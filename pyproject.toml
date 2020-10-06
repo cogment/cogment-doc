@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "cogment-doc"
+version = "0.1.0"
+description = "User documentation for cogment"
+authors = ["Artificial Intelligence Redefined <dev+cogment@ai-r.com>"]
+license = "Apache License 2.0"
+
+[tool.poetry.dependencies]
+python = "^3.7"
+mkdocs = "^1.1.2"
+
+[tool.poetry.dev-dependencies]
+taskipy = "^1.2.1"
+
+[tool.taskipy.tasks]
+dev = "mkdocs serve"
+build = "mkdocs build --clean"
+
+[build-system]
+requires = ["poetry>=0.12"]
+build-backend = "poetry.masonry.api"
+

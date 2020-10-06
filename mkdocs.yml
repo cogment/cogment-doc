@@ -1,0 +1,30 @@
+site_name: Cogment
+site_dir: public
+docs_dir: src
+theme:
+  name: "readthedocs"
+repo_url: https://gitlab.com/cogment/cogment/
+
+nav:
+  - "Getting Started": "index.md"
+  - "Download": "installation.md"
+  - "User Guide":
+      - "Fundamentals": "user-guide/fundamentals.md"
+      - "Python": "user-guide/sdk-python.md"
+      - "Low level": "user-guide/low-level.md"
+  - "Reference":
+      - "Glossary": "glossary.md"
+      - "cogment.yaml": "ref/config.md"
+      - "gRPC API": "ref/grpc.md"
+      - "Python": "ref/python.md"
+      - "Javascript": "ref/javascript.md"
+  - "Deployment": "deployment-guide/deployment.md"
+  - "Tutorial":
+      - "Intro": "tutorial/intro.md"
+      - "Step 1 : Create a new Trial": "tutorial/step1/index.md"
+      - "Step 2 : Implement our components": "tutorial/step2/index.md"
+      - "Step 3 : Upgrade our components": "tutorial/step3/index.md"
+      - "Step 4 : Create a friendly UI": "tutorial/step4/index.md"
+      - "Step 5 : Dataset and Results": "tutorial/step5/index.md"
+  - "License": "license.md"
+  - "Contributing": "contributing.md"
