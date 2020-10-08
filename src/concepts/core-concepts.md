@@ -16,7 +16,7 @@ As a [trial][6] runs, a few things happen:
 - The environment updates itself based on the actions taken by the actors and generates updated observations.
 - Multiple [Feedbacks][11] for the actors are generated either by the environment or other actors.
 - Actors asynchronously receive [reward][12] information based on received feedbacks.
-- The actors or the environment can send [messages][32] to actors or the environment. 
+- The actors or the environment can send [messages][32] to actors or the environment.
 - A datalog of the observation/action/reward is produced and stored.
 
 A [trial][22] begins at the request of a [frontend][23] application and finishes when either the frontend application ends it, when a predefined amount of time has elapsed (either in real time, or number of updates), or if the trial does not see any activity for an extended period of time.
@@ -75,31 +75,31 @@ The Orchestrator is not capable of handling traffic from web browsers by itself.
 
 If a cogment project does not support web-based client applications, then the envoy proxy can be ommited from any deployment.
 
-[3]: ../glossary.md#trial
-[4]: ../glossary.md#actor
-[5]: ../glossary.md#environment
-[6]: ../glossary.md#triak
-[7]: ../glossary.md#actor
-[8]: ../glossary.md#action
-[9]: ../glossary.md#observations
-[10]: ../glossary.md#environment
-[11]: ../glossary.md#feedback
-[12]: ../glossary.md#reward
-[13]: ../glossary.md#actor
-[14]: ../glossary.md#trial
-[15]: ../glossary.md#observation-space
-[16]: ../glossary.md#action-space
-[17]: ../glossary.md#actor-class
-[18]: ../glossary.md#agent
-[19]: ../glossary.md#action
-[20]: ../glossary.md#observation
-[21]: ../glossary.md#environment
-[22]: ../glossary.md#trial
-[23]: ../glossary.md#frontend
+[3]: ./glossary.md#trial
+[4]: ./glossary.md#actor
+[5]: ./glossary.md#environment
+[6]: ./glossary.md#triak
+[7]: ./glossary.md#actor
+[8]: ./glossary.md#action
+[9]: ./glossary.md#observations
+[10]: ./glossary.md#environment
+[11]: ./glossary.md#feedback
+[12]: ./glossary.md#reward
+[13]: ./glossary.md#actor
+[14]: ./glossary.md#trial
+[15]: ./glossary.md#observation-space
+[16]: ./glossary.md#action-space
+[17]: ./glossary.md#actor-class
+[18]: ./glossary.md#agent
+[19]: ./glossary.md#action
+[20]: ./glossary.md#observation
+[21]: ./glossary.md#environment
+[22]: ./glossary.md#trial
+[23]: ./glossary.md#frontend
 [24]: https://yaml.org/
-[25]: ../glossary.md#actor-class
-[26]: ../glossary.md#trial
-[27]: ../glossary.md#actor-class
-[28]: ../glossary.md#agent
-[31]: ../glossary.md#observation
-[32]: ../glossary.md#messages
+[25]: ./glossary.md#actor-class
+[26]: ./glossary.md#trial
+[27]: ./glossary.md#actor-class
+[28]: ./glossary.md#agent
+[31]: ./glossary.md#observation
+[32]: ./glossary.md#messages

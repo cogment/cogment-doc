@@ -3,28 +3,36 @@ site_dir: public
 docs_dir: src
 theme:
   name: "readthedocs"
-repo_url: https://gitlab.com/cogment/cogment/
 
 nav:
-  - "Getting Started": "index.md"
-  - "Download": "installation.md"
-  - "User Guide":
-      - "Fundamentals": "user-guide/fundamentals.md"
-      - "Python": "user-guide/sdk-python.md"
-      - "Low level": "user-guide/low-level.md"
-  - "Reference":
-      - "Glossary": "glossary.md"
-      - "cogment.yaml": "ref/config.md"
-      - "gRPC API": "ref/grpc.md"
-      - "Python": "ref/python.md"
-      - "Javascript": "ref/javascript.md"
-  - "Deployment": "deployment-guide/deployment.md"
-  - "Tutorial":
-      - "Intro": "tutorial/intro.md"
-      - "Step 1 : Create a new Trial": "tutorial/step1/index.md"
-      - "Step 2 : Implement our components": "tutorial/step2/index.md"
-      - "Step 3 : Upgrade our components": "tutorial/step3/index.md"
-      - "Step 4 : Create a friendly UI": "tutorial/step4/index.md"
-      - "Step 5 : Dataset and Results": "tutorial/step5/index.md"
+  - "Introduction":
+      - "Overview": "index.md"
+      - "Installation & Setup": "introduction/installation.md"
+  - "Support":
+      - "Community channels": "support/community-channels.md"
+      # - "FAQ": "support/faq.md" # out-of-scope for ɑ
+      # - "Troubleshooting": "support/troubleshooting.md" # out-of-scope for ɑ
+  - "Concepts":
+      - "Core Concepts": "concepts/core-concepts.md"
+      - "Glossary": "concepts/glossary.md"
+  - "Cogment":
+      - "Getting Started": "cogment/getting-started.md"
+      # - "Tutorial": # nice-to-have for ɑ
+      #     - "Intro": "cogment/tutorial/intro.md"
+      #     - "Step 1 : Create a new Trial": "cogment/tutorial/step1/index.md"
+      #     - "Step 2 : Implement our components": "cogment/tutorial/step2/index.md"
+      #     - "Step 3 : Upgrade our components": "cogment/tutorial/step3/index.md"
+      #     - "Step 4 : Create a friendly UI": "cogment/tutorial/step4/index.md"
+      #     - "Step 5 : Dataset and Results": "cogment/tutorial/step5/index.md"
+      - "Cogment API Guide": "cogment/cogment-api-guide.md"
+      - "Cogment API Reference":
+          - "cogment.yaml": "cogment/cogment-api-reference/cogment-yaml.md"
+          - "python": "cogment/cogment-api-reference/python.md"
+          # - "javascript": "cogment/cogment-api-reference/javascript.md" # out-of-scope for ɑ
+      - "Cogment Low Level API Guide":
+          - "Overview": "cogment/cogment-low-level-api-guide/overview.md"
+          - "gRPC API Reference": "cogment/cogment-low-level-api-guide/grpc.md"
+  - "Deployment Guide":
+      - "Local Deployment": "deployment-guide/local-deployement.md"
+      # - "Cloud Deployment": "deployment-guide/cloud-deployement.md" # out-of-scope for ɑ
   - "License": "license.md"
-  - "Contributing": "contributing.md"

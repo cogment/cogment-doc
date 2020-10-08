@@ -4,7 +4,7 @@
 
 This document assumes the reader is familiar with the [Cogment Fundamentals][2].
 
-The High-level cogment API expects users to use [protocol buffers](https://developers.google.com/protocol-buffers/) to declare a project's data structures. The intricacies of protobufs are beyond the scope of this document.  Basic knowledge of the technology and its usage is assumed.
+The High-level cogment API expects users to use [protocol buffers](https://developers.google.com/protocol-buffers/) to declare a project's data structures. The intricacies of protobufs are beyond the scope of this document. Basic knowledge of the technology and its usage is assumed.
 
 Basic familiarity with [Docker](https://www.docker.com/) is also a prerequisite.
 
@@ -60,7 +60,7 @@ The cogment cli will also compile the imported `.proto` files in python modules 
 
 This class will be instantiated once for each [trial][11] that is run on the project, and needs to implement two methods: `start()` and `update()`.
 
-The `start()` method will be called at the start of the trial, and an instance of the [environment][12]’s configuration type (if applicable) will be passed to it.  `start()` must return the initial [observation][13] to be sent to the [actors][14].
+The `start()` method will be called at the start of the trial, and an instance of the [environment][12]’s configuration type (if applicable) will be passed to it. `start()` must return the initial [observation][13] to be sent to the [actors][14].
 
 The `update()` method will be invoked repeatedly as the trial progresses, and the [action][15] of each [actor][16] participating in the [trial][17] will be passed to it. `update()` must return the new [observations][18].
 
@@ -321,51 +321,51 @@ actors:
 [^1]: This shows only the relevant part of the full cogment.yaml
 
 [2]: /fundamentals
-[4]: ../glossary.md#actor-class
-[5]: ../glossary.md#observation-space
-[6]: ../glossary.md#action-space
-[7]: ../glossary.md#observation
-[8]: ../glossary.md#action
-[10]: ../glossary.md#environment
-[11]: ../glossary.md#trial
-[12]: ../glossary.md#environment
-[13]: ../glossary.md#observation
-[14]: ../glossary.md#actor
-[15]: ../glossary.md#action
-[16]: ../glossary.md#actor
-[17]: ../glossary.md#trial
-[18]: ../glossary.md#observation
-[19]: ../glossary.md#action
-[20]: ../glossary.md#actor-class
-[21]: ../glossary.md#actor
-[22]: ../glossary.md#actor-class
-[23]: ../glossary.md#environment
-[24]: ../glossary.md#agent
-[25]: ../glossary.md#environment
-[26]: ../glossary.md#agent
-[27]: ../glossary.md#trial
-[28]: ../glossary.md#agent
-[29]: ../glossary.md#action
-[30]: ../glossary.md#observation
-[31]: ../glossary.md#agent
-[32]: ../glossary.md#actor-class
-[33]: ../glossary.md#agent
-[34]: ../glossary.md#agent
-[35]: ../glossary.md#environment
-[36]: ../glossary.md#frontend
-[37]: ../glossary.md#orchestrator
-[38]: ../glossary.md#frontend
-[39]: ../glossary.md#agent
-[40]: ../glossary.md#environment
-[41]: ../glossary.md#frontend
-[42]: ../glossary.md#feedback
-[43]: ../glossary.md#actor
-[44]: ../glossary.md#reward
-[45]: ../glossary.md#agent
-[46]: ../glossary.md#trial
-[47]: ../glossary.md#observation
-[48]: ../glossary.md#environment
-[49]: ../glossary.md#actor
-[50]: ../glossary.md#observation
-[51]: ../glossary.md#agent
-[52]: ../glossary.md#messages
+[4]: concepts/glossary.md#actor-class
+[5]: concepts/glossary.md#observation-space
+[6]: concepts/glossary.md#action-space
+[7]: concepts/glossary.md#observation
+[8]: concepts/glossary.md#action
+[10]: concepts/glossary.md#environment
+[11]: concepts/glossary.md#trial
+[12]: concepts/glossary.md#environment
+[13]: concepts/glossary.md#observation
+[14]: concepts/glossary.md#actor
+[15]: concepts/glossary.md#action
+[16]: concepts/glossary.md#actor
+[17]: concepts/glossary.md#trial
+[18]: concepts/glossary.md#observation
+[19]: concepts/glossary.md#action
+[20]: concepts/glossary.md#actor-class
+[21]: concepts/glossary.md#actor
+[22]: concepts/glossary.md#actor-class
+[23]: concepts/glossary.md#environment
+[24]: concepts/glossary.md#agent
+[25]: concepts/glossary.md#environment
+[26]: concepts/glossary.md#agent
+[27]: concepts/glossary.md#trial
+[28]: concepts/glossary.md#agent
+[29]: concepts/glossary.md#action
+[30]: concepts/glossary.md#observation
+[31]: concepts/glossary.md#agent
+[32]: concepts/glossary.md#actor-class
+[33]: concepts/glossary.md#agent
+[34]: concepts/glossary.md#agent
+[35]: concepts/glossary.md#environment
+[36]: concepts/glossary.md#frontend
+[37]: concepts/glossary.md#orchestrator
+[38]: concepts/glossary.md#frontend
+[39]: concepts/glossary.md#agent
+[40]: concepts/glossary.md#environment
+[41]: concepts/glossary.md#frontend
+[42]: concepts/glossary.md#feedback
+[43]: concepts/glossary.md#actor
+[44]: concepts/glossary.md#reward
+[45]: concepts/glossary.md#agent
+[46]: concepts/glossary.md#trial
+[47]: concepts/glossary.md#observation
+[48]: concepts/glossary.md#environment
+[49]: concepts/glossary.md#actor
+[50]: concepts/glossary.md#observation
+[51]: concepts/glossary.md#agent
+[52]: concepts/glossary.md#messages

@@ -22,10 +22,9 @@ $ cd rps
 
 For Rock-Paper-Scissors (i.e. RPS), there are 2 types of [Actors][1], one named "human" and one named "agent".
 
-You now have all the needed elements of a (blank) cogment project. Now, let's implement the logic.  Have a look at the `data.proto` file contents of the rps directory.  You should see the following -
+You now have all the needed elements of a (blank) cogment project. Now, let's implement the logic. Have a look at the `data.proto` file contents of the rps directory. You should see the following -
 
 ```yaml
-
 syntax = "proto3";
 
 package rps;
@@ -34,7 +33,7 @@ message EnvConfig {
 }
 
 message TrialConfig {
-  EnvConfig env_config = 1;
+EnvConfig env_config = 1;
 }
 
 message Observation {}
@@ -42,7 +41,6 @@ message Observation {}
 message HumanAction {}
 
 message AgentAction {}
-
 ```
 
 ## Define our data structures
@@ -60,30 +58,28 @@ message EnvConfig {
 }
 
 message TrialConfig {
-  EnvConfig env_config = 1;
+EnvConfig env_config = 1;
 }
 
 enum Decision {
-    NONE = 0;
-    ROCK = 1;
-    PAPER = 2;
-    SCISSOR = 3;
+NONE = 0;
+ROCK = 1;
+PAPER = 2;
+SCISSOR = 3;
 }
 
 message Observation {
-    int32 p1_score = 1;
-    int32 p2_score = 2;
+int32 p1_score = 1;
+int32 p2_score = 2;
 }
 
 message HumanAction {
-    Decision decision = 1;
+Decision decision = 1;
 }
 
 message AgentAction {
-    Decision decision = 1;
+Decision decision = 1;
 }
-
-
 ```
 
 In RPS, the [Action Space][4] of our [Actor Classes][5] is a discrete choice between three alternatives (“Rock”, “Paper”, “Scissors” - with the addition of a “None” decision which will be used when we initialize the game). We will use an enum, called **Decision** to represent those alternatives and have a field of that enum type within the action space.
@@ -95,7 +91,7 @@ The **HumanAction** is the action taken by an Actor of the player class **Human*
 In the `rps` directory, modify the `data.proto` file to include the above additions.
 
 Note that a file named `cogment.yaml` was also created in the `rps` directory by the boostrap process.
-This file is the main configuration for your cogment project.  In it, you will see a reference to:
+This file is the main configuration for your cogment project. In it, you will see a reference to:
 
 ```yaml
 import:
@@ -157,7 +153,7 @@ The Environment is up and running.
 
 ## The Agent
 
-The bootstrap project provides as many agent files as were defined in the init process we did in the [Bootstrap the project section][6] above: two actors were defined (`human` and `agent`), with one of the actors being an agent that we called `agent`.  Therefore, an `Agent` directory was created in the `Agents` directory which contains the *main.py* agent file.
+The bootstrap project provides as many agent files as were defined in the init process we did in the [Bootstrap the project section][6] above: two actors were defined (`human` and `agent`), with one of the actors being an agent that we called `agent`. Therefore, an `Agent` directory was created in the `Agents` directory which contains the _main.py_ agent file.
 
 An agent must implement 3 methods: `decide, reward, end`
 
@@ -250,7 +246,7 @@ actor_counts: 1
 
 This concludes Step 1 of the Tutorial: you have bootstrapped a Cogment project, defined your protobufs, started the environment and agent services, and launched a trial through a debug command.
 
-The above sends a start trial command and receives a succeeded response with a trial\_id, which you will see on the terminal window listening for trials:
+The above sends a start trial command and receives a succeeded response with a trial_id, which you will see on the terminal window listening for trials:
 
 ```text
 orchestrator_1  | [2020-07-27 18:22:29.882] [info] creating trial: 215cd3e5-d12e-466d-93c9-4d3fcd60ecea
@@ -265,10 +261,10 @@ This concludes Step 1 of the Tutorial: you have bootstrapped a Cogment project, 
 
 Let’s move on to actually implementing our components.
 
-[1]: ../../glossary.md#actor
+[1]: ../concepts/glossary.md#actor
 [2]: https://developers.google.com/protocol-buffers/
 [3]: https://grpc.io/
-[4]: ../../glossary.md#action-space
-[5]: ../../glossary.md#actor-class
+[4]: ../concepts/glossary.md#action-space
+[5]: ../concepts/glossary.md#actor-class
 [6]: #bootstrap-the-project
-[7]:    ../../installation.md
+[7]: ../../installation.md
