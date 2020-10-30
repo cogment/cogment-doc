@@ -1,1 +1,4 @@
 /public
+
+# Backup of "sed-ed" files
+*.bak
