@@ -5,7 +5,31 @@
 The simplest way to install the python SDK is to just install it using pip:
 `pip install cogment`
 
+The basic requiremetns is Python 3.7.
+
 ## General usage
+
+### The cogment.yaml file
+
+The [cogment.yaml][1] file (including imported files) defines the high level API.
+
+For example, an [actor class][4] is defined by its required [observation space][5] and [action space][6], but also an optional [message space][10].
+
+These "spaces" are defined by using protobuf message types (from the imported files). [Observations][7], [actions][8], and [messages][9] will simply be instances of the appropriate type.
+
+#### Compiling the cogment.yaml
+
+In order to use the configuration found in the `cogment.yaml` file within python scripts, it needs to be compiled into python modules. This is done by a tool called the “cogment cli” (Command Line Interface).
+
+The cogment cli requires `protoc` (the Protobuf compiler).
+
+As a convenience, the `cogment/cli` docker image can be used to run it, as it has all the required dependencies correctly setup already:
+
+```text
+$ docker run -v $(pwd):/data --rm cogment/cli --file /data/cogment.yaml --python_dir=/data
+```
+
+This will create a `cog_settings.py` module in the `--python-dir` directory.  The cogment cli will also compile the imported `*.proto` files in python modules living in the same location (e.g. `data_pb2.py` in this case). There is no need to invoke `protoc` yourself for the imported files.
 
 ### cog_settings.py
 
@@ -21,20 +45,255 @@ This will generate both a `cog_settings.py` file, as well as any required compil
 
 ### Top-level import
 
-Wether a script implements a client, agent or environment, it should import both the `cog_settings` and cogment itself.
+Wether a script implements an actor or environment, it should import both the `cog_settings` and `cogment` modules.
 
 ```python
 import cog_settings
 import cogment
 ```
 
-## Common API
+## cogment.Server
 
-### cogment.Actor
+Class to setup and run the communication for a component.
+
+### ```__init__(self, cog_project, port, prometheus_port = 8000)```
+
+Parameters:
+
+- `cog_project`: *module* - Settings module associated with trials that will be run ([cog_settings](#cog_settings.py) namespace).
+- `port`: *int* - TCP/IP port number to listen to.
+- `prometheus_port`: *int* - TCP/IP port number for Prometheus
+
+### ```run(self)```
+
+Method to start and run the communication server for the registered components (environment, actor, prehook, datalog).
+
+Parameters: None
+
+Return : None
+
+### ```register_environment(self, impl, impl_name = "default")```
+
+Method to register the asynchronous callback function that will run an environment for a trial.
+
+Parameters:
+
+- `impl`: *async function(cogment.environment.EnvironmentSession instance, cogment.trial.Trial instance)* - Callback function to be registered
+- `impl_name`: *str* - Name for the environment being run by the given callback function.
+
+Return: None
+
+### ```register_actor(self, impl, impl_name, actor_class)```
+
+Method to register the asynchronous callback function that will run an actor for a trial.
+
+Parameters:
+
+- `impl`: *async func(cogment.actor.ActorSession instance, cogment.trial.Trial instance)* - Callback function to be registered
+- `impl_name`: *str* - Name for the actor being run by the given callback function.
+- `actor_class`: *str* - The actor class name run by the given callback function. The possible names are specified in file `cogment.yaml` as `id` under section `actor_classes`.  E.g. "driver"
+
+Return: None
+
+### ```register_prehook(self, impl)```
+
+Method to register an asynchronous callback function that will be called before a trial is started.
+
+Parameters:
+
+- `impl`: *async func(SimpleNamespace instance)* - Callback function to be registered
+
+Return: None
+
+### ```register_datalog(self, impl)```
+
+Method to register an asynchronous callback function that will be called for each log request (for any trial).  Only one such function can be registered.
+
+Parameters:
+
+- `impl`: *async func(samples, trial_params, trial_id)* - Callback function to be registered
+
+Return: None
+
+## cogment.Trial
+
+Class representing a trial.
+
+`id`: *str* - Trial UUID.
+
+`over`: *bool* - True if the trial has ended, false otherwise.
+
+`actors`: *list[cogment.Actor]* - List of active actors involved in this trial.
+
+`tick_id`: *int* - The current tick id (time step).
+
+### ```get_receivers(self, pattern, env=False)```
+
+Parameters:
+
+- `pattern`:: *list[ID]* - The ID can be the index (*int*) of the actor in the `Trial.actors` list.  The ID can also be the name (*str*) of the actor or "env" (for the environment).  The ID can also represent a set of actors or environment by name (*str*); A set of names can be represented with the wildcard character (`*`), and takes the form of "`*`" for all actors/environment, or "`XXX.*`" where `XXX` is the class ID of actors.
+- `env`: *bool* - If True, try to match the environment (as well as actors) to the pattern.  If False, only actors will be matched.  Note that the environment has a hard coded name of "env".
+
+Return: *list[class instances]* - Returns the actors (`cogment.actor.Actor`) that match the pattern, and possibly the environment that match the pattern (`cogment.environment.Env`).
+
+### ```add_feedback(self, to, value, confidence```
+
+Method to provide feedback that will contribute to the actors' reward.
+
+Parameters:
+
+- `to`: - *list[actor ID]* - The destination.  Same as the `pattern` parameter of the `get_receivers()` method, but only actors (no environment)
+- `value`: *float* - Value of the feedback
+- `confidence`: *float* - Weight this feedback has relative to other feedbacks.
+
+Return: None
+
+### ```send_message(self, to, user_data)```
+
+Method to send a message to one or more actors/environment.
+
+Parameters:
+
+- `to`: - *list[ID]* - The destination.  Same as the `pattern` parameter of the `get_receivers()` method, for actors and the environment.
+- `user_data`: *protobuf class instance* - The message to be sent.  The protobuf class is specified as the `actor_classes:message:space` for the destination actor/environment in `cogment.yaml`.
+
+Return: None
+
+## cogment.environment.EnvironmentSession
+
+Class containing session/trial data and methods necessary to run an environment for a trial.  An instance of this class is passed as argument to the environment callback function registered with `cogment.Server.register_environment`.
+
+`trial`: *Trial instance* - The trial managed by this class.
+
+`end_trial`: *bool* - If True, the end of the trial has been requested, and the environment as ended.
+
+`impl_name`: *str* - Name of the implementation running this environment.
+
+`on_actions`: *function(list[action])* - If defined, this function will be called for every set of action that is received.  The actions received by the function are the classes defined as action spaces for the actors in `cogment.yaml`.  This should not be defined if using `gather_actions()`.
+
+`on_message`: *function(int, protobuf class instance)* - If defined, this function will be called when a new message arrives.  The protobuc class type is specified as the `environment:message:space` in `cogment.yaml`.
+
+`on_trial_over`: *function()* - If defined, this function will be called when the end of the trial has been requested.  At this point `end_trial` is set to `True`.
+
+`latest_actions`: *list[action]* - The latest actions received.  This is also provided as argument to `on_actions()` (if defined).  If `gather_actions()` is used instead, this may transitorilly contain the latest actions received.
+
+`latest_message`: *protobuf class instance* - The lastest message received.  This is also provided as argument to `on_message()` (if defined). The protobuf class type is specified as the `environment:message:space` in `cogment.yaml`.
+
+### ```start(self, observations)```
+
+Method to report that the environment is starting to run the trial.
+
+Parameters:
+
+- `observations`: *list[tuple(str, protobuf class instance)]* - The initial observations from which the environment is starting the trial.  The string in the tuple is the name of the destination actor (or "*" for all actors).  The name of the actors can be found in `cogment.yaml` under `trial_params:actors:name`.  The protobuf class is the Observation Space for that actor, found in `cogment.yaml` in the corresponding section `actor_classes:observation:space`.
+
+Return: None
+
+### ```async gather_actions(self)```
+
+Method to wait for a set of actions from the actors.  This should not be called if `self.on_actions` is defined.
+
+Parameters: None
+
+Return: *list[action]* - The actions are the classes defined as action-spaces for the actors in `cogment.yaml`.
+
+### ```produce_observations(self, observations)```
+
+Method to send observations to actors.
+
+Parameters:
+
+- `observations`: *list[tuple(str, protobuc class instance)]* - The observations to send to actors.  The string in the tuple is the name of the destination actor (or "*" for all actors).  The name of the actors can be found in `cogment.yaml` under `trial_params:actors:name`.  The protobuf class is Observation Space for that actor, found in `cogment.yaml` in the corresponding section `actor_classes:observation:space`.
+
+Return: None
+
+### ```end(self, final_observations)```
+
+Method to request the end of the trial, and report the end of the environment.
+
+Parameters:
+
+- `final_observations`: *list[tuple(str, protobuf class instance)]* - The final observations to send to the actors.  The string in the tuple is the name of the destination actor (or "*" for all actors).  The name of the actors can be found in `cogment.yaml` under `trial_params:actors:name`.  The protobuf class is the Observation Space for that actor, found in `cogment.yaml` in the corresponding section `actor_classes:observation:space`.
+
+Return: None
+
+## cogment.actor.ActorSession
+
+Class containing session/trial data and methods necessary to run an actor for a trial.  An instance of this class is passed as argument to the actor callback function registered with `cogment.Server.register_actor`.
+
+`actor_class`: *str* - Name of the class of actor this class represents.  Specified in `cogment.yaml` as `actor_classes:id`.
+
+`impl_name`: *str* - Name of the implementation of the actor represented by this class.
+
+`name`: *str* - Name of the actor this classs represents.
+
+`trial`: *Trial instance* - The trial managed by this class.
+
+`end_trial`: *bool* - If True, the trial has ended.
+
+`on_observation`: *function(protobuf class instance)* - If defined, this function will be called when an observation is received.  The observation received is of the class defined as observation space for the appropriate actor class specified in section `actor_classes:observation:space` in `cogment.yaml` for the appropriate actor class.
+
+`on_reward`: *function(protobuf class instance)* - If defined, this function will be called when a reward is received.  The reward received is of the type `cogment.Reward`.
+
+`on_message`: *function(int, protobuf class instance)* - If defined, this function will be called when a new message arrives.  The protobuf class type is specified as the `actor_classes:message:space` in `cogment.yaml` for the appropriate actor class.
+
+`on_trial_over`: *function()* - If defined, this function will be called when the trial has ended.  At this point `end_trial` is set to `True`.
+
+`latest_observation`: *protobuf class instance* - The latest observation received.  This is also provided as argument to `on_observation()` (if defined).
+
+`latest_reward`: *protobuf class instance* - The latest reward received.  This is also provided as argument to `on_reward()` (if defined).
+
+`latest_message`: *protobuf class instance* - The lastest message received.  This is also provided as argument to `on_message()` (if defined). The protobuf class type is specified as the `actor_classes:message:space` in `cogment.yaml`.
+
+### ```start(self)```
+
+Method to start the actor and wait for the first observation.
+
+Parameters: None
+
+Return: - *protobuf class instance* - The first observation available from which to start the actor.  The class is the Observation Space for the actor, found in `cogment.yaml` in the corresponding section `actor_classes:observation:space`.
+
+### ```start_nowait(self)```
+
+Method to start the actor.
+
+Parameters: None
+
+Return: None
+
+### ```do_action(self, action)```
+
+Method to send actions to the environment and wait for the next observation.
+
+Parameters:
+
+- `action`: *protobuf class instance* - An instance of the action space class specified in corresponding section `actor_classes:action:space` of the `cogment.yaml` file.
+
+Return: - *protobuf class instance* - The first observation available from which to start the actor.  The class is the Observation Space for the actor, found in `cogment.yaml` in the corresponding section `actor_classes:observation:space`.
+
+### ```do_action_nowait(self, action)```
+
+Method to send actions to the environment.
+
+Parameters:
+
+- `action`: *protobuf class instance* - An instance of the action space class specified in corresponding section `actor_classes:action:space` of the `cogment.yaml` file.
+
+Return: None
+
+### ```end(self)```
+
+Method to end the trial.
+
+Parameters: None
+
+Return: None
+
+## cogment.Actor
 
 Class representing an actor within a trial.
 
-#### ```add_feedback(self, value, confidence, tick_id=-1, user_data=None)```
+### ```add_feedback(self, value, confidence, tick_id=-1, user_data=None)```
 
 Method to provide feedback that will contribute to that actor's reward.
 
@@ -43,295 +302,64 @@ Parameters:
 - `value`: *float* - Value of the feedback
 - `confidence`: *float* - Weight this feedback has relative to other feedbacks.
 - `tick_id`: *int* - Tick id (timestep) for which this feedback refers to. If left at -1, it implicitely refers to the latest point in time, and can be **reliably** expected to be propagated live to the agent.
-- `user_data`: unused
+- `user_data`: *protobuf class instance* - Specific information for the actor.  The class is specified in `cogment.yaml` in the section `actor_classes:feedback:info`.
 
 Return: None
 
-#### ```send_message(self, user_data=None)```
+### ```send_message(self, user_data=None)```
 
-Method to send a message to an actor or the environment.
+Method to send a message to the actor.
 
 Parameters:
 
-- `user_data`: *protobuf class* - The message to be sent.
+- `user_data`: *protobuf class instance* - The message to be sent.  The class is specified in `cogment.yaml` in the section `actor_classes:message:space`.
 
 Return: None
 
-#### ```multi_cast(self, user_data=None, send_list=[])```
+## cogment.client.Connection
 
-Method to send a message to a list of actors and/or the environment.
+Class to create a connection to a cogment orchestrator to start and control trials.
 
-Parameters:
-
-- `user_data`: *protobuf class* - The message to be sent.
-- `send_list`: *list* - List of actor IDs and/or -1 (for the environment)
-
-Return: None
-
-### cogment.Trial
-
-Class representing a trial.
-
-`id`: *str* - Trial UUID.
-
-`settings`: *module* - Settings module associated with this trial ([cog_settings](#cog_settings.py) namespace).
-
-`actor_counts`: *list[int]* - Number of actors for each class of actor.
-
-`actors`: *types.SimpleNamespace instance*
-
-- `all`: *list[cogment.Actor]* - List of all actors present in the trial.
-
-
-`tick_id`: *int* - The current tick id.
-
-`trial_config`: *protobuf instance* - Configuration for the trial.  The type is specified in file `cogment.yaml` under the section `trial:config_type`
-
-#### ```new_observation_table(self)```
-
-Method to return a new, empty observation table.
-
-Parameters: None
-
-Return: *cog_settings.ObservationTable instance* - Observations for all actors
-
-## Client API
-
-### cogment.client.Connection
-
-Class to create a connection to a cogment orchestrator.
-
-#### ```__init__(self, cog_settings, endpoint)```
+### ```__init__(self, cog_project, endpoint)```
 
 Parameters:
 
-- `cog_settings`: *module* - Settings module associated with this trial ([cog_settings](#cog_settings.py) namespace).
-- `endpoint`: *str* - URL of the project's Orchestrator.
+- `cog_project`: *module* - Settings module associated with this trial ([cog_settings](#cog_settings.py) namespace).
+- `endpoint`: *str* - URL of the Orchestrator to connect to.
 
-#### ```start_trial(self, actor_class, trial_cfg=None, plugins=[])```
+### ```start_trial(self, trial_config, user_id)```
 
-Method to begin a new trial.
-
-Parameters:
-
-- `actor_class`: *class type* - The actor class the human is registering as. The type is specified in file `cogment.yaml` under section `actors`; the `actor_class` name with `endpoint: human`).  E.g. `cog_settings.actor_classes.observer`
-- `trial_cfg`: *protobuf instance* - Configuration for the trial.  The type is specified in file `cogment.yaml` under the section `trial:config_type`
-- `plugins`: *list* - List of plugin instances.
-
-Return: *cogment.client.ClientTrial instance* - Trial upon successfull creation.
-
-#### ```join_trial(self, actor_class, trial_id, actor_id)```
-
-Method to join an existing trial.
+Method to start a new trial.
 
 Parameters:
 
-- `actor_class`: *class type* - The actor class the human is registering as. The type is specified in file `cogment.yaml` under section `actors`; the `actor_class` name with `endpoint: human`).  E.g. `cog_settings.actor_classes.observer`
+- `trial_config`: *protobuf class instance* - Configuration for the trial.  The type is specified in file `cogment.yaml` under the section `trial:config_type`
+
+- `user_id`: *str* - Identifier for the user requesting the trial start
+
+Return: *cogment.client.TrialLifeCycle instance* - Class representing the trial that was started.
+
+### ```join_trial(self, trial_id=None, actor_id=-1, actor_class=None, impl=None)```
+
+Method for an actor to join an existing trial.
+
+Parameters:
+
 - `trial_id`: *str* - The UUID of the trial to join.
-- `actor_id`: *int* - Id of this actor in trial.
 
-Return: *cogment.client.ClientTrial instance* - Trial upon successfull join.
+- `actor_id`: *int* - Id of the actor joining the trial.
+  
+- `actor_class`: *str* - The actor class for the actor that is joining the trial. The type is specified in file `cogment.yaml` under section `actor_classes:id`
 
-### cogment.client.ClientTrial(cogment.Trial)
-
-Class representing an active trial from the perspective of a client application.
-
-`connection`: *cogment.client.Connection instance* - Connection to orchestrator.
-
-`observation`: *protobuf instance* - The updated observation for the actor. The type is specified in file `cogment.yaml` under the section `actor_classes:observation:space` for the actor class of the actor.
-
-`actor_id`:*int* - Id of actor.
-
-`actor_class`: *class type* - The actor class used by the actor. The type is specified in file `cogment.yaml` under section `actors`.  And described in section `actor_classes:id`.  E.g. `cog_settings.actor_classes.player`
-
-`latest_reward`: *protobuf instance* - The updated reward received.  `Reward` defined in file `agent.proto`.
-
-`latest_messages`: *protobuf instance* - The updated messages received.  `MessageCollection` defined in file `agent.proto`.
-
-`session_id`: *str* - UUID of the connection session.
-
-#### ```do_action(self, action)```
-
-Method to request the advancement of time for the trial by providing a human (client) action. Any pending feedback is also flushed.
-
-Parameters:
-
-- `action`: *protobuf instance* - The human's action. The type is specified in file `cogment.yaml` under the section `actor_classes:action:space` for the human actor.  Which actor is human is specified in section `actors:actor_class` with `endpoint: human`.
-
-Return: *tuple*
-
-- [0]: Same as member `observation`.
-- [1]; Same as member `last_reward`.
-- [2]: Same as member `last_messages`.
-
-#### ```end(self)```
-
-Method to request the end of the trial. Any pending feedback is also flushed.
-
-Parameters: None
+- `impl`: *async function(cogment.environment.ActorSession instance, cogment.trial.Trial instance)* - Callback function.  This function will be be called when the trial has been joined.
 
 Return: None
 
-#### ```flush_feedback(self)```
-
-Method to explicitely flush any pending feedback. This should rarely be needed.
-
-Parameters: None
-
-Return: None
-
-#### ```flush_message(self)```
-
-Method to explicitely flush any pending messages. This should rarely be needed.
-
-Parameters: None
-
-Return: None
-
-#### ```begin_actions_stream(self)```
-
-Method to switch the client to streaming mode, using a single connection to transfer all actions and observations.
-
-Parameters: None
-
-Return: None
-
-#### ```set_on_trial_end_event_listener(self, callback)```
-
-Method to register a function to call when the trial is ended (not by calling `end()`).
-
-Parameters:
-
-- `callback`: *function* - A callback function.  With no parameters.  The return value is ignored.
-
-Return: None
-
-## Agent API
-
-### cogment.Agent
-
-*Abstract Class* - Provides necessary basis for a project-specific agent implementation.
-
-`VERSIONS`: *dict[str, str]* - Version information.  To be filled by the derived class.
-
-`actor_class`: *class type* - The actor class implemented by this class. The types are described in file `cogment.yaml` in section `actor_classes:id`.  To be set by the derived class.  E.g. `cog_settings.actor_classes.player`
-
-#### ```__init__(self, trial, actor, config)```
-
-Parameters:
-
-- `trial`: *cogment.Trial instance* - Trial the agent will participate in.
-- `actor`: *cogment.Actor instance* - Actor for this agent in the trial.
-- `config`: *protobuf instance* - The configuration for the agent (can be None). If any, the type is specified in file `cogment.yaml` in section `actor_classes:config_type`.
-
-#### ```end(self)```
-
-Method to invoke at the end of the trial.
-
-Parameters: None
-
-Return: None
-
-#### ```reward(self, reward)```
-
-*Abstract Method* - Will be invoked when reward information is available.
-
-Parameters:
-
-- `reward`: *protobuf instance* - The reward received.  `Reward` defined in file `agent.proto`.
-
-Return: None
-
-#### ```on_message(self, reward)```
-
-*Abstract Method* - Will be invoked when a message is available.
-
-Parameters:
-
-- `onmessage`: *protobuf instance* - The messages received.  `MessageCollection` defined in file `agent.proto`.
-
-Return: None
-
-#### ```decide(self, observation)```
-
-*Abstract Method* - Will be invoked when a new observation is avalable.
-
-Parameters:
-
-- `observation`: *protobuf instance* - The observation for the time step. The type is specified in file `cogment.yaml` in section `actor_classes:observation:space`.
-
-Return: *protobuf instance* - The action done in response to the given observation. The type is specified in file `cogment.yaml` in section `actor_classes:action:space`.
-
-## Environment API
-
-### cogment.Environemnt
-
-*Abstract Class* - Provides necessary basis for a project-specific environment implementation.
-
-`VERSIONS`: *dict[str, str]* - Version information.  To be filled by the derived class.
-
-#### ```start(self, config)```
-
-*Abstract Method* - Will be invoked at the start of a trial.
-
-Parameters:
-
-- `config`: *protobuf instance* - The configuration for the environment (can be None). If any, the type is specified in file `cogment.yaml` in section `environment:config_type`.
-
-Return: None
-
-#### ```update(self, actions)```
-
-*Abstract Method* - Will be invoked when there are new actions available.
-
-Parameters:
-
-- `actions`: *cog_settings.ActionsTable instance* - Actions from all actors.
-
-Return: *cog_settings.ObservationTable instance* - Updated observation after actions taken into account.
-
-#### ```on_message(self, onmessage)```
-
-*Abstract Method* - Will be invoked when a message is available.
-
-Parameters:
-
-- `onmessage`: *protobuf instance* - The messages received.  `MessageCollection` defined in file `agent.proto`.
-
-Return: None
-
-#### ```end(self)```
-
-This should be invoked to indicate the end of the trial.
-
-Parameters: None
-
-Return: None
-
-## Service API
-
-### cogment.GrpcServer
-
-#### ```__init__(self, service_type, settings, port=DEFAULT_PORT)```
-
-Parameters:
-
-- `service_type`: *class type* - Either a subclass of `cogment.Agent`, `cogment.Environment` or `cogment.TrialHooks`.
-- `settings`: *module* - Settings module associated with this trial ([cog_settings](#cog_settings.py) namespace).
-- `port`: *int* - The port at which the server runs.
-
-#### ```stop(self)```
-
-Stops the server.
-
-Parameters: None
-
-Return: None
-
-#### ```serve(self)```
-
-Starts the server, and blocks until a signal (e.g. CTRL-C) is received.
-
-Parameters: None
-
-Return: None
+[1]: cogment-api-reference/cogment-yaml.md
+[4]: concepts/glossary.md#actor-class
+[5]: concepts/glossary.md#observation-space
+[6]: concepts/glossary.md#action-space
+[7]: concepts/glossary.md#observation
+[8]: concepts/glossary.md#action
+[9]: concepts/glossary.md#message
+[10]: concepts/glossary.md#message-space

@@ -63,9 +63,13 @@ We call Human / AI interaction loop training the fundamental paradigm our [Frame
 
 ## M
 
-### Messages
+### Message
 
 Messages can be sent from any actor or the environment to any actor or the environment.  The message can be any protobuf message.  This creates channels between any set of actors and the environment.  These channels can be used for applications where communication between actors and the environment need to be outside of the standard observation and action spaces.
+
+### Message space
+
+A Message space defines all possible data in a [message][52] an [Actor][36] can receive from other Actors or the [environment][37].
 
 ### Model
 
@@ -105,6 +109,10 @@ The Orchestrator is the central piece of our framework; it’s an executable tha
 
 A plugin or extension adds functionality to our core framework.  
 We provide plugins that handle special features such as Deployment, Dataset storage destinations, Analytics, that one may or may not choose to use alongside the core framework, depending on their specific needs.
+
+### Protobuf/Protocol Buffer
+
+A binary data format for serialized communication defined from a YAML config file ([protocol buffers](https://developers.google.com/protocol-buffers/)).
 
 ## R
 
@@ -182,3 +190,4 @@ The problem one wants to solve.
 [48]: #actor
 [49]: #agent
 [50]: #reward-function
+[52]: #message

@@ -17,13 +17,13 @@ As a [trial][6] runs, a few things happen:
 - Multiple [Feedbacks][11] for the actors are generated either by the environment or other actors.
 - Actors asynchronously receive [reward][12] information based on received feedbacks.
 - The actors or the environment can send [messages][32] to actors or the environment.
-- A datalog of the observation/action/reward is produced and stored.
+- A datalog of the observation/action/reward/messages is produced and stored.
 
-A [trial][22] begins at the request of a [frontend][23] application and finishes when either the frontend application ends it, when a predefined amount of time has elapsed (either in real time, or number of updates), or if the trial does not see any activity for an extended period of time.
+A [trial][22] begins at the request of a [frontend][23] application and finishes when either the frontend application requests the end, when a predefined amount of time has elapsed (either in real time, or number of updates), or if the trial does not see any activity for an extended period of time.
 
 ### Actors and actor classes
 
-Each [actor][13] within a [trial][14] is defined primarily by what information it receives from the environment (its [observation space][15]), and what actions it can perform (its [action space][16]).
+Each [actor][13] within a [trial][14] is defined primarily by what information it receives from the environment (its [observation space][15]), what actions it can perform (its [action space][16]), and what messages it can receive [Message space].
 
 Two cogment actors that share the same observation space and action space are said to belong to the same [actor class][17].
 
@@ -102,4 +102,5 @@ If a cogment project does not support web-based client applications, then the en
 [27]: ./glossary.md#actor-class
 [28]: ./glossary.md#agent
 [31]: ./glossary.md#observation
-[32]: ./glossary.md#messages
+[32]: ./glossary.md#message
+[32]: ./glossary.md#message-space
