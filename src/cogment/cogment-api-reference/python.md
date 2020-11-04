@@ -13,9 +13,11 @@ The basic requiremetns is Python 3.7.
 
 The [cogment.yaml][1] file (including imported files) defines the high level API.
 
-For example, an [actor class][4] is defined by its required [observation space][5] and [action space][6], but also an optional [message space][10].
+For example, an [actor class][4] is defined by its required [observation space][5] and [action space][6].
 
-These "spaces" are defined by using protobuf message types (from the imported files). [Observations][7], [actions][8], and [messages][9] will simply be instances of the appropriate type.
+These "spaces" are defined by using protobuf message types (from the imported files). [Observations][7] and [actions][8] will simply be instances of the appropriate type.
+
+Messages don't have a set type, they can be any type as long as the receiver can manage that type (i.e. the type of the object received should be checked against known types before handling).  The type is determined by the originator of the message.
 
 #### Compiling the cogment.yaml
 
@@ -129,6 +131,8 @@ Class representing a trial.
 
 ### ```get_receivers(self, pattern, env=False)```
 
+Method to retrieve a set of receivers for messages or feedback.
+
 Parameters:
 
 - `pattern`:: *list[ID]* - The ID can be the index (*int*) of the actor in the `Trial.actors` list.  The ID can also be the name (*str*) of the actor or "env" (for the environment).  The ID can also represent a set of actors or environment by name (*str*); A set of names can be represented with the wildcard character (`*`), and takes the form of "`*`" for all actors/environment, or "`XXX.*`" where `XXX` is the class ID of actors.
@@ -155,7 +159,7 @@ Method to send a message to one or more actors/environment.
 Parameters:
 
 - `to`: - *list[ID]* - The destination.  Same as the `pattern` parameter of the `get_receivers()` method, for actors and the environment.
-- `user_data`: *protobuf class instance* - The message to be sent.  The protobuf class is specified as the `actor_classes:message:space` for the destination actor/environment in `cogment.yaml`.
+- `user_data`: *protobuf class instance* - The message to be sent. The class can be any protobuf class.  It is the responsibility of the receiving actor or environment to manage the type received.
 
 Return: None
 
@@ -171,13 +175,13 @@ Class containing session/trial data and methods necessary to run an environment 
 
 `on_actions`: *function(list[action])* - If defined, this function will be called for every set of action that is received.  The actions received by the function are the classes defined as action spaces for the actors in `cogment.yaml`.  This should not be defined if using `gather_actions()`.
 
-`on_message`: *function(int, protobuf class instance)* - If defined, this function will be called when a new message arrives.  The protobuc class type is specified as the `environment:message:space` in `cogment.yaml`.
+`on_message`: *function(int, protobuf class instance)* - If defined, this function will be called when a new message arrives. The class is of the type sent by the originator.  It is the responsibility of the environment to manage the type received.
 
 `on_trial_over`: *function()* - If defined, this function will be called when the end of the trial has been requested.  At this point `end_trial` is set to `True`.
 
 `latest_actions`: *list[action]* - The latest actions received.  This is also provided as argument to `on_actions()` (if defined).  If `gather_actions()` is used instead, this may transitorilly contain the latest actions received.
 
-`latest_message`: *protobuf class instance* - The lastest message received.  This is also provided as argument to `on_message()` (if defined). The protobuf class type is specified as the `environment:message:space` in `cogment.yaml`.
+`latest_message`: *protobuf class instance* - The lastest message received.  This is also provided as argument to `on_message()` (if defined).
 
 ### ```start(self, observations)```
 
@@ -235,7 +239,7 @@ Class containing session/trial data and methods necessary to run an actor for a 
 
 `on_reward`: *function(protobuf class instance)* - If defined, this function will be called when a reward is received.  The reward received is of the type `cogment.Reward`.
 
-`on_message`: *function(int, protobuf class instance)* - If defined, this function will be called when a new message arrives.  The protobuf class type is specified as the `actor_classes:message:space` in `cogment.yaml` for the appropriate actor class.
+`on_message`: *function(int, protobuf class instance)* - If defined, this function will be called when a new message arrives. The class is of the type sent by the originator.  It is the responsibility of the actor to manage the type received.
 
 `on_trial_over`: *function()* - If defined, this function will be called when the trial has ended.  At this point `end_trial` is set to `True`.
 
@@ -243,7 +247,7 @@ Class containing session/trial data and methods necessary to run an actor for a 
 
 `latest_reward`: *protobuf class instance* - The latest reward received.  This is also provided as argument to `on_reward()` (if defined).
 
-`latest_message`: *protobuf class instance* - The lastest message received.  This is also provided as argument to `on_message()` (if defined). The protobuf class type is specified as the `actor_classes:message:space` in `cogment.yaml`.
+`latest_message`: *protobuf class instance* - The lastest message received.  This is also provided as argument to `on_message()` (if defined).
 
 ### ```start(self)```
 
@@ -312,7 +316,7 @@ Method to send a message to the actor.
 
 Parameters:
 
-- `user_data`: *protobuf class instance* - The message to be sent.  The class is specified in `cogment.yaml` in the section `actor_classes:message:space`.
+- `user_data`: *protobuf class instance* - The message to be sent.  The class can be any protobuf class.  It is the responsibility of the actor to manage the type received.
 
 Return: None
 
@@ -355,11 +359,9 @@ Parameters:
 
 Return: None
 
-[1]: cogment-api-reference/cogment-yaml.md
+[1]: cogment/cogment-api-reference/cogment-yaml.md
 [4]: concepts/glossary.md#actor-class
 [5]: concepts/glossary.md#observation-space
 [6]: concepts/glossary.md#action-space
 [7]: concepts/glossary.md#observation
 [8]: concepts/glossary.md#action
-[9]: concepts/glossary.md#message
-[10]: concepts/glossary.md#message-space
