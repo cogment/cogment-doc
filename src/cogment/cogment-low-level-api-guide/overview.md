@@ -74,4 +74,4 @@ The observationSet class is used by the environment to send multiple observation
 
 ### Actor IDs
 
-Each actor within a trial is assigned an actor ID. actor IDs are assigned deterministically from their order of instantiation within the `cogment.yaml` file, starting from 0.
+Each actor within a trial is assigned an actor ID. Actor IDs are assigned deterministically from their order of instantiation within the `cogment.yaml` file, starting from 0.
