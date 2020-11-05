@@ -138,7 +138,7 @@ Parameters:
 - `pattern`:: *list[ID]* - The ID can be the index (*int*) of the actor in the `Trial.actors` list.  The ID can also be the name (*str*) of the actor or "env" (for the environment).  The ID can also represent a set of actors or environment by name (*str*); A set of names can be represented with the wildcard character (`*`), and takes the form of "`*`" for all actors/environment, or "`XXX.*`" where `XXX` is the class ID of actors.
 - `env`: *bool* - If True, try to match the environment (as well as actors) to the pattern.  If False, only actors will be matched.  Note that the environment has a hard coded name of "env".
 
-Return: *list[class instances]* - Returns the actors (`cogment.actor.Actor`) that match the pattern, and possibly the environment that match the pattern (`cogment.environment.Env`).
+Return: *list[class instances]* - Returns the actors (`cogment.actor.Actor`) that match the pattern, and possibly the environment that match the pattern (`cogment.environment.Environment`).
 
 ### ```add_feedback(self, to, value, confidence```
 

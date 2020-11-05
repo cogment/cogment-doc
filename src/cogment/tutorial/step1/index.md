@@ -201,7 +201,7 @@ As you've probably noticed, both the environment and agent are running on port 9
 
 This service is implemented by running a component called the **orchestrator**, which is the entry point for the system and the interface between the client and the backend. This component is provided as a docker image and is automatically added by the bootstrap process.
 
-The orchestrator needs to know where the Env and the Agent are running. Cogment uses a distributed infrastructure where components can live on different servers. This is an important concern for Human / AI Interaction training, since one may have a human user base spread out in many different locations.
+The orchestrator needs to know where the Environment and the Agent are running. Cogment uses a distributed infrastructure where components can live on different servers. This is an important concern for Human / AI Interaction training, since one may have a human user base spread out in many different locations.
 
 ```text
 $ docker-compose up orchestrator
