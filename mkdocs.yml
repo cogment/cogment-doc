@@ -29,6 +29,8 @@ nav:
           - "cogment.yaml": "cogment/cogment-api-reference/cogment-yaml.md"
           - "python": "cogment/cogment-api-reference/python.md"
           # - "javascript": "cogment/cogment-api-reference/javascript.md" # out-of-scope for ɑ
+      - "Agent Toolbox Guide":
+          - "Introduction": "cogment/cogment-agent-toolbox-guide/agent-toolbox-introduction.md"
       - "Cogment Low Level API Guide":
           - "Overview": "cogment/cogment-low-level-api-guide/overview.md"
           - "gRPC API Reference": "cogment/cogment-low-level-api-guide/grpc.md"

@@ -8,7 +8,7 @@ Please install:
 
 2. [protoc](https://github.com/protocolbuffers/protobuf)
 
-## Get the Cogment CLI
+## Get the latest Cogment CLI
 
 The latest `cogment` CLI is available [here](https://gitlab.com/cogment/cogment/-/releases) as an executable binary.
 
