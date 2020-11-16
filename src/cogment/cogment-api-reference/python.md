@@ -54,25 +54,52 @@ import cog_settings
 import cogment
 ```
 
-## cogment.Server
+## cogment.Context
 
-Class to setup and run the communication for a component.
+Class to setup and run all the different aspects of trials.
 
-### ```__init__(self, cog_project, port, prometheus_port = 8000)```
+### ```__init__(self, user_id, cog_project)```
 
 Parameters:
 
+- `user_id`: *str* - Identifier for the user of this context.
 - `cog_project`: *module* - Settings module associated with trials that will be run ([cog_settings](#cog_settings.py) namespace).
+
+### ```async serve_all_registered(self, port, prometheus_port = 8000)```
+
+Method to start and run the communication server for the registered components (environment, actor, prehook, datalog).  Returns only when all activity has stopped (i.e. current coroutine is blocked until the server is stopped).
+
+Parameters:
+
 - `port`: *int* - TCP/IP port number to listen to.
 - `prometheus_port`: *int* - TCP/IP port number for Prometheus
 
-### ```run(self)```
-
-Method to start and run the communication server for the registered components (environment, actor, prehook, datalog).
-
-Parameters: None
-
 Return : None
+
+### ```async start_trial(self, trial_config, endpoint, impl)```
+
+Method to start a new trial.  Returns only when the `impl` returns.
+
+Parameters:
+
+- `trial_config`: *protobuf class instance* - Configuration for the trial.  The type is specified in file `cogment.yaml` under the section `trial:config_type`
+- `endpoint`: *str* - URL of the Orchestrator to connect to.
+- `impl`: *async function(cogment.ControlSessionSession instance)* - Callback function to be registered.
+
+Return: None
+
+### ```async join_trial(self, trial_id, endpoint, impl_name, actor_id=-1)```
+
+Method for an actor to asynchronously join an existing trial.
+
+Parameters:
+
+- `trial_id`: *str* - The UUID of the trial to join.
+- `endpoint`: *str* - URL of the Orchestrator to connect to join the trial.
+- `impl_name`: *str* - The implementation name of the actor to join the trial.  The implementation must have previously been registered with the `register_actor` method.
+- `actor_id`: *int* - Id of the actor joining the trial. If `-1`, the actor will join as any of the configured (free) actors of the actor class registered for `impl_name`.  Otherwise, the id must match an actor with an actor_class compatible with `impl_name`.
+
+Return: None
 
 ### ```register_environment(self, impl, impl_name = "default")```
 
@@ -85,19 +112,19 @@ Parameters:
 
 Return: None
 
-### ```register_actor(self, impl, impl_name, actor_class)```
+### ```register_actor(self, impl, impl_name, actor_classes=[])```
 
 Method to register the asynchronous callback function that will run an actor for a trial.
 
 Parameters:
 
 - `impl`: *async func(cogment.ActorSession instance)* - Callback function to be registered.
-- `impl_name`: *str* - Name for the actor being run by the given callback function.
-- `actor_class`: *str* or *list[str]* - The actor class name(s) that can be run by the given callback function. The possible names are specified in file `cogment.yaml` as `id` under section `actor_classes`.  If this parameter is "*", this implementation can run any actor class.
+- `impl_name`: *str* - Name for the actor implementation being run by the given callback function.
+- `actor_classes`: *list[str]* - The actor class name(s) that can be run by the given callback function. The possible names are specified in file `cogment.yaml` as `id` under section `actor_classes`.  If the list is empty, this implementation can run any actor class.
 
 Return: None
 
-### ```register_prehook(self, impl)```
+### ```register_pre_trial_hook(self, impl)```
 
 Method to register an asynchronous callback function that will be called before a trial is started.
 
@@ -179,10 +206,9 @@ Parameters:
 
 Return: None
 
-
 ## cogment.EnvironmentSession(Session)
 
-Abstract class based on `cogment.Session`, containing session data and methods necessary to run an environment for a trial.  An instance of this class is passed as argument to the environment callback function registered with `cogment.Server.register_environment`.
+Abstract class based on `cogment.Session`, containing session data and methods necessary to run an environment for a trial.  An instance of this class is passed as argument to the environment callback function registered with `cogment.Context.register_environment`.
 
 `impl_name`: *str* - Name of the implementation running this environment.
 
@@ -232,7 +258,7 @@ Return: None
 
 ## cogment.ActorSession(Session)
 
-Abstract class based on `cogment.Session`, containing session/trial data and methods necessary to run an actor for a trial.  An instance of this class is passed as argument to the actor callback function registered with `cogment.Server.register_actor`.
+Abstract class based on `cogment.Session`, containing session/trial data and methods necessary to run an actor for a trial.  An instance of this class is passed as argument to the actor callback function registered with `cogment.Context.register_actor`.
 
 `actor_class`: *str* - Name of the class of actor this class represents.  Specified in `cogment.yaml` as `actor_classes:id`.
 
@@ -256,7 +282,7 @@ Parameters: None
 
 Return: None
 
-### ```get_observation(self)```
+### ```async get_observation(self)```
 
 Method to wait for an observation from the environment.
 
@@ -264,7 +290,7 @@ Parameters: None
 
 Return: *protobuf class instance* - The observation received.  The class is specified as the Observation Space for the actor, found in `cogment.yaml` in the corresponding section `actor_classes:observation:space`.
 
-### ```get_all_observations(self)```
+### ```async get_all_observations(self)```
 
 Generator method to iterate over all observations as they are received (waiting for each in turn).
 
@@ -274,7 +300,7 @@ Return: *generator of protobuf class instance* - A generator for the observation
 
 Return: *protobuf class instance* - The observation received.  The class is specified as the Observation Space for the actor, found in `cogment.yaml` in the corresponding section `actor_classes:observation:space`.
 
-### ```do_action(self, action)```
+### ```async do_action(self, action)```
 
 Method to send actions to the environment.
 
@@ -342,11 +368,27 @@ Parameters: None
 
 Return: *int* - The current tick id.
 
-## cogment.ClientSession(Session)
+## cogment.ControlSession
 
-Abstract class based on `cogment.Session`, containing session/trial data and methods necessary to run an actor of type `client` for a trial.  An instance of this class is returned from `cogment.Connection.start_trial` function.
+Abstract class containing trial data and methods necessary to control (and stop) a trial.  An instance of this class is passed as argument to the `cogment.Context.register_launcher` callback function parameter.
 
-### ```terminate(self)```
+### ```get_trial_id(self)```
+
+Method to get the UUID of the trial.
+
+Parameters: None
+
+Return: *str* - UUID of the trial.
+
+### ```get_actors(self)```
+
+Method to get the list of configured actors in the trial.
+
+Parameters: None
+
+Return: *list[cogment.Actor]* - List of actors configured in this trial.
+
+### ```terminate_trial(self)```
 
 Method to request the end of the trial.
 
@@ -354,48 +396,9 @@ Parameters: None
 
 Return: None
 
-## cogment.client.Connection
-
-Class to create a connection to a cogment orchestrator to start and control trials.
-
-### ```__init__(self, cog_project, endpoint)```
-
-Parameters:
-
-- `cog_project`: *module* - Settings module associated with this trial ([cog_settings](#cog_settings.py) namespace).
-- `endpoint`: *str* - URL of the Orchestrator to connect to.
-
-### ```start_trial(self, trial_config, user_id)```
-
-Method to start a new trial.
-
-Parameters:
-
-- `trial_config`: *protobuf class instance* - Configuration for the trial.  The type is specified in file `cogment.yaml` under the section `trial:config_type`
-
-- `user_id`: *str* - Identifier for the user requesting the trial start
-
-Return: *cogment.ClientSession instance* - Class representing the trial that was started.
-
-### ```join_trial(self, trial_id=None, actor_id=-1, actor_class=None, impl=None)```
-
-Method for an actor to join an existing trial.
-
-Parameters:
-
-- `trial_id`: *str* - The UUID of the trial to join.
-
-- `actor_id`: *int* - Id of the actor joining the trial.
-  
-- `actor_class`: *str* - The actor class for the actor that is joining the trial. The type is specified in file `cogment.yaml` under section `actor_classes:id`
-
-- `impl`: *async function(cogment.environment.ActorSession instance, cogment.trial.Trial instance)* - Callback function.  This function will be be called when the trial has been joined.
-
-Return: None
-
 ## cogment.PrehookSession(ABC)
 
-Abstract class containing trial configuration data and methods to define a new trial.  An instance of this class is passed as argument to the prehook callback function registered with `cogment.Server.register_prehook`.
+Abstract class containing trial configuration data and methods to define a new trial.  An instance of this class is passed as argument to the prehook callback function registered with `cogment.Context.register_pre_trial_hook`.
 
 The member data of this class should be changed as needed for the new trial.
 
@@ -431,16 +434,9 @@ Parameters: None
 
 Return: None
 
-[1]: cogment/cogment-api-reference/cogment-yaml.md
-[4]: concepts/glossary.md#actor-class
-[5]: concepts/glossary.md#observation-space
-[6]: concepts/glossary.md#action-space
-[7]: concepts/glossary.md#observation
-[8]: concepts/glossary.md#action
-
 ## cogment.DatalogSession(ABC)
 
-Abstract class containing session data and methods necessary to manage logging of trial run data.  An instance of this class is passed as argument to the datalog callback function registered with `cogment.Server.register_datalog`.
+Abstract class containing session data and methods necessary to manage logging of trial run data.  An instance of this class is passed as argument to the datalog callback function registered with `cogment.Context.register_datalog`.
 
 `trial_id`: *str* - UUID of the trial managed by this instance.
 
@@ -474,3 +470,10 @@ Parameters: None
 
 Return: *generator of class instance* - A generator for the samples received.
 
+
+[1]: cogment/cogment-api-reference/cogment-yaml.md
+[4]: concepts/glossary.md#actor-class
+[5]: concepts/glossary.md#observation-space
+[6]: concepts/glossary.md#action-space
+[7]: concepts/glossary.md#observation
+[8]: concepts/glossary.md#action
