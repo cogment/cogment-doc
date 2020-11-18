@@ -54,7 +54,7 @@ import cog_settings
 import cogment
 ```
 
-## cogment.Context
+## class cogment.Context
 
 Class to setup and run all the different aspects of trials.
 
@@ -84,7 +84,7 @@ Parameters:
 
 - `trial_config`: *protobuf class instance* - Configuration for the trial.  The type is specified in file `cogment.yaml` under the section `trial:config_type`
 - `endpoint`: *str* - URL of the Orchestrator to connect to.
-- `impl`: *async function(cogment.ControlSessionSession instance)* - Callback function to be registered.
+- `impl`: *async function(ControlSessionSession instance)* - Callback function to be registered.
 
 Return: None
 
@@ -107,7 +107,7 @@ Method to register the asynchronous callback function that will run an environme
 
 Parameters:
 
-- `impl`: *async function(cogment.EnvironmentSession instance)* - Callback function to be registered.
+- `impl`: *async function(EnvironmentSession instance)* - Callback function to be registered.
 - `impl_name`: *str* - Name for the environment being run by the given callback function.
 
 Return: None
@@ -118,7 +118,7 @@ Method to register the asynchronous callback function that will run an actor for
 
 Parameters:
 
-- `impl`: *async func(cogment.ActorSession instance)* - Callback function to be registered.
+- `impl`: *async func(ActorSession instance)* - Callback function to be registered.
 - `impl_name`: *str* - Name for the actor implementation being run by the given callback function.
 - `actor_classes`: *list[str]* - The actor class name(s) that can be run by the given callback function. The possible names are specified in file `cogment.yaml` as `id` under section `actor_classes`.  If the list is empty, this implementation can run any actor class.
 
@@ -130,7 +130,7 @@ Method to register an asynchronous callback function that will be called before 
 
 Parameters:
 
-- `impl`: *async func(SimpleNamespace instance)* - Callback function to be registered
+- `impl`: *async func(PrehookSession instance)* - Callback function to be registered
 
 Return: None
 
@@ -140,11 +140,11 @@ Method to register an asynchronous callback function that will be called for eac
 
 Parameters:
 
-- `impl`: *async func(cogment.DatalogSession instance)* - Callback function to be registered
+- `impl`: *async func(DatalogSession instance)* - Callback function to be registered
 
 Return: None
 
-## cogment.Session
+## class Session
 
 Abstract class containing data and methods common to all sessions that manage aspects of a trial.
 
@@ -178,7 +178,7 @@ Method to get the list of active actors in the trial.
 
 Parameters: None
 
-Return: *list[cogment.Actor]* - List of active actors involved in this trial.
+Return: *list[SimpleNamespace(actor_name, actor_class)]* - List of active actors' names and class involved in this trial.
 
 ### ```add_feedback(self, value, confidence, to, tick_id=-1, user_data= None)```
 
@@ -206,15 +206,15 @@ Parameters:
 
 Return: None
 
-## cogment.EnvironmentSession(Session)
+## class EnvironmentSession(Session)
 
-Abstract class based on `cogment.Session`, containing session data and methods necessary to run an environment for a trial.  An instance of this class is passed as argument to the environment callback function registered with `cogment.Context.register_environment`.
+Abstract class based on `Session`, containing session data and methods necessary to run an environment for a trial.  An instance of this class is passed as argument to the environment callback function registered with `cogment.Context.register_environment`.
 
 `impl_name`: *str* - Name of the implementation running this environment.
 
 `on_actions`: *function(list[action])* - If defined, this function will be called for every set of action that is received.  The actions received by the function are the classes defined as action spaces for the actors in `cogment.yaml`.  This should not be defined if using `gather_actions()`.
 
-`on_message`: *function(int, protobuf class instance)* - If defined, this function will be called when a new message arrives. The class is of the type sent by the originator.  It is the responsibility of the environment to manage the type received.
+`on_message`: *function(int, protobuf class instance)* - If defined, this function will be called when a new message arrives. The class received by the function is of the type sent by the originator.  It is the responsibility of the environment to manage the type received.
 
 `on_trial_over`: *function()* - If defined, this function will be called when the end of the trial has been requested.  This should be defined to respond to an external request to end the trial (so that the `end()` method can be called).
 
@@ -256,9 +256,9 @@ Parameters:
 
 Return: None
 
-## cogment.ActorSession(Session)
+## class ActorSession(Session)
 
-Abstract class based on `cogment.Session`, containing session/trial data and methods necessary to run an actor for a trial.  An instance of this class is passed as argument to the actor callback function registered with `cogment.Context.register_actor`.
+Abstract class based on `Session`, containing session/trial data and methods necessary to run an actor for a trial.  An instance of this class is passed as argument to the actor callback function registered with `cogment.Context.register_actor`.
 
 `actor_class`: *str* - Name of the class of actor this class represents.  Specified in `cogment.yaml` as `actor_classes:id`.
 
@@ -268,7 +268,7 @@ Abstract class based on `cogment.Session`, containing session/trial data and met
 
 `on_observation`: *function(protobuf class instance)* - If defined, this function will be called when an observation is received.  The observation received is of the class defined as observation space for the appropriate actor class specified in section `actor_classes:observation:space` in `cogment.yaml` for the appropriate actor class.
 
-`on_reward`: *function(protobuf class instance)* - If defined, this function will be called when a reward is received.  The reward received is of the type `cogment.Reward`.
+`on_reward`: *function(Reward instance)* - If defined, this function will be called when a reward is received.  The reward received is of the type `Reward`.
 
 `on_message`: *function(int, protobuf class instance)* - If defined, this function will be called when a new message arrives. The class is of the type sent by the originator.  It is the responsibility of the actor to manage the type received.
 
@@ -298,8 +298,6 @@ Parameters: None
 
 Return: *generator of protobuf class instance* - A generator for the observations received.  The protobuf class is specified as the Observation Space for the actor, found in `cogment.yaml` in the corresponding section `actor_classes:observation:space`.
 
-Return: *protobuf class instance* - The observation received.  The class is specified as the Observation Space for the actor, found in `cogment.yaml` in the corresponding section `actor_classes:observation:space`.
-
 ### ```async do_action(self, action)```
 
 Method to send actions to the environment.
@@ -320,7 +318,7 @@ Parameters:
 - `confidence`: *float* - Weight this feedback has relative to other feedbacks.
 - `to`: *list[actor_ID]* - Target of feedback.  The actor_ID can be the index (*int*) of the actor in the `Trial.actors` list.  The actor_ID can also be the name (*str*) of the actor.  The actor_ID can also represent a set of actors (*str*); A set of actors can be represented with the wildcard character (`*`) for all actors (of all classes), or "`actor_class.*`" for all actors of a specific class (the `actor_class` is the name of the class as specified in `cogment.yaml`).
 - `tick_id`: *int* - The tick id (time step) for which the feedback should be applied.  If `-1`, the feedback is applied to the current time step.
-- `user_data`: *protobuf class instance* - Specific information for the target actor.  The class can be any protobuf class.  It is the responsibility of the receiving actor to manage the type received.
+- `user_data`: *protobuf class instance* - Specific information for the target actor.  The class can be any protobuf class.  It will be serialised to a byte string, and it becomes the responsibility of the receiving actor to manage the type received (see [Reward](#class-Reward))
 
 Return: None
 
@@ -368,7 +366,7 @@ Parameters: None
 
 Return: *int* - The current tick id.
 
-## cogment.ControlSession
+## class ControlSession
 
 Abstract class containing trial data and methods necessary to control (and stop) a trial.  An instance of this class is passed as argument to the `cogment.Context.register_launcher` callback function parameter.
 
@@ -386,7 +384,7 @@ Method to get the list of configured actors in the trial.
 
 Parameters: None
 
-Return: *list[cogment.Actor]* - List of actors configured in this trial.
+Return: *list[SimpleNamespace(actor_name, actor_class)]* - List of actors' names and class configured in this trial.
 
 ### ```terminate_trial(self)```
 
@@ -396,7 +394,7 @@ Parameters: None
 
 Return: None
 
-## cogment.PrehookSession(ABC)
+## class PrehookSession
 
 Abstract class containing trial configuration data and methods to define a new trial.  An instance of this class is passed as argument to the prehook callback function registered with `cogment.Context.register_pre_trial_hook`.
 
@@ -434,13 +432,13 @@ Parameters: None
 
 Return: None
 
-## cogment.DatalogSession(ABC)
+## class DatalogSession
 
 Abstract class containing session data and methods necessary to manage logging of trial run data.  An instance of this class is passed as argument to the datalog callback function registered with `cogment.Context.register_datalog`.
 
 `trial_id`: *str* - UUID of the trial managed by this instance.
 
-`trial_params`: *cogment.PrehookSession instance* - Parameters of the the trial.
+`trial_params`: *PrehookSession instance* - Parameters of the the trial.
 
 `on_sample`: *function(class instance)* - If defined, this function will be called when a sample is received.
 
@@ -469,6 +467,24 @@ Generator method to iterate over all samples as they are received (waiting for e
 Parameters: None
 
 Return: *generator of class instance* - A generator for the samples received.
+
+## class Reward
+
+Class containing the details of a received reward.
+
+`tick_id`: *int* - The tick id (time step) for which the reward should be applied.
+
+`value`: *float* - Value of the reward
+
+`confidence`: *float* - Weight the reward has relative to other rewards.
+
+### ```all_user_data(self)```
+
+Generator method to iterate over all user_data making up this reward.
+
+Parameters: None
+
+Return: *generator(byte strings)* - A generator for the user_data in the reward (from individual feedbacks that make up the reward).  The user_data is a serialization of a protobuf class sent by the originator, and it is the responsibility of the receiving actor to decode it (i.e. to know what class is supposed to be received).
 
 
 [1]: cogment/cogment-api-reference/cogment-yaml.md
