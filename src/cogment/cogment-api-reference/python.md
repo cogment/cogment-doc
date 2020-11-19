@@ -90,7 +90,7 @@ Return: None
 
 ### ```async join_trial(self, trial_id, endpoint, impl_name, actor_id=-1)```
 
-Method for an actor to asynchronously join an existing trial.
+Method for an actor to asynchronously join an existing trial.  Returns only when the implementation of `impl_name` returns.
 
 Parameters:
 

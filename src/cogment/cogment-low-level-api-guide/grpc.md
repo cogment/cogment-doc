@@ -221,11 +221,11 @@ If a project has multiple replicas of an actor served by the same agent service,
 | name      | type             | description                |
 |-----------|------------------|----------------------------|
 
-### Decide
+### Update
 
 Request a decision
 
-**Argument:** `AgentDecideRequest`
+**Argument:** `AgentUpdateRequest`
 
 | name      | type           | description                |
 |-----------|----------------|----------------------------|
@@ -235,7 +235,7 @@ Request a decision
 
 If the actor class employs an observation delta, then `observation` may be either a snapshot or a delta, and both cases should be handled at all times. Any perceived pattern should be considered coincidental. For example: a snapshot followed by nothing but deltas for the rest of a trial may be a very *common* occurence, but it should not be *relied* upon.
 
-**Returns:** `AgentDecideReply`
+**Returns:** `AgentActionReply`
 
 | name      | type                 | description                |
 |-----------|----------------------|----------------------------|
@@ -268,11 +268,11 @@ N.B. For the moment, cogment only sends live reward data for the latest tick.
 
 **Returns:** `AgentRewardReply`
 
-### OnMessage
+### Message
 
 Provide message information
 
-**Argument:** `AgentOnMessageRequest`
+**Argument:** `AgentMessageRequest`
 
 | name      | type           | description                |
 |-----------|----------------|----------------------------|
@@ -287,7 +287,7 @@ Provide message information
 |-----------|----------------|----------------------------|
 | messages   | repeated Message     | Individual messages |
 
-**Returns:** `AgentOnMessageReply`
+**Returns:** `AgentMessageReply`
 
 
 ### Version
@@ -380,11 +380,11 @@ Provides actions for all actors within a trial, and expects an updated observati
 | end_tril  | bool  | End trial indicator  |
 | messages  | repeated Message  | Message for actors or environment |
 
-### `OnMessage`
+### `Message`
 
 Provide message information.
 
-**Argument:** `EnvOnMessageRequest`
+**Argument:** `EnvMessageRequest`
 
 | name      | type             | description                |
 |-----------|------------------|----------------------------|
@@ -392,7 +392,7 @@ Provide message information.
 | actor_id  | int32         | actor id  |
 | messages  | Message         | messages  |
 
-**Returns:** `EnvOnMessageReply`
+**Returns:** `EnvMessageReply`
 
 | name      | type             | description                |
 |-----------|------------------|----------------------------|

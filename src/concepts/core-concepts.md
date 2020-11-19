@@ -55,7 +55,7 @@ The environment service is responsible for creating and updating environments fo
 
 **Start**: Announce that an agent is requested for a trial.
 
-**Decide**: Given an observation, choose an action.
+**Update**: Given an observation, choose an action.
 
 **Reward**: Be notified about reward information associated with a previous decision.
 

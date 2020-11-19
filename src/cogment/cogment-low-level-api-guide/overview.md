@@ -24,9 +24,9 @@ The low-level API is fully described within the gRPC service definitions found i
 
 - `Start()` is called when a trial starts.
 - `End()` is called when a trial ends.
-- `Decide()` is called to request an action from the agent, given an observation.
+- `Update()` is called to request an action from the agent, given an observation.
 - `Reward()` is called to inform the agent of received feedback.
-- `OnMessage()` is called to inform the agent of received messages.
+- `Message()` is called to inform the agent of received messages.
 
 ### Environment Service
 
@@ -35,7 +35,7 @@ The low-level API is fully described within the gRPC service definitions found i
 - `Start()` is called when a trial starts.
 - `End()` is called when a trial ends.
 - `Update()` is called to request an updated set of observations based on fresh actions.
-- `OnMessage()` is called to inform the environment of received messages.
+- `Message()` is called to inform the environment of received messages.
 
 ### Frontend API
 
