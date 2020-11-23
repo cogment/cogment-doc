@@ -9,7 +9,7 @@ The basic requiremetns is Python 3.7.
 
 ## General usage
 
-### The cogment.yaml file
+### cogment.yaml
 
 The [cogment.yaml][1] file (including imported files) defines the high level API.
 
@@ -17,7 +17,9 @@ For example, an [actor class][4] is defined by its required [observation space][
 
 These "spaces" are defined by using protobuf message types (from the imported files). [Observations][7] and [actions][8] will simply be instances of the appropriate type.
 
-Messages don't have a set type, they can be any type as long as the receiver can manage that type (i.e. the type of the object received should be checked against known types before handling).  The type is determined by the originator of the message.
+Messages and feedback user data don't have a set type, they can be any type as long as the receiver can manage that type (i.e. the type of the object received should be checked against known types before handling).  The type is determined by the originator of the message.
+
+The `trial_params` section represents default valuesut can be dynamically changed for each trial with pre-trial hooks.  Therefore, below, when this section of the `cogment.yaml` file is refered, we mean the final parameters after any pre-trial hooks.
 
 #### Compiling the cogment.yaml
 
@@ -88,7 +90,7 @@ Parameters:
 
 Return: None
 
-### ```async join_trial(self, trial_id, endpoint, impl_name, actor_id=-1)```
+### ```async join_trial(self, trial_id, endpoint, impl_name, actor_name=None)```
 
 Method for an actor to asynchronously join an existing trial.  Returns only when the implementation of `impl_name` returns.
 
@@ -97,7 +99,7 @@ Parameters:
 - `trial_id`: *str* - The UUID of the trial to join.
 - `endpoint`: *str* - URL of the Orchestrator to connect to join the trial.
 - `impl_name`: *str* - The implementation name of the actor to join the trial.  The implementation must have previously been registered with the `register_actor` method.
-- `actor_id`: *int* - Id of the actor joining the trial. If `-1`, the actor will join as any of the configured (free) actors of the actor class registered for `impl_name`.  Otherwise, the id must match an actor with an actor_class compatible with `impl_name`.
+- `actor_namer`: *str* - Name of the actor joining the trial. If `None`, the actor will join as any of the configured (free) actors of the actor class registered for `impl_name`.  Otherwise, the name must match an actor with an actor_class compatible with `impl_name` as defined in `cogment.yaml` in the sections `trial_params:actors:actor_class` and `trial_params:actors:name`.
 
 Return: None
 
@@ -188,7 +190,7 @@ Parameters:
 
 - `value`: *float* - Value of the feedback
 - `confidence`: *float* - Weight this feedback has relative to other feedbacks.
-- `to`: *list[actor_ID]* - Target of feedback.  The actor_ID can be the index (*int*) of the actor in the `Trial.actors` list.  The actor_ID can also be the name (*str*) of the actor.  The actor_ID can also represent a set of actors (*str*); A set of actors can be represented with the wildcard character (`*`) for all actors (of all classes), or "`actor_class.*`" for all actors of a specific class (the `actor_class` is the name of the class as specified in `cogment.yaml`).
+- `to`: *list[str]* - Targets of feedback.  A list value could be the name of an actor in the trial.  Or it could represent a set of actors; A set of actors can be represented with the wildcard character "`*`" for all actors (of all classes), or "`actor_class.*`" for all actors of a specific class (the `actor_class` is the name of the class as specified in `cogment.yaml`).
 - `tick_id`: *int* - The tick id (time step) for which the feedback should be applied.  If `-1`, the feedback is applied to the current time step.
 - `user_data`: *protobuf class instance* - Specific information for the target actor.  The class can be any protobuf class.  It is the responsibility of the receiving actor to manage the type received.
 
@@ -201,7 +203,7 @@ Method to send a message to one or more actors/environment.
 Parameters:
 
 - `user_data`: *protobuf class instance* - The message to be sent. The class can be any protobuf class.  It is the responsibility of the receiving actor or environment to manage the type received.
-- `to`: *list[actor_ID]* - Target of message.  The actor_ID can be the index (*int*) of the actor in the `Trial.actors` list.  The actor_ID can also be the name (*str*) of the actor.  The actor_ID can also represent a set of actors (*str*); A set of actors can be represented with the wildcard character (`*`) for all actors (of all classes), or "`actor_class.*`" for all actors of a specific class (the `actor_class` is the name of the class as specified in `cogment.yaml`).
+- `to`: *list[str]* - Targets of feedback.  A list value could be the name of an actor in the trial.  Or it could represent a set of actors; A set of actors can be represented with the wildcard character "`*`" for all actors (of all classes), or "`actor_class.*`" for all actors of a specific class (the `actor_class` is the name of the class as specified in `cogment.yaml`).
 - `to_environment`: *bool* - If True, the message is also sent to the environment, otherwise the message is only sent to the actors specified.
 
 Return: None
@@ -214,7 +216,7 @@ Abstract class based on `Session`, containing session data and methods necessary
 
 `on_actions`: *function(list[action])* - If defined, this function will be called for every set of action that is received.  The actions received by the function are the classes defined as action spaces for the actors in `cogment.yaml`.  This function should not be defined if using `self.gather_actions()`.
 
-`on_message`: *function(int, protobuf class instance)* - If defined, this function will be called when a new message arrives. The class received by the function is of the type sent by the originator.  It is the responsibility of the environment to manage the type received.
+`on_message`: *function(str, protobuf class instance)* - If defined, this function will be called when a new message arrives. The string received by the function is the name of the originator.  The class received by the function is of the type sent by the originator; It is the responsibility of the environment to manage the type received.
 
 `on_end_request`: *function(list[action]) -> list[tuple(str, protobuf class instance)]* - If defined, this function will be called when the end of the trial has been requested.  This should be defined to respond to an external request to end the trial properly.  The parameter of the function is the same as what is received by `self.on_actions`.  The return value is the same as the parameter of `self.produce_observations`.
 
@@ -270,7 +272,7 @@ Abstract class based on `Session`, containing session/trial data and methods nec
 
 `on_reward`: *function(Reward instance)* - If defined, this function will be called when a reward is received.  The reward received is of the type `Reward`.
 
-`on_message`: *function(int, protobuf class instance)* - If defined, this function will be called when a new message arrives. The class is of the type sent by the originator.  It is the responsibility of the actor to manage the type received.
+`on_message`: *function(str, protobuf class instance)* - If defined, this function will be called when a new message arrives. The string received by the function is the name of the originator.  The class received by the function is of the type sent by the originator; It is the responsibility of the environment to manage the type received.
 
 `on_trial_over`: *function(SimpleNamespace(observations, rewards, messages))* - If defined, this function will be called when the trial has ended.  The `observations` is a list of protobuf class instances (see `self.get_observation` for detail).  The `rewards` is a list of `Reward` class instances.  The `messages` is a list of protobuf class instances.
 
