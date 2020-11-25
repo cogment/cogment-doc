@@ -214,6 +214,8 @@ Abstract class based on `Session`, containing session data and methods necessary
 
 `impl_name`: *str* - Name of the implementation running this environment.
 
+`config`: *protobuf class instance* - User configuration received for this environment instance.  Can be `None` is no configuration was provided.  The type of the protobuf class is specified in `cogment.yaml` in section `environment:config_type`.
+
 `on_actions`: *function(list[action])* - If defined, this function will be called for every set of action that is received.  The actions received by the function are the classes defined as action spaces for the actors in `cogment.yaml`.  This function should not be defined if using `self.gather_actions()`.
 
 `on_message`: *function(str, protobuf class instance)* - If defined, this function will be called when a new message arrives. The string received by the function is the name of the originator.  The class received by the function is of the type sent by the originator; It is the responsibility of the environment to manage the type received.
@@ -265,6 +267,8 @@ Abstract class based on `Session`, containing session/trial data and methods nec
 `actor_class`: *str* - Name of the class of actor this class represents.  Specified in `cogment.yaml` as `actor_classes:id`.
 
 `impl_name`: *str* - Name of the implementation of the actor represented by this class.
+
+`config`: *protobuf class instance* - User configuration received for this actor instance.  Can be `None` is no configuration was provided.  The type of the protobuf class is specified in `cogment.yaml` in section `actor_classes:config_type`.
 
 `name`: *str* - Name of the actor this classs represents.
 
