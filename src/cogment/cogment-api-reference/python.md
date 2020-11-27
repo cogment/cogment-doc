@@ -214,13 +214,7 @@ Abstract class based on `Session`, containing session data and methods necessary
 
 `impl_name`: *str* - Name of the implementation running this environment.
 
-`config`: *protobuf class instance* - User configuration received for this environment instance.  Can be `None` is no configuration was provided.  The type of the protobuf class is specified in `cogment.yaml` in section `environment:config_type`.
-
-`on_actions`: *function(list[action])* - If defined, this function will be called for every set of action that is received.  The actions received by the function are the classes defined as action spaces for the actors in `cogment.yaml`.  This function should not be defined if using `self.gather_actions()`.
-
-`on_message`: *function(str, protobuf class instance)* - If defined, this function will be called when a new message arrives. The string received by the function is the name of the originator.  The class received by the function is of the type sent by the originator; It is the responsibility of the environment to manage the type received.
-
-`on_end_request`: *function(list[action]) -> list[tuple(str, protobuf class instance)]* - If defined, this function will be called when the end of the trial has been requested.  This should be defined to respond to an external request to end the trial properly.  The parameter of the function is the same as what is received by `self.on_actions`.  The return value is the same as the parameter of `self.produce_observations`.
+`config`: *protobuf class instance* - User configuration received for this environment instance.  Can be `None` if no configuration was provided.  The type of the protobuf class is specified in `cogment.yaml` in section `environment:config_type`.
 
 ### ```start(self, observations)```
 
@@ -232,13 +226,19 @@ Parameters:
 
 Return: None
 
-### ```async gather_actions(self)```
+### ```async event_loop(self)```
 
-Method to wait for a set of actions from the actors.  This should not be called if `self.on_actions` is defined.
+Generator method to iterate over all events (actions, messages) as they are received.  This will block and wait for an event.
 
 Parameters: None
 
-Return: *list[action]* - The actions of the actors.  This is the same as the parameter to `self.on_actions`.
+Return: *generator of dict* - A generator for the events that arrive.  The dictionary may contain any of the following:
+
+- "actions" : *list[action]* - The actions from the actors in the trial. The class of each action is defined as action space for each actor in `cogment.yaml`.  The list is in the same order (and same length) as the list of actors returned by `Session.get_active_actors`.  The `self.produce_observation` method should be used to "reply" when receiving this data.
+  
+- "final_actions" : *list[action]* - The final set of actions at the end of a trial (i.e. no more actions will be coming after this event).  This is received when a trial termination has been externally requested (e.g. `ControlSession.terminate_trial` method is called).  The actions received are the same as for "actions" above.  The `self.end` method must be called after receiving this event to cleanly end a trial.
+
+- "message" :  *tuple(str, google.protobuf.Any instance)* - Data for a received message. The string in the tuple is the name of the sender.  The class is of the type set by the sender; It is the responsibility of the environment to manage the data received (i.e. determine the type and unpack the data).
 
 ### ```produce_observations(self, observations)```
 
@@ -246,13 +246,13 @@ Method to send observations to actors.
 
 Parameters:
 
-- `observations`: *list[tuple(str, protobuc class instance)]* - The observations to send to actors.  The string in the tuple is the name of the destination actor (or "*" for all actors).  The name of the actors can be found in `cogment.yaml` under `trial_params:actors:name`.  The protobuf class is Observation Space for that actor, found in `cogment.yaml` in the corresponding section `actor_classes:observation:space`.
+- `observations`: *list[tuple(str, protobuf class instance)]* - The observations to send to actors.  The string in the tuple is the name of the destination actor (or "*" for all actors).  The name of the actors can be found in `cogment.yaml` under `trial_params:actors:name`.  The protobuf class is Observation Space for that actor, found in `cogment.yaml` in the corresponding section `actor_classes:observation:space`.
 
 Return: None
 
 ### ```end(self, final_observations)```
 
-Method to report the end of the environment.  This method should always be called to finalize a trial properly.  It should not be called if `self.on_end_request` was called.
+Method to report the end of the environment.  This method must be called to finalize a trial properly, either in response to a "final_actions" event received (i.e. a terminate trial request), or because the environment is stopping for other reasons (e.g. end of the simulation).
 
 Parameters:
 
@@ -272,14 +272,6 @@ Abstract class based on `Session`, containing session/trial data and methods nec
 
 `name`: *str* - Name of the actor this classs represents.
 
-`on_observation`: *function(protobuf class instance)* - If defined, this function will be called when an observation is received.  The observation received is of the class defined as observation space for the appropriate actor class specified in section `actor_classes:observation:space` in `cogment.yaml` for the appropriate actor class.
-
-`on_reward`: *function(Reward instance)* - If defined, this function will be called when a reward is received.  The reward received is of the type `Reward`.
-
-`on_message`: *function(str, protobuf class instance)* - If defined, this function will be called when a new message arrives. The string received by the function is the name of the originator.  The class received by the function is of the type sent by the originator; It is the responsibility of the environment to manage the type received.
-
-`on_trial_over`: *function(SimpleNamespace(observations, rewards, messages))* - If defined, this function will be called when the trial has ended.  The `observations` is a list of protobuf class instances (see `self.get_observation` for detail).  The `rewards` is a list of `Reward` class instances.  The `messages` is a list of protobuf class instances.
-
 ### ```start(self)```
 
 Method to start the actor.
@@ -288,29 +280,29 @@ Parameters: None
 
 Return: None
 
-### ```async get_observation(self)```
+### ```async event_loop(self)```
 
-Method to wait for an observation from the environment.
-
-Parameters: None
-
-Return: *protobuf class instance* - The observation received.  The class is specified as the Observation Space for the actor, found in `cogment.yaml` in the corresponding section `actor_classes:observation:space`.
-
-### ```async get_all_observations(self)```
-
-Generator method to iterate over all observations as they are received (waiting for each in turn).
+Generator method to iterate over all events (actions, rewards, messages) as they are received.  This will block and wait for an event.
 
 Parameters: None
 
-Return: *generator of protobuf class instance* - A generator for the observations received.  The protobuf class is specified as the Observation Space for the actor, found in `cogment.yaml` in the corresponding section `actor_classes:observation:space`.
+Return: *generator of dict* - A generator for the events that arrive.  The dictionary may contain any of the following:
 
-### ```async do_action(self, action)```
+- "observation" : *protobuf class instance* - Observation received from the environment.  The class of the observation is defined as observation space for the actor class.  This is specified in section `actor_classes:observation:space` in `cogment.yaml` for the appropriate/receiving actor class.  The `self.do_action` method should be used to "reply" when receiving this data.
+
+- "reward" : *Reward instance* - Reward received.  The reward received is of the type `Reward`.
+
+- "message" :  *tuple(str, google.protobuf.Any instance)* - Data for a received message. The string in the tuple is the name of the sender.  The class is of the type set by the sender; It is the responsibility of the environment to manage the data received (i.e. determine the type and unpack the data).
+
+- "final_data" : *SimpleNamespace(observations, rewards, messages)* - The final set of data at the end of a trial.  `observations` is a list of observations as described above.  `rewards` is a list of rewards as described above.  `messages` is a list of message tuples as described above.  No actions can be sent after receiving this data (i.e. do not call `self.do_action`).
+
+### ```do_action(self, action)```
 
 Method to send actions to the environment.
 
 Parameters:
 
-- `action`: *protobuf class instance* - An instance of the action space class specified in corresponding section `actor_classes:action:space` of the `cogment.yaml` file.
+- `action`: *protobuf class instance* - An instance of the action space class specified in the corresponding section `actor_classes:action:space` of the `cogment.yaml` file.
 
 Return: None
 
@@ -433,7 +425,6 @@ Generator method to iterate over all user_data making up this reward.
 Parameters: None
 
 Return: *generator(byte strings)* - A generator for the user_data in the reward (from individual feedbacks that make up the reward).  The user_data is a serialization of a protobuf class sent by the originator, and it is the responsibility of the receiving actor to decode it (i.e. to know what class is supposed to be received).
-
 
 [1]: cogment/cogment-api-reference/cogment-yaml.md
 [4]: concepts/glossary.md#actor-class
