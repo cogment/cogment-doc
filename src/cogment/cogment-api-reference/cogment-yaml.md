@@ -1,17 +1,36 @@
 # Cogment.yaml
 
-At the heart of every cogment project is a `cogment.yaml` file. This file is used by the cogment cli tool to configure the language specific SDK, as well as the orchestrator to initialize the runtime environment.
+At the heart of every cogment project is a `cogment.yaml` file. This file is used by the cogment cli tool to configure the language specific SDK, as well as the orchestrator to initialize the runtime environment. {TO_REVIEW}
 
-## Import Section
+The top level sections in the file are:
 
-The import section is used to specify external data structures, and optionally code, that is referenced in other parts of the cogment.yaml.
+- [import](#Import): Used to import other files into the defintion of the project
+- [commands](#Commands): Defines commands that can be run by the Cogment CLI
+- [trial](#Trial): Define trial speficic properties
+- [environment](#Environment): Define environment specific properties
+- [actor_classes](#Actor-Classes): Define actor specific properties (for each actor class)
+- [trial_params](#Trial-Params): Defines the default parameters to run a trial
 
-Currently, almost all cogment projects will need at least one `proto` import, and python and/or javascript imports will be needed if you make use of delta encodings.
+## Import
+
+The import section is used to specify external data structures, and optionally code, that is referenced in other parts of the `cogment.yaml` file.  The import sections are:
+
+- `proto`: List of protobuf definition files.  Message types defined in these files are used to communicate between the various components
+- `protoAlias`: {TO_REVIEW}
+- `python`: List of Python modules
+- `javascript`: List of Javascript files
+
+All cogment projects will need at least one `proto` import to define the data structures exchanged between the various components.  Python and/or javascript imports will be needed if you make use of delta encodings.
+
+E.g.:
 
 ```yaml
 import:
   proto:
-    - filename.proto
+    - filename1.proto
+    - filename2.proto
+  protoAlias:
+    - somealias {TO_REVIEW}
   python:
     - module_name
   javascript:
@@ -21,79 +40,135 @@ import:
 **N.B.**
 When using message types imported from a `.proto` file, types need to be referred through their *package* namespace, not the filename containing them.
 
-## Environment Section
+## Commands
 
-This section section defines properties related to the environment and its service application.
+This section is optional and defines a dictionary of commands that can then be executed using the Cogment CLI `run` command.  The commands will be executed by a sub-shell and thus can be any shell command.  The commands can also recursively call Cogment, either builtin CLI or other commands defined here.  But care should be taken not to create infinite recursive calls.
 
-It has the following properties:
+E.g.:
 
-- url [**required**]: The url at which the orchestrator will look for the environment service
-- config [**optional**]: The proto message type used to configure the environment.
+```yaml
+commands:
+  generate: cogment generate --python_dir=.
+  start: docker-compose up orchestrator agent env
+  play: cogment run start && docker-compose run launcher
+```
+
+To run one of these commands, the Cogment CLI command `run` must be used, e.g.: `cogment run start`.  And as such there is no problem differentiating between `cogment run generate` and `cogment generate` (the latter is the builtin CLI command, and the former is the command defined in the `cogment.yaml` file).
+
+## Trial
+
+This section defines properties related to the trial and trial management.  It has the properties:
+
+- `config_type`: The protobuf message type (data structure) that will be passed on to the pre-trial hooks
+- `pre_hooks`: List of functions that will be called before the start of a trial.  These functions receive the default parameters and can change them for the upcoming trial {TO_REVIEW}
+
+E.g.:
+
+```yaml
+trial:
+  config_type: namespace.DataType
+  pre_hooks:
+    - namespace.Function1
+    - namespace.Function2
+```
+
+## Environment
+
+This section defines properties related to the environment. It has the properties:
+
+- `config_type`: The protobuf message type used to configure the environment
 
 ```yaml
 environment:
-  url: url.example.com
-  config: namespace.DataType
+  config_type: namespace.DataType
 ```
 
-## Datalog Section
+## Actor Classes
 
-This **optional** section configures how the orchestrator will keep records of the trials it manages:
+Arguably the most important section of the `cogment.yaml` file, the actor classes section describes the actor types that can be present in the project's trials.
 
-If present, it has the following properties:
+The content of this section is a list of actor classes, each containing the necessary properties to define an actor class.  These properties are:
 
-- type [**required**]: currently, must be `raw`
-- file [**required**]: The path at which to store the datalog
-- fields [**optional**]:
-  - exclude [**optional**]: List of fields to exclude from the datalog.
+- `id`: The name by which this actor class is known
+- `action`: Dictionary of properties
+  - `space`: The protobuf message type that represents all the possible actions that this actor class can perform (its action space)
+- `observation`: Dictionary of properties
+  - `space`: The protobuf message type that represents a snapshot of the data that this actor class has access to (its observation space)
+  - `delta`: The protobuf message type that represents the difference between two observation spaces (snapshots)
+  - `delta_apply_fn`: Dictionary of exclusive options for a function to combine an observation space and a delta, into a new observation space {TO_REVIEW}
+    - `python`: The function defined in python
+    - `javascript`: The function defined in Javascript
+- `config_type`: Defines the protobuf message type used to configure this actor class
 
-```yaml
-datalog:
-  type: raw
-  file: /app/datalog.bin
-  fields:
-    exclude:
-      - pkg.message.fieldname
-```
-
-## Actors Section
-
-Arguably the most important section of the `cogment.yaml` file, the actors section describes the actors that are present in the project's trials.
-
-The actors section itself is an object of which each property refers to a distinc actor class.
-
-Each actor class should define both an observation and action space as protocol buffer message types, as well as a list of instances. The sum of the count of an actor class' instances will be the total number of actors of the class within each trial.
-
-Actor classes may also optionally define a delta encoding for observations.
+Each actor class should define both an observation and action space as protobuf message types.
 
 ```yaml
-actors:
-  actor_class_a:
-    observation:
-      space: pkg.msg_type
-
+actor_classes:
+  - id: BigPlayer
     action:
-      space: pkh.msg_type
-
-    instances:
-      - type: agent
-        url: agent:9000
-        count: 1
-
-  actor_class_b:
+      space: namespace.PlayerAction
     observation:
-      space: pkg.msg_type
-      delta: pkg.msg_type_2
+      space: namespace.PlayerObservation
+      delta: namespace.PlayerDeltaObservation
       delta_apply_fn:
-        python: module.fn
-        javascript: module.fn
-    action:
-      space: pkh.msg_type
+        python: module_name.PlayerDeltaProcessingFn
+    config_type: namespace.PlayerConfig
 
-    instances:
-      - type: human
-        count: 1
-      - type: agent
-        url: agent_2:9000
-        count: 3
+  - id: SmallPlayer
+    action:
+      space: namespace.PlayerAction
+    observation:
+      space: namespace.PlayerObservation
+      delta: namespace.PlayerDeltaObservation
+      delta_apply_fn:
+        python: module_name.PlayerDeltaProcessingFn
+    config_type: namespace.PlayerConfig
+
+  - id: Referee
+    action:
+      space: namespace.RefereeAction
+    observation:
+      space: namespace.RefereeObservation
+      delta: namespace.RefereeDeltaObservation
+      delta_apply_fn:
+        python: module_name.RefereeDeltaProcessingFn
+    config_type: namespace.RefereeConfig
+```
+
+## Trial Params
+
+This section defines the different parameters that can be adjusted by pre-trial hooks for each trial.  It also defines the default values for these parameters.  These parameters are:
+
+- `environment`: Dictionary of properties
+  - `endpoint`: The URL where the environment gRPC server resides
+  - `config`: Dictionary of properties to match the definition of config_type for the environment {TO_REVIEW}
+- `actors`: Dictionary of properties
+  - `actor_class`: The name (id) of the class this instance of an actor belongs.  The actor class must be defined in the `actor_classes` section above
+  - `endpoint`: The URL where the actor gRPC server resides.  If this is `client`, the actor will connect as a client (the orchestrator being the server in this case).
+  - `config`: Dictionary of properties to match the definition of config_type for this actor class {TO_REVIEW}
+
+E.g.:
+
+```yaml
+trial_params:
+  environment:
+    endpoint: grpc://env:9000
+    config:
+
+  actors:
+    - actor_class: BigPlayer
+      endpoint: grpc://bp1:9000
+      config:
+    - actor_class: BigPlayer
+      endpoint: grpc://bp2:9000
+      config:
+    - actor_class: SmallPlayer
+      endpoint: grpc://sp:9000
+      config:
+    - actor_class: SmallPlayer
+      endpoint: grpc://sp:9000
+      config:
+    - actor_class: Referee
+      endpoint: client
+      config:
 ```
