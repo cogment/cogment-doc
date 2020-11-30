@@ -13,10 +13,9 @@ The top level sections in the file are:
 
 ## Import
 
-The import section is used to specify external data structures, and optionally code, that is referenced in other parts of the `cogment.yaml` file.  The import sections are:
+The import section is used to specify external data structures, and optionally code, that is referenced in other parts of the `cogment.yaml` file.  The references files must be in the same folder as the `cogment.yaml` file.  The import sections are:
 
 - `proto`: List of protobuf definition files.  Message types defined in these files are used to communicate between the various components
-- `protoAlias`: {TO_REVIEW}
 - `python`: List of Python modules
 - `javascript`: List of Javascript files
 
@@ -29,8 +28,6 @@ import:
   proto:
     - filename1.proto
     - filename2.proto
-  protoAlias:
-    - somealias {TO_REVIEW}
   python:
     - module_name
   javascript:
