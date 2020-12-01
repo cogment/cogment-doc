@@ -180,7 +180,7 @@ Method to get the list of active actors in the trial.
 
 Parameters: None
 
-Return: *list[SimpleNamespace(actor_name, actor_class)]* - List of active actors' names and class involved in this trial.
+Return: *list[SimpleNamespace(actor_name: str, actor_class: str)]* - List of active actors and classes involved in this trial.
 
 ### ```add_feedback(self, value, confidence, to, tick_id=-1, user_data= None)```
 
@@ -294,7 +294,7 @@ Return: *generator of dict* - A generator for the events that arrive.  The dicti
 
 - "message" :  *tuple(str, google.protobuf.Any instance)* - Data for a received message. The string in the tuple is the name of the sender.  The class is of the type set by the sender; It is the responsibility of the environment to manage the data received (i.e. determine the type and unpack the data).
 
-- "final_data" : *SimpleNamespace(observations, rewards, messages)* - The final set of data at the end of a trial.  `observations` is a list of observations as described above.  `rewards` is a list of rewards as described above.  `messages` is a list of message tuples as described above.  No actions can be sent after receiving this data (i.e. do not call `self.do_action`).
+- "final_data" : *SimpleNamespace(observations, rewards, messages)* - The final set of data at the end of a trial.  `observations` is a list of observations as described above (i.e. a list of protobuf class instances).  `rewards` is a list of rewards as described above.  `messages` is a list of message tuples as described above.  No action can be sent after receiving this data (i.e. do not call `self.do_action`).
 
 ### ```do_action(self, action)```
 
@@ -324,7 +324,7 @@ Method to get the list of configured actors in the trial.
 
 Parameters: None
 
-Return: *list[SimpleNamespace(actor_name, actor_class)]* - List of actors' names and class configured in this trial.
+Return: *list[SimpleNamespace(actor_name: str, actor_class: str)]* - List of actors and classes configured in this trial.
 
 ### ```terminate_trial(self)```
 
