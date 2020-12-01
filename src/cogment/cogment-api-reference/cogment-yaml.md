@@ -140,7 +140,8 @@ This section defines the different parameters that can be adjusted by pre-trial 
   - `endpoint`: The URL where the environment gRPC server resides
   - `config`: Dictionary of properties to match the definition of config_type for the environment {TO_REVIEW}
 - `actors`: Dictionary of properties
-  - `actor_class`: The name (id) of the class this instance of an actor belongs.  The actor class must be defined in the `actor_classes` section above
+  - `name`: The name of this actor (specific instance of actor class)
+  - `actor_class`: The name (id) of the actor class.  The actor class must be defined in the `actor_classes` section above
   - `endpoint`: The URL where the actor gRPC server resides.  If this is `client`, the actor will connect as a client (the orchestrator being the server in this case).
   - `config`: Dictionary of properties to match the definition of config_type for this actor class {TO_REVIEW}
 
