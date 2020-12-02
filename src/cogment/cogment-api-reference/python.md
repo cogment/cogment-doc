@@ -196,6 +196,19 @@ Parameters:
 
 Return: None
 
+### ```add_feedback(self, value, confidence, to, tick_id=-1, user_data=None)```
+
+Method to send a feedback (to create the rewards) to one or more actors.
+
+Parameters:
+
+- `value`: *float* - Value of the feedback, to be combined with other feedbacks to make a reward.
+- `confidence`: *float* - Weight of the feedback value in determining the final reward.
+- `to`: *list[str]* - Targets of feedback.  A list value could be the name of an actor in the trial.  Or it could represent a set of actors; A set of actors can be represented with the wildcard character "`*`" for all actors (of all classes), or "`actor_class.*`" for all actors of a specific class (the `actor_class` is the name of the class as specified in `cogment.yaml`).
+- `user_data`: *protobuf class instance* - Extra user data to be sent with the feedback. The class can be any protobuf class.  It is the responsibility of the receiving actor to manage the type received.
+
+Return: None
+
 ### ```send_message(self, user_data, to, to_environment=False)```
 
 Method to send a message to one or more actors/environment.
