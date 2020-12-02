@@ -60,12 +60,12 @@ import cogment
 
 Class to setup and run all the different aspects of trials.
 
-### ```__init__(self, user_id, cog_project)```
+### ```__init__(self, user_id, cog_settings)```
 
 Parameters:
 
 - `user_id`: *str* - Identifier for the user of this context.
-- `cog_project`: *module* - Settings module associated with trials that will be run ([cog_settings](#cog_settings.py) namespace).
+- `cog_settings`: *module* - Settings module associated with trials that will be run ([cog_settings](#cog_settings.py) namespace).
 
 ### ```async serve_all_registered(self, port, prometheus_port = 8000)```
 
