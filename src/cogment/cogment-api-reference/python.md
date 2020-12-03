@@ -78,15 +78,15 @@ Parameters:
 
 Return : None
 
-### ```async start_trial(self, trial_config, endpoint, impl)```
+### ```async start_trial(self, endpoint, impl, trial_config=None)```
 
 Method to start a new trial.  Returns only when the `impl` returns.
 
 Parameters:
 
-- `trial_config`: *protobuf class instance* - Configuration for the trial.  The type is specified in file `cogment.yaml` under the section `trial:config_type`
 - `endpoint`: *str* - URL of the Orchestrator to connect to.
 - `impl`: *async function(ControlSessionSession instance)* - Callback function to be registered.
+- `trial_config`: *protobuf class instance* - Configuration for the trial.  The type is specified in file `cogment.yaml` under the section `trial:config_type`.  Can be `None` if non configuration is provided.
 
 Return: None
 
@@ -318,7 +318,7 @@ Method to send actions to the environment.
 
 Parameters:
 
-- `action`: *protobuf class instance* - An instance of the action space class specified in the corresponding section `actor_classes:action:space` of the `cogment.yaml` file.
+- `action`: *protobuf class instance* - An instance of the action space class specified in the corresponding section `actor_classes:action:space` of the `cogment.yaml` file.  Can be `None`.
 
 Return: None
 
