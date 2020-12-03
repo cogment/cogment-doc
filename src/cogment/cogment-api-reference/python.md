@@ -180,7 +180,10 @@ Method to get the list of active actors in the trial.
 
 Parameters: None
 
-Return: *list[SimpleNamespace(actor_name: str, actor_class: str)]* - List of active actors and classes involved in this trial.
+Return: *list[ActiveActor]* - List of active actors and classes involved in this trial, elements in the list are instances of `ActiveActor`, they define the following attributes:
+
+- `actor_name`: *str* - Name of the actor.
+- `actor_class`: *str* - Name of the actor's class.
 
 ### ```add_feedback(self, value, confidence, to, tick_id=-1, user_data= None)```
 
