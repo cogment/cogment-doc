@@ -252,7 +252,7 @@ Return: *generator of dict* - A generator for the events that arrive.  The dicti
 
 - "actions" : *list[action]* - The actions from the actors in the trial. The class of each action is defined as action space for each actor in `cogment.yaml`.  The list is in the same order (and same length) as the list of actors returned by `Session.get_active_actors`.  The `self.produce_observation` method should be used to "reply" when receiving this data.
   
-- "final_actions" : *list[action]* - The final set of actions at the end of a trial (i.e. no more actions will be coming after this event).  This is received when a trial termination has been externally requested (e.g. `ControlSession.terminate_trial` method is called).  The actions received are the same as for "actions" above.  The `self.end` method must be called after receiving this event to cleanly end a trial.
+- "final_actions" : *list[action]* - The final set of actions at the end of a trial (i.e. no more actions will be coming after this event).  This is received when a trial termination has been externally requested (e.g. `ControlSession.terminate_trial` method is called).  The actions received are the same as for "actions" above.  The `self.end` method must be called after receiving this event to cleanly end a trial.  The event loop will exit after this event is received (i.e. the event loop generator will reach the "end").
 
 - "message" :  *tuple(str, google.protobuf.Any instance)* - Data for a received message. The string in the tuple is the name of the sender.  The class is of the type set by the sender; It is the responsibility of the environment to manage the data received (i.e. determine the type and unpack the data).
 
@@ -310,7 +310,7 @@ Return: *generator of dict* - A generator for the events that arrive.  The dicti
 
 - "message" :  *tuple(str, google.protobuf.Any instance)* - Data for a received message. The string in the tuple is the name of the sender.  The class is of the type set by the sender; It is the responsibility of the environment to manage the data received (i.e. determine the type and unpack the data).
 
-- "final_data" : *SimpleNamespace(observations, rewards, messages)* - The final set of data at the end of a trial.  `observations` is a list of observations as described above (i.e. a list of protobuf class instances).  `rewards` is a list of rewards as described above.  `messages` is a list of message tuples as described above.  No action can be sent after receiving this data (i.e. do not call `self.do_action`).
+- "final_data" : *SimpleNamespace(observations, rewards, messages)* - The final set of data at the end of a trial.  `observations` is a list of observations as described above (i.e. a list of protobuf class instances).  `rewards` is a list of rewards as described above.  `messages` is a list of message tuples as described above.  No action can be sent after receiving this data (i.e. do not call `self.do_action`).  The event loop will exit after this event is received (i.e. the event loop generator will reach the "end").
 
 ### ```do_action(self, action)```
 
