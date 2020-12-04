@@ -1,17 +1,25 @@
-image: python:latest
+stages:
+  - lint
+  - build
 
-variables:
-  PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
-cache:
-  paths:
-    - .cache/pip
-    - venv/
+apache_licenses_check:
+  stage: lint
+  image: registry.gitlab.com/ai-r/apache-license-checker:latest
+  script:
+    - apache-license-checker
 
-before_script:
-  - pip install poetry
-  - poetry --version
-  - poetry install -vv
-
-test:
+build:
+  stage: build
+  image: python:latest
+  variables:
+    PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
+  cache:
+    paths:
+      - .cache/pip
+      - venv/
+  before_script:
+    - pip install poetry
+    - poetry --version
+    - poetry install -vv
   script:
     - poetry run task build
