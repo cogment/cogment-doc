@@ -68,9 +68,9 @@ E.g.:
 trial:
   config_type: namespace.DataType
   pre_hooks:
-    - actorconfigserver:9000
-    - envconfigserver:9000
-    - logconfigserver:9000
+    - grpc://actorconfigserver:9000
+    - grpc://envconfigserver:9000
+    - grpc://logconfigserver:9000
 ```
 
 ## Environment
