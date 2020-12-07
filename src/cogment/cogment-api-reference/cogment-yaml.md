@@ -1,6 +1,6 @@
 # Cogment.yaml
 
-At the heart of every cogment project is a `cogment.yaml` file. This file is used by the cogment cli tool to configure the language specific SDK, as well as the orchestrator to initialize the runtime environment. {TO_REVIEW}
+At the heart of every Cogment project is a `cogment.yaml` file (default name). This file is used by the Cogment CLI tool to configure the language specific SDK.  It is also used by the orchestrator to initialize the runtime environment.
 
 The top level sections in the file are:
 
@@ -10,16 +10,19 @@ The top level sections in the file are:
 - [environment](#Environment): Define environment specific properties
 - [actor_classes](#Actor-Classes): Define actor specific properties (for each actor class)
 - [trial_params](#Trial-Params): Defines the default parameters to run a trial
+- [datalog](#Datalog): Defines the data logging specific properties
+
+In this document, "section" refers to YAML mappings.
 
 ## Import
 
-The import section is used to specify external data structures, and optionally code, that is referenced in other parts of the `cogment.yaml` file.  The references files must be in the same folder as the `cogment.yaml` file.  The import sections are:
+The import section is used to specify external data structures, and optionally code, that is referenced in other parts of the file.  The referenced files must be in the same folder as the `cogment.yaml` file.  The import sections are:
 
 - `proto`: List of protobuf definition files.  Message types defined in these files are used to communicate between the various components
-- `python`: List of Python modules
-- `javascript`: List of Javascript files
+- `python`: (optional) List of Python modules
+- `javascript`: (optional) List of Javascript files
 
-All cogment projects will need at least one `proto` import to define the data structures exchanged between the various components.  Python and/or javascript imports will be needed if you make use of delta encodings.
+All Cogment projects will need at least one `proto` import to define the data structures exchanged between the various components.  Python and/or javascript imports will be needed if you make use of delta encodings.
 
 E.g.:
 
@@ -39,7 +42,7 @@ When using message types imported from a `.proto` file, types need to be referre
 
 ## Commands
 
-This section is optional and defines a dictionary of commands that can then be executed using the Cogment CLI `run` command.  The commands will be executed by a sub-shell and thus can be any shell command.  The commands can also recursively call Cogment, either builtin CLI or other commands defined here.  But care should be taken not to create infinite recursive calls.
+This section is optional and defines commands that can then be executed using the Cogment CLI `run` command.  The commands will be executed by a sub-shell and thus can be any shell command.  The commands can also recursively call Cogment, either builtin CLI or other commands defined here.  But care should be taken not to create infinite recursive calls.
 
 E.g.:
 
@@ -56,8 +59,8 @@ To run one of these commands, the Cogment CLI command `run` must be used, e.g.: 
 
 This section defines properties related to the trial and trial management.  It has the properties:
 
-- `config_type`: The protobuf message type (data structure) that will be passed on to the pre-trial hooks
-- `pre_hooks`: List of functions that will be called before the start of a trial.  These functions receive the default parameters and can change them for the upcoming trial {TO_REVIEW}
+- `config_type`: (optional) The protobuf message type (data structure) that will be passed on to the pre-trial hooks
+- `pre_hooks`: (optional) List of endpoint for pre-trial hook processing services.  The services will be called, and their responses waited upon before the trial starts.  The services will receive the default parameters (set in the `trial_params` section of `cogment.yaml`) and can change them before the trial starts.  The services are called in order of listing.
 
 E.g.:
 
@@ -65,15 +68,16 @@ E.g.:
 trial:
   config_type: namespace.DataType
   pre_hooks:
-    - namespace.Function1
-    - namespace.Function2
+    - actorconfigserver:9000
+    - envconfigserver:9000
+    - logconfigserver:9000
 ```
 
 ## Environment
 
 This section defines properties related to the environment. It has the properties:
 
-- `config_type`: The protobuf message type used to configure the environment
+- `config_type`: (optional) The protobuf message type used to configure the environment
 
 ```yaml
 environment:
@@ -87,15 +91,15 @@ Arguably the most important section of the `cogment.yaml` file, the actor classe
 The content of this section is a list of actor classes, each containing the necessary properties to define an actor class.  These properties are:
 
 - `id`: The name by which this actor class is known
-- `action`: Dictionary of properties
+- `action`: Mapping of properties
   - `space`: The protobuf message type that represents all the possible actions that this actor class can perform (its action space)
-- `observation`: Dictionary of properties
+- `observation`: Mapping of properties
   - `space`: The protobuf message type that represents a snapshot of the data that this actor class has access to (its observation space)
-  - `delta`: The protobuf message type that represents the difference between two observation spaces (snapshots)
-  - `delta_apply_fn`: Dictionary of exclusive options for a function to combine an observation space and a delta, into a new observation space {TO_REVIEW}
+  - `delta`: (optional) The protobuf message type that represents the difference between two observation spaces (snapshots)
+  - `delta_apply_fn`: (optional) Mapping for a function to combine an observation space and a delta, into a new observation space: *fn(observation, delta) -> observation*.  Only one of the following can be defined
     - `python`: The function defined in python
     - `javascript`: The function defined in Javascript
-- `config_type`: Defines the protobuf message type used to configure this actor class
+- `config_type`: (optional) Defines the protobuf message type used to configure this actor class
 
 Each actor class should define both an observation and action space as protobuf message types.
 
@@ -136,14 +140,16 @@ actor_classes:
 
 This section defines the different parameters that can be adjusted by pre-trial hooks for each trial.  It also defines the default values for these parameters.  These parameters are:
 
-- `environment`: Dictionary of properties
+- `trial`: Mapping of properties
+  - `config`: Definition of properties to match the definition of config_type for the trial
+- `environment`: Mapping of properties
   - `endpoint`: The URL where the environment gRPC server resides
-  - `config`: Dictionary of properties to match the definition of config_type for the environment {TO_REVIEW}
-- `actors`: Dictionary of properties
-  - `name`: The name of this actor (specific instance of actor class)
+  - `config`: Definition of properties to match the definition of config_type for the environment
+- `actors`: List of actor properties
+  - `name`: The name of this actor (i.e. name of the specific instance of the actor class)
   - `actor_class`: The name (id) of the actor class.  The actor class must be defined in the `actor_classes` section above
   - `endpoint`: The URL where the actor gRPC server resides.  If this is `client`, the actor will connect as a client (the orchestrator being the server in this case).
-  - `config`: Dictionary of properties to match the definition of config_type for this actor class {TO_REVIEW}
+  - `config`: Definition of properties to match the definition of config_type for this actor class
 
 E.g.:
 
@@ -169,4 +175,21 @@ trial_params:
     - actor_class: Referee
       endpoint: client
       config:
+```
+
+## Datalog
+
+This section defines the properties related to the logging of the data.  It has the properties:
+
+- `fields`: (optional) Mapping of properties
+  - `exclude`: List of fields to exclude from the data to send for logging
+- `type`: The type of data to send for logging.  Can be `grpc` or `none`.
+- `url`: URL where to send the data to be logged
+
+```yaml
+datalog:
+  fields:
+    exclude: [time, msg, status]
+  type: grpc
+  url: logserver:9000
 ```
