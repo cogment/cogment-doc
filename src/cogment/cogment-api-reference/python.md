@@ -85,7 +85,7 @@ Method to start a new trial.  Returns only when the `impl` returns.
 Parameters:
 
 - `endpoint`: *str* - URL of the Orchestrator to connect to.
-- `impl`: *async function(ControlSessionSession instance)* - Callback function to be registered.
+- `impl`: *async function(ControlSession instance)* - Callback function to be registered.
 - `trial_config`: *protobuf class instance* - Configuration for the trial.  The type is specified in file `cogment.yaml` under the section `trial:config_type`.  Can be `None` if non configuration is provided.
 
 Return: None
@@ -184,20 +184,6 @@ Return: *list[ActiveActor]* - List of active actors and classes involved in this
 
 - `actor_name`: *str* - Name of the actor.
 - `actor_class`: *str* - Name of the actor's class.
-
-### ```add_feedback(self, value, confidence, to, tick_id=-1, user_data= None)```
-
-Method to provide feedback that will contribute to actors' reward.
-
-Parameters:
-
-- `value`: *float* - Value of the feedback
-- `confidence`: *float* - Weight this feedback has relative to other feedbacks.
-- `to`: *list[str]* - Targets of feedback.  A list value could be the name of an actor in the trial.  Or it could represent a set of actors; A set of actors can be represented with the wildcard character "`*`" for all actors (of all classes), or "`actor_class.*`" for all actors of a specific class (the `actor_class` is the name of the class as specified in `cogment.yaml`).
-- `tick_id`: *int* - The tick id (time step) for which the feedback should be applied.  If `-1`, the feedback is applied to the current time step.
-- `user_data`: *protobuf class instance* - Specific information for the target actor.  The class can be any protobuf class.  It is the responsibility of the receiving actor to manage the type received.
-
-Return: None
 
 ### ```add_feedback(self, value, confidence, to, tick_id=-1, user_data=None)```
 
