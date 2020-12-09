@@ -144,11 +144,13 @@ This section defines the different parameters that can be adjusted by pre-trial 
   - `config`: Definition of properties to match the definition of config_type for the trial
 - `environment`: Mapping of properties
   - `endpoint`: The URL where the environment gRPC server resides
+  - `implementation`: The name of the implementation to be used for this instance of the environment.  This must match an implementation that is defined at the endpoint.  If not defined, an arbitraary implementation will be chosen at runtime
   - `config`: Definition of properties to match the definition of config_type for the environment
 - `actors`: List of actor properties
   - `name`: The name of this actor (i.e. name of the specific instance of the actor class)
   - `actor_class`: The name (id) of the actor class.  The actor class must be defined in the `actor_classes` section above
   - `endpoint`: The URL where the actor gRPC server resides.  If this is `client`, the actor will connect as a client (the orchestrator being the server in this case).
+  - `implementation`: The name of the implementation to be used for this actor instance.  This must match an implementation that is defined at the endpoint.  If not defined, an arbitraary implementation will be chosen at runtime
   - `config`: Definition of properties to match the definition of config_type for this actor class
 
 E.g.:
@@ -157,23 +159,34 @@ E.g.:
 trial_params:
   environment:
     endpoint: grpc://env:9000
+    implementation: default
     config:
 
   actors:
-    - actor_class: BigPlayer
+    - name: Alice
+      actor_class: BigPlayer
       endpoint: grpc://bp1:9000
+      implementation:
       config:
-    - actor_class: BigPlayer
+    - name: Bob
+      actor_class: BigPlayer
       endpoint: grpc://bp2:9000
+      implementation: Test
       config:
-    - actor_class: SmallPlayer
+    - name: Carol
+      actor_class: SmallPlayer
       endpoint: grpc://sp:9000
+      implementation: DQN_Hotel3
       config:
-    - actor_class: SmallPlayer
+    - name: Dave
+      actor_class: SmallPlayer
       endpoint: grpc://sp:9000
+      implementation: DNN_Karma3.1.17
       config:
-    - actor_class: Referee
+    - name: Olivia
+      actor_class: Referee
       endpoint: client
+      implementation: Standard
       config:
 ```
 
