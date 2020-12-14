@@ -132,7 +132,7 @@ Method to register an asynchronous callback function that will be called before 
 
 Parameters:
 
-- `impl`: *async func(PrehookSession instance)* - Callback function to be registered
+- `impl`: *async func(PrehookSession instance)* - Callback function to be registered.  The `PrehookSession` instance member data should be changed as needed for the new trial before returning from this function.
 
 Return: None
 
@@ -180,10 +180,10 @@ Method to get the list of active actors in the trial.
 
 Parameters: None
 
-Return: *list[ActiveActor]* - List of active actors and classes involved in this trial, elements in the list are instances of `ActiveActor`, they define the following attributes:
+Return: *list[ActiveActor]* - List of active actors and classes involved in this trial. Elements in the list are instances of `ActiveActor`, which define the following attributes:
 
 - `actor_name`: *str* - Name of the actor.
-- `actor_class`: *str* - Name of the actor's class.
+- `actor_class_name`: *str* - Name of the actor's class.
 
 ### ```add_feedback(self, value, confidence, to, tick_id=-1, user_data=None)```
 
@@ -266,13 +266,13 @@ Return: None
 
 Abstract class based on `Session`, containing session/trial data and methods necessary to run an actor for a trial.  An instance of this class is passed as argument to the actor callback function registered with `cogment.Context.register_actor`.
 
-`actor_class`: *str* - Name of the class of actor this class represents.  Specified in `cogment.yaml` as `actor_classes:id`.
+`class_name`: *str* - Name of the class of actor this instance represents.  Specified in `cogment.yaml` as `actor_classes:id`.
 
-`impl_name`: *str* - Name of the implementation of the actor represented by this class.
+`impl_name`: *str* - Name of the implementation of the actor represented by this instance.
 
 `config`: *protobuf class instance* - User configuration received for this actor instance.  Can be `None` is no configuration was provided.  The type of the protobuf class is specified in `cogment.yaml` in section `actor_classes:config_type`.
 
-`name`: *str* - Name of the actor this classs represents.
+`name`: *str* - Name of the actor this instance represents.
 
 ### ```start(self)```
 
@@ -326,7 +326,7 @@ Method to get the list of configured actors in the trial.
 
 Parameters: None
 
-Return: *list[SimpleNamespace(actor_name: str, actor_class: str)]* - List of actors and classes configured in this trial.
+Return: *list[SimpleNamespace(actor_name: str, actor_class_name: str)]* - List of actors and classes configured in this trial.
 
 ### ```terminate_trial(self)```
 
@@ -338,9 +338,7 @@ Return: None
 
 ## class PrehookSession
 
-Abstract class containing trial configuration data and methods to define a new trial.  An instance of this class is passed as argument to the prehook callback function registered with `cogment.Context.register_pre_trial_hook`.
-
-The member data of this class should be changed as needed for the new trial.
+Abstract class containing trial configuration data to define the specifics of a trial.  An instance of this class is passed as argument to the prehook callback function registered with `cogment.Context.register_pre_trial_hook`, and is part of the `DatalogSession`.
 
 `trial_config`: *protobuf class instance* - Configuration for the new trial.  The type is specified in file `cogment.yaml` under the section `trial:config_type`.
 
