@@ -304,7 +304,7 @@ Method to send actions to the environment.
 
 Parameters:
 
-- `action`: *protobuf class instance* - An instance of the action space class specified in the corresponding section `actor_classes:action:space` of the `cogment.yaml` file.  If `None`, then no action space is sent (empty content) and the environment will received a default initialized action space of the appropriate type.
+- `action`: *protobuf class instance* - An instance of the action space class specified in the corresponding section `actor_classes:action:space` of the `cogment.yaml` file.  If `None`, then no action space is sent (empty content) and the environment will receive a default initialized action space of the appropriate type.
 
 Return: None
 
