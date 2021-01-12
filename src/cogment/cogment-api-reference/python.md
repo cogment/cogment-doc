@@ -237,7 +237,7 @@ Parameters: None
 Return: *generator of dict* - A generator for the events that arrive.  The dictionary may contain any of the following:
 
 - "actions" : *list[action]* - The actions from the actors in the trial. The class of each action is defined as action space for each actor in `cogment.yaml`.  The list is in the same order (and same length) as the list of actors returned by `Session.get_active_actors`.  The `self.produce_observation` method should be used to "reply" when receiving this data.
-  
+
 - "final_actions" : *list[action]* - The final set of actions at the end of a trial (i.e. no more actions will be coming after this event).  This is received when a trial termination has been externally requested (e.g. `ControlSession.terminate_trial` method is called).  The actions received are the same as for "actions" above.  The `self.end` method must be called after receiving this event to cleanly end a trial.  The event loop will exit after this event is received (i.e. the event loop generator will reach the "end").
 
 - "message" :  *tuple(str, google.protobuf.Any instance)* - Data for a received message. The string in the tuple is the name of the sender.  The class is of the type set by the sender; It is the responsibility of the environment to manage the data received (i.e. determine the type and unpack the data).
@@ -426,9 +426,9 @@ Parameters: None
 
 Return: *generator(byte strings)* - A generator for the user_data in the reward (from individual feedbacks that make up the reward).  The user_data is a serialization of a protobuf class sent by the originator, and it is the responsibility of the receiving actor to decode it (i.e. to know what class is supposed to be received).
 
-[1]: cogment/cogment-api-reference/cogment-yaml.md
-[4]: concepts/glossary.md#actor-class
-[5]: concepts/glossary.md#observation-space
-[6]: concepts/glossary.md#action-space
-[7]: concepts/glossary.md#observation
-[8]: concepts/glossary.md#action
+[1]: ./cogment-yaml.md
+[4]: ../../concepts/glossary.md#actor-class
+[5]: ../../concepts/glossary.md#observation-space
+[6]: ../../concepts/glossary.md#action-space
+[7]: ../../concepts/glossary.md#observation
+[8]: ../../concepts/glossary.md#action

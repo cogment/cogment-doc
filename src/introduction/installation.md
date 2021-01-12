@@ -42,5 +42,5 @@ $ alias cogment="docker run --rm -v$(pwd):/cogment -v/var/run/docker.sock:/var/r
 
 Add this to your `.bashrc` or `.zshrc` for `cogment` to be defined in all your sessions. This [article](https://shapeshed.com/unix-alias/) can help you if you're not familiar with aliases.
 
-You are now ready to start using Cogment!
-We recommend our [cogment tutorial](tutorial/intro.md) as the next step.
+You are now ready to start using Cogment! We recommend our
+[cogment tutorial](../cogment/tutorial/intro.md) as the next step.

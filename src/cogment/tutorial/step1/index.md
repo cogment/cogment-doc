@@ -261,10 +261,10 @@ This concludes Step 1 of the Tutorial: you have bootstrapped a Cogment project, 
 
 Let’s move on to actually implementing our components.
 
-[1]: ../concepts/glossary.md#actor
+[1]: ../../../concepts/glossary.md#actor
 [2]: https://developers.google.com/protocol-buffers/
 [3]: https://grpc.io/
-[4]: ../concepts/glossary.md#action-space
-[5]: ../concepts/glossary.md#actor-class
+[4]: ../../../concepts/glossary.md#action-space
+[5]: ../../../concepts/glossary.md#actor-class
 [6]: #bootstrap-the-project
-[7]: ../../installation.md
+[7]: ../../../introduction/installation.md

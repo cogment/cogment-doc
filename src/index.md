@@ -68,9 +68,16 @@ This diagram illustrates the high-level architecture of a Cogment project:
 
 ## First steps
 
-The easiest way to get started is to use the `cogment` command line tool.
-Please see our [installation instructions](./introduction/installation/) for details.
+The easiest way to get started is to use the `cogment` command line
+tool. Please see our
+[installation instructions](./introduction/installation.md) for details.
 
-Before diving right in, we recommend taking the time to read the [Core concepts](./concepts/core-concepts/) section, as well as our [glossary](./concepts/glossary/), which details the terminology we use for several critical concepts of the Cogment Framework.
-You can then proceed to read on how to [install](./introduction/installation/) the framework.
-[//]: # (Last but not least, a [tutorial](./cogment/tutorial/) is available.)
+Before diving right in, we recommend taking the time to read the
+[Core concepts](./concepts/core-concepts.md) section, as well as our
+[glossary](./concepts/glossary.md), which details the terminology we use
+for several critical concepts of the Cogment Framework. You can then
+proceed to read on how to [install](./introduction/installation.md) the
+framework.
+
+[//]: # (Last but not least, a [tutorial](./cogment/tutorial/)
+is available.)
