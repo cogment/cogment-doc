@@ -1,6 +1,7 @@
 stages:
   - lint
   - build
+  - pages
 
 apache_licenses_check:
   stage: lint
@@ -11,15 +12,22 @@ apache_licenses_check:
 build:
   stage: build
   image: python:latest
-  variables:
-    PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
-  cache:
-    paths:
-      - .cache/pip
-      - venv/
   before_script:
     - pip install poetry
     - poetry --version
     - poetry install -vv
   script:
     - poetry run task build
+  artifacts:
+    paths:
+      - public
+
+pages:
+  stage: pages
+  script:
+    - echo "Using build artifacts from previous stage"
+  artifacts:
+    paths:
+      - public
+  only:
+    - master
