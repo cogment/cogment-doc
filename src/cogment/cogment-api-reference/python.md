@@ -231,6 +231,7 @@ Return: None
 ### ```async event_loop(self)```
 
 Generator method to iterate over all events (actions, messages) as they are received.  This will block and wait for an event.
+When this generator exits, the callback function (registered with `register_environment`) must return.
 
 Parameters: None
 
@@ -285,6 +286,7 @@ Return: None
 ### ```async event_loop(self)```
 
 Generator method to iterate over all events (actions, rewards, messages) as they are received.  This will block and wait for an event.
+When this generator exits, the callback function (registered with `register_actor`) must return.
 
 Parameters: None
 
