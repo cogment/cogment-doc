@@ -1,8 +1,11 @@
 # Cogment gRPC API
 
-The entirety of the low-level cogment API is implemented using [gRPC](https://grpc.github.io/) services. How services are implemented or accessed is highly dependant on the programming language being interfaced, so we will defer to the gRPC documentation for the nuts and bolts of using the gRPC API.
+The low-level cogment communication API is implemented using [gRPC](https://grpc.github.io/) services.
+These services are collections of procedures to be called remotely (RPC).
+gRPC abstracts the network communication with familiar looking functions (representing the defined procedures), in any number of programming languages.
+How services are implemented or accessed is highly dependant on the programming language being interfaced, and is beyond the scope of this document (see gRPC API documentation).
 
-This reference requires a basic understanding of the format of gRPC `proto` files.
+This reference requires a basic understanding of gRPC, and in particular the format of the `proto` files.
 
 ## General
 
@@ -12,7 +15,7 @@ On the other hand, the `google.protobuf.Any` data type is normally used to conta
 
 Empty messages are normally used as a placeholder for easy future, backward compatible, extension of the API.
 
-In this API, [gRPC metadata](https://grpc.io/docs/what-is-grpc/core-concepts/#metadata) is normally used only for service request (function calls) for identifying purposes.  The details of the required metadata are described with the service calls.  Service replies are not expecting to provide metadata.
+In this API, [gRPC metadata](https://grpc.io/docs/what-is-grpc/core-concepts/#metadata) is normally used only for service request (procedure calls) for identifying purposes.  The details of the required metadata are described with the service calls.  Service replies are not expecting to provide metadata.
 
 In many places in the API, we use a list of actor data without information about which actor is where in the list.
 These lists have a constant length and order throughout a trial (set in the trial parameters), and thus can/must be cross referenced with other such lists within the same trial (e.g. `actors_in_trial`, `actors_map`).
@@ -24,7 +27,7 @@ Most of the messages are defined in the `common.proto` file.  `Rewards` and `Age
 
 ### `VersionRequest`
 
-Empty message to serve as the request for the `Version` function (present in all gRPC services defined in the Cogment API).
+Empty message to serve as the request for the `Version` procedure (present in all gRPC services defined in the Cogment API).
 
 ```protobuf
 message VersionRequest {}
@@ -32,7 +35,7 @@ message VersionRequest {}
 
 ### `VersionInfo`
 
-Reply message for the `Version` function (present in all gRPC services defined in the API).
+Reply message for the `Version` procedure (present in all gRPC services defined in the API).
 It contains a list of version information.
 The Cogment framework expects at least "cogment-api" and "grpc" versions present in the list.  The "cogment-api" is for the local version of the Cogment API used by the service.  The "grpc" is for the version of gRPC used by the service.
 Other reported versions are specific to the service called, possibly for use by utility and management tools.
@@ -321,7 +324,7 @@ Metadata: None
 
 ### `TrialStartRequest`
 
-Request message for the `StartTrial` function.
+Request message for the `StartTrial` procedure.
 
 ```protobuf
 message TrialStartRequest {
@@ -335,7 +338,7 @@ message TrialStartRequest {
 
 ### TrialStartReply
 
-Reply message for the `StartTrial` function.
+Reply message for the `StartTrial` procedure.
 
 ```protobuf
 message TrialStartReply {
@@ -349,7 +352,7 @@ message TrialStartReply {
 
 ### `TerminateTrialRequest`
 
-Request message for the `TerminateTrial` function.
+Request message for the `TerminateTrial` procedure.
 
 ```protobuf
 message TerminateTrialRequest {}
@@ -357,7 +360,7 @@ message TerminateTrialRequest {}
 
 ### `TerminateTrialReply`
 
-Reply message for the `TerminateTrial` function.
+Reply message for the `TerminateTrial` procedure.
 
 ```protobuf
 message TerminateTrialReply {}
@@ -365,7 +368,7 @@ message TerminateTrialReply {}
 
 ### `TrialInfoRequest`
 
-Request message for the `GetTrialInfo` function.
+Request message for the `GetTrialInfo` procedure.
 
 ```protobuf
 message TrialInfoRequest {
@@ -377,7 +380,7 @@ message TrialInfoRequest {
 
 ### `TrialInfoReply`
 
-Reply message for the `GetTrialInfo` function.
+Reply message for the `GetTrialInfo` procedure.
 
 ```protobuf
 message TrialInfoReply {
@@ -385,7 +388,7 @@ message TrialInfoReply {
 }
 ```
 
-- trial: List of information about the trials.  Contains only the requested trial info if a trial ID was provided when the call was made (as metadata to the function).  Otherwise contains information about all active trials.
+- trial: List of information about the trials.  Contains only the requested trial info if a trial ID was provided when the call was made (as metadata to the procedure).  Otherwise contains information about all active trials.
 
 ### `TrialInfo`
 
@@ -485,7 +488,7 @@ Metadata: None
 
 ### `TrialJoinRequest`
 
-Request message for the `JoinTrial` function.
+Request message for the `JoinTrial` procedure.
 
 ```protobuf
 message TrialJoinRequest {
@@ -504,7 +507,7 @@ message TrialJoinRequest {
 
 ### `TrialJoinReply`
 
-Reply message for the `JoinTrial` function.
+Reply message for the `JoinTrial` procedure.
 
 ```protobuf
 message TrialJoinReply {
@@ -522,7 +525,7 @@ message TrialJoinReply {
 
 ### `TrialHeartbeatRequest`
 
-Request message for the `Heartbeat` function.
+Request message for the `Heartbeat` procedure.
 
 ```protobuf
 message TrialHeartbeatRequest {}
@@ -530,7 +533,7 @@ message TrialHeartbeatRequest {}
 
 ### `TrialHeartbeatReply`
 
-Reply message for the `Heartbeat` function.
+Reply message for the `Heartbeat` procedure.
 
 ```protobuf
 message TrialHeartbeatReply {}
@@ -538,7 +541,7 @@ message TrialHeartbeatReply {}
 
 ### `TrialActionRequest`
 
-Stream request message for the `ActionStream` function.
+Stream request message for the `ActionStream` procedure.
 
 ```protobuf
 message TrialActionRequest {
@@ -550,7 +553,7 @@ message TrialActionRequest {
 
 ### `TrialActionReply`
 
-Stream reply message for the `ActionStream` function.
+Stream reply message for the `ActionStream` procedure.
 
 ```protobuf
 message TrialActionReply {
@@ -564,7 +567,7 @@ message TrialActionReply {
 
 ### `TrialFeedbackRequest`
 
-Request message for the `GiveFeedback` function.
+Request message for the `GiveFeedback` procedure.
 
 ```protobuf
 message TrialFeedbackRequest {
@@ -576,7 +579,7 @@ message TrialFeedbackRequest {
 
 ### `TrialFeedbackReply`
 
-Reply message for the `GiveFeedback` function.
+Reply message for the `GiveFeedback` procedure.
 
 ```protobuf
 message TrialFeedbackReply {}
@@ -584,7 +587,7 @@ message TrialFeedbackReply {}
 
 ### `TrialMessageRequest`
 
-Request message for the `SendMessage` function.
+Request message for the `SendMessage` procedure.
 
 ```protobuf
 message TrialMessageRequest {
@@ -592,11 +595,11 @@ message TrialMessageRequest {
 }
 ```
 
-- messages: User data to send to other actors or the environment.  The sender_name entry should not be set (it is part of the metadata of the function).
+- messages: User data to send to other actors or the environment.  The sender_name entry should not be set (it is part of the metadata of the procedure).
 
 ### `TrialMessageReply`
 
-Reply message for the `SendMessage` function.
+Reply message for the `SendMessage` procedure.
 
 ```protobuf
 message TrialMessageReply {}
@@ -677,7 +680,7 @@ Metadata: None
 
 ### `AgentStartRequest`
 
-Request message for the `OnStart` function.
+Request message for the `OnStart` procedure.
 
 ```protobuf
 message AgentStartRequest {
@@ -693,7 +696,7 @@ message AgentStartRequest {
 
 ### `AgentStartReply`
 
-Reply message for the `OnStart` function.
+Reply message for the `OnStart` procedure.
 
 ```protobuf
 message AgentStartReply {}
@@ -701,7 +704,7 @@ message AgentStartReply {}
 
 ### `AgentObservationRequest`
 
-Request message for the `OnObservation` function.
+Request message for the `OnObservation` procedure.
 
 ```protobuf
 message AgentObservationRequest {
@@ -713,7 +716,7 @@ message AgentObservationRequest {
 
 ### `AgenActionReply`
 
-Reply message for the `OnObservation` function.
+Reply message for the `OnObservation` procedure.
 
 ```protobuf
 message AgentActionReply {
@@ -729,7 +732,7 @@ message AgentActionReply {
 
 ### `AgentRewardRequest`
 
-Request message for the `OnReward` function.
+Request message for the `OnReward` procedure.
 
 ```protobuf
 message AgentRewardRequest {
@@ -743,7 +746,7 @@ message AgentRewardRequest {
 
 ### `AgentRewardReply`
 
-Reply message for the `OnReward` function.
+Reply message for the `OnReward` procedure.
 
 ```protobuf
 message AgentRewardReply {}
@@ -751,7 +754,7 @@ message AgentRewardReply {}
 
 ### `AgentMessageRequest`
 
-Request message for the `OnMessage` function.
+Request message for the `OnMessage` procedure.
 
 ```protobuf
 message AgentMessageRequest {
@@ -763,7 +766,7 @@ message AgentMessageRequest {
 
 ### `AgentMessageReply`
 
-Reply message for the `OnMessage` function.
+Reply message for the `OnMessage` procedure.
 
 ```protobuf
 message AgentMessageReply {}
@@ -771,7 +774,7 @@ message AgentMessageReply {}
 
 ### `AgentEndRequest`
 
-Request message for the `OnEnd` function.
+Request message for the `OnEnd` procedure.
 
 ```protobuf
 message AgentEndRequest {
@@ -783,7 +786,7 @@ message AgentEndRequest {
 
 ### `AgentEndReply`
 
-Reply message for the `OnEnd` function.
+Reply message for the `OnEnd` procedure.
 
 ```protobuf
 message AgentEndReply {}
@@ -851,7 +854,7 @@ Metadata: None
 
 ### `EnvStartRequest`
 
-Request message for the `OnStart` function.
+Request message for the `OnStart` procedure.
 
 ```protobuf
 message EnvStartRequest {
@@ -867,7 +870,7 @@ message EnvStartRequest {
 
 ### `EnvStartReply`
 
-Reply message for the `OnStart` function.
+Reply message for the `OnStart` procedure.
 
 ```protobuf
 message EnvStartReply {
@@ -879,7 +882,7 @@ message EnvStartReply {
 
 ### `EnvActionRequest`
 
-Request message for the `OnAction` and `OnEnd` functions.
+Request message for the `OnAction` and `OnEnd` procedures.
 
 ```protobuf
 message ActionSet {
@@ -898,7 +901,7 @@ message EnvActionRequest {
 
 ### `EnvActionReply`
 
-Reply message for the `OnAction` and `OnEnd` functions.
+Reply message for the `OnAction` and `OnEnd` procedures.
 
 ```protobuf
 message EnvActionReply {
@@ -913,11 +916,11 @@ message EnvActionReply {
 - feedback: A list of feedbacks for actors.
 - messages: User data to send to actors.  The sender_name entry should not be set.
 - messages: A list of messages for actors.  The sender actor entry should not be filled.
-- final_update: If true, this will be the final update of the environment for this trial (i.e. end of the trial). This should always be true when replying to an `OnEnd` function call.
+- final_update: If true, this will be the final update of the environment for this trial (i.e. end of the trial). This should always be true when replying to an `OnEnd` procedure call.
 
 ### `EnvMessageRequest`
 
-Request message for the `OnMessage` function.
+Request message for the `OnMessage` procedure.
 
 ```protobuf
 message EnvMessageRequest {
@@ -929,7 +932,7 @@ message EnvMessageRequest {
 
 ### `EnvMessageReply`
 
-Reply message for the `OnMessage` function.
+Reply message for the `OnMessage` procedure.
 
 ```protobuf
 message EnvMessageReply {}
@@ -967,7 +970,7 @@ Metadata: None
 
 ### `LogExporterSampleRequest`
 
-Stream request message for the `OnLogSample` function.
+Stream request message for the `OnLogSample` procedure.
 
 ```protobuf
 message DatalogSample {
@@ -997,7 +1000,7 @@ message LogExporterSampleRequest {
 
 ### `LogExporterSampleReply`
 
-Reply message for the `OnLogSample` function.
+Reply message for the `OnLogSample` procedure.
 
 ```protobuf
 message LogExporterSampleReply {}
@@ -1034,7 +1037,7 @@ Metadata: None
 
 ### `PreTrialContext`
 
-Request and reply message for the `OnPreTrial` function.
+Request and reply message for the `OnPreTrial` procedure.
 
 ```protobuf
 message PreTrialContext {
