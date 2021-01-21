@@ -220,7 +220,7 @@ Abstract class based on `Session`, containing session data and methods necessary
 
 ### ```start(self, observations)```
 
-Method to report that the environment is starting to run the trial.
+Method to report that the environment is starting to run the trial.  The method should be called before any other method in the session.
 
 Parameters:
 
@@ -277,7 +277,7 @@ Abstract class based on `Session`, containing session/trial data and methods nec
 
 ### ```start(self)```
 
-Method to start the actor.
+Method to start the actor.  This method should be called before any other method in the session.
 
 Parameters: None
 
