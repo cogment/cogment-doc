@@ -232,6 +232,7 @@ Return: None
 
 Generator method to iterate over all events (actions, messages) as they are received.  This will block and wait for an event.
 When this generator exits, the callback function (registered with `register_environment`) should return to end the trial cleanly.
+The generator will exit for various reasons indicating the end of the trial, a loss of communication with the orchestrator, of if the generator is sent "False".
 
 Parameters: None
 
@@ -287,6 +288,7 @@ Return: None
 
 Generator method to iterate over all events (actions, rewards, messages) as they are received.  This will block and wait for an event.
 When this generator exits, the callback function (registered with `register_actor`) should return to end the trial cleanly.
+The generator will exit for various reasons indicating the end of the trial, a loss of communication with the orchestrator, of if the generator is sent "False".
 
 Parameters: None
 
@@ -350,13 +352,15 @@ Abstract class containing trial configuration data to define the specifics of a 
 
 `environment_config`: *protobuf class instance* - Configuration for the environment in the new trial.  This configuration will be sent to the environment on start.  The type is specified in file `cogment.yaml` under the section `environment:config_type`.
 
-`environment_endpoint`: *str* - The URL to conenct to the environment.  The protocol must be "grpc".  E.g. "grpc://myenv:9000"
+`environment_endpoint`: *str* - The URL to connect to the environment.  The protocol must be "grpc".  E.g. "grpc://myenv:9000"
 
-`actors_config`: *list[protobuf class instance]* - The configuration data for all actors of the new trial.  The order is the same as `actors_endpoint` and `actors_class`.
+`actors`: *list[dict]* - Each item (dictionary) of the list represents an actor.  Each actor dictionary contains these key-value pairs:
 
-`actors_endpoint`: *list[str]* - The URL to connect to all actors of the new trial.  If instead of a URL, the value is "client", then this actor will connect in (as opposed to be to connected to), at which point the actor will need to provide the URL to connect to.  The order is the same as `actors_config` and `actors_class`.
-
-`actors_class`: *list[str]* - The actor class for all actors of the new trial.  The order is the same as `actors_config` and `actors_endpoint`.
+- "name": *str* - Name of the actor
+- "actor_class": *str* - The actor class for the actor
+- "endpoint": *str* - The URL to connect to the actor.  If, instead of a URL, the value is "client", then this actor will connect in (as opposed to be to connected to), and the actor will need to provide the URL to connect to the orchestrator.
+- "implementation: *str* - The name of the implementation to run this actor
+- "config": *protobuf class instance* - The configuration data for the actor.
 
 ### ```get_trial_id(self)```
 
