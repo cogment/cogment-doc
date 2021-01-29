@@ -10,7 +10,6 @@ nav:
       - "Installation & Setup": "introduction/installation.md"
   - "Support":
       - "Community channels": "support/community-channels.md"
-      # - "FAQ": "support/faq.md" # out-of-scope for ɑ
       # - "Troubleshooting": "support/troubleshooting.md" # out-of-scope for ɑ
   - "Concepts":
       - "Core Concepts": "concepts/core-concepts.md"
