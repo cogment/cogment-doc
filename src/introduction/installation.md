@@ -8,11 +8,17 @@ Please install:
 
 2. [protoc](https://github.com/protocolbuffers/protobuf)
 
-## Get the latest Cogment CLI
+## Install the latest Cogment CLI
 
 The latest `cogment` CLI is available [here](https://github.com/cogment/cogment-cli/releases/) as an executable binary.
 
 Choose the appropriate file for your system, rename the file to "cogment", and make sure to put it in a folder that is in your 'PATH' environmental variable.
+
+With a working installation you can run the following in a terminal:
+
+```console
+$ cogment version
+```
 
 You can then list all the commands by typing:
 
@@ -26,21 +32,29 @@ or for help on each individual command:
 $ cogment help <command>
 ```
 
-### Alternative install method, using Cogment CLI in a docker image
+## Test your installation
 
-`cogment` CLI can be used as a docker image available [here](https://hub.docker.com/r/cogment/cli). You can retrieve the latest release locally by running:
+In order to test that your installation is fully working, run an existing Cogment app, for example one of the steps of the tutorial.
 
-```console
-$ docker pull cogment/cli
-```
+Download or clone the sources for the official Rock-Paper-Scissors (_RPS_) tutorial from <https://github.com/cogment/cogment-tutorial-rps>.
 
-Then the easier way to use it is to create an alias named `cogment`:
+Once it is done, run the following in the directory you retrieved:
 
 ```console
-$ alias cogment="docker run --rm -v$(pwd):/cogment -v/var/run/docker.sock:/var/run/docker.sock cogment/cli"
+$ cd 5-human-player
+$ cogment run generate
+$ cogment run build
+$ cogment run start
 ```
 
-Add this to your `.bashrc` or `.zshrc` for `cogment` to be defined in all your sessions. This [article](https://shapeshed.com/unix-alias/) can help you if you're not familiar with aliases.
+The first `cogment` command will run the code generation phase for this project. If everything runs fine it means `cogment` and Protobuf's `protoc` are installed correctly.
 
-You are now ready to start using Cogment! We recommend our
-[cogment tutorial](../cogment/tutorial/intro.md) as the next step.
+The second will build docker images for the services of this Cogment app. If everything runs fine it means the `docker` and `docker-compose` installations are functional.
+
+Finally, the third command will start the Cogment app. In another terminal you can connect to it and play a few games of _RPS_ against a simple AI agent.
+
+```console
+$ cogment run client
+```
+
+Congratulations, you have a working installation of Cogment! We recommend you head to the [Cogment tutorial](../cogment/tutorial/intro.md) to learn how to implement this _RPS_ app from scratch.
