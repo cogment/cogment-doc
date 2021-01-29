@@ -15,7 +15,6 @@ nav:
       - "Core Concepts": "concepts/core-concepts.md"
       - "Glossary": "concepts/glossary.md"
   - "Cogment":
-      - "Getting Started": "cogment/getting-started.md"
       # - "Tutorial": # nice-to-have for ɑ
       #     - "Intro": "cogment/tutorial/intro.md"
       #     - "Step 1 : Create a new Trial": "cogment/tutorial/step1/index.md"
