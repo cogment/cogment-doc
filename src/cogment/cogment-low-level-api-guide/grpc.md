@@ -107,7 +107,7 @@ message ActorParams {
 
 - name: The name of the actor.
 - actor_class: The name of the class of actor.  Actor classes are defined in the `cogment.yaml` file in the `actor_classes:id` sections.
-- endpoint: The URL where the actor is being served, or "client".  The URL is used by the Orchestrator to connect to the actor using the `AgentEndpoint` gRPC service.  If set to "client", then the actor is a client and will connect to the Orchestrator instead, using the `ActorEndpoint` gRPC service.
+- endpoint: The URL where the actor is being served, or "client".  The URL is used by the Orchestrator to connect to the actor using the `AgentEndpoint` gRPC service.  If set to "client", then the actor is a client and will connect to the Orchestrator instead, using the `ClientActor` gRPC service.
 - implementation: (optional) The name of the implementation of the actor class to run.
 - config: (optional) The user config for the actor.
 
@@ -243,12 +243,12 @@ message Reward {
 - confidence: The confidence level of the reward value.
 - feedbacks: The individual feedbacks that were used to generate the reward value and confidence.
 
-### `AgentPeriodData`
+### `ActorPeriodData`
 
 Timely trial data sent to an actor.  The data may span a period of time.
 
 ```protobuf
-message AgentPeriodData {
+message ActorPeriodData {
   repeated Observation observations = 1;
   repeated Reward rewards = 2;
   repeated Message messages = 3;
@@ -423,10 +423,10 @@ This API is used by client actors participating in existing trials.
 Multiple simultaneous actors can connect using a single client application instance.
 The actors connecting this way must have an endpoint set to "client" in the [trial parameters][1].
 
-### Service `ActorEndpoint`
+### Service `ClientActor`
 
 ```protobuf
-service ActorEndpoint {
+service ClientActor {
   rpc JoinTrial(TrialJoinRequest) returns (TrialJoinReply) {}
   rpc ActionStream(stream TrialActionRequest) returns (stream TrialActionReply) {}
   rpc Heartbeat(TrialHeartbeatRequest) returns (TrialHeartbeatReply) {}
@@ -557,7 +557,7 @@ Stream reply message for the `ActionStream` procedure.
 
 ```protobuf
 message TrialActionReply {
-  AgentPeriodData data = 1;
+  ActorPeriodData data = 1;
   bool final_data = 2;
 }
 ```
@@ -778,7 +778,7 @@ Request message for the `OnEnd` procedure.
 
 ```protobuf
 message AgentEndRequest {
-  AgentPeriodData final_data = 1;
+  ActorPeriodData final_data = 1;
 }
 ```
 
@@ -940,7 +940,7 @@ message EnvMessageReply {}
 
 ## Data/Log API
 
-This API is defined in `data.proto`. It is implemented by the data logger application using the gRPC server API, and the orchestrator connects to the data logger application.
+This API is defined in `datalog.proto`. It is implemented by the data logger application using the gRPC server API, and the orchestrator connects to the data logger application.
 
 The data logger endpoint, for the orchestrator to connect to, is defined in the `cogment.yaml` file.
 
