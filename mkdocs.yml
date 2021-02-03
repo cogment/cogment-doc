@@ -15,13 +15,13 @@ nav:
       - "Core Concepts": "concepts/core-concepts.md"
       - "Glossary": "concepts/glossary.md"
   - "Cogment":
-      # - "Tutorial": # nice-to-have for ɑ
-      #     - "Intro": "cogment/tutorial/intro.md"
-      #     - "Step 1 : Create a new Trial": "cogment/tutorial/step1/index.md"
-      #     - "Step 2 : Implement our components": "cogment/tutorial/step2/index.md"
-      #     - "Step 3 : Upgrade our components": "cogment/tutorial/step3/index.md"
-      #     - "Step 4 : Create a friendly UI": "cogment/tutorial/step4/index.md"
-      #     - "Step 5 : Dataset and Results": "cogment/tutorial/step5/index.md"
+      - "Tutorial":
+          - "Introduction": "cogment/tutorial/introduction.md"
+          - "Step 1: Bootstrap a Cogment app": "cogment/tutorial/1-bootstrap-and-data-structures.md"
+          - "Step 2: Implement actor and environment": "cogment/tutorial/2-random-player.md"
+          - "Step 3: Introduce rewards": "cogment/tutorial/3-rewards.md"
+          - "Step 4: Create a heuristic player": "cogment/tutorial/4-heuristic-player.md"
+          - "Step 5: Add a human player in the loop": "cogment/tutorial/5-human-player.md"
       - "Cogment API Guide": "cogment/cogment-api-guide.md"
       - "Cogment API Reference":
           - "cogment.yaml": "cogment/cogment-api-reference/cogment-yaml.md"
