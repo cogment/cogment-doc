@@ -57,4 +57,4 @@ Finally, the third command will start the Cogment app. In another terminal you c
 $ cogment run client
 ```
 
-Congratulations, you have a working installation of Cogment! We recommend you head to the [Cogment tutorial](../cogment/tutorial/intro.md) to learn how to implement this _RPS_ app from scratch.
+Congratulations, you have a working installation of Cogment! We recommend you head to the [Cogment tutorial](../cogment/tutorial/introduction.md) to learn how to implement this _RPS_ app from scratch.
