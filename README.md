@@ -1,10 +1,12 @@
 # Cogment documentation
 
+[![Browse the current version](https://img.shields.io/static/v1?label=cogment%20doc&message=curent%20version&color=blue&style=flat-square&logo=read-the-docs)](./src/index.md)
+
 ## Introduction
 
 The Cogment framework is a high-efficiency, open source framework designed to enable the training of models in environments where humans and agents interact with the environment and each other continuously. It’s capable of distributed, multi-agent, multi-model training.
 
-This is the documentation for the Cogment framework.  For further Cogment information, check out the documentation at <https://docs.cogment.ai>
+This is the documentation for the Cogment framework. For further Cogment information, check out the documentation at <https://docs.cogment.ai>
 
 ## Architecture
 
