@@ -1,6 +1,6 @@
 ## Step 2: Implement a first actor and environment
 
-> This part of the tutorial follows [step 1](../1-bootstrap-and-data-structures), make sure you've gone through it before starting this one. Alternatively the completed step 1 can be retrieved from the [tutorial's repository](https://github.com/cogment/cogment-tutorial-rps).
+> This part of the tutorial follows [step 1](./1-bootstrap-and-data-structures.md), make sure you've gone through it before starting this one. Alternatively the completed step 1 can be retrieved from the [tutorial's repository](https://github.com/cogment/cogment-tutorial-rps).
 
 In this step of the tutorial, we will implement the (very simple) decison logic for the random player as well as the base mechanics for RPS, i.e. the rules of the game, in the environment services.
 
@@ -41,7 +41,7 @@ The generated implementation is very simple:
 - it handles the three main kind of events: **observations**, **rewards** and **messages**,
 - it does a default **action** whenever required, i.e. in response to an observation.
 
-We will further learn about how to use observations in [step 4](../4-heuristic-player) and rewards in [step 3](../3-rewards). Messages are out of the scope for this _basics_ tutorial.
+We will further learn about how to use observations in [step 4](./4-heuristic-player.md) and rewards in [step 3](./3-rewards.md). Messages are out of the scope for this _basics_ tutorial.
 
 Please note the import and usage of `PlayerAction` which is the data structure from `data.proto` defining the actor's action space.
 
@@ -228,8 +228,8 @@ print(f"\t * {state['rounds_count'] - state['p1']['won_rounds_count'] - state['p
 
 Modify the `environment/main.py` file to include the above additions. Please note that this code makes assumptions on the number of actors and their classes. Production code should handle non-standard cases in a better way. We also _merged_ how the implementation deals with `actions` and `final_actions`, you can remove the part of the update loop only dealing with `final_actions`.
 
-You can now [build and run](../1-bootstrap-and-data-structures#building-and-running-the-app) the application. Given the nature of the game and the fully random nature of the plays you should have around 1/3 of player 1 wins, 1/3 of player 2's and 1/3 of draws.
+You can now [build and run](./1-bootstrap-and-data-structures.md#building-and-running-the-app) the application. Given the nature of the game and the fully random nature of the plays you should have around 1/3 of player 1 wins, 1/3 of player 2's and 1/3 of draws.
 
 This concludes the step 2 of the tutorial: you implemented your first actor and your first environment.
 
-Let’s move on to learning more about rewards in [step 3](../3-rewards).
+Let’s move on to learning more about rewards in [step 3](./3-rewards.md).

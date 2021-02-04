@@ -1,6 +1,6 @@
 # Step 4: Add a second actor implementation based on a heuristic
 
-> This part of the tutorial follows [step 3](../3-rewards), make sure you've gone through it before starting this one. Alternatively the completed step 2 can be retrieved from the [tutorial's repository](https://github.com/cogment/cogment-tutorial-rps).
+> This part of the tutorial follows [step 3](./3-rewards.md), make sure you've gone through it before starting this one. Alternatively the completed step 2 can be retrieved from the [tutorial's repository](https://github.com/cogment/cogment-tutorial-rps).
 
 In this step of the tutorial, we will go over another actor implementation and learn about using the received observations before doing an action.
 
@@ -41,7 +41,7 @@ actors:
 
 Modify the `cogment.yaml` file to include the above addition.
 
-You can now [build and run](../1-bootstrap-and-data-structures#building-and-running-the-app) the application to check that it still works. Nothing should have changed except one of the player uses the code from the new implementation.
+You can now [build and run](./1-bootstrap-and-data-structures.md#building-and-running-the-app) the application to check that it still works. Nothing should have changed except one of the player uses the code from the new implementation.
 
 ## Implementing a simple heuristic's agent
 
@@ -78,8 +78,8 @@ else:
 
 Modify the `random_player/main.py` file accordingly.
 
-You can now [build and run](../1-bootstrap-and-data-structures#building-and-running-the-app) the application to check that it works. Don't expect the heuristic player to beat the random player, the nature of the game actually rewards pure randomness in the playing. You can however implement various strategies and see how they fare against each other.
+You can now [build and run](./1-bootstrap-and-data-structures.md#building-and-running-the-app) the application to check that it works. Don't expect the heuristic player to beat the random player, the nature of the game actually rewards pure randomness in the playing. You can however implement various strategies and see how they fare against each other.
 
 This concludes the step 4 of the tutorial: you've learned about adding and using different implementations of an actor class and how to access and use the received observations.
 
-Let’s move on to adding a human player in the mix with [step 5](../5-human-player).
+Let’s move on to adding a human player in the mix with [step 5](./5-human-player.md).

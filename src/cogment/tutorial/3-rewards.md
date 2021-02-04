@@ -1,6 +1,6 @@
 # Step 3 - Rewards
 
-> This part of the tutorial follows [step 2](../2-random-player), make sure you've gone through it before starting this one. Alternatively the completed step 2 can be retrieved from the [tutorial's repository](https://github.com/cogment/cogment-tutorial-rps).
+> This part of the tutorial follows [step 2](./2-random-player.md), make sure you've gone through it before starting this one. Alternatively the completed step 2 can be retrieved from the [tutorial's repository](https://github.com/cogment/cogment-tutorial-rps).
 
 In this step of the tutorial, we will start thinking about rewards. Rewards are a way to evaluate how an actor performs at a task. They can be used to evaluate or compare different implementations of an actor, or, especially in the context or Reinforcement Learning, train an model. In Cogment, both the environment and other actors can evaluate an actor. Here, we will focus on sending reward from the environment.
 
@@ -99,7 +99,7 @@ trial_params:
 
 Modify the `cogment.yaml` file with this update.
 
-You can now [build and run](../1-bootstrap-and-data-structures#building-and-running-the-app) the application to check that it works as expected.
+You can now [build and run](./1-bootstrap-and-data-structures.md#building-and-running-the-app) the application to check that it works as expected.
 
 In this simple implementation, the concept of game is local to the environment. It has no impact on the observation and action spaces, and thus no impact on the actor implementation. This means an actor wouldn't _know_ that the round it currently plays is the tie breaker in a game or its very first round. As a result the actor will play every round the same way.
 
@@ -131,7 +131,7 @@ environment_session.add_feedback(value=1, confidence=1, to=[p2.actor_name])
 
 Modify the `environment/main.py` file to include the above additions.
 
-You can now [build and run](../1-bootstrap-and-data-structures#building-and-running-the-app) the application to check that it works as expected. In particular you should see logs relative to the reception of rewards on the actor side.
+You can now [build and run](./1-bootstrap-and-data-structures.md#building-and-running-the-app) the application to check that it works as expected. In particular you should see logs relative to the reception of rewards on the actor side.
 
 ## Using the **metrics** and **dashboard** services to retrieve & visualize the rewards over time
 
@@ -139,4 +139,4 @@ You can now [build and run](../1-bootstrap-and-data-structures#building-and-runn
 
 This concludes the step 3 of the tutorial: you've learned about environment configuration, implemented your reward sending and used the **metrics** and **dashboard** services.
 
-Let’s move on to implementing an RPS player that actually considers what was played before deciding on its next move in [step 4](../4-heuristic-player).
+Let’s move on to implementing an RPS player that actually considers what was played before deciding on its next move in [step 4](./4-heuristic-player.md).

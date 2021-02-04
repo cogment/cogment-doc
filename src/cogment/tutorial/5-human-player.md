@@ -1,6 +1,6 @@
 # Step 5: Add a human player in the loop
 
-> This part of the tutorial follows [step 4](../4-heuristic-player), make sure you've gone through it before starting this one. Alternatively the completed step 2 can be retrieved from the [tutorial's repository](https://github.com/cogment/cogment-tutorial-rps).
+> This part of the tutorial follows [step 4](./4-heuristic-player.md), make sure you've gone through it before starting this one. Alternatively the completed step 2 can be retrieved from the [tutorial's repository](https://github.com/cogment/cogment-tutorial-rps).
 
 In this step of the tutorial, we will go over another actor implementation, this time client-side, to enable Humans to play RPS. We will also learn how to let the environment control the termination of the trial.
 
@@ -68,7 +68,7 @@ else:
 
 Edit the `environment/main.py` file to include the above additions.
 
-You can now [build and run](../1-bootstrap-and-data-structures#building-and-running-the-app) the application. It should be much faster than before as the AIs only play 5 games.
+You can now [build and run](./1-bootstrap-and-data-structures.md#building-and-running-the-app) the application. It should be much faster than before as the AIs only play 5 games.
 
 ## Client actor implementation
 
@@ -148,7 +148,7 @@ actors:
     # endpoint: grpc://random-agent:9000
 ```
 
-You can now [build and run](../1-bootstrap-and-data-structures#building-and-running-the-app) the application. Everything should work but player 1 shouldn't fare too well as it only ever plays `PAPER`.
+You can now [build and run](./1-bootstrap-and-data-structures.md#building-and-running-the-app) the application. Everything should work but player 1 shouldn't fare too well as it only ever plays `PAPER`.
 
 ## Interactive prompt to let Humans play RPS
 
@@ -199,6 +199,6 @@ next_action = PlayerAction(move=move)
 
 Modify the `client/main.py` file to include the above additions.
 
-You can now [build and run](../1-bootstrap-and-data-structures#building-and-running-the-app) the application. You'll be presented with a prompt for your moves and compare your skills to the simple heuristic AI we implemented earlier.
+You can now [build and run](./1-bootstrap-and-data-structures.md#building-and-running-the-app) the application. You'll be presented with a prompt for your moves and compare your skills to the simple heuristic AI we implemented earlier.
 
 This concludes the step 5 of the tutorial: you implemented your first client actor and put your first human in the loop! This is also the final step for the basics tutorial.

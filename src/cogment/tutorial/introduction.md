@@ -32,11 +32,11 @@ In the first 5 steps of the tutorial, you'll go from a blank state to a Cogment 
 
 The implementations will be done in Python 3, you'll need a good knowledge of the language to follow through.
 
-- [Step 1: Bootstrap the RPS project and define observation & action space data structures](../1-bootstrap-and-data-structures)
-- [Step 2: Implement a first actor and environment](../2-random-player)
-- [Step 3: Introduce rewards](../3-rewards)
-- [Step 4: Create a second actor implementation based on a heuristic](../4-heuristic-player)
-- [Step 5: Add a human player in the loop](../5-human-player)
+- [Step 1: Bootstrap the RPS project and define observation & action space data structures](./1-bootstrap-and-data-structures.md)
+- [Step 2: Implement a first actor and environment](./2-random-player.md)
+- [Step 3: Introduce rewards](./3-rewards.md)
+- [Step 4: Create a second actor implementation based on a heuristic](./4-heuristic-player.md)
+- [Step 5: Add a human player in the loop](./5-human-player.md)
 
 ## Webapp
 

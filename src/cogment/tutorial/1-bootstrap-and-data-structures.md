@@ -2,7 +2,7 @@
 
 ## Install Cogment
 
-To follow this tutorial you'll need a working installation of **Cogment**. If you haven't done so already, follow our [installation instructions](../../../introduction/installation).
+To follow this tutorial you'll need a working installation of **Cogment**. If you haven't done so already, follow our [installation instructions](../../introduction/installation.md).
 
 ## Bootstrap the app
 
@@ -142,4 +142,4 @@ To check that everything is working [build and run](#building-and-running-the-ap
 
 This concludes the step 1 of the tutorial: you have bootstrapped a Cogment project, implemented the data structures defining the action and observation spaces, started your app and ran a trial.
 
-Let’s move on to actually implementing our services in [step 2](../2-random-player).
+Let’s move on to actually implementing our services in [step 2](./2-random-player.md).
