@@ -23,7 +23,7 @@ The actor can be infered by the position in the list, and the index into the lis
 
 ## Common types
 
-Most of the messages are defined in the `common.proto` file.  `Rewards` and `AgenPeriodData` are defined in `agent.proto`.  `ObservationSet` is defined in `environment.proto`.
+Most of the messages are defined in the `common.proto` file.  `ObservationSet` is defined in `environment.proto`.
 
 ### `VersionRequest`
 
@@ -188,26 +188,6 @@ message Action {
 
 - content: The serialized protobuf message representing an action from a specific actor.  The actual message type for the action space is defined in the `cogment.yaml` file for each actor class in section `actor_classes:action:space`.  Note that the specific actor represented is defined by the enclosing message.
 
-### `Feedback`
-
-Data associated with a piece of feedback for an actor, from other actors or the environment.
-
-```protobuf
-message Feedback {
-  string actor_name = 1;
-  int32 tick_id = 2;
-  float value = 3;
-  float confidence = 4;
-  google.protobuf.Any user_data = 5;
-}
-```
-
-- actor_name: The name of the target actor.
-- tick_id: The time associated with the feedback.  If set to `-1`, the orchestrator will automatically assign the latest time to the feedback.
-- value: The numerical value of the feedback.
-- confidence: The weight of this feedback in computing the reward.
-- user_data: Additional user data to be consumed by the target actor.  It is the responsibility of the target actor to understand the type received.
-
 ### `Message`
 
 Data associated with a communication (message) destined for an actor or the environment.
@@ -226,22 +206,42 @@ message Message {
 - receiver_name: The name of the target/receiving actor.  "env" for the environment.
 - payload: Data for the target actor/environment.  It is the responsibility of the target to understand the type received.
 
-### `Rewards`
+### `RewardSource`
 
-Data representing a reward sent to an actor, usually for the purpose of training automated agents.
-A rewards is an aggregate of feedbacks.
+Data representing a simple reward source made by a single component/sender, usually for the purpose of training automated agents.
 
 ```protobuf
-message Reward {
-  float value = 1;
-  float confidence = 2;
-  repeated Feedback feedbacks = 3;
+message RewardSource {
+  string sender_name = 1;
+  float value = 2;
+  float confidence = 3;
+  google.protobuf.Any user_data = 4;
 }
 ```
 
-- value: The aggregated value (weighted sum) of the provided feedback values.
-- confidence: The confidence level of the reward value.
-- feedbacks: The individual feedbacks that were used to generate the reward value and confidence.
+- sender_name: Name of the sender that sent the reward.  This is not needed when sending becasue it will be set by the orchestrator.  It is only used by receiving actors.
+- value: The numerical value of the provided reward.
+- confidence: The weight of this reward in computing the final (aggregated) reward.
+- user_data: Additional user data to be consumed by the receiving actor.  It is the responsibility of the receiver to understand the type received.
+
+### `Reward`
+
+Data representing a reward sent or received, usually for the purpose of training automated agents.
+This is an aggregate of possibly multiple `RewardSource` (but at least one).
+
+```protobuf
+message Reward {
+  string receiver_name = 1;
+  int32 tick_id = 2;
+  float value = 3;
+  repeated RewardSource sources = 4;
+}
+```
+
+- receiver_name: Name of the receiving actor (the reward destination).
+- tick_id: The time step associated with the reward.  If set to `-1` when sending a reward, the orchestrator will automatically assign the latest tick.  This will always be a valid tick when receiving a reward.
+- value: The aggregated value (weighted sum) of the provided reward sources.  May be ignored when sending a reward; The final value will be computed by the orchestrator.
+- sources: The simple reward sources that form this aggregated reward. There must be at least one.
 
 ### `ActorPeriodData`
 
@@ -256,7 +256,7 @@ message ActorPeriodData {
 ```
 
 - observations: Observations from the environment for a period of time.  Typically only for one time step (tick).
-- rewards: List of rewards, from various feedbacks sent by actors or the environment.
+- rewards: List of rewards sent by actors or the environment.
 - messages: List of user data sent by actors or the environment.
 
 ### `ObservationSet`
@@ -430,7 +430,7 @@ service ClientActor {
   rpc JoinTrial(TrialJoinRequest) returns (TrialJoinReply) {}
   rpc ActionStream(stream TrialActionRequest) returns (stream TrialActionReply) {}
   rpc Heartbeat(TrialHeartbeatRequest) returns (TrialHeartbeatReply) {}
-  rpc GiveFeedback(TrialFeedbackRequest) returns (TrialFeedbackReply) {}
+  rpc SendReward(TrialRewardRequest) returns (TrialRewardReply) {}
   rpc SendMessage(TrialMessageRequest) returns (TrialMessageReply) {}
   rpc Version(VersionRequest) returns (VersionInfo) {}
 }
@@ -462,7 +462,7 @@ Metadata:
 - `trial-id`: UUID of the trial the current actor is participating in.  This comes from the `JoinTrial` reply.
 - `actor-name`: The name of the current actor participating in the trial.  This is supplied (or confirmed) in the `JoinTrial` reply.
 
-#### `GiveFeedback()`
+#### `SendReward()`
 
 Used to provide feedback to other actors in the same trial as current actor.
 
@@ -565,24 +565,24 @@ message TrialActionReply {
 - data: The trial data for the current actor.  This data can span a period of time, but is typically for one time step (tick).
 - final_data: If this is true, the data provided is final and no more reply messages will be received after this one.
 
-### `TrialFeedbackRequest`
+### `TrialRewardRequest`
 
-Request message for the `GiveFeedback` procedure.
+Request message for the `SendReward` procedure.
 
 ```protobuf
-message TrialFeedbackRequest {
-  repeated Feedback feedbacks = 1;
+message TrialRewardRequest {
+  repeated Reward rewards = 1;
 }
 ```
 
-- feedbacks: The feedbacks to send to one or more actors.
+- rewards: The rewards to send to one or more actors.
 
-### `TrialFeedbackReply`
+### `TrialRewardReply`
 
-Reply message for the `GiveFeedback` procedure.
+Reply message for the `SendReward` procedure.
 
 ```protobuf
-message TrialFeedbackReply {}
+message TrialRewardReply {}
 ```
 
 ### `TrialMessageRequest`
@@ -721,13 +721,13 @@ Reply message for the `OnObservation` procedure.
 ```protobuf
 message AgentActionReply {
   Action action = 1;
-  repeated Feedback feedbacks = 2;
+  repeated Reward rewards = 2;
   repeated Message messages = 3;
 }
 ```
 
 - action: An action for the environment.
-- feedbacks: Feedbacks for other actors.
+- rewards: Rewards for other actors.
 - messages: User data to send to other actors or the environment.  The sender_name entry should not be set.
 
 ### `AgentRewardRequest`
@@ -736,13 +736,11 @@ Request message for the `OnReward` procedure.
 
 ```protobuf
 message AgentRewardRequest {
-  int32 tick_id = 1;
-  Reward reward = 2;
+  Reward reward = 1;
 }
 ```
 
-- tick_id: The time step (tick) for which the reward applies.
-- reward: Reward from various feedbacks sent by actors or the environment.
+- reward: Reward received from aggregating various rewards from actors or the environment.
 
 ### `AgentRewardReply`
 
@@ -906,14 +904,14 @@ Reply message for the `OnAction` and `OnEnd` procedures.
 ```protobuf
 message EnvActionReply {
   ObservationSet observation_set = 1;
-  repeated Feedback feedbacks = 2;  // Feedback accumulated so far
+  repeated Reward rewards = 2;
   repeated Message messages = 3;
-  bool final_update = 4;  // This should normally end the trial
+  bool final_update = 4;
 }
 ```
 
 - observation_set:  A set of observations for all actors of the trial.
-- feedback: A list of feedbacks for actors.
+- rewards: A list of rewards for actors.
 - messages: User data to send to actors.  The sender_name entry should not be set.
 - messages: A list of messages for actors.  The sender actor entry should not be filled.
 - final_update: If true, this will be the final update of the environment for this trial (i.e. end of the trial). This should always be true when replying to an `OnEnd` procedure call.

@@ -118,15 +118,15 @@ When a game is won, the environment will add a **positive reward to the winner**
 In the **update loop**, when the first player wins a game we add the following.
 
 ```python
-environment_session.add_feedback(value=1, confidence=1, to=[p1.actor_name])
-environment_session.add_feedback(value=0, confidence=1, to=[p2.actor_name])
+environment_session.add_reward(value=1, confidence=1, to=[p1.actor_name])
+environment_session.add_reward(value=0, confidence=1, to=[p2.actor_name])
 ```
 
 When the second player wins a game we add the following.
 
 ```python
-environment_session.add_feedback(value=0, confidence=1, to=[p1.actor_name])
-environment_session.add_feedback(value=1, confidence=1, to=[p2.actor_name])
+environment_session.add_reward(value=0, confidence=1, to=[p1.actor_name])
+environment_session.add_reward(value=1, confidence=1, to=[p2.actor_name])
 ```
 
 Modify the `environment/main.py` file to include the above additions.

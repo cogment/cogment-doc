@@ -185,16 +185,16 @@ Return: *list[ActiveActor]* - List of active actors and classes involved in this
 - `actor_name`: *str* - Name of the actor.
 - `actor_class_name`: *str* - Name of the actor's class.
 
-### ```add_feedback(self, value, confidence, to, tick_id=-1, user_data=None)```
+### ```add_reward(self, value, confidence, to, tick_id=-1, user_data=None)```
 
-Method to send a feedback (to create the rewards) to one or more actors.
+Method to send a reward to one or more actors.
 
 Parameters:
 
-- `value`: *float* - Value of the feedback, to be combined with other feedbacks to make a reward.
-- `confidence`: *float* - Weight of the feedback value in determining the final reward.
-- `to`: *list[str]* - Targets of feedback.  A list value could be the name of an actor in the trial.  Or it could represent a set of actors; A set of actors can be represented with the wildcard character "`*`" for all actors (of all classes), or "`actor_class.*`" for all actors of a specific class (the `actor_class` is the name of the class as specified in `cogment.yaml`).
-- `user_data`: *protobuf class instance* - Extra user data to be sent with the feedback. The class can be any protobuf class.  It is the responsibility of the receiving actor to manage the type received.
+- `value`: *float* - Value of the reward.  This will be aggregated with other rewards for the same target actor.
+- `confidence`: *float* - Weight of this reward value in determining the final aggregated reward.
+- `to`: *list[str]* - Target(s) of reward.  A list value could be the name of an actor in the trial.  Or it could represent a set of actors; A set of actors can be represented with the wildcard character "`*`" for all actors (of all classes), or "`actor_class.*`" for all actors of a specific class (the `actor_class` is the name of the class as specified in `cogment.yaml`).
+- `user_data`: *protobuf class instance* - Extra user data to be sent with the reward. The class can be any protobuf class.  It is the responsibility of the receiving actor to manage the type received.
 
 Return: None
 
@@ -296,7 +296,7 @@ Return: *generator of dict* - A generator for the events that arrive.  The dicti
 
 - "observation" : *protobuf class instance* - Observation received from the environment.  The class of the observation is defined as observation space for the actor class.  This is specified in section `actor_classes:observation:space` in `cogment.yaml` for the appropriate/receiving actor class.  The `self.do_action` method should be used to "reply" when receiving this data.
 
-- "reward" : *Reward instance* - Reward received.  The reward received is of the type `Reward`.
+- "reward" : *RecvReward instance* - A received reward.  The reward received is of the type `RecvReward`.
 
 - "message" :  *tuple(str, google.protobuf.Any instance)* - Data for a received message. The string in the tuple is the name of the sender.  The class is of the type set by the sender; It is the responsibility of the environment to manage the data received (i.e. determine the type and unpack the data).
 
@@ -414,7 +414,7 @@ Parameters: None
 
 Return: *generator of class instance* - A generator for the samples received.
 
-## class Reward
+## class RecvReward
 
 Class containing the details of a received reward.
 
@@ -422,15 +422,26 @@ Class containing the details of a received reward.
 
 `value`: *float* - Value of the reward
 
-`confidence`: *float* - Weight the reward has relative to other rewards.
+### ```get_nb_sources(self)`
 
-### ```all_user_data(self)```
-
-Generator method to iterate over all user_data making up this reward.
+Return the number of source rewards this reward is based upon.
 
 Parameters: None
 
-Return: *generator(byte strings)* - A generator for the user_data in the reward (from individual feedbacks that make up the reward).  The user_data is a serialization of a protobuf class sent by the originator, and it is the responsibility of the receiving actor to decode it (i.e. to know what class is supposed to be received).
+Return: Number of sources.
+
+### ```all_sources(self)```
+
+Generator method to iterate over all sources making up this reward.
+
+Parameters: None
+
+Return: *generator(tuple(float, float, string, google.protobuf.Any instance))* - A generator for the sources in the reward (simple rewards that make up this final/aggregate reward).
+
+- tuple[0]: *float* - The value of the source reward.
+- tuple[1]: *float* - The confidence level of the reward value.
+- tuple[2]: *string* - Name of the sender.
+- tuple[3]: *google.protobuf.Any instance* - Data for a user specific reward format.  Can be `None` if no specific data was provided. The class enclosed in `google.protobuf.Any` is of the type set by the sender; It is the responsibility of the receiver to manage the data received (i.e. determine the type and unpack the data).
 
 [1]: ./cogment-yaml.md
 [4]: ../../concepts/glossary.md#actor-class
