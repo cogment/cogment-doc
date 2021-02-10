@@ -67,13 +67,21 @@ Parameters:
 - `user_id`: *str* - Identifier for the user of this context.
 - `cog_settings`: *module* - Settings module associated with trials that will be run ([cog_settings](#cog_settings.py) namespace).
 
-### ```async serve_all_registered(self, port, prometheus_port = 8000)```
+### ```set_credentials(self, root, private_key, chain)```
+
+root_certificates – The PEM-encoded root certificates as a byte string, or None to retrieve them from a default location chosen by gRPC runtime.
+
+private_key – The PEM-encoded private key as a byte string, or None if no private key should be used.
+
+certificate_chain – The PEM-encoded certificate chain as a byte string to use or None if no certificate chain should be used.
+
+### ```async serve_all_registered(self, served_endpoint, prometheus_port = 8000)```
 
 Method to start and run the communication server for the registered components (environment, actor, prehook, datalog).  Returns only when all activity has stopped (i.e. current coroutine is blocked until the server is stopped).
 
 Parameters:
 
-- `port`: *int* - TCP/IP port number to listen to.
+- `served_endpoint`: *ServedEndpoint instance* - Details of the connection for the served components.
 - `prometheus_port`: *int* - TCP/IP port number for Prometheus
 
 Return : None
@@ -84,7 +92,7 @@ Method to start a new trial.  Returns only when the `impl` returns.
 
 Parameters:
 
-- `endpoint`: *str* - URL of the Orchestrator to connect to.
+- `endpoint`: *Endpoint instance* - Details of the connection to the Orchestrator.
 - `impl`: *async function(ControlSession instance)* - Callback function to be registered.
 - `trial_config`: *protobuf class instance* - Configuration for the trial.  The type is specified in file `cogment.yaml` under the section `trial:config_type`.  Can be `None` if non configuration is provided.
 
@@ -97,7 +105,7 @@ Method for an actor to asynchronously join an existing trial.  Returns only when
 Parameters:
 
 - `trial_id`: *str* - The UUID of the trial to join.
-- `endpoint`: *str* - URL of the Orchestrator to connect to join the trial.
+- `endpoint`: *Endpoint instance* - Details of the connection to the Orchestrator.
 - `impl_name`: *str* - The implementation name of the actor to join the trial.  The implementation must have previously been registered with the `register_actor` method.
 - `actor_namer`: *str* - Name of the actor joining the trial. If `None`, the actor will join as any of the configured (free) actors of the actor class registered for `impl_name`.  Otherwise, the name must match an actor with an actor_class compatible with `impl_name` as defined in `cogment.yaml` in the sections `trial_params:actors:actor_class` and `trial_params:actors:name`.
 
@@ -442,6 +450,42 @@ Return: *generator(tuple(float, float, string, google.protobuf.Any instance))* -
 - tuple[1]: *float* - The confidence level of the reward value.
 - tuple[2]: *string* - Name of the sender.
 - tuple[3]: *google.protobuf.Any instance* - Data for a user specific reward format.  Can be `None` if no specific data was provided. The class enclosed in `google.protobuf.Any` is of the type set by the sender; It is the responsibility of the receiver to manage the data received (i.e. determine the type and unpack the data).
+
+## class Endpoint
+
+Class enclosing the details for connecting to an Orchestrator.
+
+`url`: *str* - The URL where to connect to the Orchestrator.
+
+`private_key`: *str* - To use TLS for the connection, this must be set to the PEM-encoded private key.
+
+`root_certificates`: *str* - If using TLS for the connection (i.e. the `private_key` is not `None`), this can be set to the PEM-encoded root certificates. If not set and using TLS for the connection, the root certificates will be fetched from the system default location.
+
+`certificate_chain`: *str* - If True, then the Orchestrator must be authenticated, and `root_certificates` must be set properly.
+
+### ```__inti__(self, url)```
+
+Parameters:
+
+- `url`: *str* - The URL where to connect to the Orchestrator.
+
+## class ServedEndpoint
+
+Class enclosing the details for connection from an Orchestrator.
+
+`port`: *str* - The TCP/IP port where the service will be awaiting the Orchestrator connection.
+
+`private_key_certificate_chain_pairs`: *list[tupple(str, str)]* - To use TLS for incoming connections, this must be se to a list of tuples of the form (PEM-encoded private key, PEM-encoded certificate chain).
+
+`root_certificates`: *str* - If using TLS for the connection (i.e. `private_key_certificate_chain_pairs` is not `None`), this can be set to PEM-encoded Orchestrator root certificates that the server will use to verify Orchestrator authentication. If omitted, require_client_auth must also be False.
+
+`require_client_auth`: *bool* - If using TLS for the connection, this can be set to the PEM-encoded certificate chain.
+
+### ```__inti__(self, port)```
+
+Parameters:
+
+- `port`: *int* - The TCP/IP port where the service will be awaiting the Orchestrator connection.
 
 [1]: ./cogment-yaml.md
 [4]: ../../concepts/glossary.md#actor-class
