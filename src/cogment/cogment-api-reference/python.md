@@ -449,7 +449,7 @@ Return: *generator(tuple(float, float, string, google.protobuf.Any instance))* -
 - tuple[0]: *float* - The value of the source reward.
 - tuple[1]: *float* - The confidence level of the reward value.
 - tuple[2]: *string* - Name of the sender.
-- tuple[3]: *google.protobuf.Any instance* - Data for a user specific reward format.  Can be `None` if no specific data was provided. The class enclosed in `google.protobuf.Any` is of the type set by the sender; It is the responsibility of the receiver to manage the data received (i.e. determine the type and unpack the data).
+- tuple[3]: *google.protobuf.Any instance* - Data for a user-specific reward format.  Can be `None` if no specific data was provided. The class enclosed in `google.protobuf.Any` is of the type set by the sender; It is the responsibility of the receiver to manage the data received (i.e. determine the type and unpack the data).
 
 ## class Endpoint
 
@@ -461,7 +461,7 @@ Class enclosing the details for connecting to an Orchestrator.
 
 `root_certificates`: *str* - If using TLS for the connection (i.e. the `private_key` is not `None`), this can be set to the PEM-encoded root certificates. If not set and using TLS for the connection, the root certificates will be fetched from the system default location.
 
-`certificate_chain`: *str* - If True, then the Orchestrator must be authenticated, and `root_certificates` must be set properly.
+`certificate_chain`: *str* - If using TLS for the connection, this can be set to the PEM-encoded certificate chain.
 
 ### ```__inti__(self, url)```
 
@@ -479,7 +479,7 @@ Class enclosing the details for connection from an Orchestrator.
 
 `root_certificates`: *str* - If using TLS for the connection (i.e. `private_key_certificate_chain_pairs` is not `None`), this can be set to PEM-encoded Orchestrator root certificates that the server will use to verify Orchestrator authentication. If omitted, require_client_auth must also be False.
 
-`require_client_auth`: *bool* - If using TLS for the connection, this can be set to the PEM-encoded certificate chain.
+`require_client_auth`: *bool* - If True, then the Orchestrator must be authenticated, and `root_certificates` must be set properly.
 
 ### ```__inti__(self, port)```
 
