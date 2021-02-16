@@ -1,6 +1,6 @@
 ## Step 2: Implement a first actor and environment
 
-> This part of the tutorial follows [step 1](./1-bootstrap-and-data-structures.md), make sure you've gone through it before starting this one. Alternatively the completed step 1 can be retrieved from the [tutorial's repository](https://github.com/cogment/cogment-tutorial-rps).
+> This part of the tutorial follows [step 1](./1-bootstrap-and-data-structures.md), make sure you've gone through it before starting this one. Alternatively, the completed step 1 can be retrieved from the [tutorial's repository](https://github.com/cogment/cogment-tutorial-rps).
 
 In this step of the tutorial, we will implement the (very simple) decison logic for the random player as well as the base mechanics for RPS, i.e. the rules of the game, in the environment services.
 
