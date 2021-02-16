@@ -122,8 +122,8 @@ In the context of RPS, the environment is limited to the two players and what th
 
 ```proto
 message PlayerState {
-  Move last_move = 1; // Last moved played
-  bool won_last = 2;  // Did the player won the last round
+  Move last_move = 1; // Last move played
+  bool won_last = 2;  // Did the player win the last round
 }
 ```
 
