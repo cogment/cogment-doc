@@ -30,7 +30,7 @@ async def main():
   await context.serve_all_registered(port=9000)
 ```
 
-At the beggining of the file the function `random_agent` is the actor's implementation. This function is called once per actor and per trial and handles the full lifetime of the actor.
+At the beginning of the file, the function `random_agent` is the actor's implementation. This function is called once per actor and per trial and handles the full lifetime of the actor.
 
 - The actor's **initialization**, before the `async for`. This is where, for example, actor's internal data can be defined before calling `actor_session.start()` to notify that it is ready,
 - Its **update loop**, the content of the `async for`. This is where resides the implementation of the actor's response to various events,
