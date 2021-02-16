@@ -116,7 +116,7 @@ Modify the `data.proto` file to include the above additions.
 
 ### Observation Space
 
-The `Observation` structure defines what the actors perceive from the environment. It is an input they use to chose which action to take.
+The `Observation` structure defines what the actors perceive from the environment. It is an input they use to choose which action to take.
 
 In the context of RPS, the environment is limited to the two players and what they played. We represent this information in a data structure called `PlayerState` using two properties.
 
