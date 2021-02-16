@@ -139,7 +139,7 @@ async def environment(environment_session):
 
 Our goal, in this section, is to implement how the environment computes the observations from the actions done by the actors at a given timestep.
 
-We first import the needed datastructure and define a dictionnary mapping each move to the move that defeats it.
+We first import the needed datastructure and define a dictionary mapping each move to the move that defeats it.
 
 ```python
 from data_pb2 import PlayerState, ROCK, PAPER, SCISSORS
