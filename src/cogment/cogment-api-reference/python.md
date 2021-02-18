@@ -67,14 +67,6 @@ Parameters:
 - `user_id`: *str* - Identifier for the user of this context.
 - `cog_settings`: *module* - Settings module associated with trials that will be run ([cog_settings](#cog_settings.py) namespace).
 
-### ```set_credentials(self, root, private_key, chain)```
-
-root_certificates – The PEM-encoded root certificates as a byte string, or None to retrieve them from a default location chosen by gRPC runtime.
-
-private_key – The PEM-encoded private key as a byte string, or None if no private key should be used.
-
-certificate_chain – The PEM-encoded certificate chain as a byte string to use or None if no certificate chain should be used.
-
 ### ```async serve_all_registered(self, served_endpoint, prometheus_port = 8000)```
 
 Method to start and run the communication server for the registered components (environment, actor, prehook, datalog).  Returns only when all activity has stopped (i.e. current coroutine is blocked until the server is stopped).
@@ -240,7 +232,7 @@ Return: None
 
 Generator method to iterate over all events (actions, messages) as they are received.  This will block and wait for an event.
 When this generator exits, the callback function (registered with `register_environment`) should return to end the trial cleanly.
-The generator will exit for various reasons indicating the end of the trial, a loss of communication with the orchestrator, of if the generator is sent "False".
+The generator will exit for various reasons indicating the forced termination of the trial, a loss of communication with the orchestrator, or if the generator is sent "False".
 
 Parameters: None
 
@@ -296,7 +288,7 @@ Return: None
 
 Generator method to iterate over all events (actions, rewards, messages) as they are received.  This will block and wait for an event.
 When this generator exits, the callback function (registered with `register_actor`) should return to end the trial cleanly.
-The generator will exit for various reasons indicating the end of the trial, a loss of communication with the orchestrator, of if the generator is sent "False".
+The generator will exit for various reasons indicating the end of the trial, a loss of communication with the orchestrator, or if the generator is sent "False".
 
 Parameters: None
 
@@ -477,9 +469,7 @@ Class enclosing the details for connection from an Orchestrator.
 
 `private_key_certificate_chain_pairs`: *list[tupple(str, str)]* - To use TLS for incoming connections, this must be se to a list of tuples of the form (PEM-encoded private key, PEM-encoded certificate chain).
 
-`root_certificates`: *str* - If using TLS for the connection (i.e. `private_key_certificate_chain_pairs` is not `None`), this can be set to PEM-encoded Orchestrator root certificates that the server will use to verify Orchestrator authentication. If omitted, require_client_auth must also be False.
-
-`require_client_auth`: *bool* - If True, then the Orchestrator must be authenticated, and `root_certificates` must be set properly.
+`root_certificates`: *str* - If using TLS for the connection (i.e. `private_key_certificate_chain_pairs` is not `None`), this should be set to PEM-encoded Orchestrator root certificates that the server will use to verify Orchestrator authentication.
 
 ### ```__inti__(self, port)```
 
