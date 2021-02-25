@@ -141,17 +141,17 @@ actor_classes:
 This section defines the different parameters that can be adjusted by pre-trial hooks for each trial.  It also defines the default values for these parameters.  These parameters are:
 
 - `trial`: Mapping of properties
-  - `config`: Definition of properties to match the definition of `config_type` for the trial
+  - `config`: Definition of properties to match the definition of `config_type` for the trial. I.e. the yaml definition needs to match the definition of the protobuf class declared as `config_type`.
 - `environment`: Mapping of properties
   - `endpoint`: The URL where the environment gRPC server resides
   - `implementation`: The name of the implementation to be used for this instance of the environment.  This must match an implementation that is defined at the endpoint.  If not defined, an arbitraary implementation will be chosen at runtime
-  - `config`: Definition of properties to match the definition of `config_type` for the environment
+  - `config`: Definition of properties to match the definition of `config_type` for the environment. I.e. the yaml definition needs to match the definition of the protobuf class declared as `config_type`.
 - `actors`: List of actor properties
   - `name`: The name of this actor (i.e. name of the specific instance of the actor class)
-  - `actor_class`: The name (id) of the actor class.  The actor class must be defined in the `actor_classes` section above
+  - `actor_class`: The name of the actor class.  The actor class must be defined in the `actor_classes` section above
   - `endpoint`: The URL where the actor gRPC server resides.  If this is `client`, the actor will connect as a client (the orchestrator being the server in this case).
   - `implementation`: The name of the implementation to be used for this actor instance.  This must match an implementation that is defined at the endpoint.  If not defined, an arbitraary implementation will be chosen at runtime.
-  - `config`: Definition of properties to match the definition of `config_type` for this actor class.  I.e. the yaml definition needs to match the 
+  - `config`: Definition of properties to match the definition of `config_type` for this actor class.  I.e. the yaml definition needs to match the definition of the protobuf class declared as `config_type`.
 
 E.g.:
 

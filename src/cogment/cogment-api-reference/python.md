@@ -17,9 +17,9 @@ For example, an [actor class][4] is defined by its required [observation space][
 
 These "spaces" are defined by using protobuf message types (from the imported files). [Observations][7] and [actions][8] will simply be instances of the appropriate type.
 
-Messages and feedback user data don't have a set type, they can be any type as long as the receiver can manage that type (i.e. the type of the object received should be checked against known types before handling).  The type is determined by the originator of the message.
+Messages and feedback user data don't have a set type, they can be any type as long as the receiver can manage that type (i.e. the object received is an instance of `google.protobuf.Any` and the contained type should be checked against known types before handling).  The type is determined by the provided message from the originator.
 
-The `trial_params` section represents default valuesut can be dynamically changed for each trial with pre-trial hooks.  Therefore, below, when this section of the `cogment.yaml` file is refered, we mean the final parameters after any pre-trial hooks.
+The `trial_params` section represents default values that can be dynamically changed for each trial with pre-trial hooks.  Therefore, below, when this section of the `cogment.yaml` file is refered, we mean the final parameters after any pre-trial hooks.
 
 #### Compiling the cogment.yaml
 
@@ -49,7 +49,7 @@ This will generate both a `cog_settings.py` file, as well as any required compil
 
 ### Top-level import
 
-Wether a script implements an actor or environment, it should import both the `cog_settings` and `cogment` modules.
+Wether a script implements an actor or environment, it should import both the `cogment` module (generic python SDK for Cogment) and the `cog_settings` module (project specific definitions created from `cogment.yaml`).
 
 ```python
 import cog_settings
@@ -122,7 +122,7 @@ Parameters:
 
 - `impl`: *async func(ActorSession instance)* - Callback function to be registered.
 - `impl_name`: *str* - Name for the actor implementation being run by the given callback function.
-- `actor_classes`: *list[str]* - The actor class name(s) that can be run by the given callback function. The possible names are specified in file `cogment.yaml` as `id` under section `actor_classes`.  If the list is empty, this implementation can run any actor class.
+- `actor_classes`: *list[str]* - The actor class name(s) that can be run by the given callback function. The possible names are specified in file `cogment.yaml` under section `actor_classes:name`.  If the list is empty, this implementation can run any actor class.
 
 Return: None
 
@@ -176,7 +176,7 @@ Return: *bool* - True if the trial has ended, false otherwise.
 
 ### ```get_active_actors(self)```
 
-Method to get the list of active actors in the trial.
+Method to get the list of active actors in the trial.  This may be expensive to retrieve and thus should be stored if not expecting the list to change throughout the trial.
 
 Parameters: None
 
@@ -194,17 +194,18 @@ Parameters:
 - `value`: *float* - Value of the reward.  This will be aggregated with other rewards for the same target actor.
 - `confidence`: *float* - Weight of this reward value in determining the final aggregated reward.
 - `to`: *list[str]* - Target(s) of reward.  A list value could be the name of an actor in the trial.  Or it could represent a set of actors; A set of actors can be represented with the wildcard character "`*`" for all actors (of all classes), or "`actor_class.*`" for all actors of a specific class (the `actor_class` is the name of the class as specified in `cogment.yaml`).
-- `user_data`: *protobuf class instance* - Extra user data to be sent with the reward. The class can be any protobuf class.  It is the responsibility of the receiving actor to manage the type received.
+- `tick_id`: *int* - The tick id (time step) for which the reward should be applied.  If "-1", then the reward applies to the current time step.
+- `user_data`: *protobuf class instance* - Extra user data to be sent with the reward. The class can be any protobuf class.  It is the responsibility of the receiving actor to manage the class received (packed in a `google.protobuf.Any`).
 
 Return: None
 
 ### ```send_message(self, user_data, to, to_environment=False)```
 
-Method to send a message to one or more actors/environment.
+Method to send a message (related to current time step) to one or more actors/environment.
 
 Parameters:
 
-- `user_data`: *protobuf class instance* - The message to be sent. The class can be any protobuf class.  It is the responsibility of the receiving actor or environment to manage the type received.
+- `user_data`: *protobuf class instance* - The message to be sent. The class can be any protobuf class.  It is the responsibility of the receiving actor or environment to manage the class received (packed in a `google.protobuf.Any`).
 - `to`: *list[str]* - Targets of feedback.  A list value could be the name of an actor in the trial.  Or it could represent a set of actors; A set of actors can be represented with the wildcard character "`*`" for all actors (of all classes), or "`actor_class.*`" for all actors of a specific class (the `actor_class` is the name of the class as specified in `cogment.yaml`).
 - `to_environment`: *bool* - If True, the message is also sent to the environment, otherwise the message is only sent to the actors specified.
 
@@ -232,21 +233,15 @@ Return: None
 
 Generator method to iterate over all events (actions, messages) as they are received.  This will block and wait for an event.
 When this generator exits, the callback function (registered with `register_environment`) should return to end the trial cleanly.
-The generator will exit for various reasons indicating the forced termination of the trial, a loss of communication with the orchestrator, or if the generator is sent "False".
+The generator will exit for various reasons indicating the termination of the trial, a loss of communication with the orchestrator, or if the generator is sent "False" (in which case the callback function does not necessarily need to exit).
 
 Parameters: None
 
-Return: *generator of dict* - A generator for the events that arrive.  The dictionary may contain any of the following:
-
-- "actions" : *list[action]* - The actions from the actors in the trial. The class of each action is defined as action space for each actor in `cogment.yaml`.  The list is in the same order (and same length) as the list of actors returned by `Session.get_active_actors`.  The `self.produce_observation` method should be used to "reply" when receiving this data.
-
-- "final_actions" : *list[action]* - The final set of actions at the end of a trial (i.e. no more actions will be coming after this event).  This is received when a trial termination has been externally requested (e.g. `ControlSession.terminate_trial` method is called).  The actions received are the same as for "actions" above.  The `self.end` method must be called after receiving this event to cleanly end a trial.  The event loop will exit after this event is received (i.e. the event loop generator will reach the "end").
-
-- "message" :  *tuple(str, google.protobuf.Any instance)* - Data for a received message. The string in the tuple is the name of the sender.  The class is of the type set by the sender; It is the responsibility of the environment to manage the data received (i.e. determine the type and unpack the data).
+Return: *generator(RecvEvent instance)* - A generator for the events that arrive.  The `RecvEvent` instances received from this generator will only contain actions or messages, no observations neither rewards.  When receiving actions in the event, the `self.produce_observation` method is normally used to "reply" (or `self.end` to end the trial).
 
 ### ```produce_observations(self, observations)```
 
-Method to send observations to actors.
+Method to send observations to actors.  If called after receiving an event of type `EventType.ENDING`, the observation will be consired the final observation (equivalent to calling `end()`).
 
 Parameters:
 
@@ -256,7 +251,7 @@ Return: None
 
 ### ```end(self, final_observations)```
 
-Method to report the end of the environment.  This method must be called to finalize a trial properly, either in response to a "final_actions" event received (i.e. a terminate trial request), or because the environment is stopping for other reasons (e.g. end of the simulation).
+Method to report the end of the environment. This will effectively end the trial.
 
 Parameters:
 
@@ -268,7 +263,7 @@ Return: None
 
 Abstract class based on `Session`, containing session/trial data and methods necessary to run an actor for a trial.  An instance of this class is passed as argument to the actor callback function registered with `cogment.Context.register_actor`.
 
-`class_name`: *str* - Name of the class of actor this instance represents.  Specified in `cogment.yaml` as `actor_classes:id`.
+`class_name`: *str* - Name of the class of actor this instance represents.  Specified in `cogment.yaml` as `actor_classes:name`.
 
 `impl_name`: *str* - Name of the implementation of the actor represented by this instance.
 
@@ -286,21 +281,13 @@ Return: None
 
 ### ```async event_loop(self)```
 
-Generator method to iterate over all events (actions, rewards, messages) as they are received.  This will block and wait for an event.
+Generator method to iterate over all events (observations, rewards, messages) as they are received.  This will block and wait for an event.
 When this generator exits, the callback function (registered with `register_actor`) should return to end the trial cleanly.
 The generator will exit for various reasons indicating the end of the trial, a loss of communication with the orchestrator, or if the generator is sent "False".
 
 Parameters: None
 
-Return: *generator of dict* - A generator for the events that arrive.  The dictionary may contain any of the following:
-
-- "observation" : *protobuf class instance* - Observation received from the environment.  The class of the observation is defined as observation space for the actor class.  This is specified in section `actor_classes:observation:space` in `cogment.yaml` for the appropriate/receiving actor class.  The `self.do_action` method should be used to "reply" when receiving this data.
-
-- "reward" : *RecvReward instance* - A received reward.  The reward received is of the type `RecvReward`.
-
-- "message" :  *tuple(str, google.protobuf.Any instance)* - Data for a received message. The string in the tuple is the name of the sender.  The class is of the type set by the sender; It is the responsibility of the environment to manage the data received (i.e. determine the type and unpack the data).
-
-- "final_data" : *SimpleNamespace(observations, rewards, messages)* - The final set of data at the end of a trial.  `observations` is a list of observations as described above (i.e. a list of protobuf class instances).  `rewards` is a list of rewards as described above.  `messages` is a list of message tuples as described above.  No action can be sent after receiving this data (i.e. do not call `self.do_action`).  The event loop will exit after this event is received (i.e. the event loop generator will reach the "end").
+Return: *generator(RecvEvent instance)* - A generator for the events that arrive.  The `RecvEvent` instances received from this generator will not contain actions.  When receiving an observation in the event, the `self.do_action` method is normally used to "reply" (if the event type is `EventType.ACTIVE`).
 
 ### ```do_action(self, action)```
 
@@ -412,38 +399,9 @@ Generator method to iterate over all samples as they are received (waiting for e
 
 Parameters: None
 
-Return: *generator of class instance* - A generator for the samples received.
+Return: *generator(class instance)* - A generator for the samples received.
 
-## class RecvReward
-
-Class containing the details of a received reward.
-
-`tick_id`: *int* - The tick id (time step) for which the reward should be applied.
-
-`value`: *float* - Value of the reward
-
-### ```get_nb_sources(self)`
-
-Return the number of source rewards this reward is based upon.
-
-Parameters: None
-
-Return: Number of sources.
-
-### ```all_sources(self)```
-
-Generator method to iterate over all sources making up this reward.
-
-Parameters: None
-
-Return: *generator(tuple(float, float, string, google.protobuf.Any instance))* - A generator for the sources in the reward (simple rewards that make up this final/aggregate reward).
-
-- tuple[0]: *float* - The value of the source reward.
-- tuple[1]: *float* - The confidence level of the reward value.
-- tuple[2]: *string* - Name of the sender.
-- tuple[3]: *google.protobuf.Any instance* - Data for a user-specific reward format.  Can be `None` if no specific data was provided. The class enclosed in `google.protobuf.Any` is of the type set by the sender; It is the responsibility of the receiver to manage the data received (i.e. determine the type and unpack the data).
-
-## class Endpoint
+## class cogment.Endpoint
 
 Class enclosing the details for connecting to an Orchestrator.
 
@@ -461,7 +419,7 @@ Parameters:
 
 - `url`: *str* - The URL where to connect to the Orchestrator.
 
-## class ServedEndpoint
+## class cogment.ServedEndpoint
 
 Class enclosing the details for connection from an Orchestrator.
 
@@ -476,6 +434,89 @@ Class enclosing the details for connection from an Orchestrator.
 Parameters:
 
 - `port`: *int* - The TCP/IP port where the service will be awaiting the Orchestrator connection.
+
+## class RecvEvent
+
+Class representing a received event (for environments and actors).  It can contain any combination of data according to the receiver needs, and even be empty, but it will always have a type.
+
+`type`: *Enum EventType* - Type of event the enclosed data represents.
+
+`observation`: *RecvObservation instance* - Observation data.  This can only be received by actors.  `None` if not present.
+
+`actions`: *list[RecvAction instance]* - Action data from actors.  This can only be received by the environment.  The list is empty if not present.
+
+`rewards`: *list[RecvReward instance]* - Reward values and data.  This can only be received by actors.  The list is empty if not present.
+
+`messages`: *list[RecvMessage instance] - Message data.  The list is empty if not present.
+
+### class cogment.EventType(enum.Enum)
+
+Enum representing the type of an event.
+
+- `EventType.NONE`: Empty event.  This kind of event should never be received.
+
+- `EventType.ACTIVE`: Normal event from an active trial. Most events will be of this type.
+
+- `EventType.ENDING`: Events from a trial in the process of ending.  For the environment, this means that these events contain the last actions from the actors, and the trial is awaiting a final observation. For the actors, this means that the trial has ended and no action can/need to be sent in response.
+
+- `EventType.FINAL`: Final event for the trial.  This may contain data or be empty.  If not empty, the data should be considered the same as for a `EventType.ENDING` event.  The event loop will exit after this event is delivered.
+
+## class RecvObservation
+
+Class containing the details of an observation for an actor.
+
+`tick_id`: *int* - The time step that the observation relates to.
+
+`timestamp`: *int* - Unix style Epoch timestamp in nanoseconds (time since 00:00:00 UTC Jan 1, 1970).
+
+`snapshot`: *protobuf class instance* - Snaphot Observation (as opposed to a delta observation) received from the environment.  The class of the snapshot observation is defined as observation space for the actor class.  This is specified in section `actor_classes:observation:space` in `cogment.yaml` for the appropriate/receiving actor class.
+
+## class RecvAction
+
+Class containing the details of an action from an actor.
+
+`actor_index`: *int* - Index of actor in the list of all trial actors (returned by `Session.get_active_actors`).
+
+`action`: *protobuf class instance* - Action from the actor wich has index `actor_index` in the trial. The class of the action is defined as action space for the specific actor in section `actor_classes:action:space` in `cogment.yaml` .
+
+## class RecvMessage
+
+Class containing a message.
+
+`tick_id`: *int* - The time step that the message relates to.
+
+`sender_name`: *str* - Name of the sender of the message (the name of an actor, or "env" if the environment sent the message).
+
+`payload`: *google.protobuf.Any instance* - Data for a received message. The class enclosed in `google.protobuf.Any` is of the type set by the sender; It is the responsibility of the receiver to manage the data received (i.e. determine the type and unpack the data).
+
+## class RecvReward
+
+Class containing the details of a received reward.
+
+`tick_id`: *int* - The tick id (time step) for which the reward should be applied.
+
+`value`: *float* - Value of the reward (aggregated from the sources)
+
+### ```get_nb_sources(self)`
+
+Return the number of source rewards this reward is based upon.
+
+Parameters: None
+
+Return: *int* - Number of sources.
+
+### ```all_sources(self)```
+
+Generator method to iterate over all sources making up this reward.
+
+Parameters: None
+
+Return: *generator(tuple(float, float, string, google.protobuf.Any instance))* - A generator for the sources in the reward (simple rewards that make up this final/aggregate reward).
+
+- tuple[0]: *float* - The value of the source reward.
+- tuple[1]: *float* - The confidence level of the reward value.
+- tuple[2]: *string* - Name of the sender.
+- tuple[3]: *google.protobuf.Any instance* - Data for a user-specific reward format.  Can be `None` if no specific data was provided. The class enclosed in `google.protobuf.Any` is of the type set by the sender; It is the responsibility of the receiver to manage the data received (i.e. determine the type and unpack the data).
 
 [1]: ./cogment-yaml.md
 [4]: ../../concepts/glossary.md#actor-class
