@@ -348,7 +348,7 @@ message TrialStartReply {
 ```
 
 - trial_id: UUID of the newly started trial.
-- actors_in_trial: The list of all actors in the trial.  This list has the same length and order as the list of actors provided in different places in the API, for the same trial.
+- actors_in_trial: The list of all actors in the trial.  This list has the same length and order as the list of actors provided in different places in the API, for the same trial.  The list can be empty (or not present) in some circumstances, even if there are actors (if necessary the list can be obtained in other ways).
 
 ### `TerminateTrialRequest`
 
@@ -521,7 +521,7 @@ message TrialJoinReply {
 - actor_name: The name assignbed to the current actor in joining the trial.
 - trial_id: The UUID of the trial joined.
 - config: The configuration to start the actor.
-- actors_in_trial: The list of all actors in the trial (including current actor). This list has the same length and order as the list of actors provided in different places in the API, for the same trial.
+- actors_in_trial: The list of all actors in the trial (including current actor). This list has the same length and order as the list of actors provided in different places in the API, for the same trial.  The list can be empty (or not present) in some circumstances, even if there are actors (if necessary the list can be obtained in other ways).
 
 ### `TrialHeartbeatRequest`
 
@@ -692,7 +692,7 @@ message AgentStartRequest {
 
 - impl_name: (optional) Name of the implementation that should run the actor in this trial. If not provided, an arbitrary implementation will be used.
 - config: The configuration to start the actor.
-- actors_in_trial: The list of all actors in the trial (including current actor). This list has the same length and order as the list of actors provided in different places in the API, for the same trial.
+- actors_in_trial: The list of all actors in the trial (including current actor). This list has the same length and order as the list of actors provided in different places in the API, for the same trial.  The list can be empty (or not present) in some circumstances, even if there are actors (if necessary the list can be obtained in other ways).
 
 ### `AgentStartReply`
 
