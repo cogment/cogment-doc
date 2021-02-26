@@ -255,9 +255,9 @@ message ActorPeriodData {
 }
 ```
 
-- observations: Observations from the environment for a period of time.  Typically only for one time step (tick). If there are multiple, they are in order of tick_id.
-- rewards: List of rewards sent by actors or the environment. In order of tick_id.
-- messages: List of user data sent by actors or the environment. In order of tick_id.
+- observations: Observations from the environment for a period of time.  Typically only for one time step (tick). If there are multiple, they are ordered by tick_id.
+- rewards: List of rewards sent by actors or the environment. Ordered by tick_id.
+- messages: List of user data sent by actors or the environment. Ordered by tick_id.
 
 ### `ObservationSet`
 

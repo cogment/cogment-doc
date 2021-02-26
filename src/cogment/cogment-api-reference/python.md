@@ -49,7 +49,7 @@ This will generate both a `cog_settings.py` file, as well as any required compil
 
 ### Top-level import
 
-Wether a script implements an actor or environment, it should import both the `cogment` module (generic python SDK for Cogment) and the `cog_settings` module (project specific definitions created from `cogment.yaml`).
+Whether a script implements an actor or environment, it should import both the `cogment` module (generic python SDK for Cogment) and the `cog_settings` module (project specific definitions created from `cogment.yaml`).
 
 ```python
 import cog_settings
@@ -176,7 +176,7 @@ Return: *bool* - True if the trial has ended, false otherwise.
 
 ### ```get_active_actors(self)```
 
-Method to get the list of active actors in the trial.  This may be expensive to retrieve and thus should be stored if not expecting the list to change throughout the trial.
+Method to get the list of active actors in the trial.  This may be expensive to retrieve and thus should be stored if the list is not expected to change throughout the trial.
 
 Parameters: None
 
@@ -199,13 +199,13 @@ Parameters:
 
 Return: None
 
-### ```send_message(self, user_data, to, to_environment=False)```
+### ```send_message(self, payload, to, to_environment=False)```
 
-Method to send a message (related to current time step) to one or more actors/environment.
+Method to send a message related to current time step (tick id).
 
 Parameters:
 
-- `user_data`: *protobuf class instance* - The message to be sent. The class can be any protobuf class.  It is the responsibility of the receiving actor or environment to manage the class received (packed in a `google.protobuf.Any`).
+- `payload`: *protobuf class instance* - The message data to be sent. The class can be any protobuf class.  It is the responsibility of the receiving actor or environment to manage the class received (packed in a `google.protobuf.Any`).
 - `to`: *list[str]* - Targets of feedback.  A list value could be the name of an actor in the trial.  Or it could represent a set of actors; A set of actors can be represented with the wildcard character "`*`" for all actors (of all classes), or "`actor_class.*`" for all actors of a specific class (the `actor_class` is the name of the class as specified in `cogment.yaml`).
 - `to_environment`: *bool* - If True, the message is also sent to the environment, otherwise the message is only sent to the actors specified.
 
@@ -237,7 +237,7 @@ The generator will exit for various reasons indicating the termination of the tr
 
 Parameters: None
 
-Return: *generator(RecvEvent instance)* - A generator for the events that arrive.  The `RecvEvent` instances received from this generator will only contain actions or messages, no observations neither rewards.  When receiving actions in the event, the `self.produce_observation` method is normally used to "reply" (or `self.end` to end the trial).
+Return: *generator(RecvEvent instance)* - A generator for the events that arrive.  The `RecvEvent` instances received from this generator will only contain actions or messages; no observations nor rewards.  When receiving actions in the event, the `self.produce_observation` method is normally used to "reply" (or `self.end` to end the trial).
 
 ### ```produce_observations(self, observations)```
 
@@ -437,7 +437,7 @@ Parameters:
 
 ## class RecvEvent
 
-Class representing a received event (for environments and actors).  It can contain any combination of data according to the receiver needs, and even be empty, but it will always have a type.
+Class representing a received event (for environments and actors).  It can contain any combination of data according to the receiver needs, or even be empty, but it will always have a type.
 
 `type`: *Enum EventType* - Type of event the enclosed data represents.
 
