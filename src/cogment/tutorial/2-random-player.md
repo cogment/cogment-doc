@@ -33,7 +33,7 @@ async def main():
 At the beginning of the file, the function `random_agent` is the actor's implementation. This function is called once per actor and per trial and handles the full lifetime of the actor.
 
 - The actor's **initialization**, before the `async for`. This is where, for example, actor's internal data can be defined before calling `actor_session.start()` to notify that it is ready,
-- Its **update loop**, the content of the `async for`. This is where resides the implementation of the actor's response to various events,
+- Its **event loop**, the content of the `async for`. This is where resides the implementation of the actor's response to various events,
 - Its **termination**, after the `async for`.
 
 The generated implementation is very simple:
@@ -175,7 +175,7 @@ environment_session.start([
 ])
 ```
 
-In the **update loop** we implement how the environment produces observations based on the actor's actions.
+In the **event loop** we implement how the environment produces observations based on the actor's actions.
 
 We start by retrieving each player's action and computing who won the round. Then, we update the internal `state`. Finally, we produce up-to-date observations for the players.
 
@@ -226,7 +226,7 @@ print(f"\t * {p1.actor_name} won {state['p2']['won_rounds_count']} rounds")
 print(f"\t * {state['rounds_count'] - state['p1']['won_rounds_count'] - state['p2']['won_rounds_count']} draws")
 ```
 
-Modify the `environment/main.py` file to include the above additions. Please note that this code makes assumptions on the number of actors and their classes. Production code should handle non-standard cases in a better way. We also _merged_ how the implementation deals with `actions` and `final_actions`, you can remove the part of the update loop only dealing with `final_actions`.
+Modify the `environment/main.py` file to include the above additions. Please note that this code makes assumptions on the number of actors and their classes. Production code should handle non-standard cases in a better way. We also _merged_ how the implementation deals with `actions` and `final_actions`, you can remove the part of the event loop only dealing with `final_actions`.
 
 You can now [build and run](./1-bootstrap-and-data-structures.md#building-and-running-the-app) the application. Given the nature of the game and the fully random nature of the plays you should have around 1/3 of player 1 wins, 1/3 of player 2's and 1/3 of draws.
 

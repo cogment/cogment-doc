@@ -46,7 +46,7 @@ state = {
 }
 ```
 
-In the **update loop** we need to make two changes.
+In the **event loop** we need to make two changes.
 
 First, Instead of counting the rounds, we will update each player `current_game_score`.
 
@@ -115,7 +115,7 @@ Please note, that not all actions need to be rewarded.
 
 When a game is won, the environment will add a **positive reward to the winner** (we chose a value of 1) and a **negative reward to the loser** (we chose a value of 0). Cogment also supports the notion of _confidence_, a weight, between 0 and 1 that expresses the qualification of the reward sender in its appreciation. In this case we are applying objective rules, so we use a confidence of 1.
 
-In the **update loop**, when the first player wins a game we add the following.
+In the **event loop**, when the first player wins a game we add the following.
 
 ```python
 environment_session.add_reward(value=1, confidence=1, to=[p1.actor_name])

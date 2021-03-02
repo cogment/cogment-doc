@@ -2,19 +2,17 @@
 
 ## Prerequisites
 
-This document assumes the reader is familiar with the [Cogment Fundamentals][2].
+This document assumes the reader is familiar with the [Cogment Fundamentals](../concepts/core-concepts.md).
 
-The High-level cogment API expects users to use [protocol buffers](https://developers.google.com/protocol-buffers/) to declare a project's data structures. The intricacies of protobufs are beyond the scope of this document. Basic knowledge of the technology and its usage is assumed.
-
-Basic familiarity with [Docker](https://www.docker.com/) is also a prerequisite.
+The High-level Cogment API expects users to use [protocol buffers](https://developers.google.com/protocol-buffers/) to declare a project's data structures. The intricacies of protobufs are beyond the scope of this document. Basic knowledge of the technology and its usage is assumed.
 
 ## The cogment.yaml file
 
-An [actor class][4] is primarily defined by its [observation space][5] and [action space][6] and both MUST be configured in the `cogment.yaml` file.
+An [actor class](../concepts/glossary.md#actor-class) is primarily defined by its [observation space](../concepts/glossary#observation-space) and [action space](../concepts/glossary#action-space).
 
-The shape of these spaces is declared by using a protocol buffer message type. [Observations][7] and [actions][8] will simply be instances of the matching type.
+The data structures describing these spaces are declared by using a protocol buffer message type. [Observations](../concepts/glossary.md#observation) and [actions](../concepts/glossary.md#action) will simply be instances of the matching type.
 
-For example, in the following, `driver` and `pedestrian` share a common view of the environment, but have different actions available to them.
+For example, in the following, `driver` and `pedestrian` share a common view of the environment, hence use the same observation space, but have different actions available to them.
 
 ```yaml
 import:
@@ -37,256 +35,254 @@ actors:
       space: city.PedestrianAction
 ```
 
-[^1]
-You can find the full list of options configurable within the yaml file [here]().
+> ⚠️ This shows only the relevant part of the full `cogment.yaml`, you can find the full list of configurable options [in the reference page](./cogment-api-reference/cogment-yaml.md).
 
 ### Compiling the cogment.yaml
 
-In order to use the `cogment.yaml` file within python scripts, it needs to be interpreted into a python module. This is done by a tool called the “cogment cli”.
+In order to use the `cogment.yaml` file within python scripts, it needs to be interpreted into a python module. This is done by the **cogment cli** (Command Line Interface) that can be installed following [those directions](../introduction/installation.md#install-the-latest-cogment-cli).
 
-We recommend using the `cogment/cli` docker image to run it, as it has all the required dependencies correctly setup already.
-
-```text
-$ docker run -v $(pwd):/data --rm cogment/cli --file /data/cogment.yaml --python_dir=/data
+```console
+$ cogment run --file /path/to/cogment.yaml --python_dir=./
 ```
 
-This will create a `cog_settings.py` module in the current directory. The `/data` path is the path within the container at which the current local directory is mounted.
+This will create a `cog_settings.py` module in the current directory.
 
-The cogment cli will also compile the imported `.proto` files in python modules living in the same location. There is no need to invoke `protoc` yourself.
+The cogment cli will also compile the imported [`.proto`](../concepts/glossary.md#protocol-buffer) files in python modules living in the same location.
 
 ## Environment
 
-[Environments][10] are implemented by a Python class that inherits from the `cogment.Environment` class.
+[Environments](../concepts/glossary.md#environment) are implemented by a Python function that uses a [`cogment.EnvironmentSession`](./cogment-api-reference/python.md#class-environmentsessionsession) instance.
 
-This class will be instantiated once for each [trial][11] that is run on the project, and needs to implement two methods: `start()` and `update()`.
+This function will be called once for each [trial][../concepts/glossary.md#trial)]. This function usually consists of three sections.
 
-The `start()` method will be called at the start of the trial, and an instance of the [environment][12]’s configuration type (if applicable) will be passed to it. `start()` must return the initial [observation][13] to be sent to the [actors][14].
-
-The `update()` method will be invoked repeatedly as the trial progresses, and the [action][15] of each [actor][16] participating in the [trial][17] will be passed to it. `update()` must return the new [observations][18].
-
-`on_message()` notifies the environment that a message has been received from either an actor or the environment.
+- The environment's **initialization**, where its internal state can be initialized and processes started. It ends with the sending of the initial observations to the actors participating in the trial.
+- Its **event loop**, where the environment iterates through the events occurring during the trial and produces [observations](../concepts/glossary.md#observation) as well as sends [rewards](../concepts/glossary.md#reward) and [messages](../concepts/glossary.md#message). In this loop the environment can end the trial on its own or the end can be requested by a [trial controller](#trial-controller).
+- Its **termination**, where cleanup occurs.
 
 In the common case where all actors within a trial share the same observation, a bare-minimum environment service would look like this:
 
 ```python
-# env.py
-import cog_settings
-from city_pb2 import Observation
+async def environment(environment_session):
+    # -- Initialization --
 
-from cogment import Environment, GrpcServer
+    # Retrieve the actors participating in the trial
+    actors = environment_session.get_active_actors()
 
+    # Start the trial and send a default observation to all actors
+    environment_session.start([("*", Observation())])
 
-class CityEnv(Environment):
-    def start(self, config):
-        return Observation()
+    # -- Event loop --
+    async for event in environment_session.event_loop():
+        if event.actions:
+            # `event.actions` is a list of the actions done by the actors (with a 1-1 matching)
+            actions = event.actions
+            if event.type == cogment.EventType.ACTIVE:
+              # The trial is active, produce an observation in response to the actions
+              environment_session.produce_observations([("*", Observation())])
+              # Alternatively the environment can decide to **end** the trial with the following
+              # environment_session.end([("*", Observation())])
+            else:
+              # The trial termination has been  requested by an external trial controller
+              # Produce a final observation
+              environment_session.end([("*", Observation())])
 
-    def update(self, actions):
-        return Observation()
+        for message in event.messages:
+            # `event.messages` is a list of all the messages received by the environment (it can be empty)
 
-    def on_message(self, sender, msg):
-        pass
+            # Handle each message here.
 
-if __name__ == "__name__":
-    server = GrpcServer(CityEnv, cog_settings, 9002)
-    server.serve()
+    # -- Termination --
 ```
 
-(TODO: add explanation of multi-observation API)
-
-### Interpreting Actions
-
-The [actions][19] argument passed to the environment’s `update()` has one attribute for each [actor class][20] of the project, named accordingly. Each of these is itself a list of deserialized protobuf messages (one per [actor][21] of the actor class the attribute refers to).
-
-The type of the objects in the list will be the one that was set as the `action:space` of that [actor class][22].
+This environment implementation needs to be registered and served so that the [orchestrator](../concepts/glossary.md#orchestrator) can reach it. This can be done through a [`Context`](./cogment-api-reference/python.md#class-cogmentcontext) instance.
 
 ```python
-def update(self, actions):
-    action_a = actions.pedestrian[0]
-    action_b = actions.pedestrian[1]
+context = cogment.Context(cog_settings=cog_settings, user_id="my_user_id")
 
-    car_action = actions.driver[0]
-    ...
+context.register_environment(impl=environment)
+
+await context.serve_all_registered(port=9000)
 ```
 
-N.B. You should not assume that an [environment][23] will be updated in the same thread that created it, nor that all updates will happen within the same thread. Similarly, the SDK does not perform synchronization across environment instances; therefore environments sharing data amongst themselves need to expect a possible high level of contention.
+### Sending observations
 
-## Agent
+The environment session has 3 different methods able to send observations: `start`, `produce_observations` and `end`. Each of those methods takes a list of 2-tuples destination / observation.
 
-[Agents][24] look a lot like [environment][25], inheriting from `cogment.Agent`. They are also instantiated and served on demand, though multiple instances of the same [agent][26] python class could be created for each [trial][27] if the `cogment.yaml` specifies so.
-
-The three methods the [agent][28] should implement are `decide()`, `reward()` and `on_message()`.
-
-`decide()` chooses which [action][29] should be taken when faced with a given [observation][30].
-
-`reward()` notifies the [agent][31] that a judgment has been made on its past performance. The agent is free to do what it wants with that information.
-
-`on_message()` notifies the [agent][51] that a message has been received from either an actor or the environment.
-
-Finally, the agent must announce to the SDK which [actor class][32] of the project it is implementing. This is done by setting the `actor_class` class property to the correct reference from the project's `cog_settings` module.
-
-A typical [agent][33] would look like this:
+As demonstrated above, sending the same observation to all actors is done using `"*"` as the destination.
 
 ```python
-# agent.py
-import cog_settings
-from city_pb2 import Action
-
-from cogment import Agent, GrpcServer
-
-
-class Pedestrian(Agent):
-    actor_class = cog_settings.actor_classes.pedestrian
-
-    def decide(self, observation):
-        return PedestrianAction()
-
-    def reward(self, reward):
-        pass
-
-    def on_message(self, sender, msg):
-        pass
-
-if __name__ == "__main__":
-    server = GrpcServer(MyAgent, cog_settings, 9001)
-    server.serve()
+environment_session.produce_observations([("*", Observation(...))])
 ```
 
-## Frontend
-
-Unlike the [agent][34] and [environment][35] APIs, where the code gets invoked on demand by the Cogment framework, the [frontend][36] code sends requests to the [orchestrator][37].
+It is also possible to send different observations to different actors. This can be useful to send observations of the _world_ from the point of view of the actor or to send partial observations.
 
 ```python
-# client.py
-import cog_settings
-
-from city_pb2 import DriverAction
-from cogment.client import Connection
-
-# Create a connection to the Orchestrator serving this project
-conn = Connection(cog_settings, "127.0.0.1:9000")
-
-# Initiate a trial
-trial = conn.start_trial(cog_settings.actor_classes.player)
-
-# Perform actions, and get observations
-observation = trial.do_action(DriverAction())
-observation = trial.do_action(DriverAction())
-observation = trial.do_action(DriverAction())
-observation = trial.do_action(DriverAction())
-
-# cleanup
-trial.end()
+environment_session.produce_observations([
+  ("my_first_actor_name", Observation(...)),
+  ("my_second_actor_name", Observation(...))
+])
 ```
 
-## Feedback
+Please note that the environment should always send observations such as each actor in the trial receives one.
+
+## Actor
+
+[Actors](../concepts/glossary.md#actor) implementations look a lot like the [environment's](#environment). They take a [`cogment.ActorSession`](./cogment-api-reference/python.md#class-actorsessionsession) instance and have the same three sections: **initialization**, **event loop** and **termination**.
+
+The event loops in Actors' implementations handle three basic types of events:
+
+- `observation` produced by the environment and that should lead to an action being done.
+- `rewards` sent by other actors or the environment, we'll talk about them in more details [below](#reward).
+- `messages` sent by other actors or the environment, we'll talk about them in more details [below](#messages).
+
+A typical actor implementation would look like this:
+
+```python
+async def driver_actor(actor_session):
+    # -- Initialization --
+
+    # Notify that the actor is ready for the trial to start.
+    actor_session.start()
+
+    async for event in actor_session.event_loop():
+        if event.observation:
+            # `event.observation` is an instance of the Observation produced by the environment
+            observation = event.observation
+            if event.type == cogment.EventType.ACTIVE:
+              # The trial is active, it is expecting the agent to do an action
+              actor_session.do_action(DriverAction(...))
+
+        for reward in event.rewards:
+            # `event.rewards` is a list of all the rewards received by the actor (it can be empty)
+
+            # Handle each reward here.
+
+        for message in event.messages:
+            # `event.messages` is a list of all the messages received by the actor (it can be empty)
+
+            # Handle each message here.
+```
+
+### Service actor / Client actor
+
+A Cogment app can use two types of actors, they are identical in terms of implementation but differ in how they interact with the app's [orchestrator](../concepts/glossary.md#orchestrator).
+
+**Service actors** are accessible in the same way the environment is, through a [`Context`](./cogment-api-reference/python.md#class-cogmentcontext) instance.
+
+```python
+context = cogment.Context(cog_settings=cog_settings, user_id="rps")
+context.register_actor(
+    impl=actor,
+    impl_name="driver_actor",
+    actor_classes=["driver"])
+
+
+await context.serve_all_registered(port=9000)
+```
+
+Please note that this is also through this registrating that the implementation is associated with one or more [actor classes](../concepts/glossary.md#actor-class) it implements.
+
+**Client actors**, contrary to Service actors, are not served to the [orchestrator](../concepts/glossary.md#orchestrator). They connect as clients of the orchestrator and join a [trial](../concepts/glossary.md#trial) that has started.
+
+```python
+context = cogment.Context(cog_settings=cog_settings, user_id="rps")
+context.register_actor(
+    impl=actor,
+    impl_name="driver_actor",
+    actor_classes=["driver"])
+
+await context.join_trial(
+  trial_id=trial_id,
+  endpoint="orchestrator:9000",
+  impl_name="human")
+```
+
+Please note, that a trial including one or more client actors will wait for all of them to join before any actor can start processing events.
+
+Due to the different network requirements, client actors are a good fit when implementing a [frontend](../concepts/glossary.md#frontend) for human actors. In addition to the [python](./cogment-api-reference/python.md) SDK demonstrated above, client actors can be implemented in [javascript](./cogment-api-reference/javascript.md) using the corresponding SDK.
+
+## Trial Controller
+
+[Trials](../concepts/glossary.md#trial) are started by clients of the orchestrator using a trial controller.
+
+> 🚧 TODO Add usage details when the dust settles
+
+## Rewards
 
 ### Creating
 
-Feedbacks can be generated from all three components (Environment, Agent or [frontend][38]) using the `trial` object:
-
-In the [agent][39] and [environment][40], the trial object can be found as the `trial` property of the instance itself, whereas in the [frontend][41], the object returned by `start_trial()` serves that purpose.
+[Rewards](../concepts/glossary.md#reward) are sent to [actors](../concepts/glossary.md#actor) from another actor or the [environment](../concepts/glossary.md#environment). The `session` instance passed to their implementation can be used for this purpose.
 
 ```python
-# In agent/environment
-class Pedestrian(Agent):
-    def foo(self):
-      human_driver = self.trial.actors.driver[1]
-      human_driver.add_feedback(
-          time=0,
-          value=-1,
-          confidence=1
-      )
-
-# In client
-trial = conn.start_trial(cog_settings.actor_classes.driver)
-...
-ai = trial.actors.pedestrian[0]
-ai.add_feedback(time=0, value=-1, confidence=1)
+session.add_reward(
+  value=-1,
+  confidence=1,
+  tick_id=-1,
+  to=['an_actor_name'])
 ```
+
+Rewards consist of an arbitrary numerical **value** describing how the reward "sender" _believes_ the actor performed. It is _weighted_ by a value between 0 and 1 qualifying the **confidence** of the "sender" in its reward, from a very low confidence just above 0 to a very high confidence approaching 1. The confidence value is used to collate all the rewards sent to an actor at the same time. Optionally, a reward can be provided with arbitrary user data.
+
+Each reward applies to a list of recipients (either all the actors, all the actors of a given class or a specific actor) at a specific point in time, during the trial, defined as a [**tick**](../concepts/glossary.md#tick).
+
+The full documentation for `session.add_reward` can be found [here](./cogment-api-reference/python.md#add_rewardself-value-confidence-to-tick_id-1-user_datanone).
 
 ### Consuming
 
-All the [feedbacks][42] that are sent and destined to each specific [actor][43] for a given point in time are combined together in a single [reward][44] by the framework.
+All the [rewards](../concepts/glossary.md#reward) that are sent and destined to each specific [actor](../concepts/glossary.md#actor) for a given point in time are collated together by the framework.
 
-This reward will be stored in the offline dataset, but the [agent][45] has the option to learn from it directly, live, as the [trial][46] is running.
+The [actor](../concepts/glossary.md#actor) can take into account the reward directly as the [trial](../concepts/glossary.md#trial) is running by consuming the `"reward"` event in their event loop.
 
 ```python
-# In agent
-class Pedestrian(Agent):
-    def reward(self, reward):
-        print(f'receiving reward: {reward}')
+async for event in actor_session.event_loop():
+    # [...]
+    for reward in event.rewards:
+        # `reward.tick_id` is the id of the tick this reward concerns.
+        tick_id = reward.tick_id
+        # `reward.value` is the aggregated value of the reward.
+        value = reward.value
+        for (src_value, src_confidence, sender, user_data) in reward.all_sources():
+            # Iterate over individual source rewards.
 ```
 
 ## Messages
 
 ### Creating
 
-Messages can be created and sent to any of all three components (Environment, Agent or frontend Client using the `trial` object:
-
-In the [agent][39] and [environment][40], the trial object can be found as the `trial` property of the instance itself, whereas in the frontend client, the object returned by `start_trial()` serves that purpose.
+[Messages](../concepts/glossary.md#message) can be created and sent between [actors](../concepts/glossary.md#actor) or the [environment](../concepts/glossary.md#environment) within a trial using their `session` instance.
 
 ```python
-# In agent/environment
-class Pedestrian(Agent):
-    def foo(self):
-      human_driver = self.trial.actors.driver[1]
-      human_driver.send_message(user_date=any_protobuf_type)
-
-# In client
-trial = conn.start_trial(cog_settings.actor_classes.driver)
-...
-ai = trial.actors.pedestrian[0]
-ai.send_message(user_date=any_protobuf_type)
+session.send_message
+  user_data=MyProtobufDataStructure(...), # any protobuf data structure can be used here.
+  to=['pedestrian:*'], # send the message to all the actors of the "pedestrian" class
+  to_environment=False)
 ```
 
-Messages can also be multi-cast to a set of the three components using the following:
+Messages consist of an arbitrary payload, their `user_data`, defined as an instance of any protobuf data structure.
 
-```python
-# In agent/environment
-class Pedestrian(Agent):
-    def foo(self):
-      human_driver = self.trial.actors.driver[1]
-      human_driver.multi_cast(user_date=any_protobuf_type, send_list=[0,1,3,-1])
+A message can be sent to one, many or all actors in a trial and / or to the environment.
 
-# In client
-trial = conn.start_trial(cog_settings.actor_classes.driver)
-...
-ai = trial.actors.pedestrian[0]
-ai.multi_cast(user_date=any_protobuf_type, send_list=[0,1,3,-1])
-```
-
-where the send_list contains the actor and environment (-1) class id.
+The full documentation for `session.send_message` can be found [here](./cogment-api-reference/python.md#send_messageself-user_data-to-to_environmentfalse).
 
 ### Consuming
 
-All the [messages][52] that are sent and destined for each specific actor or environment will be received by the target actor or environment.
+All the [messages](../concepts/glossary.md#message) that are sent and intended for each specific actor or environment will be received by the target actor or environment.
 
-This message will be stored in the offline dataset, but the actor or environment can use the message directly, live, as the [trial][46] is running.
+Actors or the environment can use the message directly, live, as the [trial](../concepts/glossary.md#message) is running by consuming message event in their event loop.
 
 ```python
-# In agent
-class Pedestrian(Agent):
-    def on_message(self, sender, msg):
-        if msg:
-            print(f'Message {msg} received from {sender}:')
-
-# In environment
-class Env(Environment):
-    def on_message(self, sender, msg):
-        if msg:
-            print(f'Message {msg} received from {sender}:')
-
-# In client as callback
-def handle_messages(sender, msg):
-    if msg:
-        print(f'Message {msg} received from {sender}:')
-...
-observation = trial.do_action(action, on_message = handle_messages)
+async for event in actor_session.event_loop():
+    # [...]
+    for message in event.messages:
+        # `message.sender_name` is the name of the actor who sent a message
+        sender_name = message.sender_name
+        # `message.payload` is the content of the message, it needs to be unpacked
+        payload = message.payload
 ```
 
 ## Delta Encoding
 
-By default, [observations][47] are sent whole from the [environment][48] to the [actors][49]. However, it's fairly common to only have a small portion of an [observation][50] to change from one update to the next.
+By default, [observations](../concepts/glossary.md#observation) are sent in their entirety from the [environment](../concepts/glossary.md#environment) to the [actors](../concepts/glossary.md#actors). However, it's fairly common to only have a small portion of an [observation](../concepts/glossary.md#observation) to change from one update to the next.
 
 Cogment allows you to specify a separate data structure to encode partial observation updates. However, if you do so, you must provide
 a method that can apply the deltas to previous observations.
@@ -317,55 +313,3 @@ actors:
       delta_apply_fn:
         python: delta.apply_delta
 ```
-
-[^1]: This shows only the relevant part of the full cogment.yaml
-
-[2]: ../concepts/core-concepts.md
-[4]: ../concepts/glossary.md#actor-class
-[5]: ../concepts/glossary.md#observation-space
-[6]: ../concepts/glossary.md#action-space
-[7]: ../concepts/glossary.md#observation
-[8]: ../concepts/glossary.md#action
-[10]: ../concepts/glossary.md#environment
-[11]: ../concepts/glossary.md#trial
-[12]: ../concepts/glossary.md#environment
-[13]: ../concepts/glossary.md#observation
-[14]: ../concepts/glossary.md#actor
-[15]: ../concepts/glossary.md#action
-[16]: ../concepts/glossary.md#actor
-[17]: ../concepts/glossary.md#trial
-[18]: ../concepts/glossary.md#observation
-[19]: ../concepts/glossary.md#action
-[20]: ../concepts/glossary.md#actor-class
-[21]: ../concepts/glossary.md#actor
-[22]: ../concepts/glossary.md#actor-class
-[23]: ../concepts/glossary.md#environment
-[24]: ../concepts/glossary.md#agent
-[25]: ../concepts/glossary.md#environment
-[26]: ../concepts/glossary.md#agent
-[27]: ../concepts/glossary.md#trial
-[28]: ../concepts/glossary.md#agent
-[29]: ../concepts/glossary.md#action
-[30]: ../concepts/glossary.md#observation
-[31]: ../concepts/glossary.md#agent
-[32]: ../concepts/glossary.md#actor-class
-[33]: ../concepts/glossary.md#agent
-[34]: ../concepts/glossary.md#agent
-[35]: ../concepts/glossary.md#environment
-[36]: ../concepts/glossary.md#frontend
-[37]: ../concepts/glossary.md#orchestrator
-[38]: ../concepts/glossary.md#frontend
-[39]: ../concepts/glossary.md#agent
-[40]: ../concepts/glossary.md#environment
-[41]: ../concepts/glossary.md#frontend
-[42]: ../concepts/glossary.md#feedback
-[43]: ../concepts/glossary.md#actor
-[44]: ../concepts/glossary.md#reward
-[45]: ../concepts/glossary.md#agent
-[46]: ../concepts/glossary.md#trial
-[47]: ../concepts/glossary.md#observation
-[48]: ../concepts/glossary.md#environment
-[49]: ../concepts/glossary.md#actor
-[50]: ../concepts/glossary.md#observation
-[51]: ../concepts/glossary.md#agent
-[52]: ../concepts/glossary.md#message

@@ -63,7 +63,7 @@ DEFEATS = {
 }
 ```
 
-Then, in the update loop, we look at the received observation before taking an action based on this simple strategy.
+Then, in the event loop, we look at the received observation before taking an action based on this simple strategy.
 
 ```python
 observation = event["observation"]

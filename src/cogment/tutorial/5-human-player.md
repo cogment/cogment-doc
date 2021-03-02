@@ -57,7 +57,7 @@ observations = [
 ]
 ```
 
-And then, at the end of the update loop, either end the trial if the target games count is reached or produce the observations as before.
+And then, at the end of the event loop, either end the trial if the target games count is reached or produce the observations as before.
 
 ```python
 if state["games_count"]>=environment_session.config.target_games_count:
@@ -170,7 +170,7 @@ def print_observation(round_index, observation):
         print(f" -> round #{round_index + 1} is a draw")
 ```
 
-It needs to be called whenever the actor receives an observation, except for the first time, before the first round is played. Add the following just after the observation is retrieved in the update loop.
+It needs to be called whenever the actor receives an observation, except for the first time, before the first round is played. Add the following just after the observation is retrieved in the event loop.
 
 ```python
 if round_index > 0:
