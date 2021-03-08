@@ -2,7 +2,7 @@
 
 Terminology is a very important part of understanding new concepts and learning how to use new technology. The words we use throughout our documentation may cause problems if one is not familiar with how we use those words; this is a glossary of terms for newcomers and seasoned developers alike. Some familiar terms may have additional caveats specifically added to their definition in the context of the Cogment Framework (generally for clarity).
 
-[A](#a)—B—C—D—[E](#e)—[F][3]—G—[H](#h)—I—J—K—L—[M](#m)—N—[O](#o)—[P](#p)—Q—[R](#8)—S—[T](#t)—[U](#u)—V—W—X—Y(#f)
+[A](#a)—B—C—D—[E](#e)—[F](#f)—G—[H](#h)—I—J—K—L—[M](#m)—N—[O](#o)—[P](#p)—Q—[R](#8)—S—[T](#t)—[U](#u)—V—W—X—Y
 
 ## A
 
@@ -16,7 +16,7 @@ Each [Actor](#actor) always belongs to a single Actor Class. An Actor Class is p
 
 ### Action
 
-1. An Action is an interaction an [Actor](#actor) performs on the environment. Actions are picked from the [Action Space
+1. An Action is an interaction an [Actor](#actor) performs on the environment. Actions are picked from the [Action Space](#action-space),
 2. A single element of an Action Space.
 
 ### Agent
@@ -51,7 +51,7 @@ The interface, usually an app, that humans use to interact with the rest of the 
 
 ### Human / Artificial Intelligence Interaction Loop Training
 
-We call Human / AI interaction loop training the fundamental paradigm our [Framework](#framework) was build for: a continuous loop between humans and agents where they learn from each other. It’s a way to train [agents][29] in an environment where direct human interactions, whether between humans, between humans and the environment, or between humans and agents, provide live data to the agents (first part of the loop), _**as well as**_ a way for agents to interact with humans, either directly or through the environment (second part of the loop).
+We call Human / AI interaction loop training the fundamental paradigm our [Framework](#framework) was build for: a continuous loop between humans and agents where they learn from each other. It’s a way to train [agents](#agent) in an environment where direct human interactions, whether between humans, between humans and the environment, or between humans and agents, provide live data to the agents (first part of the loop), _**as well as**_ a way for agents to interact with humans, either directly or through the environment (second part of the loop).
 
 ## M
 
@@ -67,7 +67,7 @@ A model is a representation, usually a mathematical one in our context, of a con
 
 ### Observation
 
-An observation is the subset of the [environment state][#environment-state] that an [Actor](#actor) based its choice of [Action](#action) on.
+An observation is the subset of the [environment state](#environment-state) that an [Actor](#actor) based its choice of [Action](#action) on.
 
 ### Observation delta
 
@@ -85,7 +85,7 @@ An Observation space is the set of all possible [observations](#observation) an 
 
 The Orchestrator is the central piece of our [framework](#framework); it’s an executable that handles several things:
 
-- It circulates data flows between [Actors](#actor) (Humans and Agents) and [Environments](#environment).
+- It circulates data flows between [Actors](#actor) and [Environments](#environment).
 - It dumps datasets in the chosen storage location.
 - It compresses & encrypts data.
 - It collates various [reward](#reward) sources (usually [environment](#environment) or [actors](#actor)) into a single reward for an Actor.
@@ -106,17 +106,17 @@ A binary data format for serialized communication, `.proto` files are used to sp
 
 ### Reward
 
-1. A sent reward is a measure of an [Actor’s][23] performance within the environment at a given [tick](#tick). The reward can be sent by the environment, and/or a different Actor. They are sent to the [Orchestrator][#orchestrator], which collate before they are received by the target actor.
+1. A sent reward is a measure of an [Actor’s](#actor) performance within the environment at a given [tick](#tick). The reward can be sent by the environment, and/or a different Actor. They are sent to the [Orchestrator](#orchestrator), which collate before they are received by the target actor.
 
-2. A received reward is a single measure of an [Actor’s][43] performance. It is produced when at least one reward is sent to the actor at a given [tick](#tick).
+2. A received reward is a single measure of an [Actor’s](#actor) performance. It is produced when at least one reward is sent to the actor at a given [tick](#tick).
 
 ### Reward function
 
-A reward function describes how an [agent][#agent] "ought" to behave; what behaviours lead to [Rewards][#reward]. Note that in our case, Reward functions can be used to reward any [Actor][#actor], regardless of it being human or not.
+A reward function describes how an [agent](#agent) "ought" to behave; what behaviours lead to [Rewards](#reward). Note that in our case, Reward functions can be used to reward any [Actor](#actor), regardless of it being human or not.
 
 ### Reinforcement Learning (RL)
 
-RL is a specific method to train [agents][#agent], using [reward functions][#reward-function].
+RL is a specific method to train [agents](#agent), using [reward functions](#reward-function).
 
 ## T
 
