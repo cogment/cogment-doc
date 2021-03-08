@@ -99,15 +99,16 @@ async def human_player(actor_session):
     actor_session.start()
 
     async for event in actor_session.event_loop():
-        if "observation" in event:
-            observation = event["observation"]
+        if event.observation:
+            observation = event.observation
 
-            print(f"\n-- Round #{round_index + 1} --\n")
+            if event.type == cogment.EventType.ACTIVE:
+                print(f"\n-- Round #{round_index + 1} --\n")
 
-            next_action = PlayerAction(move=PAPER)
-            actor_session.do_action(next_action)
+                next_action = PlayerAction(move=PAPER)
+                actor_session.do_action(next_action)
 
-            round_index += 1
+                round_index += 1
 
     trial_finished.set_result(True)
 
@@ -126,11 +127,11 @@ async def trial_controller(control_session):
     print(f"Trial '{control_session.get_trial_id()}' terminating")
     await control_session.terminate_trial()
 
-trial = asyncio.create_task(context.start_trial(endpoint="orchestrator:9000", impl=trial_controller, trial_config=TrialConfig()))
+trial = asyncio.create_task(context.start_trial(endpoint=cogment.Endpoint("orchestrator:9000"), impl=trial_controller, trial_config=TrialConfig()))
 # Wait until the trial id is known
 trial_id = await trial_id
 # Join the trial as a human player
-await context.join_trial(trial_id=trial_id, endpoint="orchestrator:9000", impl_name="human")
+await context.join_trial(trial_id=trial_id, endpoint=cogment.Endpoint("orchestrator:9000"), impl_name="human")
 # Wait until the trial terminates
 await trial
 ```
@@ -176,16 +177,6 @@ It needs to be called whenever the actor receives an observation, except for the
 if round_index > 0:
   # The only time the observation is not relevant is on the first round of the first game
   print_observation(round_index, observation)
-```
-
-After the last round of the last game is played, we won't receive further _observation_ as the trial will be terminating. The remaining final observation will be bundled inside a _final_data_ event.
-
-```python
-if "final_data" in event:
-  final_data = event["final_data"]
-
-  for observation in final_data.observations:
-    print_observation(observation)
 ```
 
 Last but not least, instead of always picking `PAPER` we will read from the keyboard input what the player wishes to play. Using python's [`input`](https://docs.python.org/3.7/library/functions.html#input) function we can print a prompt and read whatever the user enters before pressing `<ENTER>`.

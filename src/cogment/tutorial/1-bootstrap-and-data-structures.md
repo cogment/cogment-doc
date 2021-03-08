@@ -21,9 +21,16 @@ Enter how many actor classes should be created: 1
 [class #1 'player' > service impl. #1] Enter the name of the implementation: random_agent
 [class #1 'player' > service impl. #1 'random_agent'] Enter the number of actor instances using this implementation (empty for 1): 2
 [class #1 'player'] Should a client implementation be created (Y or N, empty for Y): N
+Should a web-client be created (Y or N, empty for Y): N
 
 $ cd rps
 ```
+
+To summarize, for this 2 players game, we created:
+
+- 1 actor class, `player`, because RPS is a symmetric game, both players have the same role within the game,
+- 1 actor implementation for this class, `random_agent`, because at the moment we only want to implement one way of playing,
+- 2 actor instances, because the game has 2 players.
 
 > ℹ️ For the remainder of this tutorial, unless mentioned, it is assumed that all operations are run in the `rps` directory.
 

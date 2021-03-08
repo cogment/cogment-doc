@@ -27,7 +27,7 @@ async def main():
       impl_name="random_agent",
       actor_classes=["player",])
 
-  await context.serve_all_registered(port=9000)
+  await context.serve_all_registered(cogment.ServedEndpoint(port=9000))
 ```
 
 At the beginning of the file, the function `random_agent` is the actor's implementation. This function is called once per actor and per trial and handles the full lifetime of the actor.
@@ -50,26 +50,16 @@ async def random_agent(actor_session):
     actor_session.start()
 
     async for event in actor_session.event_loop():
-        if "observation" in event:
-            observation = event["observation"]
+        if event.observation:
+            observation = event.observation
             print(f"'{actor_session.name}' received an observation: '{observation}'")
-            action = PlayerAction()
-            actor_session.do_action(action)
-        if "reward" in event:
-            reward = event["reward"]
+            if event.type == cogment.EventType.ACTIVE:
+                action = PlayerAction()
+                actor_session.do_action(action)
+        for reward in event.rewards:
             print(f"'{actor_session.name}' received a reward for tick #{reward.tick_id}: {reward.value}/{reward.confidence}")
-        if "message" in event:
-            (sender, message) = event["message"]
-            print(f"'{actor_session.name}' received a message from '{sender}': - '{message}'")
-        if "final_data" in event:
-            final_data = event["final_data"]
-            for observation in final_data.observations:
-                print(f"'{actor_session.name}' received a final observation: '{observation}'")
-            for reward in final_data.rewards:
-                print(f"'{actor_session.name}' received a final reward for tick #{reward.tick_id}: {reward.value}/{reward.confidence}")
-            for message in final_data.messages:
-                (sender, message) = message
-                print(f"'{actor_session.name}' received a final message from '{sender}': - '{message}'")
+        for message in event.messages:
+            print(f"'{actor_session.name}' received a message from '{message.sender_name}': - '{message.payload}'")
 ```
 
 Our goal is to implement an actor playing at random. We first need to import the different `Move`, as defined in our data structures. We also need to import `random`, the python package generating random numbers.
@@ -85,11 +75,12 @@ MOVES = [ROCK, PAPER, SCISSORS]
 Once this is available we can simply update the _taking decision_ part of the actor's implementation to compute a random move whenever it is needed.
 
 ```python
-if "observation" in event:
-  observation = event["observation"]
-  print(f"'{actor_session.name}' received an observation: '{observation}'")
-  action = PlayerAction(move=random.choice(MOVES))
-  actor_session.do_action(action)
+if event.observation:
+    observation = event.observation
+    print(f"'{actor_session.name}' received an observation: '{observation}'")
+    if event.type == cogment.EventType.ACTIVE:
+        action = PlayerAction(move=random.choice(MOVES))
+        actor_session.do_action(action)
 ```
 
 Modify the `random_agent/main.py` file to include the above additions.
@@ -114,25 +105,20 @@ async def environment(environment_session):
     environment_session.start([("*", observation)])
 
     async for event in environment_session.event_loop():
-        if "actions" in event:
-            actions = event["actions"]
-            print(f"environment received actions")
+        if event.actions:
+            actions = event.actions
+            print(f"environment received the actions")
             for actor, action in zip(environment_session.get_active_actors(), actions):
                 print(f" actor '{actor.actor_name}' did action '{action}'")
-
             observation = Observation()
-            environment_session.produce_observations([("*", observation)])
-        if "message" in event:
-            (sender, message) = event["message"]
-            print(f"environment received a message from '{sender}': - '{message}'")
-        if "final_actions" in event:
-            actions = event["final_actions"]
-            print(f"environment received final actions")
-            for actor, action in zip(environment_session.get_active_actors(), actions):
-                print(f" actor '{actor.actor_name}' did action '{action}'")
-
-            observation = Observation()
-            environment_session.end([("*", observation)])
+            if event.type == cogment.EventType.ACTIVE:
+                # The trial is active
+                environment_session.produce_observations([("*", observation)])
+            else:
+                # The trial termination has been requested
+                environment_session.end([("*", observation)])
+        for message in event.messages:
+            print(f"environment received a message from '{message.sender_name}': - '{message.payload}'")
 
     print("environment end")
 ```
@@ -180,40 +166,41 @@ In the **event loop** we implement how the environment produces observations bas
 We start by retrieving each player's action and computing who won the round. Then, we update the internal `state`. Finally, we produce up-to-date observations for the players.
 
 ```python
-if "actions" in event or "final_actions" in event:
-  is_final = "final_actions" in event
-  [p1_action, p2_action] = event["actions"] if "actions" in event else event["final_actions"]
-  print(f"{p1.actor_name} played {MOVES_STR[p1_action.move]}")
-  print(f"{p2.actor_name} played {MOVES_STR[p2_action.move]}")
+if event.actions:
+    [p1_action, p2_action] = event.actions
+    print(f"{p1.actor_name} played {MOVES_STR[p1_action.move]}")
+    print(f"{p2.actor_name} played {MOVES_STR[p2_action.move]}")
 
-  # Compute who wins, if the two players had the same move, nobody wins
-  p1_state = PlayerState(
-      won_last=p1_action.move == DEFEATS[p2_action.move],
-      last_move=p1_action.move
-  )
-  p2_state = PlayerState(
-      won_last=p2_action.move == DEFEATS[p1_action.move],
-      last_move=p2_action.move
-  )
-  state["rounds_count"] += 1
-  if p1_state.won_last:
-      state["p1"]["won_rounds_count"] += 1
-      print(f"{p1.actor_name} wins!")
-  elif p2_state.won_last:
-      state["p2"]["won_rounds_count"] += 1
-      print(f"{p2.actor_name} wins!")
-  else:
-      print(f"draw.")
+    # Compute who wins, if the two players had the same move, nobody wins
+    p1_state = PlayerState(
+        won_last=p1_action.move == DEFEATS[p2_action.move],
+        last_move=p1_action.move
+    )
+    p2_state = PlayerState(
+        won_last=p2_action.move == DEFEATS[p1_action.move],
+        last_move=p2_action.move
+    )
+    state["rounds_count"] += 1
+    if p1_state.won_last:
+        state["p1"]["won_rounds_count"] += 1
+        print(f"{p1.actor_name} wins!")
+    elif p2_state.won_last:
+        state["p2"]["won_rounds_count"] += 1
+        print(f"{p2.actor_name} wins!")
+    else:
+        print(f"draw.")
 
-  # Generate and send observations
-  observations = [
-      (p1.actor_name, Observation(me=p1_state, them=p2_state)),
-      (p2.actor_name, Observation(me=p2_state, them=p1_state)),
-  ]
-  if is_final:
-      environment_session.end(observations)
-  else:
-      environment_session.produce_observations(observations)
+    # Generate and send observations
+    observations = [
+        (p1.actor_name, Observation(me=p1_state, them=p2_state)),
+        (p2.actor_name, Observation(me=p2_state, them=p1_state)),
+    ]
+    if event.type == cogment.EventType.ACTIVE:
+        # The trial is active
+        environment_session.produce_observations(observations)
+    else:
+        # The trial termination has been requested
+        environment_session.end(observations)
 ```
 
 Finally, in the **termination** phase, we print some stats about the trial itself.
@@ -226,7 +213,7 @@ print(f"\t * {p1.actor_name} won {state['p2']['won_rounds_count']} rounds")
 print(f"\t * {state['rounds_count'] - state['p1']['won_rounds_count'] - state['p2']['won_rounds_count']} draws")
 ```
 
-Modify the `environment/main.py` file to include the above additions. Please note that this code makes assumptions on the number of actors and their classes. Production code should handle non-standard cases in a better way. We also _merged_ how the implementation deals with `actions` and `final_actions`, you can remove the part of the event loop only dealing with `final_actions`.
+Modify the `environment/main.py` file to include the above additions. Please note that this code makes assumptions on the number of actors and their classes. Production code should handle non-standard cases in a better way.
 
 You can now [build and run](./1-bootstrap-and-data-structures.md#building-and-running-the-app) the application. Given the nature of the game and the fully random nature of the plays you should have around 1/3 of player 1 wins, 1/3 of player 2's and 1/3 of draws.
 
