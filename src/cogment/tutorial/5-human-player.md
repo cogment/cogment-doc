@@ -1,6 +1,6 @@
 # Step 5: Add a human player in the loop
 
-> This part of the tutorial follows [step 4](./4-heuristic-player.md), make sure you've gone through it before starting this one. Alternatively the completed step 2 can be retrieved from the [tutorial's repository](https://github.com/cogment/cogment-tutorial-rps).
+> This part of the tutorial follows [step 4](./4-heuristic-player.md), make sure you've gone through it before starting this one. Alternatively the completed step 4 can be retrieved from the [tutorial's repository](https://github.com/cogment/cogment-tutorial-rps).
 
 In this step of the tutorial, we will go over another actor implementation, this time client-side, to enable Humans to play RPS. We will also learn how to let the environment control the termination of the trial.
 

@@ -1,6 +1,6 @@
 # Step 4: Add a second actor implementation based on a heuristic
 
-> This part of the tutorial follows [step 3](./3-rewards.md), make sure you've gone through it before starting this one. Alternatively the completed step 2 can be retrieved from the [tutorial's repository](https://github.com/cogment/cogment-tutorial-rps).
+> This part of the tutorial follows [step 3](./3-rewards.md), make sure you've gone through it before starting this one. Alternatively the completed step 3 can be retrieved from the [tutorial's repository](https://github.com/cogment/cogment-tutorial-rps).
 
 In this step of the tutorial, we will go over another actor implementation and learn about using the received observations before doing an action.
 
