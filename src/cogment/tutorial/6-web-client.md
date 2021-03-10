@@ -12,7 +12,7 @@ https://nodejs.org/en/download/
 
 ## The web client
 
-In the previous steps, we triggered the trials by running `cogment run client`. This launched a trial using code in `client/main.py`. In this step we will trigger a trial using a react app. 
+In the previous steps, we triggered the trials by running `cogment run client`. This launched a trial using code in `client/main.py`. In this step we will trigger a trial using a react app.
 
 Before we start with the cogment side of things, we'll need to get a few prerequisite files setup
 
@@ -44,17 +44,11 @@ $ npm i @mateiral-ui/core
 $ npm i @material-ui/icons
 ```
 
-## Copying in assets
-
-For this rps implementation, we will need a few assets, these can be retrieved from the [tutorial's repository](https://github.com/cogment/cogment-tutorial-rps) in the path [6-web-client/web-client/public/images](./6-web-client/web-client/public/images)
-
-Copy that image folder into the public folder that was generated when you ran create-react-app.
-
 ## Setting up Docker
 
 We'll need two additional docker-compose services along-side those which you already have in order to add this web client. One will be for running the web-client. and one will be for a proxy service called `grpcwebproxy`
 
-> NOTE: `grpcwebproxy` is a helpful program that allows grpc endpoints to be utilized by web applications. Web applications natively can not use the grpc protocol, which is an issue as that is how all the elements of cogment communicate with eachother. This is solved by using a proxy which accepts web socket connections, and translates those into grpc requests.
+> NOTE: `grpcwebproxy` [link](https://github.com/improbable-eng/grpc-web/tree/master/go/grpcwebproxy) is a helpful program that allows grpc endpoints to be utilized by web applications. Web applications natively can not use the grpc protocol, which is an issue as that is how all the elements of cogment communicate with eachother. This is solved by using a proxy which accepts web socket connections, and translates those into grpc requests.
 
 For these services, add the following to the end of your docker-compose.yaml
 
@@ -162,6 +156,8 @@ Now that all that's done, we can finally start coding our web client!
 
 When you created your react app, these two files were generated automatically. Replace their contents with the following
 
+>NOTE: These can also be downloaded from the [tutorial's repository](https://github.com/cogment/cogment-tutorial-rps)
+
 index.css:
 
 ```css
@@ -219,9 +215,7 @@ We'll start with a few imports, some of these files don't exist yet, but we'll b
 import React, { useEffect } from "react";
 
 //Then some imports for icons and Material UI functionality we'll be using
-import ComputerIcon from "@material-ui/icons/Computer";
-import PersonIcon from "@material-ui/icons/Person";
-import { Container, makeStyles, useTheme } from "@material-ui/core";
+import { Box, Button, makeStyles, Typography, useTheme } from "@material-ui/core";
 
 //And here's the important part, we're importing the two things that will allow us to use cogment, first is the 'useActions' hook, this will give us the observations of our human agent, as well as allow us to make actions.
 import { useActions } from "./hooks/useActions";
@@ -231,47 +225,16 @@ import { useActions } from "./hooks/useActions";
 //This file tells our web client relevant information about our trials, environments, and actor classes
 import { cogSettings } from "./CogSettings";
 
-//Finally here are two components which we will make later in the tutorial
-import { Player } from "./components/Player";
-import { Header } from "./components/Header";
-```
-
-Next are the styles we'll use for this component, again, feel free to change these as you see fit
-
-```jsx
-const useStyles = makeStyles((theme) => ({
-  root: {
-    backgroundColor: theme.palette.primary.light,
-    width: "100vw",
-    height: "100vh",
-  },
-
-  container: {
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "center",
-  },
-
-  choiceButtonContainer: {
-    display: "flex",
-    justifyContent: "center",
-  },
-
-  choiceContainer: {
-    margin: theme.spacing(1),
-  },
-
-  choiceImg: {
-    paddingRight: "1vw",
-    width: "12vw",
-    height: "12vw",
-  },
-}));
+//These are messages which were defined in data.proto, these imports will need to change whenever their corresponding messages in data.proto are changed, and cogment generate is run.
+import { Action, Move } from "./data_pb";
 ```
 
 And a simple helper function
 
 ```jsx
+/*
+When our web client recieves an observation from the trial, the moves will be encoded in an enum, the same enum that we defined in our `data.proto`. Here we translate that into strings we can use in our application
+*/
 function getMoveText(move) {
   switch (move) {
     case 0:
@@ -286,441 +249,198 @@ function getMoveText(move) {
 }
 ```
 
-When our web client recieves an observation from the trial, the moves will be encoded in an enum, the same enum that we defined in our `data.proto`. Here we translate that into strings we can use in our application
-
 Finally, the react component
 
 ```jsx
+
 export const App = () => {
-  //Bring in classes and themes to use in Material UI
-  const classes = useStyles();
-  const theme = useTheme();
+    /*
+      The most important part of our application.
+  
+      Here, we use the 'useActions' hook, this hook returns an array with 3 elements
+  
+      event: this contains all the information about any observation, reward, or message we've recieved this tick, we will use this to see what moves we and the computer played
+  
+      startTrial: this is a function which takes no arguments, and is a very simple way to start a new trial with our player actor
+  
+      sendAction: this is a funciton which takes an argument of type 'Action', this class can be imported from data_pb.js, but we'll see that later in this tutorial.
+  
+      This hook takes in 3 arguments, the first being
+  
+      cogSettings: this is what's imported from CogSettings.js, it provides all the relevant information about data.proto to this hook so that it can function
+  
+      actorName: the name of the human actor which this web client will be representing, this is defined in cogment.yaml
 
-  /*
-    The most important part of our application.
+      actorClass: the class of the human actor which this web client will be representing, this is defined in cogment.yaml
+    */
+    const [event, startTrial, sendAction] = useActions(
+        cogSettings,
+        "player_1",
+        "player"
+    );
+    
+    //Function to construct the Action which the player will send when they click either rock, paper, or scissors
+    const choose = (move) => {
+        const moveEnum = Move[move];
+        const action = new Action();
+        action.setMove(moveEnum);
+        sendAction(action);
+    }
 
-    Here, we use the 'useActions' hook, this hook returns an array with 3 elements
+    //This will start a trial as soon as we're connected to the orchestrator
+    useEffect(() => {
+        if (startTrial) startTrial();
+    }, [startTrial]);
 
-    event: this contains all the information about any observation, reward, or message we've recieved this tick, we will use this to see what moves we and the computer played
+    //Get any observation from the current event, events have observations, messages, and rewards, and all three can be unpacked from the event object
+    const { observation } = event;
 
-    startTrial: this is a function which takes no arguments, and is a very simple way to start a new trial with our player actor
+    //Parse game state out of the observation
+    //Generally in cogment applications, all information that's not strictly neccesary must be infered by all agents, for this case, we must infer whether the game has either just started, is going, or if a round has ended
+    let gameState;
+    if (!observation || observation.roundIndex === 0) gameState = "start";
+    if (observation && observation.roundIndex !== 0) gameState = "playing";
+    if (
+        observation &&
+        observation.roundIndex === 0 &&
+        observation.gameIndex !== 0
+    )
+        gameState = "end";
 
-    sendAction: this is a funciton which takes an argument of type 'Action', this class can be imported from data_pb.js, but we'll see that later in this tutorial.
-
-    This hook takes in 3 arguments, the first being
-
-    cogSettings: this is what's imported from CogSettings.js, it provides all the relevant information about data.proto to this hook so that it can function
-
-    actorName: the name of the human actor which this web client will be representing, this is defined in cogment.yaml
-
-    actorClass: the class of the human actor which this web client will be representing, this is defined in cogment.yaml
-  */
-  const [event, startTrial, sendAction] = useActions(
-    cogSettings,
-    "player_1",
-    "player"
-  );
-
-  //This will start a trial as soon as we're connected to the orchestrator
-  useEffect(() => {
-    if (startTrial) startTrial();
-  }, [startTrial]);
-
-  //Get any observation from the current event, events have observations, messages, and rewards, and all three can be unpacked from the event object
-  const { observation } = event;
-
-  //Parse game state out of the observation
-  //Generally in cogment applications, all information that's not strictly neccesary must be infered by all agents, for this case, we must infer whether the game has either just started, is going, or if a round has ended
-  let gameState;
-  if (!observation || observation.roundIndex === 0) gameState = "start";
-  if (observation && observation.roundIndex !== 0) gameState = "playing";
-  if (
-    observation &&
-    observation.roundIndex === 0 &&
-    observation.gameIndex !== 0
-  )
-    gameState = "end";
-
-  //Get the button the AI has selected, we will highlight this in yellow to let the human know that the AI has selected this option
-  const AISelected =
-    gameState !== "start" && getMoveText(observation.them.lastRoundMove);
+    //Get both scores
+    const humanScore = observation ? observation.me.currentGameScore : 0;
+    const computerScore = observation ? observation.them.currentGameScore : 0;
 
   //The layout of the page
   return (
-    <>
-      <Header observation={observation} gameState={gameState} />
-      <Container className={classes.container}>
-        <Player
-          score={observation ? observation.me.currentGameScore : 0}
-          color={theme.palette.primary.main}
-          IconClass={PersonIcon}
-          onAction={sendAction}
-          isHuman
-        />
+    <Box>
+      {/*
+        Tell the player everything we know about the trial state, such as scores, moves, etc...
+      */}
+      <Typography>Game state: {gameState}</Typography>
+      <Typography>Human score: {humanScore}</Typography>
+      <Typography>Computer score: {computerScore}</Typography>
+      <Typography>Human's move: {gameState !== "start" && getMoveText(observation.me.lastRoundMove)}</Typography>
+      <Typography>Computer's move: {gameState !== "start" && getMoveText(observation.them.lastRoundMove)}</Typography>
+      <Typography>Did Human win last round? {observation && observation.me.lastRoundWin ? "Yes" : "No"}</Typography>
+      <Typography>Did Computer win last round? {observation && observation.them.lastRoundWin ? "Yes" : "No"}</Typography>
+      <Button onClick={() => choose(0)}>Rock</Button>
+      <Button onClick={() => choose(1)}>Paper</Button>
+      <Button onClick={() => choose(2)}>Scissors</Button>
 
-        <Player
-          score={observation ? observation.them.currentGameScore : 0}
-          color={theme.palette.secondary.main}
-          IconClass={ComputerIcon}
-          selected={AISelected}
-        />
-      </Container>
-    </>
+      {/*
+        If you want a fancier interface there is a completed UI in the tutorials repository that you can copy into your project, then just add the following code, along with some style code that can be found in the repository version of App.js 
+
+        <Header observation={observation} gameState={gameState} />
+        <Container className={classes.container}>
+            <Player
+                score={humanScore}
+                color={theme.palette.primary.main}
+                IconClass={PersonIcon}
+                choose={choose}
+                isHuman
+            />
+
+            <Player
+                score={computerScore}
+                color={theme.palette.secondary.main}
+                IconClass={ComputerIcon}
+                selected={gameState !== "start" && getMoveText(observation.them.lastRoundMove)}
+            />
+        </Container>
+      */}
+    </Box>
   );
 };
 ```
 
-Awesome, we're almost done!, now to implement the two components referenced in this component. Header, and Player.
+Even though the `useActions` hook is provided upon cogment init, we will still go through it in this tutorial, because that is where most of the Cogment related code is contained, and must be understood if we want to use Cogment without React.JS. Feel free to skip this section if you just want to get a working application going.
 
-First the header, this will tell the player the current game state, and let them know what they should do next
+## useActions.js
 
-## components/Header.js
-
-First, the imports
+This hook does multiple things, it starts a trial, joins a trial, sends actions, and recieves information from the orchestrator. Below is the code
 
 ```jsx
-import React from "react";
+import { useEffect, useState } from "react";
+import * as cogment from "@cogment/cogment-js-sdk";
 
-//Just some imports from Material UI for the styling, as well as some icons that we'll be using
-import { makeStyles, Typography } from "@material-ui/core";
-import ComputerIcon from "@material-ui/icons/Computer";
-import PersonIcon from "@material-ui/icons/Person";
-```
+export const useActions = (cogSettings, actorName, actorClass) => {
 
-Next, the style
+  //Events are composed of a possible observation, message, and reward
+  const [event, setEvent] = useState({
+    observation: null,
+    message: null,
+    reward: null,
+  });
 
-```jsx
-const useStyles = makeStyles((theme) => ({
-  banner: {
-    backgroundColor: theme.palette.primary.main,
-    padding: theme.spacing(4),
-    marginBottom: theme.spacing(4),
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "center",
-  },
+  //startTrial and sendAction will be set after the connected agent joins the trial
+  const [startTrial, setStartTrial] = useState(null);
+  const [sendAction, setSendAction] = useState(null);
 
-  inlineImg: {
-    height: "1em",
-    width: "1em",
-    margin: "0 0.25em",
-    fontSize: "inherit",
-  },
+  //Set up the connection and register the actor only once, regardless of re-rendering
 
-  headerText: {
-    display: "flex",
-    alignItems: "center",
-  },
+  //In this hook, the connected agent is immediatly registered to any existing trial sitting at port 8080 (more accurately any grpcwebproxy pointing to a trial). This is most of the time, the desired behaviour, but this could be changed in different circumstances by replacing this with something like setState(joinTrial), similar to setStartTrial further down this code
+  useEffect(() => {
 
-  spacer: {
-    width: "1em",
-  },
-}));
-```
+    //First we create our service, which will be our primary point of contact to the orchestrator
+    const service = cogment.createService({
+      cogSettings,
+      //grpcURL is an optional argument, and it in fact defaults to the following value, here we're just showing that it can be set explicitly
+      grpcURL:
+        window.location.protocol + "//" + window.location.hostname + ":8080",
+    });
 
-And finally the component
+    //Set up the actor object, an actorName and an actorClass is enough to define a unique actor to add to a trial
+    const actor = { name: actorName, actorClass: actorClass };
 
-```jsx
-export const Header = ({ observation, gameState }) => {
-  //Get styles
-  const classes = useStyles();
+    //Use the service to register an actor. registerActor takes two arguments, the second of which is a callback function which is provided the actorSession of the registered actor, with which we can send actions, and recieve events
+    service.registerActor(actor, async (actorSession) => {
+      //Start the session
+      actorSession.start();
 
-  //Define icons we will be using, for simple access later in the component
-  const rock = (
-    <img
-      alt="rock"
-      className={classes.inlineImg}
-      src={"images/hand-rock.svg"}
-    />
-  );
-  const paper = (
-    <img
-      alt="paper"
-      className={classes.inlineImg}
-      src={"images/hand-paper.svg"}
-    />
-  );
-  const scissors = (
-    <img
-      alt="scissors"
-      className={classes.inlineImg}
-      src={"images/hand-scissors.svg"}
-    />
-  );
-  const human = <PersonIcon className={classes.inlineImg} />;
-  const computer = <ComputerIcon className={classes.inlineImg} />;
+      //Double arrow function here beause react will turn a single one into a lazy loaded function
+      setSendAction(() => (action) => {
+        actorSession.sendAction(action);
+      });
 
-  //Simple function to go from enum to an image, this is the similar to the function in App.js that did something similar
-  function getMoveImg(move) {
-    switch (move) {
-      case 0:
-        return rock;
-      case 1:
-        return paper;
-      case 2:
-        return scissors;
-      default:
-        throw new Error("Not a rock, paper, or scissors");
-    }
-  }
+      /*actorSession.eventLoop is a async generator function, meaning you can use the syntax 
+        for await(const foo of generator()){
+          do stuff
+        }
+        to run some code every time there's new data provided by the function.
 
-  return (
-    <div className={classes.banner}>
-      {/*
-        Show different information based on game state
-        For the first option, if the game state is just starting, tell the human to chose rock, paper, or scissors
-      */}
-      {gameState === "start" && (
-        <Typography variant="h1" align="center" className={classes.headerText}>
-          Pick{rock},{paper}, or{scissors}
-        </Typography>
-      )}
-
-      {/*
-        If the game state is in the middle of playing, let the human know what the result of the last round was
-      */}
-      {gameState === "playing" && (
-        <Typography variant="h1" align="center" className={classes.headerText}>
-          {/*
-            Show what each player chose as their action
-          */}
-          {human}
-          {getMoveImg(observation.me.lastRoundMove)}
-          <div className={classes.spacer} />
-          {computer}
-          {getMoveImg(observation.them.lastRoundMove)}
-          <div className={classes.spacer} />
-
-          {/*
-            Show the result of each player choosing the aformentioned actions, either the human wins the round, computer wins the round, or it's a tie
-          */}
-          {observation.me.lastRoundWin === observation.them.lastRoundWin &&
-            "Tie!"}
-
-          {observation.me.lastRoundWin && !observation.them.lastRoundWin && (
-            <>{human}Won!</>
-          )}
-
-          {!observation.me.lastRoundWin && observation.them.lastRoundWin && (
-            <>{computer}Won!</>
-          )}
-        </Typography>
-      )}
-
-      {/*
-        If the game state is that the round has ended, show who won the round, by seeing who's score was bigger
-      */}
-      {gameState === "end" && (
-        <Typography variant="h1" align="center" className={classes.headerText}>
-          {observation.me.currentGameScore >
-            observation.them.currentGameScore && human}
-          {observation.me.currentGameScore <
-            observation.them.currentGameScore && computer}
-          WINS!
-          <div className={classes.spacer} />
-          Choose to play again
-        </Typography>
-      )}
-    </div>
-  );
-};
-```
-
-Now that we've made the component that will tell the human what the current game state is, let's make the component that will allow the human to interact with the trial, this component will make use of the sendAction function we got from the useActions hook
-
-## components/Player.js
-
-First, the imports
-
-```jsx
-import React from "react";
-
-//Material UI imports, for style
-import Grid from "@material-ui/core/Grid";
-import { makeStyles, Typography } from "@material-ui/core";
-
-//This is a message which was defined in data.proto, this import will need to change whenever its corresponding message in data.proto is changed, and cogment generate is run.
-import { Action } from "../data_pb";
-
-//One last component which we haven't defined yet, don't worry, it's not too big
-import { RPSButton } from "./RPSButton";
-```
-
-Next, the style
-
-```jsx
-const useStyles = makeStyles((theme) => ({
-  banner: {
-    backgroundColor: theme.palette.primary.main,
-    padding: theme.spacing(4),
-    marginBottom: theme.spacing(4),
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "center",
-  },
-
-  inlineImg: {
-    height: "1em",
-    width: "1em",
-    margin: "0 0.25em",
-    fontSize: "inherit",
-  },
-
-  headerText: {
-    display: "flex",
-    alignItems: "center",
-  },
-
-  spacer: {
-    width: "1em",
-  },
-}));
-```
-
-And finally, the component
-
-```jsx
-//This component will recieve some props, which will tell it about the trial state, and whether it's the human, or computer player
-export const Player = ({
-  IconClass /*Either a human, or computer icon*/,
-  score = 0 /*The score of the agent this component represents*/,
-  isHuman /*Is the component a human?*/,
-  onAction /*The onAction function we got from the useActions hook*/,
-  selected /*Which option is selected (Only relevant if this is representing the computer)*/,
-}) => {
-  const classes = useStyles({ isHuman });
-
-  //This is a function that constructs the Action which the player will send when they click either rock, paper, or scissors
-  function choose(move) {
-    const action = new Action();
-    action.setMove(move);
-    onAction(action);
-  }
-
-  return (
-    <Grid className={classes.choiceContainer} container>
-      {/*
-        Show for this player, whether they are the human, or the computer, and what their score is
-      */}
-      <Grid className={classes.choiceButtonContainer} item xs={3}>
-        <IconClass className={classes.icon} />
-        <Typography variant="h1">{score}</Typography>
-      </Grid>
-
-      {/*
-        The Rock, Paper, and Scissors buttons
-      */}
-      <Grid className={classes.choiceButtonContainer} item xs={3}>
-        <RPSButton
-          selected={selected === "rock"}
-          move="rock"
-          isHuman={isHuman}
-          onChoose={choose}
-        />
-      </Grid>
-
-      <Grid className={classes.choiceButtonContainer} item xs={3}>
-        <RPSButton
-          selected={selected === "paper"}
-          move="paper"
-          isHuman={isHuman}
-          onChoose={choose}
-        />
-      </Grid>
-
-      <Grid className={classes.choiceButtonContainer} item xs={3}>
-        <RPSButton
-          selected={selected === "scissors"}
-          move="scissors"
-          isHuman={isHuman}
-          onChoose={choose}
-        />
-      </Grid>
-    </Grid>
-  );
-};
-```
-
-Alright, finally, let's make the actual buttons that will let the human chose an option of Rock, Paper, or Scissors (These buttons also serve to show visually which option the computer has just chosen)
-
-## components/RPSButton.js
-
-First, the imports
-
-```jsx
-import React from "react";
-
-//Material UI imports, for style
-import { IconButton, makeStyles, useTheme } from "@material-ui/core";
-
-//This is a message which was defined in data.proto, this import will need to change whenever its corresponding message in data.proto is changed, and cogment generate is run.
-import { Move } from "../data_pb";
-```
-
-Next, the style
-
-```jsx
-const useStyles = makeStyles((theme) => ({
-  banner: {
-    backgroundColor: theme.palette.primary.main,
-    padding: theme.spacing(4),
-    marginBottom: theme.spacing(4),
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "center",
-  },
-
-  inlineImg: {
-    height: "1em",
-    width: "1em",
-    margin: "0 0.25em",
-    fontSize: "inherit",
-  },
-
-  headerText: {
-    display: "flex",
-    alignItems: "center",
-  },
-
-  spacer: {
-    width: "1em",
-  },
-}));
-```
-
-And finally, the component
-
-```jsx
-export const RPSButton = ({ selected, isHuman, move, onChoose }) => {
-  const theme = useTheme();
-
-  //Make the button either Blue, or Yellow, depending on if this button is being used by the human, or computer
-  const color = isHuman
-    ? theme.palette.primary.main
-    : theme.palette.secondary.main;
-  const classes = useStyles({ color, isHuman });
-
-  //Make the button either behave like a clickable button, or a non-clickable button, depending on if this button is being used by the human, or computer
-  const className =
-    isHuman || selected ? classes.choiceButton : classes.choiceButtonGray;
-
-  return (
-    <IconButton
-      className={className}
-      /* 
-        Move[move.toUpperCase()] is a neat hack based on the fact that in Javascript, object.THING is the same as object["THING"], so we can access the enum value for a certain move by indexing it at the text for that move
-
-        Move.ROCK is the same as Move["Rock"]
+        This is massively useful for network streams.
       */
-      onClick={() => onChoose(Move[move.toUpperCase()])}
-    >
-      <img
-        alt={(isHuman ? "Human " : "Computer ") + move}
-        className={classes.choiceImg}
-        src={"images/hand-" + move + ".svg"}
-      />
-    </IconButton>
-  );
+      for await (const {
+        observation,
+        message,
+        reward,
+      } of actorSession.eventLoop()) {
+        //Parse the observation into a regular JS object
+        //TODO: this will eventually be part of the API
+
+        //Eventually observations will be regular Javascript objects (same with messages, and rewards). But for now you must convert it to an object.
+        let observationOBJ = observation && observation.toObject();
+
+        //Set the event state to the recieved event, causing a hook update
+        setEvent({ observation: observationOBJ, message, reward });
+      }
+    });
+
+    //Creating the trial controller must happen after actors are registered
+    const trialController = service.createTrialController();
+
+    //Need to output a function so that the user can start the trial when all actors are connected
+    //Again, double arrow function cause react will turn a single one into a lazy loaded function
+    setStartTrial(() => async () => {
+
+      //Start and join the trial, when you start a trial, you will recieve an object containing the trialId, that can then be used to join a trial. Almost always, you will want to do both these actions in sequence, as trials do not proceed without the connected agent, if it has been specified in the cogment.yaml that a connected agent exists.
+      const { trialId } = await trialController.startTrial(actor.name);
+      await trialController.joinTrial(trialId, actor);
+    });
+  }, [cogSettings, actorName, actorClass]);
+
+  return [event, startTrial, sendAction];
 };
 ```
 
