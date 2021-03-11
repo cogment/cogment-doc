@@ -12,12 +12,12 @@ The Cogment framework is a high-efficiency, open source framework designed to en
 
 This is the documentation for the Cogment framework. For further Cogment information, check out the documentation at <https://docs.cogment.ai>
 
-## Architecture
+## Documentation architecture
 
 - `mkdocs.yml` is the main configuration file for the documentation.
 - `./src` contains the source for the documentation, mostly markdown file and images.
 
-## Build & develop
+## Building this documentation
 
 ### Prerequisites
 
