@@ -156,7 +156,7 @@ Now that all that's done, we can finally start coding our web client!
 
 When you created your react app, these two files were generated automatically. Replace their contents with the following
 
->NOTE: These can also be downloaded from the [tutorial's repository](https://github.com/cogment/cogment-tutorial-rps)
+> NOTE: These can also be downloaded from the [tutorial's repository](https://github.com/cogment/cogment-tutorial-rps)
 
 index.css:
 
@@ -215,7 +215,13 @@ We'll start with a few imports, some of these files don't exist yet, but we'll b
 import React, { useEffect } from "react";
 
 //Then some imports for icons and Material UI functionality we'll be using
-import { Box, Button, makeStyles, Typography, useTheme } from "@material-ui/core";
+import {
+  Box,
+  Button,
+  makeStyles,
+  Typography,
+  useTheme,
+} from "@material-ui/core";
 
 //And here's the important part, we're importing the two things that will allow us to use cogment, first is the 'useActions' hook, this will give us the observations of our human agent, as well as allow us to make actions.
 import { useActions } from "./hooks/useActions";
@@ -229,12 +235,9 @@ import { cogSettings } from "./CogSettings";
 import { Action, Move } from "./data_pb";
 ```
 
-And a simple helper function
+Then we add a function that will convert the move, encoded as an enum (the same enum that we defined in our `data.proto`) to a string we can use in our application
 
 ```jsx
-/*
-When our web client recieves an observation from the trial, the moves will be encoded in an enum, the same enum that we defined in our `data.proto`. Here we translate that into strings we can use in our application
-*/
 function getMoveText(move) {
   switch (move) {
     case 0:
@@ -251,65 +254,63 @@ function getMoveText(move) {
 
 Finally, the react component
 
+At the start of this component is the most important part of our application.
+
+Here, we use the 'useActions' hook, this hook returns an array with 3 elements
+
+- event: this contains all the information about any observation, reward, or message we've recieved this tick, we will use this to see what moves we and the computer played
+
+- startTrial: this is a function which takes no arguments, and is a very simple way to start a new trial with our player actor
+
+- sendAction: this is a funciton which takes an argument of type 'Action', this class can be imported from data_pb.js, but we'll see that later in this tutorial.
+
+This hook takes in 3 arguments, the first being
+
+- cogSettings: this is what's imported from CogSettings.js, it provides all the relevant information about data.proto to this hook so that it can function
+
+- actorName: the name of the human actor which this web client will be representing, this is defined in cogment.yaml
+
+- actorClass: the class of the human actor which this web client will be representing, this is defined in cogment.yaml
+
 ```jsx
-
 export const App = () => {
-    /*
-      The most important part of our application.
-  
-      Here, we use the 'useActions' hook, this hook returns an array with 3 elements
-  
-      event: this contains all the information about any observation, reward, or message we've recieved this tick, we will use this to see what moves we and the computer played
-  
-      startTrial: this is a function which takes no arguments, and is a very simple way to start a new trial with our player actor
-  
-      sendAction: this is a funciton which takes an argument of type 'Action', this class can be imported from data_pb.js, but we'll see that later in this tutorial.
-  
-      This hook takes in 3 arguments, the first being
-  
-      cogSettings: this is what's imported from CogSettings.js, it provides all the relevant information about data.proto to this hook so that it can function
-  
-      actorName: the name of the human actor which this web client will be representing, this is defined in cogment.yaml
+  const [event, startTrial, sendAction] = useActions(
+    cogSettings,
+    "player_1",
+    "player"
+  );
 
-      actorClass: the class of the human actor which this web client will be representing, this is defined in cogment.yaml
-    */
-    const [event, startTrial, sendAction] = useActions(
-        cogSettings,
-        "player_1",
-        "player"
-    );
-    
-    //Function to construct the Action which the player will send when they click either rock, paper, or scissors
-    const choose = (move) => {
-        const moveEnum = Move[move];
-        const action = new Action();
-        action.setMove(moveEnum);
-        sendAction(action);
-    }
+  //Function to construct the Action which the player will send when they click either rock, paper, or scissors
+  const choose = (move) => {
+    const moveEnum = Move[move];
+    const action = new Action();
+    action.setMove(moveEnum);
+    sendAction(action);
+  };
 
-    //This will start a trial as soon as we're connected to the orchestrator
-    useEffect(() => {
-        if (startTrial) startTrial();
-    }, [startTrial]);
+  //This will start a trial as soon as we're connected to the orchestrator
+  useEffect(() => {
+    if (startTrial) startTrial();
+  }, [startTrial]);
 
-    //Get any observation from the current event, events have observations, messages, and rewards, and all three can be unpacked from the event object
-    const { observation } = event;
+  //Get any observation from the current event, events have observations, messages, and rewards, and all three can be unpacked from the event object
+  const { observation } = event;
 
-    //Parse game state out of the observation
-    //Generally in cogment applications, all information that's not strictly neccesary must be infered by all agents, for this case, we must infer whether the game has either just started, is going, or if a round has ended
-    let gameState;
-    if (!observation || observation.roundIndex === 0) gameState = "start";
-    if (observation && observation.roundIndex !== 0) gameState = "playing";
-    if (
-        observation &&
-        observation.roundIndex === 0 &&
-        observation.gameIndex !== 0
-    )
-        gameState = "end";
+  //Parse game state out of the observation
+  //Generally in cogment applications, all information that's not strictly neccesary must be infered by all agents, for this case, we must infer whether the game has either just started, is going, or if a round has ended
+  let gameState;
+  if (!observation || observation.roundIndex === 0) gameState = "start";
+  if (observation && observation.roundIndex !== 0) gameState = "playing";
+  if (
+    observation &&
+    observation.roundIndex === 0 &&
+    observation.gameIndex !== 0
+  )
+    gameState = "end";
 
-    //Get both scores
-    const humanScore = observation ? observation.me.currentGameScore : 0;
-    const computerScore = observation ? observation.them.currentGameScore : 0;
+  //Get both scores
+  const humanScore = observation ? observation.me.currentGameScore : 0;
+  const computerScore = observation ? observation.them.currentGameScore : 0;
 
   //The layout of the page
   return (
@@ -320,52 +321,39 @@ export const App = () => {
       <Typography>Game state: {gameState}</Typography>
       <Typography>Human score: {humanScore}</Typography>
       <Typography>Computer score: {computerScore}</Typography>
-      <Typography>Human's move: {gameState !== "start" && getMoveText(observation.me.lastRoundMove)}</Typography>
-      <Typography>Computer's move: {gameState !== "start" && getMoveText(observation.them.lastRoundMove)}</Typography>
-      <Typography>Did Human win last round? {observation && observation.me.lastRoundWin ? "Yes" : "No"}</Typography>
-      <Typography>Did Computer win last round? {observation && observation.them.lastRoundWin ? "Yes" : "No"}</Typography>
+      <Typography>
+        Human's move:{" "}
+        {gameState !== "start" && getMoveText(observation.me.lastRoundMove)}
+      </Typography>
+      <Typography>
+        Computer's move:{" "}
+        {gameState !== "start" && getMoveText(observation.them.lastRoundMove)}
+      </Typography>
+      <Typography>
+        Did Human win last round?{" "}
+        {observation && observation.me.lastRoundWin ? "Yes" : "No"}
+      </Typography>
+      <Typography>
+        Did Computer win last round?{" "}
+        {observation && observation.them.lastRoundWin ? "Yes" : "No"}
+      </Typography>
       <Button onClick={() => choose(0)}>Rock</Button>
       <Button onClick={() => choose(1)}>Paper</Button>
       <Button onClick={() => choose(2)}>Scissors</Button>
-
-      {/*
-        If you want a fancier interface there is a completed UI in the tutorials repository that you can copy into your project, then just add the following code, along with some style code that can be found in the repository version of App.js 
-
-        <Header observation={observation} gameState={gameState} />
-        <Container className={classes.container}>
-            <Player
-                score={humanScore}
-                color={theme.palette.primary.main}
-                IconClass={PersonIcon}
-                choose={choose}
-                isHuman
-            />
-
-            <Player
-                score={computerScore}
-                color={theme.palette.secondary.main}
-                IconClass={ComputerIcon}
-                selected={gameState !== "start" && getMoveText(observation.them.lastRoundMove)}
-            />
-        </Container>
-      */}
     </Box>
   );
 };
 ```
 
-Even though the `useActions` hook is provided upon cogment init, we will still go through it in this tutorial, because that is where most of the Cogment related code is contained, and must be understood if we want to use Cogment without React.JS. Feel free to skip this section if you just want to get a working application going.
+## hooks/useActions.js
 
-## useActions.js
-
-This hook does multiple things, it starts a trial, joins a trial, sends actions, and recieves information from the orchestrator. Below is the code
+This hook does multiple things, it starts a trial, joins a trial, sends actions, and recieves information from the orchestrator. The following is its annotated code.
 
 ```jsx
 import { useEffect, useState } from "react";
 import * as cogment from "@cogment/cogment-js-sdk";
 
 export const useActions = (cogSettings, actorName, actorClass) => {
-
   //Events are composed of a possible observation, message, and reward
   const [event, setEvent] = useState({
     observation: null,
@@ -381,7 +369,6 @@ export const useActions = (cogSettings, actorName, actorClass) => {
 
   //In this hook, the connected agent is immediatly registered to any existing trial sitting at port 8080 (more accurately any grpcwebproxy pointing to a trial). This is most of the time, the desired behaviour, but this could be changed in different circumstances by replacing this with something like setState(joinTrial), similar to setStartTrial further down this code
   useEffect(() => {
-
     //First we create our service, which will be our primary point of contact to the orchestrator
     const service = cogment.createService({
       cogSettings,
@@ -433,9 +420,8 @@ export const useActions = (cogSettings, actorName, actorClass) => {
     //Need to output a function so that the user can start the trial when all actors are connected
     //Again, double arrow function cause react will turn a single one into a lazy loaded function
     setStartTrial(() => async () => {
-
       //Start and join the trial, when you start a trial, you will recieve an object containing the trialId, that can then be used to join a trial. Almost always, you will want to do both these actions in sequence, as trials do not proceed without the connected agent, if it has been specified in the cogment.yaml that a connected agent exists.
-      const { trialId } = await trialController.startTrial(actor.name);
+      const { trialId } = await trialController.startTrial(actor.actorClass);
       await trialController.joinTrial(trialId, actor);
     });
   }, [cogSettings, actorName, actorClass]);
@@ -444,7 +430,9 @@ export const useActions = (cogSettings, actorName, actorClass) => {
 };
 ```
 
-And we're done!
+Even though the `useActions` hook is provided upon cogment init, we've still gone through it in this tutorial, because that is where most of the Cogment related code is contained, and must be understood if we want to use Cogment without React.JS.
+
+And with that we're done!
 
 ## Conclusion
 
@@ -456,3 +444,29 @@ $ cogment run start
 ```
 
 And opening up localhost:3000 in your browser
+
+If you want a fancier interface there is a completed UI in the tutorials repository that you can copy into your project, then just replace the return statement from App.js with the following, along with some style code that can be found in the repository version of App.js
+
+```jsx
+<Box>
+  <Header observation={observation} gameState={gameState} />
+  <Container className={classes.container}>
+    <Player
+      score={humanScore}
+      color={theme.palette.primary.main}
+      IconClass={PersonIcon}
+      choose={choose}
+      isHuman
+    />
+
+    <Player
+      score={computerScore}
+      color={theme.palette.secondary.main}
+      IconClass={ComputerIcon}
+      selected={
+        gameState !== "start" && getMoveText(observation.them.lastRoundMove)
+      }
+    />
+  </Container>
+</Box>
+```
