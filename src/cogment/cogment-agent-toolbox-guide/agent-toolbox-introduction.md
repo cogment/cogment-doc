@@ -1,2 +1,0 @@
-# Agent Toolbox introduction
-The Cogment framework comes with a toolbox dedicated to the streamlining of Agents creation. Using the different features of this Agent Toolbox will facilitate some recurrent tasks that are attached to agent creation, helping any Cogment project to get off the ground that much faster and ensuring iteration can happen as fast as possible.
