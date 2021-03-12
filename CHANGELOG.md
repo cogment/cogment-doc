@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## Unreleased
 
+### Fixed
+
+- Fix typos and grammar errors in the core concept page.
+
 ## v1.0.0-alpha1 - 2021-03-11
 
 - Initial alpha release.

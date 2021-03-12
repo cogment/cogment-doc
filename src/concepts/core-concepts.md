@@ -42,7 +42,7 @@ At the heart of every Cogment project is a [YAML](https://yaml.org) file typical
 
 ## Architecture
 
-Running trials with Cogment usually involves a deployment of a cluster services and its clients. These components are either provided by the Cogment framework, depicted below in blue, or implemented for a particular project, depicted in orange.
+Running trials with Cogment usually involves the deployment of a cluster of services and its clients. These components are either provided by the Cogment framework, depicted below in blue, or implemented for a particular project, depicted below in orange.
 
 ![Cogment Architecture - Simple](./cogment_architecture_simple.png)
 
@@ -56,7 +56,7 @@ The key aspect of Cogment's orchestrator is its capacity to handle a number of n
 
 ### Controller
 
-The Controller is a key part of using Cogment, it initiates communication with the Orchestrator to control the execution of [trials](./glossary.md#trial). It is responsible for starting [Trials](./glossary.md#trial), retrieve and watch their state (including the end of the trial), or request trial termination.
+The Controller is a key part of using Cogment, it initiates communication with the Orchestrator to control the execution of [trials](./glossary.md#trial). It is responsible for starting [Trials](./glossary.md#trial), retrieving and watching their state (including the end of the trial), or requesting trial termination.
 
 ### Environment
 
@@ -71,9 +71,9 @@ Using one of [Cogment's SDKs](../cogment/cogment-api-guide.md), the Environment 
 
 ### Actors
 
-Actors can be implemented in two different ways, either as a service or as a client. **Service Actor** implementations are accessed by the [Orchestrator](./glossary.md#orchestrator) during [Trials](./glossary.md#trial), while **Client Actor** implementations join a Trial by initating the communication with the Orchestrator. Client Actors implementations can _reach_ a Cogment deployment through [NAT traversal](https://en.wikipedia.org/wiki/NAT_traversal). This makes them particularly well-suited to implement human-driven Actors, in web-browsers for example.
+Actors can be implemented in two different ways, either as a service or as a client. **Service Actor** implementations are accessed by the [Orchestrator](./glossary.md#orchestrator) during [Trials](./glossary.md#trial), while **Client Actor** implementations join a Trial by initiating the communication with the Orchestrator. Client Actors implementations can _reach_ a Cogment deployment through [NAT traversal](https://en.wikipedia.org/wiki/NAT_traversal). This makes them particularly well-suited to implement human-driven Actors, in web-browsers for example.
 
-Using one of [Cogment's SDKs](../cogment/cogment-api-guide.md) Actors can be implemented as functions handling the integration between a decision making Actor ([software agent](./glossary.md#agent) or Human) and the [Trial](./glossary.md#trial). This function performs the following tasks during the Trial:
+Using one of [Cogment's SDKs](../cogment/cogment-api-guide.md) Actors can be implemented as functions handling the integration between a decision-making Actor ([software agent](./glossary.md#agent) or Human) and the [Trial](./glossary.md#trial). This function performs the following tasks during the Trial:
 
 - Receive [Observations](./glossary.md#observation) and do [Actions](./glossary.md#action) in response, for example vectorizing the retrieved observation, feeding it to a neural network and converting its output to an Action.
 - Receive [Rewards](./glossary.md#reward), for example using them to update a neural network.
