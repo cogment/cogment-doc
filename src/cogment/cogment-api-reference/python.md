@@ -78,17 +78,15 @@ Parameters:
 
 Return : None
 
-### ```async start_trial(self, endpoint, impl, trial_config=None)```
+### ```async get_controller(self, endpoint)```
 
-Method to start a new trial.  Returns only when the `impl` returns.
+Method to get a controller instance to manage trials (start, stop, inquire, etc).
 
 Parameters:
 
 - `endpoint`: *Endpoint instance* - Details of the connection to the Orchestrator.
-- `impl`: *async function(ControlSession instance)* - Callback function to be registered.
-- `trial_config`: *protobuf class instance* - Configuration for the trial.  The type is specified in file `cogment.yaml` under the section `trial:config_type`.  Can be `None` if non configuration is provided.
 
-Return: None
+Return: *Controller instance* - An instance of the Controller class used to manage trials.
 
 ### ```async join_trial(self, trial_id, endpoint, impl_name, actor_name=None)```
 
@@ -146,6 +144,50 @@ Parameters:
 
 Return: None
 
+## class Controller
+
+Class containing data and methods to control and manage trials.
+
+### ```async start_trial(self, trial_config=None)```
+
+Method to start a new trial.  The parameters of the trial will be set by the pre-trial hooks (registered in `cogment.Context`), and the hooks will receive the provided trial config.
+
+Parameters:
+
+- `trial_config`: *protobuf class instance* - Configuration for the trial.  The type is specified in file `cogment.yaml` under the section `trial:config_type`.  Can be `None` if no configuration is provided.
+
+Return: *str* - The newly started trial ID.
+
+### ```terminate_trial(self, trial_id)```
+
+Method to request the end of a trial.
+
+Parameters:
+
+- `trial_id`: *str* - The trial ID to request to terminate.
+
+Return: None
+
+### ```async watch_trials(self, trial_state_filters=[])```
+
+Generator method to iterate, in real-time, through all trial states matching the filters.  When called, it will first iterate over the current states matching the filters, for all trials.  Afterward, it will iterate in real-time over the matching states as they change.
+
+Parameters:
+
+- `trial_state_filters`: *list[cogment.TrialState]* - List of enum values from `cogment.TrialState`.   for which we are intersted to receive state change.
+
+Return: *generator(TrialInfo instance)* - A generator for the state changes that arrive.
+
+### ```get_actors(self, trial_id)```
+
+Method to get the list of configured actors in a trial.
+
+Parameters:
+
+- `trial_id`: *str* - The trial ID to from which to request the list of actors.
+
+Return: *list[ActorInfo instance]* - List of actors configured in this trial.
+
 ## class Session
 
 Abstract class containing data and methods common to all sessions that manage aspects of a trial.
@@ -180,10 +222,7 @@ Method to get the list of active actors in the trial.  This may be expensive to 
 
 Parameters: None
 
-Return: *list[ActiveActor]* - List of active actors and classes involved in this trial. Elements in the list are instances of `ActiveActor`, which define the following attributes:
-
-- `actor_name`: *str* - Name of the actor.
-- `actor_class_name`: *str* - Name of the actor's class.
+Return: *list[ActorInfo instance]* - List of active actors and classes involved in this trial.
 
 ### ```add_reward(self, value, confidence, to, tick_id=-1, user_data=None)```
 
@@ -299,34 +338,6 @@ Parameters:
 
 Return: None
 
-## class ControlSession
-
-Abstract class containing trial data and methods necessary to control (and stop) a trial.  An instance of this class is passed as argument to the `cogment.Context.register_launcher` callback function parameter.
-
-### ```get_trial_id(self)```
-
-Method to get the UUID of the trial.
-
-Parameters: None
-
-Return: *str* - UUID of the trial.
-
-### ```get_actors(self)```
-
-Method to get the list of configured actors in the trial.
-
-Parameters: None
-
-Return: *list[SimpleNamespace(actor_name: str, actor_class_name: str)]* - List of actors and classes configured in this trial.
-
-### ```terminate_trial(self)```
-
-Method to request the end of the trial.
-
-Parameters: None
-
-Return: None
-
 ## class PrehookSession
 
 Abstract class containing trial configuration data to define the specifics of a trial.  An instance of this class is passed as argument to the prehook callback function registered with `cogment.Context.register_pre_trial_hook`, and is part of the `DatalogSession`.
@@ -435,6 +446,33 @@ Parameters:
 
 - `port`: *int* - The TCP/IP port where the service will be awaiting the Orchestrator connection.
 
+## class cogment.TrialState(enum.Enum)
+
+Enum representing the various states of trials.
+
+- UNKNOWN: Should not be used.
+- INITIALIZING: The trial is in the process of starting.
+- PENDING: The trial is waiting for its final parameters, before running.
+- RUNNING: The trial is running.
+- TERMINATING: The trial is in the process of terminating (either a request to terminate has been received or the last observation has been received).
+- ENDED: The trial has ended.  Only a set number of ended trials will be kept (configured in the Orchestrator).
+
+## class TrialInfo
+
+Class enclosing the details of a trial.
+
+`trial_id`: *str* - The trial ID for which the details pertain.
+
+`state`: *cogment.TrialState* - The current state of the trial.
+
+## class ActorInfo
+
+Class enclosing the details of an actor.
+
+`actor_name`: *str* - The name of the actor.
+
+`actor_class_name`: *str* - The name of the actor's class (as defined in `cogment.yaml`).
+
 ## class RecvEvent
 
 Class representing a received event (for environments and actors).  It can contain any combination of data according to the receiver needs, or even be empty, but it will always have a type.
@@ -511,12 +549,19 @@ Generator method to iterate over all sources making up this reward.
 
 Parameters: None
 
-Return: *generator(tuple(float, float, string, google.protobuf.Any instance))* - A generator for the sources in the reward (simple rewards that make up this final/aggregate reward).
+Return: *generator(RecvRewardSource instance)* - A generator for the sources in the reward (simple rewards that make up this final/aggregate reward).
 
-- tuple[0]: *float* - The value of the source reward.
-- tuple[1]: *float* - The confidence level of the reward value.
-- tuple[2]: *string* - Name of the sender.
-- tuple[3]: *google.protobuf.Any instance* - Data for a user-specific reward format.  Can be `None` if no specific data was provided. The class enclosed in `google.protobuf.Any` is of the type set by the sender; It is the responsibility of the receiver to manage the data received (i.e. determine the type and unpack the data).
+## class RecvRewardSource
+
+Class containing the details of a received single source reward.
+
+`value`: *float* - Value of the reward from the sender
+
+`confidence`: *float* - Confidence level of this reward value.
+
+`sender_name`: *str* - Name of the sender of this reward (the name of an actor, or "env" if the environment sent the reward).
+
+`user_data`: *google.protobuf.Any instance* - Data for a user-specific reward format.  Can be `None` if no specific data was provided. The class enclosed in `google.protobuf.Any` is of the type set by the sender; It is the responsibility of the receiver to manage the data received (i.e. determine the type and unpack the data).
 
 [1]: ./cogment-yaml.md
 [4]: ../../concepts/glossary.md#actor-class

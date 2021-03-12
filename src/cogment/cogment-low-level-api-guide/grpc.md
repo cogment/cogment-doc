@@ -281,7 +281,7 @@ message ObservationSet {
 
 This API is defined in `orchestrator.proto`. It is implemented by the cogment orchestrator, and client applications are expected to connect to it using the gRPC client API.
 
-This API is used for general control and services related to trials, primarily to start trials.
+This API is used for general control and services related to trials.
 
 ### Service `TrialLifecycle`
 
@@ -290,6 +290,7 @@ service TrialLifecycle {
   rpc StartTrial(TrialStartRequest) returns (TrialStartReply) {}
   rpc TerminateTrial(TerminateTrialRequest) returns (TerminateTrialReply) {}
   rpc GetTrialInfo(TrialInfoRequest) returns (TrialInfoReply) {}
+  rpc WatchTrials(TrialListRequest) returns (stream TrialListEntry) {}
   rpc Version(VersionRequest) returns (VersionInfo) {}
 }
 ```
@@ -315,6 +316,12 @@ Get extra information about an existing trial.
 Metadata:
 
 - `trial-id`: (*optional*) UUID of the trial to terminate.  If not provided, the request is for informatrion about all running trials.
+
+#### `WatchTrials()`
+
+Stream state changes from trials.
+
+Metadata: None
 
 #### `Version()`
 
@@ -390,9 +397,9 @@ message TrialInfoReply {
 
 - trial: List of information about the trials.  Contains only the requested trial info if a trial ID was provided when the call was made (as metadata to the procedure).  Otherwise contains information about all active trials.
 
-### `TrialInfo`
+### `TrialState`
 
-Message containing information about a trial.
+Enum representing the state of a trial.
 
 ```protobuf
 enum TrialState {
@@ -403,7 +410,20 @@ enum TrialState {
   TERMINATING = 4;
   ENDED = 5;
 }
+```
 
+- UNKNOWN: Should not be used (requirements of protobuf enums to have a 0 default value).
+- INITIALIZING: The trial is in the process of starting.
+- PENDING: The trial is waiting for its final parameters, before running.
+- RUNNING: The trial is running.
+- TERMINATING: The trial is in the process of terminating (either a request to terminate has been received or the last observation has been received).
+- ENDED: The trial has ended.  Only a set number of ended trials will be kept (configured in the Orchestrator).
+
+### `TrialInfo`
+
+Message containing information about a trial.
+
+```protobuf
 message TrialInfo {
   string trial_id = 1;
   TrialState state = 2;
@@ -412,8 +432,35 @@ message TrialInfo {
 ```
 
 - trial_id: The UUID of the trial.
-- state: The state of the trial.  `ENDED` trials will only appear in the list of trials for a short period after they are terminated (if they appear at all).
+- state: The state of the trial.
 - latest_observation: The latest environment observation.  This will be provided only if requested in the `TrialInfoRequest`.
+
+### `TrialListRequest`
+
+Request message for the `WatchTrials` procedure.
+
+```protobuf
+message TrialListRequest {
+  repeated TrialState filter = 1;
+}
+```
+
+- filter: The list of states that are requested.  If a trial is not in a state found in this list, it will not be reported.  If the list is empty, all states will be reported.
+
+### `TrialListEntry`
+
+Stream reply message for the `WatchTrials` procedure.
+
+```protobuf
+message TrialListEntry {
+  string trial_id = 1;
+  TrialState state = 2;
+}
+
+```
+
+- trial_id: The UUID of the trial.
+- state: The state of the trial.
 
 ## Client Actor API
 
