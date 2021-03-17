@@ -110,7 +110,7 @@
     </li>
     <li class="toctree-l4"><a class="reference internal" href="#async-serve_all_registeredself-served_endpoint-prometheus_port-8000">async serve_all_registered(self, served_endpoint, prometheus_port = 8000)</a>
     </li>
-    <li class="toctree-l4"><a class="reference internal" href="#async-start_trialself-endpoint-impl-trial_confignone">async start_trial(self, endpoint, impl, trial_config=None)</a>
+    <li class="toctree-l4"><a class="reference internal" href="#async-get_controllerself-endpoint">async get_controller(self, endpoint)</a>
     </li>
     <li class="toctree-l4"><a class="reference internal" href="#async-join_trialself-trial_id-endpoint-impl_name-actor_namenone">async join_trial(self, trial_id, endpoint, impl_name, actor_name=None)</a>
     </li>
@@ -121,6 +121,18 @@
     <li class="toctree-l4"><a class="reference internal" href="#register_pre_trial_hookself-impl">register_pre_trial_hook(self, impl)</a>
     </li>
     <li class="toctree-l4"><a class="reference internal" href="#register_datalogself-impl">register_datalog(self, impl)</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#class-controller">class Controller</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#async-start_trialself-trial_confignone">async start_trial(self, trial_config=None)</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#terminate_trialself-trial_id">terminate_trial(self, trial_id)</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#async-watch_trialsself-trial_state_filters">async watch_trials(self, trial_state_filters=[])</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#get_actorsself-trial_id">get_actors(self, trial_id)</a>
     </li>
         </ul>
     </li>
@@ -162,19 +174,9 @@
     </li>
         </ul>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#class-controlsession">class ControlSession</a>
-        <ul>
-    <li class="toctree-l4"><a class="reference internal" href="#get_trial_idself_1">get_trial_id(self)</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#get_actorsself">get_actors(self)</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#terminate_trialself">terminate_trial(self)</a>
-    </li>
-        </ul>
-    </li>
     <li class="toctree-l3"><a class="reference internal" href="#class-prehooksession">class PrehookSession</a>
         <ul>
-    <li class="toctree-l4"><a class="reference internal" href="#get_trial_idself_2">get_trial_id(self)</a>
+    <li class="toctree-l4"><a class="reference internal" href="#get_trial_idself_1">get_trial_id(self)</a>
     </li>
     <li class="toctree-l4"><a class="reference internal" href="#validateself">validate(self)</a>
     </li>
@@ -202,6 +204,12 @@
     </li>
         </ul>
     </li>
+    <li class="toctree-l3"><a class="reference internal" href="#class-cogmenttrialstateenumenum">class cogment.TrialState(enum.Enum)</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#class-trialinfo">class TrialInfo</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#class-actorinfo">class ActorInfo</a>
+    </li>
     <li class="toctree-l3"><a class="reference internal" href="#class-recvevent">class RecvEvent</a>
         <ul>
     <li class="toctree-l4"><a class="reference internal" href="#class-cogmenteventtypeenumenum">class cogment.EventType(enum.Enum)</a>
@@ -221,6 +229,8 @@
     <li class="toctree-l4"><a class="reference internal" href="#all_sourcesself">all_sources(self)</a>
     </li>
         </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#class-recvrewardsource">class RecvRewardSource</a>
     </li>
     </ul>
                 </li>
@@ -336,15 +346,13 @@ import cogment
 <li><code>prometheus_port</code>: <em>int</em> - TCP/IP port number for Prometheus</li>
 </ul>
 <p>Return : None</p>
-<h3 id="async-start_trialself-endpoint-impl-trial_confignone"><code>async start_trial(self, endpoint, impl, trial_config=None)</code></h3>
-<p>Method to start a new trial.  Returns only when the <code>impl</code> returns.</p>
+<h3 id="async-get_controllerself-endpoint"><code>async get_controller(self, endpoint)</code></h3>
+<p>Method to get a controller instance to manage trials (start, stop, inquire, etc).</p>
 <p>Parameters:</p>
 <ul>
 <li><code>endpoint</code>: <em>Endpoint instance</em> - Details of the connection to the Orchestrator.</li>
-<li><code>impl</code>: <em>async function(ControlSession instance)</em> - Callback function to be registered.</li>
-<li><code>trial_config</code>: <em>protobuf class instance</em> - Configuration for the trial.  The type is specified in file <code>cogment.yaml</code> under the section <code>trial:config_type</code>.  Can be <code>None</code> if non configuration is provided.</li>
 </ul>
-<p>Return: None</p>
+<p>Return: <em>Controller instance</em> - An instance of the Controller class used to manage trials.</p>
 <h3 id="async-join_trialself-trial_id-endpoint-impl_name-actor_namenone"><code>async join_trial(self, trial_id, endpoint, impl_name, actor_name=None)</code></h3>
 <p>Method for an actor to asynchronously join an existing trial.  Returns only when the implementation of <code>impl_name</code> returns.</p>
 <p>Parameters:</p>
@@ -386,6 +394,36 @@ import cogment
 <li><code>impl</code>: <em>async func(DatalogSession instance)</em> - Callback function to be registered</li>
 </ul>
 <p>Return: None</p>
+<h2 id="class-controller">class Controller</h2>
+<p>Class containing data and methods to control and manage trials.</p>
+<h3 id="async-start_trialself-trial_confignone"><code>async start_trial(self, trial_config=None)</code></h3>
+<p>Method to start a new trial.  The parameters of the trial will be set by the pre-trial hooks (registered in <code>cogment.Context</code>), and the hooks will receive the provided trial config.</p>
+<p>Parameters:</p>
+<ul>
+<li><code>trial_config</code>: <em>protobuf class instance</em> - Configuration for the trial.  The type is specified in file <code>cogment.yaml</code> under the section <code>trial:config_type</code>.  Can be <code>None</code> if no configuration is provided.</li>
+</ul>
+<p>Return: <em>str</em> - The newly started trial ID.</p>
+<h3 id="terminate_trialself-trial_id"><code>terminate_trial(self, trial_id)</code></h3>
+<p>Method to request the end of a trial.</p>
+<p>Parameters:</p>
+<ul>
+<li><code>trial_id</code>: <em>str</em> - The trial ID to request to terminate.</li>
+</ul>
+<p>Return: None</p>
+<h3 id="async-watch_trialsself-trial_state_filters"><code>async watch_trials(self, trial_state_filters=[])</code></h3>
+<p>Generator method to iterate, in real-time, through all trial states matching the filters.  When called, it will first iterate over the current states matching the filters, for all trials.  Afterward, it will iterate in real-time over the matching states as they change.</p>
+<p>Parameters:</p>
+<ul>
+<li><code>trial_state_filters</code>: <em>list[cogment.TrialState]</em> - List of enum values from <code>cogment.TrialState</code>.   for which we are intersted to receive state change.</li>
+</ul>
+<p>Return: <em>generator(TrialInfo instance)</em> - A generator for the state changes that arrive.</p>
+<h3 id="get_actorsself-trial_id"><code>get_actors(self, trial_id)</code></h3>
+<p>Method to get the list of configured actors in a trial.</p>
+<p>Parameters:</p>
+<ul>
+<li><code>trial_id</code>: <em>str</em> - The trial ID to from which to request the list of actors.</li>
+</ul>
+<p>Return: <em>list[ActorInfo instance]</em> - List of actors configured in this trial.</p>
 <h2 id="class-session">class Session</h2>
 <p>Abstract class containing data and methods common to all sessions that manage aspects of a trial.</p>
 <h3 id="get_trial_idself"><code>get_trial_id(self)</code></h3>
@@ -403,11 +441,7 @@ import cogment
 <h3 id="get_active_actorsself"><code>get_active_actors(self)</code></h3>
 <p>Method to get the list of active actors in the trial.  This may be expensive to retrieve and thus should be stored if the list is not expected to change throughout the trial.</p>
 <p>Parameters: None</p>
-<p>Return: <em>list[ActiveActor]</em> - List of active actors and classes involved in this trial. Elements in the list are instances of <code>ActiveActor</code>, which define the following attributes:</p>
-<ul>
-<li><code>actor_name</code>: <em>str</em> - Name of the actor.</li>
-<li><code>actor_class_name</code>: <em>str</em> - Name of the actor's class.</li>
-</ul>
+<p>Return: <em>list[ActorInfo instance]</em> - List of active actors and classes involved in this trial.</p>
 <h3 id="add_rewardself-value-confidence-to-tick_id-1-user_datanone"><code>add_reward(self, value, confidence, to, tick_id=-1, user_data=None)</code></h3>
 <p>Method to send a reward to one or more actors.</p>
 <p>Parameters:</p>
@@ -482,20 +516,6 @@ The generator will exit for various reasons indicating the end of the trial, a l
 <li><code>action</code>: <em>protobuf class instance</em> - An instance of the action space class specified in the corresponding section <code>actor_classes:action:space</code> of the <code>cogment.yaml</code> file.  If <code>None</code>, then no action space is sent (empty content) and the environment will receive a default initialized action space of the appropriate type.</li>
 </ul>
 <p>Return: None</p>
-<h2 id="class-controlsession">class ControlSession</h2>
-<p>Abstract class containing trial data and methods necessary to control (and stop) a trial.  An instance of this class is passed as argument to the <code>cogment.Context.register_launcher</code> callback function parameter.</p>
-<h3 id="get_trial_idself_1"><code>get_trial_id(self)</code></h3>
-<p>Method to get the UUID of the trial.</p>
-<p>Parameters: None</p>
-<p>Return: <em>str</em> - UUID of the trial.</p>
-<h3 id="get_actorsself"><code>get_actors(self)</code></h3>
-<p>Method to get the list of configured actors in the trial.</p>
-<p>Parameters: None</p>
-<p>Return: <em>list[SimpleNamespace(actor_name: str, actor_class_name: str)]</em> - List of actors and classes configured in this trial.</p>
-<h3 id="terminate_trialself"><code>terminate_trial(self)</code></h3>
-<p>Method to request the end of the trial.</p>
-<p>Parameters: None</p>
-<p>Return: None</p>
 <h2 id="class-prehooksession">class PrehookSession</h2>
 <p>Abstract class containing trial configuration data to define the specifics of a trial.  An instance of this class is passed as argument to the prehook callback function registered with <code>cogment.Context.register_pre_trial_hook</code>, and is part of the <code>DatalogSession</code>.</p>
 <p><code>trial_config</code>: <em>protobuf class instance</em> - Configuration for the new trial.  The type is specified in file <code>cogment.yaml</code> under the section <code>trial:config_type</code>.</p>
@@ -511,7 +531,7 @@ The generator will exit for various reasons indicating the end of the trial, a l
 <li>"implementation: <em>str</em> - The name of the implementation to run this actor</li>
 <li>"config": <em>protobuf class instance</em> - The configuration data for the actor.</li>
 </ul>
-<h3 id="get_trial_idself_2"><code>get_trial_id(self)</code></h3>
+<h3 id="get_trial_idself_1"><code>get_trial_id(self)</code></h3>
 <p>Method to retrieve the UUID of the trial.</p>
 <p>Parameters: None</p>
 <p>Return: <em>str</em> - UUID of the trial.</p>
@@ -558,6 +578,24 @@ The generator will exit for various reasons indicating the end of the trial, a l
 <ul>
 <li><code>port</code>: <em>int</em> - The TCP/IP port where the service will be awaiting the Orchestrator connection.</li>
 </ul>
+<h2 id="class-cogmenttrialstateenumenum">class cogment.TrialState(enum.Enum)</h2>
+<p>Enum representing the various states of trials.</p>
+<ul>
+<li>UNKNOWN: Should not be used.</li>
+<li>INITIALIZING: The trial is in the process of starting.</li>
+<li>PENDING: The trial is waiting for its final parameters, before running.</li>
+<li>RUNNING: The trial is running.</li>
+<li>TERMINATING: The trial is in the process of terminating (either a request to terminate has been received or the last observation has been received).</li>
+<li>ENDED: The trial has ended.  Only a set number of ended trials will be kept (configured in the Orchestrator).</li>
+</ul>
+<h2 id="class-trialinfo">class TrialInfo</h2>
+<p>Class enclosing the details of a trial.</p>
+<p><code>trial_id</code>: <em>str</em> - The trial ID for which the details pertain.</p>
+<p><code>state</code>: <em>cogment.TrialState</em> - The current state of the trial.</p>
+<h2 id="class-actorinfo">class ActorInfo</h2>
+<p>Class enclosing the details of an actor.</p>
+<p><code>actor_name</code>: <em>str</em> - The name of the actor.</p>
+<p><code>actor_class_name</code>: <em>str</em> - The name of the actor's class (as defined in <code>cogment.yaml</code>).</p>
 <h2 id="class-recvevent">class RecvEvent</h2>
 <p>Class representing a received event (for environments and actors).  It can contain any combination of data according to the receiver needs, or even be empty, but it will always have a type.</p>
 <p><code>type</code>: <em>Enum EventType</em> - Type of event the enclosed data represents.</p>
@@ -606,13 +644,13 @@ The generator will exit for various reasons indicating the end of the trial, a l
 <h3 id="all_sourcesself"><code>all_sources(self)</code></h3>
 <p>Generator method to iterate over all sources making up this reward.</p>
 <p>Parameters: None</p>
-<p>Return: <em>generator(tuple(float, float, string, google.protobuf.Any instance))</em> - A generator for the sources in the reward (simple rewards that make up this final/aggregate reward).</p>
-<ul>
-<li>tuple[0]: <em>float</em> - The value of the source reward.</li>
-<li>tuple<a href="../cogment-yaml/">1</a>: <em>float</em> - The confidence level of the reward value.</li>
-<li>tuple[2]: <em>string</em> - Name of the sender.</li>
-<li>tuple[3]: <em>google.protobuf.Any instance</em> - Data for a user-specific reward format.  Can be <code>None</code> if no specific data was provided. The class enclosed in <code>google.protobuf.Any</code> is of the type set by the sender; It is the responsibility of the receiver to manage the data received (i.e. determine the type and unpack the data).</li>
-</ul>
+<p>Return: <em>generator(RecvRewardSource instance)</em> - A generator for the sources in the reward (simple rewards that make up this final/aggregate reward).</p>
+<h2 id="class-recvrewardsource">class RecvRewardSource</h2>
+<p>Class containing the details of a received single source reward.</p>
+<p><code>value</code>: <em>float</em> - Value of the reward from the sender</p>
+<p><code>confidence</code>: <em>float</em> - Confidence level of this reward value.</p>
+<p><code>sender_name</code>: <em>str</em> - Name of the sender of this reward (the name of an actor, or "env" if the environment sent the reward).</p>
+<p><code>user_data</code>: <em>google.protobuf.Any instance</em> - Data for a user-specific reward format.  Can be <code>None</code> if no specific data was provided. The class enclosed in <code>google.protobuf.Any</code> is of the type set by the sender; It is the responsibility of the receiver to manage the data received (i.e. determine the type and unpack the data).</p>
               
             </div>
           </div>
