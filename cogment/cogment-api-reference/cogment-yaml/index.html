@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  
+  <link rel="shortcut icon" href="../../../img/favicon.ico">
+  <title>cogment.yaml - Cogment</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
+
+  <link rel="stylesheet" href="../../../css/theme.css" />
+  <link rel="stylesheet" href="../../../css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "cogment.yaml";
+    var mkdocs_page_input_path = "cogment/cogment-api-reference/cogment-yaml.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../../../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../../../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+        <a href="../../.." class="icon icon-home"> Cogment</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+                <p class="caption"><span class="caption-text">Introduction</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../..">Overview</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../../introduction/installation/">Installation & Setup</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Support</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../../support/community-channels/">Community channels</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Concepts</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../../concepts/core-concepts/">Core Concepts</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../../concepts/glossary/">Glossary</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Cogment</span></p>
+                <ul class="current">
+                    <li class="toctree-l1"><a class="reference internal" href="#">Tutorial</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../../tutorial/introduction/">Introduction</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../tutorial/1-bootstrap-and-data-structures/">Step 1: Bootstrap a Cogment app</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../tutorial/2-random-player/">Step 2: Implement actor and environment</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../tutorial/3-rewards/">Step 3: Introduce rewards</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../tutorial/4-heuristic-player/">Step 4: Create a heuristic player</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../tutorial/5-human-player/">Step 5: Add a human player in the loop</a>
+                </li>
+    </ul>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../cogment-api-guide/">Cogment API Guide</a>
+                    </li>
+                    <li class="toctree-l1 current"><a class="reference internal current" href="#">Cogment API Reference</a>
+    <ul class="current">
+                <li class="toctree-l2 current"><a class="reference internal current" href="./">cogment.yaml</a>
+    <ul class="current">
+    <li class="toctree-l3"><a class="reference internal" href="#import">Import</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#commands">Commands</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#trial">Trial</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#environment">Environment</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#actor-classes">Actor Classes</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#trial-params">Trial Params</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#datalog">Datalog</a>
+    </li>
+    </ul>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../python/">python</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../javascript/">javascript</a>
+                </li>
+    </ul>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="#">Cogment Low Level API Guide</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../../cogment-low-level-api-guide/overview/">Overview</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../cogment-low-level-api-guide/grpc/">gRPC API Reference</a>
+                </li>
+    </ul>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Deployment Guide</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../../deployment-guide/local-deployement/">Local Deployment</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../../license/">License</a>
+                    </li>
+                </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../..">Cogment</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Cogment API Reference &raquo;</li>
+        
+      
+        
+          <li>Cogment &raquo;</li>
+        
+      
+    
+    <li>cogment.yaml</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="cogmentyaml">Cogment.yaml</h1>
+<p>At the heart of every Cogment project is a <code>cogment.yaml</code> file (default name). This file is used by the Cogment CLI tool to configure the language specific SDK.  It is also used by the orchestrator to initialize the runtime environment.</p>
+<p>The top level sections in the file are:</p>
+<ul>
+<li><a href="#Import">import</a>: Used to import other files into the defintion of the project</li>
+<li><a href="#Commands">commands</a>: Defines commands that can be run by the Cogment CLI</li>
+<li><a href="#Trial">trial</a>: Define trial speficic properties</li>
+<li><a href="#Environment">environment</a>: Define environment specific properties</li>
+<li><a href="#Actor-Classes">actor_classes</a>: Define actor specific properties (for each actor class)</li>
+<li><a href="#Trial-Params">trial_params</a>: Defines the default parameters to run a trial</li>
+<li><a href="#Datalog">datalog</a>: Defines the data logging specific properties</li>
+</ul>
+<p>In this document, "section" refers to YAML mappings.</p>
+<h2 id="import">Import</h2>
+<p>The import section is used to specify external data structures, and optionally code, that is referenced in other parts of the file.  The referenced files must be in the same folder as the <code>cogment.yaml</code> file.  The import sections are:</p>
+<ul>
+<li><code>proto</code>: List of protobuf definition files.  Message types defined in these files are used to communicate between the various components</li>
+<li><code>python</code>: (optional) List of Python modules</li>
+<li><code>javascript</code>: (optional) List of Javascript files</li>
+</ul>
+<p>All Cogment projects will need at least one <code>proto</code> import to define the data structures exchanged between the various components.  Python and/or javascript imports will be needed if you make use of delta encodings.</p>
+<p>E.g.:</p>
+<pre><code class="yaml">import:
+  proto:
+    - filename1.proto
+    - filename2.proto
+  python:
+    - module_name
+  javascript:
+    - filename.js
+</code></pre>
+
+<p><strong>N.B.</strong>
+When using message types imported from a <code>.proto</code> file, types need to be referred through their <em>package</em> namespace, not the filename containing them.</p>
+<h2 id="commands">Commands</h2>
+<p>This section is optional and defines commands that can then be executed using the Cogment CLI <code>run</code> command.  The commands will be executed by a sub-shell and thus can be any shell command.  The commands can also recursively call Cogment, either builtin CLI or other commands defined here.  But care should be taken not to create infinite recursive calls.</p>
+<p>E.g.:</p>
+<pre><code class="yaml">commands:
+  generate: cogment generate --python_dir=.
+  start: docker-compose up orchestrator agent env
+  play: cogment run start &amp;&amp; docker-compose run launcher
+</code></pre>
+
+<p>To run one of these commands, the Cogment CLI command <code>run</code> must be used, e.g.: <code>cogment run start</code>.  And as such there is no problem differentiating between <code>cogment run generate</code> and <code>cogment generate</code> (the latter is the builtin CLI command, and the former is the command defined in the <code>cogment.yaml</code> file).</p>
+<h2 id="trial">Trial</h2>
+<p>This section defines properties related to the trial and trial management.  It has the properties:</p>
+<ul>
+<li><code>config_type</code>: (optional) The protobuf message type (data structure) that will be passed on to the pre-trial hooks.</li>
+<li><code>pre_hooks</code>: (optional) List of endpoint for pre-trial hook processing services.  The services will all be called, and their responses waited upon before the trial starts.  The services are called in order of listing.  The first service to be called will receive the default parameters (set in the <code>trial_params</code> section of <code>cogment.yaml</code>) and can change them.  Each subsequent service will receive the parameters updated by the previous service, and can change them further.  If no service is defined, the default parameters are used directly.</li>
+</ul>
+<p>E.g.:</p>
+<pre><code class="yaml">trial:
+  config_type: namespace.DataType
+  pre_hooks:
+    - grpc://actorconfigserver:9000
+    - grpc://envconfigserver:9000
+    - grpc://logconfigserver:9000
+</code></pre>
+
+<h2 id="environment">Environment</h2>
+<p>This section defines properties related to the environment. It has the properties:</p>
+<ul>
+<li><code>config_type</code>: (optional) The protobuf message type used to configure the environment</li>
+</ul>
+<pre><code class="yaml">environment:
+  config_type: namespace.DataType
+</code></pre>
+
+<h2 id="actor-classes">Actor Classes</h2>
+<p>Arguably the most important section of the <code>cogment.yaml</code> file, the actor classes section describes the actor types that can be present in the project's trials.</p>
+<p>The content of this section is a list of actor classes, each containing the necessary properties to define an actor class.  These properties are:</p>
+<ul>
+<li><code>id</code>: The name by which this actor class is known</li>
+<li><code>action</code>: Mapping of properties</li>
+<li><code>space</code>: The protobuf message type that represents all the possible actions that this actor class can perform (its action space)</li>
+<li><code>observation</code>: Mapping of properties</li>
+<li><code>space</code>: The protobuf message type that represents a snapshot of the data that this actor class has access to (its observation space)</li>
+<li><code>delta</code>: (optional) The protobuf message type that represents the difference between two observation spaces (snapshots)</li>
+<li><code>delta_apply_fn</code>: (optional) Mapping for a function to combine an observation space and a delta, into a new observation space: <em>fn(observation, delta) -&gt; observation</em>.  Only one of the following can be defined<ul>
+<li><code>python</code>: The function defined in python</li>
+<li><code>javascript</code>: The function defined in Javascript</li>
+</ul>
+</li>
+<li><code>config_type</code>: (optional) Defines the protobuf message type used to configure this actor class</li>
+</ul>
+<p>Each actor class should define both an observation and action space as protobuf message types.</p>
+<pre><code class="yaml">actor_classes:
+  - id: BigPlayer
+    action:
+      space: namespace.PlayerAction
+    observation:
+      space: namespace.PlayerObservation
+      delta: namespace.PlayerDeltaObservation
+      delta_apply_fn:
+        python: module_name.PlayerDeltaProcessingFn
+    config_type: namespace.PlayerConfig
+
+  - id: SmallPlayer
+    action:
+      space: namespace.PlayerAction
+    observation:
+      space: namespace.PlayerObservation
+      delta: namespace.PlayerDeltaObservation
+      delta_apply_fn:
+        python: module_name.PlayerDeltaProcessingFn
+    config_type: namespace.PlayerConfig
+
+  - id: Referee
+    action:
+      space: namespace.RefereeAction
+    observation:
+      space: namespace.RefereeObservation
+      delta: namespace.RefereeDeltaObservation
+      delta_apply_fn:
+        python: module_name.RefereeDeltaProcessingFn
+    config_type: namespace.RefereeConfig
+</code></pre>
+
+<h2 id="trial-params">Trial Params</h2>
+<p>This section defines the different parameters that can be adjusted by pre-trial hooks for each trial.  It also defines the default values for these parameters.  These parameters are:</p>
+<ul>
+<li><code>trial</code>: Mapping of properties</li>
+<li><code>config</code>: Definition of properties to match the definition of <code>config_type</code> for the trial. I.e. the yaml definition needs to match the definition of the protobuf class declared as <code>config_type</code>.</li>
+<li><code>environment</code>: Mapping of properties</li>
+<li><code>endpoint</code>: The URL where the environment gRPC server resides</li>
+<li><code>implementation</code>: The name of the implementation to be used for this instance of the environment.  This must match an implementation that is defined at the endpoint.  If not defined, an arbitraary implementation will be chosen at runtime</li>
+<li><code>config</code>: Definition of properties to match the definition of <code>config_type</code> for the environment. I.e. the yaml definition needs to match the definition of the protobuf class declared as <code>config_type</code>.</li>
+<li><code>actors</code>: List of actor properties</li>
+<li><code>name</code>: The name of this actor (i.e. name of the specific instance of the actor class)</li>
+<li><code>actor_class</code>: The name of the actor class.  The actor class must be defined in the <code>actor_classes</code> section above</li>
+<li><code>endpoint</code>: The URL where the actor gRPC server resides.  If this is <code>client</code>, the actor will connect as a client (the orchestrator being the server in this case).</li>
+<li><code>implementation</code>: The name of the implementation to be used for this actor instance.  This must match an implementation that is defined at the endpoint.  If not defined, an arbitraary implementation will be chosen at runtime.</li>
+<li><code>config</code>: Definition of properties to match the definition of <code>config_type</code> for this actor class.  I.e. the yaml definition needs to match the definition of the protobuf class declared as <code>config_type</code>.</li>
+</ul>
+<p>E.g.:</p>
+<pre><code class="yaml">trial_params:
+  environment:
+    endpoint: grpc://env:9000
+    implementation: default
+    config:
+
+  actors:
+    - name: Alice
+      actor_class: BigPlayer
+      endpoint: grpc://bp1:9000
+      implementation:
+      config:
+    - name: Bob
+      actor_class: BigPlayer
+      endpoint: grpc://bp2:9000
+      implementation: Test
+      config:
+    - name: Carol
+      actor_class: SmallPlayer
+      endpoint: grpc://sp:9000
+      implementation: DQN_Hotel3
+      config:
+    - name: Dave
+      actor_class: SmallPlayer
+      endpoint: grpc://sp:9000
+      implementation: DNN_Karma3.1.17
+      config:
+    - name: Olivia
+      actor_class: Referee
+      endpoint: client
+      implementation: Standard
+      config:
+</code></pre>
+
+<h2 id="datalog">Datalog</h2>
+<p>This section defines the properties related to the logging of the data.  It has the properties:</p>
+<ul>
+<li><code>fields</code>: (optional) Mapping of properties</li>
+<li><code>exclude</code>: List of fields to exclude from the data to send for logging</li>
+<li><code>type</code>: The type of data to send for logging.  Can be <code>grpc</code> or <code>none</code>.</li>
+<li><code>url</code>: URL where to send the data to be logged</li>
+</ul>
+<pre><code class="yaml">datalog:
+  fields:
+    exclude: [time, msg, status]
+  type: grpc
+  url: logserver:9000
+</code></pre>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../python/" class="btn btn-neutral float-right" title="python">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../../cogment-api-guide/" class="btn btn-neutral" title="Cogment API Guide"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../../cogment-api-guide/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../python/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '../../..';</script>
+    <script src="../../../js/theme.js" defer></script>
+      <script src="../../../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

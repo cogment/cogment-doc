@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  
+  <link rel="shortcut icon" href="../../../img/favicon.ico">
+  <title>python - Cogment</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
+
+  <link rel="stylesheet" href="../../../css/theme.css" />
+  <link rel="stylesheet" href="../../../css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "python";
+    var mkdocs_page_input_path = "cogment/cogment-api-reference/python.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../../../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../../../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+        <a href="../../.." class="icon icon-home"> Cogment</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+                <p class="caption"><span class="caption-text">Introduction</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../..">Overview</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../../introduction/installation/">Installation & Setup</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Support</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../../support/community-channels/">Community channels</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Concepts</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../../concepts/core-concepts/">Core Concepts</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../../concepts/glossary/">Glossary</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Cogment</span></p>
+                <ul class="current">
+                    <li class="toctree-l1"><a class="reference internal" href="#">Tutorial</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../../tutorial/introduction/">Introduction</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../tutorial/1-bootstrap-and-data-structures/">Step 1: Bootstrap a Cogment app</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../tutorial/2-random-player/">Step 2: Implement actor and environment</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../tutorial/3-rewards/">Step 3: Introduce rewards</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../tutorial/4-heuristic-player/">Step 4: Create a heuristic player</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../tutorial/5-human-player/">Step 5: Add a human player in the loop</a>
+                </li>
+    </ul>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../cogment-api-guide/">Cogment API Guide</a>
+                    </li>
+                    <li class="toctree-l1 current"><a class="reference internal current" href="#">Cogment API Reference</a>
+    <ul class="current">
+                <li class="toctree-l2"><a class="reference internal" href="../cogment-yaml/">cogment.yaml</a>
+                </li>
+                <li class="toctree-l2 current"><a class="reference internal current" href="./">python</a>
+    <ul class="current">
+    <li class="toctree-l3"><a class="reference internal" href="#installation">Installation</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#general-usage">General usage</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#cogmentyaml">cogment.yaml</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#cog_settingspy">cog_settings.py</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#top-level-import">Top-level import</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#class-cogmentcontext">class cogment.Context</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#__init__self-user_id-cog_settings">__init__(self, user_id, cog_settings)</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#async-serve_all_registeredself-served_endpoint-prometheus_port-8000">async serve_all_registered(self, served_endpoint, prometheus_port = 8000)</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#async-start_trialself-endpoint-impl-trial_confignone">async start_trial(self, endpoint, impl, trial_config=None)</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#async-join_trialself-trial_id-endpoint-impl_name-actor_namenone">async join_trial(self, trial_id, endpoint, impl_name, actor_name=None)</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#register_environmentself-impl-impl_name-default">register_environment(self, impl, impl_name = "default")</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#register_actorself-impl-impl_name-actor_classes">register_actor(self, impl, impl_name, actor_classes=[])</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#register_pre_trial_hookself-impl">register_pre_trial_hook(self, impl)</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#register_datalogself-impl">register_datalog(self, impl)</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#class-session">class Session</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#get_trial_idself">get_trial_id(self)</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#get_tick_idself">get_tick_id(self)</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#is_trial_overself">is_trial_over(self)</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#get_active_actorsself">get_active_actors(self)</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#add_rewardself-value-confidence-to-tick_id-1-user_datanone">add_reward(self, value, confidence, to, tick_id=-1, user_data=None)</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#send_messageself-payload-to-to_environmentfalse">send_message(self, payload, to, to_environment=False)</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#class-environmentsessionsession">class EnvironmentSession(Session)</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#startself-observations">start(self, observations)</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#async-event_loopself">async event_loop(self)</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#produce_observationsself-observations">produce_observations(self, observations)</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#endself-final_observations">end(self, final_observations)</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#class-actorsessionsession">class ActorSession(Session)</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#startself">start(self)</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#async-event_loopself_1">async event_loop(self)</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#do_actionself-action">do_action(self, action)</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#class-controlsession">class ControlSession</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#get_trial_idself_1">get_trial_id(self)</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#get_actorsself">get_actors(self)</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#terminate_trialself">terminate_trial(self)</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#class-prehooksession">class PrehookSession</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#get_trial_idself_2">get_trial_id(self)</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#validateself">validate(self)</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#class-datalogsession">class DatalogSession</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#startself_1">start(self)</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#get_sampleself">get_sample(self)</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#get_all_samplesself">get_all_samples(self)</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#class-cogmentendpoint">class cogment.Endpoint</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#__inti__self-url">__inti__(self, url)</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#class-cogmentservedendpoint">class cogment.ServedEndpoint</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#__inti__self-port">__inti__(self, port)</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#class-recvevent">class RecvEvent</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#class-cogmenteventtypeenumenum">class cogment.EventType(enum.Enum)</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#class-recvobservation">class RecvObservation</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#class-recvaction">class RecvAction</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#class-recvmessage">class RecvMessage</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#class-recvreward">class RecvReward</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#get_nb_sourcesself">``get_nb_sources(self)</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#all_sourcesself">all_sources(self)</a>
+    </li>
+        </ul>
+    </li>
+    </ul>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../javascript/">javascript</a>
+                </li>
+    </ul>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="#">Cogment Low Level API Guide</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../../cogment-low-level-api-guide/overview/">Overview</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../cogment-low-level-api-guide/grpc/">gRPC API Reference</a>
+                </li>
+    </ul>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Deployment Guide</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../../deployment-guide/local-deployement/">Local Deployment</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../../license/">License</a>
+                    </li>
+                </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../..">Cogment</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Cogment API Reference &raquo;</li>
+        
+      
+        
+          <li>Cogment &raquo;</li>
+        
+      
+    
+    <li>python</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="python-sdk">Python SDK</h1>
+<h2 id="installation">Installation</h2>
+<p>The simplest way to install the python SDK is to just install it using pip:
+<code>pip install cogment</code></p>
+<p>The basic requiremetns is Python 3.7.</p>
+<h2 id="general-usage">General usage</h2>
+<h3 id="cogmentyaml">cogment.yaml</h3>
+<p>The <a href="../cogment-yaml/">cogment.yaml</a> file (including imported files) defines the high level API.</p>
+<p>For example, an <a href="../../../concepts/glossary/#actor-class">actor class</a> is defined by its required <a href="../../../concepts/glossary/#observation-space">observation space</a> and <a href="../../../concepts/glossary/#action-space">action space</a>.</p>
+<p>These "spaces" are defined by using protobuf message types (from the imported files). <a href="../../../concepts/glossary/#observation">Observations</a> and <a href="../../../concepts/glossary/#action">actions</a> will simply be instances of the appropriate type.</p>
+<p>Messages and feedback user data don't have a set type, they can be any type as long as the receiver can manage that type (i.e. the object received is an instance of <code>google.protobuf.Any</code> and the contained type should be checked against known types before handling).  The type is determined by the provided message from the originator.</p>
+<p>The <code>trial_params</code> section represents default values that can be dynamically changed for each trial with pre-trial hooks.  Therefore, below, when this section of the <code>cogment.yaml</code> file is refered, we mean the final parameters after any pre-trial hooks.</p>
+<h4 id="compiling-the-cogmentyaml">Compiling the cogment.yaml</h4>
+<p>In order to use the configuration found in the <code>cogment.yaml</code> file within python scripts, it needs to be compiled into python modules. This is done by a tool called the “cogment cli” (Command Line Interface).</p>
+<p>The cogment cli requires <code>protoc</code> (the Protobuf compiler).</p>
+<p>As a convenience, the <code>cogment/cli</code> docker image can be used to run it, as it has all the required dependencies correctly setup already:</p>
+<pre><code class="text">$ docker run -v $(pwd):/data --rm cogment/cli --file /data/cogment.yaml --python_dir=/data
+</code></pre>
+
+<p>This will create a <code>cog_settings.py</code> module in the <code>--python-dir</code> directory.  The cogment cli will also compile the imported <code>*.proto</code> files in python modules living in the same location (e.g. <code>data_pb2.py</code> in this case). There is no need to invoke <code>protoc</code> yourself for the imported files.</p>
+<h3 id="cog_settingspy">cog_settings.py</h3>
+<p>All API entrypoints require a cogment configuration object. This configuration object can be determined
+from the content of a project's <code>cogment.yaml</code>. As such, it should be generated using the <code>cogment</code> tool.</p>
+<pre><code class="bash"># From the directory containing cogment.yaml
+$ cogment generate --python_dir=path/to/project
+</code></pre>
+
+<p>This will generate both a <code>cog_settings.py</code> file, as well as any required compiled protocol buffer files.</p>
+<h3 id="top-level-import">Top-level import</h3>
+<p>Whether a script implements an actor or environment, it should import both the <code>cogment</code> module (generic python SDK for Cogment) and the <code>cog_settings</code> module (project specific definitions created from <code>cogment.yaml</code>).</p>
+<pre><code class="python">import cog_settings
+import cogment
+</code></pre>
+
+<h2 id="class-cogmentcontext">class cogment.Context</h2>
+<p>Class to setup and run all the different aspects of trials.</p>
+<h3 id="__init__self-user_id-cog_settings"><code>__init__(self, user_id, cog_settings)</code></h3>
+<p>Parameters:</p>
+<ul>
+<li><code>user_id</code>: <em>str</em> - Identifier for the user of this context.</li>
+<li><code>cog_settings</code>: <em>module</em> - Settings module associated with trials that will be run (<a href="#cog_settings.py">cog_settings</a> namespace).</li>
+</ul>
+<h3 id="async-serve_all_registeredself-served_endpoint-prometheus_port-8000"><code>async serve_all_registered(self, served_endpoint, prometheus_port = 8000)</code></h3>
+<p>Method to start and run the communication server for the registered components (environment, actor, prehook, datalog).  Returns only when all activity has stopped (i.e. current coroutine is blocked until the server is stopped).</p>
+<p>Parameters:</p>
+<ul>
+<li><code>served_endpoint</code>: <em>ServedEndpoint instance</em> - Details of the connection for the served components.</li>
+<li><code>prometheus_port</code>: <em>int</em> - TCP/IP port number for Prometheus</li>
+</ul>
+<p>Return : None</p>
+<h3 id="async-start_trialself-endpoint-impl-trial_confignone"><code>async start_trial(self, endpoint, impl, trial_config=None)</code></h3>
+<p>Method to start a new trial.  Returns only when the <code>impl</code> returns.</p>
+<p>Parameters:</p>
+<ul>
+<li><code>endpoint</code>: <em>Endpoint instance</em> - Details of the connection to the Orchestrator.</li>
+<li><code>impl</code>: <em>async function(ControlSession instance)</em> - Callback function to be registered.</li>
+<li><code>trial_config</code>: <em>protobuf class instance</em> - Configuration for the trial.  The type is specified in file <code>cogment.yaml</code> under the section <code>trial:config_type</code>.  Can be <code>None</code> if non configuration is provided.</li>
+</ul>
+<p>Return: None</p>
+<h3 id="async-join_trialself-trial_id-endpoint-impl_name-actor_namenone"><code>async join_trial(self, trial_id, endpoint, impl_name, actor_name=None)</code></h3>
+<p>Method for an actor to asynchronously join an existing trial.  Returns only when the implementation of <code>impl_name</code> returns.</p>
+<p>Parameters:</p>
+<ul>
+<li><code>trial_id</code>: <em>str</em> - The UUID of the trial to join.</li>
+<li><code>endpoint</code>: <em>Endpoint instance</em> - Details of the connection to the Orchestrator.</li>
+<li><code>impl_name</code>: <em>str</em> - The implementation name of the actor to join the trial.  The implementation must have previously been registered with the <code>register_actor</code> method.</li>
+<li><code>actor_namer</code>: <em>str</em> - Name of the actor joining the trial. If <code>None</code>, the actor will join as any of the configured (free) actors of the actor class registered for <code>impl_name</code>.  Otherwise, the name must match an actor with an actor_class compatible with <code>impl_name</code> as defined in <code>cogment.yaml</code> in the sections <code>trial_params:actors:actor_class</code> and <code>trial_params:actors:name</code>.</li>
+</ul>
+<p>Return: None</p>
+<h3 id="register_environmentself-impl-impl_name-default"><code>register_environment(self, impl, impl_name = "default")</code></h3>
+<p>Method to register the asynchronous callback function that will run an environment for a trial.</p>
+<p>Parameters:</p>
+<ul>
+<li><code>impl</code>: <em>async function(EnvironmentSession instance)</em> - Callback function to be registered.</li>
+<li><code>impl_name</code>: <em>str</em> - Name for the environment being run by the given callback function.</li>
+</ul>
+<p>Return: None</p>
+<h3 id="register_actorself-impl-impl_name-actor_classes"><code>register_actor(self, impl, impl_name, actor_classes=[])</code></h3>
+<p>Method to register the asynchronous callback function that will run an actor for a trial.</p>
+<p>Parameters:</p>
+<ul>
+<li><code>impl</code>: <em>async func(ActorSession instance)</em> - Callback function to be registered.</li>
+<li><code>impl_name</code>: <em>str</em> - Name for the actor implementation being run by the given callback function.</li>
+<li><code>actor_classes</code>: <em>list[str]</em> - The actor class name(s) that can be run by the given callback function. The possible names are specified in file <code>cogment.yaml</code> under section <code>actor_classes:name</code>.  If the list is empty, this implementation can run any actor class.</li>
+</ul>
+<p>Return: None</p>
+<h3 id="register_pre_trial_hookself-impl"><code>register_pre_trial_hook(self, impl)</code></h3>
+<p>Method to register an asynchronous callback function that will be called before a trial is started.</p>
+<p>Parameters:</p>
+<ul>
+<li><code>impl</code>: <em>async func(PrehookSession instance)</em> - Callback function to be registered.  The <code>PrehookSession</code> instance member data should be changed as needed for the new trial before returning from this function.</li>
+</ul>
+<p>Return: None</p>
+<h3 id="register_datalogself-impl"><code>register_datalog(self, impl)</code></h3>
+<p>Method to register an asynchronous callback function that will be called for each log request (for any trial).  Only one such function can be registered.</p>
+<p>Parameters:</p>
+<ul>
+<li><code>impl</code>: <em>async func(DatalogSession instance)</em> - Callback function to be registered</li>
+</ul>
+<p>Return: None</p>
+<h2 id="class-session">class Session</h2>
+<p>Abstract class containing data and methods common to all sessions that manage aspects of a trial.</p>
+<h3 id="get_trial_idself"><code>get_trial_id(self)</code></h3>
+<p>Method to get the UUID of the trial managed by this session.</p>
+<p>Parameters: None</p>
+<p>Return: <em>str</em> - UUID of the trial.</p>
+<h3 id="get_tick_idself"><code>get_tick_id(self)</code></h3>
+<p>Method to get the current tick id of the trial (i.e. time step).</p>
+<p>Parameters: None</p>
+<p>Return: <em>int</em> - The current tick id.</p>
+<h3 id="is_trial_overself"><code>is_trial_over(self)</code></h3>
+<p>Method to inquire if the current trial has ended.</p>
+<p>Parameters: None</p>
+<p>Return: <em>bool</em> - True if the trial has ended, false otherwise.</p>
+<h3 id="get_active_actorsself"><code>get_active_actors(self)</code></h3>
+<p>Method to get the list of active actors in the trial.  This may be expensive to retrieve and thus should be stored if the list is not expected to change throughout the trial.</p>
+<p>Parameters: None</p>
+<p>Return: <em>list[ActiveActor]</em> - List of active actors and classes involved in this trial. Elements in the list are instances of <code>ActiveActor</code>, which define the following attributes:</p>
+<ul>
+<li><code>actor_name</code>: <em>str</em> - Name of the actor.</li>
+<li><code>actor_class_name</code>: <em>str</em> - Name of the actor's class.</li>
+</ul>
+<h3 id="add_rewardself-value-confidence-to-tick_id-1-user_datanone"><code>add_reward(self, value, confidence, to, tick_id=-1, user_data=None)</code></h3>
+<p>Method to send a reward to one or more actors.</p>
+<p>Parameters:</p>
+<ul>
+<li><code>value</code>: <em>float</em> - Value of the reward.  This will be aggregated with other rewards for the same target actor.</li>
+<li><code>confidence</code>: <em>float</em> - Weight of this reward value in determining the final aggregated reward.</li>
+<li><code>to</code>: <em>list[str]</em> - Target(s) of reward.  A list value could be the name of an actor in the trial.  Or it could represent a set of actors; A set of actors can be represented with the wildcard character "<code>*</code>" for all actors (of all classes), or "<code>actor_class.*</code>" for all actors of a specific class (the <code>actor_class</code> is the name of the class as specified in <code>cogment.yaml</code>).</li>
+<li><code>tick_id</code>: <em>int</em> - The tick id (time step) for which the reward should be applied.  If "-1", then the reward applies to the current time step.</li>
+<li><code>user_data</code>: <em>protobuf class instance</em> - Extra user data to be sent with the reward. The class can be any protobuf class.  It is the responsibility of the receiving actor to manage the class received (packed in a <code>google.protobuf.Any</code>).</li>
+</ul>
+<p>Return: None</p>
+<h3 id="send_messageself-payload-to-to_environmentfalse"><code>send_message(self, payload, to, to_environment=False)</code></h3>
+<p>Method to send a message related to current time step (tick id).</p>
+<p>Parameters:</p>
+<ul>
+<li><code>payload</code>: <em>protobuf class instance</em> - The message data to be sent. The class can be any protobuf class.  It is the responsibility of the receiving actor or environment to manage the class received (packed in a <code>google.protobuf.Any</code>).</li>
+<li><code>to</code>: <em>list[str]</em> - Targets of feedback.  A list value could be the name of an actor in the trial.  Or it could represent a set of actors; A set of actors can be represented with the wildcard character "<code>*</code>" for all actors (of all classes), or "<code>actor_class.*</code>" for all actors of a specific class (the <code>actor_class</code> is the name of the class as specified in <code>cogment.yaml</code>).</li>
+<li><code>to_environment</code>: <em>bool</em> - If True, the message is also sent to the environment, otherwise the message is only sent to the actors specified.</li>
+</ul>
+<p>Return: None</p>
+<h2 id="class-environmentsessionsession">class EnvironmentSession(Session)</h2>
+<p>Abstract class based on <code>Session</code>, containing session data and methods necessary to run an environment for a trial.  An instance of this class is passed as argument to the environment callback function registered with <code>cogment.Context.register_environment</code>.</p>
+<p><code>impl_name</code>: <em>str</em> - Name of the implementation running this environment.</p>
+<p><code>config</code>: <em>protobuf class instance</em> - User configuration received for this environment instance.  Can be <code>None</code> if no configuration was provided.  The type of the protobuf class is specified in <code>cogment.yaml</code> in section <code>environment:config_type</code>.</p>
+<h3 id="startself-observations"><code>start(self, observations)</code></h3>
+<p>Method to report that the environment is starting to run the trial.  The method should be called before any other method in the session.</p>
+<p>Parameters:</p>
+<ul>
+<li><code>observations</code>: <em>list[tuple(str, protobuf class instance)]</em> - The initial observations from which the environment is starting the trial.  This is the same as the parameter for <code>self.produce_observations</code>.</li>
+</ul>
+<p>Return: None</p>
+<h3 id="async-event_loopself"><code>async event_loop(self)</code></h3>
+<p>Generator method to iterate over all events (actions, messages) as they are received.  This will block and wait for an event.
+When this generator exits, the callback function (registered with <code>register_environment</code>) should return to end the trial cleanly.
+The generator will exit for various reasons indicating the termination of the trial, a loss of communication with the orchestrator, or if the generator is sent "False" (in which case the callback function does not necessarily need to exit).</p>
+<p>Parameters: None</p>
+<p>Return: <em>generator(RecvEvent instance)</em> - A generator for the events that arrive.  The <code>RecvEvent</code> instances received from this generator will only contain actions or messages; no observations nor rewards.  When receiving actions in the event, the <code>self.produce_observation</code> method is normally used to "reply" (or <code>self.end</code> to end the trial).</p>
+<h3 id="produce_observationsself-observations"><code>produce_observations(self, observations)</code></h3>
+<p>Method to send observations to actors.  If called after receiving an event of type <code>EventType.ENDING</code>, the observation will be consired the final observation (equivalent to calling <code>end()</code>).</p>
+<p>Parameters:</p>
+<ul>
+<li><code>observations</code>: <em>list[tuple(str, protobuf class instance)]</em> - The observations to send to actors.  The string in the tuple is the name of the destination actor (or "*" for all actors).  The name of the actors can be found in <code>cogment.yaml</code> under <code>trial_params:actors:name</code>.  The protobuf class is Observation Space for that actor, found in <code>cogment.yaml</code> in the corresponding section <code>actor_classes:observation:space</code>.</li>
+</ul>
+<p>Return: None</p>
+<h3 id="endself-final_observations"><code>end(self, final_observations)</code></h3>
+<p>Method to report the end of the environment. This will effectively end the trial.</p>
+<p>Parameters:</p>
+<ul>
+<li><code>final_observations</code>: <em>list[tuple(str, protobuf class instance)]</em> - The final observations to send to the actors.  This is the same as the parameter for <code>self.produce_observations</code>.</li>
+</ul>
+<p>Return: None</p>
+<h2 id="class-actorsessionsession">class ActorSession(Session)</h2>
+<p>Abstract class based on <code>Session</code>, containing session/trial data and methods necessary to run an actor for a trial.  An instance of this class is passed as argument to the actor callback function registered with <code>cogment.Context.register_actor</code>.</p>
+<p><code>class_name</code>: <em>str</em> - Name of the class of actor this instance represents.  Specified in <code>cogment.yaml</code> as <code>actor_classes:name</code>.</p>
+<p><code>impl_name</code>: <em>str</em> - Name of the implementation of the actor represented by this instance.</p>
+<p><code>config</code>: <em>protobuf class instance</em> - User configuration received for this actor instance.  Can be <code>None</code> is no configuration was provided.  The type of the protobuf class is specified in <code>cogment.yaml</code> in section <code>actor_classes:config_type</code>.</p>
+<p><code>name</code>: <em>str</em> - Name of the actor this instance represents.</p>
+<h3 id="startself"><code>start(self)</code></h3>
+<p>Method to start the actor.  This method should be called before any other method in the session.</p>
+<p>Parameters: None</p>
+<p>Return: None</p>
+<h3 id="async-event_loopself_1"><code>async event_loop(self)</code></h3>
+<p>Generator method to iterate over all events (observations, rewards, messages) as they are received.  This will block and wait for an event.
+When this generator exits, the callback function (registered with <code>register_actor</code>) should return to end the trial cleanly.
+The generator will exit for various reasons indicating the end of the trial, a loss of communication with the orchestrator, or if the generator is sent "False".</p>
+<p>Parameters: None</p>
+<p>Return: <em>generator(RecvEvent instance)</em> - A generator for the events that arrive.  The <code>RecvEvent</code> instances received from this generator will not contain actions.  When receiving an observation in the event, the <code>self.do_action</code> method is normally used to "reply" (if the event type is <code>EventType.ACTIVE</code>).</p>
+<h3 id="do_actionself-action"><code>do_action(self, action)</code></h3>
+<p>Method to send actions to the environment.</p>
+<p>Parameters:</p>
+<ul>
+<li><code>action</code>: <em>protobuf class instance</em> - An instance of the action space class specified in the corresponding section <code>actor_classes:action:space</code> of the <code>cogment.yaml</code> file.  If <code>None</code>, then no action space is sent (empty content) and the environment will receive a default initialized action space of the appropriate type.</li>
+</ul>
+<p>Return: None</p>
+<h2 id="class-controlsession">class ControlSession</h2>
+<p>Abstract class containing trial data and methods necessary to control (and stop) a trial.  An instance of this class is passed as argument to the <code>cogment.Context.register_launcher</code> callback function parameter.</p>
+<h3 id="get_trial_idself_1"><code>get_trial_id(self)</code></h3>
+<p>Method to get the UUID of the trial.</p>
+<p>Parameters: None</p>
+<p>Return: <em>str</em> - UUID of the trial.</p>
+<h3 id="get_actorsself"><code>get_actors(self)</code></h3>
+<p>Method to get the list of configured actors in the trial.</p>
+<p>Parameters: None</p>
+<p>Return: <em>list[SimpleNamespace(actor_name: str, actor_class_name: str)]</em> - List of actors and classes configured in this trial.</p>
+<h3 id="terminate_trialself"><code>terminate_trial(self)</code></h3>
+<p>Method to request the end of the trial.</p>
+<p>Parameters: None</p>
+<p>Return: None</p>
+<h2 id="class-prehooksession">class PrehookSession</h2>
+<p>Abstract class containing trial configuration data to define the specifics of a trial.  An instance of this class is passed as argument to the prehook callback function registered with <code>cogment.Context.register_pre_trial_hook</code>, and is part of the <code>DatalogSession</code>.</p>
+<p><code>trial_config</code>: <em>protobuf class instance</em> - Configuration for the new trial.  The type is specified in file <code>cogment.yaml</code> under the section <code>trial:config_type</code>.</p>
+<p><code>trial_max_steps</code>: <em>int</em> - The maximum number of time steps (ticks) that the trial will run before terminating.</p>
+<p><code>trial_max_inactivity</code>: <em>int</em> - The number of seconds of inactivity after which a trial will be terminated.  If 0, the trial will not be terminated because of inactivity.</p>
+<p><code>environment_config</code>: <em>protobuf class instance</em> - Configuration for the environment in the new trial.  This configuration will be sent to the environment on start.  The type is specified in file <code>cogment.yaml</code> under the section <code>environment:config_type</code>.</p>
+<p><code>environment_endpoint</code>: <em>str</em> - The URL to connect to the environment.  The protocol must be "grpc".  E.g. "grpc://myenv:9000"</p>
+<p><code>actors</code>: <em>list[dict]</em> - Each item (dictionary) of the list represents an actor.  Each actor dictionary contains these key-value pairs:</p>
+<ul>
+<li>"name": <em>str</em> - Name of the actor</li>
+<li>"actor_class": <em>str</em> - The actor class for the actor</li>
+<li>"endpoint": <em>str</em> - The URL to connect to the actor.  If, instead of a URL, the value is "client", then this actor will connect in (as opposed to be to connected to), and the actor will need to provide the URL to connect to the orchestrator.</li>
+<li>"implementation: <em>str</em> - The name of the implementation to run this actor</li>
+<li>"config": <em>protobuf class instance</em> - The configuration data for the actor.</li>
+</ul>
+<h3 id="get_trial_idself_2"><code>get_trial_id(self)</code></h3>
+<p>Method to retrieve the UUID of the trial.</p>
+<p>Parameters: None</p>
+<p>Return: <em>str</em> - UUID of the trial.</p>
+<h3 id="validateself"><code>validate(self)</code></h3>
+<p>Method to validate that the data is valid.  This is a superficial check; even if the data validates successfully, there can still be problems with the data.  This method should be called if changes have been made to the data members of the class.  Exceptions are raised on error.</p>
+<p>Parameters: None</p>
+<p>Return: None</p>
+<h2 id="class-datalogsession">class DatalogSession</h2>
+<p>Abstract class containing session data and methods necessary to manage logging of trial run data.  An instance of this class is passed as argument to the datalog callback function registered with <code>cogment.Context.register_datalog</code>.</p>
+<p><code>trial_id</code>: <em>str</em> - UUID of the trial managed by this instance.</p>
+<p><code>trial_params</code>: <em>PrehookSession instance</em> - Parameters of the the trial.</p>
+<p><code>on_sample</code>: <em>function(class instance)</em> - If defined, this function will be called when a sample is received.</p>
+<p><code>on_trial_over</code>: <em>function()</em> - If defined, this function will be called when the trial has ended.</p>
+<h3 id="startself_1"><code>start(self)</code></h3>
+<p>Method to start receiving samples.</p>
+<p>Parameters: None</p>
+<p>Return: None</p>
+<h3 id="get_sampleself"><code>get_sample(self)</code></h3>
+<p>Method to wait for a sample from a time step.</p>
+<p>Parameters: None</p>
+<p>Return: <em>class instance</em> - The sample received.</p>
+<h3 id="get_all_samplesself"><code>get_all_samples(self)</code></h3>
+<p>Generator method to iterate over all samples as they are received (waiting for each in turn).</p>
+<p>Parameters: None</p>
+<p>Return: <em>generator(class instance)</em> - A generator for the samples received.</p>
+<h2 id="class-cogmentendpoint">class cogment.Endpoint</h2>
+<p>Class enclosing the details for connecting to an Orchestrator.</p>
+<p><code>url</code>: <em>str</em> - The URL where to connect to the Orchestrator.</p>
+<p><code>private_key</code>: <em>str</em> - To use TLS for the connection, this must be set to the PEM-encoded private key.</p>
+<p><code>root_certificates</code>: <em>str</em> - If using TLS for the connection (i.e. the <code>private_key</code> is not <code>None</code>), this can be set to the PEM-encoded root certificates. If not set and using TLS for the connection, the root certificates will be fetched from the system default location.</p>
+<p><code>certificate_chain</code>: <em>str</em> - If using TLS for the connection, this can be set to the PEM-encoded certificate chain.</p>
+<h3 id="__inti__self-url"><code>__inti__(self, url)</code></h3>
+<p>Parameters:</p>
+<ul>
+<li><code>url</code>: <em>str</em> - The URL where to connect to the Orchestrator.</li>
+</ul>
+<h2 id="class-cogmentservedendpoint">class cogment.ServedEndpoint</h2>
+<p>Class enclosing the details for connection from an Orchestrator.</p>
+<p><code>port</code>: <em>str</em> - The TCP/IP port where the service will be awaiting the Orchestrator connection.</p>
+<p><code>private_key_certificate_chain_pairs</code>: <em>list[tupple(str, str)]</em> - To use TLS for incoming connections, this must be se to a list of tuples of the form (PEM-encoded private key, PEM-encoded certificate chain).</p>
+<p><code>root_certificates</code>: <em>str</em> - If using TLS for the connection (i.e. <code>private_key_certificate_chain_pairs</code> is not <code>None</code>), this should be set to PEM-encoded Orchestrator root certificates that the server will use to verify Orchestrator authentication.</p>
+<h3 id="__inti__self-port"><code>__inti__(self, port)</code></h3>
+<p>Parameters:</p>
+<ul>
+<li><code>port</code>: <em>int</em> - The TCP/IP port where the service will be awaiting the Orchestrator connection.</li>
+</ul>
+<h2 id="class-recvevent">class RecvEvent</h2>
+<p>Class representing a received event (for environments and actors).  It can contain any combination of data according to the receiver needs, or even be empty, but it will always have a type.</p>
+<p><code>type</code>: <em>Enum EventType</em> - Type of event the enclosed data represents.</p>
+<p><code>observation</code>: <em>RecvObservation instance</em> - Observation data.  This can only be received by actors.  <code>None</code> if not present.</p>
+<p><code>actions</code>: <em>list[RecvAction instance]</em> - Action data from actors.  This can only be received by the environment.  The list is empty if not present.</p>
+<p><code>rewards</code>: <em>list[RecvReward instance]</em> - Reward values and data.  This can only be received by actors.  The list is empty if not present.</p>
+<p><code>messages</code>: *list[RecvMessage instance] - Message data.  The list is empty if not present.</p>
+<h3 id="class-cogmenteventtypeenumenum">class cogment.EventType(enum.Enum)</h3>
+<p>Enum representing the type of an event.</p>
+<ul>
+<li>
+<p><code>EventType.NONE</code>: Empty event.  This kind of event should never be received.</p>
+</li>
+<li>
+<p><code>EventType.ACTIVE</code>: Normal event from an active trial. Most events will be of this type.</p>
+</li>
+<li>
+<p><code>EventType.ENDING</code>: Events from a trial in the process of ending.  For the environment, this means that these events contain the last actions from the actors, and the trial is awaiting a final observation. For the actors, this means that the trial has ended and no action can/need to be sent in response.</p>
+</li>
+<li>
+<p><code>EventType.FINAL</code>: Final event for the trial.  This may contain data or be empty.  If not empty, the data should be considered the same as for a <code>EventType.ENDING</code> event.  The event loop will exit after this event is delivered.</p>
+</li>
+</ul>
+<h2 id="class-recvobservation">class RecvObservation</h2>
+<p>Class containing the details of an observation for an actor.</p>
+<p><code>tick_id</code>: <em>int</em> - The time step that the observation relates to.</p>
+<p><code>timestamp</code>: <em>int</em> - Unix style Epoch timestamp in nanoseconds (time since 00:00:00 UTC Jan 1, 1970).</p>
+<p><code>snapshot</code>: <em>protobuf class instance</em> - Snaphot Observation (as opposed to a delta observation) received from the environment.  The class of the snapshot observation is defined as observation space for the actor class.  This is specified in section <code>actor_classes:observation:space</code> in <code>cogment.yaml</code> for the appropriate/receiving actor class.</p>
+<h2 id="class-recvaction">class RecvAction</h2>
+<p>Class containing the details of an action from an actor.</p>
+<p><code>actor_index</code>: <em>int</em> - Index of actor in the list of all trial actors (returned by <code>Session.get_active_actors</code>).</p>
+<p><code>action</code>: <em>protobuf class instance</em> - Action from the actor wich has index <code>actor_index</code> in the trial. The class of the action is defined as action space for the specific actor in section <code>actor_classes:action:space</code> in <code>cogment.yaml</code> .</p>
+<h2 id="class-recvmessage">class RecvMessage</h2>
+<p>Class containing a message.</p>
+<p><code>tick_id</code>: <em>int</em> - The time step that the message relates to.</p>
+<p><code>sender_name</code>: <em>str</em> - Name of the sender of the message (the name of an actor, or "env" if the environment sent the message).</p>
+<p><code>payload</code>: <em>google.protobuf.Any instance</em> - Data for a received message. The class enclosed in <code>google.protobuf.Any</code> is of the type set by the sender; It is the responsibility of the receiver to manage the data received (i.e. determine the type and unpack the data).</p>
+<h2 id="class-recvreward">class RecvReward</h2>
+<p>Class containing the details of a received reward.</p>
+<p><code>tick_id</code>: <em>int</em> - The tick id (time step) for which the reward should be applied.</p>
+<p><code>value</code>: <em>float</em> - Value of the reward (aggregated from the sources)</p>
+<h3 id="get_nb_sourcesself"><code>``get_nb_sources(self)</code></h3>
+<p>Return the number of source rewards this reward is based upon.</p>
+<p>Parameters: None</p>
+<p>Return: <em>int</em> - Number of sources.</p>
+<h3 id="all_sourcesself"><code>all_sources(self)</code></h3>
+<p>Generator method to iterate over all sources making up this reward.</p>
+<p>Parameters: None</p>
+<p>Return: <em>generator(tuple(float, float, string, google.protobuf.Any instance))</em> - A generator for the sources in the reward (simple rewards that make up this final/aggregate reward).</p>
+<ul>
+<li>tuple[0]: <em>float</em> - The value of the source reward.</li>
+<li>tuple<a href="../cogment-yaml/">1</a>: <em>float</em> - The confidence level of the reward value.</li>
+<li>tuple[2]: <em>string</em> - Name of the sender.</li>
+<li>tuple[3]: <em>google.protobuf.Any instance</em> - Data for a user-specific reward format.  Can be <code>None</code> if no specific data was provided. The class enclosed in <code>google.protobuf.Any</code> is of the type set by the sender; It is the responsibility of the receiver to manage the data received (i.e. determine the type and unpack the data).</li>
+</ul>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../javascript/" class="btn btn-neutral float-right" title="javascript">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../cogment-yaml/" class="btn btn-neutral" title="cogment.yaml"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../cogment-yaml/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../javascript/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '../../..';</script>
+    <script src="../../../js/theme.js" defer></script>
+      <script src="../../../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  
+  <link rel="shortcut icon" href="../../img/favicon.ico">
+  <title>Glossary - Cogment</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
+
+  <link rel="stylesheet" href="../../css/theme.css" />
+  <link rel="stylesheet" href="../../css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Glossary";
+    var mkdocs_page_input_path = "concepts/glossary.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+        <a href="../.." class="icon icon-home"> Cogment</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+                <p class="caption"><span class="caption-text">Introduction</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../..">Overview</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../introduction/installation/">Installation & Setup</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Support</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../support/community-channels/">Community channels</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Concepts</span></p>
+                <ul class="current">
+                    <li class="toctree-l1"><a class="reference internal" href="../core-concepts/">Core Concepts</a>
+                    </li>
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Glossary</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#a">A</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#actor">Actor</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#actor-class">Actor Class</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#action">Action</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#agent">Agent</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#e">E</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#environment">Environment</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#environment-state">Environment State</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#f">F</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#framework">Framework</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#frontend">Frontend</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#h">H</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#human-artificial-intelligence-interaction-loop-training">Human / Artificial Intelligence Interaction Loop Training</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#m">M</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#message">Message</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#model">Model</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#o">O</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#observation">Observation</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#observation-delta">Observation delta</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#observation-transition">Observation transition</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#observation-space">Observation space</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#orchestrator">Orchestrator</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#p">P</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#pluginextension">Plugin/extension</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#protocol-buffer">Protocol Buffer</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#r">R</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#reward">Reward</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#reward-function">Reward function</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#reinforcement-learning-rl">Reinforcement Learning (RL)</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#t">T</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#tick">Tick</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#trial">Trial</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#u">U</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#use-case">Use case</a>
+    </li>
+        </ul>
+    </li>
+    </ul>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Cogment</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="#">Tutorial</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../../cogment/tutorial/introduction/">Introduction</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../cogment/tutorial/1-bootstrap-and-data-structures/">Step 1: Bootstrap a Cogment app</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../cogment/tutorial/2-random-player/">Step 2: Implement actor and environment</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../cogment/tutorial/3-rewards/">Step 3: Introduce rewards</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../cogment/tutorial/4-heuristic-player/">Step 4: Create a heuristic player</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../cogment/tutorial/5-human-player/">Step 5: Add a human player in the loop</a>
+                </li>
+    </ul>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../cogment/cogment-api-guide/">Cogment API Guide</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="#">Cogment API Reference</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../../cogment/cogment-api-reference/cogment-yaml/">cogment.yaml</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../cogment/cogment-api-reference/python/">python</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../cogment/cogment-api-reference/javascript/">javascript</a>
+                </li>
+    </ul>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="#">Cogment Low Level API Guide</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../../cogment/cogment-low-level-api-guide/overview/">Overview</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../cogment/cogment-low-level-api-guide/grpc/">gRPC API Reference</a>
+                </li>
+    </ul>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Deployment Guide</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../deployment-guide/local-deployement/">Local Deployment</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../license/">License</a>
+                    </li>
+                </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../..">Cogment</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Concepts &raquo;</li>
+        
+      
+    
+    <li>Glossary</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="glossary">Glossary</h1>
+<p>Terminology is a very important part of understanding new concepts and learning how to use new technology. The words we use throughout our documentation may cause problems if one is not familiar with how we use those words; this is a glossary of terms for newcomers and seasoned developers alike. Some familiar terms may have additional caveats specifically added to their definition in the context of the Cogment Framework (generally for clarity).</p>
+<p><a href="#a">A</a>—B—C—D—<a href="#e">E</a>—<a href="#f">F</a>—G—<a href="#h">H</a>—I—J—K—L—<a href="#m">M</a>—N—<a href="#o">O</a>—<a href="#p">P</a>—Q—<a href="#8">R</a>—S—<a href="#t">T</a>—<a href="#u">U</a>—V—W—X—Y</p>
+<h2 id="a">A</h2>
+<h3 id="actor">Actor</h3>
+<p>An actor is somebody or something who/which interacts with the environment by executing certain actions, taking observations, and receiving rewards (positive or negative) for this. An Actor can be an <a href="#agent">Agent</a> (of any level of complexity and any type of flexibility, from bots to ML agents), or a human user.</p>
+<h3 id="actor-class">Actor Class</h3>
+<p>Each <a href="#actor">Actor</a> always belongs to a single Actor Class. An Actor Class is primarily defined by its associated <a href="#action-space">Action Space</a>, as a property of an <a href="#environment">environment</a>. For example, pilot and passenger could be two different Actor Classes.</p>
+<h3 id="action">Action</h3>
+<ol>
+<li>An Action is an interaction an <a href="#actor">Actor</a> performs on the environment. Actions are picked from the <a href="#action-space">Action Space</a>,</li>
+<li>A single element of an Action Space.</li>
+</ol>
+<h3 id="agent">Agent</h3>
+<p>We usually call agent, non-human <a href="#actor">Actors</a>. Agents can use on any sort of decision-making underlying system, able to learn or not.</p>
+<h2 id="e">E</h2>
+<h3 id="environment">Environment</h3>
+<ol>
+<li>The environment is the set of rules defining how a trial evolves over time for any given use case. For example, to train a pilot <a href="#agent">agent</a>, a flight simulation would be the environment. <a href="#actor">Actors</a> can interact with the environment itself, or with each other through the environment, within the boundaries of the environment ruleset (i.e. how an environment can change, from environmental rulesets or the actions of Actors in the environment).</li>
+<li>A stateful instance of an environment.</li>
+</ol>
+<h3 id="environment-state">Environment State</h3>
+<p>An environment state is the specific set of conditions in which the environment is at a specific time (for example, when it is first instantiated). These conditions can be observable or not, and our <a href="#framework">Framework</a> does not concern itself with the ones that are not.</p>
+<h2 id="f">F</h2>
+<h3 id="framework">Framework</h3>
+<p>These two elements combined are what we call the framework:</p>
+<ul>
+<li><a href="#orchestrator">Orchestrator</a></li>
+<li>SDKs</li>
+</ul>
+<h3 id="frontend">Frontend</h3>
+<p>The interface, usually an app, that humans use to interact with the rest of the system; the software that turns humans into <a href="#actor">Actors</a>.</p>
+<h2 id="h">H</h2>
+<h3 id="human-artificial-intelligence-interaction-loop-training">Human / Artificial Intelligence Interaction Loop Training</h3>
+<p>We call Human / AI interaction loop training the fundamental paradigm our <a href="#framework">Framework</a> was build for: a continuous loop between humans and agents where they learn from each other. It’s a way to train <a href="#agent">agents</a> in an environment where direct human interactions, whether between humans, between humans and the environment, or between humans and agents, provide live data to the agents (first part of the loop), <em><strong>as well as</strong></em> a way for agents to interact with humans, either directly or through the environment (second part of the loop).</p>
+<h2 id="m">M</h2>
+<h3 id="message">Message</h3>
+<p>Messages can be sent from any actor or the environment to any <a href="#actor">actor</a> or the <a href="#environment">environment</a>. The message can be any protobuf class. This creates channels between any set of <a href="#actor">actors</a> and the <a href="#environment">environment</a>. These channels can be used for applications where communication between actors and the environment need to be outside of the standard observation and action spaces.</p>
+<h3 id="model">Model</h3>
+<p>A model is a representation, usually a mathematical one in our context, of a concept, structure, system, or an aspect of the real world. It is usually a simplified and abstracted representation.</p>
+<h2 id="o">O</h2>
+<h3 id="observation">Observation</h3>
+<p>An observation is the subset of the <a href="#environment-state">environment state</a> that an <a href="#actor">Actor</a> based its choice of <a href="#action">Action</a> on.</p>
+<h3 id="observation-delta">Observation delta</h3>
+<p>An observation delta is the difference between two <a href="#observation">observations</a>. Usually, we encode deltas from the past to the future.</p>
+<h3 id="observation-transition">Observation transition</h3>
+<p>An observation transition is an observation delta between two consecutive <a href="#observation">observations</a>.</p>
+<h3 id="observation-space">Observation space</h3>
+<p>An Observation space is the set of all possible <a href="#observation">observations</a> an <a href="#actor">Actor</a> can make of an <a href="#environment">environment</a>.</p>
+<h3 id="orchestrator">Orchestrator</h3>
+<p>The Orchestrator is the central piece of our <a href="#framework">framework</a>; it’s an executable that handles several things:</p>
+<ul>
+<li>It circulates data flows between <a href="#actor">Actors</a> and <a href="#environment">Environments</a>.</li>
+<li>It dumps datasets in the chosen storage location.</li>
+<li>It compresses &amp; encrypts data.</li>
+<li>It collates various <a href="#reward">reward</a> sources (usually <a href="#environment">environment</a> or <a href="#actor">actors</a>) into a single reward for an Actor.</li>
+<li>It instantiates the <a href="#trial">trials</a>.</li>
+</ul>
+<h2 id="p">P</h2>
+<h3 id="pluginextension">Plugin/extension</h3>
+<p>A plugin or extension adds functionality to our core <a href="#framework">framework</a>.
+We provide plugins that handle special features such as Deployment, Dataset storage destinations, Analytics, that one may or may not choose to use alongside the core framework, depending on their specific needs.</p>
+<h3 id="protocol-buffer">Protocol Buffer</h3>
+<p>A binary data format for serialized communication, <code>.proto</code> files are used to specify the available data structures. You can learn more at <a href="https://developers.google.com/protocol-buffers/">https://developers.google.com/protocol-buffers/</a>.</p>
+<h2 id="r">R</h2>
+<h3 id="reward">Reward</h3>
+<ol>
+<li>
+<p>A sent reward is a measure of an <a href="#actor">Actor’s</a> performance within the environment at a given <a href="#tick">tick</a>. The reward can be sent by the environment, and/or a different Actor. They are sent to the <a href="#orchestrator">Orchestrator</a>, which collate before they are received by the target actor.</p>
+</li>
+<li>
+<p>A received reward is a single measure of an <a href="#actor">Actor’s</a> performance. It is produced when at least one reward is sent to the actor at a given <a href="#tick">tick</a>.</p>
+</li>
+</ol>
+<h3 id="reward-function">Reward function</h3>
+<p>A reward function describes how an <a href="#agent">agent</a> "ought" to behave; what behaviours lead to <a href="#reward">Rewards</a>. Note that in our case, Reward functions can be used to reward any <a href="#actor">Actor</a>, regardless of it being human or not.</p>
+<h3 id="reinforcement-learning-rl">Reinforcement Learning (RL)</h3>
+<p>RL is a specific method to train <a href="#agent">agents</a>, using <a href="#reward-function">reward functions</a>.</p>
+<h2 id="t">T</h2>
+<h3 id="tick">Tick</h3>
+<p>A tick is a discrete timestep between two <a href="#environment-state">states of the environment</a>, in our <a href="#framework">Framework</a>, ticks within a trial are numbered.</p>
+<h3 id="trial">Trial</h3>
+<p>A trial is a single run of a use case, with a beginning and end, populated with a single instance of the use case’s <a href="#environment">environment</a> and its <a href="#actor">actors</a>.</p>
+<h2 id="u">U</h2>
+<h3 id="use-case">Use case</h3>
+<p>The problem one wants to solve.</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../../cogment/tutorial/introduction/" class="btn btn-neutral float-right" title="Introduction">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../core-concepts/" class="btn btn-neutral" title="Core Concepts"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../core-concepts/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../../cogment/tutorial/introduction/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '../..';</script>
+    <script src="../../js/theme.js" defer></script>
+      <script src="../../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

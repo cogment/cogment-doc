@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  
+  <link rel="shortcut icon" href="img/favicon.ico">
+  <title>Overview - Cogment</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
+
+  <link rel="stylesheet" href="css/theme.css" />
+  <link rel="stylesheet" href="css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Overview";
+    var mkdocs_page_input_path = "index.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="js/jquery-2.1.1.min.js" defer></script>
+  <script src="js/modernizr-2.8.3.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+        <a href="." class="icon icon-home"> Cogment</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="./search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+                <p class="caption"><span class="caption-text">Introduction</span></p>
+                <ul class="current">
+                    <li class="toctree-l1 current"><a class="reference internal current" href=".">Overview</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#what-is-cogment">What is Cogment?</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#when-to-use-cogment">When to use Cogment?</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#when-not-to-use-cogment">When not to use Cogment</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#features">Features</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#components">Components</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#first-steps">First steps</a>
+    </li>
+    </ul>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="introduction/installation/">Installation & Setup</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Support</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="support/community-channels/">Community channels</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Concepts</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="concepts/core-concepts/">Core Concepts</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="concepts/glossary/">Glossary</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Cogment</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="#">Tutorial</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="cogment/tutorial/introduction/">Introduction</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="cogment/tutorial/1-bootstrap-and-data-structures/">Step 1: Bootstrap a Cogment app</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="cogment/tutorial/2-random-player/">Step 2: Implement actor and environment</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="cogment/tutorial/3-rewards/">Step 3: Introduce rewards</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="cogment/tutorial/4-heuristic-player/">Step 4: Create a heuristic player</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="cogment/tutorial/5-human-player/">Step 5: Add a human player in the loop</a>
+                </li>
+    </ul>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="cogment/cogment-api-guide/">Cogment API Guide</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="#">Cogment API Reference</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="cogment/cogment-api-reference/cogment-yaml/">cogment.yaml</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="cogment/cogment-api-reference/python/">python</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="cogment/cogment-api-reference/javascript/">javascript</a>
+                </li>
+    </ul>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="#">Cogment Low Level API Guide</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="cogment/cogment-low-level-api-guide/overview/">Overview</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="cogment/cogment-low-level-api-guide/grpc/">gRPC API Reference</a>
+                </li>
+    </ul>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Deployment Guide</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="deployment-guide/local-deployement/">Local Deployment</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="license/">License</a>
+                    </li>
+                </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href=".">Cogment</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Introduction &raquo;</li>
+        
+      
+    
+    <li>Overview</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <p><a href="https://cogment.ai/"><img alt="Cogment Homepage" src="https://img.shields.io/badge/-Homepage-ffbb00?style=flat" /></a>
+<a href="https://github.com/cogment"><img alt="Cogment sources @ Github" src="https://img.shields.io/badge/Github-Cogment%20Sources-lightgrey?style=flat&amp;logo=github" /></a> <a href="https://discord.gg/55h7fnqdSJ"><img alt="Join us on the official Cogment discord" src="https://img.shields.io/discord/739822842450935963?style=flat&amp;color=6f84d4&amp;label=Cogment%27s%20Discord&amp;logo=discord&amp;logoColor=white" /></a></p>
+<h1 id="cogment-10-framework-overview">Cogment 1.0 Framework Overview</h1>
+<h2 id="what-is-cogment">What is Cogment?</h2>
+<p>The Cogment 1.0 framework is a high-efficiency, open source framework designed to enable the training of models in environments where humans and agents interact with the environment and each other continuously. It’s capable of distributed, multi-agent, multi-model training.</p>
+<h3 id="when-to-use-cogment">When to use Cogment?</h3>
+<p>Cogment is designed to allow the training of complex agent architectures in complex environments, with human users in the loop. It is especially well suited to address multi-agent contexts, regardless of their learning mechanisms (or, for that matter, whether they are of the learning kind or not). Cogment also allows for the Actor's abstraction, meaning that human users and learning or non-learning agents alike are treated in the same way from a high level point of view, being interchangeable.</p>
+<p>As such, Cogment is suited for, among others, these contexts:</p>
+<ul>
+<li>Easily bootstrapping a given system by using human users, or heuristic agents, or both, then transitioning seamlessly to ML implementations</li>
+<li>Architecture multiple ML approaches to contribute to a single role, either by balancing them through specific rulesets, or specific performance metrics, or any other criteria</li>
+<li>Comparing different agent types/implementations without requiring any change in the implementation of the environment</li>
+</ul>
+<h3 id="when-not-to-use-cogment">When not to use Cogment</h3>
+<p>Cogment can be used in many other contexts it wasn't specifically designed for. However, for several types and scales of ML-powered projects, it may not be the most fitting approach:</p>
+<ul>
+<li>Simple projects focused around one learning agent</li>
+<li>Projects deployed only locally with no plans of larger scale distributed deployment</li>
+</ul>
+<h3 id="features">Features</h3>
+<p>Cogment main features are:</p>
+<ul>
+<li>
+<p><strong>Tech Stack Agnosticity.</strong> With the use of protobufs and gRPC, Cogment allows the development of tech-heterogeneous components working together regardless of the tech stacks used to develop them. It is fully compatible with current tools, langages and commonly used techniques.
+  &nbsp;</p>
+</li>
+<li>
+<p><strong>Multi-Method.</strong> Cogment doesn't enforce any particular approach to agents implementation. It doesn't favor learning over non-learning agents, nor does it learning techniques over others.
+  &nbsp;</p>
+</li>
+<li>
+<p><strong>Multi-Actor.</strong> Cogment was designed to allow multiple agents and multiple human users (all "actors") to exist, train, and work together within the same environment, interacting with one another and their environment.
+  &nbsp;</p>
+</li>
+<li>
+<p><strong>Multi-Reward</strong> Multiple Reinforcement Learning (RL) agents can use any number of reward sources in a Cogment project, whether they are from human users, an environment (real or simulated), or other agents. The same is true for the kind or mechanic of those rewards.</p>
+</li>
+<li><strong>Humans in the loop.</strong> Interaction with human users is a core feature of the Cogment framework, at any step of a project from the bootstrapping to the deployment and productionalization. There is no enforced limit to the complexity of said interaction.</li>
+<li><strong>Multi-Experience learning.</strong> Several deployments (instances) of a Cogment project can contribute to the learning of their agents in a parallel way, i.e. each instance contributing to the learning of a single implementation of an agent.</li>
+<li><strong>Actor hot-swap.</strong> Cogment allows for the swapping in and out of an actor from one implementation of an agent to another, or from a human user to another, or from a human user to a trained or untrained agent, and vice-versa. You can for example use simulated humans for a while before switching in real users, or switch from AI to human control.</li>
+<li><strong>Custom agent architectures.</strong> Cogment allows the architecturing behind an agent's role to be as complex and specific as needed; hybridation between techniques, in particular, can be used to build individual capabilities and ultimately assemble them into one complex agent.</li>
+<li><strong>Distributed computing &amp; training.</strong> The physical location of any given component or part of a Cogment's project does not have to be the same, and neither do instances of a deployed Cogment project. Training and use can all happen in a distributed way, running one large algorithm or an array of decentralized agents.</li>
+<li><strong>Live development.</strong> There is virtually no difference between dev and prod versions of a Cogment project; any Cogment project can be developed in an iterative way, with any part of it being live-developed so iteration cycles between simulated and real environment, for example, can happen as quickly as possible.</li>
+</ul>
+<h3 id="components">Components</h3>
+<p>The Cogment framework consists of multiple components:</p>
+<ul>
+<li>The <strong>Orchestrator</strong>, the <em>heart</em> of a Cogment app, is in charge of running the components.</li>
+<li>The <strong>SDKs</strong> are used to build your Cogment app services and clients. The SDKs are currently available in Python and Javascript only.</li>
+<li>A <strong>command like tool</strong> to facilitate the creation of Cogment apps.</li>
+</ul>
+<h2 id="first-steps">First steps</h2>
+<p>The easiest way to get started is to use the <code>cogment</code> command line tool. Please see our <a href="introduction/installation/">installation instructions</a> for details.</p>
+<p>Before diving right in, we recommend taking the time to read the <a href="concepts/core-concepts/">Core concepts</a> section, as well as our <a href="concepts/glossary/">glossary</a>, which details the terminology we use for several critical concepts of the Cogment Framework. You can then proceed to read on how to <a href="introduction/installation/">install</a> the framework.</p>
+<p>Last but not least, a <a href="cogment/tutorial/introduction/">tutorial</a></p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="introduction/installation/" class="btn btn-neutral float-right" title="Installation & Setup">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+      
+        <span style="margin-left: 15px"><a href="introduction/installation/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '.';</script>
+    <script src="js/theme.js" defer></script>
+      <script src="search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

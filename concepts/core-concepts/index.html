@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  
+  <link rel="shortcut icon" href="../../img/favicon.ico">
+  <title>Core Concepts - Cogment</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
+
+  <link rel="stylesheet" href="../../css/theme.css" />
+  <link rel="stylesheet" href="../../css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Core Concepts";
+    var mkdocs_page_input_path = "concepts/core-concepts.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+        <a href="../.." class="icon icon-home"> Cogment</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+                <p class="caption"><span class="caption-text">Introduction</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../..">Overview</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../introduction/installation/">Installation & Setup</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Support</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../support/community-channels/">Community channels</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Concepts</span></p>
+                <ul class="current">
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Core Concepts</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#core-concepts">Core Concepts</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#trials">Trials</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#actors">Actors</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#environment">Environment</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#the-cogmentyaml">The cogment.yaml</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#architecture">Architecture</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#orchestrator">Orchestrator</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#controller">Controller</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#environment_1">Environment</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#actors_1">Actors</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#additional-optional-services">Additional optional services</a>
+    </li>
+        </ul>
+    </li>
+        </ul>
+    </li>
+    </ul>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../glossary/">Glossary</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Cogment</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="#">Tutorial</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../../cogment/tutorial/introduction/">Introduction</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../cogment/tutorial/1-bootstrap-and-data-structures/">Step 1: Bootstrap a Cogment app</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../cogment/tutorial/2-random-player/">Step 2: Implement actor and environment</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../cogment/tutorial/3-rewards/">Step 3: Introduce rewards</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../cogment/tutorial/4-heuristic-player/">Step 4: Create a heuristic player</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../cogment/tutorial/5-human-player/">Step 5: Add a human player in the loop</a>
+                </li>
+    </ul>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../cogment/cogment-api-guide/">Cogment API Guide</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="#">Cogment API Reference</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../../cogment/cogment-api-reference/cogment-yaml/">cogment.yaml</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../cogment/cogment-api-reference/python/">python</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../cogment/cogment-api-reference/javascript/">javascript</a>
+                </li>
+    </ul>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="#">Cogment Low Level API Guide</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../../cogment/cogment-low-level-api-guide/overview/">Overview</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../cogment/cogment-low-level-api-guide/grpc/">gRPC API Reference</a>
+                </li>
+    </ul>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Deployment Guide</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../deployment-guide/local-deployement/">Local Deployment</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../license/">License</a>
+                    </li>
+                </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../..">Cogment</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Concepts &raquo;</li>
+        
+      
+    
+    <li>Core Concepts</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="cogment-core-concepts-guide">Cogment Core Concepts Guide</h1>
+<p>Welcome to the Cogment core concepts guide. It contains information that is pertinent to both the <a href="../../cogment/cogment-api-guide/">high-level SDK</a> and the <a href="../../cogment/cogment-low-level-api-guide/overview/">low-level API</a>.</p>
+<h2 id="core-concepts">Core Concepts</h2>
+<p>Cogment is built around concepts adapted from multi-agent systems (agents, environment), Markov decision processes (action and observation space) and reinforcement learning (trials, rewards).</p>
+<h3 id="trials">Trials</h3>
+<p><a href="../glossary/#trial">Trials</a> are what a Cogment deployment runs. They enable <a href="../glossary/#actors">Actors</a> to interact with their <a href="../glossary/#environment">Environment</a>. Trials are started by clients connecting to Cogment. A trial can end either by being terminated from a client or end by itself, for example once a specific state of the Environment is reached.</p>
+<p>During the trial:</p>
+<ul>
+<li>The <a href="../glossary/#environment">Environment</a> generates <a href="../glossary/#observation"><strong>observations</strong></a> of its internal state and sends them to the <a href="../glossary/#actor">actors</a>.</li>
+<li>Given these <a href="../glossary/#observation">observations</a>, each <a href="../glossary/#actor">actor</a> might choose and take an <a href="../glossary/#action"><strong>action</strong></a>.</li>
+<li>The <a href="../glossary/#environment">Environment</a> receives the <a href="../glossary/#action">actions</a> and updates its state.</li>
+<li><a href="../glossary/#reward"><strong>Rewards</strong></a> can be sent to the <a href="../glossary/#actor">actors</a> from either the environment or other actors.</li>
+<li><a href="../glossary/#actor">Actors</a> receive <a href="../glossary/#reward"><strong>rewards</strong></a>.</li>
+<li>The <a href="../glossary/#actor">actors</a> or the <a href="../glossary/#environment">environment</a> can send <a href="../glossary/#message"><strong>messages</strong></a> to actors or the environment.</li>
+<li>A log of the activity during the trial (observations, actions, rewards &amp; messages) is produced and can be stored.</li>
+</ul>
+<p>A trial is defined by the participating <a href="../glossary/#actor">Actors</a> and the host <a href="../glossary/#environment">Environment</a>. As a concept, Trials are quite close to Reinforcement Learning (RL)'s <strong>Episodes</strong>, i.e. all the states that come between an initial state and a terminal state. However, because Cogment can be used outside of an RL context, we prefer using the more generic term of Trial.</p>
+<h3 id="actors">Actors</h3>
+<p><a href="../glossary/#actor">Actors</a> within a trial instantiate <a href="../glossary/#actor-class">actor classes</a> defined by the nature of the information they receive from the <a href="../glossary/#environment">environment</a>, their <a href="../glossary/#observation-space">observation space</a>, and what actions they can perform, their <a href="../glossary/#action-space">action space</a>.</p>
+<p>In Cogment, the observation and action space are defined as typed data structures. In particular, Cogment uses <a href="../glossary/#protocol-buffer">protobuf</a> as a format to specify these data structures. This typing defines both an interface contract between the <a href="../glossary/#actor">Actors</a> and the <a href="../glossary/#environment">Environment</a> and helps convey semantic information, thus facilitating the independent design and development of both.</p>
+<p>An <a href="../glossary/#actor">Actor</a> might be controlled either by a software <a href="../glossary/#agent">Agent</a>, or by a Human. Whichever the case, the process of generating <a href="../glossary/#action">actions</a> based on <a href="../glossary/#observation">observations</a> remains the same, and the <a href="../glossary/#environment">Environment</a> treats them the same.</p>
+<h3 id="environment">Environment</h3>
+<p>The <a href="../glossary/#environment">Environment</a> is the context within which the <a href="../glossary/#trial">Trial</a> takes place. The Environment receives the <a href="../glossary/#actions">actions</a> done by the actors, usually updates an internal state, and generates an <a href="../glossary/#observation">observation</a> for each <a href="../glossary/#actor">Actor</a>.</p>
+<p>The Environment is the main integration point between Cogment and an external system, either a <strong>simulation</strong> or a <strong>real world system</strong>.</p>
+<h2 id="the-cogmentyaml">The cogment.yaml</h2>
+<p>At the heart of every Cogment project is a <a href="https://yaml.org">YAML</a> file typically called <code>cogment.yaml</code>. Its primary role is to define the <a href="../glossary/#actor-class">actor classes</a> present within the project, including their <a href="../glossary/#action-space">action</a> &amp; <a href="../glossary/#observation-space">observation spaces</a>, as well as a default configuration for trials, including the number of actor participating in each <a href="../glossary/#trial">trial</a> and their class and implementation.</p>
+<h2 id="architecture">Architecture</h2>
+<p>Running trials with Cogment usually involves a deployment of a cluster services and its clients. These components are either provided by the Cogment framework, depicted below in blue, or implemented for a particular project, depicted in orange.</p>
+<p><img alt="Cogment Architecture - Simple" src="../cogment_architecture_simple.png" /></p>
+<p>User implemented components use one of the <a href="../../cogment/cogment-api-guide/">Cogment SDKs</a> or directly implement the <a href="../../cogment/cogment-low-level-api-guide/overview/">underlying protocol</a>. Components communicate using <a href="https://grpc.io">gRPC</a>, clients can also communicate in a web-friendly way using <a href="https://grpc.io/docs/platforms/web/">gRPC-Web</a> and <a href="https://github.com/improbable-eng/grpc-web/tree/master/go/grpcwebproxy">grpcwebproxy</a>.</p>
+<h3 id="orchestrator">Orchestrator</h3>
+<p>The Orchestrator is the glue that binds everything together. It is responsible for running the <a href="../glossary/#trial">trials</a> and contacting other services as needed to ensure their execution.</p>
+<p>The key aspect of Cogment's orchestrator is its capacity to handle a number of network connections in parallel while keeping its responsiveness.</p>
+<h3 id="controller">Controller</h3>
+<p>The Controller is a key part of using Cogment, it initiates communication with the Orchestrator to control the execution of <a href="../glossary/#trial">trials</a>. It is responsible for starting <a href="../glossary/#trial">Trials</a>, retrieve and watch their state (including the end of the trial), or request trial termination.</p>
+<h3 id="environment_1">Environment</h3>
+<p>The Environment implementation is accessed by the <a href="../glossary/#orchestrator">Orchestrator</a> to run the <a href="../glossary/#environment">Environment</a> during <a href="../glossary/#trial">Trials</a>.</p>
+<p>Using one of <a href="../../cogment/cogment-api-guide/">Cogment's SDKs</a>, the Environment can be implemented as a function integrating a <em>"state of the world"</em> with the <a href="../glossary/#trial">Trial</a>. This function performs the following tasks during the Trial:</p>
+<ul>
+<li>Generate <a href="../glossary/#observation">Observations</a> from the current <em>state of the world</em>, for example retrieving the visible objects from a 3D simulation.</li>
+<li>Apply the <a href="../glossary/#action">Actions</a>, thus updating the <em>state of the world</em>, for example changing the velocity of a moving vehicle in a race simulation.</li>
+<li>Evaluate the performance of <a href="../glossary/#actor">Actors</a> and send them <a href="../glossary/#reward">Rewards</a>, for example by checking if a vehicle crossed the finish line in a race simulation.</li>
+<li>Send and receive direct messages.</li>
+</ul>
+<h3 id="actors_1">Actors</h3>
+<p>Actors can be implemented in two different ways, either as a service or as a client. <strong>Service Actor</strong> implementations are accessed by the <a href="../glossary/#orchestrator">Orchestrator</a> during <a href="../glossary/#trial">Trials</a>, while <strong>Client Actor</strong> implementations join a Trial by initating the communication with the Orchestrator. Client Actors implementations can <em>reach</em> a Cogment deployment through <a href="https://en.wikipedia.org/wiki/NAT_traversal">NAT traversal</a>. This makes them particularly well-suited to implement human-driven Actors, in web-browsers for example.</p>
+<p>Using one of <a href="../../cogment/cogment-api-guide/">Cogment's SDKs</a> Actors can be implemented as functions handling the integration between a decision making Actor (<a href="../glossary/#agent">software agent</a> or Human) and the <a href="../glossary/#trial">Trial</a>. This function performs the following tasks during the Trial:</p>
+<ul>
+<li>Receive <a href="../glossary/#observation">Observations</a> and do <a href="../glossary/#action">Actions</a> in response, for example vectorizing the retrieved observation, feeding it to a neural network and converting its output to an Action.</li>
+<li>Receive <a href="../glossary/#reward">Rewards</a>, for example using them to update a neural network.</li>
+<li>Send and receive direct messages.</li>
+</ul>
+<p>Please note that rewards can also be retrieved after the fact using an <a href="#additional-optional-services">activity logger</a>.</p>
+<h4 id="additional-optional-services">Additional optional services</h4>
+<p>Beyond the core services described above, a Cogment deployment can include these additional ones:</p>
+<ul>
+<li><strong>Pre trial hooks</strong> can be used to dynamically setup Trials from a given configuration, for example changing the number of Actors or pointing to other Environment or Actor implementations.</li>
+<li><strong>Activity Logger</strong> can be used to listen to the activity during a trial (actions, observations, rewards, messages), for example, to do store these data in order to do offline training of AI agents.</li>
+</ul>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../glossary/" class="btn btn-neutral float-right" title="Glossary">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../../support/community-channels/" class="btn btn-neutral" title="Community channels"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../../support/community-channels/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../glossary/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '../..';</script>
+    <script src="../../js/theme.js" defer></script>
+      <script src="../../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

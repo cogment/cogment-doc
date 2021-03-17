@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  
+  <link rel="shortcut icon" href="../../../img/favicon.ico">
+  <title>Step 1: Bootstrap a Cogment app - Cogment</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
+
+  <link rel="stylesheet" href="../../../css/theme.css" />
+  <link rel="stylesheet" href="../../../css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Step 1: Bootstrap a Cogment app";
+    var mkdocs_page_input_path = "cogment/tutorial/1-bootstrap-and-data-structures.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../../../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../../../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+        <a href="../../.." class="icon icon-home"> Cogment</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+                <p class="caption"><span class="caption-text">Introduction</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../..">Overview</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../../introduction/installation/">Installation & Setup</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Support</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../../support/community-channels/">Community channels</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Concepts</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../../concepts/core-concepts/">Core Concepts</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../../concepts/glossary/">Glossary</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Cogment</span></p>
+                <ul class="current">
+                    <li class="toctree-l1 current"><a class="reference internal current" href="#">Tutorial</a>
+    <ul class="current">
+                <li class="toctree-l2"><a class="reference internal" href="../introduction/">Introduction</a>
+                </li>
+                <li class="toctree-l2 current"><a class="reference internal current" href="./">Step 1: Bootstrap a Cogment app</a>
+    <ul class="current">
+    <li class="toctree-l3"><a class="reference internal" href="#install-cogment">Install Cogment</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#bootstrap-the-app">Bootstrap the app</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#building-and-running-the-app">Building and running the app</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#define-our-data-structures">Define our data structures</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#action-space">Action Space</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#observation-space">Observation Space</a>
+    </li>
+        </ul>
+    </li>
+    </ul>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../2-random-player/">Step 2: Implement actor and environment</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../3-rewards/">Step 3: Introduce rewards</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../4-heuristic-player/">Step 4: Create a heuristic player</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../5-human-player/">Step 5: Add a human player in the loop</a>
+                </li>
+    </ul>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../cogment-api-guide/">Cogment API Guide</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="#">Cogment API Reference</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../../cogment-api-reference/cogment-yaml/">cogment.yaml</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../cogment-api-reference/python/">python</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../cogment-api-reference/javascript/">javascript</a>
+                </li>
+    </ul>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="#">Cogment Low Level API Guide</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../../cogment-low-level-api-guide/overview/">Overview</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../cogment-low-level-api-guide/grpc/">gRPC API Reference</a>
+                </li>
+    </ul>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Deployment Guide</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../../deployment-guide/local-deployement/">Local Deployment</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../../license/">License</a>
+                    </li>
+                </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../..">Cogment</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Tutorial &raquo;</li>
+        
+      
+        
+          <li>Cogment &raquo;</li>
+        
+      
+    
+    <li>Step 1: Bootstrap a Cogment app</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="step-1-create-a-new-trial">Step 1: Create a new Trial</h1>
+<h2 id="install-cogment">Install Cogment</h2>
+<p>To follow this tutorial you'll need a working installation of <strong>Cogment</strong>. If you haven't done so already, follow our <a href="../../../introduction/installation/">installation instructions</a>.</p>
+<h2 id="bootstrap-the-app">Bootstrap the app</h2>
+<p>The Cogment command line interface (CLI) includes a simple tool to generate the base files and folder structures for a Cogment app. The first thing we'll do is use it to create an app with 2 AIs able to play games of RPS.</p>
+<p>Using Cogment's terminology, we will create 2 actors sharing a single implementation picking a random move for each round. We will develop a <strong>service actor</strong> implementation which is well suited for AIs and no <strong>client actor</strong> implementation which would be required for an interactive actor, for exemple, an actor controlled by a Human player. In the <a href="../5-human-player">step 5</a> we will create such implementation.</p>
+<p>Run the following to bootstrap the app in a <code>rps</code> directory:</p>
+<pre><code class="console">$ cogment init rps
+
+Enter how many actor classes should be created: 1
+[class 1] Enter the name of the class: player
+[class #1 'player'] Enter the number of service implementations that should be created (empty for 1): 1
+[class #1 'player' &gt; service impl. #1] Enter the name of the implementation: random_agent
+[class #1 'player' &gt; service impl. #1 'random_agent'] Enter the number of actor instances using this implementation (empty for 1): 2
+[class #1 'player'] Should a client implementation be created (Y or N, empty for Y): N
+Should a web-client be created (Y or N, empty for Y): N
+
+$ cd rps
+</code></pre>
+
+<p>To summarize, for this 2 players game, we created:</p>
+<ul>
+<li>1 actor class, <code>player</code>, because RPS is a symmetric game, both players have the same role within the game,</li>
+<li>1 actor implementation for this class, <code>random_agent</code>, because at the moment we only want to implement one way of playing,</li>
+<li>2 actor instances, because the game has 2 players.</li>
+</ul>
+<blockquote>
+<p>ℹ️ For the remainder of this tutorial, unless mentioned, it is assumed that all operations are run in the <code>rps</code> directory.</p>
+</blockquote>
+<h2 id="building-and-running-the-app">Building and running the app</h2>
+<p>We can now check that everything works as expected.</p>
+<p>First, we will need to run the code generation phase and the build phase.</p>
+<pre><code class="console">$ cogment run generate
+$ cogment run build
+</code></pre>
+
+<p>Run the following to start all the services of the Cogment app as docker containers: the <code>orchestrator</code>, the <code>environment</code> and our <code>random_agent</code>.</p>
+<pre><code class="console">$ cogment run start
+</code></pre>
+
+<p>In another terminal, run the following to start a client for this Cogment app, this will connect to the running services to start a trial, let it run for a few seconds and then terminate it.</p>
+<pre><code class="console">$ cogment run client
+Executing docker-compose run --rm client in .
+Creating rps_client_run ... done
+Client up and running.
+Trial 'b8251a1a-fad0-43b9-a1cc-00dcbebbfaa7' starts
+Trial 'b8251a1a-fad0-43b9-a1cc-00dcbebbfaa7' terminating
+</code></pre>
+
+<p>This should also generate some logs in the first terminal where the app services are running. You can now terminate the services using <code>ctrl+C</code>.</p>
+<p>At this point we have generated a working but empty Cogment app and we checked that it could build and run. We are now ready to start the actual implementation!</p>
+<h2 id="define-our-data-structures">Define our data structures</h2>
+<p>Cogment uses <a href="https://developers.google.com/protocol-buffers/">Protocol Buffers</a> to define data structures. The initial definitions are located in the <code>data.proto</code> and look like that.</p>
+<pre><code class="proto">syntax = &quot;proto3&quot;;
+
+package rps;
+
+message EnvConfig {
+}
+
+message TrialConfig {
+    EnvConfig env_config = 1;
+}
+
+message Observation {}
+message PlayerAction {}
+</code></pre>
+
+<p>Note that a file named <code>cogment.yaml</code> was also created in the <code>rps</code> directory by the boostrap process.
+This file is the main configuration for your Cogment app. In it, you will see a reference to:</p>
+<pre><code class="yaml">import:
+  proto:
+    - data.proto
+</code></pre>
+
+<p><code>EnvConfig</code> and <code>TrialConfig</code> will be discussed in the coming steps. For now we'll focus on defining the <strong>Action Space and Observation Space</strong> for our RPS app.</p>
+<h3 id="action-space">Action Space</h3>
+<p>Let's start by filling up <code>PlayerAction</code> which defines what each player can do at each step of the game. In the case of RPS, players chose one move among the three alternatives giving their name to the game: <em>"Rock"</em>, <em>"Paper"</em> or <em>"Scissors"</em>.</p>
+<p>To do that we will use an <code>enum</code> called <code>Move</code>,</p>
+<pre><code class="proto">enum Move {
+  ROCK = 0;
+  PAPER = 1;
+  SCISSORS = 2;
+}
+</code></pre>
+
+<p>and use that type in <code>PlayerAction</code>.</p>
+<pre><code class="proto">message PlayerAction {
+  Move move = 1;
+}
+</code></pre>
+
+<p>Modify the <code>data.proto</code> file to include the above additions.</p>
+<h3 id="observation-space">Observation Space</h3>
+<p>The <code>Observation</code> structure defines what the actors perceive from the environment. It is an input they use to choose which action to take.</p>
+<p>In the context of RPS, the environment is limited to the two players and what they played. We represent this information in a data structure called <code>PlayerState</code> using two properties.</p>
+<pre><code class="proto">message PlayerState {
+  Move last_move = 1; // Last move played
+  bool won_last = 2;  // Did the player win the last round
+}
+</code></pre>
+
+<p>The <code>Observation</code> structure itself defines the observed players from the point of view of each player.</p>
+<pre><code class="proto">message Observation {
+  PlayerState me = 1;
+  PlayerState them = 2;
+}
+</code></pre>
+
+<p>Edit the <code>data.proto</code> file to include the above additions. This file is used during the code generation phase to make the defined data structures available to the different services.</p>
+<p>To check that everything is working <a href="#building-and-running-the-app">build and run</a> the application. Nothing should be different at this stage.</p>
+<p>This concludes the step 1 of the tutorial: you have bootstrapped a Cogment project, implemented the data structures defining the action and observation spaces, started your app and ran a trial.</p>
+<p>Let’s move on to actually implementing our services in <a href="../2-random-player/">step 2</a>.</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../2-random-player/" class="btn btn-neutral float-right" title="Step 2: Implement actor and environment">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../introduction/" class="btn btn-neutral" title="Introduction"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../introduction/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../2-random-player/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '../../..';</script>
+    <script src="../../../js/theme.js" defer></script>
+      <script src="../../../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

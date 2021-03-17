@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  
+  <link rel="shortcut icon" href="../../../img/favicon.ico">
+  <title>Step 2: Implement actor and environment - Cogment</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
+
+  <link rel="stylesheet" href="../../../css/theme.css" />
+  <link rel="stylesheet" href="../../../css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Step 2: Implement actor and environment";
+    var mkdocs_page_input_path = "cogment/tutorial/2-random-player.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../../../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../../../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+        <a href="../../.." class="icon icon-home"> Cogment</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+                <p class="caption"><span class="caption-text">Introduction</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../..">Overview</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../../introduction/installation/">Installation & Setup</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Support</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../../support/community-channels/">Community channels</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Concepts</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../../concepts/core-concepts/">Core Concepts</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../../concepts/glossary/">Glossary</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Cogment</span></p>
+                <ul class="current">
+                    <li class="toctree-l1 current"><a class="reference internal current" href="#">Tutorial</a>
+    <ul class="current">
+                <li class="toctree-l2"><a class="reference internal" href="../introduction/">Introduction</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../1-bootstrap-and-data-structures/">Step 1: Bootstrap a Cogment app</a>
+                </li>
+                <li class="toctree-l2 current"><a class="reference internal current" href="./">Step 2: Implement actor and environment</a>
+    <ul class="current">
+    <li class="toctree-l3"><a class="reference internal" href="#random-player-agent">Random player agent</a>
+    </li>
+    </ul>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../3-rewards/">Step 3: Introduce rewards</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../4-heuristic-player/">Step 4: Create a heuristic player</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../5-human-player/">Step 5: Add a human player in the loop</a>
+                </li>
+    </ul>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../cogment-api-guide/">Cogment API Guide</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="#">Cogment API Reference</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../../cogment-api-reference/cogment-yaml/">cogment.yaml</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../cogment-api-reference/python/">python</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../cogment-api-reference/javascript/">javascript</a>
+                </li>
+    </ul>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="#">Cogment Low Level API Guide</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../../cogment-low-level-api-guide/overview/">Overview</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../cogment-low-level-api-guide/grpc/">gRPC API Reference</a>
+                </li>
+    </ul>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Deployment Guide</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../../deployment-guide/local-deployement/">Local Deployment</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../../license/">License</a>
+                    </li>
+                </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../..">Cogment</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Tutorial &raquo;</li>
+        
+      
+        
+          <li>Cogment &raquo;</li>
+        
+      
+    
+    <li>Step 2: Implement actor and environment</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h2 id="step-2-implement-a-first-actor-and-environment">Step 2: Implement a first actor and environment</h2>
+<blockquote>
+<p>This part of the tutorial follows <a href="../1-bootstrap-and-data-structures/">step 1</a>, make sure you've gone through it before starting this one. Alternatively, the completed step 1 can be retrieved from the <a href="https://github.com/cogment/cogment-tutorial-rps">tutorial's repository</a>.</p>
+</blockquote>
+<p>In this step of the tutorial, we will implement the (very simple) decison logic for the random player as well as the base mechanics for RPS, i.e. the rules of the game, in the environment services.</p>
+<h3 id="random-player-agent">Random player agent</h3>
+<p>In the <code>rps</code> directory, the <code>random_agent</code> directory contains the python implementation for the eponymous service. You'll find two files here:</p>
+<ul>
+<li><code>requirements.txt</code> is a <a href="https://pip.pypa.io/en/stable/reference/pip_install/?highlight=requirements#requirements-file-format">pip requirement file</a> defining the dependencies of the service. For the moment it only lists <a href="https://pypi.org/project/cogment/"><code>cogment</code></a>, Cogment's python SDK.</li>
+<li><code>main.py</code> contains the implementation of the service.</li>
+</ul>
+<p>Open <code>main.py</code> and take a look at the generated content.</p>
+<p>At the bottom you'll find the <code>main</code> function, it initializes Cogment's context, registers the <code>random_agent</code> actor's implementation, then starts the service itsef on tcp port 9000 and await for its termination.</p>
+<blockquote>
+<p>Cogment's python sdk leverages Python's <a href="https://docs.python.org/3/library/asyncio-task.html">asynchronous features</a>, you'll need a basic understanding of them.</p>
+</blockquote>
+<pre><code class="python">async def main():
+  print(&quot;Random-Agent actor service up and running.&quot;)
+
+  context = cogment.Context(cog_settings=cog_settings, user_id=&quot;rps&quot;)
+  context.register_actor(
+      impl=random_agent,
+      impl_name=&quot;random_agent&quot;,
+      actor_classes=[&quot;player&quot;,])
+
+  await context.serve_all_registered(cogment.ServedEndpoint(port=9000))
+</code></pre>
+
+<p>At the beginning of the file, the function <code>random_agent</code> is the actor's implementation. This function is called once per actor and per trial and handles the full lifetime of the actor.</p>
+<ul>
+<li>The actor's <strong>initialization</strong>, before the <code>async for</code>. This is where, for example, actor's internal data can be defined before calling <code>actor_session.start()</code> to notify that it is ready,</li>
+<li>Its <strong>event loop</strong>, the content of the <code>async for</code>. This is where resides the implementation of the actor's response to various events,</li>
+<li>Its <strong>termination</strong>, after the <code>async for</code>.</li>
+</ul>
+<p>The generated implementation is very simple:</p>
+<ul>
+<li>it handles the three main kind of events: <strong>observations</strong>, <strong>rewards</strong> and <strong>messages</strong>,</li>
+<li>it does a default <strong>action</strong> whenever required, i.e. in response to an observation.</li>
+</ul>
+<p>We will further learn about how to use observations in <a href="../4-heuristic-player/">step 4</a> and rewards in <a href="../3-rewards/">step 3</a>. Messages are out of the scope for this <em>basics</em> tutorial.</p>
+<p>Please note the import and usage of <code>PlayerAction</code> which is the data structure from <code>data.proto</code> defining the actor's action space.</p>
+<pre><code class="python">async def random_agent(actor_session):
+    actor_session.start()
+
+    async for event in actor_session.event_loop():
+        if event.observation:
+            observation = event.observation
+            print(f&quot;'{actor_session.name}' received an observation: '{observation}'&quot;)
+            if event.type == cogment.EventType.ACTIVE:
+                action = PlayerAction()
+                actor_session.do_action(action)
+        for reward in event.rewards:
+            print(f&quot;'{actor_session.name}' received a reward for tick #{reward.tick_id}: {reward.value}/{reward.confidence}&quot;)
+        for message in event.messages:
+            print(f&quot;'{actor_session.name}' received a message from '{message.sender_name}': - '{message.payload}'&quot;)
+</code></pre>
+
+<p>Our goal is to implement an actor playing at random. We first need to import the different <code>Move</code>, as defined in our data structures. We also need to import <code>random</code>, the python package generating random numbers.</p>
+<pre><code class="python">from data_pb2 import ROCK, PAPER, SCISSORS
+
+import random
+
+MOVES = [ROCK, PAPER, SCISSORS]
+</code></pre>
+
+<p>Once this is available we can simply update the <em>taking decision</em> part of the actor's implementation to compute a random move whenever it is needed.</p>
+<pre><code class="python">if event.observation:
+    observation = event.observation
+    print(f&quot;'{actor_session.name}' received an observation: '{observation}'&quot;)
+    if event.type == cogment.EventType.ACTIVE:
+        action = PlayerAction(move=random.choice(MOVES))
+        actor_session.do_action(action)
+</code></pre>
+
+<p>Modify the <code>random_agent/main.py</code> file to include the above additions.</p>
+<h2 id="implementing-the-rules-of-the-game">Implementing the rules of the game</h2>
+<p>In the <code>rps</code> directory, the <code>environment</code> directory contains the python implementation for the eponymous service. Similarly to the actor's service, you will find two files here, <code>requirements.txt</code> and <code>main.py</code>.</p>
+<p>Open <code>main.py</code> and take a look at the generated content.</p>
+<p>The code is very similar to the <code>random_agent</code>'s. In the <code>main</code> function, instead of using <code>register_actor</code>, <code>register_environment</code> is used. The implementation function, called <code>environment</code> here, is structured similarly to the actor's one but handles two kinds of events: <strong>actions</strong> (and the last actions of a trial <strong>final_actions</strong>) and <strong>message</strong>. Environments don't perform actions, they produce observations that are sent to the actors participating in the trial.</p>
+<p>Please note the import and usage of <code>Observation</code> which is the datastructure defined in <code>data.proto</code> defining the actors observation space.</p>
+<pre><code class="python">async def environment(environment_session):
+    print(&quot;environment starting&quot;)
+    # Create the initial observaton
+    observation = Observation()
+
+    # Start the trial and send that observation to all actors
+    environment_session.start([(&quot;*&quot;, observation)])
+
+    async for event in environment_session.event_loop():
+        if event.actions:
+            actions = event.actions
+            print(f&quot;environment received the actions&quot;)
+            for actor, action in zip(environment_session.get_active_actors(), actions):
+                print(f&quot; actor '{actor.actor_name}' did action '{action}'&quot;)
+            observation = Observation()
+            if event.type == cogment.EventType.ACTIVE:
+                # The trial is active
+                environment_session.produce_observations([(&quot;*&quot;, observation)])
+            else:
+                # The trial termination has been requested
+                environment_session.end([(&quot;*&quot;, observation)])
+        for message in event.messages:
+            print(f&quot;environment received a message from '{message.sender_name}': - '{message.payload}'&quot;)
+
+    print(&quot;environment end&quot;)
+</code></pre>
+
+<p>Our goal, in this section, is to implement how the environment computes the observations from the actions done by the actors at a given timestep.</p>
+<p>We first import the needed datastructure and define a dictionary mapping each move to the move that defeats it.</p>
+<pre><code class="python">from data_pb2 import PlayerState, ROCK, PAPER, SCISSORS
+
+DEFEATS = {
+  ROCK: PAPER,
+  SCISSORS: ROCK,
+  PAPER: SCISSORS
+}
+</code></pre>
+
+<p>In the <strong>initialization</strong> phase of the environment implementation, i.e. before the <code>async for</code>, we create a simple <code>state</code> data structure that is keeping around the number of rounds played and won by each of the two players.</p>
+<p>We then compute the initial observation for each of the two players. One instance of <code>PlayerState</code> per player is created, each is used as the <code>me</code> and <code>them</code> state of each player's observation.</p>
+<pre><code class="python">state = {
+    &quot;rounds_count&quot;: 0,
+    &quot;p1&quot;: {
+        &quot;won_rounds_count&quot;: 0
+    },
+    &quot;p2&quot;: {
+        &quot;won_rounds_count&quot;: 0
+    },
+}
+print(&quot;environment starting&quot;)
+[p1, p2] = environment_session.get_active_actors()
+p1_state = PlayerState(won_last=False, last_move=None)
+p2_state = PlayerState(won_last=False, last_move=None)
+environment_session.start([
+    (p1.actor_name, Observation(me=p1_state, them=p2_state)),
+    (p2.actor_name, Observation(me=p2_state, them=p1_state)),
+])
+</code></pre>
+
+<p>In the <strong>event loop</strong> we implement how the environment produces observations based on the actor's actions.</p>
+<p>We start by retrieving each player's action and computing who won the round. Then, we update the internal <code>state</code>. Finally, we produce up-to-date observations for the players.</p>
+<pre><code class="python">if event.actions:
+    [p1_action, p2_action] = event.actions
+    print(f&quot;{p1.actor_name} played {MOVES_STR[p1_action.move]}&quot;)
+    print(f&quot;{p2.actor_name} played {MOVES_STR[p2_action.move]}&quot;)
+
+    # Compute who wins, if the two players had the same move, nobody wins
+    p1_state = PlayerState(
+        won_last=p1_action.move == DEFEATS[p2_action.move],
+        last_move=p1_action.move
+    )
+    p2_state = PlayerState(
+        won_last=p2_action.move == DEFEATS[p1_action.move],
+        last_move=p2_action.move
+    )
+    state[&quot;rounds_count&quot;] += 1
+    if p1_state.won_last:
+        state[&quot;p1&quot;][&quot;won_rounds_count&quot;] += 1
+        print(f&quot;{p1.actor_name} wins!&quot;)
+    elif p2_state.won_last:
+        state[&quot;p2&quot;][&quot;won_rounds_count&quot;] += 1
+        print(f&quot;{p2.actor_name} wins!&quot;)
+    else:
+        print(f&quot;draw.&quot;)
+
+    # Generate and send observations
+    observations = [
+        (p1.actor_name, Observation(me=p1_state, them=p2_state)),
+        (p2.actor_name, Observation(me=p2_state, them=p1_state)),
+    ]
+    if event.type == cogment.EventType.ACTIVE:
+        # The trial is active
+        environment_session.produce_observations(observations)
+    else:
+        # The trial termination has been requested
+        environment_session.end(observations)
+</code></pre>
+
+<p>Finally, in the <strong>termination</strong> phase, we print some stats about the trial itself.</p>
+<pre><code class="python">print(&quot;environment end&quot;)
+print(f&quot;\t * {state['rounds_count']} rounds played&quot;)
+print(f&quot;\t * {p1.actor_name} won {state['p1']['won_rounds_count']} rounds&quot;)
+print(f&quot;\t * {p1.actor_name} won {state['p2']['won_rounds_count']} rounds&quot;)
+print(f&quot;\t * {state['rounds_count'] - state['p1']['won_rounds_count'] - state['p2']['won_rounds_count']} draws&quot;)
+</code></pre>
+
+<p>Modify the <code>environment/main.py</code> file to include the above additions. Please note that this code makes assumptions on the number of actors and their classes. Production code should handle non-standard cases in a better way.</p>
+<p>You can now <a href="../1-bootstrap-and-data-structures/#building-and-running-the-app">build and run</a> the application. Given the nature of the game and the fully random nature of the plays you should have around 1/3 of player 1 wins, 1/3 of player 2's and 1/3 of draws.</p>
+<p>This concludes the step 2 of the tutorial: you implemented your first actor and your first environment.</p>
+<p>Let’s move on to learning more about rewards in <a href="../3-rewards/">step 3</a>.</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../3-rewards/" class="btn btn-neutral float-right" title="Step 3: Introduce rewards">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../1-bootstrap-and-data-structures/" class="btn btn-neutral" title="Step 1: Bootstrap a Cogment app"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../1-bootstrap-and-data-structures/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../3-rewards/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '../../..';</script>
+    <script src="../../../js/theme.js" defer></script>
+      <script src="../../../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  
+  <link rel="shortcut icon" href="../../../img/favicon.ico">
+  <title>Step 3: Introduce rewards - Cogment</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
+
+  <link rel="stylesheet" href="../../../css/theme.css" />
+  <link rel="stylesheet" href="../../../css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Step 3: Introduce rewards";
+    var mkdocs_page_input_path = "cogment/tutorial/3-rewards.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../../../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../../../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+        <a href="../../.." class="icon icon-home"> Cogment</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+                <p class="caption"><span class="caption-text">Introduction</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../..">Overview</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../../introduction/installation/">Installation & Setup</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Support</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../../support/community-channels/">Community channels</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Concepts</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../../concepts/core-concepts/">Core Concepts</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../../concepts/glossary/">Glossary</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Cogment</span></p>
+                <ul class="current">
+                    <li class="toctree-l1 current"><a class="reference internal current" href="#">Tutorial</a>
+    <ul class="current">
+                <li class="toctree-l2"><a class="reference internal" href="../introduction/">Introduction</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../1-bootstrap-and-data-structures/">Step 1: Bootstrap a Cogment app</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../2-random-player/">Step 2: Implement actor and environment</a>
+                </li>
+                <li class="toctree-l2 current"><a class="reference internal current" href="./">Step 3: Introduce rewards</a>
+    <ul class="current">
+    <li class="toctree-l3"><a class="reference internal" href="#adding-the-concept-of-a-game">Adding the concept of a game</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#sending-rewards-to-the-actors">Sending rewards to the actors</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#using-the-metrics-and-dashboard-services-to-retrieve-visualize-the-rewards-over-time">Using the metrics and dashboard services to retrieve &amp; visualize the rewards over time</a>
+    </li>
+    </ul>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../4-heuristic-player/">Step 4: Create a heuristic player</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../5-human-player/">Step 5: Add a human player in the loop</a>
+                </li>
+    </ul>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../cogment-api-guide/">Cogment API Guide</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="#">Cogment API Reference</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../../cogment-api-reference/cogment-yaml/">cogment.yaml</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../cogment-api-reference/python/">python</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../cogment-api-reference/javascript/">javascript</a>
+                </li>
+    </ul>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="#">Cogment Low Level API Guide</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../../cogment-low-level-api-guide/overview/">Overview</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../cogment-low-level-api-guide/grpc/">gRPC API Reference</a>
+                </li>
+    </ul>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Deployment Guide</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../../deployment-guide/local-deployement/">Local Deployment</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../../license/">License</a>
+                    </li>
+                </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../..">Cogment</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Tutorial &raquo;</li>
+        
+      
+        
+          <li>Cogment &raquo;</li>
+        
+      
+    
+    <li>Step 3: Introduce rewards</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="step-3-rewards">Step 3 - Rewards</h1>
+<blockquote>
+<p>This part of the tutorial follows <a href="../2-random-player/">step 2</a>, make sure you've gone through it before starting this one. Alternatively the completed step 2 can be retrieved from the <a href="https://github.com/cogment/cogment-tutorial-rps">tutorial's repository</a>.</p>
+</blockquote>
+<p>In this step of the tutorial, we will start thinking about rewards. Rewards are a way to evaluate how an actor performs at a task. They can be used to evaluate or compare different implementations of an actor, or, especially in the context or Reinforcement Learning, train an model. In Cogment, both the environment and other actors can evaluate an actor. Here, we will focus on sending reward from the environment.</p>
+<p>The first thing we'll do for this step is to add the concept of multi-round game to our RPS implementation. We'll learn to configure the environment along the way. Then, we will adapt the environment implementation to send a reward to the actor winning a game. Finally, we will retrieve rewards and other metrics from the running Cogment app.</p>
+<h2 id="adding-the-concept-of-a-game">Adding the concept of a game</h2>
+<p>Up until now, our implementation of RPS focused on rounds. However, RPS is usually played in games won by the player reaching a target score, i.e. a number of won rounds.</p>
+<p>Before sending rewards we need to adapt our implementation to support games. We will make the target score of each game configurable.</p>
+<p>The generated data structure <code>EnvConfig</code>, referenced within <code>cogment.yaml</code> in <code>environment.config_type</code>, defines the configuration of the environment. Let's add a <code>target_game_score</code> numerical property to it.</p>
+<pre><code class="proto">message EnvConfig {
+  int32 target_game_score = 1;
+}
+</code></pre>
+
+<p>Modify the <code>data.proto</code> file with this update.</p>
+<p>The environment implementation can now be updated to know about games.</p>
+<p>During the <strong>initialization</strong> phase of the <code>environment</code> function, we can retrieve the value from the environment's configuration.</p>
+<pre><code class="python">target_game_score = environment_session.config.target_game_score
+</code></pre>
+
+<p>Instead of counting <em>rounds</em> we update the <code>state</code> variable to count <em>games</em> and the score of the ongoing game.</p>
+<pre><code class="python">state = {
+    &quot;games_count&quot;: 0,
+    &quot;p1&quot;: {
+        &quot;won_games_count&quot;: 0,
+        &quot;current_game_score&quot;: 0
+    },
+    &quot;p2&quot;: {
+        &quot;won_games_count&quot;: 0,
+        &quot;current_game_score&quot;: 0
+    },
+}
+</code></pre>
+
+<p>In the <strong>event loop</strong> we need to make two changes.</p>
+<p>First, Instead of counting the rounds, we will update each player <code>current_game_score</code>.</p>
+<pre><code class="python">if p1_state.won_last:
+    state[&quot;p1&quot;][&quot;current_game_score&quot;] += 1
+elif p2_state.won_last:
+    state[&quot;p2&quot;][&quot;current_game_score&quot;] += 1
+</code></pre>
+
+<p>Second, once the observation is sent, we detect the end of each game and update the <code>state</code> accordingly.</p>
+<pre><code class="python"># Update the game scores
+if state[&quot;p1&quot;][&quot;current_game_score&quot;] &gt;= target_game_score:
+    state[&quot;games_count&quot;] += 1
+    state[&quot;p1&quot;][&quot;current_game_score&quot;] = 0
+    state[&quot;p2&quot;][&quot;current_game_score&quot;] = 0
+    state[&quot;p1&quot;][&quot;won_games_count&quot;] += 1
+
+    print(f&quot;{p1.actor_name} won game #{state['games_count']}&quot;)
+elif state[&quot;p2&quot;][&quot;current_game_score&quot;] &gt;= target_game_score:
+    state[&quot;games_count&quot;] += 1
+    state[&quot;p1&quot;][&quot;current_game_score&quot;] = 0
+    state[&quot;p2&quot;][&quot;current_game_score&quot;] = 0
+    state[&quot;p2&quot;][&quot;won_games_count&quot;] += 1
+
+    print(f&quot;{p2.actor_name} won game #{state['games_count']}&quot;)
+</code></pre>
+
+<p>Finally, during the <strong>termination</strong>, we display stats about the games.</p>
+<pre><code class="python">print(f&quot;\t * {state['games_count']} games played&quot;)
+print(f&quot;\t * {p1.actor_name} won {state['p1']['won_games_count']} games&quot;)
+print(f&quot;\t * {p2.actor_name} won {state['p2']['won_games_count']} games&quot;)
+</code></pre>
+
+<p>Modify the <code>environment/main.py</code> file with these updates.</p>
+<p>Now that the data structure is modified and the environment implementation uses it, we can define, for the default trial, a value for the <code>target_game_score</code> property. Let's start with games of 2 winning rounds.</p>
+<pre><code class="yaml">trial_params:
+  environment:
+    endpoint: grpc://environment:9000
+    config:
+      target_game_score: 2
+</code></pre>
+
+<p>Modify the <code>cogment.yaml</code> file with this update.</p>
+<p>You can now <a href="../1-bootstrap-and-data-structures/#building-and-running-the-app">build and run</a> the application to check that it works as expected.</p>
+<p>In this simple implementation, the concept of game is local to the environment. It has no impact on the observation and action spaces, and thus no impact on the actor implementation. This means an actor wouldn't <em>know</em> that the round it currently plays is the tie breaker in a game or its very first round. As a result the actor will play every round the same way.</p>
+<h2 id="sending-rewards-to-the-actors">Sending rewards to the actors</h2>
+<p>The environment is now able to:</p>
+<ul>
+<li>compute when an actor wins a game,</li>
+<li>communicate this information to it and to the other Cogment app services,</li>
+<li>send <strong>rewards</strong> when an actor reaches a measurable goal, in our case, when it wins a game.</li>
+</ul>
+<p>Please note, that not all actions need to be rewarded.</p>
+<p>When a game is won, the environment will add a <strong>positive reward to the winner</strong> (we chose a value of 1) and a <strong>negative reward to the loser</strong> (we chose a value of -1). Cogment also supports the notion of <em>confidence</em>, a weight, between 0 and 1 that expresses the qualification of the reward sender in its appreciation. In this case we are applying objective rules, so we use a confidence of 1.</p>
+<p>In the <strong>event loop</strong>, when the first player wins a game we add the following.</p>
+<pre><code class="python">environment_session.add_reward(value=1, confidence=1, to=[p1.actor_name])
+environment_session.add_reward(value=-1, confidence=1, to=[p2.actor_name])
+</code></pre>
+
+<p>When the second player wins a game we add the following.</p>
+<pre><code class="python">environment_session.add_reward(value=-1, confidence=1, to=[p1.actor_name])
+environment_session.add_reward(value=1, confidence=1, to=[p2.actor_name])
+</code></pre>
+
+<p>Modify the <code>environment/main.py</code> file to include the above additions.</p>
+<p>You can now <a href="../1-bootstrap-and-data-structures/#building-and-running-the-app">build and run</a> the application to check that it works as expected. In particular you should see logs relative to the reception of rewards on the actor side.</p>
+<h2 id="using-the-metrics-and-dashboard-services-to-retrieve-visualize-the-rewards-over-time">Using the <strong>metrics</strong> and <strong>dashboard</strong> services to retrieve &amp; visualize the rewards over time</h2>
+<p>🚧</p>
+<p>This concludes the step 3 of the tutorial: you've learned about environment configuration, implemented your reward sending and used the <strong>metrics</strong> and <strong>dashboard</strong> services.</p>
+<p>Let’s move on to implementing an RPS player that actually considers what was played before deciding on its next move in <a href="../4-heuristic-player/">step 4</a>.</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../4-heuristic-player/" class="btn btn-neutral float-right" title="Step 4: Create a heuristic player">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../2-random-player/" class="btn btn-neutral" title="Step 2: Implement actor and environment"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../2-random-player/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../4-heuristic-player/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '../../..';</script>
+    <script src="../../../js/theme.js" defer></script>
+      <script src="../../../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>
