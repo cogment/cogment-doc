@@ -1,12 +1,12 @@
 # Step 6: Add a web client for the human player
 
-> This part of the tutorial follows [step 5](./5-human-player.md), make sure you've gone through it before starting this one. Alternatively the completed step 5 can be retrieved from the [tutorial's repository](https://github.com/cogment/cogment-tutorial-rps).
+> This part of the tutorial follows [step 5](./5-human-player.md), make sure we've gone through it before starting this one. Alternatively the completed step 5 can be retrieved from the [tutorial's repository](https://github.com/cogment/cogment-tutorial-rps).
 
 In this step of the tutorial, we will go over a web client implementation, to enable Humans to play RPS, while being able to take advantage of various web technologies.
 
 ## Prerequisites
 
-To develop a web client, you will need a working installation of Node.js, you can get download and install this from
+To develop a web client, we will need a working installation of Node.js. You can download and install this from:
 
 https://nodejs.org/en/download/
 
@@ -14,30 +14,28 @@ https://nodejs.org/en/download/
 
 In the previous steps, we triggered the trials by running `cogment run client`. This launched a trial using code in `client/main.py`. In this step we will trigger a trial using a react app.
 
-Before we start with the cogment side of things, we'll need to get a few prerequisite files setup
+Before we start with the Cogment side of things, we'll need to get a few prerequisite files setup
 
 ## Creating a React app
 
-To start, we will initialize a react app, this can be done very simply by running
+First, we will initialize a react app. This can be done very simply by running:
 
 ```console
 $ npx create-react-app web-client
 ```
 
-After this is complete you should be able to run the following commands
+Once this is done, we will be able to open a React app in our browser by running the following commands:
 
 ```console
 $ cd web-client
 $ npm start
 ```
 
-And have a react app open in your browser.
-
 ## Adding Material UI
 
-We will be using Material UI for this web client, this will provide us with a nice and clean way to add styles to our application, as well as some components which we will use to reduce code size
+We will be using Material UI for this web client. This will provide us with a nice and clean way to add styles to our application, as well as some components which we will use to reduce code size.
 
-In order to do this, install it using the following commands while inside of the web-client folder
+Install Material UI by running the following commands from inside of the web-client folder:
 
 ```console
 $ npm i @mateiral-ui/core
@@ -46,11 +44,11 @@ $ npm i @material-ui/icons
 
 ## Setting up Docker
 
-We'll need two additional docker-compose services along-side those which you already have in order to add this web client. One will be for running the web-client. and one will be for a proxy service called `grpcwebproxy`
+In addition to those the docker-compose services we already have, we'll need two more for this web client. One to run it, and another for a proxy service called `grpcwebproxy`.
 
-> NOTE: `grpcwebproxy` [link](https://github.com/improbable-eng/grpc-web/tree/master/go/grpcwebproxy) is a helpful program that allows grpc endpoints to be utilized by web applications. Web applications natively can not use the grpc protocol, which is an issue as that is how all the elements of cogment communicate with eachother. This is solved by using a proxy which accepts web socket connections, and translates those into grpc requests.
+> NOTE: `grpcwebproxy` [link](https://github.com/improbable-eng/grpc-web/tree/master/go/grpcwebproxy) is a helpful program that allows grpc endpoints to be utilized by web applications. Web applications cannot natively use the grpc protocol all the Cogment elements use to communicate with one another. Using this proxy to translate into grpc requests the web socket connections it accepts solves this issue.
 
-For these services, add the following to the end of your docker-compose.yaml
+For these services, add the following to the end of our docker-compose.yaml:
 
 ```yaml
 web-client:
@@ -78,7 +76,7 @@ grpcwebproxy:
     - orchestrator
 ```
 
-We will also need two additional dockerfiles to go along with these entries, first will be `grpcwebproxy.dockerfile` with the following contents:
+We will also need two additional dockerfiles to go along these entries. The first one will be `grpcwebproxy.dockerfile`, with the following content:
 
 ```dockerfile
 FROM golang:1.15.2 as dev
@@ -98,7 +96,7 @@ EXPOSE 8080
 CMD ["grpcwebproxy", "--backend_addr=orchestrator:9000", "--run_tls_server=false", "--allow_all_origins", "--use_websockets"]
 ```
 
-Second will be `js_service.dockerfile` with the following contents:
+Second will be `js_service.dockerfile` with the following content:
 
 ```dockerfile
 # pull official base image
@@ -115,9 +113,9 @@ COPY . ./
 CMD ["npm", "start"]
 ```
 
-> NOTE: The docker-compose entry and coresponding dockerfile are not actually needed for the web-client, as it can just as easily be run outside of docker, since the port for `grpcwebproxy` is exposed outside of the docker network. However, doing it like this makes the command to startup the application much simpler
+> NOTE: Since the port for `grpcwebproxyis` exposed outside of the docker network, the docker-compose entry and corresponding dockerfile are not actually needed for the web-client; it can just as easily be run outside of docker. However, doing it like this makes the command to startup the application much simpler.
 
-Finally, we have to add `web-client` and `grpcwebproxy` to the start, build, and stop commands in your `cogment.yaml`.
+Finally, we have to add `web-client` and `grpcwebproxy` to the start, build, and stop commands in out `cogment.yaml`.
 
 ```yaml
 build: docker-compose build orchestrator environment random_agent web-client grpcwebproxy
@@ -125,11 +123,11 @@ start: docker-compose up orchestrator environment random_agent web-client grpcwe
 stop: docker-compose stop orchestrator environment random_agent web-client grpcwebproxy
 ```
 
-## Adding Cogment to your web client
+## Adding Cogment to our web client
 
-The easiest way to add cogment to any web client is to start with a react app, then do the following three steps
+The easiest way to add Cogment to any web client is to start with a react app, then do the following three steps
 
-1.  Install the Javascript SDK using
+1.  Install the Javascript SDK using:
 
     ```console
     $ npm i @cogment/cogment-js-sdk
@@ -137,26 +135,26 @@ The easiest way to add cogment to any web client is to start with a react app, t
 
     while inside of the web-client folder
 
-2.  Copy in the hooks folder from the [tutorial's repository](https://github.com/cogment/cogment-tutorial-rps) in the path [6-web-client/web-client/src/hooks](./6-web-client/web-client/src/hooks) into your src directory.
+2.  Copy in the hooks folder from the [tutorial's repository](https://github.com/cogment/cogment-tutorial-rps), found at [6-web-client/web-client/src/hooks](./6-web-client/web-client/src/hooks) into our src directory.
 
-3.  Up one folder, in your project directory (where you have your cogment.yaml), run the following command to generate Javascript files from your defined protobufs
+3.  Navigate one folder up to your project directory (where you have your cogment.yaml) then run the following command to generate Javascript files from your defined protobufs:
     ```console
     $ cogment generate --js_dir=./web-client
     ```
 
-> NOTE: The react hooks used in this section of the tutorial would normally be generated with `cogment init` if we had chosen `Y` when asked if we wanted a web client
+> NOTE: Had we chosen `Y` at the beginning of this tutorial when asked by the CLI if we wanted a web client, the react hooks used in this section would normally have been generated with the command `cogment init`."
 
 Now that all that's done, we can finally start coding our web client!
 
 # CODE
 
-> NOTE: For each of the following files, we will provide the styles in a code block, feel free to skip these, or make your own, they are not important to the function of this application
+> NOTE: For each of the following files, we will provide the styles in a code block. Feel free to skip these, or make your own; they are not important to the function of this application.
 
 ## index.js / index.css
 
-When you created your react app, these two files were generated automatically. Replace their contents with the following
+When we created our react app, these two files were generated automatically. Replace their content with the following:
 
-> NOTE: These can also be downloaded from the [tutorial's repository](https://github.com/cogment/cogment-tutorial-rps)
+> NOTE: These can also be downloaded from the [tutorial's repository](https://github.com/cogment/cogment-tutorial-rps).
 
 index.css:
 
@@ -204,11 +202,11 @@ ReactDOM.render(
 );
 ```
 
-This is simply to provide styles to our Material UI components, we haven't started with the actual cogment part yet, which is exactly what we'll be doing next
+This is simply to provide styles to our Material UI components. We haven't started with the actual Cogment part yet, which is exactly what we'll be doing next.
 
 ## App.js
 
-We'll start with a few imports, some of these files don't exist yet, but we'll be making them
+We'll start with a few imports. Some of these files don't exist yet, so we'll be creating them:
 
 ```jsx
 //First is some react imports
@@ -223,10 +221,10 @@ import {
   useTheme,
 } from "@material-ui/core";
 
-//And here's the important part, we're importing the two things that will allow us to use cogment, first is the 'useActions' hook, this will give us the observations of our human agent, as well as allow us to make actions.
+//And here's the important part, we're importing the two things that will allow us to use Cogment, first is the 'useActions' hook, this will give us the observations of our human agent, as well as allow us to make actions.
 import { useActions } from "./hooks/useActions";
 
-//Second is our 'cogSettings'. This is a file that was generated when you ran
+//Second is our 'cogSettings'. This is a file that was generated when we ran
 //`cogment generate --js_dir=./webclient`
 //This file tells our web client relevant information about our trials, environments, and actor classes
 import { cogSettings } from "./CogSettings";
@@ -297,7 +295,7 @@ export const App = () => {
   const { observation } = event;
 
   //Parse game state out of the observation
-  //Generally in cogment applications, all information that's not strictly neccesary must be infered by all agents, for this case, we must infer whether the game has either just started, is going, or if a round has ended
+  //Generally in Cogment applications, all information that's not strictly neccesary must be infered by all agents, for this case, we must infer whether the game has either just started, is going, or if a round has ended
   let gameState;
   if (!observation || observation.roundIndex === 0) gameState = "start";
   if (observation && observation.roundIndex !== 0) gameState = "playing";
@@ -312,7 +310,7 @@ export const App = () => {
   const humanScore = observation ? observation.me.currentGameScore : 0;
   const computerScore = observation ? observation.them.currentGameScore : 0;
 
-  //The layout of the page
+  //The lawet of the page
   return (
     <Box>
       {/*
@@ -390,7 +388,7 @@ export const useActions = (cogSettings, actorName, actorClass) => {
         actorSession.sendAction(action);
       });
 
-      /*actorSession.eventLoop is a async generator function, meaning you can use the syntax 
+      /*actorSession.eventLoop is a async generator function, meaning we can use the syntax 
         for await(const foo of generator()){
           do stuff
         }
@@ -406,7 +404,7 @@ export const useActions = (cogSettings, actorName, actorClass) => {
         //Parse the observation into a regular JS object
         //TODO: this will eventually be part of the API
 
-        //Eventually observations will be regular Javascript objects (same with messages, and rewards). But for now you must convert it to an object.
+        //Eventually observations will be regular Javascript objects (same with messages, and rewards). But for now we must convert it to an object.
         let observationOBJ = observation && observation.toObject();
 
         //Set the event state to the recieved event, causing a hook update
@@ -420,7 +418,7 @@ export const useActions = (cogSettings, actorName, actorClass) => {
     //Need to output a function so that the user can start the trial when all actors are connected
     //Again, double arrow function cause react will turn a single one into a lazy loaded function
     setStartTrial(() => async () => {
-      //Start and join the trial, when you start a trial, you will recieve an object containing the trialId, that can then be used to join a trial. Almost always, you will want to do both these actions in sequence, as trials do not proceed without the connected agent, if it has been specified in the cogment.yaml that a connected agent exists.
+      //Start and join the trial, when we start a trial, we will recieve an object containing the trialId, that can then be used to join a trial. Almost always, we will want to do both these actions in sequence, as trials do not proceed without the connected agent, if it has been specified in the cogment.yaml that a connected agent exists.
       const { trialId } = await trialController.startTrial(actor.actorClass);
       await trialController.joinTrial(trialId, actor);
     });
@@ -432,20 +430,20 @@ export const useActions = (cogSettings, actorName, actorClass) => {
 
 Please note that `useActions` hook is generated by `cogment init`, we've still gone through it in this tutorial, because that is where most of the Cogment related code is contained, and must be understood if we want to use Cogment without React.JS.
 
-You can now see your app fully functional by going to the folder where your cogment.yaml sits, and running the commands
+You can now see our app fully functional by going to the folder where our cogment.yaml sits, and running the commands
 
 ```console
 $ cogment run build
 $ cogment run start
 ```
 
-And opening up localhost:3000 in your browser
+And opening up localhost:3000 in our browser
 
 And with that we're done!
 
 ## Making it look good
 
-If you want a fancier interface there is a completed UI in the tutorials repository that you can copy into your project, then just replace the return statement from App.js with the following, along with some style code that can be found in the repository version of App.js
+If we want a fancier interface there is a completed UI in the tutorials repository that we can copy into our project, then just replace the return statement from App.js with the following, along with some style code that can be found in the repository version of App.js
 
 ```jsx
 <Box>
