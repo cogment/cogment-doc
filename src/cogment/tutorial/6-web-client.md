@@ -12,16 +12,16 @@ https://nodejs.org/en/download/
 
 ## The web client
 
-In the previous steps, we triggered the trials by running `cogment run client`. This launched a trial using code in `client/main.py`. In this step we will trigger a trial using a react app.
+In the previous steps, we triggered the trials by running `cogment run client`. This launched a trial using code in `client/main.py`. In this step we will trigger a trial using a React app.
 
-Before we start with the Cogment side of things, we'll need to get a few prerequisite files setup
+Before we start with the Cogment side of things, we'll need to get a few prerequisite files setup.
 
 ## Creating a React app
 
-First, we will initialize a react app. This can be done very simply by running:
+First, we will initialize a React app. This can be done very simply by running:
 
 ```console
-$ npx create-react-app web-client
+$ npx create-React-app web-client
 ```
 
 Once this is done, we will be able to open a React app in our browser by running the following commands:
@@ -44,9 +44,9 @@ $ npm i @material-ui/icons
 
 ## Setting up Docker
 
-In addition to those the docker-compose services we already have, we'll need two more for this web client. One to run it, and another for a proxy service called `grpcwebproxy`.
+In addition to the docker-compose services we already have, we'll need two more for this web client. One to run it, and another for a proxy service called `grpcwebproxy`.
 
-> NOTE: `grpcwebproxy` [link](https://github.com/improbable-eng/grpc-web/tree/master/go/grpcwebproxy) is a helpful program that allows grpc endpoints to be utilized by web applications. Web applications cannot natively use the grpc protocol all the Cogment elements use to communicate with one another. Using this proxy to translate into grpc requests the web socket connections it accepts solves this issue.
+> NOTE: `grpcwebproxy` [link](https://github.com/improbable-eng/grpc-web/tree/master/go/grpcwebproxy) is a helpful program that allows grpc endpoints to be utilized by web applications. Web applications cannot natively use the grpc protocol all the Cogment elements use to communicate with one another. Using this proxy to translate the web socket connections it accepts into grpc requests solves this issue.
 
 For these services, add the following to the end of our docker-compose.yaml:
 
@@ -96,7 +96,7 @@ EXPOSE 8080
 CMD ["grpcwebproxy", "--backend_addr=orchestrator:9000", "--run_tls_server=false", "--allow_all_origins", "--use_websockets"]
 ```
 
-Second will be `js_service.dockerfile` with the following content:
+The second one will be `js_service.dockerfile`, with the following content:
 
 ```dockerfile
 # pull official base image
@@ -113,9 +113,9 @@ COPY . ./
 CMD ["npm", "start"]
 ```
 
-> NOTE: Since the port for `grpcwebproxyis` exposed outside of the docker network, the docker-compose entry and corresponding dockerfile are not actually needed for the web-client; it can just as easily be run outside of docker. However, doing it like this makes the command to startup the application much simpler.
+> NOTE: Since the port for `grpcwebproxy` is exposed outside of the docker network, the docker-compose entry and corresponding dockerfile are not actually needed for the web-client; it can just as easily be run outside of docker. However, doing it like this makes the command to startup the application much simpler.
 
-Finally, we have to add `web-client` and `grpcwebproxy` to the start, build, and stop commands in out `cogment.yaml`.
+Finally, we have to add `web-client` and `grpcwebproxy` to the start, build, and stop commands in our `cogment.yaml`.
 
 ```yaml
 build: docker-compose build orchestrator environment random_agent web-client grpcwebproxy
@@ -125,7 +125,7 @@ stop: docker-compose stop orchestrator environment random_agent web-client grpcw
 
 ## Adding Cogment to our web client
 
-The easiest way to add Cogment to any web client is to start with a react app, then do the following three steps
+The easiest way to add Cogment to any web client is to start with a React app, then follow the three steps below:
 
 1.  Install the Javascript SDK using:
 
@@ -135,14 +135,14 @@ The easiest way to add Cogment to any web client is to start with a react app, t
 
     while inside of the web-client folder
 
-2.  Copy in the hooks folder from the [tutorial's repository](https://github.com/cogment/cogment-tutorial-rps), found at [6-web-client/web-client/src/hooks](./6-web-client/web-client/src/hooks) into our src directory.
+2.  Copy in the hooks folder from the [tutorial's repository](https://github.com/cogment/cogment-tutorial-rps), found at [6-web-client/web-client/src/hooks](./6-web-client/web-client/src/hooks), into our src directory.
 
 3.  Navigate one folder up to your project directory (where you have your cogment.yaml) then run the following command to generate Javascript files from your defined protobufs:
     ```console
     $ cogment generate --js_dir=./web-client
     ```
 
-> NOTE: Had we chosen `Y` at the beginning of this tutorial when asked by the CLI if we wanted a web client, the react hooks used in this section would normally have been generated with the command `cogment init`."
+> NOTE: Had we chosen `Y` at the beginning of this tutorial when asked by the CLI if we wanted a web client, the React hooks used in this section would normally have been generated with the command `cogment init`."
 
 Now that all that's done, we can finally start coding our web client!
 
@@ -152,7 +152,7 @@ Now that all that's done, we can finally start coding our web client!
 
 ## index.js / index.css
 
-When we created our react app, these two files were generated automatically. Replace their content with the following:
+When we created our React app, these two files were generated automatically. Replace their content with the following:
 
 > NOTE: These can also be downloaded from the [tutorial's repository](https://github.com/cogment/cogment-tutorial-rps).
 
@@ -168,8 +168,8 @@ body {
 index.js
 
 ```jsx
-import React from "react";
-import ReactDOM from "react-dom";
+import React from "React";
+import ReactDOM from "React-dom";
 import "./index.css";
 import { App } from "./App";
 import {
@@ -209,8 +209,8 @@ This is simply to provide styles to our Material UI components. We haven't start
 We'll start with a few imports. Some of these files don't exist yet, so we'll be creating them:
 
 ```jsx
-//First is some react imports
-import React, { useEffect } from "react";
+//First is some React imports
+import React, { useEffect } from "React";
 
 //Then some imports for icons and Material UI functionality we'll be using
 import {
@@ -221,19 +221,21 @@ import {
   useTheme,
 } from "@material-ui/core";
 
-//And here's the important part, we're importing the two things that will allow us to use Cogment, first is the 'useActions' hook, this will give us the observations of our human agent, as well as allow us to make actions.
+//And here's the important part: we're importing the two things that will allow us to use Cogment. 
+
+//First, the 'useActions' hook which will give us the observations of our human agent, as well as allow us to make actions.
 import { useActions } from "./hooks/useActions";
 
-//Second is our 'cogSettings'. This is a file that was generated when we ran
+//Second, our 'cogSettings'. This is a file that was generated when we ran
 //`cogment generate --js_dir=./webclient`
-//This file tells our web client relevant information about our trials, environments, and actor classes
+//This file tells our web client relevant information about our trials, environments, and actor classes.
 import { cogSettings } from "./CogSettings";
 
-//These are messages which were defined in data.proto, these imports will need to change whenever their corresponding messages in data.proto are changed, and cogment generate is run.
+//These are message which were defined in data.proto. These imports will need to change whenever their corresponding messages in data.proto are changed and `cogment generate` is run.
 import { Action, Move } from "./data_pb";
 ```
 
-Then we add a function that will convert the move, encoded as an enum (the same enum that we defined in our `data.proto`) to a string we can use in our application
+Then we add a function that will convert the play, encoded as an enum (the same enum that we defined in our `data.proto`) to a string we can use in our application:
 
 ```jsx
 function getMoveText(move) {
@@ -250,25 +252,25 @@ function getMoveText(move) {
 }
 ```
 
-Finally, the react component
+Finally, the React component.
 
-At the start of this component is the most important part of our application.
+At the start of this component is the most important part of our application: the useActionhook.
 
-Here, we use the 'useActions' hook, this hook returns an array with 3 elements
+This hook returns an array with 3 elements:
 
-- event: this contains all the information about any observation, reward, or message we've recieved this tick, we will use this to see what moves we and the computer played
+- event: this contains all the information about any observation, reward, or message we've received this tick. We will use this to see what plays we and the computer made.
 
-- startTrial: this is a function which takes no arguments, and is a very simple way to start a new trial with our player actor
+- startTrial: this is a function which takes no arguments, and is a very simple way to start a new trial with our player actor.
 
-- sendAction: this is a funciton which takes an argument of type 'Action', this class can be imported from data_pb.js, but we'll see that later in this tutorial.
+- sendAction: this is a function which takes an argument of type 'Action'. This class can be imported from data_pb.js, but we'll see that later in this tutorial.
 
-This hook takes in 3 arguments, the first being
+This hook takes in 3 arguments:
 
-- cogSettings: this is what's imported from CogSettings.js, it provides all the relevant information about data.proto to this hook so that it can function
+- cogSettings: this is what's imported from CogSettings.js. It provides all the relevant information about data.proto to this hook so that it can function.
 
-- actorName: the name of the human actor which this web client will be representing, this is defined in cogment.yaml
+- actorName: the name of the human actor which this web client will be representing. This is defined in cogment.yaml.
 
-- actorClass: the class of the human actor which this web client will be representing, this is defined in cogment.yaml
+- actorClass: the class of the human actor which this web client will be representing. This is defined in cogment.yaml.
 
 ```jsx
 export const App = () => {
@@ -291,11 +293,11 @@ export const App = () => {
     if (startTrial) startTrial();
   }, [startTrial]);
 
-  //Get any observation from the current event, events have observations, messages, and rewards, and all three can be unpacked from the event object
+  //Get any observation from the current event. Events have observations, messages, and rewards, and all three can be unpacked from the event object
   const { observation } = event;
 
   //Parse game state out of the observation
-  //Generally in Cogment applications, all information that's not strictly neccesary must be infered by all agents, for this case, we must infer whether the game has either just started, is going, or if a round has ended
+  ////Generally in Cogment applications, all information that's not strictly necessary must be inferred by all agents. In this case, we must infer whether the game has just started, is ongoing, or if a round has ended"
   let gameState;
   if (!observation || observation.roundIndex === 0) gameState = "start";
   if (observation && observation.roundIndex !== 0) gameState = "playing";
@@ -314,7 +316,7 @@ export const App = () => {
   return (
     <Box>
       {/*
-        Tell the player everything we know about the trial state, such as scores, moves, etc...
+        Tell the player everything we know about the trial state, such as scores, plays, etc...
       */}
       <Typography>Game state: {gameState}</Typography>
       <Typography>Human score: {humanScore}</Typography>
@@ -348,7 +350,7 @@ export const App = () => {
 This hook does multiple things, it starts a trial, joins a trial, sends actions, and recieves information from the orchestrator. The following is its annotated code.
 
 ```jsx
-import { useEffect, useState } from "react";
+import { useEffect, useState } from "React";
 import * as cogment from "@cogment/cogment-js-sdk";
 
 export const useActions = (cogSettings, actorName, actorClass) => {
@@ -363,9 +365,9 @@ export const useActions = (cogSettings, actorName, actorClass) => {
   const [startTrial, setStartTrial] = useState(null);
   const [sendAction, setSendAction] = useState(null);
 
-  //Set up the connection and register the actor only once, regardless of re-rendering
+  //Set up the connection and register the actor only once
 
-  //In this hook, the connected agent is immediatly registered to any existing trial sitting at port 8080 (more accurately any grpcwebproxy pointing to a trial). This is most of the time, the desired behaviour, but this could be changed in different circumstances by replacing this with something like setState(joinTrial), similar to setStartTrial further down this code
+  //In this hook, the connected agent is immediatly registered to any existing trial sitting at port 8080 (more accurately any grpcwebproxy pointing to a trial). Most of the time, this is the desired behaviour, but it could be changed in different circumstances by replacing this with something like setState(joinTrial), similar to setStartTrial further down this code
   useEffect(() => {
     //First we create our service, which will be our primary point of contact to the orchestrator
     const service = cogment.createService({
@@ -375,20 +377,20 @@ export const useActions = (cogSettings, actorName, actorClass) => {
         window.location.protocol + "//" + window.location.hostname + ":8080",
     });
 
-    //Set up the actor object, an actorName and an actorClass is enough to define a unique actor to add to a trial
+    //Set up the actor object. An actorName and an actorClass is enough to define a unique actor to be added to a trial
     const actor = { name: actorName, actorClass: actorClass };
 
-    //Use the service to register an actor. registerActor takes two arguments, the second of which is a callback function which is provided the actorSession of the registered actor, with which we can send actions, and recieve events
+    //Use the service to register an actor. registerActor takes two arguments, the second of which is a callback function which is given the actorSession of the registered actor as it's only argument. With the provided actorSession, we can send actions, and receive events.
     service.registerActor(actor, async (actorSession) => {
       //Start the session
       actorSession.start();
 
-      //Double arrow function here beause react will turn a single one into a lazy loaded function
+      //Double arrow function here because React will turn a single one into a lazy loaded function
       setSendAction(() => (action) => {
         actorSession.sendAction(action);
       });
 
-      /*actorSession.eventLoop is a async generator function, meaning we can use the syntax 
+      /*actorSession.eventLoop is an async generator function, meaning we can use the syntax 
         for await(const foo of generator()){
           do stuff
         }
@@ -407,7 +409,7 @@ export const useActions = (cogSettings, actorName, actorClass) => {
         //Eventually observations will be regular Javascript objects (same with messages, and rewards). But for now we must convert it to an object.
         let observationOBJ = observation && observation.toObject();
 
-        //Set the event state to the recieved event, causing a hook update
+        //Set the event state to the received event, causing a hook update
         setEvent({ observation: observationOBJ, message, reward });
       }
     });
@@ -416,9 +418,10 @@ export const useActions = (cogSettings, actorName, actorClass) => {
     const trialController = service.createTrialController();
 
     //Need to output a function so that the user can start the trial when all actors are connected
-    //Again, double arrow function cause react will turn a single one into a lazy loaded function
+    //Again, double arrow function cause React will turn a single one into a lazy loaded function
     setStartTrial(() => async () => {
-      //Start and join the trial, when we start a trial, we will recieve an object containing the trialId, that can then be used to join a trial. Almost always, we will want to do both these actions in sequence, as trials do not proceed without the connected agent, if it has been specified in the cogment.yaml that a connected agent exists.
+      //Start and join the trial. When we start a trial, we receive an object containing the trialID that can then be used to join it.
+      //We will almost always want to do both these actions in sequence, since trials do not proceed without the connected agent if cogment.yaml specifies that a connected agent exists
       const { trialId } = await trialController.startTrial(actor.actorClass);
       await trialController.joinTrial(trialId, actor);
     });
@@ -428,22 +431,22 @@ export const useActions = (cogSettings, actorName, actorClass) => {
 };
 ```
 
-Please note that `useActions` hook is generated by `cogment init`, we've still gone through it in this tutorial, because that is where most of the Cogment related code is contained, and must be understood if we want to use Cogment without React.JS.
+Please note that the `useActions` hook is generated by `cogment init`. We've still gone through it in this tutorial, because that is where most of the Cogment related code is contained, and it must be understood if we want to use Cogment without React.JS.
 
-You can now see our app fully functional by going to the folder where our cogment.yaml sits, and running the commands
+You can now see our app fully functional by going to the folder where our cogment.yaml sits, and running the commands:
 
 ```console
 $ cogment run build
 $ cogment run start
 ```
 
-And opening up localhost:3000 in our browser
+And opening up localhost:3000 in our browser.
 
 And with that we're done!
 
 ## Making it look good
 
-If we want a fancier interface there is a completed UI in the tutorials repository that we can copy into our project, then just replace the return statement from App.js with the following, along with some style code that can be found in the repository version of App.js
+If we want a fancier interface, there is a completed UI in the tutorials repository that we can copy into our project. Then, along with some style code that can be found in the repository version of App.js, just replace the return statement from App.js with the following:
 
 ```jsx
 <Box>
