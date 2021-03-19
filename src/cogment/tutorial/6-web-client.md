@@ -223,7 +223,7 @@ import {
 
 //And here's the important part: we're importing the two things that will allow us to use Cogment. 
 
-//First, the 'useActions' hook which will give us the observations of our human agent, as well as allow us to make actions.
+//First, the 'useActions' hook which will give us the observations for us, as the human agent, as well as allow us to send actions.
 import { useActions } from "./hooks/useActions";
 
 //Second, our 'cogSettings'. This is a file that was generated when we ran
@@ -347,7 +347,7 @@ export const App = () => {
 
 ## hooks/useActions.js
 
-This hook does multiple things, it starts a trial, joins a trial, sends actions, and recieves information from the orchestrator. The following is its annotated code.
+This hook does multiple things. It starts a trial, joins a trial, sends actions, and receives information from the orchestrator. The following is its annotated code:
 
 ```jsx
 import { useEffect, useState } from "React";
