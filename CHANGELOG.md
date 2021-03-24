@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Changed
 
+- The documentation `main` branch is now continuously published to https://docs.cogment.ai.
 - Update the tutorials to use `controller.watch_trials` and the new `Recv...` classes.
 
 ### Fixed

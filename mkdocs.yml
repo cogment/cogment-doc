@@ -1,4 +1,6 @@
 site_name: Cogment
+site_url: https://docs.cogment.ai
+repo_url: https://github.com/cogment/cogment-doc
 site_dir: public
 docs_dir: src
 theme:
