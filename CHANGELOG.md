@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## Unreleased
 
+### Added
+
+- Add section related to Controller in the api guide.
+
+### Changed
+
+- Update the tutorials to use `controller.watch_trials` and the new `Recv...` classes.
+
 ### Fixed
 
 - Fix typos and grammar errors in the core concept page.

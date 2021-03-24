@@ -69,12 +69,12 @@ Then, in the event loop, we look at the received observation before taking an ac
 observation = event.observation
 print(f"'{actor_session.name}' received an observation: '{observation}'")
 if event.type == cogment.EventType.ACTIVE:
-    if observation.me.won_last:
+    if observation.snapshot.me.won_last:
         # I won the last round, let's play the same thing
-        actor_session.do_action(PlayerAction(move=observation.me.last_move))
-    elif observation.them.won_last:
+        actor_session.do_action(PlayerAction(move=observation.snapshot.me.last_move))
+    elif observation.snapshot.them.won_last:
         # I lost the last round, let's play what would have won
-        actor_session.do_action(PlayerAction(move=DEFEATS[observation.them.last_move]))
+        actor_session.do_action(PlayerAction(move=DEFEATS[observation.snapshot.them.last_move]))
     else:
         # last round was a draw, let's play randomly
         actor_session.do_action(PlayerAction(move=random.choice(MOVES)))
