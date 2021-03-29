@@ -57,7 +57,7 @@ async def random_agent(actor_session):
                 action = PlayerAction()
                 actor_session.do_action(action)
         for reward in event.rewards:
-            print(f"'{actor_session.name}' received a reward for tick #{reward.tick_id}: {reward.value}/{reward.confidence}")
+            print(f"'{actor_session.name}' received a reward for tick #{reward.tick_id}: {reward.value}")
         for message in event.messages:
             print(f"'{actor_session.name}' received a message from '{message.sender_name}': - '{message.payload}'")
 ```
@@ -108,8 +108,8 @@ async def environment(environment_session):
         if event.actions:
             actions = event.actions
             print(f"environment received the actions")
-            for actor, action in zip(environment_session.get_active_actors(), actions):
-                print(f" actor '{actor.actor_name}' did action '{action}'")
+            for actor, recv_action in zip(environment_session.get_active_actors(), actions):
+                print(f" actor '{actor.actor_name}' did action '{recv_action.action}'")
             observation = Observation()
             if event.type == cogment.EventType.ACTIVE:
                 # The trial is active
@@ -167,7 +167,7 @@ We start by retrieving each player's action and computing who won the round. The
 
 ```python
 if event.actions:
-    [p1_action, p2_action] = event.actions
+    [p1_action, p2_action] = [recv_action.action for recv_action in event.actions]
     print(f"{p1.actor_name} played {MOVES_STR[p1_action.move]}")
     print(f"{p2.actor_name} played {MOVES_STR[p2_action.move]}")
 

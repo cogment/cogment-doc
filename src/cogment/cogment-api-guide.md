@@ -56,7 +56,7 @@ The cogment cli will also compile the imported [`.proto`](../concepts/glossary.m
 This function will be called once for each [trial][../concepts/glossary.md#trial)]. This function usually consists of three sections.
 
 - The environment's **initialization**, where its internal state can be initialized and processes started. It ends with the sending of the initial observations to the actors participating in the trial.
-- Its **event loop**, where the environment iterates through the events occurring during the trial and produces [observations](../concepts/glossary.md#observation) as well as sends [rewards](../concepts/glossary.md#reward) and [messages](../concepts/glossary.md#message). In this loop the environment can end the trial on its own or the end can be requested by a [trial controller](#trial-controller).
+- Its **event loop**, where the environment iterates through the events occurring during the trial and produces [observations](../concepts/glossary.md#observation) as well as receives [messages](../concepts/glossary.md#message). In this loop the environment can end the trial on its own or the end can be requested by a [controller](#controller).
 - Its **termination**, where cleanup occurs.
 
 In the common case where all actors within a trial share the same observation, a bare-minimum environment service would look like this:
@@ -82,7 +82,7 @@ async def environment(environment_session):
               # Alternatively the environment can decide to **end** the trial with the following
               # environment_session.end([("*", Observation())])
             else:
-              # The trial termination has been  requested by an external trial controller
+              # The trial termination has been requested by an external controller
               # Produce a final observation
               environment_session.end([("*", Observation())])
 
@@ -165,7 +165,7 @@ async def driver_actor(actor_session):
 
 ### Service actor / Client actor
 
-A Cogment app can use two types of actors, they are identical in terms of implementation but differ in how they interact with the app's [orchestrator](../concepts/glossary.md#orchestrator).
+A Cogment app can use two types of actors, they are identical in terms of implementation but differ in how they interact with the app's [Orchestrator](../concepts/glossary.md#orchestrator).
 
 **Service actors** are accessible in the same way the environment is, through a [`Context`](./cogment-api-reference/python.md#class-cogmentcontext) instance.
 
@@ -201,11 +201,34 @@ Please note, that a trial including one or more client actors will wait for all 
 
 Due to the different network requirements, client actors are a good fit when implementing a [frontend](../concepts/glossary.md#frontend) for human actors. In addition to the [python](./cogment-api-reference/python.md) SDK demonstrated above, client actors can be implemented in [javascript](./cogment-api-reference/javascript.md) using the corresponding SDK.
 
-## Trial Controller
+## Controller
 
-[Trials](../concepts/glossary.md#trial) are started by clients of the orchestrator using a trial controller.
+[Trials](../concepts/glossary.md#trial) are started by clients of the [Orchestrator](../concepts/glossary.md#orchestrator) using a Controller. Instances of a controller are built from the [`Context`](./cogment-api-reference/python.md#class-cogmentcontext) instance and connect to an Orchestrator endpoint.
 
-> 🚧 TODO Add usage details when the dust settles
+```python
+controller = context.get_controller(
+  endpoint=cogment.Endpoint("orchestrator:9000")
+)
+```
+
+The controller can then be used to create trials and request their termination.
+
+```python
+trial_id = await controller.start_trial(trial_config=TrialConfig())
+
+# ...
+
+await controller.terminate_trial(trial_id)
+```
+
+The controller can also be used to subscribe to events occuring in the trials run by the Orchestrator it connects to. For example, this can be used to wait for a trial's end:
+
+```python
+async for trial_info in controller.watch_trials(trial_state_filters=[cogment.TrialState.ENDED]):
+    # The trial having id {trial_info.trial_id} ended.
+```
+
+The full documentation for the controller can be found [here](./cogment-api-reference/python.md#class-controller).
 
 ## Rewards
 

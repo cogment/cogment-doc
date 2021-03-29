@@ -183,10 +183,12 @@ Data associated with an actor's action.
 ```protobuf
 message Action {
   bytes content = 1;
+  uint64 tick_id = 2;
 }
 ```
 
 - content: The serialized protobuf message representing an action from a specific actor.  The actual message type for the action space is defined in the `cogment.yaml` file for each actor class in section `actor_classes:action:space`.  Note that the specific actor represented is defined by the enclosing message.
+- tick_id: The tick ID of the observation on which the action is taken.
 
 ### `Message`
 
@@ -194,7 +196,7 @@ Data associated with a communication (message) destined for an actor or the envi
 
 ```protobuf
 message Message {
-  int32 tick_id = 1;
+  sint64 tick_id = 1;
   string sender_name = 2;
   string receiver_name = 3;
   google.protobuf.Any payload = 4;
@@ -232,7 +234,7 @@ This is an aggregate of possibly multiple `RewardSource` (but at least one).
 ```protobuf
 message Reward {
   string receiver_name = 1;
-  int32 tick_id = 2;
+  sint64 tick_id = 2;
   float value = 3;
   repeated RewardSource sources = 4;
 }
@@ -281,7 +283,7 @@ message ObservationSet {
 
 This API is defined in `orchestrator.proto`. It is implemented by the cogment orchestrator, and client applications are expected to connect to it using the gRPC client API.
 
-This API is used for general control and services related to trials, primarily to start trials.
+This API is used for general control and services related to trials.
 
 ### Service `TrialLifecycle`
 
@@ -290,6 +292,7 @@ service TrialLifecycle {
   rpc StartTrial(TrialStartRequest) returns (TrialStartReply) {}
   rpc TerminateTrial(TerminateTrialRequest) returns (TerminateTrialReply) {}
   rpc GetTrialInfo(TrialInfoRequest) returns (TrialInfoReply) {}
+  rpc WatchTrials(TrialListRequest) returns (stream TrialListEntry) {}
   rpc Version(VersionRequest) returns (VersionInfo) {}
 }
 ```
@@ -315,6 +318,12 @@ Get extra information about an existing trial.
 Metadata:
 
 - `trial-id`: (*optional*) UUID of the trial to terminate.  If not provided, the request is for informatrion about all running trials.
+
+#### `WatchTrials()`
+
+Stream state changes from trials.
+
+Metadata: None
 
 #### `Version()`
 
@@ -390,9 +399,9 @@ message TrialInfoReply {
 
 - trial: List of information about the trials.  Contains only the requested trial info if a trial ID was provided when the call was made (as metadata to the procedure).  Otherwise contains information about all active trials.
 
-### `TrialInfo`
+### `TrialState`
 
-Message containing information about a trial.
+Enum representing the state of a trial.
 
 ```protobuf
 enum TrialState {
@@ -403,17 +412,63 @@ enum TrialState {
   TERMINATING = 4;
   ENDED = 5;
 }
+```
 
+- UNKNOWN: Should not be used (requirements of protobuf enums to have a 0 default value).
+- INITIALIZING: The trial is in the process of starting.
+- PENDING: The trial is waiting for its final parameters, before running.
+- RUNNING: The trial is running.
+- TERMINATING: The trial is in the process of terminating (either a request to terminate has been received or the last observation has been received).
+- ENDED: The trial has ended.  Only a set number of ended trials will be kept (configured in the Orchestrator).
+
+### `TrialInfo`
+
+Message containing information about a trial.
+
+```protobuf
 message TrialInfo {
   string trial_id = 1;
   TrialState state = 2;
+  uint64 tick_id = 3;
+  fixed64 trial_duration = 4;
   ObservationSet latest_observation = 3;
+  repeated TrialActor actors_in_trial = 6;
 }
 ```
 
 - trial_id: The UUID of the trial.
-- state: The state of the trial.  `ENDED` trials will only appear in the list of trials for a short period after they are terminated (if they appear at all).
+- state: The state of the trial.
+- tick_id: The current tick ID of the trial.
+- trial_duration: The duration of the trial so far, in nanoseconds. This is meant as an indictor; resolution may not be a nanosecond, and precision is not garanteed.
 - latest_observation: The latest environment observation.  This will be provided only if requested in the `TrialInfoRequest`.
+- actors_in_trial: The list of active actors in the trial.
+
+### `TrialListRequest`
+
+Request message for the `WatchTrials` procedure.
+
+```protobuf
+message TrialListRequest {
+  repeated TrialState filter = 1;
+}
+```
+
+- filter: The list of states that are requested.  If a trial is not in a state found in this list, it will not be reported.  If the list is empty, all states will be reported.
+
+### `TrialListEntry`
+
+Stream reply message for the `WatchTrials` procedure.
+
+```protobuf
+message TrialListEntry {
+  string trial_id = 1;
+  TrialState state = 2;
+}
+
+```
+
+- trial_id: The UUID of the trial.
+- state: The state of the trial.
 
 ## Client Actor API
 
@@ -859,12 +914,14 @@ message EnvStartRequest {
   string impl_name = 1;
   EnvironmentConfig config = 2;
   repeated TrialActor actors_in_trial = 3;
+  uint64 tick_id = 4;
 }
 ```
 
 - impl_name: (optional) Name of the implementation that should run the environment for this trial. If not provided, an arbitrary implementation will be used.
 - config: The configuration to start the environment.
 - actors_in_trial: The list of all actors in the trial. This list has the same length and order as the list of actors provided in different places in the API, for the same trial.
+- tick_id: The expected tick ID of the observation set returned in `EnvStartReply`.
 
 ### `EnvStartReply`
 
@@ -885,6 +942,7 @@ Request message for the `OnAction` and `OnEnd` procedures.
 ```protobuf
 message ActionSet {
   repeated bytes actions = 1;
+  uint64 tick_id = 2;
 }
 
 message EnvActionRequest {
@@ -894,6 +952,7 @@ message EnvActionRequest {
 ```
 
 - actions: A list of actions, one for each actor of the trial.  This list has the same length and order as the list of actors provided in different places in the API (e.g. `actors_in_trial`), for the same trial. Each action is the serialization of the appropriate type for the actor (as defined in the `cogment.yaml` file).
+- tick_id: The tick ID of the observations on which the actions are taken.
 - action_set: The set of actions for all actors.
 - reply_with_snapshot: If true, then request that the observations for the actors (in the reply) be snapshots.  If false, the observations can be snapshots or deltas (at the discretion of the environment).  See [ObservationData][2].
 

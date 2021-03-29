@@ -1,6 +1,10 @@
 # Cogment documentation
 
-[![Browse the current version](https://img.shields.io/static/v1?label=cogment%20doc&message=curent%20version&color=blue&style=flat-square&logo=read-the-docs)](./src/index.md)
+> ⚠️ 🚧 This is part of an upcoming release of cogment and still unstable.
+>
+> Current stable version can be found at <https://gitlab.com/cogment/cogment>
+
+[![Browse the published version](https://img.shields.io/static/v1?label=cogment%20doc&message=published%20version&color=blue&style=flat-square&logo=read-the-docs)](https://docs.cogment.ai) [![Browse in the repository](https://img.shields.io/static/v1?label=cogment%20doc&message=repository&color=blue&style=flat-square&logo=read-the-docs)](./src/index.md) [![Apache 2 License](https://img.shields.io/badge/license-Apache%202-green?style=flat-square)](./LICENSE) [![Changelog](https://img.shields.io/badge/-Changelog%20-blueviolet?style=flat-square)](./CHANGELOG.md)
 
 ## Introduction
 
@@ -8,12 +12,12 @@ The Cogment framework is a high-efficiency, open source framework designed to en
 
 This is the documentation for the Cogment framework. For further Cogment information, check out the documentation at <https://docs.cogment.ai>
 
-## Architecture
+## Documentation architecture
 
 - `mkdocs.yml` is the main configuration file for the documentation.
 - `./src` contains the source for the documentation, mostly markdown file and images.
 
-## Build & develop
+## Building this documentation
 
 ### Prerequisites
 

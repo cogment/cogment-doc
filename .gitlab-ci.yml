@@ -1,13 +1,47 @@
 stages:
   - lint
   - build
-  - pages
+  - publish
+
+.base_gh_ssh_agent:
+  before_script:
+    ## _Inspired by https://docs.gitlab.com/ee/ci/ssh_keys/_
+    ##
+    ## Install ssh-agent if not already installed.
+    - "command -v ssh-agent >/dev/null || ( apt-get update -y && apt-get install openssh-client -y )"
+    ## Run ssh-agent
+    - eval $(ssh-agent -s)
+    ## Add the private key file to ssh-agent
+    - echo "$GH_REPO_SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
+    ## Create the SSH directory and give it the right permissions
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    ## Using the set $SSH_KNOWN_HOSTS to be able to verify remote servers public keys
+    - echo "$SSH_KNOWN_HOSTS" >> ~/.ssh/known_hosts
+    - chmod 644 ~/.ssh/known_hosts
 
 apache_licenses_check:
   stage: lint
   image: registry.gitlab.com/ai-r/apache-license-checker:latest
   script:
     - apache-license-checker
+
+# Bash scripts formatting
+shellcheck:
+  image: koalaman/shellcheck-alpine:v0.7.1
+  stage: lint
+  before_script:
+    - shellcheck --version
+  script:
+    - shellcheck ./scripts/*.sh
+
+shfmt:
+  image: mvdan/shfmt:v3.1.0-alpine
+  stage: lint
+  before_script:
+    - shfmt -version
+  script:
+    - shfmt -i 2 -ci -d ./scripts
 
 build:
   stage: build
@@ -22,8 +56,8 @@ build:
     paths:
       - public
 
-pages:
-  stage: pages
+publish-internal-version:
+  stage: publish
   script:
     - echo "Using build artifacts from previous stage"
   artifacts:
@@ -31,3 +65,14 @@ pages:
       - public
   only:
     - develop
+
+publish-public-version:
+  extends: .base_gh_ssh_agent
+  stage: publish
+  script:
+    - ./scripts/publish.sh
+  artifacts:
+    paths:
+      - public
+  only:
+    - main

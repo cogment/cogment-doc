@@ -1,12 +1,11 @@
-[<img src="https://discord.com/assets/e4923594e694a21542a489471ecffa50.svg" alt="Discord Logo" style="width:100px;"/> Find us on Cogment's Discord server.](https://discord.gg/55h7fnqdSJ)
+[![Cogment Homepage](https://img.shields.io/badge/-Homepage-ffbb00?style=flat)](https://cogment.ai/)
+[![Cogment sources @ Github](https://img.shields.io/badge/Github-Cogment%20Sources-lightgrey?style=flat&logo=github)](https://github.com/cogment) [![Join us on the official Cogment discord](https://img.shields.io/discord/739822842450935963?style=flat&color=6f84d4&label=Cogment%27s%20Discord&logo=discord&logoColor=white)](https://discord.gg/55h7fnqdSJ)
 
 # Cogment 1.0 Framework Overview
 
 ## What is Cogment?
 
 The Cogment 1.0 framework is a high-efficiency, open source framework designed to enable the training of models in environments where humans and agents interact with the environment and each other continuously. It’s capable of distributed, multi-agent, multi-model training.
-
-| Homepage  | [cogment.ai](https://cogment.ai/)        |
 
 ### When to use Cogment?
 
@@ -30,13 +29,13 @@ Cogment can be used in many other contexts it wasn't specifically designed for. 
 Cogment main features are:
 
 - **Tech Stack Agnosticity.** With the use of protobufs and gRPC, Cogment allows the development of tech-heterogeneous components working together regardless of the tech stacks used to develop them. It is fully compatible with current tools, langages and commonly used techniques.
-&nbsp;
+  &nbsp;
 
 - **Multi-Method.** Cogment doesn't enforce any particular approach to agents implementation. It doesn't favor learning over non-learning agents, nor does it learning techniques over others.
-&nbsp;
+  &nbsp;
 
 - **Multi-Actor.** Cogment was designed to allow multiple agents and multiple human users (all "actors") to exist, train, and work together within the same environment, interacting with one another and their environment.
-&nbsp;
+  &nbsp;
 
 - **Multi-Reward** Multiple Reinforcement Learning (RL) agents can use any number of reward sources in a Cogment project, whether they are from human users, an environment (real or simulated), or other agents. The same is true for the kind or mechanic of those rewards.
 - **Humans in the loop.** Interaction with human users is a core feature of the Cogment framework, at any step of a project from the bootstrapping to the deployment and productionalization. There is no enforced limit to the complexity of said interaction.
@@ -50,34 +49,14 @@ Cogment main features are:
 
 The Cogment framework consists of multiple components:
 
-- Orchestrator:
-
-- SDKs: Python and Javascript for the time being
-
-- APIs:
-
-- A Cogment project features:
-	* Environment:
-	* Agent(s):
-	* (optional) Frontend client: generally for human use
-
-### Architecture
-
-This diagram illustrates the high-level architecture of a Cogment project:
-
+- The **Orchestrator**, the _heart_ of a Cogment app, is in charge of running the components.
+- The **SDKs** are used to build your Cogment app services and clients. The SDKs are currently available in Python and Javascript only.
+- A **command like tool** to facilitate the creation of Cogment apps.
 
 ## First steps
 
-The easiest way to get started is to use the `cogment` command line
-tool. Please see our
-[installation instructions](./introduction/installation.md) for details.
+The easiest way to get started is to use the `cogment` command line tool. Please see our [installation instructions](./introduction/installation.md) for details.
 
-Before diving right in, we recommend taking the time to read the
-[Core concepts](./concepts/core-concepts.md) section, as well as our
-[glossary](./concepts/glossary.md), which details the terminology we use
-for several critical concepts of the Cogment Framework. You can then
-proceed to read on how to [install](./introduction/installation.md) the
-framework.
+Before diving right in, we recommend taking the time to read the [Core concepts](./concepts/core-concepts.md) section, as well as our [glossary](./concepts/glossary.md), which details the terminology we use for several critical concepts of the Cogment Framework. You can then proceed to read on how to [install](./introduction/installation.md) the framework.
 
-[//]: # (Last but not least, a [tutorial](./cogment/tutorial/)
-is available.)
+Last but not least, a [tutorial](./cogment/tutorial/introduction.md)

@@ -1,4 +1,6 @@
+# outputs
 /public
+/publish
 
 # Backup of "sed-ed" files
 *.bak

@@ -1,4 +1,6 @@
 site_name: Cogment
+site_url: https://docs.cogment.ai
+repo_url: https://github.com/cogment/cogment-doc
 site_dir: public
 docs_dir: src
 theme:
@@ -10,7 +12,6 @@ nav:
       - "Installation & Setup": "introduction/installation.md"
   - "Support":
       - "Community channels": "support/community-channels.md"
-      # - "Troubleshooting": "support/troubleshooting.md" # out-of-scope for ɑ
   - "Concepts":
       - "Core Concepts": "concepts/core-concepts.md"
       - "Glossary": "concepts/glossary.md"
@@ -26,9 +27,7 @@ nav:
       - "Cogment API Reference":
           - "cogment.yaml": "cogment/cogment-api-reference/cogment-yaml.md"
           - "python": "cogment/cogment-api-reference/python.md"
-          # - "javascript": "cogment/cogment-api-reference/javascript.md" # out-of-scope for ɑ
-      - "Agent Toolbox Guide":
-          - "Introduction": "cogment/cogment-agent-toolbox-guide/agent-toolbox-introduction.md"
+          - "javascript": "cogment/cogment-api-reference/javascript.md"
       - "Cogment Low Level API Guide":
           - "Overview": "cogment/cogment-low-level-api-guide/overview.md"
           - "gRPC API Reference": "cogment/cogment-low-level-api-guide/grpc.md"
