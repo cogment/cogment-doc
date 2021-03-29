@@ -1,6 +1,6 @@
 # Step 6: Add a web client for the human player
 
-> This part of the tutorial follows [step 5](./5-human-player.md), make sure we've gone through it before starting this one. Alternatively the completed step 5 can be retrieved from the [tutorial's repository](https://github.com/cogment/cogment-tutorial-rps).
+> This part of the tutorial follows [step 5](./5-human-player.md), make sure you've gone through it before starting this one. Alternatively the completed step 5 can be retrieved from the [tutorial's repository](https://github.com/cogment/cogment-tutorial-rps).
 
 In this step of the tutorial, we will go over a web client implementation, to enable Humans to play RPS, while being able to take advantage of various web technologies.
 
@@ -46,9 +46,9 @@ $ npm i @material-ui/icons
 
 In addition to the docker-compose services we already have, we'll need two more for this web client. One to run it, and another for a proxy service called `grpcwebproxy`.
 
-> NOTE: `grpcwebproxy` [link](https://github.com/improbable-eng/grpc-web/tree/master/go/grpcwebproxy) is a helpful program that allows grpc endpoints to be utilized by web applications. Web applications cannot natively use the grpc protocol all the Cogment elements use to communicate with one another. Using this proxy to translate the web socket connections it accepts into grpc requests solves this issue.
+> NOTE: `grpcwebproxy` [link](https://github.com/improbable-eng/grpc-web/tree/master/go/grpcwebproxy) is a helpful program that allows grpc endpoints to be utilized by web applications. Web applications cannot natively use the grpc protocol that all Cogment elements use to communicate with one another. Using this proxy to translate the web socket connections it accepts into grpc requests solves this issue.
 
-For these services, add the following to the end of our docker-compose.yaml:
+For these services, let's add the following to the end of our docker-compose.yaml:
 
 ```yaml
 web-client:
@@ -135,7 +135,7 @@ The easiest way to add Cogment to any web client is to start with a React app, t
 
     while inside of the web-client folder
 
-2.  Copy in the hooks folder from the [tutorial's repository](https://github.com/cogment/cogment-tutorial-rps), found at [6-web-client/web-client/src/hooks](./6-web-client/web-client/src/hooks), into our src directory.
+2.  Copy in the hooks folder from the [tutorial's repository](https://github.com/cogment/cogment-tutorial-rps), found at [6-web-client/web-client/src/hooks](./6-web-client/web-client/src/hooks), into your src directory.
 
 3.  Navigate one folder up to your project directory (where you have your cogment.yaml) then run the following command to generate Javascript files from your defined protobufs:
     ```console
@@ -223,7 +223,7 @@ import {
 
 //And here's the important part: we're importing the two things that will allow us to use Cogment. 
 
-//First, the 'useActions' hook which will give us the observations for us, as the human agent, as well as allow us to send actions.
+//First, the 'useActions' hook which will give us our observations as a human agent, as well as allow us to send actions.
 import { useActions } from "./hooks/useActions";
 
 //Second, our 'cogSettings'. This is a file that was generated when we ran
@@ -231,11 +231,11 @@ import { useActions } from "./hooks/useActions";
 //This file tells our web client relevant information about our trials, environments, and actor classes.
 import { cogSettings } from "./CogSettings";
 
-//These are message which were defined in data.proto. These imports will need to change whenever their corresponding messages in data.proto are changed and `cogment generate` is run.
-import { Action, Move } from "./data_pb";
+//These are messages which were defined in data.proto. These imports will need to change whenever their corresponding messages in data.proto are changed and `cogment generate` is run.
+import { PlayerAction } from "./data_pb";
 ```
 
-Then we add a function that will convert the play, encoded as an enum (the same enum that we defined in our `data.proto`) to a string we can use in our application:
+Then we add a function that will convert the play, encoded as the same "move" enum that we defined in our data.proto, to a string we can use in our application:
 
 ```jsx
 function getMoveText(move) {
@@ -254,7 +254,7 @@ function getMoveText(move) {
 
 Finally, the React component.
 
-At the start of this component is the most important part of our application: the useActionhook.
+At the start of this component is the most important part of our application: the useAction hook.
 
 This hook returns an array with 3 elements:
 
@@ -282,9 +282,8 @@ export const App = () => {
 
   //Function to construct the Action which the player will send when they click either rock, paper, or scissors
   const choose = (move) => {
-    const moveEnum = Move[move];
-    const action = new Action();
-    action.setMove(moveEnum);
+    const action = new PlayerAction();
+    action.setMove(move);
     sendAction(action);
   };
 
@@ -293,50 +292,60 @@ export const App = () => {
     if (startTrial) startTrial();
   }, [startTrial]);
 
-  //Get any observation from the current event. Events have observations, messages, and rewards, and all three can be unpacked from the event object
-  const { observation } = event;
+  //Get any observation from the current event, events have observations, messages, and rewards, and all three can be unpacked from the event object
+  //We will also unpack a helpful variable called 'last', this will allow us to know when the trial has ended
+  const { observation, last } = event;
 
-  //Parse game state out of the observation
-  ////Generally in Cogment applications, all information that's not strictly necessary must be inferred by all agents. In this case, we must infer whether the game has just started, is ongoing, or if a round has ended"
-  let gameState;
-  if (!observation || observation.roundIndex === 0) gameState = "start";
-  if (observation && observation.roundIndex !== 0) gameState = "playing";
-  if (
-    observation &&
-    observation.roundIndex === 0 &&
-    observation.gameIndex !== 0
-  )
-    gameState = "end";
+  const [gameState, setGameState] = useState({
+      gameStage: "start",
+      roundIndex: 0,
+      lastMoveComputer: 0,
+      lastMoveHuman: 0,
+  })
+  const [firstObservation, setFirstObservation] = useState(true);
 
-  //Get both scores
-  const humanScore = observation ? observation.me.currentGameScore : 0;
-  const computerScore = observation ? observation.them.currentGameScore : 0;
+  useEffect(() => {
+      //Parse game state out of the observation
+      //Some events don't contain an observation, so we need to store the observation contents in a state
+      if (!observation) return;
 
-  //The lawet of the page
+      //The first observation is not useful, as it just contains the default game state, before players have made moves
+      if(firstObservation){
+          setFirstObservation(false);
+          return;
+      }
+
+
+      //Get all relevant information from the observation
+      const roundIndex = gameState.roundIndex + 1;
+      const gameStage = "playing";
+      const lastMoveComputer = observation.them.lastMove
+      const lastMoveHuman = observation.me.lastMove
+      const lastWonComputer = observation.them.wonLast;
+      const lastWonHuman = observation.me.wonLast;
+
+      setGameState({
+          gameStage,
+          roundIndex,
+          lastMoveComputer,
+          lastMoveHuman,
+          lastWonComputer,
+          lastWonHuman
+      })
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [observation])
+
+  //The layout of the page
   return (
     <Box>
       {/*
-        Tell the player everything we know about the trial state, such as scores, plays, etc...
+        Tell the player everything we know about the trial state, such as, plays, who won, etc...
       */}
-      <Typography>Game state: {gameState}</Typography>
-      <Typography>Human score: {humanScore}</Typography>
-      <Typography>Computer score: {computerScore}</Typography>
-      <Typography>
-        Human's move:{" "}
-        {gameState !== "start" && getMoveText(observation.me.lastRoundMove)}
-      </Typography>
-      <Typography>
-        Computer's move:{" "}
-        {gameState !== "start" && getMoveText(observation.them.lastRoundMove)}
-      </Typography>
-      <Typography>
-        Did Human win last round?{" "}
-        {observation && observation.me.lastRoundWin ? "Yes" : "No"}
-      </Typography>
-      <Typography>
-        Did Computer win last round?{" "}
-        {observation && observation.them.lastRoundWin ? "Yes" : "No"}
-      </Typography>
+      <Typography>Game stage: {gameState.gameStage}</Typography>
+      <Typography>Human's move: {gameState.gameStage !== "start" && getMoveText(gameState.lastMoveHuman)}</Typography>
+      <Typography>Computer's move: {gameState.gameStage !== "start" && getMoveText(gameState.lastMoveComputer)}</Typography>
+      <Typography>Did Human win last round? {observation && gameState.lastWonHuman ? "Yes" : "No"}</Typography>
+      <Typography>Did Computer win last round? {observation && gameState.lastWonComputer ? "Yes" : "No"}</Typography>
       <Button onClick={() => choose(0)}>Rock</Button>
       <Button onClick={() => choose(1)}>Paper</Button>
       <Button onClick={() => choose(2)}>Scissors</Button>
@@ -372,7 +381,7 @@ export const useActions = (cogSettings, actorName, actorClass) => {
     //First we create our service, which will be our primary point of contact to the orchestrator
     const service = cogment.createService({
       cogSettings,
-      //grpcURL is an optional argument, and it in fact defaults to the following value, here we're just showing that it can be set explicitly
+      //grpcURL is an optional argument that in fact defaults to the following value. Here we're just showing that it can be set explicitly
       grpcURL:
         window.location.protocol + "//" + window.location.hostname + ":8080",
     });
@@ -380,7 +389,7 @@ export const useActions = (cogSettings, actorName, actorClass) => {
     //Set up the actor object. An actorName and an actorClass is enough to define a unique actor to be added to a trial
     const actor = { name: actorName, actorClass: actorClass };
 
-    //Use the service to register an actor. registerActor takes two arguments, the second of which is a callback function which is given the actorSession of the registered actor as it's only argument. With the provided actorSession, we can send actions, and receive events.
+    //Use the service to register an actor. registerActor takes two arguments, the second of which is a callback function which is given the actorSession of the registered actor as its only argument. With the provided actorSession, we can send actions, and receive events.
     service.registerActor(actor, async (actorSession) => {
       //Start the session
       actorSession.start();
@@ -407,10 +416,14 @@ export const useActions = (cogSettings, actorName, actorClass) => {
         //TODO: this will eventually be part of the API
 
         //Eventually observations will be regular Javascript objects (same with messages, and rewards). But for now we must convert it to an object.
-        let observationOBJ = observation && observation.toObject();
+        let observationOBJ = event.observation && event.observation.toObject();
+        event.observation = observationOBJ;
+
+        //If the type of the event is 3 (Ending), store that in event.last so we can use it later
+        event.last = event.type === 3;
 
         //Set the event state to the received event, causing a hook update
-        setEvent({ observation: observationOBJ, message, reward });
+        setEvent(event)
       }
     });
 
