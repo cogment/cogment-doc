@@ -214,7 +214,7 @@ controller = context.get_controller(
 The controller can then be used to create trials and request their termination.
 
 ```python
-trial_id = await controller.start_trial("player_1", trial_config=TrialConfig())
+trial_id = await controller.start_trial(trial_config=TrialConfig())
 
 # ...
 
