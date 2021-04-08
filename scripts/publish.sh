@@ -70,6 +70,10 @@ out_dir_full_path="${root_dir}/${OUT_DIR}"
 cp -r "${out_dir_full_path:?}"/* "${pub_dir_full_path}"
 printf "* \"%s\" synced to \"%s\"\n" "${out_dir_full_path}" "${pub_dir_full_path}"
 
+echo "docs.cogment.ai" >"${pub_dir_full_path}/CNAME"
+echo ".nojekyll" >"${pub_dir_full_path}/.nojekyll"
+printf "* required files 'CNAME' and '.nojekyll' updated in \"%s\"\n" "${pub_dir_full_path}"
+
 git -C "${pub_dir_full_path}" config user.name "${PUBLISH_AUTHOR_NAME}"
 git -C "${pub_dir_full_path}" config user.email "${PUBLISH_AUTHOR_EMAIL}"
 git -C "${pub_dir_full_path}" add -A
