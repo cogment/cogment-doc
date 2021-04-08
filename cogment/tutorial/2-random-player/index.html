@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   
-  
+  <link rel="canonical" href="https://docs.cogment.ai/cogment/tutorial/2-random-player/">
   <link rel="shortcut icon" href="../../../img/favicon.ico">
   <title>Step 2: Implement actor and environment - Cogment</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
@@ -20,7 +20,7 @@
     // Current page data
     var mkdocs_page_name = "Step 2: Implement actor and environment";
     var mkdocs_page_input_path = "cogment/tutorial/2-random-player.md";
-    var mkdocs_page_url = null;
+    var mkdocs_page_url = "/cogment/tutorial/2-random-player/";
   </script>
   
   <script src="../../../js/jquery-2.1.1.min.js" defer></script>
@@ -150,6 +150,9 @@
     <li>Step 2: Implement actor and environment</li>
     <li class="wy-breadcrumbs-aside">
       
+        <a href="https://github.com/cogment/cogment-doc/edit/master/docs/cogment/tutorial/2-random-player.md"
+          class="icon icon-github"> Edit on GitHub</a>
+      
     </li>
   </ul>
   
@@ -210,7 +213,7 @@
                 action = PlayerAction()
                 actor_session.do_action(action)
         for reward in event.rewards:
-            print(f&quot;'{actor_session.name}' received a reward for tick #{reward.tick_id}: {reward.value}/{reward.confidence}&quot;)
+            print(f&quot;'{actor_session.name}' received a reward for tick #{reward.tick_id}: {reward.value}&quot;)
         for message in event.messages:
             print(f&quot;'{actor_session.name}' received a message from '{message.sender_name}': - '{message.payload}'&quot;)
 </code></pre>
@@ -250,8 +253,8 @@ MOVES = [ROCK, PAPER, SCISSORS]
         if event.actions:
             actions = event.actions
             print(f&quot;environment received the actions&quot;)
-            for actor, action in zip(environment_session.get_active_actors(), actions):
-                print(f&quot; actor '{actor.actor_name}' did action '{action}'&quot;)
+            for actor, recv_action in zip(environment_session.get_active_actors(), actions):
+                print(f&quot; actor '{actor.actor_name}' did action '{recv_action.action}'&quot;)
             observation = Observation()
             if event.type == cogment.EventType.ACTIVE:
                 # The trial is active
@@ -300,7 +303,7 @@ environment_session.start([
 <p>In the <strong>event loop</strong> we implement how the environment produces observations based on the actor's actions.</p>
 <p>We start by retrieving each player's action and computing who won the round. Then, we update the internal <code>state</code>. Finally, we produce up-to-date observations for the players.</p>
 <pre><code class="python">if event.actions:
-    [p1_action, p2_action] = event.actions
+    [p1_action, p2_action] = [recv_action.action for recv_action in event.actions]
     print(f&quot;{p1.actor_name} played {MOVES_STR[p1_action.move]}&quot;)
     print(f&quot;{p2.actor_name} played {MOVES_STR[p2_action.move]}&quot;)
 
@@ -382,6 +385,8 @@ print(f&quot;\t * {state['rounds_count'] - state['p1']['won_rounds_count'] - sta
 
   <div class="rst-versions" role="note" aria-label="versions">
     <span class="rst-current-version" data-toggle="rst-current-version">
+      
+          <a href="https://github.com/cogment/cogment-doc/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
       
       
         <span><a href="../1-bootstrap-and-data-structures/" style="color: #fcfcfc;">&laquo; Previous</a></span>

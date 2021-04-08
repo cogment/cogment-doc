@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   
-  
+  <link rel="canonical" href="https://docs.cogment.ai/cogment/cogment-low-level-api-guide/grpc/">
   <link rel="shortcut icon" href="../../../img/favicon.ico">
   <title>gRPC API Reference - Cogment</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
@@ -20,7 +20,7 @@
     // Current page data
     var mkdocs_page_name = "gRPC API Reference";
     var mkdocs_page_input_path = "cogment/cogment-low-level-api-guide/grpc.md";
-    var mkdocs_page_url = null;
+    var mkdocs_page_url = "/cogment/cogment-low-level-api-guide/grpc/";
   </script>
   
   <script src="../../../js/jquery-2.1.1.min.js" defer></script>
@@ -298,6 +298,9 @@
     <li>gRPC API Reference</li>
     <li class="wy-breadcrumbs-aside">
       
+        <a href="https://github.com/cogment/cogment-doc/edit/master/docs/cogment/cogment-low-level-api-guide/grpc.md"
+          class="icon icon-github"> Edit on GitHub</a>
+      
     </li>
   </ul>
   
@@ -458,16 +461,18 @@ message TrialConfig {
 <p>Data associated with an actor's action.</p>
 <pre><code class="protobuf">message Action {
   bytes content = 1;
+  uint64 tick_id = 2;
 }
 </code></pre>
 
 <ul>
 <li>content: The serialized protobuf message representing an action from a specific actor.  The actual message type for the action space is defined in the <code>cogment.yaml</code> file for each actor class in section <code>actor_classes:action:space</code>.  Note that the specific actor represented is defined by the enclosing message.</li>
+<li>tick_id: The tick ID of the observation on which the action is taken.</li>
 </ul>
 <h3 id="message"><code>Message</code></h3>
 <p>Data associated with a communication (message) destined for an actor or the environment.</p>
 <pre><code class="protobuf">message Message {
-  int32 tick_id = 1;
+  sint64 tick_id = 1;
   string sender_name = 2;
   string receiver_name = 3;
   google.protobuf.Any payload = 4;
@@ -501,7 +506,7 @@ message TrialConfig {
 This is an aggregate of possibly multiple <code>RewardSource</code> (but at least one).</p>
 <pre><code class="protobuf">message Reward {
   string receiver_name = 1;
-  int32 tick_id = 2;
+  sint64 tick_id = 2;
   float value = 3;
   repeated RewardSource sources = 4;
 }
@@ -656,14 +661,20 @@ This is an aggregate of possibly multiple <code>RewardSource</code> (but at leas
 <pre><code class="protobuf">message TrialInfo {
   string trial_id = 1;
   TrialState state = 2;
+  uint64 tick_id = 3;
+  fixed64 trial_duration = 4;
   ObservationSet latest_observation = 3;
+  repeated TrialActor actors_in_trial = 6;
 }
 </code></pre>
 
 <ul>
 <li>trial_id: The UUID of the trial.</li>
 <li>state: The state of the trial.</li>
+<li>tick_id: The current tick ID of the trial.</li>
+<li>trial_duration: The duration of the trial so far, in nanoseconds. This is meant as an indictor; resolution may not be a nanosecond, and precision is not garanteed.</li>
 <li>latest_observation: The latest environment observation.  This will be provided only if requested in the <code>TrialInfoRequest</code>.</li>
+<li>actors_in_trial: The list of active actors in the trial.</li>
 </ul>
 <h3 id="triallistrequest"><code>TrialListRequest</code></h3>
 <p>Request message for the <code>WatchTrials</code> procedure.</p>
@@ -1028,6 +1039,7 @@ If no reply is sent within a pre-determined time, the environment is considered 
   string impl_name = 1;
   EnvironmentConfig config = 2;
   repeated TrialActor actors_in_trial = 3;
+  uint64 tick_id = 4;
 }
 </code></pre>
 
@@ -1035,6 +1047,7 @@ If no reply is sent within a pre-determined time, the environment is considered 
 <li>impl_name: (optional) Name of the implementation that should run the environment for this trial. If not provided, an arbitrary implementation will be used.</li>
 <li>config: The configuration to start the environment.</li>
 <li>actors_in_trial: The list of all actors in the trial. This list has the same length and order as the list of actors provided in different places in the API, for the same trial.</li>
+<li>tick_id: The expected tick ID of the observation set returned in <code>EnvStartReply</code>.</li>
 </ul>
 <h3 id="envstartreply"><code>EnvStartReply</code></h3>
 <p>Reply message for the <code>OnStart</code> procedure.</p>
@@ -1050,6 +1063,7 @@ If no reply is sent within a pre-determined time, the environment is considered 
 <p>Request message for the <code>OnAction</code> and <code>OnEnd</code> procedures.</p>
 <pre><code class="protobuf">message ActionSet {
   repeated bytes actions = 1;
+  uint64 tick_id = 2;
 }
 
 message EnvActionRequest {
@@ -1060,6 +1074,7 @@ message EnvActionRequest {
 
 <ul>
 <li>actions: A list of actions, one for each actor of the trial.  This list has the same length and order as the list of actors provided in different places in the API (e.g. <code>actors_in_trial</code>), for the same trial. Each action is the serialization of the appropriate type for the actor (as defined in the <code>cogment.yaml</code> file).</li>
+<li>tick_id: The tick ID of the observations on which the actions are taken.</li>
 <li>action_set: The set of actions for all actors.</li>
 <li>reply_with_snapshot: If true, then request that the observations for the actors (in the reply) be snapshots.  If false, the observations can be snapshots or deltas (at the discretion of the environment).  See <a href="#ObservationData">ObservationData</a>.</li>
 </ul>
@@ -1214,6 +1229,8 @@ message LogExporterSampleRequest {
 
   <div class="rst-versions" role="note" aria-label="versions">
     <span class="rst-current-version" data-toggle="rst-current-version">
+      
+          <a href="https://github.com/cogment/cogment-doc/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
       
       
         <span><a href="../overview/" style="color: #fcfcfc;">&laquo; Previous</a></span>

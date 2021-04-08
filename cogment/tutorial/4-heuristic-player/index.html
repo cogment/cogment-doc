@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   
-  
+  <link rel="canonical" href="https://docs.cogment.ai/cogment/tutorial/4-heuristic-player/">
   <link rel="shortcut icon" href="../../../img/favicon.ico">
   <title>Step 4: Create a heuristic player - Cogment</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
@@ -20,7 +20,7 @@
     // Current page data
     var mkdocs_page_name = "Step 4: Create a heuristic player";
     var mkdocs_page_input_path = "cogment/tutorial/4-heuristic-player.md";
-    var mkdocs_page_url = null;
+    var mkdocs_page_url = "/cogment/tutorial/4-heuristic-player/";
   </script>
   
   <script src="../../../js/jquery-2.1.1.min.js" defer></script>
@@ -152,6 +152,9 @@
     <li>Step 4: Create a heuristic player</li>
     <li class="wy-breadcrumbs-aside">
       
+        <a href="https://github.com/cogment/cogment-doc/edit/master/docs/cogment/tutorial/4-heuristic-player.md"
+          class="icon icon-github"> Edit on GitHub</a>
+      
     </li>
   </ul>
   
@@ -162,7 +165,7 @@
               
                 <h1 id="step-4-add-a-second-actor-implementation-based-on-a-heuristic">Step 4: Add a second actor implementation based on a heuristic</h1>
 <blockquote>
-<p>This part of the tutorial follows <a href="../3-rewards/">step 3</a>, make sure you've gone through it before starting this one. Alternatively the completed step 2 can be retrieved from the <a href="https://github.com/cogment/cogment-tutorial-rps">tutorial's repository</a>.</p>
+<p>This part of the tutorial follows <a href="../3-rewards/">step 3</a>, make sure you've gone through it before starting this one. Alternatively the completed step 3 can be retrieved from the <a href="https://github.com/cogment/cogment-tutorial-rps">tutorial's repository</a>.</p>
 </blockquote>
 <p>In this step of the tutorial, we will go over another actor implementation and learn about using the received observations before doing an action.</p>
 <h2 id="creating-a-second-actor-implementation">Creating a second actor implementation</h2>
@@ -213,12 +216,12 @@
 <pre><code class="python">observation = event.observation
 print(f&quot;'{actor_session.name}' received an observation: '{observation}'&quot;)
 if event.type == cogment.EventType.ACTIVE:
-    if observation.me.won_last:
+    if observation.snapshot.me.won_last:
         # I won the last round, let's play the same thing
-        actor_session.do_action(PlayerAction(move=observation.me.last_move))
-    elif observation.them.won_last:
+        actor_session.do_action(PlayerAction(move=observation.snapshot.me.last_move))
+    elif observation.snapshot.them.won_last:
         # I lost the last round, let's play what would have won
-        actor_session.do_action(PlayerAction(move=DEFEATS[observation.them.last_move]))
+        actor_session.do_action(PlayerAction(move=DEFEATS[observation.snapshot.them.last_move]))
     else:
         # last round was a draw, let's play randomly
         actor_session.do_action(PlayerAction(move=random.choice(MOVES)))
@@ -262,6 +265,8 @@ if event.type == cogment.EventType.ACTIVE:
 
   <div class="rst-versions" role="note" aria-label="versions">
     <span class="rst-current-version" data-toggle="rst-current-version">
+      
+          <a href="https://github.com/cogment/cogment-doc/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
       
       
         <span><a href="../3-rewards/" style="color: #fcfcfc;">&laquo; Previous</a></span>

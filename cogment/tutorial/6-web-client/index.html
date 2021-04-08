@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="canonical" href="https://docs.cogment.ai/cogment/tutorial/6-web-client/">
+  <link rel="shortcut icon" href="../../../img/favicon.ico">
+  <title>Step 6: Add a web client for the human player - Cogment</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
+
+  <link rel="stylesheet" href="../../../css/theme.css" />
+  <link rel="stylesheet" href="../../../css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Step 6: Add a web client for the human player";
+    var mkdocs_page_input_path = "cogment/tutorial/6-web-client.md";
+    var mkdocs_page_url = "/cogment/tutorial/6-web-client/";
+  </script>
+  
+  <script src="../../../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../../../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+        <a href="../../.." class="icon icon-home"> Cogment</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+                <p class="caption"><span class="caption-text">Introduction</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../..">Overview</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../../introduction/installation/">Installation & Setup</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Support</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../../support/community-channels/">Community channels</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Concepts</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../../concepts/core-concepts/">Core Concepts</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../../concepts/glossary/">Glossary</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Cogment</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="#">Tutorial</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../introduction/">Introduction</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../1-bootstrap-and-data-structures/">Step 1: Bootstrap a Cogment app</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../2-random-player/">Step 2: Implement actor and environment</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../3-rewards/">Step 3: Introduce rewards</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../4-heuristic-player/">Step 4: Create a heuristic player</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../5-human-player/">Step 5: Add a human player in the loop</a>
+                </li>
+    </ul>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../cogment-api-guide/">Cogment API Guide</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="#">Cogment API Reference</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../../cogment-api-reference/cogment-yaml/">cogment.yaml</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../cogment-api-reference/python/">python</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../cogment-api-reference/javascript/">javascript</a>
+                </li>
+    </ul>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="#">Cogment Low Level API Guide</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../../cogment-low-level-api-guide/overview/">Overview</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../cogment-low-level-api-guide/grpc/">gRPC API Reference</a>
+                </li>
+    </ul>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Deployment Guide</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../../deployment-guide/local-deployement/">Local Deployment</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../../license/">License</a>
+                    </li>
+                </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../..">Cogment</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>Step 6: Add a web client for the human player</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        <a href="https://github.com/cogment/cogment-doc/edit/master/docs/cogment/tutorial/6-web-client.md"
+          class="icon icon-github"> Edit on GitHub</a>
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="step-6-add-a-web-client-for-the-human-player">Step 6: Add a web client for the human player</h1>
+<blockquote>
+<p>This part of the tutorial follows <a href="../5-human-player/">step 5</a>, make sure you've gone through it before starting this one. Alternatively the completed step 5 can be retrieved from the <a href="https://github.com/cogment/cogment-tutorial-rps">tutorial's repository</a>.</p>
+</blockquote>
+<p>In this step of the tutorial, we will go over a web client implementation, to enable Humans to play RPS, while being able to take advantage of various web technologies.</p>
+<h2 id="prerequisites">Prerequisites</h2>
+<p>To develop a web client, we will need a working installation of Node.js. You can download and install this from:</p>
+<p>https://nodejs.org/en/download/</p>
+<h2 id="the-web-client">The web client</h2>
+<p>In the previous steps, we triggered the trials by running <code>cogment run client</code>. This launched a trial using code in <code>client/main.py</code>. In this step we will trigger a trial using a React app.</p>
+<p>Before we start with the Cogment side of things, we'll need to get a few prerequisite files setup.</p>
+<h2 id="creating-a-react-app">Creating a React app</h2>
+<p>First, we will initialize a React app. This can be done very simply by running:</p>
+<pre><code class="console">$ npx create-React-app web-client
+</code></pre>
+
+<p>Once this is done, we will be able to open a React app in our browser by running the following commands:</p>
+<pre><code class="console">$ cd web-client
+$ npm start
+</code></pre>
+
+<h2 id="adding-material-ui">Adding Material UI</h2>
+<p>We will be using Material UI for this web client. This will provide us with a nice and clean way to add styles to our application, as well as some components which we will use to reduce code size.</p>
+<p>Install Material UI by running the following commands from inside of the web-client folder:</p>
+<pre><code class="console">$ npm i @mateiral-ui/core
+$ npm i @material-ui/icons
+</code></pre>
+
+<h2 id="setting-up-docker">Setting up Docker</h2>
+<p>In addition to the docker-compose services we already have, we'll need two more for this web client. One to run it, and another for a proxy service called <code>grpcwebproxy</code>.</p>
+<blockquote>
+<p>NOTE: <code>grpcwebproxy</code> <a href="https://github.com/improbable-eng/grpc-web/tree/master/go/grpcwebproxy">link</a> is a helpful program that allows grpc endpoints to be utilized by web applications. Web applications cannot natively use the grpc protocol that all Cogment elements use to communicate with one another. Using this proxy to translate the web socket connections it accepts into grpc requests solves this issue.</p>
+</blockquote>
+<p>For these services, let's add the following to the end of our docker-compose.yaml:</p>
+<pre><code class="yaml">web-client:
+  build:
+    context: web-client
+    dockerfile: ../js_service.dockerfile
+  environment:
+    - NODE_ENV=development
+    - CHOKIDAR_USEPOLLING=true
+    - REACT_APP_APP_VERSION=dev
+  restart: on-failure
+  ports:
+    - &quot;3000:3000&quot;
+  depends_on:
+    - grpcwebproxy
+
+grpcwebproxy:
+  build:
+    context: ./grpcwebproxy
+    dockerfile: ../grpcwebproxy.dockerfile
+  restart: on-failure
+  ports:
+    - &quot;8080:8080&quot;
+  depends_on:
+    - orchestrator
+</code></pre>
+
+<p>We will also need two additional dockerfiles to go along these entries. The first one will be <code>grpcwebproxy.dockerfile</code>, with the following content:</p>
+<pre><code class="dockerfile">FROM golang:1.15.2 as dev
+
+WORKDIR /go
+
+ARG GO111MODULE=auto
+ENV GO111MODULE=${GO111MODULE}
+ENV GOPATH=/go
+
+ENV COGMENT_URL=orchestrator:9000
+
+RUN go get github.com/improbable-eng/grpc-web/go/grpcwebproxy
+
+EXPOSE 8080
+
+CMD [&quot;grpcwebproxy&quot;, &quot;--backend_addr=orchestrator:9000&quot;, &quot;--run_tls_server=false&quot;, &quot;--allow_all_origins&quot;, &quot;--use_websockets&quot;]
+</code></pre>
+
+<p>The second one will be <code>js_service.dockerfile</code>, with the following content:</p>
+<pre><code class="dockerfile"># pull official base image
+FROM node:14 as dev
+
+# set working directory
+WORKDIR /app
+EXPOSE 3000
+
+# copy generated app
+COPY . ./
+
+# start app
+CMD [&quot;npm&quot;, &quot;start&quot;]
+</code></pre>
+
+<blockquote>
+<p>NOTE: Since the port for <code>grpcwebproxy</code> is exposed outside of the docker network, the docker-compose entry and corresponding dockerfile are not actually needed for the web-client; it can just as easily be run outside of docker. However, doing it like this makes the command to startup the application much simpler.</p>
+</blockquote>
+<p>Finally, we have to add <code>web-client</code> and <code>grpcwebproxy</code> to the start, build, and stop commands in our <code>cogment.yaml</code>.</p>
+<pre><code class="yaml">build: docker-compose build orchestrator environment random_agent web-client grpcwebproxy
+start: docker-compose up orchestrator environment random_agent web-client grpcwebproxy
+stop: docker-compose stop orchestrator environment random_agent web-client grpcwebproxy
+</code></pre>
+
+<h2 id="adding-cogment-to-our-web-client">Adding Cogment to our web client</h2>
+<p>The easiest way to add Cogment to any web client is to start with a React app, then follow the three steps below:</p>
+<ol>
+<li>
+<p>Install the Javascript SDK using:</p>
+<p><code>console
+$ npm i @cogment/cogment-js-sdk</code></p>
+<p>while inside of the web-client folder</p>
+</li>
+<li>
+<p>Copy in the hooks folder from the <a href="https://github.com/cogment/cogment-tutorial-rps">tutorial's repository</a>, found at <a href="./6-web-client/web-client/src/hooks">6-web-client/web-client/src/hooks</a>, into your src directory.</p>
+</li>
+<li>
+<p>Navigate one folder up to your project directory (where you have your cogment.yaml) then run the following command to generate Javascript files from your defined protobufs:
+    <code>console
+    $ cogment generate --js_dir=./web-client</code></p>
+</li>
+</ol>
+<blockquote>
+<p>NOTE: Had we chosen <code>Y</code> at the beginning of this tutorial when asked by the CLI if we wanted a web client, the React hooks used in this section would normally have been generated with the command <code>cogment init</code>."</p>
+</blockquote>
+<p>Now that all that's done, we can finally start coding our web client!</p>
+<h1 id="code">CODE</h1>
+<blockquote>
+<p>NOTE: For each of the following files, we will provide the styles in a code block. Feel free to skip these, or make your own; they are not important to the function of this application.</p>
+</blockquote>
+<h2 id="indexjs-indexcss">index.js / index.css</h2>
+<p>When we created our React app, these two files were generated automatically. Replace their content with the following:</p>
+<blockquote>
+<p>NOTE: These can also be downloaded from the <a href="https://github.com/cogment/cogment-tutorial-rps">tutorial's repository</a>.</p>
+</blockquote>
+<p>index.css:</p>
+<pre><code class="css">body {
+  margin: 0;
+  background-color: #c5cce8;
+}
+</code></pre>
+
+<p>index.js</p>
+<pre><code class="jsx">import React from &quot;React&quot;;
+import ReactDOM from &quot;React-dom&quot;;
+import &quot;./index.css&quot;;
+import { App } from &quot;./App&quot;;
+import {
+  createMuiTheme,
+  responsiveFontSizes,
+  ThemeProvider,
+} from &quot;@material-ui/core/styles&quot;;
+
+let theme = createMuiTheme({
+  palette: {
+    primary: {
+      light: &quot;#c5cce8&quot;,
+      main: &quot;#6B80C4&quot;,
+    },
+    secondary: {
+      main: &quot;#ffb400&quot;,
+    },
+  },
+});
+
+theme = responsiveFontSizes(theme);
+
+ReactDOM.render(
+  &lt;React.StrictMode&gt;
+    &lt;ThemeProvider theme={theme}&gt;
+      &lt;App /&gt;
+    &lt;/ThemeProvider&gt;
+  &lt;/React.StrictMode&gt;,
+  document.getElementById(&quot;root&quot;)
+);
+</code></pre>
+
+<p>This is simply to provide styles to our Material UI components. We haven't started with the actual Cogment part yet, which is exactly what we'll be doing next.</p>
+<h2 id="appjs">App.js</h2>
+<p>We'll start with a few imports. Some of these files don't exist yet, so we'll be creating them:</p>
+<pre><code class="jsx">//First is some React imports
+import React, { useEffect } from &quot;React&quot;;
+
+//Then some imports for icons and Material UI functionality we'll be using
+import {
+  Box,
+  Button,
+  makeStyles,
+  Typography,
+  useTheme,
+} from &quot;@material-ui/core&quot;;
+
+//And here's the important part: we're importing the two things that will allow us to use Cogment. 
+
+//First, the 'useActions' hook which will give us our observations as a human agent, as well as allow us to send actions.
+import { useActions } from &quot;./hooks/useActions&quot;;
+
+//Second, our 'cogSettings'. This is a file that was generated when we ran
+//`cogment generate --js_dir=./webclient`
+//This file tells our web client relevant information about our trials, environments, and actor classes.
+import { cogSettings } from &quot;./CogSettings&quot;;
+
+//These are messages which were defined in data.proto. These imports will need to change whenever their corresponding messages in data.proto are changed and `cogment generate` is run.
+import { PlayerAction } from &quot;./data_pb&quot;;
+</code></pre>
+
+<p>Then we add a function that will convert the play, encoded as the same "move" enum that we defined in our data.proto, to a string we can use in our application:</p>
+<pre><code class="jsx">function getMoveText(move) {
+  switch (move) {
+    case 0:
+      return &quot;rock&quot;;
+    case 1:
+      return &quot;paper&quot;;
+    case 2:
+      return &quot;scissors&quot;;
+    default:
+      throw new Error(&quot;Not a rock, paper, or scissors&quot;);
+  }
+}
+</code></pre>
+
+<p>Finally, the React component.</p>
+<p>At the start of this component is the most important part of our application: the useAction hook.</p>
+<p>This hook returns an array with 3 elements:</p>
+<ul>
+<li>
+<p>event: this contains all the information about any observation, reward, or message we've received this tick. We will use this to see what plays we and the computer made.</p>
+</li>
+<li>
+<p>startTrial: this is a function which takes no arguments, and is a very simple way to start a new trial with our player actor.</p>
+</li>
+<li>
+<p>sendAction: this is a function which takes an argument of type 'Action'. This class can be imported from data_pb.js, but we'll see that later in this tutorial.</p>
+</li>
+</ul>
+<p>This hook takes in 3 arguments:</p>
+<ul>
+<li>
+<p>cogSettings: this is what's imported from CogSettings.js. It provides all the relevant information about data.proto to this hook so that it can function.</p>
+</li>
+<li>
+<p>actorName: the name of the human actor which this web client will be representing. This is defined in cogment.yaml.</p>
+</li>
+<li>
+<p>actorClass: the class of the human actor which this web client will be representing. This is defined in cogment.yaml.</p>
+</li>
+</ul>
+<pre><code class="jsx">export const App = () =&gt; {
+  const [event, startTrial, sendAction] = useActions(
+    cogSettings,
+    &quot;player_1&quot;,
+    &quot;player&quot;
+  );
+
+  //Function to construct the Action which the player will send when they click either rock, paper, or scissors
+  const choose = (move) =&gt; {
+    const action = new PlayerAction();
+    action.setMove(move);
+    sendAction(action);
+  };
+
+  //This will start a trial as soon as we're connected to the orchestrator
+  useEffect(() =&gt; {
+    if (startTrial) startTrial();
+  }, [startTrial]);
+
+  //Get any observation from the current event, events have observations, messages, and rewards, and all three can be unpacked from the event object
+  //We will also unpack a helpful variable called 'last', this will allow us to know when the trial has ended
+  const { observation, last } = event;
+
+  const [gameState, setGameState] = useState({
+      gameStage: &quot;start&quot;,
+      roundIndex: 0,
+      lastMoveComputer: 0,
+      lastMoveHuman: 0,
+  })
+  const [firstObservation, setFirstObservation] = useState(true);
+
+  useEffect(() =&gt; {
+      //Parse game state out of the observation
+      //Some events don't contain an observation, so we need to store the observation contents in a state
+      if (!observation) return;
+
+      //The first observation is not useful, as it just contains the default game state, before players have made moves
+      if(firstObservation){
+          setFirstObservation(false);
+          return;
+      }
+
+
+      //Get all relevant information from the observation
+      const roundIndex = gameState.roundIndex + 1;
+      const gameStage = &quot;playing&quot;;
+      const lastMoveComputer = observation.them.lastMove
+      const lastMoveHuman = observation.me.lastMove
+      const lastWonComputer = observation.them.wonLast;
+      const lastWonHuman = observation.me.wonLast;
+
+      setGameState({
+          gameStage,
+          roundIndex,
+          lastMoveComputer,
+          lastMoveHuman,
+          lastWonComputer,
+          lastWonHuman
+      })
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [observation])
+
+  //The layout of the page
+  return (
+    &lt;Box&gt;
+      {/*
+        Tell the player everything we know about the trial state, such as, plays, who won, etc...
+      */}
+      &lt;Typography&gt;Game stage: {gameState.gameStage}&lt;/Typography&gt;
+      &lt;Typography&gt;Human's move: {gameState.gameStage !== &quot;start&quot; &amp;&amp; getMoveText(gameState.lastMoveHuman)}&lt;/Typography&gt;
+      &lt;Typography&gt;Computer's move: {gameState.gameStage !== &quot;start&quot; &amp;&amp; getMoveText(gameState.lastMoveComputer)}&lt;/Typography&gt;
+      &lt;Typography&gt;Did Human win last round? {observation &amp;&amp; gameState.lastWonHuman ? &quot;Yes&quot; : &quot;No&quot;}&lt;/Typography&gt;
+      &lt;Typography&gt;Did Computer win last round? {observation &amp;&amp; gameState.lastWonComputer ? &quot;Yes&quot; : &quot;No&quot;}&lt;/Typography&gt;
+      &lt;Button onClick={() =&gt; choose(0)}&gt;Rock&lt;/Button&gt;
+      &lt;Button onClick={() =&gt; choose(1)}&gt;Paper&lt;/Button&gt;
+      &lt;Button onClick={() =&gt; choose(2)}&gt;Scissors&lt;/Button&gt;
+    &lt;/Box&gt;
+  );
+};
+</code></pre>
+
+<h2 id="hooksuseactionsjs">hooks/useActions.js</h2>
+<p>This hook does multiple things. It starts a trial, joins a trial, sends actions, and receives information from the orchestrator. The following is its annotated code:</p>
+<pre><code class="jsx">import { useEffect, useState } from &quot;React&quot;;
+import * as cogment from &quot;@cogment/cogment-js-sdk&quot;;
+
+export const useActions = (cogSettings, actorName, actorClass) =&gt; {
+  //Events are composed of a possible observation, message, and reward
+  const [event, setEvent] = useState({
+    observation: null,
+    message: null,
+    reward: null,
+  });
+
+  //startTrial and sendAction will be set after the connected agent joins the trial
+  const [startTrial, setStartTrial] = useState(null);
+  const [sendAction, setSendAction] = useState(null);
+
+  //Set up the connection and register the actor only once
+
+  //In this hook, the connected agent is immediatly registered to any existing trial sitting at port 8080 (more accurately any grpcwebproxy pointing to a trial). Most of the time, this is the desired behaviour, but it could be changed in different circumstances by replacing this with something like setState(joinTrial), similar to setStartTrial further down this code
+  useEffect(() =&gt; {
+    //First we create our service, which will be our primary point of contact to the orchestrator
+    const service = cogment.createService({
+      cogSettings,
+      //grpcURL is an optional argument that in fact defaults to the following value. Here we're just showing that it can be set explicitly
+      grpcURL:
+        window.location.protocol + &quot;//&quot; + window.location.hostname + &quot;:8080&quot;,
+    });
+
+    //Set up the actor object. An actorName and an actorClass is enough to define a unique actor to be added to a trial
+    const actor = { name: actorName, actorClass: actorClass };
+
+    //Use the service to register an actor. registerActor takes two arguments, the second of which is a callback function which is given the actorSession of the registered actor as its only argument. With the provided actorSession, we can send actions, and receive events.
+    service.registerActor(actor, async (actorSession) =&gt; {
+      //Start the session
+      actorSession.start();
+
+      //Double arrow function here because React will turn a single one into a lazy loaded function
+      setSendAction(() =&gt; (action) =&gt; {
+        actorSession.sendAction(action);
+      });
+
+      /*actorSession.eventLoop is an async generator function, meaning we can use the syntax 
+        for await(const foo of generator()){
+          do stuff
+        }
+        to run some code every time there's new data provided by the function.
+
+        This is massively useful for network streams.
+      */
+      for await (const {
+        observation,
+        message,
+        reward,
+      } of actorSession.eventLoop()) {
+        //Parse the observation into a regular JS object
+        //TODO: this will eventually be part of the API
+
+        //Eventually observations will be regular Javascript objects (same with messages, and rewards). But for now we must convert it to an object.
+        let observationOBJ = event.observation &amp;&amp; event.observation.toObject();
+        event.observation = observationOBJ;
+
+        //If the type of the event is 3 (Ending), store that in event.last so we can use it later
+        event.last = event.type === 3;
+
+        //Set the event state to the received event, causing a hook update
+        setEvent(event)
+      }
+    });
+
+    //Creating the trial controller must happen after actors are registered
+    const trialController = service.createTrialController();
+
+    //Need to output a function so that the user can start the trial when all actors are connected
+    //Again, double arrow function cause React will turn a single one into a lazy loaded function
+    setStartTrial(() =&gt; async () =&gt; {
+      //Start and join the trial. When we start a trial, we receive an object containing the trialID that can then be used to join it.
+      //We will almost always want to do both these actions in sequence, since trials do not proceed without the connected agent if cogment.yaml specifies that a connected agent exists
+      const { trialId } = await trialController.startTrial(actor.actorClass);
+      await trialController.joinTrial(trialId, actor);
+    });
+  }, [cogSettings, actorName, actorClass]);
+
+  return [event, startTrial, sendAction];
+};
+</code></pre>
+
+<p>Please note that the <code>useActions</code> hook is generated by <code>cogment init</code>. We've still gone through it in this tutorial, because that is where most of the Cogment related code is contained, and it must be understood if we want to use Cogment without React.JS.</p>
+<p>You can now see our app fully functional by going to the folder where our cogment.yaml sits, and running the commands:</p>
+<pre><code class="console">$ cogment run build
+$ cogment run start
+</code></pre>
+
+<p>And opening up localhost:3000 in our browser.</p>
+<p>And with that we're done!</p>
+<h2 id="making-it-look-good">Making it look good</h2>
+<p>If we want a fancier interface, there is a completed UI in the tutorials repository that we can copy into our project. Then, along with some style code that can be found in the repository version of App.js, just replace the return statement from App.js with the following:</p>
+<pre><code class="jsx">&lt;Box&gt;
+  &lt;Header observation={observation} gameState={gameState} /&gt;
+  &lt;Container className={classes.container}&gt;
+    &lt;Player
+      score={humanScore}
+      color={theme.palette.primary.main}
+      IconClass={PersonIcon}
+      choose={choose}
+      isHuman
+    /&gt;
+
+    &lt;Player
+      score={computerScore}
+      color={theme.palette.secondary.main}
+      IconClass={ComputerIcon}
+      selected={
+        gameState !== &quot;start&quot; &amp;&amp; getMoveText(observation.them.lastRoundMove)
+      }
+    /&gt;
+  &lt;/Container&gt;
+&lt;/Box&gt;
+</code></pre>
+              
+            </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+          <a href="https://github.com/cogment/cogment-doc/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
+      
+      
+      
+    </span>
+</div>
+    <script>var base_url = '../../..';</script>
+    <script src="../../../js/theme.js" defer></script>
+      <script src="../../../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

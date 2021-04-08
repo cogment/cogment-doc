@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   
-  
+  <link rel="canonical" href="https://docs.cogment.ai/cogment/cogment-api-guide/">
   <link rel="shortcut icon" href="../../img/favicon.ico">
   <title>Cogment API Guide - Cogment</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
@@ -20,7 +20,7 @@
     // Current page data
     var mkdocs_page_name = "Cogment API Guide";
     var mkdocs_page_input_path = "cogment/cogment-api-guide.md";
-    var mkdocs_page_url = null;
+    var mkdocs_page_url = "/cogment/cogment-api-guide/";
   </script>
   
   <script src="../../js/jquery-2.1.1.min.js" defer></script>
@@ -106,7 +106,7 @@
     </li>
         </ul>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#trial-controller">Trial Controller</a>
+    <li class="toctree-l2"><a class="reference internal" href="#controller">Controller</a>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#rewards">Rewards</a>
         <ul>
@@ -184,6 +184,9 @@
     <li>Cogment API Guide</li>
     <li class="wy-breadcrumbs-aside">
       
+        <a href="https://github.com/cogment/cogment-doc/edit/master/docs/cogment/cogment-api-guide.md"
+          class="icon icon-github"> Edit on GitHub</a>
+      
     </li>
   </ul>
   
@@ -235,7 +238,7 @@ actors:
 <p>This function will be called once for each [trial][../concepts/glossary.md#trial)]. This function usually consists of three sections.</p>
 <ul>
 <li>The environment's <strong>initialization</strong>, where its internal state can be initialized and processes started. It ends with the sending of the initial observations to the actors participating in the trial.</li>
-<li>Its <strong>event loop</strong>, where the environment iterates through the events occurring during the trial and produces <a href="../../concepts/glossary/#observation">observations</a> as well as sends <a href="../../concepts/glossary/#reward">rewards</a> and <a href="../../concepts/glossary/#message">messages</a>. In this loop the environment can end the trial on its own or the end can be requested by a <a href="#trial-controller">trial controller</a>.</li>
+<li>Its <strong>event loop</strong>, where the environment iterates through the events occurring during the trial and produces <a href="../../concepts/glossary/#observation">observations</a> as well as receives <a href="../../concepts/glossary/#message">messages</a>. In this loop the environment can end the trial on its own or the end can be requested by a <a href="#controller">controller</a>.</li>
 <li>Its <strong>termination</strong>, where cleanup occurs.</li>
 </ul>
 <p>In the common case where all actors within a trial share the same observation, a bare-minimum environment service would look like this:</p>
@@ -259,7 +262,7 @@ actors:
               # Alternatively the environment can decide to **end** the trial with the following
               # environment_session.end([(&quot;*&quot;, Observation())])
             else:
-              # The trial termination has been  requested by an external trial controller
+              # The trial termination has been requested by an external controller
               # Produce a final observation
               environment_session.end([(&quot;*&quot;, Observation())])
 
@@ -328,7 +331,7 @@ await context.serve_all_registered(port=9000)
 </code></pre>
 
 <h3 id="service-actor-client-actor">Service actor / Client actor</h3>
-<p>A Cogment app can use two types of actors, they are identical in terms of implementation but differ in how they interact with the app's <a href="../../concepts/glossary/#orchestrator">orchestrator</a>.</p>
+<p>A Cogment app can use two types of actors, they are identical in terms of implementation but differ in how they interact with the app's <a href="../../concepts/glossary/#orchestrator">Orchestrator</a>.</p>
 <p><strong>Service actors</strong> are accessible in the same way the environment is, through a <a href="../cogment-api-reference/python/#class-cogmentcontext"><code>Context</code></a> instance.</p>
 <pre><code class="python">context = cogment.Context(cog_settings=cog_settings, user_id=&quot;rps&quot;)
 context.register_actor(
@@ -356,11 +359,27 @@ await context.join_trial(
 
 <p>Please note, that a trial including one or more client actors will wait for all of them to join before any actor can start processing events.</p>
 <p>Due to the different network requirements, client actors are a good fit when implementing a <a href="../../concepts/glossary/#frontend">frontend</a> for human actors. In addition to the <a href="../cogment-api-reference/python/">python</a> SDK demonstrated above, client actors can be implemented in <a href="../cogment-api-reference/javascript/">javascript</a> using the corresponding SDK.</p>
-<h2 id="trial-controller">Trial Controller</h2>
-<p><a href="../../concepts/glossary/#trial">Trials</a> are started by clients of the orchestrator using a trial controller.</p>
-<blockquote>
-<p>🚧 TODO Add usage details when the dust settles</p>
-</blockquote>
+<h2 id="controller">Controller</h2>
+<p><a href="../../concepts/glossary/#trial">Trials</a> are started by clients of the <a href="../../concepts/glossary/#orchestrator">Orchestrator</a> using a Controller. Instances of a controller are built from the <a href="../cogment-api-reference/python/#class-cogmentcontext"><code>Context</code></a> instance and connect to an Orchestrator endpoint.</p>
+<pre><code class="python">controller = context.get_controller(
+  endpoint=cogment.Endpoint(&quot;orchestrator:9000&quot;)
+)
+</code></pre>
+
+<p>The controller can then be used to create trials and request their termination.</p>
+<pre><code class="python">trial_id = await controller.start_trial(trial_config=TrialConfig())
+
+# ...
+
+await controller.terminate_trial(trial_id)
+</code></pre>
+
+<p>The controller can also be used to subscribe to events occuring in the trials run by the Orchestrator it connects to. For example, this can be used to wait for a trial's end:</p>
+<pre><code class="python">async for trial_info in controller.watch_trials(trial_state_filters=[cogment.TrialState.ENDED]):
+    # The trial having id {trial_info.trial_id} ended.
+</code></pre>
+
+<p>The full documentation for the controller can be found <a href="../cogment-api-reference/python/#class-controller">here</a>.</p>
 <h2 id="rewards">Rewards</h2>
 <h3 id="creating">Creating</h3>
 <p><a href="../../concepts/glossary/#reward">Rewards</a> are sent to <a href="../../concepts/glossary/#actor">actors</a> from another actor or the <a href="../../concepts/glossary/#environment">environment</a>. The <code>session</code> instance passed to their implementation can be used for this purpose.</p>
@@ -474,6 +493,8 @@ actors:
 
   <div class="rst-versions" role="note" aria-label="versions">
     <span class="rst-current-version" data-toggle="rst-current-version">
+      
+          <a href="https://github.com/cogment/cogment-doc/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
       
       
         <span><a href="../tutorial/5-human-player/" style="color: #fcfcfc;">&laquo; Previous</a></span>

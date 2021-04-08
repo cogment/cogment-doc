@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   
-  
+  <link rel="canonical" href="https://docs.cogment.ai/cogment/tutorial/5-human-player/">
   <link rel="shortcut icon" href="../../../img/favicon.ico">
   <title>Step 5: Add a human player in the loop - Cogment</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
@@ -20,7 +20,7 @@
     // Current page data
     var mkdocs_page_name = "Step 5: Add a human player in the loop";
     var mkdocs_page_input_path = "cogment/tutorial/5-human-player.md";
-    var mkdocs_page_url = null;
+    var mkdocs_page_url = "/cogment/tutorial/5-human-player/";
   </script>
   
   <script src="../../../js/jquery-2.1.1.min.js" defer></script>
@@ -156,6 +156,9 @@
     <li>Step 5: Add a human player in the loop</li>
     <li class="wy-breadcrumbs-aside">
       
+        <a href="https://github.com/cogment/cogment-doc/edit/master/docs/cogment/tutorial/5-human-player.md"
+          class="icon icon-github"> Edit on GitHub</a>
+      
     </li>
   </ul>
   
@@ -166,7 +169,7 @@
               
                 <h1 id="step-5-add-a-human-player-in-the-loop">Step 5: Add a human player in the loop</h1>
 <blockquote>
-<p>This part of the tutorial follows <a href="../4-heuristic-player/">step 4</a>, make sure you've gone through it before starting this one. Alternatively the completed step 2 can be retrieved from the <a href="https://github.com/cogment/cogment-tutorial-rps">tutorial's repository</a>.</p>
+<p>This part of the tutorial follows <a href="../4-heuristic-player/">step 4</a>, make sure you've gone through it before starting this one. Alternatively the completed step 4 can be retrieved from the <a href="https://github.com/cogment/cogment-tutorial-rps">tutorial's repository</a>.</p>
 </blockquote>
 <p>In this step of the tutorial, we will go over another actor implementation, this time client-side, to enable Humans to play RPS. We will also learn how to let the environment control the termination of the trial.</p>
 <h2 id="the-client">The client</h2>
@@ -227,13 +230,10 @@ MOVES = [ROCK, PAPER, SCISSORS]
 </code></pre>
 
 <p>In the <code>main</code> function we then implement the <code>human_player</code> actor implementation, only playing <code>PAPER</code> for the moment, register the implementation and join the trial once it is initialized.</p>
-<p>We use <a href="https://docs.python.org/3.7/library/asyncio-future.html">futures</a> to retrieve the unique identifier of the trial from the <code>trial_controller</code> before joining the trial and awaiting for the trial end.</p>
 <pre><code class="python">context = cogment.Context(cog_settings=cog_settings, user_id=&quot;rps&quot;)
 
-trial_finished = asyncio.get_running_loop().create_future()
 async def human_player(actor_session):
     round_index = 0
-    nonlocal trial_finished
 
     actor_session.start()
 
@@ -249,30 +249,28 @@ async def human_player(actor_session):
 
                 round_index += 1
 
-    trial_finished.set_result(True)
-
 context.register_actor(
     impl=human_player,
     impl_name=&quot;human&quot;,
     actor_classes=[&quot;player&quot;])
 
-# Create and join a new trial
-trial_id = asyncio.get_running_loop().create_future()
-async def trial_controller(control_session):
-    nonlocal trial_id
-    print(f&quot;Trial '{control_session.get_trial_id()}' starts&quot;)
-    trial_id.set_result(control_session.get_trial_id())
-    await trial_finished
-    print(f&quot;Trial '{control_session.get_trial_id()}' terminating&quot;)
-    await control_session.terminate_trial()
+# Create a controller
+controller = context.get_controller(endpoint=cogment.Endpoint(&quot;orchestrator:9000&quot;))
 
-trial = asyncio.create_task(context.start_trial(endpoint=cogment.Endpoint(&quot;orchestrator:9000&quot;), impl=trial_controller, trial_config=TrialConfig()))
-# Wait until the trial id is known
-trial_id = await trial_id
-# Join the trial as a human player
+# Start a new trial
+trial_id = await controller.start_trial(trial_config=TrialConfig())
+print(f&quot;Trial '{trial_id}' starting&quot;)
+
+# Let the human actor join the trial
 await context.join_trial(trial_id=trial_id, endpoint=cogment.Endpoint(&quot;orchestrator:9000&quot;), impl_name=&quot;human&quot;)
-# Wait until the trial terminates
-await trial
+print(f&quot;Human actor joining trial '{trial_id}'&quot;)
+
+# Wait for the trial to end by itself
+async for trial_info in controller.watch_trials(trial_state_filters=[cogment.TrialState.ENDED]):
+    if trial_info.trial_id == trial_id:
+        break
+
+print(f&quot;Trial '{trial_id}' ended&quot;)
 </code></pre>
 
 <p>Modify the <code>client/main.py</code> file with these updates.</p>
@@ -292,11 +290,11 @@ await trial
 <pre><code class="python">MOVES_STR = [&quot;👊 rock&quot;, &quot;✋ paper&quot;, &quot;✌️ scissors&quot;]
 
 def print_observation(round_index, observation):
-    print(f&quot;🧑 played {MOVES_STR[observation.me.last_move]}&quot;)
-    print(f&quot;🤖 played {MOVES_STR[observation.them.last_move]}&quot;)
-    if observation.me.won_last:
+    print(f&quot;🧑 played {MOVES_STR[observation.snapshot.me.last_move]}&quot;)
+    print(f&quot;🤖 played {MOVES_STR[observation.snapshot.them.last_move]}&quot;)
+    if observation.snapshot.me.won_last:
         print(f&quot; -&gt; 🧑 wins round #{round_index + 1}&quot;)
-    elif observation.them.won_last:
+    elif observation.snapshot.them.won_last:
         print(f&quot; -&gt; 🤖 wins the round #{round_index + 1}&quot;)
     else:
         print(f&quot; -&gt; round #{round_index + 1} is a draw&quot;)
@@ -351,6 +349,8 @@ next_action = PlayerAction(move=move)
 
   <div class="rst-versions" role="note" aria-label="versions">
     <span class="rst-current-version" data-toggle="rst-current-version">
+      
+          <a href="https://github.com/cogment/cogment-doc/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
       
       
         <span><a href="../4-heuristic-player/" style="color: #fcfcfc;">&laquo; Previous</a></span>
