@@ -5,14 +5,47 @@
 Please install:
 
 1. [Docker](https://docs.docker.com/engine/install/) and [docker-compose](https://docs.docker.com/compose/install/)
-
 2. [protoc](https://github.com/protocolbuffers/protobuf)
 
 ## Install the latest Cogment CLI
 
-The latest `cogment` CLI is available [here](https://github.com/cogment/cogment-cli/releases/) as an executable binary.
+1. `cogment` CLI releases are available [here](https://github.com/cogment/cogment-cli/releases/) as executable binaries.
+2. Pick a version, usually the latest one should be the right pick.
+3. At the end of the release notes, click on "Assets" to choose and download the appropriate version for your system.
+4. Rename the file to "cogment", and add it to your [`PATH` environmental variable](https://superuser.com/questions/284342/what-are-path-and-other-environment-variables-and-how-can-i-set-or-use-them). 
 
-Choose the appropriate file for your system, rename the file to "cogment", and make sure to put it in a folder that is in your 'PATH' environmental variable.
+You can follow more specific instructions for your OS in the following.
+
+### Linux
+
+The following downloads version `COGMENT_CLI_VERSION` of the cli to `/usr/local/bin`, a location already belonging to your `PATH` in most linux distributions and make sure it is executable.
+
+Simply replace `COGMENT_CLI_VERSION` with the version you want to download, e.g. `v1.0.1`.
+
+```console
+$ curl -L https://github.com/cogment/cogment-cli/releases/download/COGMENT_CLI_VERSION/cogment-linux-amd64 -o /usr/local/bin/cogment && chmod +x /usr/local/bin/cogment
+```
+
+### macOS
+
+> At the moment Cogment will only work on x86 _intel_ macs
+
+The following downloads version `COGMENT_CLI_VERSION` of the cli to `/usr/local/bin`, a location already belonging to your `PATH` in macOS and make sure it is executable.
+
+Simply replace `COGMENT_CLI_VERSION` with the version you want to download, e.g. `v1.0.1`.
+
+```console
+$ curl -L https://github.com/cogment/cogment-cli/releases/download/COGMENT_CLI_VERSION/cogment-macOS-amd64 -o /usr/local/bin/cogment && chmod +x /usr/local/bin/cogment
+```
+
+### Windows
+
+1. Download the windows version of the cogment CLI as described above.
+2. Rename the downloaded file `cogment-windows-amd64.exe` to `cogment.exe`.
+2. Copy it to an easy to find location, e.g. `c:\\cogment`.
+3. Add the `c:\\cogment` folder to your [`PATH` environmental variable](https://superuser.com/questions/284342/what-are-path-and-other-environment-variables-and-how-can-i-set-or-use-them).
+
+### Check that Cogment CLI is accessible.
 
 With a working installation you can run the following in a terminal:
 
