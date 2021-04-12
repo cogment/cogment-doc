@@ -1,5 +1,7 @@
 # Python SDK
 
+The Python SDK is designed to run concurently and asynchronously using the Python `asyncio` library.  As such, it should be run in an `asyncio.Task`.
+
 ## Installation
 
 The simplest way to install the python SDK is to just install it using pip:
@@ -69,16 +71,16 @@ Parameters:
 
 ### ```async serve_all_registered(self, served_endpoint, prometheus_port = 8000)```
 
-Method to start and run the communication server for the registered components (environment, actor, prehook, datalog).  Returns only when all activity has stopped (i.e. current coroutine is blocked until the server is stopped).
+Method to start and run the communication server for the registered components (environment, actor, prehook, datalog). This coroutine will end when all activity has stopped.
 
 Parameters:
 
 - `served_endpoint`: *ServedEndpoint instance* - Details of the connection for the served components.
 - `prometheus_port`: *int* - TCP/IP port number for Prometheus
 
-Return : None
+Return: None
 
-### ```async get_controller(self, endpoint)```
+### ```get_controller(self, endpoint)```
 
 Method to get a controller instance to manage trials (start, stop, inquire, etc).
 
@@ -90,7 +92,7 @@ Return: *Controller instance* - An instance of the Controller class used to mana
 
 ### ```async join_trial(self, trial_id, endpoint, impl_name, actor_name=None)```
 
-Method for an actor to asynchronously join an existing trial.  Returns only when the implementation of `impl_name` returns.
+Method for an actor to asynchronously join an existing trial. This task will normally end after the user implementation has exited.
 
 Parameters:
 
@@ -495,9 +497,9 @@ Enum representing the type of an event.
 
 - `EventType.ACTIVE`: Normal event from an active trial. Most events will be of this type.
 
-- `EventType.ENDING`: Events from a trial in the process of ending.  For the environment, this means that these events contain the last actions from the actors, and the trial is awaiting a final observation. For the actors, this means that the trial has ended and no action can/need to be sent in response.
+- `EventType.ENDING`: Events from a trial in the process of ending.  For the environment, this means that these events contain the last actions from the actors, and the trial is awaiting a final observation. For the actors, this means that the trial is ending and no action can/need to be sent in response.  Note that because of network timing, there may be `ACTIVE` events (e.g. rewards or messages) arriving after some `ENDING` events, but the trial is ending regardless.
 
-- `EventType.FINAL`: Final event for the trial.  This may contain data or be empty.  If not empty, the data should be considered the same as for a `EventType.ENDING` event.  The event loop will exit after this event is delivered.
+- `EventType.FINAL`: Final event for the trial.  This does not contain data. The event loop will exit after this event is delivered.  This event can be ignored if nothing needs to be done before exiting the loop.
 
 ## class RecvObservation
 
