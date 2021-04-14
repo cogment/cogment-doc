@@ -99,7 +99,7 @@ Parameters:
 - `trial_id`: *str* - The UUID of the trial to join.
 - `endpoint`: *Endpoint instance* - Details of the connection to the Orchestrator.
 - `impl_name`: *str* - The implementation name of the actor to join the trial.  The implementation must have previously been registered with the `register_actor` method.
-- `actor_namer`: *str* - Name of the actor joining the trial. If `None`, the actor will join as any of the configured (free) actors of the actor class registered for `impl_name`.  Otherwise, the name must match an actor with an actor_class compatible with `impl_name` as defined in `cogment.yaml` in the sections `trial_params:actors:actor_class` and `trial_params:actors:name`.
+- `actor_name`: *str* - Name of the actor joining the trial. If `None`, the actor will join as any of the configured (free) actors of the actor class registered for `impl_name`.  Otherwise, the name must match an actor with an actor_class compatible with `impl_name` as defined in `cogment.yaml` in the sections `trial_params:actors:actor_class` and `trial_params:actors:name`.
 
 Return: None
 
@@ -378,17 +378,23 @@ Parameters: None
 
 Return: None
 
+## cogment.api.common_pb2.TrialParams
+
+[TrialParams](cogment-doc/cogment/cogment-low-level-api-guide/grpc/#trialparams) is defined in the low level grpc api. 
+
+## cogment.api.datalog.DatalogSample
+
+[DatalogSample](cogment-doc/cogment/cogment-low-level-api-guide/grpc/#logexportersamplerequest) is defined in the low level grpc api.
+
 ## class DatalogSession
 
 Abstract class containing session data and methods necessary to manage logging of trial run data.  An instance of this class is passed as argument to the datalog callback function registered with `cogment.Context.register_datalog`.
 
 `trial_id`: *str* - UUID of the trial managed by this instance.
 
-`trial_params`: *PrehookSession instance* - Parameters of the the trial.
+`trial_params`: *dictionary* - Parameters of the trial. This parameter has been **deprecated**.
 
-`on_sample`: *function(class instance)* - If defined, this function will be called when a sample is received.
-
-`on_trial_over`: *function()* - If defined, this function will be called when the trial has ended.
+`raw_trial_params`: *cogment.api.common_pb2.TrialParams* - Parameters of the trial.
 
 ### ```start(self)```
 
@@ -398,21 +404,13 @@ Parameters: None
 
 Return: None
 
-### ```get_sample(self)```
-
-Method to wait for a sample from a time step.
-
-Parameters: None
-
-Return: *class instance* - The sample received.
-
 ### ```get_all_samples(self)```
 
 Generator method to iterate over all samples as they are received (waiting for each in turn).
 
 Parameters: None
 
-Return: *generator(class instance)* - A generator for the samples received.
+Return: *generator(cogment.api.datalog.DatalogSample)* - A generator for the samples received.
 
 ## class cogment.Endpoint
 
@@ -426,7 +424,7 @@ Class enclosing the details for connecting to an Orchestrator.
 
 `certificate_chain`: *str* - If using TLS for the connection, this can be set to the PEM-encoded certificate chain.
 
-### ```__inti__(self, url)```
+### ```__init__(self, url)```
 
 Parameters:
 
@@ -442,7 +440,7 @@ Class enclosing the details for connection from an Orchestrator.
 
 `root_certificates`: *str* - If using TLS for the connection (i.e. `private_key_certificate_chain_pairs` is not `None`), this should be set to PEM-encoded Orchestrator root certificates that the server will use to verify Orchestrator authentication.
 
-### ```__inti__(self, port)```
+### ```__init__(self, port)```
 
 Parameters:
 
