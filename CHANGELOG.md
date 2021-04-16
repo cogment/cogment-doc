@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## Unreleased
 
+### Added
+
+- Integrate
+  [@cogment/cogment-js-sdk docs](https://github.com/cogment/cogment-js-sdk)
+
 ### Changed
 
 - Update for latest Python SDK changes
