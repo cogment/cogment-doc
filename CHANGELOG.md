@@ -16,6 +16,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 - Update for latest Python SDK changes
 
+### Fixed
+
+- Fix internal documentation releases
+
 ## v1.0.0-beta1 - 2021-04-08
 
 ### Added

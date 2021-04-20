@@ -56,7 +56,7 @@ build:
     paths:
       - public
 
-publish-internal-version:
+pages:
   stage: pages
   script:
     - echo "Using build artifacts from previous stage"
