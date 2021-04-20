@@ -57,7 +57,7 @@ build:
       - public
 
 publish-internal-version:
-  stage: publish
+  stage: pages
   script:
     - echo "Using build artifacts from previous stage"
   artifacts:
