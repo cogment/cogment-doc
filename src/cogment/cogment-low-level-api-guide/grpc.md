@@ -439,8 +439,8 @@ message TrialInfo {
 - trial_id: The UUID of the trial.
 - state: The state of the trial.
 - tick_id: The current tick ID of the trial.
-- trial_duration: The duration of the trial so far, in nanoseconds. This is meant as an indictor; resolution may not be a nanosecond, and precision is not garanteed.
-- latest_observation: The latest environment observation.  This will be provided only if requested in the `TrialInfoRequest`.
+- trial_duration: The duration of the trial so far, in nanoseconds.  If the trial has ended, this is the duration from start to end of the trial.  This is meant as an indicator; resolution may not be a nanosecond, and precision is not garanteed.
+- latest_observation: The latest environment observations for all actors.  This will be provided only if requested in the `TrialInfoRequest`.
 - actors_in_trial: The list of active actors in the trial.
 
 ### `TrialListRequest`

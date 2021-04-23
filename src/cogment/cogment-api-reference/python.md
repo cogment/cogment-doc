@@ -170,6 +170,16 @@ Parameters:
 
 Return: None
 
+### ```async get_trial_info(self, trial_id)```
+
+Method to get information about a trial.
+
+Parameters:
+
+- `trial_id`: *str* - The trial ID from which to request information.  If `None` returns information about all trials.  Note that ended trials may only appear for a short time in this list after they have ended.
+
+Return: *list[TrialInfo instance]* - List of trial information, one per trial.  Can be empty if no trial matches.
+
 ### ```async watch_trials(self, trial_state_filters=[])```
 
 Generator method to iterate, in real-time, through all trial states matching the filters.  When called, it will first iterate over the current states matching the filters, for all trials.  Afterward, it will iterate in real-time over the matching states as they change.
@@ -180,13 +190,13 @@ Parameters:
 
 Return: *generator(TrialInfo instance)* - A generator for the state changes that arrive.
 
-### ```get_actors(self, trial_id)```
+### ```async get_actors(self, trial_id)```
 
 Method to get the list of configured actors in a trial.
 
 Parameters:
 
-- `trial_id`: *str* - The trial ID to from which to request the list of actors.
+- `trial_id`: *str* - The trial ID from which to request the list of actors.
 
 Return: *list[ActorInfo instance]* - List of actors configured in this trial.
 
@@ -464,6 +474,10 @@ Class enclosing the details of a trial.
 `trial_id`: *str* - The trial ID for which the details pertain.
 
 `state`: *cogment.TrialState* - The current state of the trial.
+
+`tick_id`: *int* - The time step that the information relates to.
+
+`duration`: *int* - The time (in nanoseconds) that the trial has run.  
 
 ## class ActorInfo
 
