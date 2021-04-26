@@ -188,7 +188,7 @@ Parameters:
 
 - `trial_state_filters`: *list[cogment.TrialState]* - List of enum values from `cogment.TrialState`.   for which we are intersted to receive state change.
 
-Return: *generator(TrialInfo instance)* - A generator for the state changes that arrive.
+Return: *generator(TrialInfo instance)* - A generator for the state changes that arrive.  The `TrialInfo` received here only contain the trial ID and the state.
 
 ### ```async get_actors(self, trial_id)```
 
@@ -475,9 +475,9 @@ Class enclosing the details of a trial.
 
 `state`: *cogment.TrialState* - The current state of the trial.
 
-`tick_id`: *int* - The time step that the information relates to.
+`tick_id`: *int* - The time step that the information relates to.  Only provided from a call to `get_trial_info`.
 
-`duration`: *int* - The time (in nanoseconds) that the trial has run.  
+`duration`: *int* - The time (in nanoseconds) that the trial has run.  Only provided from a call to `get_trial_info`.
 
 ## class ActorInfo
 
