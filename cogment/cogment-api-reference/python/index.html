@@ -110,7 +110,7 @@
     </li>
     <li class="toctree-l4"><a class="reference internal" href="#async-serve_all_registeredself-served_endpoint-prometheus_port-8000">async serve_all_registered(self, served_endpoint, prometheus_port = 8000)</a>
     </li>
-    <li class="toctree-l4"><a class="reference internal" href="#async-get_controllerself-endpoint">async get_controller(self, endpoint)</a>
+    <li class="toctree-l4"><a class="reference internal" href="#get_controllerself-endpoint">get_controller(self, endpoint)</a>
     </li>
     <li class="toctree-l4"><a class="reference internal" href="#async-join_trialself-trial_id-endpoint-impl_name-actor_namenone">async join_trial(self, trial_id, endpoint, impl_name, actor_name=None)</a>
     </li>
@@ -130,9 +130,11 @@
     </li>
     <li class="toctree-l4"><a class="reference internal" href="#terminate_trialself-trial_id">terminate_trial(self, trial_id)</a>
     </li>
+    <li class="toctree-l4"><a class="reference internal" href="#async-get_trial_infoself-trial_id">async get_trial_info(self, trial_id)</a>
+    </li>
     <li class="toctree-l4"><a class="reference internal" href="#async-watch_trialsself-trial_state_filters">async watch_trials(self, trial_state_filters=[])</a>
     </li>
-    <li class="toctree-l4"><a class="reference internal" href="#get_actorsself-trial_id">get_actors(self, trial_id)</a>
+    <li class="toctree-l4"><a class="reference internal" href="#async-get_actorsself-trial_id">async get_actors(self, trial_id)</a>
     </li>
         </ul>
     </li>
@@ -182,11 +184,13 @@
     </li>
         </ul>
     </li>
+    <li class="toctree-l3"><a class="reference internal" href="#cogmentapicommon_pb2trialparams">cogment.api.common_pb2.TrialParams</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#cogmentapidatalogdatalogsample">cogment.api.datalog.DatalogSample</a>
+    </li>
     <li class="toctree-l3"><a class="reference internal" href="#class-datalogsession">class DatalogSession</a>
         <ul>
     <li class="toctree-l4"><a class="reference internal" href="#startself_1">start(self)</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#get_sampleself">get_sample(self)</a>
     </li>
     <li class="toctree-l4"><a class="reference internal" href="#get_all_samplesself">get_all_samples(self)</a>
     </li>
@@ -194,13 +198,13 @@
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#class-cogmentendpoint">class cogment.Endpoint</a>
         <ul>
-    <li class="toctree-l4"><a class="reference internal" href="#__inti__self-url">__inti__(self, url)</a>
+    <li class="toctree-l4"><a class="reference internal" href="#__init__self-url">__init__(self, url)</a>
     </li>
         </ul>
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#class-cogmentservedendpoint">class cogment.ServedEndpoint</a>
         <ul>
-    <li class="toctree-l4"><a class="reference internal" href="#__inti__self-port">__inti__(self, port)</a>
+    <li class="toctree-l4"><a class="reference internal" href="#__init__self-port">__init__(self, port)</a>
     </li>
         </ul>
     </li>
@@ -234,7 +238,43 @@
     </li>
     </ul>
                 </li>
-                <li class="toctree-l2"><a class="reference internal" href="../javascript/">javascript</a>
+                <li class="toctree-l2"><a class="reference internal" href="#">Javascript/Typescript SDK</a>
+    <ul>
+                <li class="toctree-l3"><a class="reference internal" href="../javascript/modules/">Modules</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../javascript/classes/actorsession/">Class: ActorSession</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../javascript/classes/cogmentservice/">Class: CogmentService</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../javascript/classes/trialcontroller/">Class: TrialController</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../javascript/enums/eventtype/">Enum: EventType</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../javascript/interfaces/cogmentyaml/">Interface: CogmentYaml</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../javascript/interfaces/cogmentyamlactor/">Interface: CogmentYamlActor</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../javascript/interfaces/cogmentyamlactorclass/">Interface: CogmentYamlActorClass</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../javascript/interfaces/cogmentyamldatalog/">Interface: CogmentYamlDatalog</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../javascript/interfaces/cogmentyamltrialparameters/">Interface: CogmentYamlTrialParameters</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../javascript/interfaces/cogsettings/">Interface: CogSettings</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../javascript/interfaces/cogsettingsactorclass/">Interface: CogSettingsActorClass</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../javascript/interfaces/createserviceoptions/">Interface: CreateServiceOptions</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../javascript/interfaces/event/">Interface: Event</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../javascript/interfaces/reward/">Interface: Reward</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../javascript/interfaces/sendmessageoptions/">Interface: SendMessageOptions</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../javascript/interfaces/trialactor/">Interface: TrialActor</a>
+                </li>
+    </ul>
                 </li>
     </ul>
                     </li>
@@ -300,6 +340,7 @@
             <div class="section">
               
                 <h1 id="python-sdk">Python SDK</h1>
+<p>The Python SDK is designed to run concurently and asynchronously using the Python <code>asyncio</code> library.  As such, it should be run in an <code>asyncio.Task</code>.</p>
 <h2 id="installation">Installation</h2>
 <p>The simplest way to install the python SDK is to just install it using pip:
 <code>pip install cogment</code></p>
@@ -342,14 +383,14 @@ import cogment
 <li><code>cog_settings</code>: <em>module</em> - Settings module associated with trials that will be run (<a href="#cog_settings.py">cog_settings</a> namespace).</li>
 </ul>
 <h3 id="async-serve_all_registeredself-served_endpoint-prometheus_port-8000"><code>async serve_all_registered(self, served_endpoint, prometheus_port = 8000)</code></h3>
-<p>Method to start and run the communication server for the registered components (environment, actor, prehook, datalog).  Returns only when all activity has stopped (i.e. current coroutine is blocked until the server is stopped).</p>
+<p>Method to start and run the communication server for the registered components (environment, actor, prehook, datalog). This coroutine will end when all activity has stopped.</p>
 <p>Parameters:</p>
 <ul>
 <li><code>served_endpoint</code>: <em>ServedEndpoint instance</em> - Details of the connection for the served components.</li>
 <li><code>prometheus_port</code>: <em>int</em> - TCP/IP port number for Prometheus</li>
 </ul>
-<p>Return : None</p>
-<h3 id="async-get_controllerself-endpoint"><code>async get_controller(self, endpoint)</code></h3>
+<p>Return: None</p>
+<h3 id="get_controllerself-endpoint"><code>get_controller(self, endpoint)</code></h3>
 <p>Method to get a controller instance to manage trials (start, stop, inquire, etc).</p>
 <p>Parameters:</p>
 <ul>
@@ -357,13 +398,13 @@ import cogment
 </ul>
 <p>Return: <em>Controller instance</em> - An instance of the Controller class used to manage trials.</p>
 <h3 id="async-join_trialself-trial_id-endpoint-impl_name-actor_namenone"><code>async join_trial(self, trial_id, endpoint, impl_name, actor_name=None)</code></h3>
-<p>Method for an actor to asynchronously join an existing trial.  Returns only when the implementation of <code>impl_name</code> returns.</p>
+<p>Method for an actor to asynchronously join an existing trial. This task will normally end after the user implementation has exited.</p>
 <p>Parameters:</p>
 <ul>
 <li><code>trial_id</code>: <em>str</em> - The UUID of the trial to join.</li>
 <li><code>endpoint</code>: <em>Endpoint instance</em> - Details of the connection to the Orchestrator.</li>
 <li><code>impl_name</code>: <em>str</em> - The implementation name of the actor to join the trial.  The implementation must have previously been registered with the <code>register_actor</code> method.</li>
-<li><code>actor_namer</code>: <em>str</em> - Name of the actor joining the trial. If <code>None</code>, the actor will join as any of the configured (free) actors of the actor class registered for <code>impl_name</code>.  Otherwise, the name must match an actor with an actor_class compatible with <code>impl_name</code> as defined in <code>cogment.yaml</code> in the sections <code>trial_params:actors:actor_class</code> and <code>trial_params:actors:name</code>.</li>
+<li><code>actor_name</code>: <em>str</em> - Name of the actor joining the trial. If <code>None</code>, the actor will join as any of the configured (free) actors of the actor class registered for <code>impl_name</code>.  Otherwise, the name must match an actor with an actor_class compatible with <code>impl_name</code> as defined in <code>cogment.yaml</code> in the sections <code>trial_params:actors:actor_class</code> and <code>trial_params:actors:name</code>.</li>
 </ul>
 <p>Return: None</p>
 <h3 id="register_environmentself-impl-impl_name-default"><code>register_environment(self, impl, impl_name = "default")</code></h3>
@@ -413,18 +454,25 @@ import cogment
 <li><code>trial_id</code>: <em>str</em> - The trial ID to request to terminate.</li>
 </ul>
 <p>Return: None</p>
+<h3 id="async-get_trial_infoself-trial_id"><code>async get_trial_info(self, trial_id)</code></h3>
+<p>Method to get information about a trial.</p>
+<p>Parameters:</p>
+<ul>
+<li><code>trial_id</code>: <em>str</em> - The trial ID from which to request information.  If <code>None</code> returns information about all trials.  Note that ended trials may only appear for a short time in this list after they have ended.</li>
+</ul>
+<p>Return: <em>list[TrialInfo instance]</em> - List of trial information, one per trial.  Can be empty if no trial matches.</p>
 <h3 id="async-watch_trialsself-trial_state_filters"><code>async watch_trials(self, trial_state_filters=[])</code></h3>
 <p>Generator method to iterate, in real-time, through all trial states matching the filters.  When called, it will first iterate over the current states matching the filters, for all trials.  Afterward, it will iterate in real-time over the matching states as they change.</p>
 <p>Parameters:</p>
 <ul>
 <li><code>trial_state_filters</code>: <em>list[cogment.TrialState]</em> - List of enum values from <code>cogment.TrialState</code>.   for which we are intersted to receive state change.</li>
 </ul>
-<p>Return: <em>generator(TrialInfo instance)</em> - A generator for the state changes that arrive.</p>
-<h3 id="get_actorsself-trial_id"><code>get_actors(self, trial_id)</code></h3>
+<p>Return: <em>generator(TrialInfo instance)</em> - A generator for the state changes that arrive.  The <code>TrialInfo</code> received here only contain the trial ID and the state.</p>
+<h3 id="async-get_actorsself-trial_id"><code>async get_actors(self, trial_id)</code></h3>
 <p>Method to get the list of configured actors in a trial.</p>
 <p>Parameters:</p>
 <ul>
-<li><code>trial_id</code>: <em>str</em> - The trial ID to from which to request the list of actors.</li>
+<li><code>trial_id</code>: <em>str</em> - The trial ID from which to request the list of actors.</li>
 </ul>
 <p>Return: <em>list[ActorInfo instance]</em> - List of actors configured in this trial.</p>
 <h2 id="class-session">class Session</h2>
@@ -542,31 +590,30 @@ The generator will exit for various reasons indicating the end of the trial, a l
 <p>Method to validate that the data is valid.  This is a superficial check; even if the data validates successfully, there can still be problems with the data.  This method should be called if changes have been made to the data members of the class.  Exceptions are raised on error.</p>
 <p>Parameters: None</p>
 <p>Return: None</p>
+<h2 id="cogmentapicommon_pb2trialparams">cogment.api.common_pb2.TrialParams</h2>
+<p><a href="cogment-doc/cogment/cogment-low-level-api-guide/grpc/#trialparams">TrialParams</a> is defined in the low level grpc api. </p>
+<h2 id="cogmentapidatalogdatalogsample">cogment.api.datalog.DatalogSample</h2>
+<p><a href="cogment-doc/cogment/cogment-low-level-api-guide/grpc/#logexportersamplerequest">DatalogSample</a> is defined in the low level grpc api.</p>
 <h2 id="class-datalogsession">class DatalogSession</h2>
 <p>Abstract class containing session data and methods necessary to manage logging of trial run data.  An instance of this class is passed as argument to the datalog callback function registered with <code>cogment.Context.register_datalog</code>.</p>
 <p><code>trial_id</code>: <em>str</em> - UUID of the trial managed by this instance.</p>
-<p><code>trial_params</code>: <em>PrehookSession instance</em> - Parameters of the the trial.</p>
-<p><code>on_sample</code>: <em>function(class instance)</em> - If defined, this function will be called when a sample is received.</p>
-<p><code>on_trial_over</code>: <em>function()</em> - If defined, this function will be called when the trial has ended.</p>
+<p><code>trial_params</code>: <em>dictionary</em> - Parameters of the trial. This parameter has been <strong>deprecated</strong>.</p>
+<p><code>raw_trial_params</code>: <em>cogment.api.common_pb2.TrialParams</em> - Parameters of the trial.</p>
 <h3 id="startself_1"><code>start(self)</code></h3>
 <p>Method to start receiving samples.</p>
 <p>Parameters: None</p>
 <p>Return: None</p>
-<h3 id="get_sampleself"><code>get_sample(self)</code></h3>
-<p>Method to wait for a sample from a time step.</p>
-<p>Parameters: None</p>
-<p>Return: <em>class instance</em> - The sample received.</p>
 <h3 id="get_all_samplesself"><code>get_all_samples(self)</code></h3>
 <p>Generator method to iterate over all samples as they are received (waiting for each in turn).</p>
 <p>Parameters: None</p>
-<p>Return: <em>generator(class instance)</em> - A generator for the samples received.</p>
+<p>Return: <em>generator(cogment.api.datalog.DatalogSample)</em> - A generator for the samples received.</p>
 <h2 id="class-cogmentendpoint">class cogment.Endpoint</h2>
 <p>Class enclosing the details for connecting to an Orchestrator.</p>
 <p><code>url</code>: <em>str</em> - The URL where to connect to the Orchestrator.</p>
 <p><code>private_key</code>: <em>str</em> - To use TLS for the connection, this must be set to the PEM-encoded private key.</p>
 <p><code>root_certificates</code>: <em>str</em> - If using TLS for the connection (i.e. the <code>private_key</code> is not <code>None</code>), this can be set to the PEM-encoded root certificates. If not set and using TLS for the connection, the root certificates will be fetched from the system default location.</p>
 <p><code>certificate_chain</code>: <em>str</em> - If using TLS for the connection, this can be set to the PEM-encoded certificate chain.</p>
-<h3 id="__inti__self-url"><code>__inti__(self, url)</code></h3>
+<h3 id="__init__self-url"><code>__init__(self, url)</code></h3>
 <p>Parameters:</p>
 <ul>
 <li><code>url</code>: <em>str</em> - The URL where to connect to the Orchestrator.</li>
@@ -576,7 +623,7 @@ The generator will exit for various reasons indicating the end of the trial, a l
 <p><code>port</code>: <em>str</em> - The TCP/IP port where the service will be awaiting the Orchestrator connection.</p>
 <p><code>private_key_certificate_chain_pairs</code>: <em>list[tupple(str, str)]</em> - To use TLS for incoming connections, this must be se to a list of tuples of the form (PEM-encoded private key, PEM-encoded certificate chain).</p>
 <p><code>root_certificates</code>: <em>str</em> - If using TLS for the connection (i.e. <code>private_key_certificate_chain_pairs</code> is not <code>None</code>), this should be set to PEM-encoded Orchestrator root certificates that the server will use to verify Orchestrator authentication.</p>
-<h3 id="__inti__self-port"><code>__inti__(self, port)</code></h3>
+<h3 id="__init__self-port"><code>__init__(self, port)</code></h3>
 <p>Parameters:</p>
 <ul>
 <li><code>port</code>: <em>int</em> - The TCP/IP port where the service will be awaiting the Orchestrator connection.</li>
@@ -595,6 +642,8 @@ The generator will exit for various reasons indicating the end of the trial, a l
 <p>Class enclosing the details of a trial.</p>
 <p><code>trial_id</code>: <em>str</em> - The trial ID for which the details pertain.</p>
 <p><code>state</code>: <em>cogment.TrialState</em> - The current state of the trial.</p>
+<p><code>tick_id</code>: <em>int</em> - The time step that the information relates to.  Only provided from a call to <code>get_trial_info</code>.</p>
+<p><code>duration</code>: <em>int</em> - The time (in nanoseconds) that the trial has run.  Only provided from a call to <code>get_trial_info</code>.</p>
 <h2 id="class-actorinfo">class ActorInfo</h2>
 <p>Class enclosing the details of an actor.</p>
 <p><code>actor_name</code>: <em>str</em> - The name of the actor.</p>
@@ -616,10 +665,10 @@ The generator will exit for various reasons indicating the end of the trial, a l
 <p><code>EventType.ACTIVE</code>: Normal event from an active trial. Most events will be of this type.</p>
 </li>
 <li>
-<p><code>EventType.ENDING</code>: Events from a trial in the process of ending.  For the environment, this means that these events contain the last actions from the actors, and the trial is awaiting a final observation. For the actors, this means that the trial has ended and no action can/need to be sent in response.</p>
+<p><code>EventType.ENDING</code>: Events from a trial in the process of ending.  For the environment, this means that these events contain the last actions from the actors, and the trial is awaiting a final observation. For the actors, this means that the trial is ending and no action can/need to be sent in response.  Note that because of network timing, there may be <code>ACTIVE</code> events (e.g. rewards or messages) arriving after some <code>ENDING</code> events, but the trial is ending regardless.</p>
 </li>
 <li>
-<p><code>EventType.FINAL</code>: Final event for the trial.  This may contain data or be empty.  If not empty, the data should be considered the same as for a <code>EventType.ENDING</code> event.  The event loop will exit after this event is delivered.</p>
+<p><code>EventType.FINAL</code>: Final event for the trial.  This does not contain data. The event loop will exit after this event is delivered.  This event can be ignored if nothing needs to be done before exiting the loop.</p>
 </li>
 </ul>
 <h2 id="class-recvobservation">class RecvObservation</h2>
@@ -661,7 +710,7 @@ The generator will exit for various reasons indicating the end of the trial, a l
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../javascript/" class="btn btn-neutral float-right" title="javascript">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../javascript/modules/" class="btn btn-neutral float-right" title="Modules">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
         <a href="../cogment-yaml/" class="btn btn-neutral" title="cogment.yaml"><span class="icon icon-circle-arrow-left"></span> Previous</a>
@@ -695,7 +744,7 @@ The generator will exit for various reasons indicating the end of the trial, a l
         <span><a href="../cogment-yaml/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../javascript/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../javascript/modules/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>

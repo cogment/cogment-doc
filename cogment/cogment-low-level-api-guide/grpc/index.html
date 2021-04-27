@@ -92,7 +92,43 @@
                 </li>
                 <li class="toctree-l2"><a class="reference internal" href="../../cogment-api-reference/python/">python</a>
                 </li>
-                <li class="toctree-l2"><a class="reference internal" href="../../cogment-api-reference/javascript/">javascript</a>
+                <li class="toctree-l2"><a class="reference internal" href="#">Javascript/Typescript SDK</a>
+    <ul>
+                <li class="toctree-l3"><a class="reference internal" href="../../cogment-api-reference/javascript/modules/">Modules</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../../cogment-api-reference/javascript/classes/actorsession/">Class: ActorSession</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../../cogment-api-reference/javascript/classes/cogmentservice/">Class: CogmentService</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../../cogment-api-reference/javascript/classes/trialcontroller/">Class: TrialController</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../../cogment-api-reference/javascript/enums/eventtype/">Enum: EventType</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../../cogment-api-reference/javascript/interfaces/cogmentyaml/">Interface: CogmentYaml</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../../cogment-api-reference/javascript/interfaces/cogmentyamlactor/">Interface: CogmentYamlActor</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../../cogment-api-reference/javascript/interfaces/cogmentyamlactorclass/">Interface: CogmentYamlActorClass</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../../cogment-api-reference/javascript/interfaces/cogmentyamldatalog/">Interface: CogmentYamlDatalog</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../../cogment-api-reference/javascript/interfaces/cogmentyamltrialparameters/">Interface: CogmentYamlTrialParameters</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../../cogment-api-reference/javascript/interfaces/cogsettings/">Interface: CogSettings</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../../cogment-api-reference/javascript/interfaces/cogsettingsactorclass/">Interface: CogSettingsActorClass</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../../cogment-api-reference/javascript/interfaces/createserviceoptions/">Interface: CreateServiceOptions</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../../cogment-api-reference/javascript/interfaces/event/">Interface: Event</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../../cogment-api-reference/javascript/interfaces/reward/">Interface: Reward</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../../cogment-api-reference/javascript/interfaces/sendmessageoptions/">Interface: SendMessageOptions</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../../cogment-api-reference/javascript/interfaces/trialactor/">Interface: TrialActor</a>
+                </li>
+    </ul>
                 </li>
     </ul>
                     </li>
@@ -672,8 +708,8 @@ This is an aggregate of possibly multiple <code>RewardSource</code> (but at leas
 <li>trial_id: The UUID of the trial.</li>
 <li>state: The state of the trial.</li>
 <li>tick_id: The current tick ID of the trial.</li>
-<li>trial_duration: The duration of the trial so far, in nanoseconds. This is meant as an indictor; resolution may not be a nanosecond, and precision is not garanteed.</li>
-<li>latest_observation: The latest environment observation.  This will be provided only if requested in the <code>TrialInfoRequest</code>.</li>
+<li>trial_duration: The duration of the trial so far, in nanoseconds.  If the trial has ended, this is the duration from start to end of the trial.  This is meant as an indicator; resolution may not be a nanosecond, and precision is not garanteed.</li>
+<li>latest_observation: The latest environment observations for all actors.  This will be provided only if requested in the <code>TrialInfoRequest</code>.</li>
 <li>actors_in_trial: The list of active actors in the trial.</li>
 </ul>
 <h3 id="triallistrequest"><code>TrialListRequest</code></h3>

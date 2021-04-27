@@ -134,7 +134,43 @@
                 </li>
                 <li class="toctree-l2"><a class="reference internal" href="../cogment-api-reference/python/">python</a>
                 </li>
-                <li class="toctree-l2"><a class="reference internal" href="../cogment-api-reference/javascript/">javascript</a>
+                <li class="toctree-l2"><a class="reference internal" href="#">Javascript/Typescript SDK</a>
+    <ul>
+                <li class="toctree-l3"><a class="reference internal" href="../cogment-api-reference/javascript/modules/">Modules</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../cogment-api-reference/javascript/classes/actorsession/">Class: ActorSession</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../cogment-api-reference/javascript/classes/cogmentservice/">Class: CogmentService</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../cogment-api-reference/javascript/classes/trialcontroller/">Class: TrialController</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../cogment-api-reference/javascript/enums/eventtype/">Enum: EventType</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../cogment-api-reference/javascript/interfaces/cogmentyaml/">Interface: CogmentYaml</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../cogment-api-reference/javascript/interfaces/cogmentyamlactor/">Interface: CogmentYamlActor</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../cogment-api-reference/javascript/interfaces/cogmentyamlactorclass/">Interface: CogmentYamlActorClass</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../cogment-api-reference/javascript/interfaces/cogmentyamldatalog/">Interface: CogmentYamlDatalog</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../cogment-api-reference/javascript/interfaces/cogmentyamltrialparameters/">Interface: CogmentYamlTrialParameters</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../cogment-api-reference/javascript/interfaces/cogsettings/">Interface: CogSettings</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../cogment-api-reference/javascript/interfaces/cogsettingsactorclass/">Interface: CogSettingsActorClass</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../cogment-api-reference/javascript/interfaces/createserviceoptions/">Interface: CreateServiceOptions</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../cogment-api-reference/javascript/interfaces/event/">Interface: Event</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../cogment-api-reference/javascript/interfaces/reward/">Interface: Reward</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../cogment-api-reference/javascript/interfaces/sendmessageoptions/">Interface: SendMessageOptions</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../cogment-api-reference/javascript/interfaces/trialactor/">Interface: TrialActor</a>
+                </li>
+    </ul>
                 </li>
     </ul>
                     </li>
@@ -358,7 +394,7 @@ await context.join_trial(
 </code></pre>
 
 <p>Please note, that a trial including one or more client actors will wait for all of them to join before any actor can start processing events.</p>
-<p>Due to the different network requirements, client actors are a good fit when implementing a <a href="../../concepts/glossary/#frontend">frontend</a> for human actors. In addition to the <a href="../cogment-api-reference/python/">python</a> SDK demonstrated above, client actors can be implemented in <a href="../cogment-api-reference/javascript/">javascript</a> using the corresponding SDK.</p>
+<p>Due to the different network requirements, client actors are a good fit when implementing a <a href="../../concepts/glossary/#frontend">frontend</a> for human actors. In addition to the <a href="../cogment-api-reference/python/">python</a> SDK demonstrated above, client actors can be implemented in <a href="./cogment-api-reference/javascript.md">javascript</a> using the corresponding SDK.</p>
 <h2 id="controller">Controller</h2>
 <p><a href="../../concepts/glossary/#trial">Trials</a> are started by clients of the <a href="../../concepts/glossary/#orchestrator">Orchestrator</a> using a Controller. Instances of a controller are built from the <a href="../cogment-api-reference/python/#class-cogmentcontext"><code>Context</code></a> instance and connect to an Orchestrator endpoint.</p>
 <pre><code class="python">controller = context.get_controller(

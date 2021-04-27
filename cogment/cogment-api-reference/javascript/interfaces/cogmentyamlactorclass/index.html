@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="canonical" href="https://docs.cogment.ai/cogment/cogment-api-reference/javascript/interfaces/cogmentyamlactorclass/">
+  <link rel="shortcut icon" href="../../../../../img/favicon.ico">
+  <title>Interface: CogmentYamlActorClass - Cogment</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
+
+  <link rel="stylesheet" href="../../../../../css/theme.css" />
+  <link rel="stylesheet" href="../../../../../css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Interface: CogmentYamlActorClass";
+    var mkdocs_page_input_path = "cogment/cogment-api-reference/javascript/interfaces/cogmentyamlactorclass.md";
+    var mkdocs_page_url = "/cogment/cogment-api-reference/javascript/interfaces/cogmentyamlactorclass/";
+  </script>
+  
+  <script src="../../../../../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../../../../../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+        <a href="../../../../.." class="icon icon-home"> Cogment</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+                <p class="caption"><span class="caption-text">Introduction</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../../../..">Overview</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../../../../introduction/installation/">Installation & Setup</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Support</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../../../../support/community-channels/">Community channels</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Concepts</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../../../../concepts/core-concepts/">Core Concepts</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../../../../concepts/glossary/">Glossary</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Cogment</span></p>
+                <ul class="current">
+                    <li class="toctree-l1"><a class="reference internal" href="#">Tutorial</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../../../../tutorial/introduction/">Introduction</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../../../tutorial/1-bootstrap-and-data-structures/">Step 1: Bootstrap a Cogment app</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../../../tutorial/2-random-player/">Step 2: Implement actor and environment</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../../../tutorial/3-rewards/">Step 3: Introduce rewards</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../../../tutorial/4-heuristic-player/">Step 4: Create a heuristic player</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../../../tutorial/5-human-player/">Step 5: Add a human player in the loop</a>
+                </li>
+    </ul>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../../../cogment-api-guide/">Cogment API Guide</a>
+                    </li>
+                    <li class="toctree-l1 current"><a class="reference internal current" href="#">Cogment API Reference</a>
+    <ul class="current">
+                <li class="toctree-l2"><a class="reference internal" href="../../../cogment-yaml/">cogment.yaml</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../../python/">python</a>
+                </li>
+                <li class="toctree-l2 current"><a class="reference internal current" href="#">Javascript/Typescript SDK</a>
+    <ul class="current">
+                <li class="toctree-l3"><a class="reference internal" href="../../modules/">Modules</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../../classes/actorsession/">Class: ActorSession</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../../classes/cogmentservice/">Class: CogmentService</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../../classes/trialcontroller/">Class: TrialController</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../../enums/eventtype/">Enum: EventType</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../cogmentyaml/">Interface: CogmentYaml</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../cogmentyamlactor/">Interface: CogmentYamlActor</a>
+                </li>
+                <li class="toctree-l3 current"><a class="reference internal current" href="./">Interface: CogmentYamlActorClass</a>
+    <ul class="current">
+    <li class="toctree-l4"><a class="reference internal" href="#action">action</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#config_type">config_type</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#name">name</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#observation">observation</a>
+    </li>
+    </ul>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../cogmentyamldatalog/">Interface: CogmentYamlDatalog</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../cogmentyamltrialparameters/">Interface: CogmentYamlTrialParameters</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../cogsettings/">Interface: CogSettings</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../cogsettingsactorclass/">Interface: CogSettingsActorClass</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../createserviceoptions/">Interface: CreateServiceOptions</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../event/">Interface: Event</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../reward/">Interface: Reward</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../sendmessageoptions/">Interface: SendMessageOptions</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../trialactor/">Interface: TrialActor</a>
+                </li>
+    </ul>
+                </li>
+    </ul>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="#">Cogment Low Level API Guide</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../../../../cogment-low-level-api-guide/overview/">Overview</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../../../cogment-low-level-api-guide/grpc/">gRPC API Reference</a>
+                </li>
+    </ul>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Deployment Guide</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../../../../deployment-guide/local-deployement/">Local Deployment</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../../../../license/">License</a>
+                    </li>
+                </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../../..">Cogment</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Javascript/Typescript SDK &raquo;</li>
+        
+      
+        
+          <li>Cogment API Reference &raquo;</li>
+        
+      
+        
+          <li>Cogment &raquo;</li>
+        
+      
+    
+    <li>Interface: CogmentYamlActorClass</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        <a href="https://github.com/cogment/cogment-doc/edit/master/docs/cogment/cogment-api-reference/javascript/interfaces/cogmentyamlactorclass.md"
+          class="icon icon-github"> Edit on GitHub</a>
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <p>Static configuration for an actor class.</p>
+<h2 id="properties">Properties</h2>
+<h3 id="action">action</h3>
+<p>• <strong>action</strong>: <em>object</em></p>
+<p>Action space static configuration.</p>
+<h4 id="type-declaration">Type declaration:</h4>
+<table>
+<thead>
+<tr>
+<th align="left">Name</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>space</code></td>
+<td align="left"><em>string</em></td>
+<td align="left">Full protobuf message type representing the action space of this actor.</td>
+</tr>
+</tbody>
+</table>
+<p>Defined in: <a href="https://github.com/cogment/cogment-js-sdk/blob/main/src/cogment/types/CogmentYaml.ts#L25">cogment/types/CogmentYaml.ts:25</a></p>
+<hr />
+<h3 id="config_type">config_type</h3>
+<p>• <code>Optional</code> <strong>config_type</strong>: <em>string</em></p>
+<p>Full protobuf message type representing the configuration of this actor.</p>
+<p>Defined in: <a href="https://github.com/cogment/cogment-js-sdk/blob/main/src/cogment/types/CogmentYaml.ts#L34">cogment/types/CogmentYaml.ts:34</a></p>
+<hr />
+<h3 id="name">name</h3>
+<p>• <strong>name</strong>: <em>string</em></p>
+<p>Unique identifier for this actor. This identifier corresponds to <a href="../trialactor/#actorclass">TrialActor.actorClass</a> and is used to
+register actor implementations with <a href="../../classes/cogmentservice/#registeractor">CogmentService.registerActor</a>.</p>
+<p>Defined in: <a href="https://github.com/cogment/cogment-js-sdk/blob/main/src/cogment/types/CogmentYaml.ts#L39">cogment/types/CogmentYaml.ts:39</a></p>
+<hr />
+<h3 id="observation">observation</h3>
+<p>• <strong>observation</strong>: <em>object</em></p>
+<p>Observation space static configuration.</p>
+<h4 id="type-declaration_1">Type declaration:</h4>
+<table>
+<thead>
+<tr>
+<th align="left">Name</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>space</code></td>
+<td align="left"><em>string</em></td>
+<td align="left">Full protobuf message type representing the observation space of this actor.</td>
+</tr>
+</tbody>
+</table>
+<p>Defined in: <a href="https://github.com/cogment/cogment-js-sdk/blob/main/src/cogment/types/CogmentYaml.ts#L43">cogment/types/CogmentYaml.ts:43</a></p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../cogmentyamldatalog/" class="btn btn-neutral float-right" title="Interface: CogmentYamlDatalog">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../cogmentyamlactor/" class="btn btn-neutral" title="Interface: CogmentYamlActor"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+          <a href="https://github.com/cogment/cogment-doc/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
+      
+      
+        <span><a href="../cogmentyamlactor/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../cogmentyamldatalog/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '../../../../..';</script>
+    <script src="../../../../../js/theme.js" defer></script>
+      <script src="../../../../../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

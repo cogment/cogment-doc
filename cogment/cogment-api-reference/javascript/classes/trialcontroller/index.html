@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="canonical" href="https://docs.cogment.ai/cogment/cogment-api-reference/javascript/classes/trialcontroller/">
+  <link rel="shortcut icon" href="../../../../../img/favicon.ico">
+  <title>Class: TrialController - Cogment</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
+
+  <link rel="stylesheet" href="../../../../../css/theme.css" />
+  <link rel="stylesheet" href="../../../../../css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Class: TrialController";
+    var mkdocs_page_input_path = "cogment/cogment-api-reference/javascript/classes/trialcontroller.md";
+    var mkdocs_page_url = "/cogment/cogment-api-reference/javascript/classes/trialcontroller/";
+  </script>
+  
+  <script src="../../../../../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../../../../../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+        <a href="../../../../.." class="icon icon-home"> Cogment</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+                <p class="caption"><span class="caption-text">Introduction</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../../../..">Overview</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../../../../introduction/installation/">Installation & Setup</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Support</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../../../../support/community-channels/">Community channels</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Concepts</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../../../../concepts/core-concepts/">Core Concepts</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../../../../concepts/glossary/">Glossary</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Cogment</span></p>
+                <ul class="current">
+                    <li class="toctree-l1"><a class="reference internal" href="#">Tutorial</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../../../../tutorial/introduction/">Introduction</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../../../tutorial/1-bootstrap-and-data-structures/">Step 1: Bootstrap a Cogment app</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../../../tutorial/2-random-player/">Step 2: Implement actor and environment</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../../../tutorial/3-rewards/">Step 3: Introduce rewards</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../../../tutorial/4-heuristic-player/">Step 4: Create a heuristic player</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../../../tutorial/5-human-player/">Step 5: Add a human player in the loop</a>
+                </li>
+    </ul>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../../../cogment-api-guide/">Cogment API Guide</a>
+                    </li>
+                    <li class="toctree-l1 current"><a class="reference internal current" href="#">Cogment API Reference</a>
+    <ul class="current">
+                <li class="toctree-l2"><a class="reference internal" href="../../../cogment-yaml/">cogment.yaml</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../../python/">python</a>
+                </li>
+                <li class="toctree-l2 current"><a class="reference internal current" href="#">Javascript/Typescript SDK</a>
+    <ul class="current">
+                <li class="toctree-l3"><a class="reference internal" href="../../modules/">Modules</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../actorsession/">Class: ActorSession</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../cogmentservice/">Class: CogmentService</a>
+                </li>
+                <li class="toctree-l3 current"><a class="reference internal current" href="./">Class: TrialController</a>
+    <ul class="current">
+    <li class="toctree-l4"><a class="reference internal" href="#getactiveactors">getActiveActors</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#gettriaid">getTriaId</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#gettrialinfo">getTrialInfo</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#istrialover">isTrialOver</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#jointrial">joinTrial</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#starttrial">startTrial</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#terminatetrial">terminateTrial</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#version">version</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#watchtrials">watchTrials</a>
+    </li>
+    </ul>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../../enums/eventtype/">Enum: EventType</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../../interfaces/cogmentyaml/">Interface: CogmentYaml</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../../interfaces/cogmentyamlactor/">Interface: CogmentYamlActor</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../../interfaces/cogmentyamlactorclass/">Interface: CogmentYamlActorClass</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../../interfaces/cogmentyamldatalog/">Interface: CogmentYamlDatalog</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../../interfaces/cogmentyamltrialparameters/">Interface: CogmentYamlTrialParameters</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../../interfaces/cogsettings/">Interface: CogSettings</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../../interfaces/cogsettingsactorclass/">Interface: CogSettingsActorClass</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../../interfaces/createserviceoptions/">Interface: CreateServiceOptions</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../../interfaces/event/">Interface: Event</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../../interfaces/reward/">Interface: Reward</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../../interfaces/sendmessageoptions/">Interface: SendMessageOptions</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../../interfaces/trialactor/">Interface: TrialActor</a>
+                </li>
+    </ul>
+                </li>
+    </ul>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="#">Cogment Low Level API Guide</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../../../../cogment-low-level-api-guide/overview/">Overview</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../../../cogment-low-level-api-guide/grpc/">gRPC API Reference</a>
+                </li>
+    </ul>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Deployment Guide</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../../../../deployment-guide/local-deployement/">Local Deployment</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../../../../license/">License</a>
+                    </li>
+                </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../../..">Cogment</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Javascript/Typescript SDK &raquo;</li>
+        
+      
+        
+          <li>Cogment API Reference &raquo;</li>
+        
+      
+        
+          <li>Cogment &raquo;</li>
+        
+      
+    
+    <li>Class: TrialController</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        <a href="https://github.com/cogment/cogment-doc/edit/master/docs/cogment/cogment-api-reference/javascript/classes/trialcontroller.md"
+          class="icon icon-github"> Edit on GitHub</a>
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <p>Controller for interacting with trials in the Cogment framework. Each instance is bound to
+<a href="../../interfaces/cogsettings/"><code>CogSettings</code></a>,
+<a href="../../interfaces/trialactor/"><code>TrialActor's</code></a> <a href="../../modules/#actorimplementation"><code>ActorImplementation's</code></a> and gRPC connections to
+the Cogment framework.</p>
+<h2 id="methods">Methods</h2>
+<h3 id="getactiveactors">getActiveActors</h3>
+<p>▸ <strong>getActiveActors</strong>(): <a href="../../interfaces/trialactor/"><em>TrialActor</em></a>[]</p>
+<p>A list of <a href="../../interfaces/trialactor/"><code>TrialActor's</code></a> associated to this trial.</p>
+<p><strong>Returns:</strong> <a href="../../interfaces/trialactor/"><em>TrialActor</em></a>[]</p>
+<ul>
+<li>The trial actors for this trial.</li>
+</ul>
+<p>Defined in: <a href="https://github.com/cogment/cogment-js-sdk/blob/main/src/cogment/TrialController.ts#L101">cogment/TrialController.ts:101</a></p>
+<hr />
+<h3 id="gettriaid">getTriaId</h3>
+<p>▸ <strong>getTriaId</strong>(): <em>string</em></p>
+<p>The id of any started or joined trial.</p>
+<p><strong>Returns:</strong> <em>string</em></p>
+<ul>
+<li>The trial id</li>
+</ul>
+<p>Defined in: <a href="https://github.com/cogment/cogment-js-sdk/blob/main/src/cogment/TrialController.ts#L109">cogment/TrialController.ts:109</a></p>
+<hr />
+<h3 id="gettrialinfo">getTrialInfo</h3>
+<p>▸ <strong>getTrialInfo</strong>(<code>trialId</code>: <em>string</em>): <em>Promise</em>&lt;TrialInfoReply></p>
+<p>Get trial information for a given trial.</p>
+<h4 id="parameters">Parameters:</h4>
+<table>
+<thead>
+<tr>
+<th align="left">Name</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>trialId</code></td>
+<td align="left"><em>string</em></td>
+<td align="left">Id of the trial to retrieve info for.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Returns:</strong> <em>Promise</em>&lt;TrialInfoReply></p>
+<p>Defined in: <a href="https://github.com/cogment/cogment-js-sdk/blob/main/src/cogment/TrialController.ts#L120">cogment/TrialController.ts:120</a></p>
+<hr />
+<h3 id="istrialover">isTrialOver</h3>
+<p>▸ <strong>isTrialOver</strong>(<code>trialId</code>: <em>string</em>): <em>Promise</em>&lt;boolean></p>
+<p>Check if a given trial is completed.</p>
+<h4 id="parameters_1">Parameters:</h4>
+<table>
+<thead>
+<tr>
+<th align="left">Name</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>trialId</code></td>
+<td align="left"><em>string</em></td>
+<td align="left">the id of the trial to check.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Returns:</strong> <em>Promise</em>&lt;boolean></p>
+<p>Defined in: <a href="https://github.com/cogment/cogment-js-sdk/blob/main/src/cogment/TrialController.ts#L141">cogment/TrialController.ts:141</a></p>
+<hr />
+<h3 id="jointrial">joinTrial</h3>
+<p>▸ <strong>joinTrial</strong>(<code>trialId</code>: <em>string</em>, <code>trialActor?</code>: <a href="../../interfaces/trialactor/"><em>TrialActor</em></a>): <em>Promise</em>&lt;<a href="../../modules/#jointrialreturntype"><em>JoinTrialReturnType</em></a>></p>
+<p>Join a trial given a trial id.</p>
+<h4 id="parameters_2">Parameters:</h4>
+<table>
+<thead>
+<tr>
+<th align="left">Name</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>trialId</code></td>
+<td align="left"><em>string</em></td>
+<td align="left">The trialId of the trial to join.</td>
+</tr>
+<tr>
+<td align="left"><code>trialActor?</code></td>
+<td align="left"><a href="../../interfaces/trialactor/"><em>TrialActor</em></a></td>
+<td align="left">The TrialActor configuration to join as.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Returns:</strong> <em>Promise</em>&lt;<a href="../../modules/#jointrialreturntype"><em>JoinTrialReturnType</em></a>></p>
+<p>Defined in: <a href="https://github.com/cogment/cogment-js-sdk/blob/main/src/cogment/TrialController.ts#L151">cogment/TrialController.ts:151</a></p>
+<hr />
+<h3 id="starttrial">startTrial</h3>
+<p>▸ <strong>startTrial</strong>(<code>actorClass</code>: <em>string</em>, <code>trialConfig?</code>: <em>Message</em>): <em>Promise</em>&lt;AsObject></p>
+<p>Start a new trial.</p>
+<h4 id="parameters_3">Parameters:</h4>
+<table>
+<thead>
+<tr>
+<th align="left">Name</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>actorClass</code></td>
+<td align="left"><em>string</em></td>
+<td align="left">The name of an actor_class corresponding to <a href="../../interfaces/cogmentyaml/"><code>cogment.yaml</code></a></td>
+</tr>
+<tr>
+<td align="left"><code>trialConfig?</code></td>
+<td align="left"><em>Message</em></td>
+<td align="left">A TrialConfig protobuf that will be passed to any pre-hooks configured in   <a href="../../interfaces/cogmentyaml/#pre_hooks"><code>cogment.yaml</code></a></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Returns:</strong> <em>Promise</em>&lt;AsObject></p>
+<ul>
+<li>A trial start response</li>
+</ul>
+<p>Defined in: <a href="https://github.com/cogment/cogment-js-sdk/blob/main/src/cogment/TrialController.ts#L204">cogment/TrialController.ts:204</a></p>
+<hr />
+<h3 id="terminatetrial">terminateTrial</h3>
+<p>▸ <strong>terminateTrial</strong>(<code>trialId</code>: <em>string</em>): <em>Promise</em>&lt;void></p>
+<p>Terminate a trial.</p>
+<h4 id="parameters_4">Parameters:</h4>
+<table>
+<thead>
+<tr>
+<th align="left">Name</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>trialId</code></td>
+<td align="left"><em>string</em></td>
+<td align="left">Id of the trial to terminate.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Returns:</strong> <em>Promise</em>&lt;void></p>
+<p>Defined in: <a href="https://github.com/cogment/cogment-js-sdk/blob/main/src/cogment/TrialController.ts#L238">cogment/TrialController.ts:238</a></p>
+<hr />
+<h3 id="version">version</h3>
+<p>▸ <strong>version</strong>(): <em>Promise</em>&lt;<a href="../../modules/#versionreturntype"><em>VersionReturnType</em></a>></p>
+<p>Request the version from the Cogment framework.</p>
+<p><strong>Returns:</strong> <em>Promise</em>&lt;<a href="../../modules/#versionreturntype"><em>VersionReturnType</em></a>></p>
+<p>Defined in: <a href="https://github.com/cogment/cogment-js-sdk/blob/main/src/cogment/TrialController.ts#L258">cogment/TrialController.ts:258</a></p>
+<hr />
+<h3 id="watchtrials">watchTrials</h3>
+<p>▸ <strong>watchTrials</strong>(<code>filter?</code>: (<em>0</em> | <em>2</em> | <em>1</em> | <em>3</em> | <em>4</em> | <em>5</em>)[]): <em>AsyncGenerator</em>&lt;TrialListEntry, void, void></p>
+<p>Watch cogment for trial changes.</p>
+<h4 id="parameters_5">Parameters:</h4>
+<table>
+<thead>
+<tr>
+<th align="left">Name</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>filter?</code></td>
+<td align="left">(<em>0</em> | <em>2</em> | <em>1</em> | <em>3</em> | <em>4</em> | <em>5</em>)[]</td>
+<td align="left">An enum of TrialState's to watch trial changes of.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Returns:</strong> <em>AsyncGenerator</em>&lt;TrialListEntry, void, void></p>
+<p>Defined in: <a href="https://github.com/cogment/cogment-js-sdk/blob/main/src/cogment/TrialController.ts#L277">cogment/TrialController.ts:277</a></p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../../enums/eventtype/" class="btn btn-neutral float-right" title="Enum: EventType">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../cogmentservice/" class="btn btn-neutral" title="Class: CogmentService"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+          <a href="https://github.com/cogment/cogment-doc/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
+      
+      
+        <span><a href="../cogmentservice/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../../enums/eventtype/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '../../../../..';</script>
+    <script src="../../../../../js/theme.js" defer></script>
+      <script src="../../../../../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

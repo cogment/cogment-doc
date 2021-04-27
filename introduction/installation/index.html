@@ -56,6 +56,16 @@
     <li class="toctree-l2"><a class="reference internal" href="#pre-requisites">Pre-Requisites</a>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#install-the-latest-cogment-cli">Install the latest Cogment CLI</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#linux">Linux</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#macos">macOS</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#windows">Windows</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#check-that-cogment-cli-is-accessible">Check that Cogment CLI is accessible.</a>
+    </li>
+        </ul>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#test-your-installation">Test your installation</a>
     </li>
@@ -100,7 +110,43 @@
                 </li>
                 <li class="toctree-l2"><a class="reference internal" href="../../cogment/cogment-api-reference/python/">python</a>
                 </li>
-                <li class="toctree-l2"><a class="reference internal" href="../../cogment/cogment-api-reference/javascript/">javascript</a>
+                <li class="toctree-l2"><a class="reference internal" href="#">Javascript/Typescript SDK</a>
+    <ul>
+                <li class="toctree-l3"><a class="reference internal" href="../../cogment/cogment-api-reference/javascript/modules/">Modules</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../../cogment/cogment-api-reference/javascript/classes/actorsession/">Class: ActorSession</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../../cogment/cogment-api-reference/javascript/classes/cogmentservice/">Class: CogmentService</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../../cogment/cogment-api-reference/javascript/classes/trialcontroller/">Class: TrialController</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../../cogment/cogment-api-reference/javascript/enums/eventtype/">Enum: EventType</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../../cogment/cogment-api-reference/javascript/interfaces/cogmentyaml/">Interface: CogmentYaml</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../../cogment/cogment-api-reference/javascript/interfaces/cogmentyamlactor/">Interface: CogmentYamlActor</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../../cogment/cogment-api-reference/javascript/interfaces/cogmentyamlactorclass/">Interface: CogmentYamlActorClass</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../../cogment/cogment-api-reference/javascript/interfaces/cogmentyamldatalog/">Interface: CogmentYamlDatalog</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../../cogment/cogment-api-reference/javascript/interfaces/cogmentyamltrialparameters/">Interface: CogmentYamlTrialParameters</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../../cogment/cogment-api-reference/javascript/interfaces/cogsettings/">Interface: CogSettings</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../../cogment/cogment-api-reference/javascript/interfaces/cogsettingsactorclass/">Interface: CogSettingsActorClass</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../../cogment/cogment-api-reference/javascript/interfaces/createserviceoptions/">Interface: CreateServiceOptions</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../../cogment/cogment-api-reference/javascript/interfaces/event/">Interface: Event</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../../cogment/cogment-api-reference/javascript/interfaces/reward/">Interface: Reward</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../../cogment/cogment-api-reference/javascript/interfaces/sendmessageoptions/">Interface: SendMessageOptions</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../../cogment/cogment-api-reference/javascript/interfaces/trialactor/">Interface: TrialActor</a>
+                </li>
+    </ul>
                 </li>
     </ul>
                     </li>
@@ -165,16 +211,40 @@
 <h2 id="pre-requisites">Pre-Requisites</h2>
 <p>Please install:</p>
 <ol>
-<li>
-<p><a href="https://docs.docker.com/engine/install/">Docker</a> and <a href="https://docs.docker.com/compose/install/">docker-compose</a></p>
-</li>
-<li>
-<p><a href="https://github.com/protocolbuffers/protobuf">protoc</a></p>
-</li>
+<li><a href="https://docs.docker.com/engine/install/">Docker</a> and <a href="https://docs.docker.com/compose/install/">docker-compose</a></li>
+<li><a href="https://github.com/protocolbuffers/protobuf">protoc</a></li>
 </ol>
 <h2 id="install-the-latest-cogment-cli">Install the latest Cogment CLI</h2>
-<p>The latest <code>cogment</code> CLI is available <a href="https://github.com/cogment/cogment-cli/releases/">here</a> as an executable binary.</p>
-<p>Choose the appropriate file for your system, rename the file to "cogment", and make sure to put it in a folder that is in your 'PATH' environmental variable.</p>
+<ol>
+<li><code>cogment</code> CLI releases are available <a href="https://github.com/cogment/cogment-cli/releases/">here</a> as executable binaries.</li>
+<li>Pick a version, usually the latest one should be the right pick.</li>
+<li>At the end of the release notes, click on "Assets" to choose and download the appropriate version for your system.</li>
+<li>Rename the file to "cogment", and add it to your <a href="https://superuser.com/questions/284342/what-are-path-and-other-environment-variables-and-how-can-i-set-or-use-them"><code>PATH</code> environmental variable</a>. </li>
+</ol>
+<p>You can follow more specific instructions for your OS in the following.</p>
+<h3 id="linux">Linux</h3>
+<p>The following downloads version <code>COGMENT_CLI_VERSION</code> of the cli to <code>/usr/local/bin</code>, a location already belonging to your <code>PATH</code> in most linux distributions and make sure it is executable.</p>
+<p>Simply replace <code>COGMENT_CLI_VERSION</code> with the version you want to download, e.g. <code>v1.0.1</code>.</p>
+<pre><code class="console">$ curl -L https://github.com/cogment/cogment-cli/releases/download/COGMENT_CLI_VERSION/cogment-linux-amd64 -o /usr/local/bin/cogment &amp;&amp; chmod +x /usr/local/bin/cogment
+</code></pre>
+
+<h3 id="macos">macOS</h3>
+<blockquote>
+<p>At the moment Cogment will only work on x86 <em>intel</em> macs</p>
+</blockquote>
+<p>The following downloads version <code>COGMENT_CLI_VERSION</code> of the cli to <code>/usr/local/bin</code>, a location already belonging to your <code>PATH</code> in macOS and make sure it is executable.</p>
+<p>Simply replace <code>COGMENT_CLI_VERSION</code> with the version you want to download, e.g. <code>v1.0.1</code>.</p>
+<pre><code class="console">$ curl -L https://github.com/cogment/cogment-cli/releases/download/COGMENT_CLI_VERSION/cogment-macOS-amd64 -o /usr/local/bin/cogment &amp;&amp; chmod +x /usr/local/bin/cogment
+</code></pre>
+
+<h3 id="windows">Windows</h3>
+<ol>
+<li>Download the windows version of the cogment CLI as described above.</li>
+<li>Rename the downloaded file <code>cogment-windows-amd64.exe</code> to <code>cogment.exe</code>.</li>
+<li>Copy it to an easy to find location, e.g. <code>c:\\cogment</code>.</li>
+<li>Add the <code>c:\\cogment</code> folder to your <a href="https://superuser.com/questions/284342/what-are-path-and-other-environment-variables-and-how-can-i-set-or-use-them"><code>PATH</code> environmental variable</a>.</li>
+</ol>
+<h3 id="check-that-cogment-cli-is-accessible">Check that Cogment CLI is accessible.</h3>
 <p>With a working installation you can run the following in a terminal:</p>
 <pre><code class="console">$ cogment version
 </code></pre>
