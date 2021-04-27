@@ -14,7 +14,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Changed
 
-- Update for latest Python SDK changes
+- Update for latest Python SDK changes (incl. Datalog related features, Controller's `get_trial_info` and `get_actors`)
 
 ### Fixed
 
