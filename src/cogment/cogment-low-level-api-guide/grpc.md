@@ -21,6 +21,22 @@ In many places in the API, we use a list of actor data without information about
 These lists have a constant length and order throughout a trial (set in the trial parameters), and thus can/must be cross referenced with other such lists within the same trial (e.g. `actors_in_trial`, `actors_map`).
 The actor can be infered by the position in the list, and the index into the list can sometimes be used to identify an actor.
 
+### Limitations
+
+Due to normal network delays and unpredictability of the various componenents, there are limitations related to the communication with the Ochestrator that translate in issues that can arise.
+
+- In the current version, to simplify the implementation, there is an expectation of "good behavior" from the various components:
+  - Actors are expected to respond with an action only after receiving an observation, and to send only one action per observation received.
+  - The environment is expected to respond with an observation set only after receiving an action set, and to send only one observation set per action set received.
+  - All components are expected to respond within a reasonable time (e.g. less than 5 sec).
+  - Hooks do not assume to receive specific parameters, reply only with well formed parameters, and do not assume a specific order of hooks being called (when multiple hooks are defined).
+  - A `TerminateTrial` (from the Control API) is called only a reasonable amount of time after a `StartTrial` (e.g. more than 2 sec).
+  - All components are started after the Orchestrator is running.
+  - Note that what constitutes a "reasonable" amount of time is dependent on many variables and the numbers given here are only vaguely safe values for most systems.
+- It is generally understood that most actors do not know when a trial will end.  Because of this, there may be unpredictable behavior at the end of a trial:
+  - Rewards and messages sent after the last action may not reach their destination.
+  - If a trial is terminated by the Control API, actions from some actors may not reach the environment before the end of the trial.
+
 ## Common types
 
 Most of the messages are defined in the `common.proto` file.  `ObservationSet` is defined in `environment.proto`.
