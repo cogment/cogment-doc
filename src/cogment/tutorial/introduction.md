@@ -40,8 +40,16 @@ The implementations will be done in Python 3, you'll need a good knowledge of th
 
 ## Webapp
 
-🚧
+In the sixth step of the tutorial, you'll implement your first webapp to provide a more user friendly interface for the human player.
+
+The implementation will be done in Javascript and using React.
+
+- [Step 6: Implement a web client for the human player](./6-web-client.md)
 
 ## Learning actors
 
-🚧
+In the seventh step of the tutorial, you'll implement your an actor trained with Reinforcement Learning.
+
+The implementation will be done in Python and using Tensorflow.
+
+- [Step 7: Add a player trained with Reinforcement Learning using DQN](./7-dqn-player.md)

@@ -10,6 +10,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 
 - Add current limitations
+- Add tutorial 7 showing how to implement a trained actor implementation
+
+### Fixed
+
+- Add missing links to tutorial 6.
 
 ## v1.0.0-beta3 - 2021-04-27
 

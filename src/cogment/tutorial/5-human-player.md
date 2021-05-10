@@ -184,6 +184,8 @@ next_action = PlayerAction(move=move)
 
 Modify the `client/main.py` file to include the above additions.
 
-You can now [build and run](./1-bootstrap-and-data-structures.md#building-and-running-the-app) the application. You'll be presented with a prompt for your moves and compare your skills to the simple heuristic AI we implemented earlier.
+You can now [build and run](./1-bootstrap-and-data-structures.md#building-and-running-the-app) the application. You'll be presented with a prompt for choosing your moves and comparing your skills to the simple heuristic AI we implemented earlier.
 
 This concludes the step 5 of the tutorial: you implemented your first client actor and put your first human in the loop! This is also the final step for the basics tutorial.
+
+You can continue by implementing a web client to replace the command line interface we just developed in [step 6](./6-web-client.md). You can also learn how to train an actor implementation using Reinforcement Learning in [step 7](./7-dqn-player.md).
