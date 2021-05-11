@@ -11,7 +11,7 @@ This is the documentation for the Cogment framework. For further Cogment informa
 - `mkdocs.yml` is the main configuration file for the documentation.
 - `./src` contains the source for the documentation, mostly markdown file and images.
 
-## Building this documentation
+## Developers
 
 ### Prerequisites
 
@@ -34,3 +34,13 @@ open <http://127.0.0.1:8000>
 ```console
 poetry run task build
 ```
+
+### Release process
+
+People having mainteners rights of the repository can follow these steps to release a version **MAJOR.MINOR.PATCH**. The versioning scheme follows [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
+
+1. Run `./scripts/create_release_branch.sh MAJOR.MINOR.PATCH` to create the release branch and update the version of the package,
+2. On the release branch, check and update the changelog if needed and make sure everything's fine on CI,
+3. Run `./scripts/tag_release.sh MAJOR.MINOR.PATCH` to create the specific version section in the changelog, merge the release branch in `main`, create the release tag and update the `develop` branch with those.
+
+The rest, publishing to https://docs.cogment.ai and updating the mirror repositories, is handled directly by the CI.
