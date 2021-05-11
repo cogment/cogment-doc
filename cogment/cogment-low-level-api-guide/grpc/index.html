@@ -82,6 +82,10 @@
                 </li>
                 <li class="toctree-l2"><a class="reference internal" href="../../tutorial/5-human-player/">Step 5: Add a human player in the loop</a>
                 </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../tutorial/6-web-client/">Step 6: Implement a web client for the human player</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../tutorial/7-dqn-player/">Step 7: Add a player trained with Reinforcement Learning using DQN</a>
+                </li>
     </ul>
                     </li>
                     <li class="toctree-l1"><a class="reference internal" href="../../cogment-api-guide/">Cogment API Guide</a>
@@ -139,6 +143,10 @@
                 <li class="toctree-l2 current"><a class="reference internal current" href="./">gRPC API Reference</a>
     <ul class="current">
     <li class="toctree-l3"><a class="reference internal" href="#general">General</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#limitations">Limitations</a>
+    </li>
+        </ul>
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#common-types">Common types</a>
         <ul>
@@ -359,6 +367,21 @@ How services are implemented or accessed is highly dependant on the programming 
 <p>In many places in the API, we use a list of actor data without information about which actor is where in the list.
 These lists have a constant length and order throughout a trial (set in the trial parameters), and thus can/must be cross referenced with other such lists within the same trial (e.g. <code>actors_in_trial</code>, <code>actors_map</code>).
 The actor can be infered by the position in the list, and the index into the list can sometimes be used to identify an actor.</p>
+<h3 id="limitations">Limitations</h3>
+<p>Due to normal network delays and unpredictability of the various componenents, there are limitations related to the communication with the Ochestrator that translate in issues that can arise.</p>
+<ul>
+<li>In the current version, to simplify the implementation, there is an expectation of "good behavior" from the various components:</li>
+<li>Actors are expected to respond with an action only after receiving an observation, and to send only one action per observation received.</li>
+<li>The environment is expected to respond with an observation set only after receiving an action set, and to send only one observation set per action set received.</li>
+<li>All components are expected to respond within a reasonable time (e.g. less than 5 sec).</li>
+<li>Hooks do not assume to receive specific parameters, reply only with well formed parameters, and do not assume a specific order of hooks being called (when multiple hooks are defined).</li>
+<li>A <code>TerminateTrial</code> (from the Control API) is called only a reasonable amount of time after a <code>StartTrial</code> (e.g. more than 2 sec).</li>
+<li>All components are started after the Orchestrator is running.</li>
+<li>Note that what constitutes a "reasonable" amount of time is dependent on many variables and the numbers given here are only vaguely safe values for most systems.</li>
+<li>It is generally understood that most actors do not know when a trial will end.  Because of this, there may be unpredictable behavior at the end of a trial:</li>
+<li>Rewards and messages sent after the last action may not reach their destination.</li>
+<li>If a trial is terminated by the Control API, actions from some actors may not reach the environment before the end of the trial.</li>
+</ul>
 <h2 id="common-types">Common types</h2>
 <p>Most of the messages are defined in the <code>common.proto</code> file.  <code>ObservationSet</code> is defined in <code>environment.proto</code>.</p>
 <h3 id="versionrequest"><code>VersionRequest</code></h3>
