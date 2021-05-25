@@ -1,6 +1,6 @@
 # Step 7: Add a web client for the human player
 
-> This part of the tutorial follows [step 5](./5-human-player.md) and [step 6](./6-human-player.md), make sure you've gone through either one of those before starting this one. Alternatively the completed step 5 can be retrieved from the [tutorial's repository](https://github.com/cogment/cogment-tutorial-rps).
+> This part of the tutorial follows [step 5](./5-human-player.md) and [step 6](./6-web-client.md), make sure you've gone through either one of those before starting this one. Alternatively the completed step 5 can be retrieved from the [tutorial's repository](https://github.com/cogment/cogment-tutorial-rps).
 
 In this step of the tutorial, we will go over yet another actor implementation and this implementation will be learning from its experience. We will implement an RPS player using Reinforcement Learning (RL) and more precisely a [Deep Q Network](https://arxiv.org/pdf/1312.5602.pdf), one of the foundational algorithm of modern RL.
 

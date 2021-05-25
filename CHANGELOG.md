@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Fixed
 
 - Fix the edit URI link
+- Fix broken links in the grpc reference, tutorial 7 and the api guide.
 
 ## v1.0.0 - 2021-05-11
 

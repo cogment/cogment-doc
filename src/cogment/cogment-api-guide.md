@@ -199,7 +199,7 @@ await context.join_trial(
 
 Please note, that a trial including one or more client actors will wait for all of them to join before any actor can start processing events.
 
-Due to the different network requirements, client actors are a good fit when implementing a [frontend](../concepts/glossary.md#frontend) for human actors. In addition to the [python](./cogment-api-reference/python.md) SDK demonstrated above, client actors can be implemented in [javascript](./cogment-api-reference/javascript.md) using the corresponding SDK.
+Due to the different network requirements, client actors are a good fit when implementing a [frontend](../concepts/glossary.md#frontend) for human actors. In addition to the [python](./cogment-api-reference/python.md) SDK demonstrated above, client actors can be implemented in [javascript](./cogment-api-reference/javascript/modules.md) using the corresponding SDK.
 
 ## Controller
 
