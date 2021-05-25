@@ -7,12 +7,32 @@ docs_dir: src
 
 site_description: Cogment user documentation - Cogment is an innovative open source AI platform designed to leverage the advent of AI to benefit humankind through human-AI collaboration
 site_author: AI Redefined
-copyright: Copyright 2021 Artificial Intelligence Redefined <dev+cogment@ai-r.com>
+copyright: Copyright 2021 AI Redefined Inc. <dev+cogment@ai-r.com>
 
 google_analytics: ["UA-146998765-2", "doc.cogment.ai"]
 
 theme:
-  name: "readthedocs"
+  name: "material"
+  language: en
+  logo: "images/cogment_logo.png"
+  favicon: "images/cogment_favicon.png"
+  features:
+    - navigation.sections
+  icon:
+    repo: fontawesome/brands/github
+
+markdown_extensions:
+  - toc:
+      permalink: true
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/cogment
+    - icon: fontawesome/brands/twitter
+      link: https://twitter.com/AI_Redefined
+    - icon: fontawesome/brands/linkedin
+      link: https://www.linkedin.com/company/ai-r
 
 nav:
   - "Introduction":
