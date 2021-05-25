@@ -56,7 +56,7 @@ nav:
       - "Cogment Low Level API Guide":
           - "Overview": "cogment/cogment-low-level-api-guide/overview.md"
           - "gRPC API Reference": "cogment/cogment-low-level-api-guide/grpc.md"
-  - "Deployment Guide":
-      - "Local Deployment": "deployment-guide/local-deployement.md"
-      # - "Cloud Deployment": "deployment-guide/cloud-deployement.md" # out-of-scope for ɑ
+  #- "Deployment Guide":
+  # - "Local Deployment": "deployment-guide/local-deployement.md"
+  # - "Cloud Deployment": "deployment-guide/cloud-deployement.md" # out-of-scope for ɑ
   - "License": "license.md"
