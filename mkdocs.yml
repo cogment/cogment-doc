@@ -9,6 +9,8 @@ site_description: Cogment user documentation - Cogment is an innovative open sou
 site_author: AI Redefined
 copyright: Copyright 2021 Artificial Intelligence Redefined <dev+cogment@ai-r.com>
 
+google_analytics: ["UA-146998765-2", "doc.cogment.ai"]
+
 theme:
   name: "readthedocs"
 
