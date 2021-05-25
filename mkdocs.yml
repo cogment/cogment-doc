@@ -1,8 +1,14 @@
 site_name: Cogment
 site_url: https://docs.cogment.ai
 repo_url: https://github.com/cogment/cogment-doc
+edit_uri: "edit/main/src/"
 site_dir: public
 docs_dir: src
+
+site_description: Cogment user documentation - Cogment is an innovative open source AI platform designed to leverage the advent of AI to benefit humankind through human-AI collaboration
+site_author: AI Redefined
+copyright: Copyright 2021 Artificial Intelligence Redefined <dev+cogment@ai-r.com>
+
 theme:
   name: "readthedocs"
 

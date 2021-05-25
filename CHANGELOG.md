@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## Unreleased
 
+### Changed
+
+- Update generated website metadata
+
+### Fixed
+
+- Fix the edit URI link
+
 ## v1.0.0 - 2021-05-11
 
 ### Added
