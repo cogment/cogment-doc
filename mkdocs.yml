@@ -23,6 +23,8 @@ theme:
 
 markdown_extensions:
   - attr_list
+  - pymdownx.highlight
+  - pymdownx.superfences
   - toc:
       permalink: true
 
@@ -34,6 +36,9 @@ extra:
       link: https://twitter.com/AI_Redefined
     - icon: fontawesome/brands/linkedin
       link: https://www.linkedin.com/company/ai-r
+
+extra_css:
+  - style/theme.css
 
 nav:
   - "Introduction":

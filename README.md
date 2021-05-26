@@ -15,7 +15,7 @@ This is the documentation for the Cogment framework. For further Cogment informa
 
 ### Prerequisites
 
-The documentation is built using [**mkdocs**](https://www.mkdocs.org/) however its dependencies and build are managed using [**poetry**](https://python-poetry.org). To build and test locally follow these instructions.
+The documentation is built using [**MkDocs**](https://www.mkdocs.org/) and [**Material for MkDocs**](https://squidfunk.github.io/mkdocs-material/). Its dependencies and build are managed using [**poetry**](https://python-poetry.org). To build and test locally follow these instructions.
 
 1. Have a working setup for Python 3.7 or above.
 2. Install poetry following the [official guidelines](https://python-poetry.org/docs/#installation)
