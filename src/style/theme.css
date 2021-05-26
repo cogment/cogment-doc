@@ -8,3 +8,15 @@
   --md-accent-fg-color: #ffb400; /* = hsl(42, 100%, 50%) */
   --md-accent-fg-color--transparent: hsla(42, 100%, 50%, 0.1);
 }
+
+/* Custom font https://squidfunk.github.io/mkdocs-material/setup/changing-the-fonts/#additional-fonts */
+
+@font-face {
+  font-family: "Object Sans Regular";
+  src: url("/style/fonts/ObjectSans-Regular.woff2") format("woff2"),
+    url("/style/fonts/ObjectSans-Regular-webfont.woff") format("woff");
+}
+
+:root {
+  --md-text-font-family: "Object Sans Regular";
+}

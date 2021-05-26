@@ -11,12 +11,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 - Use mkdocs material theme
 - Add Google analytics tracking id
-- Use Cogment official color scheme
 
 ### Changed
 
 - Update generated website metadata
 - Make outbound links open in a new window
+- Use Cogment official color scheme
+- Use Cogment official font
 
 ### Fixed
 
