@@ -4,15 +4,15 @@
 
 Please install:
 
-1. [Docker](https://docs.docker.com/engine/install/) and [docker-compose](https://docs.docker.com/compose/install/)
-2. [protoc](https://github.com/protocolbuffers/protobuf)
+1. [Docker](https://docs.docker.com/engine/install/){target=\_blank} and [docker-compose](https://docs.docker.com/compose/install/){target=\_blank}
+2. [protoc](https://github.com/protocolbuffers/protobuf){target=\_blank}
 
 ## Install the latest Cogment CLI
 
-1. `cogment` CLI releases are available [here](https://github.com/cogment/cogment-cli/releases/) as executable binaries.
+1. `cogment` CLI releases are available [here](https://github.com/cogment/cogment-cli/releases/){target=\_blank} as executable binaries.
 2. Pick a version, usually the latest one should be the right pick.
 3. At the end of the release notes, click on "Assets" to choose and download the appropriate version for your system.
-4. Rename the file to "cogment", and add it to your [`PATH` environmental variable](https://superuser.com/questions/284342/what-are-path-and-other-environment-variables-and-how-can-i-set-or-use-them). 
+4. Rename the file to "cogment", and add it to your [`PATH` environmental variable](https://superuser.com/questions/284342/what-are-path-and-other-environment-variables-and-how-can-i-set-or-use-them){target=\_blank}.
 
 You can follow more specific instructions for your OS in the following.
 
@@ -42,8 +42,8 @@ $ curl -L https://github.com/cogment/cogment-cli/releases/download/COGMENT_CLI_V
 
 1. Download the windows version of the cogment CLI as described above.
 2. Rename the downloaded file `cogment-windows-amd64.exe` to `cogment.exe`.
-2. Copy it to an easy to find location, e.g. `c:\\cogment`.
-3. Add the `c:\\cogment` folder to your [`PATH` environmental variable](https://superuser.com/questions/284342/what-are-path-and-other-environment-variables-and-how-can-i-set-or-use-them).
+3. Copy it to an easy to find location, e.g. `c:\\cogment`.
+4. Add the `c:\\cogment` folder to your [`PATH` environmental variable](https://superuser.com/questions/284342/what-are-path-and-other-environment-variables-and-how-can-i-set-or-use-them){target=\_blank}.
 
 ### Check that Cogment CLI is accessible.
 
@@ -69,7 +69,7 @@ $ cogment help <command>
 
 In order to test that your installation is fully working, run an existing Cogment app, for example one of the steps of the tutorial.
 
-Download or clone the sources for the official Rock-Paper-Scissors (_RPS_) tutorial from <https://github.com/cogment/cogment-tutorial-rps>.
+Download or clone the sources for the official Rock-Paper-Scissors (_RPS_) tutorial from <https://github.com/cogment/cogment-tutorial-rps>{target=\_blank}.
 
 Once it is done, run the following in the directory you retrieved:
 

@@ -1,6 +1,6 @@
 # Step 4: Add a second actor implementation based on a heuristic
 
-> This part of the tutorial follows [step 3](./3-rewards.md), make sure you've gone through it before starting this one. Alternatively the completed step 3 can be retrieved from the [tutorial's repository](https://github.com/cogment/cogment-tutorial-rps).
+> This part of the tutorial follows [step 3](./3-rewards.md), make sure you've gone through it before starting this one. Alternatively the completed step 3 can be retrieved from the [tutorial's repository](https://github.com/cogment/cogment-tutorial-rps){target=\_blank}.
 
 In this step of the tutorial, we will go over another actor implementation and learn about using the received observations before doing an action.
 
@@ -47,7 +47,7 @@ You can now [build and run](./1-bootstrap-and-data-structures.md#building-and-ru
 
 While the `random_player` ignored the state of the game, picking its move at random, our new implementation will consider the received **observations** to pick its move.
 
-We will implement a subset of the strategies described in [this](https://towardsai.net/p/artificial-intelligence/towards-an-ai-for-rock-paper-scissors-3fb05780271f) article:
+We will implement a subset of the strategies described in [this](https://towardsai.net/p/artificial-intelligence/towards-an-ai-for-rock-paper-scissors-3fb05780271f){target=\_blank} article:
 
 - If I won the last round, do the same thing,
 - If my opponent won the last round, play the move that would have won against his,

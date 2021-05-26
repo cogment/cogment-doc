@@ -8,7 +8,7 @@
 
 ## Prerequisites
 
-The actual implementation of the Low-Level API uses gRPC.  As this document is not meant to teach how to use the [gRPC](https://grpc.io) protocol and/or libraries, it will be assumed that the reader understands these concepts already.
+The actual implementation of the Low-Level API uses gRPC. As this document is not meant to teach how to use the [gRPC](https://grpc.io){target=\_blank} protocol and/or libraries, it will be assumed that the reader understands these concepts already.
 
 ## Differences from the High-Level API
 
@@ -51,7 +51,7 @@ The low-level API is fully described within the gRPC service definitions found i
 `api/cogment/data.proto` describes the services provided to save all trial data (for archival, replay or offline analysis).
 
 - `Log()` to log a data sample (i.e. normally all data from a single tick/timestep)
-  
+
 ### Hooks API
 
 `api/cogment/hooks.proto` describes the hook services provided to allow per trial configuration changes at runtime.
@@ -64,13 +64,13 @@ Most of the common data is found in `api/cogment/common.proto`, but other "commo
 
 ### Observation
 
-The observation class contains the observation data for an actor (`ObservationData`).  The type is generic (`bytes`) to accomodate the different observation classes defined for each actor (after serialization), and the snapshot and delta observations (which are defined in the `cogment.yaml` file).
+The observation class contains the observation data for an actor (`ObservationData`). The type is generic (`bytes`) to accomodate the different observation classes defined for each actor (after serialization), and the snapshot and delta observations (which are defined in the `cogment.yaml` file).
 
 The `snapshot` boolean, if set to True, indicates that the observation is a snapshot (i.e. full), and if False, indicates that the data is a delta encoding of the observation (i.e. changes only).
 
 ### ObservationSet
 
-The observationSet class is used by the environment to send multiple observations (i.e. one per actors) to the orchestrator.  The list of observations matches one-for-one with the list of actors.
+The observationSet class is used by the environment to send multiple observations (i.e. one per actors) to the orchestrator. The list of observations matches one-for-one with the list of actors.
 
 ### Actor IDs
 

@@ -38,7 +38,7 @@ The Environment is the main integration point between Cogment and an external sy
 
 ## The cogment.yaml
 
-At the heart of every Cogment project is a [YAML](https://yaml.org) file typically called `cogment.yaml`. Its primary role is to define the [actor classes](./glossary.md#actor-class) present within the project, including their [action](./glossary.md#action-space) & [observation spaces](./glossary.md#observation-space), as well as a default configuration for trials, including the number of actor participating in each [trial](./glossary.md#trial) and their class and implementation.
+At the heart of every Cogment project is a [YAML](https://yaml.org){target=\_blank} file typically called `cogment.yaml`. Its primary role is to define the [actor classes](./glossary.md#actor-class) present within the project, including their [action](./glossary.md#action-space) & [observation spaces](./glossary.md#observation-space), as well as a default configuration for trials, including the number of actor participating in each [trial](./glossary.md#trial) and their class and implementation.
 
 ## Architecture
 
@@ -46,7 +46,7 @@ Running trials with Cogment usually involves the deployment of a cluster of serv
 
 ![Cogment Architecture - Simple](./cogment_architecture_simple.png)
 
-User implemented components use one of the [Cogment SDKs](../cogment/cogment-api-guide.md) or directly implement the [underlying protocol](../cogment/cogment-low-level-api-guide/overview.md). Components communicate using [gRPC](https://grpc.io), clients can also communicate in a web-friendly way using [gRPC-Web](https://grpc.io/docs/platforms/web/) and [grpcwebproxy](https://github.com/improbable-eng/grpc-web/tree/master/go/grpcwebproxy).
+User implemented components use one of the [Cogment SDKs](../cogment/cogment-api-guide.md) or directly implement the [underlying protocol](../cogment/cogment-low-level-api-guide/overview.md). Components communicate using [gRPC](https://grpc.io){target=\_blank}, clients can also communicate in a web-friendly way using [gRPC-Web](https://grpc.io/docs/platforms/web/){target=\_blank} and [grpcwebproxy](https://github.com/improbable-eng/grpc-web/tree/master/go/grpcwebproxy){target=\_blank}.
 
 ### Orchestrator
 
@@ -71,7 +71,7 @@ Using one of [Cogment's SDKs](../cogment/cogment-api-guide.md), the Environment 
 
 ### Actors
 
-Actors can be implemented in two different ways, either as a service or as a client. **Service Actor** implementations are accessed by the [Orchestrator](./glossary.md#orchestrator) during [Trials](./glossary.md#trial), while **Client Actor** implementations join a Trial by initiating the communication with the Orchestrator. Client Actors implementations can _reach_ a Cogment deployment through [NAT traversal](https://en.wikipedia.org/wiki/NAT_traversal). This makes them particularly well-suited to implement human-driven Actors, in web-browsers for example.
+Actors can be implemented in two different ways, either as a service or as a client. **Service Actor** implementations are accessed by the [Orchestrator](./glossary.md#orchestrator) during [Trials](./glossary.md#trial), while **Client Actor** implementations join a Trial by initiating the communication with the Orchestrator. Client Actors implementations can _reach_ a Cogment deployment through [NAT traversal](https://en.wikipedia.org/wiki/NAT_traversal){target=\_blank}. This makes them particularly well-suited to implement human-driven Actors, in web-browsers for example.
 
 Using one of [Cogment's SDKs](../cogment/cogment-api-guide.md) Actors can be implemented as functions handling the integration between a decision-making Actor ([software agent](./glossary.md#agent) or Human) and the [Trial](./glossary.md#trial). This function performs the following tasks during the Trial:
 

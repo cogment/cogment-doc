@@ -1,6 +1,6 @@
 # Cogment gRPC API
 
-The low-level cogment communication API is implemented using [gRPC](https://grpc.github.io/) services.
+The low-level cogment communication API is implemented using [gRPC](https://grpc.github.io/){target=\_blank} services.
 These services are collections of procedures to be called remotely (RPC).
 gRPC abstracts the network communication with familiar looking functions (representing the defined procedures), in any number of programming languages.
 How services are implemented or accessed is highly dependant on the programming language being interfaced, and is beyond the scope of this document (see gRPC API documentation).
@@ -15,7 +15,7 @@ On the other hand, the `google.protobuf.Any` data type is normally used to conta
 
 Empty messages are normally used as a placeholder for easy future, backward compatible, extension of the API.
 
-In this API, [gRPC metadata](https://grpc.io/docs/what-is-grpc/core-concepts/#metadata) is normally used only for service request (procedure calls) for identifying purposes. The details of the required metadata are described with the service calls. Service replies are not expecting to provide metadata.
+In this API, [gRPC metadata](https://grpc.io/docs/what-is-grpc/core-concepts/#metadata){target=\_blank} is normally used only for service request (procedure calls) for identifying purposes. The details of the required metadata are described with the service calls. Service replies are not expecting to provide metadata.
 
 In many places in the API, we use a list of actor data without information about which actor is where in the list.
 These lists have a constant length and order throughout a trial (set in the trial parameters), and thus can/must be cross referenced with other such lists within the same trial (e.g. `actors_in_trial`, `actors_map`).

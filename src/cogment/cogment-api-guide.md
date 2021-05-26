@@ -4,7 +4,7 @@
 
 This document assumes the reader is familiar with the [Cogment Fundamentals](../concepts/core-concepts.md).
 
-The High-level Cogment API expects users to use [protocol buffers](https://developers.google.com/protocol-buffers/) to declare a project's data structures. The intricacies of protobufs are beyond the scope of this document. Basic knowledge of the technology and its usage is assumed.
+The High-level Cogment API expects users to use [protocol buffers](https://developers.google.com/protocol-buffers/){target=\_blank} to declare a project's data structures. The intricacies of protobufs are beyond the scope of this document. Basic knowledge of the technology and its usage is assumed.
 
 ## The cogment.yaml file
 

@@ -2,11 +2,11 @@
 
 You've reached the Cogment tutorial, the best way to learn about the concepts and the usage details of Cogment by using it to create a Rock-Paper-Scissors simulation and build AIs to play the game.
 
-Full sources for the tutorials are available at <https://github.com/cogment/cogment-tutorial-rps>
+Full sources for the tutorials are available at <https://github.com/cogment/cogment-tutorial-rps>{target=\_blank}
 
 ## Rock-Paper-Scissors (RPS)
 
-Let's quote [wikipedia](https://en.wikipedia.org/wiki/Rock_paper_scissors)
+Let's quote [wikipedia](https://en.wikipedia.org/wiki/Rock_paper_scissors){target=\_blank}
 
 > Rock paper scissors [...] is a hand game usually played between two people, in which each player simultaneously forms one of three shapes with an outstretched hand. These shapes are "rock" (a closed fist), "paper" (a flat hand), and "scissors" (a fist with the index finger and middle finger extended, forming a V). "Scissors" is identical to the two-fingered V sign (also indicating "victory" or "peace") except that it is pointed horizontally instead of being held upright in the air.
 >
@@ -22,7 +22,7 @@ Its rules can be expressed with the following statements:
 
 RPS is a very simple game with straightforward rules. As long as we "forbid" pure random moves, that are very difficult to beat, it is an interesting testbed to develop AIs that compete with Humans. Unlike _deep_ games such as chess or go, the power is not really in the brute force exploration of possible outcomes but in getting some level of understanding of how the opponent plays to be able to anticipate their moves.
 
-A good read on the subject of AI and RPS is this article by Benjamin Peterson published by Towards AI: [**Towards an AI for Rock, Paper, Scissors**](https://towardsai.net/p/artificial-intelligence/towards-an-ai-for-rock-paper-scissors-3fb05780271f).
+A good read on the subject of AI and RPS is this article by Benjamin Peterson published by Towards AI: [**Towards an AI for Rock, Paper, Scissors**](https://towardsai.net/p/artificial-intelligence/towards-an-ai-for-rock-paper-scissors-3fb05780271f){target=\_blank}.
 
 Now that we have better general knowledge on the game itself, let's start with the tutorial.
 

@@ -1,10 +1,10 @@
 # Step 7: Add a web client for the human player
 
-> This part of the tutorial follows [step 5](./5-human-player.md) and [step 6](./6-web-client.md), make sure you've gone through either one of those before starting this one. Alternatively the completed step 5 can be retrieved from the [tutorial's repository](https://github.com/cogment/cogment-tutorial-rps).
+> This part of the tutorial follows [step 5](./5-human-player.md) and [step 6](./6-web-client.md), make sure you've gone through either one of those before starting this one. Alternatively the completed step 5 can be retrieved from the [tutorial's repository](https://github.com/cogment/cogment-tutorial-rps){target=\_blank}.
 
-In this step of the tutorial, we will go over yet another actor implementation and this implementation will be learning from its experience. We will implement an RPS player using Reinforcement Learning (RL) and more precisely a [Deep Q Network](https://arxiv.org/pdf/1312.5602.pdf), one of the foundational algorithm of modern RL.
+In this step of the tutorial, we will go over yet another actor implementation and this implementation will be learning from its experience. We will implement an RPS player using Reinforcement Learning (RL) and more precisely a [Deep Q Network](https://arxiv.org/pdf/1312.5602.pdf){target=\_blank}, one of the foundational algorithm of modern RL.
 
-While we will explain some aspects of RL and DQN along the way, we won't go into all the details. Interested readers can refer to ["Reinforcement Learning: An Introduction" by Richard S. Sutton and Andrew G. Barto](http://incompleteideas.net/book/the-book-2nd.html) or to the original Deep Q Network article linked above.
+While we will explain some aspects of RL and DQN along the way, we won't go into all the details. Interested readers can refer to ["Reinforcement Learning: An Introduction" by Richard S. Sutton and Andrew G. Barto](http://incompleteideas.net/book/the-book-2nd.html){target=\_blank} or to the original Deep Q Network article linked above.
 
 ## Creating an actor service
 
@@ -134,17 +134,17 @@ We have set everything up, we can now focus on implementing our DQN agent.
 
 A Deep Q Network is a neural network taking an observation as input, and outputs the Q value for each of the actions in the action space. The Q Value is an estimation of the expected value of all the rewards if a given action is taken. The DQN agent action policy is therefore to take the action having the largest predicted Q Value. Let's start by implementing this part and we will then deal with training this model.
 
-In the rest of this tutorial we will use [Tensorflow and its Keras API](https://www.tensorflow.org) for the model itself, as well as [numpy](https://numpy.org) for datastructures. Let's import these at the top of `dqn_agent/main.py`.
+In the rest of this tutorial we will use [Tensorflow and its Keras API](https://www.tensorflow.org){target=\_blank} for the model itself, as well as [numpy](https://numpy.org){target=\_blank} for datastructures. Let's import these at the top of `dqn_agent/main.py`.
 
 ```python
 import numpy as np
 import tensorflow as tf
 ```
 
-Let's get into the meat of the matter by implementing a function to create our model. We are using [Keras functional API](https://www.tensorflow.org/guide/keras/functional) to create the following layers:
+Let's get into the meat of the matter by implementing a function to create our model. We are using [Keras functional API](https://www.tensorflow.org/guide/keras/functional){target=\_blank} to create the following layers:
 
 1. Two scalar inputs, the last moves of the player and the opponent.
-2. Each input is [one-hot encoded](https://en.wikipedia.org/wiki/One-hot#Machine_learning_and_statistics) to avoid assuming an unwanted ordering and quantitative relationship between the moves.
+2. Each input is [one-hot encoded](https://en.wikipedia.org/wiki/One-hot#Machine_learning_and_statistics){target=\_blank} to avoid assuming an unwanted ordering and quantitative relationship between the moves.
 3. The two encoded inputs are concatenated to a single vector.
 4. A dense non-linear hidden layer is added.
 5. The output layers estimates the Q value for each move.
@@ -261,7 +261,7 @@ You can now [build and run](./1-bootstrap-and-data-structures.md#building-and-ru
 
 In our journey to train a model, the next stage is to build an experience replay buffer to collect actions/observations/rewards triples over the course of the trials. Once done, it'll be usable to train the model using this data.
 
-We will start by creating the datastructure. We are using a column-oriented structure relying on [numpy arrays](https://numpy.org/doc/stable/reference/generated/numpy.array.html) as they interoperate easily with tensorflow and support the needed manipulation primitives. Each row is a **sample** corresponding to one tick: the received observation and reward, the selected action as well as the next tick's received observation.
+We will start by creating the datastructure. We are using a column-oriented structure relying on [numpy arrays](https://numpy.org/doc/stable/reference/generated/numpy.array.html){target=\_blank} as they interoperate easily with tensorflow and support the needed manipulation primitives. Each row is a **sample** corresponding to one tick: the received observation and reward, the selected action as well as the next tick's received observation.
 
 ```python
 def create_replay_buffer():
@@ -433,7 +433,7 @@ This function then needs to be called at the end of each trial after the call to
 
 You can now [build and run](./1-bootstrap-and-data-structures.md#building-and-running-the-app) the application. The dqn agent will start to learn and quickly prevails against the heuristic implementation.
 
-This can be observed by opening the dashboard at <http://localhost:3003> and opening the reward page. You should be able to track the progression of the dqn implementation.
+This can be observed by opening the dashboard at <http://localhost:3003>{target=\_blank} and opening the reward page. You should be able to track the progression of the dqn implementation.
 
 ![Cumulative reward by agent type diagram showing the dqn implementation prevailing against the heuristic agent](./figures/dqn_agent_rewards.png)
 

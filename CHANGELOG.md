@@ -15,12 +15,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Changed
 
 - Update generated website metadata
+- Make outbound links open in a new window
 
 ### Fixed
 
 - Fix the edit URI link
-- Fix broken links in the grpc reference, tutorial 7 and the api guide.
-- Hide unfinisehd parts of the documentation.
+- Fix broken links in the grpc reference, tutorial 7 and the api guide
+- Hide unfinisehd parts of the documentation
 
 ## v1.0.0 - 2021-05-11
 

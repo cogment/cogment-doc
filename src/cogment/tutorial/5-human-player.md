@@ -1,6 +1,6 @@
 # Step 5: Add a human player in the loop
 
-> This part of the tutorial follows [step 4](./4-heuristic-player.md), make sure you've gone through it before starting this one. Alternatively the completed step 4 can be retrieved from the [tutorial's repository](https://github.com/cogment/cogment-tutorial-rps).
+> This part of the tutorial follows [step 4](./4-heuristic-player.md), make sure you've gone through it before starting this one. Alternatively the completed step 4 can be retrieved from the [tutorial's repository](https://github.com/cogment/cogment-tutorial-rps){target=\_blank}.
 
 In this step of the tutorial, we will go over another actor implementation, this time client-side, to enable Humans to play RPS. We will also learn how to let the environment control the termination of the trial.
 
@@ -173,7 +173,7 @@ if round_index > 0:
   print_observation(round_index, observation)
 ```
 
-Last but not least, instead of always picking `PAPER` we will read from the keyboard input what the player wishes to play. Using python's [`input`](https://docs.python.org/3.7/library/functions.html#input) function we can print a prompt and read whatever the user enters before pressing `<ENTER>`.
+Last but not least, instead of always picking `PAPER` we will read from the keyboard input what the player wishes to play. Using python's [`input`](https://docs.python.org/3.7/library/functions.html#input){target=\_blank} function we can print a prompt and read whatever the user enters before pressing `<ENTER>`.
 
 Note that the following implementation expects a number between 1 and 3 and doesn't handle well any other input.
 

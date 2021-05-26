@@ -68,7 +68,7 @@ At this point we have generated a working but empty Cogment app and we checked t
 
 ## Define our data structures
 
-Cogment uses [Protocol Buffers](https://developers.google.com/protocol-buffers/) to define data structures. The initial definitions are located in the `data.proto` and look like that.
+Cogment uses [Protocol Buffers](https://developers.google.com/protocol-buffers/){target=\_blank} to define data structures. The initial definitions are located in the `data.proto` and look like that.
 
 ```proto
 syntax = "proto3";

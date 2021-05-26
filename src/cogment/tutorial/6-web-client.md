@@ -1,6 +1,6 @@
 # Step 6: Add a web client for the human player
 
-> This part of the tutorial follows [step 5](./5-human-player.md), make sure you've gone through it before starting this one. Alternatively the completed step 5 can be retrieved from the [tutorial's repository](https://github.com/cogment/cogment-tutorial-rps).
+> This part of the tutorial follows [step 5](./5-human-player.md), make sure you've gone through it before starting this one. Alternatively the completed step 5 can be retrieved from the [tutorial's repository](https://github.com/cogment/cogment-tutorial-rps){target=\_blank}.
 
 In this step of the tutorial, we will go over a web client implementation, to enable Humans to play RPS, while being able to take advantage of various web technologies.
 
@@ -46,7 +46,7 @@ $ npm i @material-ui/icons
 
 In addition to the docker-compose services we already have, we'll need two more for this web client. One to run it, and another for a proxy service called `grpcwebproxy`.
 
-> NOTE: `grpcwebproxy` [link](https://github.com/improbable-eng/grpc-web/tree/master/go/grpcwebproxy) is a helpful program that allows grpc endpoints to be utilized by web applications. Web applications cannot natively use the grpc protocol that all Cogment elements use to communicate with one another. Using this proxy to translate the web socket connections it accepts into grpc requests solves this issue.
+> NOTE: `grpcwebproxy` [link](https://github.com/improbable-eng/grpc-web/tree/master/go/grpcwebproxy){target=\_blank} is a helpful program that allows grpc endpoints to be utilized by web applications. Web applications cannot natively use the grpc protocol that all Cogment elements use to communicate with one another. Using this proxy to translate the web socket connections it accepts into grpc requests solves this issue.
 
 For these services, let's add the following to the end of our docker-compose.yaml:
 
@@ -135,7 +135,7 @@ The easiest way to add Cogment to any web client is to start with a React app, t
 
     while inside of the web-client folder
 
-2.  Copy in the hooks folder from the [tutorial's repository](https://github.com/cogment/cogment-tutorial-rps), found at [6-web-client/web-client/src/hooks](./6-web-client/web-client/src/hooks), into your src directory.
+2.  Copy in the hooks folder from the [tutorial's repository](https://github.com/cogment/cogment-tutorial-rps){target=\_blank}, found at [6-web-client/web-client/src/hooks](./6-web-client/web-client/src/hooks), into your src directory.
 
 3.  Navigate one folder up to your project directory (where you have your cogment.yaml) then run the following command to generate Javascript files from your defined protobufs:
     ```console
@@ -154,7 +154,7 @@ Now that all that's done, we can finally start coding our web client!
 
 When we created our React app, these two files were generated automatically. Replace their content with the following:
 
-> NOTE: These can also be downloaded from the [tutorial's repository](https://github.com/cogment/cogment-tutorial-rps).
+> NOTE: These can also be downloaded from the [tutorial's repository](https://github.com/cogment/cogment-tutorial-rps){target=\_blank}.
 
 index.css:
 
@@ -221,7 +221,7 @@ import {
   useTheme,
 } from "@material-ui/core";
 
-//And here's the important part: we're importing the two things that will allow us to use Cogment. 
+//And here's the important part: we're importing the two things that will allow us to use Cogment.
 
 //First, the 'useActions' hook which will give us our observations as a human agent, as well as allow us to send actions.
 import { useActions } from "./hooks/useActions";
@@ -297,43 +297,42 @@ export const App = () => {
   const { observation, last } = event;
 
   const [gameState, setGameState] = useState({
-      gameStage: "start",
-      roundIndex: 0,
-      lastMoveComputer: 0,
-      lastMoveHuman: 0,
-  })
+    gameStage: "start",
+    roundIndex: 0,
+    lastMoveComputer: 0,
+    lastMoveHuman: 0,
+  });
   const [firstObservation, setFirstObservation] = useState(true);
 
   useEffect(() => {
-      //Parse game state out of the observation
-      //Some events don't contain an observation, so we need to store the observation contents in a state
-      if (!observation) return;
+    //Parse game state out of the observation
+    //Some events don't contain an observation, so we need to store the observation contents in a state
+    if (!observation) return;
 
-      //The first observation is not useful, as it just contains the default game state, before players have made moves
-      if(firstObservation){
-          setFirstObservation(false);
-          return;
-      }
+    //The first observation is not useful, as it just contains the default game state, before players have made moves
+    if (firstObservation) {
+      setFirstObservation(false);
+      return;
+    }
 
+    //Get all relevant information from the observation
+    const roundIndex = gameState.roundIndex + 1;
+    const gameStage = "playing";
+    const lastMoveComputer = observation.them.lastMove;
+    const lastMoveHuman = observation.me.lastMove;
+    const lastWonComputer = observation.them.wonLast;
+    const lastWonHuman = observation.me.wonLast;
 
-      //Get all relevant information from the observation
-      const roundIndex = gameState.roundIndex + 1;
-      const gameStage = "playing";
-      const lastMoveComputer = observation.them.lastMove
-      const lastMoveHuman = observation.me.lastMove
-      const lastWonComputer = observation.them.wonLast;
-      const lastWonHuman = observation.me.wonLast;
-
-      setGameState({
-          gameStage,
-          roundIndex,
-          lastMoveComputer,
-          lastMoveHuman,
-          lastWonComputer,
-          lastWonHuman
-      })
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [observation])
+    setGameState({
+      gameStage,
+      roundIndex,
+      lastMoveComputer,
+      lastMoveHuman,
+      lastWonComputer,
+      lastWonHuman,
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [observation]);
 
   //The layout of the page
   return (
@@ -342,10 +341,24 @@ export const App = () => {
         Tell the player everything we know about the trial state, such as, plays, who won, etc...
       */}
       <Typography>Game stage: {gameState.gameStage}</Typography>
-      <Typography>Human's move: {gameState.gameStage !== "start" && getMoveText(gameState.lastMoveHuman)}</Typography>
-      <Typography>Computer's move: {gameState.gameStage !== "start" && getMoveText(gameState.lastMoveComputer)}</Typography>
-      <Typography>Did Human win last round? {observation && gameState.lastWonHuman ? "Yes" : "No"}</Typography>
-      <Typography>Did Computer win last round? {observation && gameState.lastWonComputer ? "Yes" : "No"}</Typography>
+      <Typography>
+        Human's move:{" "}
+        {gameState.gameStage !== "start" &&
+          getMoveText(gameState.lastMoveHuman)}
+      </Typography>
+      <Typography>
+        Computer's move:{" "}
+        {gameState.gameStage !== "start" &&
+          getMoveText(gameState.lastMoveComputer)}
+      </Typography>
+      <Typography>
+        Did Human win last round?{" "}
+        {observation && gameState.lastWonHuman ? "Yes" : "No"}
+      </Typography>
+      <Typography>
+        Did Computer win last round?{" "}
+        {observation && gameState.lastWonComputer ? "Yes" : "No"}
+      </Typography>
       <Button onClick={() => choose(0)}>Rock</Button>
       <Button onClick={() => choose(1)}>Paper</Button>
       <Button onClick={() => choose(2)}>Scissors</Button>
@@ -399,7 +412,7 @@ export const useActions = (cogSettings, actorName, actorClass) => {
         actorSession.sendAction(action);
       });
 
-      /*actorSession.eventLoop is an async generator function, meaning we can use the syntax 
+      /*actorSession.eventLoop is an async generator function, meaning we can use the syntax
         for await(const foo of generator()){
           do stuff
         }
@@ -423,7 +436,7 @@ export const useActions = (cogSettings, actorName, actorClass) => {
         event.last = event.type === 3;
 
         //Set the event state to the received event, causing a hook update
-        setEvent(event)
+        setEvent(event);
       }
     });
 

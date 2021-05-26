@@ -1,6 +1,6 @@
 ## Step 2: Implement a first actor and environment
 
-> This part of the tutorial follows [step 1](./1-bootstrap-and-data-structures.md), make sure you've gone through it before starting this one. Alternatively, the completed step 1 can be retrieved from the [tutorial's repository](https://github.com/cogment/cogment-tutorial-rps).
+> This part of the tutorial follows [step 1](./1-bootstrap-and-data-structures.md), make sure you've gone through it before starting this one. Alternatively, the completed step 1 can be retrieved from the [tutorial's repository](https://github.com/cogment/cogment-tutorial-rps){target=\_blank}.
 
 In this step of the tutorial, we will implement the (very simple) decison logic for the random player as well as the base mechanics for RPS, i.e. the rules of the game, in the environment services.
 
@@ -8,14 +8,14 @@ In this step of the tutorial, we will implement the (very simple) decison logic 
 
 In the `rps` directory, the `random_agent` directory contains the python implementation for the eponymous service. You'll find two files here:
 
-- `requirements.txt` is a [pip requirement file](https://pip.pypa.io/en/stable/reference/pip_install/?highlight=requirements#requirements-file-format) defining the dependencies of the service. For the moment it only lists [`cogment`](https://pypi.org/project/cogment/), Cogment's python SDK.
+- `requirements.txt` is a [pip requirement file](https://pip.pypa.io/en/stable/reference/pip_install/?highlight=requirements#requirements-file-format){target=\_blank} defining the dependencies of the service. For the moment it only lists [`cogment`](https://pypi.org/project/cogment/){target=\_blank}, Cogment's python SDK.
 - `main.py` contains the implementation of the service.
 
 Open `main.py` and take a look at the generated content.
 
 At the bottom you'll find the `main` function, it initializes Cogment's context, registers the `random_agent` actor's implementation, then starts the service itsef on tcp port 9000 and await for its termination.
 
-> Cogment's python sdk leverages Python's [asynchronous features](https://docs.python.org/3/library/asyncio-task.html), you'll need a basic understanding of them.
+> Cogment's python sdk leverages Python's [asynchronous features](https://docs.python.org/3/library/asyncio-task.html){target=\_blank}, you'll need a basic understanding of them.
 
 ```python
 async def main():

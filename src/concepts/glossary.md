@@ -100,7 +100,7 @@ We provide plugins that handle special features such as Deployment, Dataset stor
 
 ### Protocol Buffer
 
-A binary data format for serialized communication, `.proto` files are used to specify the available data structures. You can learn more at <https://developers.google.com/protocol-buffers/>.
+A binary data format for serialized communication, `.proto` files are used to specify the available data structures. You can learn more at <https://developers.google.com/protocol-buffers/>{target=\_blank}.
 
 ## R
 
