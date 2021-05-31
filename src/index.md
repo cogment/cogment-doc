@@ -1,11 +1,11 @@
 [![Cogment Homepage](https://img.shields.io/badge/-Homepage-ffbb00?style=flat)](https://cogment.ai/){target=\_blank}
 [![Cogment sources @ Github](https://img.shields.io/badge/Github-Cogment%20Sources-lightgrey?style=flat&logo=github)](https://github.com/cogment){target=\_blank} [![Join us on the official Cogment discord](https://img.shields.io/discord/739822842450935963?style=flat&color=6f84d4&label=Cogment%27s%20Discord&logo=discord&logoColor=white)](https://discord.gg/55h7fnqdSJ){target=\_blank}
 
-# Cogment 1.0 Framework Overview
+# Cogment Framework Overview
 
 ## What is Cogment?
 
-The Cogment 1.0 framework is a high-efficiency, open source framework designed to enable the training of models in environments where humans and agents interact with the environment and each other continuously. It’s capable of distributed, multi-agent, multi-model training.
+[Cogment](https://cogment.ai) is an innovative open source AI platform designed to leverage the advent of AI to benefit humankind through human-AI collaboration developed by [AI Redefined](https://ai-r.com). Cogment enables AI researchers and engineers to build, train and operate AI agents in simulated or real environments shared with humans.
 
 ### When to use Cogment?
 
@@ -59,4 +59,4 @@ The easiest way to get started is to use the `cogment` command line tool. Please
 
 Before diving right in, we recommend taking the time to read the [Core concepts](./concepts/core-concepts.md) section, as well as our [glossary](./concepts/glossary.md), which details the terminology we use for several critical concepts of the Cogment Framework. You can then proceed to read on how to [install](./introduction/installation.md) the framework.
 
-Last but not least, a [tutorial](./cogment/tutorial/introduction.md)
+Last but not least, a [tutorial](./cogment/tutorial/introduction.md) gives you a hands on introduction on using Cogment.
