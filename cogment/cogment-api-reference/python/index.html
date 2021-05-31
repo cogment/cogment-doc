@@ -1,392 +1,2006 @@
-<!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
-  
-  <link rel="canonical" href="https://docs.cogment.ai/cogment/cogment-api-reference/python/">
-  <link rel="shortcut icon" href="../../../img/favicon.ico">
-  <title>python - Cogment</title>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
 
-  <link rel="stylesheet" href="../../../css/theme.css" />
-  <link rel="stylesheet" href="../../../css/theme_extra.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
-  
-  <script>
-    // Current page data
-    var mkdocs_page_name = "python";
-    var mkdocs_page_input_path = "cogment/cogment-api-reference/python.md";
-    var mkdocs_page_url = "/cogment/cogment-api-reference/python/";
-  </script>
-  
-  <script src="../../../js/jquery-2.1.1.min.js" defer></script>
-  <script src="../../../js/modernizr-2.8.3.min.js" defer></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
-  <script>hljs.initHighlightingOnLoad();</script> 
-  
-</head>
-
-<body class="wy-body-for-nav" role="document">
-
-  <div class="wy-grid-for-nav">
-
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
     
-    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
-    <div class="wy-side-scroll">
-      <div class="wy-side-nav-search">
-        <a href="../../.." class="icon icon-home"> Cogment</a>
-        <div role="search">
-  <form id ="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
-  </form>
-</div>
-      </div>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Cogment user documentation - Cogment is an innovative open source AI platform designed to leverage the advent of AI to benefit humankind through human-AI collaboration">
+      
+      
+      
+        <meta name="author" content="AI Redefined">
+      
+      
+        <link rel="canonical" href="https://docs.cogment.ai/cogment/cogment-api-reference/python/">
+      
+      <link rel="icon" href="../../../images/cogment_favicon.png">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-7.1.5">
+    
+    
+      
+        <title>python - Cogment</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.bde7dde4.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ef6f36e2.min.css">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>:root{--md-text-font-family:"Roboto";--md-code-font-family:"Roboto Mono"}</style>
+      
+    
+    
+    
+      <link rel="stylesheet" href="../../../style/theme.css">
+    
+    
+      
+        
+<script>window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga("create","UA-146998765-2","doc.cogment.ai"),ga("set","anonymizeIp",!0),ga("send","pageview"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){var e;this.value&&(e=document.location.pathname,ga("send","pageview",e+"?q="+this.value))}),"undefined"!=typeof location$&&location$.subscribe(function(e){ga("send","pageview",e.pathname)})})</script>
+<script async src="https://www.google-analytics.com/analytics.js"></script>
+      
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
+  
+    
+    <script>function __prefix(e){return new URL("../../..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#python-sdk" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="Cogment" class="md-header__button md-logo" aria-label="Cogment" data-md-component="logo">
+      
+  <img src="../../../images/cogment_logo.png" alt="logo">
 
-      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-                <p class="caption"><span class="caption-text">Introduction</span></p>
-                <ul>
-                    <li class="toctree-l1"><a class="reference internal" href="../../..">Overview</a>
-                    </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../../../introduction/installation/">Installation & Setup</a>
-                    </li>
-                </ul>
-                <p class="caption"><span class="caption-text">Support</span></p>
-                <ul>
-                    <li class="toctree-l1"><a class="reference internal" href="../../../support/community-channels/">Community channels</a>
-                    </li>
-                </ul>
-                <p class="caption"><span class="caption-text">Concepts</span></p>
-                <ul>
-                    <li class="toctree-l1"><a class="reference internal" href="../../../concepts/core-concepts/">Core Concepts</a>
-                    </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../../../concepts/glossary/">Glossary</a>
-                    </li>
-                </ul>
-                <p class="caption"><span class="caption-text">Cogment</span></p>
-                <ul class="current">
-                    <li class="toctree-l1"><a class="reference internal" href="#">Tutorial</a>
-    <ul>
-                <li class="toctree-l2"><a class="reference internal" href="../../tutorial/introduction/">Introduction</a>
-                </li>
-                <li class="toctree-l2"><a class="reference internal" href="../../tutorial/1-bootstrap-and-data-structures/">Step 1: Bootstrap a Cogment app</a>
-                </li>
-                <li class="toctree-l2"><a class="reference internal" href="../../tutorial/2-random-player/">Step 2: Implement actor and environment</a>
-                </li>
-                <li class="toctree-l2"><a class="reference internal" href="../../tutorial/3-rewards/">Step 3: Introduce rewards</a>
-                </li>
-                <li class="toctree-l2"><a class="reference internal" href="../../tutorial/4-heuristic-player/">Step 4: Create a heuristic player</a>
-                </li>
-                <li class="toctree-l2"><a class="reference internal" href="../../tutorial/5-human-player/">Step 5: Add a human player in the loop</a>
-                </li>
-                <li class="toctree-l2"><a class="reference internal" href="../../tutorial/6-web-client/">Step 6: Implement a web client for the human player</a>
-                </li>
-                <li class="toctree-l2"><a class="reference internal" href="../../tutorial/7-dqn-player/">Step 7: Add a player trained with Reinforcement Learning using DQN</a>
-                </li>
-    </ul>
-                    </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../../cogment-api-guide/">Cogment API Guide</a>
-                    </li>
-                    <li class="toctree-l1 current"><a class="reference internal current" href="#">Cogment API Reference</a>
-    <ul class="current">
-                <li class="toctree-l2"><a class="reference internal" href="../cogment-yaml/">cogment.yaml</a>
-                </li>
-                <li class="toctree-l2 current"><a class="reference internal current" href="./">python</a>
-    <ul class="current">
-    <li class="toctree-l3"><a class="reference internal" href="#installation">Installation</a>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#general-usage">General usage</a>
-        <ul>
-    <li class="toctree-l4"><a class="reference internal" href="#cogmentyaml">cogment.yaml</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#cog_settingspy">cog_settings.py</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#top-level-import">Top-level import</a>
-    </li>
-        </ul>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#class-cogmentcontext">class cogment.Context</a>
-        <ul>
-    <li class="toctree-l4"><a class="reference internal" href="#__init__self-user_id-cog_settings">__init__(self, user_id, cog_settings)</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#async-serve_all_registeredself-served_endpoint-prometheus_port-8000">async serve_all_registered(self, served_endpoint, prometheus_port = 8000)</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#get_controllerself-endpoint">get_controller(self, endpoint)</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#async-join_trialself-trial_id-endpoint-impl_name-actor_namenone">async join_trial(self, trial_id, endpoint, impl_name, actor_name=None)</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#register_environmentself-impl-impl_name-default">register_environment(self, impl, impl_name = "default")</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#register_actorself-impl-impl_name-actor_classes">register_actor(self, impl, impl_name, actor_classes=[])</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#register_pre_trial_hookself-impl">register_pre_trial_hook(self, impl)</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#register_datalogself-impl">register_datalog(self, impl)</a>
-    </li>
-        </ul>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#class-controller">class Controller</a>
-        <ul>
-    <li class="toctree-l4"><a class="reference internal" href="#async-start_trialself-trial_confignone">async start_trial(self, trial_config=None)</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#terminate_trialself-trial_id">terminate_trial(self, trial_id)</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#async-get_trial_infoself-trial_id">async get_trial_info(self, trial_id)</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#async-watch_trialsself-trial_state_filters">async watch_trials(self, trial_state_filters=[])</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#async-get_actorsself-trial_id">async get_actors(self, trial_id)</a>
-    </li>
-        </ul>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#class-session">class Session</a>
-        <ul>
-    <li class="toctree-l4"><a class="reference internal" href="#get_trial_idself">get_trial_id(self)</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#get_tick_idself">get_tick_id(self)</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#is_trial_overself">is_trial_over(self)</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#get_active_actorsself">get_active_actors(self)</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#add_rewardself-value-confidence-to-tick_id-1-user_datanone">add_reward(self, value, confidence, to, tick_id=-1, user_data=None)</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#send_messageself-payload-to-to_environmentfalse">send_message(self, payload, to, to_environment=False)</a>
-    </li>
-        </ul>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#class-environmentsessionsession">class EnvironmentSession(Session)</a>
-        <ul>
-    <li class="toctree-l4"><a class="reference internal" href="#startself-observations">start(self, observations)</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#async-event_loopself">async event_loop(self)</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#produce_observationsself-observations">produce_observations(self, observations)</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#endself-final_observations">end(self, final_observations)</a>
-    </li>
-        </ul>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#class-actorsessionsession">class ActorSession(Session)</a>
-        <ul>
-    <li class="toctree-l4"><a class="reference internal" href="#startself">start(self)</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#async-event_loopself_1">async event_loop(self)</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#do_actionself-action">do_action(self, action)</a>
-    </li>
-        </ul>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#class-prehooksession">class PrehookSession</a>
-        <ul>
-    <li class="toctree-l4"><a class="reference internal" href="#get_trial_idself_1">get_trial_id(self)</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#validateself">validate(self)</a>
-    </li>
-        </ul>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#cogmentapicommon_pb2trialparams">cogment.api.common_pb2.TrialParams</a>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#cogmentapidatalogdatalogsample">cogment.api.datalog.DatalogSample</a>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#class-datalogsession">class DatalogSession</a>
-        <ul>
-    <li class="toctree-l4"><a class="reference internal" href="#startself_1">start(self)</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#get_all_samplesself">get_all_samples(self)</a>
-    </li>
-        </ul>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#class-cogmentendpoint">class cogment.Endpoint</a>
-        <ul>
-    <li class="toctree-l4"><a class="reference internal" href="#__init__self-url">__init__(self, url)</a>
-    </li>
-        </ul>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#class-cogmentservedendpoint">class cogment.ServedEndpoint</a>
-        <ul>
-    <li class="toctree-l4"><a class="reference internal" href="#__init__self-port">__init__(self, port)</a>
-    </li>
-        </ul>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#class-cogmenttrialstateenumenum">class cogment.TrialState(enum.Enum)</a>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#class-trialinfo">class TrialInfo</a>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#class-actorinfo">class ActorInfo</a>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#class-recvevent">class RecvEvent</a>
-        <ul>
-    <li class="toctree-l4"><a class="reference internal" href="#class-cogmenteventtypeenumenum">class cogment.EventType(enum.Enum)</a>
-    </li>
-        </ul>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#class-recvobservation">class RecvObservation</a>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#class-recvaction">class RecvAction</a>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#class-recvmessage">class RecvMessage</a>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#class-recvreward">class RecvReward</a>
-        <ul>
-    <li class="toctree-l4"><a class="reference internal" href="#get_nb_sourcesself">``get_nb_sources(self)</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#all_sourcesself">all_sources(self)</a>
-    </li>
-        </ul>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#class-recvrewardsource">class RecvRewardSource</a>
-    </li>
-    </ul>
-                </li>
-                <li class="toctree-l2"><a class="reference internal" href="#">Javascript/Typescript SDK</a>
-    <ul>
-                <li class="toctree-l3"><a class="reference internal" href="../javascript/modules/">Modules</a>
-                </li>
-                <li class="toctree-l3"><a class="reference internal" href="../javascript/classes/actorsession/">Class: ActorSession</a>
-                </li>
-                <li class="toctree-l3"><a class="reference internal" href="../javascript/classes/cogmentservice/">Class: CogmentService</a>
-                </li>
-                <li class="toctree-l3"><a class="reference internal" href="../javascript/classes/trialcontroller/">Class: TrialController</a>
-                </li>
-                <li class="toctree-l3"><a class="reference internal" href="../javascript/enums/eventtype/">Enum: EventType</a>
-                </li>
-                <li class="toctree-l3"><a class="reference internal" href="../javascript/interfaces/cogmentyaml/">Interface: CogmentYaml</a>
-                </li>
-                <li class="toctree-l3"><a class="reference internal" href="../javascript/interfaces/cogmentyamlactor/">Interface: CogmentYamlActor</a>
-                </li>
-                <li class="toctree-l3"><a class="reference internal" href="../javascript/interfaces/cogmentyamlactorclass/">Interface: CogmentYamlActorClass</a>
-                </li>
-                <li class="toctree-l3"><a class="reference internal" href="../javascript/interfaces/cogmentyamldatalog/">Interface: CogmentYamlDatalog</a>
-                </li>
-                <li class="toctree-l3"><a class="reference internal" href="../javascript/interfaces/cogmentyamltrialparameters/">Interface: CogmentYamlTrialParameters</a>
-                </li>
-                <li class="toctree-l3"><a class="reference internal" href="../javascript/interfaces/cogsettings/">Interface: CogSettings</a>
-                </li>
-                <li class="toctree-l3"><a class="reference internal" href="../javascript/interfaces/cogsettingsactorclass/">Interface: CogSettingsActorClass</a>
-                </li>
-                <li class="toctree-l3"><a class="reference internal" href="../javascript/interfaces/createserviceoptions/">Interface: CreateServiceOptions</a>
-                </li>
-                <li class="toctree-l3"><a class="reference internal" href="../javascript/interfaces/event/">Interface: Event</a>
-                </li>
-                <li class="toctree-l3"><a class="reference internal" href="../javascript/interfaces/reward/">Interface: Reward</a>
-                </li>
-                <li class="toctree-l3"><a class="reference internal" href="../javascript/interfaces/sendmessageoptions/">Interface: SendMessageOptions</a>
-                </li>
-                <li class="toctree-l3"><a class="reference internal" href="../javascript/interfaces/trialactor/">Interface: TrialActor</a>
-                </li>
-    </ul>
-                </li>
-    </ul>
-                    </li>
-                    <li class="toctree-l1"><a class="reference internal" href="#">Cogment Low Level API Guide</a>
-    <ul>
-                <li class="toctree-l2"><a class="reference internal" href="../../cogment-low-level-api-guide/overview/">Overview</a>
-                </li>
-                <li class="toctree-l2"><a class="reference internal" href="../../cogment-low-level-api-guide/grpc/">gRPC API Reference</a>
-                </li>
-    </ul>
-                    </li>
-                </ul>
-                <p class="caption"><span class="caption-text">Deployment Guide</span></p>
-                <ul>
-                    <li class="toctree-l1"><a class="reference internal" href="../../../deployment-guide/local-deployement/">Local Deployment</a>
-                    </li>
-                </ul>
-                <ul>
-                    <li class="toctree-l1"><a class="reference internal" href="../../../license/">License</a>
-                    </li>
-                </ul>
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Cogment
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              python
+            
+          </span>
+        </div>
       </div>
     </div>
-    </nav>
-
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
       
-      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
-        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-        <a href="../../..">Cogment</a>
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        
+<a href="https://github.com/cogment/cogment-doc/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Cogment" class="md-nav__button md-logo" aria-label="Cogment" data-md-component="logo">
+      
+  <img src="../../../images/cogment_logo.png" alt="logo">
+
+    </a>
+    Cogment
+  </label>
+  
+    <div class="md-nav__source">
+      
+<a href="https://github.com/cogment/cogment-doc/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_1" type="checkbox" id="__nav_1" >
+      
+      <label class="md-nav__link" for="__nav_1">
+        Introduction
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Introduction" data-md-level="1">
+        <label class="md-nav__title" for="__nav_1">
+          <span class="md-nav__icon md-icon"></span>
+          Introduction
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        Overview
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../introduction/installation/" class="md-nav__link">
+        Installation & Setup
+      </a>
+    </li>
+  
+
+          
+        </ul>
       </nav>
+    </li>
+  
 
-      
-      <div class="wy-nav-content">
-        <div class="rst-content">
-          <div role="navigation" aria-label="breadcrumbs navigation">
-  <ul class="wy-breadcrumbs">
-    <li><a href="../../..">Docs</a> &raquo;</li>
     
       
-        
-          <li>Cogment API Reference &raquo;</li>
-        
       
-        
-          <li>Cogment &raquo;</li>
-        
+      
+
+  
+  
+  
+    
       
     
-    <li>python</li>
-    <li class="wy-breadcrumbs-aside">
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
       
-        <a href="https://github.com/cogment/cogment-doc/edit/master/docs/cogment/cogment-api-reference/python.md"
-          class="icon icon-github"> Edit on GitHub</a>
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" >
+      
+      <label class="md-nav__link" for="__nav_2">
+        Support
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Support" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          Support
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../support/community-channels/" class="md-nav__link">
+        Community channels
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+      
+      <label class="md-nav__link" for="__nav_3">
+        Concepts
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Concepts" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          Concepts
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../concepts/core-concepts/" class="md-nav__link">
+        Core Concepts
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../concepts/glossary/" class="md-nav__link">
+        Glossary
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" checked>
+      
+      <label class="md-nav__link" for="__nav_4">
+        Cogment
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Cogment" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          Cogment
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_1" type="checkbox" id="__nav_4_1" >
+      
+      <label class="md-nav__link" for="__nav_4_1">
+        Tutorial
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Tutorial" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_1">
+          <span class="md-nav__icon md-icon"></span>
+          Tutorial
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorial/introduction/" class="md-nav__link">
+        Introduction
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorial/1-bootstrap-and-data-structures/" class="md-nav__link">
+        Step 1: Bootstrap a Cogment app
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorial/2-random-player/" class="md-nav__link">
+        Step 2: Implement actor and environment
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorial/3-rewards/" class="md-nav__link">
+        Step 3: Introduce rewards
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorial/4-heuristic-player/" class="md-nav__link">
+        Step 4: Create a heuristic player
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorial/5-human-player/" class="md-nav__link">
+        Step 5: Add a human player in the loop
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorial/6-web-client/" class="md-nav__link">
+        Step 6: Implement a web client for the human player
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorial/7-dqn-player/" class="md-nav__link">
+        Step 7: Add a player trained with Reinforcement Learning using DQN
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cogment-api-guide/" class="md-nav__link">
+        Cogment API Guide
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_3" type="checkbox" id="__nav_4_3" checked>
+      
+      <label class="md-nav__link" for="__nav_4_3">
+        Cogment API Reference
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Cogment API Reference" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_3">
+          <span class="md-nav__icon md-icon"></span>
+          Cogment API Reference
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cogment-yaml/" class="md-nav__link">
+        cogment.yaml
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          python
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        python
+      </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#installation" class="md-nav__link">
+    Installation
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#general-usage" class="md-nav__link">
+    General usage
+  </a>
+  
+    <nav class="md-nav" aria-label="General usage">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cogmentyaml" class="md-nav__link">
+    cogment.yaml
+  </a>
+  
+    <nav class="md-nav" aria-label="cogment.yaml">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#compiling-the-cogmentyaml" class="md-nav__link">
+    Compiling the cogment.yaml
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cog_settingspy" class="md-nav__link">
+    cog_settings.py
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#top-level-import" class="md-nav__link">
+    Top-level import
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#class-cogmentcontext" class="md-nav__link">
+    class cogment.Context
+  </a>
+  
+    <nav class="md-nav" aria-label="class cogment.Context">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#__init__self-user_id-cog_settings" class="md-nav__link">
+    __init__(self, user_id, cog_settings)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#async-serve_all_registeredself-served_endpoint-prometheus_port-8000" class="md-nav__link">
+    async serve_all_registered(self, served_endpoint, prometheus_port = 8000)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get_controllerself-endpoint" class="md-nav__link">
+    get_controller(self, endpoint)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#async-join_trialself-trial_id-endpoint-impl_name-actor_namenone" class="md-nav__link">
+    async join_trial(self, trial_id, endpoint, impl_name, actor_name=None)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#register_environmentself-impl-impl_name-default" class="md-nav__link">
+    register_environment(self, impl, impl_name = "default")
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#register_actorself-impl-impl_name-actor_classes" class="md-nav__link">
+    register_actor(self, impl, impl_name, actor_classes=[])
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#register_pre_trial_hookself-impl" class="md-nav__link">
+    register_pre_trial_hook(self, impl)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#register_datalogself-impl" class="md-nav__link">
+    register_datalog(self, impl)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#class-controller" class="md-nav__link">
+    class Controller
+  </a>
+  
+    <nav class="md-nav" aria-label="class Controller">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#async-start_trialself-trial_confignone" class="md-nav__link">
+    async start_trial(self, trial_config=None)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#terminate_trialself-trial_id" class="md-nav__link">
+    terminate_trial(self, trial_id)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#async-get_trial_infoself-trial_id" class="md-nav__link">
+    async get_trial_info(self, trial_id)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#async-watch_trialsself-trial_state_filters" class="md-nav__link">
+    async watch_trials(self, trial_state_filters=[])
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#async-get_actorsself-trial_id" class="md-nav__link">
+    async get_actors(self, trial_id)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#class-session" class="md-nav__link">
+    class Session
+  </a>
+  
+    <nav class="md-nav" aria-label="class Session">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#get_trial_idself" class="md-nav__link">
+    get_trial_id(self)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get_tick_idself" class="md-nav__link">
+    get_tick_id(self)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#is_trial_overself" class="md-nav__link">
+    is_trial_over(self)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get_active_actorsself" class="md-nav__link">
+    get_active_actors(self)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#add_rewardself-value-confidence-to-tick_id-1-user_datanone" class="md-nav__link">
+    add_reward(self, value, confidence, to, tick_id=-1, user_data=None)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#send_messageself-payload-to-to_environmentfalse" class="md-nav__link">
+    send_message(self, payload, to, to_environment=False)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#class-environmentsessionsession" class="md-nav__link">
+    class EnvironmentSession(Session)
+  </a>
+  
+    <nav class="md-nav" aria-label="class EnvironmentSession(Session)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#startself-observations" class="md-nav__link">
+    start(self, observations)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#async-event_loopself" class="md-nav__link">
+    async event_loop(self)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#produce_observationsself-observations" class="md-nav__link">
+    produce_observations(self, observations)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#endself-final_observations" class="md-nav__link">
+    end(self, final_observations)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#class-actorsessionsession" class="md-nav__link">
+    class ActorSession(Session)
+  </a>
+  
+    <nav class="md-nav" aria-label="class ActorSession(Session)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#startself" class="md-nav__link">
+    start(self)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#async-event_loopself_1" class="md-nav__link">
+    async event_loop(self)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#do_actionself-action" class="md-nav__link">
+    do_action(self, action)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#class-prehooksession" class="md-nav__link">
+    class PrehookSession
+  </a>
+  
+    <nav class="md-nav" aria-label="class PrehookSession">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#get_trial_idself_1" class="md-nav__link">
+    get_trial_id(self)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#validateself" class="md-nav__link">
+    validate(self)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cogmentapicommon_pb2trialparams" class="md-nav__link">
+    cogment.api.common_pb2.TrialParams
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cogmentapidatalogdatalogsample" class="md-nav__link">
+    cogment.api.datalog.DatalogSample
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#class-datalogsession" class="md-nav__link">
+    class DatalogSession
+  </a>
+  
+    <nav class="md-nav" aria-label="class DatalogSession">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#startself_1" class="md-nav__link">
+    start(self)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get_all_samplesself" class="md-nav__link">
+    get_all_samples(self)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#class-cogmentendpoint" class="md-nav__link">
+    class cogment.Endpoint
+  </a>
+  
+    <nav class="md-nav" aria-label="class cogment.Endpoint">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#__init__self-url" class="md-nav__link">
+    __init__(self, url)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#class-cogmentservedendpoint" class="md-nav__link">
+    class cogment.ServedEndpoint
+  </a>
+  
+    <nav class="md-nav" aria-label="class cogment.ServedEndpoint">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#__init__self-port" class="md-nav__link">
+    __init__(self, port)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#class-cogmenttrialstateenumenum" class="md-nav__link">
+    class cogment.TrialState(enum.Enum)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#class-trialinfo" class="md-nav__link">
+    class TrialInfo
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#class-actorinfo" class="md-nav__link">
+    class ActorInfo
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#class-recvevent" class="md-nav__link">
+    class RecvEvent
+  </a>
+  
+    <nav class="md-nav" aria-label="class RecvEvent">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#class-cogmenteventtypeenumenum" class="md-nav__link">
+    class cogment.EventType(enum.Enum)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#class-recvobservation" class="md-nav__link">
+    class RecvObservation
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#class-recvaction" class="md-nav__link">
+    class RecvAction
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#class-recvmessage" class="md-nav__link">
+    class RecvMessage
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#class-recvreward" class="md-nav__link">
+    class RecvReward
+  </a>
+  
+    <nav class="md-nav" aria-label="class RecvReward">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#get_nb_sourcesself" class="md-nav__link">
+    ``get_nb_sources(self)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#all_sourcesself" class="md-nav__link">
+    all_sources(self)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#class-recvrewardsource" class="md-nav__link">
+    class RecvRewardSource
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
-  </ul>
   
-  <hr/>
-</div>
-          <div role="main">
-            <div class="section">
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_3_3" type="checkbox" id="__nav_4_3_3" >
+      
+      <label class="md-nav__link" for="__nav_4_3_3">
+        Javascript/Typescript SDK
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Javascript/Typescript SDK" data-md-level="3">
+        <label class="md-nav__title" for="__nav_4_3_3">
+          <span class="md-nav__icon md-icon"></span>
+          Javascript/Typescript SDK
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../javascript/modules/" class="md-nav__link">
+        Modules
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../javascript/classes/actorsession/" class="md-nav__link">
+        Class: ActorSession
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../javascript/classes/cogmentservice/" class="md-nav__link">
+        Class: CogmentService
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../javascript/classes/trialcontroller/" class="md-nav__link">
+        Class: TrialController
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../javascript/enums/eventtype/" class="md-nav__link">
+        Enum: EventType
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../javascript/interfaces/cogmentyaml/" class="md-nav__link">
+        Interface: CogmentYaml
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../javascript/interfaces/cogmentyamlactor/" class="md-nav__link">
+        Interface: CogmentYamlActor
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../javascript/interfaces/cogmentyamlactorclass/" class="md-nav__link">
+        Interface: CogmentYamlActorClass
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../javascript/interfaces/cogmentyamldatalog/" class="md-nav__link">
+        Interface: CogmentYamlDatalog
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../javascript/interfaces/cogmentyamltrialparameters/" class="md-nav__link">
+        Interface: CogmentYamlTrialParameters
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../javascript/interfaces/cogsettings/" class="md-nav__link">
+        Interface: CogSettings
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../javascript/interfaces/cogsettingsactorclass/" class="md-nav__link">
+        Interface: CogSettingsActorClass
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../javascript/interfaces/createserviceoptions/" class="md-nav__link">
+        Interface: CreateServiceOptions
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../javascript/interfaces/event/" class="md-nav__link">
+        Interface: Event
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../javascript/interfaces/reward/" class="md-nav__link">
+        Interface: Reward
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../javascript/interfaces/sendmessageoptions/" class="md-nav__link">
+        Interface: SendMessageOptions
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../javascript/interfaces/trialactor/" class="md-nav__link">
+        Interface: TrialActor
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_4" type="checkbox" id="__nav_4_4" >
+      
+      <label class="md-nav__link" for="__nav_4_4">
+        Cogment Low Level API Guide
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Cogment Low Level API Guide" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_4">
+          <span class="md-nav__icon md-icon"></span>
+          Cogment Low Level API Guide
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cogment-low-level-api-guide/overview/" class="md-nav__link">
+        Overview
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cogment-low-level-api-guide/grpc/" class="md-nav__link">
+        gRPC API Reference
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../license/" class="md-nav__link">
+        License
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
               
-                <h1 id="python-sdk">Python SDK</h1>
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#installation" class="md-nav__link">
+    Installation
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#general-usage" class="md-nav__link">
+    General usage
+  </a>
+  
+    <nav class="md-nav" aria-label="General usage">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cogmentyaml" class="md-nav__link">
+    cogment.yaml
+  </a>
+  
+    <nav class="md-nav" aria-label="cogment.yaml">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#compiling-the-cogmentyaml" class="md-nav__link">
+    Compiling the cogment.yaml
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cog_settingspy" class="md-nav__link">
+    cog_settings.py
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#top-level-import" class="md-nav__link">
+    Top-level import
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#class-cogmentcontext" class="md-nav__link">
+    class cogment.Context
+  </a>
+  
+    <nav class="md-nav" aria-label="class cogment.Context">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#__init__self-user_id-cog_settings" class="md-nav__link">
+    __init__(self, user_id, cog_settings)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#async-serve_all_registeredself-served_endpoint-prometheus_port-8000" class="md-nav__link">
+    async serve_all_registered(self, served_endpoint, prometheus_port = 8000)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get_controllerself-endpoint" class="md-nav__link">
+    get_controller(self, endpoint)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#async-join_trialself-trial_id-endpoint-impl_name-actor_namenone" class="md-nav__link">
+    async join_trial(self, trial_id, endpoint, impl_name, actor_name=None)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#register_environmentself-impl-impl_name-default" class="md-nav__link">
+    register_environment(self, impl, impl_name = "default")
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#register_actorself-impl-impl_name-actor_classes" class="md-nav__link">
+    register_actor(self, impl, impl_name, actor_classes=[])
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#register_pre_trial_hookself-impl" class="md-nav__link">
+    register_pre_trial_hook(self, impl)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#register_datalogself-impl" class="md-nav__link">
+    register_datalog(self, impl)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#class-controller" class="md-nav__link">
+    class Controller
+  </a>
+  
+    <nav class="md-nav" aria-label="class Controller">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#async-start_trialself-trial_confignone" class="md-nav__link">
+    async start_trial(self, trial_config=None)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#terminate_trialself-trial_id" class="md-nav__link">
+    terminate_trial(self, trial_id)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#async-get_trial_infoself-trial_id" class="md-nav__link">
+    async get_trial_info(self, trial_id)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#async-watch_trialsself-trial_state_filters" class="md-nav__link">
+    async watch_trials(self, trial_state_filters=[])
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#async-get_actorsself-trial_id" class="md-nav__link">
+    async get_actors(self, trial_id)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#class-session" class="md-nav__link">
+    class Session
+  </a>
+  
+    <nav class="md-nav" aria-label="class Session">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#get_trial_idself" class="md-nav__link">
+    get_trial_id(self)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get_tick_idself" class="md-nav__link">
+    get_tick_id(self)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#is_trial_overself" class="md-nav__link">
+    is_trial_over(self)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get_active_actorsself" class="md-nav__link">
+    get_active_actors(self)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#add_rewardself-value-confidence-to-tick_id-1-user_datanone" class="md-nav__link">
+    add_reward(self, value, confidence, to, tick_id=-1, user_data=None)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#send_messageself-payload-to-to_environmentfalse" class="md-nav__link">
+    send_message(self, payload, to, to_environment=False)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#class-environmentsessionsession" class="md-nav__link">
+    class EnvironmentSession(Session)
+  </a>
+  
+    <nav class="md-nav" aria-label="class EnvironmentSession(Session)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#startself-observations" class="md-nav__link">
+    start(self, observations)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#async-event_loopself" class="md-nav__link">
+    async event_loop(self)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#produce_observationsself-observations" class="md-nav__link">
+    produce_observations(self, observations)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#endself-final_observations" class="md-nav__link">
+    end(self, final_observations)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#class-actorsessionsession" class="md-nav__link">
+    class ActorSession(Session)
+  </a>
+  
+    <nav class="md-nav" aria-label="class ActorSession(Session)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#startself" class="md-nav__link">
+    start(self)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#async-event_loopself_1" class="md-nav__link">
+    async event_loop(self)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#do_actionself-action" class="md-nav__link">
+    do_action(self, action)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#class-prehooksession" class="md-nav__link">
+    class PrehookSession
+  </a>
+  
+    <nav class="md-nav" aria-label="class PrehookSession">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#get_trial_idself_1" class="md-nav__link">
+    get_trial_id(self)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#validateself" class="md-nav__link">
+    validate(self)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cogmentapicommon_pb2trialparams" class="md-nav__link">
+    cogment.api.common_pb2.TrialParams
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cogmentapidatalogdatalogsample" class="md-nav__link">
+    cogment.api.datalog.DatalogSample
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#class-datalogsession" class="md-nav__link">
+    class DatalogSession
+  </a>
+  
+    <nav class="md-nav" aria-label="class DatalogSession">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#startself_1" class="md-nav__link">
+    start(self)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get_all_samplesself" class="md-nav__link">
+    get_all_samples(self)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#class-cogmentendpoint" class="md-nav__link">
+    class cogment.Endpoint
+  </a>
+  
+    <nav class="md-nav" aria-label="class cogment.Endpoint">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#__init__self-url" class="md-nav__link">
+    __init__(self, url)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#class-cogmentservedendpoint" class="md-nav__link">
+    class cogment.ServedEndpoint
+  </a>
+  
+    <nav class="md-nav" aria-label="class cogment.ServedEndpoint">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#__init__self-port" class="md-nav__link">
+    __init__(self, port)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#class-cogmenttrialstateenumenum" class="md-nav__link">
+    class cogment.TrialState(enum.Enum)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#class-trialinfo" class="md-nav__link">
+    class TrialInfo
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#class-actorinfo" class="md-nav__link">
+    class ActorInfo
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#class-recvevent" class="md-nav__link">
+    class RecvEvent
+  </a>
+  
+    <nav class="md-nav" aria-label="class RecvEvent">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#class-cogmenteventtypeenumenum" class="md-nav__link">
+    class cogment.EventType(enum.Enum)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#class-recvobservation" class="md-nav__link">
+    class RecvObservation
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#class-recvaction" class="md-nav__link">
+    class RecvAction
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#class-recvmessage" class="md-nav__link">
+    class RecvMessage
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#class-recvreward" class="md-nav__link">
+    class RecvReward
+  </a>
+  
+    <nav class="md-nav" aria-label="class RecvReward">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#get_nb_sourcesself" class="md-nav__link">
+    ``get_nb_sources(self)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#all_sourcesself" class="md-nav__link">
+    all_sources(self)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#class-recvrewardsource" class="md-nav__link">
+    class RecvRewardSource
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/cogment/cogment-doc/edit/main/src/cogment/cogment-api-reference/python.md" title="Edit this page" class="md-content__button md-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
+                  </a>
+                
+                
+                <h1 id="python-sdk">Python SDK<a class="headerlink" href="#python-sdk" title="Permanent link">&para;</a></h1>
 <p>The Python SDK is designed to run concurently and asynchronously using the Python <code>asyncio</code> library.  As such, it should be run in an <code>asyncio.Task</code>.</p>
-<h2 id="installation">Installation</h2>
+<h2 id="installation">Installation<a class="headerlink" href="#installation" title="Permanent link">&para;</a></h2>
 <p>The simplest way to install the python SDK is to just install it using pip:
 <code>pip install cogment</code></p>
 <p>The basic requiremetns is Python 3.7.</p>
-<h2 id="general-usage">General usage</h2>
-<h3 id="cogmentyaml">cogment.yaml</h3>
+<h2 id="general-usage">General usage<a class="headerlink" href="#general-usage" title="Permanent link">&para;</a></h2>
+<h3 id="cogmentyaml">cogment.yaml<a class="headerlink" href="#cogmentyaml" title="Permanent link">&para;</a></h3>
 <p>The <a href="../cogment-yaml/">cogment.yaml</a> file (including imported files) defines the high level API.</p>
 <p>For example, an <a href="../../../concepts/glossary/#actor-class">actor class</a> is defined by its required <a href="../../../concepts/glossary/#observation-space">observation space</a> and <a href="../../../concepts/glossary/#action-space">action space</a>.</p>
 <p>These "spaces" are defined by using protobuf message types (from the imported files). <a href="../../../concepts/glossary/#observation">Observations</a> and <a href="../../../concepts/glossary/#action">actions</a> will simply be instances of the appropriate type.</p>
 <p>Messages and feedback user data don't have a set type, they can be any type as long as the receiver can manage that type (i.e. the object received is an instance of <code>google.protobuf.Any</code> and the contained type should be checked against known types before handling).  The type is determined by the provided message from the originator.</p>
 <p>The <code>trial_params</code> section represents default values that can be dynamically changed for each trial with pre-trial hooks.  Therefore, below, when this section of the <code>cogment.yaml</code> file is refered, we mean the final parameters after any pre-trial hooks.</p>
-<h4 id="compiling-the-cogmentyaml">Compiling the cogment.yaml</h4>
+<h4 id="compiling-the-cogmentyaml">Compiling the cogment.yaml<a class="headerlink" href="#compiling-the-cogmentyaml" title="Permanent link">&para;</a></h4>
 <p>In order to use the configuration found in the <code>cogment.yaml</code> file within python scripts, it needs to be compiled into python modules. This is done by a tool called the “cogment cli” (Command Line Interface).</p>
 <p>The cogment cli requires <code>protoc</code> (the Protobuf compiler).</p>
 <p>As a convenience, the <code>cogment/cli</code> docker image can be used to run it, as it has all the required dependencies correctly setup already:</p>
-<pre><code class="text">$ docker run -v $(pwd):/data --rm cogment/cli --file /data/cogment.yaml --python_dir=/data
-</code></pre>
+<div class="highlight"><pre><span></span><code>$ docker run -v $(pwd):/data --rm cogment/cli --file /data/cogment.yaml --python_dir=/data
+</code></pre></div>
 
 <p>This will create a <code>cog_settings.py</code> module in the <code>--python-dir</code> directory.  The cogment cli will also compile the imported <code>*.proto</code> files in python modules living in the same location (e.g. <code>data_pb2.py</code> in this case). There is no need to invoke <code>protoc</code> yourself for the imported files.</p>
-<h3 id="cog_settingspy">cog_settings.py</h3>
+<h3 id="cog_settingspy">cog_settings.py<a class="headerlink" href="#cog_settingspy" title="Permanent link">&para;</a></h3>
 <p>All API entrypoints require a cogment configuration object. This configuration object can be determined
 from the content of a project's <code>cogment.yaml</code>. As such, it should be generated using the <code>cogment</code> tool.</p>
-<pre><code class="bash"># From the directory containing cogment.yaml
-$ cogment generate --python_dir=path/to/project
-</code></pre>
+<div class="highlight"><pre><span></span><code><span class="c1"># From the directory containing cogment.yaml</span>
+$ cogment generate --python_dir<span class="o">=</span>path/to/project
+</code></pre></div>
 
 <p>This will generate both a <code>cog_settings.py</code> file, as well as any required compiled protocol buffer files.</p>
-<h3 id="top-level-import">Top-level import</h3>
+<h3 id="top-level-import">Top-level import<a class="headerlink" href="#top-level-import" title="Permanent link">&para;</a></h3>
 <p>Whether a script implements an actor or environment, it should import both the <code>cogment</code> module (generic python SDK for Cogment) and the <code>cog_settings</code> module (project specific definitions created from <code>cogment.yaml</code>).</p>
-<pre><code class="python">import cog_settings
-import cogment
-</code></pre>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">cog_settings</span>
+<span class="kn">import</span> <span class="nn">cogment</span>
+</code></pre></div>
 
-<h2 id="class-cogmentcontext">class cogment.Context</h2>
+<h2 id="class-cogmentcontext">class cogment.Context<a class="headerlink" href="#class-cogmentcontext" title="Permanent link">&para;</a></h2>
 <p>Class to setup and run all the different aspects of trials.</p>
-<h3 id="__init__self-user_id-cog_settings"><code>__init__(self, user_id, cog_settings)</code></h3>
+<h3 id="__init__self-user_id-cog_settings"><code>__init__(self, user_id, cog_settings)</code><a class="headerlink" href="#__init__self-user_id-cog_settings" title="Permanent link">&para;</a></h3>
 <p>Parameters:</p>
 <ul>
 <li><code>user_id</code>: <em>str</em> - Identifier for the user of this context.</li>
 <li><code>cog_settings</code>: <em>module</em> - Settings module associated with trials that will be run (<a href="#cog_settings.py">cog_settings</a> namespace).</li>
 </ul>
-<h3 id="async-serve_all_registeredself-served_endpoint-prometheus_port-8000"><code>async serve_all_registered(self, served_endpoint, prometheus_port = 8000)</code></h3>
+<h3 id="async-serve_all_registeredself-served_endpoint-prometheus_port-8000"><code>async serve_all_registered(self, served_endpoint, prometheus_port = 8000)</code><a class="headerlink" href="#async-serve_all_registeredself-served_endpoint-prometheus_port-8000" title="Permanent link">&para;</a></h3>
 <p>Method to start and run the communication server for the registered components (environment, actor, prehook, datalog). This coroutine will end when all activity has stopped.</p>
 <p>Parameters:</p>
 <ul>
@@ -394,14 +2008,14 @@ import cogment
 <li><code>prometheus_port</code>: <em>int</em> - TCP/IP port number for Prometheus</li>
 </ul>
 <p>Return: None</p>
-<h3 id="get_controllerself-endpoint"><code>get_controller(self, endpoint)</code></h3>
+<h3 id="get_controllerself-endpoint"><code>get_controller(self, endpoint)</code><a class="headerlink" href="#get_controllerself-endpoint" title="Permanent link">&para;</a></h3>
 <p>Method to get a controller instance to manage trials (start, stop, inquire, etc).</p>
 <p>Parameters:</p>
 <ul>
 <li><code>endpoint</code>: <em>Endpoint instance</em> - Details of the connection to the Orchestrator.</li>
 </ul>
 <p>Return: <em>Controller instance</em> - An instance of the Controller class used to manage trials.</p>
-<h3 id="async-join_trialself-trial_id-endpoint-impl_name-actor_namenone"><code>async join_trial(self, trial_id, endpoint, impl_name, actor_name=None)</code></h3>
+<h3 id="async-join_trialself-trial_id-endpoint-impl_name-actor_namenone"><code>async join_trial(self, trial_id, endpoint, impl_name, actor_name=None)</code><a class="headerlink" href="#async-join_trialself-trial_id-endpoint-impl_name-actor_namenone" title="Permanent link">&para;</a></h3>
 <p>Method for an actor to asynchronously join an existing trial. This task will normally end after the user implementation has exited.</p>
 <p>Parameters:</p>
 <ul>
@@ -411,7 +2025,7 @@ import cogment
 <li><code>actor_name</code>: <em>str</em> - Name of the actor joining the trial. If <code>None</code>, the actor will join as any of the configured (free) actors of the actor class registered for <code>impl_name</code>.  Otherwise, the name must match an actor with an actor_class compatible with <code>impl_name</code> as defined in <code>cogment.yaml</code> in the sections <code>trial_params:actors:actor_class</code> and <code>trial_params:actors:name</code>.</li>
 </ul>
 <p>Return: None</p>
-<h3 id="register_environmentself-impl-impl_name-default"><code>register_environment(self, impl, impl_name = "default")</code></h3>
+<h3 id="register_environmentself-impl-impl_name-default"><code>register_environment(self, impl, impl_name = "default")</code><a class="headerlink" href="#register_environmentself-impl-impl_name-default" title="Permanent link">&para;</a></h3>
 <p>Method to register the asynchronous callback function that will run an environment for a trial.</p>
 <p>Parameters:</p>
 <ul>
@@ -419,7 +2033,7 @@ import cogment
 <li><code>impl_name</code>: <em>str</em> - Name for the environment being run by the given callback function.</li>
 </ul>
 <p>Return: None</p>
-<h3 id="register_actorself-impl-impl_name-actor_classes"><code>register_actor(self, impl, impl_name, actor_classes=[])</code></h3>
+<h3 id="register_actorself-impl-impl_name-actor_classes"><code>register_actor(self, impl, impl_name, actor_classes=[])</code><a class="headerlink" href="#register_actorself-impl-impl_name-actor_classes" title="Permanent link">&para;</a></h3>
 <p>Method to register the asynchronous callback function that will run an actor for a trial.</p>
 <p>Parameters:</p>
 <ul>
@@ -428,76 +2042,76 @@ import cogment
 <li><code>actor_classes</code>: <em>list[str]</em> - The actor class name(s) that can be run by the given callback function. The possible names are specified in file <code>cogment.yaml</code> under section <code>actor_classes:name</code>.  If the list is empty, this implementation can run any actor class.</li>
 </ul>
 <p>Return: None</p>
-<h3 id="register_pre_trial_hookself-impl"><code>register_pre_trial_hook(self, impl)</code></h3>
+<h3 id="register_pre_trial_hookself-impl"><code>register_pre_trial_hook(self, impl)</code><a class="headerlink" href="#register_pre_trial_hookself-impl" title="Permanent link">&para;</a></h3>
 <p>Method to register an asynchronous callback function that will be called before a trial is started.</p>
 <p>Parameters:</p>
 <ul>
 <li><code>impl</code>: <em>async func(PrehookSession instance)</em> - Callback function to be registered.  The <code>PrehookSession</code> instance member data should be changed as needed for the new trial before returning from this function.</li>
 </ul>
 <p>Return: None</p>
-<h3 id="register_datalogself-impl"><code>register_datalog(self, impl)</code></h3>
+<h3 id="register_datalogself-impl"><code>register_datalog(self, impl)</code><a class="headerlink" href="#register_datalogself-impl" title="Permanent link">&para;</a></h3>
 <p>Method to register an asynchronous callback function that will be called for each log request (for any trial).  Only one such function can be registered.</p>
 <p>Parameters:</p>
 <ul>
 <li><code>impl</code>: <em>async func(DatalogSession instance)</em> - Callback function to be registered</li>
 </ul>
 <p>Return: None</p>
-<h2 id="class-controller">class Controller</h2>
+<h2 id="class-controller">class Controller<a class="headerlink" href="#class-controller" title="Permanent link">&para;</a></h2>
 <p>Class containing data and methods to control and manage trials.</p>
-<h3 id="async-start_trialself-trial_confignone"><code>async start_trial(self, trial_config=None)</code></h3>
+<h3 id="async-start_trialself-trial_confignone"><code>async start_trial(self, trial_config=None)</code><a class="headerlink" href="#async-start_trialself-trial_confignone" title="Permanent link">&para;</a></h3>
 <p>Method to start a new trial.  The parameters of the trial will be set by the pre-trial hooks (registered in <code>cogment.Context</code>), and the hooks will receive the provided trial config.</p>
 <p>Parameters:</p>
 <ul>
 <li><code>trial_config</code>: <em>protobuf class instance</em> - Configuration for the trial.  The type is specified in file <code>cogment.yaml</code> under the section <code>trial:config_type</code>.  Can be <code>None</code> if no configuration is provided.</li>
 </ul>
 <p>Return: <em>str</em> - The newly started trial ID.</p>
-<h3 id="terminate_trialself-trial_id"><code>terminate_trial(self, trial_id)</code></h3>
+<h3 id="terminate_trialself-trial_id"><code>terminate_trial(self, trial_id)</code><a class="headerlink" href="#terminate_trialself-trial_id" title="Permanent link">&para;</a></h3>
 <p>Method to request the end of a trial.</p>
 <p>Parameters:</p>
 <ul>
 <li><code>trial_id</code>: <em>str</em> - The trial ID to request to terminate.</li>
 </ul>
 <p>Return: None</p>
-<h3 id="async-get_trial_infoself-trial_id"><code>async get_trial_info(self, trial_id)</code></h3>
+<h3 id="async-get_trial_infoself-trial_id"><code>async get_trial_info(self, trial_id)</code><a class="headerlink" href="#async-get_trial_infoself-trial_id" title="Permanent link">&para;</a></h3>
 <p>Method to get information about a trial.</p>
 <p>Parameters:</p>
 <ul>
 <li><code>trial_id</code>: <em>str</em> - The trial ID from which to request information.  If <code>None</code> returns information about all trials.  Note that ended trials may only appear for a short time in this list after they have ended.</li>
 </ul>
 <p>Return: <em>list[TrialInfo instance]</em> - List of trial information, one per trial.  Can be empty if no trial matches.</p>
-<h3 id="async-watch_trialsself-trial_state_filters"><code>async watch_trials(self, trial_state_filters=[])</code></h3>
+<h3 id="async-watch_trialsself-trial_state_filters"><code>async watch_trials(self, trial_state_filters=[])</code><a class="headerlink" href="#async-watch_trialsself-trial_state_filters" title="Permanent link">&para;</a></h3>
 <p>Generator method to iterate, in real-time, through all trial states matching the filters.  When called, it will first iterate over the current states matching the filters, for all trials.  Afterward, it will iterate in real-time over the matching states as they change.</p>
 <p>Parameters:</p>
 <ul>
 <li><code>trial_state_filters</code>: <em>list[cogment.TrialState]</em> - List of enum values from <code>cogment.TrialState</code>.   for which we are intersted to receive state change.</li>
 </ul>
 <p>Return: <em>generator(TrialInfo instance)</em> - A generator for the state changes that arrive.  The <code>TrialInfo</code> received here only contain the trial ID and the state.</p>
-<h3 id="async-get_actorsself-trial_id"><code>async get_actors(self, trial_id)</code></h3>
+<h3 id="async-get_actorsself-trial_id"><code>async get_actors(self, trial_id)</code><a class="headerlink" href="#async-get_actorsself-trial_id" title="Permanent link">&para;</a></h3>
 <p>Method to get the list of configured actors in a trial.</p>
 <p>Parameters:</p>
 <ul>
 <li><code>trial_id</code>: <em>str</em> - The trial ID from which to request the list of actors.</li>
 </ul>
 <p>Return: <em>list[ActorInfo instance]</em> - List of actors configured in this trial.</p>
-<h2 id="class-session">class Session</h2>
+<h2 id="class-session">class Session<a class="headerlink" href="#class-session" title="Permanent link">&para;</a></h2>
 <p>Abstract class containing data and methods common to all sessions that manage aspects of a trial.</p>
-<h3 id="get_trial_idself"><code>get_trial_id(self)</code></h3>
+<h3 id="get_trial_idself"><code>get_trial_id(self)</code><a class="headerlink" href="#get_trial_idself" title="Permanent link">&para;</a></h3>
 <p>Method to get the UUID of the trial managed by this session.</p>
 <p>Parameters: None</p>
 <p>Return: <em>str</em> - UUID of the trial.</p>
-<h3 id="get_tick_idself"><code>get_tick_id(self)</code></h3>
+<h3 id="get_tick_idself"><code>get_tick_id(self)</code><a class="headerlink" href="#get_tick_idself" title="Permanent link">&para;</a></h3>
 <p>Method to get the current tick id of the trial (i.e. time step).</p>
 <p>Parameters: None</p>
 <p>Return: <em>int</em> - The current tick id.</p>
-<h3 id="is_trial_overself"><code>is_trial_over(self)</code></h3>
+<h3 id="is_trial_overself"><code>is_trial_over(self)</code><a class="headerlink" href="#is_trial_overself" title="Permanent link">&para;</a></h3>
 <p>Method to inquire if the current trial has ended.</p>
 <p>Parameters: None</p>
 <p>Return: <em>bool</em> - True if the trial has ended, false otherwise.</p>
-<h3 id="get_active_actorsself"><code>get_active_actors(self)</code></h3>
+<h3 id="get_active_actorsself"><code>get_active_actors(self)</code><a class="headerlink" href="#get_active_actorsself" title="Permanent link">&para;</a></h3>
 <p>Method to get the list of active actors in the trial.  This may be expensive to retrieve and thus should be stored if the list is not expected to change throughout the trial.</p>
 <p>Parameters: None</p>
 <p>Return: <em>list[ActorInfo instance]</em> - List of active actors and classes involved in this trial.</p>
-<h3 id="add_rewardself-value-confidence-to-tick_id-1-user_datanone"><code>add_reward(self, value, confidence, to, tick_id=-1, user_data=None)</code></h3>
+<h3 id="add_rewardself-value-confidence-to-tick_id-1-user_datanone"><code>add_reward(self, value, confidence, to, tick_id=-1, user_data=None)</code><a class="headerlink" href="#add_rewardself-value-confidence-to-tick_id-1-user_datanone" title="Permanent link">&para;</a></h3>
 <p>Method to send a reward to one or more actors.</p>
 <p>Parameters:</p>
 <ul>
@@ -508,7 +2122,7 @@ import cogment
 <li><code>user_data</code>: <em>protobuf class instance</em> - Extra user data to be sent with the reward. The class can be any protobuf class.  It is the responsibility of the receiving actor to manage the class received (packed in a <code>google.protobuf.Any</code>).</li>
 </ul>
 <p>Return: None</p>
-<h3 id="send_messageself-payload-to-to_environmentfalse"><code>send_message(self, payload, to, to_environment=False)</code></h3>
+<h3 id="send_messageself-payload-to-to_environmentfalse"><code>send_message(self, payload, to, to_environment=False)</code><a class="headerlink" href="#send_messageself-payload-to-to_environmentfalse" title="Permanent link">&para;</a></h3>
 <p>Method to send a message related to current time step (tick id).</p>
 <p>Parameters:</p>
 <ul>
@@ -517,61 +2131,61 @@ import cogment
 <li><code>to_environment</code>: <em>bool</em> - If True, the message is also sent to the environment, otherwise the message is only sent to the actors specified.</li>
 </ul>
 <p>Return: None</p>
-<h2 id="class-environmentsessionsession">class EnvironmentSession(Session)</h2>
+<h2 id="class-environmentsessionsession">class EnvironmentSession(Session)<a class="headerlink" href="#class-environmentsessionsession" title="Permanent link">&para;</a></h2>
 <p>Abstract class based on <code>Session</code>, containing session data and methods necessary to run an environment for a trial.  An instance of this class is passed as argument to the environment callback function registered with <code>cogment.Context.register_environment</code>.</p>
 <p><code>impl_name</code>: <em>str</em> - Name of the implementation running this environment.</p>
 <p><code>config</code>: <em>protobuf class instance</em> - User configuration received for this environment instance.  Can be <code>None</code> if no configuration was provided.  The type of the protobuf class is specified in <code>cogment.yaml</code> in section <code>environment:config_type</code>.</p>
-<h3 id="startself-observations"><code>start(self, observations)</code></h3>
+<h3 id="startself-observations"><code>start(self, observations)</code><a class="headerlink" href="#startself-observations" title="Permanent link">&para;</a></h3>
 <p>Method to report that the environment is starting to run the trial.  The method should be called before any other method in the session.</p>
 <p>Parameters:</p>
 <ul>
 <li><code>observations</code>: <em>list[tuple(str, protobuf class instance)]</em> - The initial observations from which the environment is starting the trial.  This is the same as the parameter for <code>self.produce_observations</code>.</li>
 </ul>
 <p>Return: None</p>
-<h3 id="async-event_loopself"><code>async event_loop(self)</code></h3>
+<h3 id="async-event_loopself"><code>async event_loop(self)</code><a class="headerlink" href="#async-event_loopself" title="Permanent link">&para;</a></h3>
 <p>Generator method to iterate over all events (actions, messages) as they are received.  This will block and wait for an event.
 When this generator exits, the callback function (registered with <code>register_environment</code>) should return to end the trial cleanly.
 The generator will exit for various reasons indicating the termination of the trial, a loss of communication with the orchestrator, or if the generator is sent "False" (in which case the callback function does not necessarily need to exit).</p>
 <p>Parameters: None</p>
 <p>Return: <em>generator(RecvEvent instance)</em> - A generator for the events that arrive.  The <code>RecvEvent</code> instances received from this generator will only contain actions or messages; no observations nor rewards.  When receiving actions in the event, the <code>self.produce_observation</code> method is normally used to "reply" (or <code>self.end</code> to end the trial).</p>
-<h3 id="produce_observationsself-observations"><code>produce_observations(self, observations)</code></h3>
+<h3 id="produce_observationsself-observations"><code>produce_observations(self, observations)</code><a class="headerlink" href="#produce_observationsself-observations" title="Permanent link">&para;</a></h3>
 <p>Method to send observations to actors.  If called after receiving an event of type <code>EventType.ENDING</code>, the observation will be consired the final observation (equivalent to calling <code>end()</code>).</p>
 <p>Parameters:</p>
 <ul>
 <li><code>observations</code>: <em>list[tuple(str, protobuf class instance)]</em> - The observations to send to actors.  The string in the tuple is the name of the destination actor (or "*" for all actors).  The name of the actors can be found in <code>cogment.yaml</code> under <code>trial_params:actors:name</code>.  The protobuf class is Observation Space for that actor, found in <code>cogment.yaml</code> in the corresponding section <code>actor_classes:observation:space</code>.</li>
 </ul>
 <p>Return: None</p>
-<h3 id="endself-final_observations"><code>end(self, final_observations)</code></h3>
+<h3 id="endself-final_observations"><code>end(self, final_observations)</code><a class="headerlink" href="#endself-final_observations" title="Permanent link">&para;</a></h3>
 <p>Method to report the end of the environment. This will effectively end the trial.</p>
 <p>Parameters:</p>
 <ul>
 <li><code>final_observations</code>: <em>list[tuple(str, protobuf class instance)]</em> - The final observations to send to the actors.  This is the same as the parameter for <code>self.produce_observations</code>.</li>
 </ul>
 <p>Return: None</p>
-<h2 id="class-actorsessionsession">class ActorSession(Session)</h2>
+<h2 id="class-actorsessionsession">class ActorSession(Session)<a class="headerlink" href="#class-actorsessionsession" title="Permanent link">&para;</a></h2>
 <p>Abstract class based on <code>Session</code>, containing session/trial data and methods necessary to run an actor for a trial.  An instance of this class is passed as argument to the actor callback function registered with <code>cogment.Context.register_actor</code>.</p>
 <p><code>class_name</code>: <em>str</em> - Name of the class of actor this instance represents.  Specified in <code>cogment.yaml</code> as <code>actor_classes:name</code>.</p>
 <p><code>impl_name</code>: <em>str</em> - Name of the implementation of the actor represented by this instance.</p>
 <p><code>config</code>: <em>protobuf class instance</em> - User configuration received for this actor instance.  Can be <code>None</code> is no configuration was provided.  The type of the protobuf class is specified in <code>cogment.yaml</code> in section <code>actor_classes:config_type</code>.</p>
 <p><code>name</code>: <em>str</em> - Name of the actor this instance represents.</p>
-<h3 id="startself"><code>start(self)</code></h3>
+<h3 id="startself"><code>start(self)</code><a class="headerlink" href="#startself" title="Permanent link">&para;</a></h3>
 <p>Method to start the actor.  This method should be called before any other method in the session.</p>
 <p>Parameters: None</p>
 <p>Return: None</p>
-<h3 id="async-event_loopself_1"><code>async event_loop(self)</code></h3>
+<h3 id="async-event_loopself_1"><code>async event_loop(self)</code><a class="headerlink" href="#async-event_loopself_1" title="Permanent link">&para;</a></h3>
 <p>Generator method to iterate over all events (observations, rewards, messages) as they are received.  This will block and wait for an event.
 When this generator exits, the callback function (registered with <code>register_actor</code>) should return to end the trial cleanly.
 The generator will exit for various reasons indicating the end of the trial, a loss of communication with the orchestrator, or if the generator is sent "False".</p>
 <p>Parameters: None</p>
 <p>Return: <em>generator(RecvEvent instance)</em> - A generator for the events that arrive.  The <code>RecvEvent</code> instances received from this generator will not contain actions.  When receiving an observation in the event, the <code>self.do_action</code> method is normally used to "reply" (if the event type is <code>EventType.ACTIVE</code>).</p>
-<h3 id="do_actionself-action"><code>do_action(self, action)</code></h3>
+<h3 id="do_actionself-action"><code>do_action(self, action)</code><a class="headerlink" href="#do_actionself-action" title="Permanent link">&para;</a></h3>
 <p>Method to send actions to the environment.</p>
 <p>Parameters:</p>
 <ul>
 <li><code>action</code>: <em>protobuf class instance</em> - An instance of the action space class specified in the corresponding section <code>actor_classes:action:space</code> of the <code>cogment.yaml</code> file.  If <code>None</code>, then no action space is sent (empty content) and the environment will receive a default initialized action space of the appropriate type.</li>
 </ul>
 <p>Return: None</p>
-<h2 id="class-prehooksession">class PrehookSession</h2>
+<h2 id="class-prehooksession">class PrehookSession<a class="headerlink" href="#class-prehooksession" title="Permanent link">&para;</a></h2>
 <p>Abstract class containing trial configuration data to define the specifics of a trial.  An instance of this class is passed as argument to the prehook callback function registered with <code>cogment.Context.register_pre_trial_hook</code>, and is part of the <code>DatalogSession</code>.</p>
 <p><code>trial_config</code>: <em>protobuf class instance</em> - Configuration for the new trial.  The type is specified in file <code>cogment.yaml</code> under the section <code>trial:config_type</code>.</p>
 <p><code>trial_max_steps</code>: <em>int</em> - The maximum number of time steps (ticks) that the trial will run before terminating.</p>
@@ -586,53 +2200,53 @@ The generator will exit for various reasons indicating the end of the trial, a l
 <li>"implementation: <em>str</em> - The name of the implementation to run this actor</li>
 <li>"config": <em>protobuf class instance</em> - The configuration data for the actor.</li>
 </ul>
-<h3 id="get_trial_idself_1"><code>get_trial_id(self)</code></h3>
+<h3 id="get_trial_idself_1"><code>get_trial_id(self)</code><a class="headerlink" href="#get_trial_idself_1" title="Permanent link">&para;</a></h3>
 <p>Method to retrieve the UUID of the trial.</p>
 <p>Parameters: None</p>
 <p>Return: <em>str</em> - UUID of the trial.</p>
-<h3 id="validateself"><code>validate(self)</code></h3>
+<h3 id="validateself"><code>validate(self)</code><a class="headerlink" href="#validateself" title="Permanent link">&para;</a></h3>
 <p>Method to validate that the data is valid.  This is a superficial check; even if the data validates successfully, there can still be problems with the data.  This method should be called if changes have been made to the data members of the class.  Exceptions are raised on error.</p>
 <p>Parameters: None</p>
 <p>Return: None</p>
-<h2 id="cogmentapicommon_pb2trialparams">cogment.api.common_pb2.TrialParams</h2>
+<h2 id="cogmentapicommon_pb2trialparams">cogment.api.common_pb2.TrialParams<a class="headerlink" href="#cogmentapicommon_pb2trialparams" title="Permanent link">&para;</a></h2>
 <p><a href="cogment-doc/cogment/cogment-low-level-api-guide/grpc/#trialparams">TrialParams</a> is defined in the low level grpc api. </p>
-<h2 id="cogmentapidatalogdatalogsample">cogment.api.datalog.DatalogSample</h2>
+<h2 id="cogmentapidatalogdatalogsample">cogment.api.datalog.DatalogSample<a class="headerlink" href="#cogmentapidatalogdatalogsample" title="Permanent link">&para;</a></h2>
 <p><a href="cogment-doc/cogment/cogment-low-level-api-guide/grpc/#logexportersamplerequest">DatalogSample</a> is defined in the low level grpc api.</p>
-<h2 id="class-datalogsession">class DatalogSession</h2>
+<h2 id="class-datalogsession">class DatalogSession<a class="headerlink" href="#class-datalogsession" title="Permanent link">&para;</a></h2>
 <p>Abstract class containing session data and methods necessary to manage logging of trial run data.  An instance of this class is passed as argument to the datalog callback function registered with <code>cogment.Context.register_datalog</code>.</p>
 <p><code>trial_id</code>: <em>str</em> - UUID of the trial managed by this instance.</p>
 <p><code>trial_params</code>: <em>dictionary</em> - Parameters of the trial. This parameter has been <strong>deprecated</strong>.</p>
 <p><code>raw_trial_params</code>: <em>cogment.api.common_pb2.TrialParams</em> - Parameters of the trial.</p>
-<h3 id="startself_1"><code>start(self)</code></h3>
+<h3 id="startself_1"><code>start(self)</code><a class="headerlink" href="#startself_1" title="Permanent link">&para;</a></h3>
 <p>Method to start receiving samples.</p>
 <p>Parameters: None</p>
 <p>Return: None</p>
-<h3 id="get_all_samplesself"><code>get_all_samples(self)</code></h3>
+<h3 id="get_all_samplesself"><code>get_all_samples(self)</code><a class="headerlink" href="#get_all_samplesself" title="Permanent link">&para;</a></h3>
 <p>Generator method to iterate over all samples as they are received (waiting for each in turn).</p>
 <p>Parameters: None</p>
 <p>Return: <em>generator(cogment.api.datalog.DatalogSample)</em> - A generator for the samples received.</p>
-<h2 id="class-cogmentendpoint">class cogment.Endpoint</h2>
+<h2 id="class-cogmentendpoint">class cogment.Endpoint<a class="headerlink" href="#class-cogmentendpoint" title="Permanent link">&para;</a></h2>
 <p>Class enclosing the details for connecting to an Orchestrator.</p>
 <p><code>url</code>: <em>str</em> - The URL where to connect to the Orchestrator.</p>
 <p><code>private_key</code>: <em>str</em> - To use TLS for the connection, this must be set to the PEM-encoded private key.</p>
 <p><code>root_certificates</code>: <em>str</em> - If using TLS for the connection (i.e. the <code>private_key</code> is not <code>None</code>), this can be set to the PEM-encoded root certificates. If not set and using TLS for the connection, the root certificates will be fetched from the system default location.</p>
 <p><code>certificate_chain</code>: <em>str</em> - If using TLS for the connection, this can be set to the PEM-encoded certificate chain.</p>
-<h3 id="__init__self-url"><code>__init__(self, url)</code></h3>
+<h3 id="__init__self-url"><code>__init__(self, url)</code><a class="headerlink" href="#__init__self-url" title="Permanent link">&para;</a></h3>
 <p>Parameters:</p>
 <ul>
 <li><code>url</code>: <em>str</em> - The URL where to connect to the Orchestrator.</li>
 </ul>
-<h2 id="class-cogmentservedendpoint">class cogment.ServedEndpoint</h2>
+<h2 id="class-cogmentservedendpoint">class cogment.ServedEndpoint<a class="headerlink" href="#class-cogmentservedendpoint" title="Permanent link">&para;</a></h2>
 <p>Class enclosing the details for connection from an Orchestrator.</p>
 <p><code>port</code>: <em>str</em> - The TCP/IP port where the service will be awaiting the Orchestrator connection.</p>
 <p><code>private_key_certificate_chain_pairs</code>: <em>list[tupple(str, str)]</em> - To use TLS for incoming connections, this must be se to a list of tuples of the form (PEM-encoded private key, PEM-encoded certificate chain).</p>
 <p><code>root_certificates</code>: <em>str</em> - If using TLS for the connection (i.e. <code>private_key_certificate_chain_pairs</code> is not <code>None</code>), this should be set to PEM-encoded Orchestrator root certificates that the server will use to verify Orchestrator authentication.</p>
-<h3 id="__init__self-port"><code>__init__(self, port)</code></h3>
+<h3 id="__init__self-port"><code>__init__(self, port)</code><a class="headerlink" href="#__init__self-port" title="Permanent link">&para;</a></h3>
 <p>Parameters:</p>
 <ul>
 <li><code>port</code>: <em>int</em> - The TCP/IP port where the service will be awaiting the Orchestrator connection.</li>
 </ul>
-<h2 id="class-cogmenttrialstateenumenum">class cogment.TrialState(enum.Enum)</h2>
+<h2 id="class-cogmenttrialstateenumenum">class cogment.TrialState(enum.Enum)<a class="headerlink" href="#class-cogmenttrialstateenumenum" title="Permanent link">&para;</a></h2>
 <p>Enum representing the various states of trials.</p>
 <ul>
 <li>UNKNOWN: Should not be used.</li>
@@ -642,24 +2256,24 @@ The generator will exit for various reasons indicating the end of the trial, a l
 <li>TERMINATING: The trial is in the process of terminating (either a request to terminate has been received or the last observation has been received).</li>
 <li>ENDED: The trial has ended.  Only a set number of ended trials will be kept (configured in the Orchestrator).</li>
 </ul>
-<h2 id="class-trialinfo">class TrialInfo</h2>
+<h2 id="class-trialinfo">class TrialInfo<a class="headerlink" href="#class-trialinfo" title="Permanent link">&para;</a></h2>
 <p>Class enclosing the details of a trial.</p>
 <p><code>trial_id</code>: <em>str</em> - The trial ID for which the details pertain.</p>
 <p><code>state</code>: <em>cogment.TrialState</em> - The current state of the trial.</p>
 <p><code>tick_id</code>: <em>int</em> - The time step that the information relates to.  Only provided from a call to <code>get_trial_info</code>.</p>
 <p><code>duration</code>: <em>int</em> - The time (in nanoseconds) that the trial has run.  Only provided from a call to <code>get_trial_info</code>.</p>
-<h2 id="class-actorinfo">class ActorInfo</h2>
+<h2 id="class-actorinfo">class ActorInfo<a class="headerlink" href="#class-actorinfo" title="Permanent link">&para;</a></h2>
 <p>Class enclosing the details of an actor.</p>
 <p><code>actor_name</code>: <em>str</em> - The name of the actor.</p>
 <p><code>actor_class_name</code>: <em>str</em> - The name of the actor's class (as defined in <code>cogment.yaml</code>).</p>
-<h2 id="class-recvevent">class RecvEvent</h2>
+<h2 id="class-recvevent">class RecvEvent<a class="headerlink" href="#class-recvevent" title="Permanent link">&para;</a></h2>
 <p>Class representing a received event (for environments and actors).  It can contain any combination of data according to the receiver needs, or even be empty, but it will always have a type.</p>
 <p><code>type</code>: <em>Enum EventType</em> - Type of event the enclosed data represents.</p>
 <p><code>observation</code>: <em>RecvObservation instance</em> - Observation data.  This can only be received by actors.  <code>None</code> if not present.</p>
 <p><code>actions</code>: <em>list[RecvAction instance]</em> - Action data from actors.  This can only be received by the environment.  The list is empty if not present.</p>
 <p><code>rewards</code>: <em>list[RecvReward instance]</em> - Reward values and data.  This can only be received by actors.  The list is empty if not present.</p>
 <p><code>messages</code>: *list[RecvMessage instance] - Message data.  The list is empty if not present.</p>
-<h3 id="class-cogmenteventtypeenumenum">class cogment.EventType(enum.Enum)</h3>
+<h3 id="class-cogmenteventtypeenumenum">class cogment.EventType(enum.Enum)<a class="headerlink" href="#class-cogmenteventtypeenumenum" title="Permanent link">&para;</a></h3>
 <p>Enum representing the type of an event.</p>
 <ul>
 <li>
@@ -675,91 +2289,146 @@ The generator will exit for various reasons indicating the end of the trial, a l
 <p><code>EventType.FINAL</code>: Final event for the trial.  This does not contain data. The event loop will exit after this event is delivered.  This event can be ignored if nothing needs to be done before exiting the loop.</p>
 </li>
 </ul>
-<h2 id="class-recvobservation">class RecvObservation</h2>
+<h2 id="class-recvobservation">class RecvObservation<a class="headerlink" href="#class-recvobservation" title="Permanent link">&para;</a></h2>
 <p>Class containing the details of an observation for an actor.</p>
 <p><code>tick_id</code>: <em>int</em> - The time step that the observation relates to.</p>
 <p><code>timestamp</code>: <em>int</em> - Unix style Epoch timestamp in nanoseconds (time since 00:00:00 UTC Jan 1, 1970).</p>
 <p><code>snapshot</code>: <em>protobuf class instance</em> - Snaphot Observation (as opposed to a delta observation) received from the environment.  The class of the snapshot observation is defined as observation space for the actor class.  This is specified in section <code>actor_classes:observation:space</code> in <code>cogment.yaml</code> for the appropriate/receiving actor class.</p>
-<h2 id="class-recvaction">class RecvAction</h2>
+<h2 id="class-recvaction">class RecvAction<a class="headerlink" href="#class-recvaction" title="Permanent link">&para;</a></h2>
 <p>Class containing the details of an action from an actor.</p>
 <p><code>actor_index</code>: <em>int</em> - Index of actor in the list of all trial actors (returned by <code>Session.get_active_actors</code>).</p>
 <p><code>action</code>: <em>protobuf class instance</em> - Action from the actor wich has index <code>actor_index</code> in the trial. The class of the action is defined as action space for the specific actor in section <code>actor_classes:action:space</code> in <code>cogment.yaml</code> .</p>
-<h2 id="class-recvmessage">class RecvMessage</h2>
+<h2 id="class-recvmessage">class RecvMessage<a class="headerlink" href="#class-recvmessage" title="Permanent link">&para;</a></h2>
 <p>Class containing a message.</p>
 <p><code>tick_id</code>: <em>int</em> - The time step that the message relates to.</p>
 <p><code>sender_name</code>: <em>str</em> - Name of the sender of the message (the name of an actor, or "env" if the environment sent the message).</p>
 <p><code>payload</code>: <em>google.protobuf.Any instance</em> - Data for a received message. The class enclosed in <code>google.protobuf.Any</code> is of the type set by the sender; It is the responsibility of the receiver to manage the data received (i.e. determine the type and unpack the data).</p>
-<h2 id="class-recvreward">class RecvReward</h2>
+<h2 id="class-recvreward">class RecvReward<a class="headerlink" href="#class-recvreward" title="Permanent link">&para;</a></h2>
 <p>Class containing the details of a received reward.</p>
 <p><code>tick_id</code>: <em>int</em> - The tick id (time step) for which the reward should be applied.</p>
 <p><code>value</code>: <em>float</em> - Value of the reward (aggregated from the sources)</p>
-<h3 id="get_nb_sourcesself"><code>``get_nb_sources(self)</code></h3>
+<h3 id="get_nb_sourcesself"><code>``get_nb_sources(self)</code><a class="headerlink" href="#get_nb_sourcesself" title="Permanent link">&para;</a></h3>
 <p>Return the number of source rewards this reward is based upon.</p>
 <p>Parameters: None</p>
 <p>Return: <em>int</em> - Number of sources.</p>
-<h3 id="all_sourcesself"><code>all_sources(self)</code></h3>
+<h3 id="all_sourcesself"><code>all_sources(self)</code><a class="headerlink" href="#all_sourcesself" title="Permanent link">&para;</a></h3>
 <p>Generator method to iterate over all sources making up this reward.</p>
 <p>Parameters: None</p>
 <p>Return: <em>generator(RecvRewardSource instance)</em> - A generator for the sources in the reward (simple rewards that make up this final/aggregate reward).</p>
-<h2 id="class-recvrewardsource">class RecvRewardSource</h2>
+<h2 id="class-recvrewardsource">class RecvRewardSource<a class="headerlink" href="#class-recvrewardsource" title="Permanent link">&para;</a></h2>
 <p>Class containing the details of a received single source reward.</p>
 <p><code>value</code>: <em>float</em> - Value of the reward from the sender</p>
 <p><code>confidence</code>: <em>float</em> - Confidence level of this reward value.</p>
 <p><code>sender_name</code>: <em>str</em> - Name of the sender of this reward (the name of an actor, or "env" if the environment sent the reward).</p>
 <p><code>user_data</code>: <em>google.protobuf.Any instance</em> - Data for a user-specific reward format.  Can be <code>None</code> if no specific data was provided. The class enclosed in <code>google.protobuf.Any</code> is of the type set by the sender; It is the responsibility of the receiver to manage the data received (i.e. determine the type and unpack the data).</p>
+                
               
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+        
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        <a href="../cogment-yaml/" class="md-footer__link md-footer__link--prev" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              cogment.yaml
             </div>
           </div>
-          <footer>
+        </a>
+      
+      
+        <a href="../javascript/modules/" class="md-footer__link md-footer__link--next" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              Modules
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
   
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+          <div class="md-footer-copyright__highlight">
+            Copyright 2021 AI Redefined Inc. <dev+cogment@ai-r.com>
+          </div>
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+        
+      </div>
       
-        <a href="../javascript/modules/" class="btn btn-neutral float-right" title="Modules">Next <span class="icon icon-circle-arrow-right"></span></a>
+  <div class="md-footer-social">
+    
       
       
-        <a href="../cogment-yaml/" class="btn btn-neutral" title="cogment.yaml"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        
+        
       
-    </div>
-  
-
-  <hr/>
-
-  <div role="contentinfo">
-    <!-- Copyright etc -->
+      <a href="https://github.com/cogment" target="_blank" rel="noopener" title="github.com" class="md-footer-social__link">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+      </a>
+    
+      
+      
+        
+        
+      
+      <a href="https://twitter.com/AI_Redefined" target="_blank" rel="noopener" title="twitter.com" class="md-footer-social__link">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"/></svg>
+      </a>
+    
+      
+      
+        
+        
+      
+      <a href="https://www.linkedin.com/company/ai-r" target="_blank" rel="noopener" title="www.linkedin.com" class="md-footer-social__link">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"/></svg>
+      </a>
     
   </div>
 
-  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+    </div>
+  </div>
 </footer>
       
-        </div>
-      </div>
-
-    </section>
-
-  </div>
-
-  <div class="rst-versions" role="note" aria-label="versions">
-    <span class="rst-current-version" data-toggle="rst-current-version">
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["navigation.sections"], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}, "search": "../../../assets/javascripts/workers/search.d351de03.min.js", "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.a1609d9a.min.js"></script>
       
-          <a href="https://github.com/cogment/cogment-doc/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
-      
-      
-        <span><a href="../cogment-yaml/" style="color: #fcfcfc;">&laquo; Previous</a></span>
-      
-      
-        <span style="margin-left: 15px"><a href="../javascript/modules/" style="color: #fcfcfc">Next &raquo;</a></span>
-      
-    </span>
-</div>
-    <script>var base_url = '../../..';</script>
-    <script src="../../../js/theme.js" defer></script>
-      <script src="../../../search/main.js" defer></script>
-    <script defer>
-        window.onload = function () {
-            SphinxRtdTheme.Navigation.enable(true);
-        };
-    </script>
-
-</body>
+    
+  </body>
 </html>

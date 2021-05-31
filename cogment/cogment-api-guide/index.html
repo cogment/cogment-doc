@@ -1,279 +1,1259 @@
-<!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
-  
-  <link rel="canonical" href="https://docs.cogment.ai/cogment/cogment-api-guide/">
-  <link rel="shortcut icon" href="../../img/favicon.ico">
-  <title>Cogment API Guide - Cogment</title>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
 
-  <link rel="stylesheet" href="../../css/theme.css" />
-  <link rel="stylesheet" href="../../css/theme_extra.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
-  
-  <script>
-    // Current page data
-    var mkdocs_page_name = "Cogment API Guide";
-    var mkdocs_page_input_path = "cogment/cogment-api-guide.md";
-    var mkdocs_page_url = "/cogment/cogment-api-guide/";
-  </script>
-  
-  <script src="../../js/jquery-2.1.1.min.js" defer></script>
-  <script src="../../js/modernizr-2.8.3.min.js" defer></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
-  <script>hljs.initHighlightingOnLoad();</script> 
-  
-</head>
-
-<body class="wy-body-for-nav" role="document">
-
-  <div class="wy-grid-for-nav">
-
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
     
-    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
-    <div class="wy-side-scroll">
-      <div class="wy-side-nav-search">
-        <a href="../.." class="icon icon-home"> Cogment</a>
-        <div role="search">
-  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
-  </form>
-</div>
-      </div>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Cogment user documentation - Cogment is an innovative open source AI platform designed to leverage the advent of AI to benefit humankind through human-AI collaboration">
+      
+      
+      
+        <meta name="author" content="AI Redefined">
+      
+      
+        <link rel="canonical" href="https://docs.cogment.ai/cogment/cogment-api-guide/">
+      
+      <link rel="icon" href="../../images/cogment_favicon.png">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-7.1.5">
+    
+    
+      
+        <title>Cogment API Guide - Cogment</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.bde7dde4.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ef6f36e2.min.css">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>:root{--md-text-font-family:"Roboto";--md-code-font-family:"Roboto Mono"}</style>
+      
+    
+    
+    
+      <link rel="stylesheet" href="../../style/theme.css">
+    
+    
+      
+        
+<script>window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga("create","UA-146998765-2","doc.cogment.ai"),ga("set","anonymizeIp",!0),ga("send","pageview"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){var e;this.value&&(e=document.location.pathname,ga("send","pageview",e+"?q="+this.value))}),"undefined"!=typeof location$&&location$.subscribe(function(e){ga("send","pageview",e.pathname)})})</script>
+<script async src="https://www.google-analytics.com/analytics.js"></script>
+      
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
+  
+    
+    <script>function __prefix(e){return new URL("../..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#cogment-high-level-api-guide-python" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Cogment" class="md-header__button md-logo" aria-label="Cogment" data-md-component="logo">
+      
+  <img src="../../images/cogment_logo.png" alt="logo">
 
-      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-                <p class="caption"><span class="caption-text">Introduction</span></p>
-                <ul>
-                    <li class="toctree-l1"><a class="reference internal" href="../..">Overview</a>
-                    </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../../introduction/installation/">Installation & Setup</a>
-                    </li>
-                </ul>
-                <p class="caption"><span class="caption-text">Support</span></p>
-                <ul>
-                    <li class="toctree-l1"><a class="reference internal" href="../../support/community-channels/">Community channels</a>
-                    </li>
-                </ul>
-                <p class="caption"><span class="caption-text">Concepts</span></p>
-                <ul>
-                    <li class="toctree-l1"><a class="reference internal" href="../../concepts/core-concepts/">Core Concepts</a>
-                    </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../../concepts/glossary/">Glossary</a>
-                    </li>
-                </ul>
-                <p class="caption"><span class="caption-text">Cogment</span></p>
-                <ul class="current">
-                    <li class="toctree-l1"><a class="reference internal" href="#">Tutorial</a>
-    <ul>
-                <li class="toctree-l2"><a class="reference internal" href="../tutorial/introduction/">Introduction</a>
-                </li>
-                <li class="toctree-l2"><a class="reference internal" href="../tutorial/1-bootstrap-and-data-structures/">Step 1: Bootstrap a Cogment app</a>
-                </li>
-                <li class="toctree-l2"><a class="reference internal" href="../tutorial/2-random-player/">Step 2: Implement actor and environment</a>
-                </li>
-                <li class="toctree-l2"><a class="reference internal" href="../tutorial/3-rewards/">Step 3: Introduce rewards</a>
-                </li>
-                <li class="toctree-l2"><a class="reference internal" href="../tutorial/4-heuristic-player/">Step 4: Create a heuristic player</a>
-                </li>
-                <li class="toctree-l2"><a class="reference internal" href="../tutorial/5-human-player/">Step 5: Add a human player in the loop</a>
-                </li>
-                <li class="toctree-l2"><a class="reference internal" href="../tutorial/6-web-client/">Step 6: Implement a web client for the human player</a>
-                </li>
-                <li class="toctree-l2"><a class="reference internal" href="../tutorial/7-dqn-player/">Step 7: Add a player trained with Reinforcement Learning using DQN</a>
-                </li>
-    </ul>
-                    </li>
-                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Cogment API Guide</a>
-    <ul class="current">
-    <li class="toctree-l2"><a class="reference internal" href="#prerequisites">Prerequisites</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#the-cogmentyaml-file">The cogment.yaml file</a>
-        <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#compiling-the-cogmentyaml">Compiling the cogment.yaml</a>
-    </li>
-        </ul>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#environment">Environment</a>
-        <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#sending-observations">Sending observations</a>
-    </li>
-        </ul>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#actor">Actor</a>
-        <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#service-actor-client-actor">Service actor / Client actor</a>
-    </li>
-        </ul>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#controller">Controller</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#rewards">Rewards</a>
-        <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#creating">Creating</a>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#consuming">Consuming</a>
-    </li>
-        </ul>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#messages">Messages</a>
-        <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#creating_1">Creating</a>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#consuming_1">Consuming</a>
-    </li>
-        </ul>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#delta-encoding">Delta Encoding</a>
-    </li>
-    </ul>
-                    </li>
-                    <li class="toctree-l1"><a class="reference internal" href="#">Cogment API Reference</a>
-    <ul>
-                <li class="toctree-l2"><a class="reference internal" href="../cogment-api-reference/cogment-yaml/">cogment.yaml</a>
-                </li>
-                <li class="toctree-l2"><a class="reference internal" href="../cogment-api-reference/python/">python</a>
-                </li>
-                <li class="toctree-l2"><a class="reference internal" href="#">Javascript/Typescript SDK</a>
-    <ul>
-                <li class="toctree-l3"><a class="reference internal" href="../cogment-api-reference/javascript/modules/">Modules</a>
-                </li>
-                <li class="toctree-l3"><a class="reference internal" href="../cogment-api-reference/javascript/classes/actorsession/">Class: ActorSession</a>
-                </li>
-                <li class="toctree-l3"><a class="reference internal" href="../cogment-api-reference/javascript/classes/cogmentservice/">Class: CogmentService</a>
-                </li>
-                <li class="toctree-l3"><a class="reference internal" href="../cogment-api-reference/javascript/classes/trialcontroller/">Class: TrialController</a>
-                </li>
-                <li class="toctree-l3"><a class="reference internal" href="../cogment-api-reference/javascript/enums/eventtype/">Enum: EventType</a>
-                </li>
-                <li class="toctree-l3"><a class="reference internal" href="../cogment-api-reference/javascript/interfaces/cogmentyaml/">Interface: CogmentYaml</a>
-                </li>
-                <li class="toctree-l3"><a class="reference internal" href="../cogment-api-reference/javascript/interfaces/cogmentyamlactor/">Interface: CogmentYamlActor</a>
-                </li>
-                <li class="toctree-l3"><a class="reference internal" href="../cogment-api-reference/javascript/interfaces/cogmentyamlactorclass/">Interface: CogmentYamlActorClass</a>
-                </li>
-                <li class="toctree-l3"><a class="reference internal" href="../cogment-api-reference/javascript/interfaces/cogmentyamldatalog/">Interface: CogmentYamlDatalog</a>
-                </li>
-                <li class="toctree-l3"><a class="reference internal" href="../cogment-api-reference/javascript/interfaces/cogmentyamltrialparameters/">Interface: CogmentYamlTrialParameters</a>
-                </li>
-                <li class="toctree-l3"><a class="reference internal" href="../cogment-api-reference/javascript/interfaces/cogsettings/">Interface: CogSettings</a>
-                </li>
-                <li class="toctree-l3"><a class="reference internal" href="../cogment-api-reference/javascript/interfaces/cogsettingsactorclass/">Interface: CogSettingsActorClass</a>
-                </li>
-                <li class="toctree-l3"><a class="reference internal" href="../cogment-api-reference/javascript/interfaces/createserviceoptions/">Interface: CreateServiceOptions</a>
-                </li>
-                <li class="toctree-l3"><a class="reference internal" href="../cogment-api-reference/javascript/interfaces/event/">Interface: Event</a>
-                </li>
-                <li class="toctree-l3"><a class="reference internal" href="../cogment-api-reference/javascript/interfaces/reward/">Interface: Reward</a>
-                </li>
-                <li class="toctree-l3"><a class="reference internal" href="../cogment-api-reference/javascript/interfaces/sendmessageoptions/">Interface: SendMessageOptions</a>
-                </li>
-                <li class="toctree-l3"><a class="reference internal" href="../cogment-api-reference/javascript/interfaces/trialactor/">Interface: TrialActor</a>
-                </li>
-    </ul>
-                </li>
-    </ul>
-                    </li>
-                    <li class="toctree-l1"><a class="reference internal" href="#">Cogment Low Level API Guide</a>
-    <ul>
-                <li class="toctree-l2"><a class="reference internal" href="../cogment-low-level-api-guide/overview/">Overview</a>
-                </li>
-                <li class="toctree-l2"><a class="reference internal" href="../cogment-low-level-api-guide/grpc/">gRPC API Reference</a>
-                </li>
-    </ul>
-                    </li>
-                </ul>
-                <p class="caption"><span class="caption-text">Deployment Guide</span></p>
-                <ul>
-                    <li class="toctree-l1"><a class="reference internal" href="../../deployment-guide/local-deployement/">Local Deployment</a>
-                    </li>
-                </ul>
-                <ul>
-                    <li class="toctree-l1"><a class="reference internal" href="../../license/">License</a>
-                    </li>
-                </ul>
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Cogment
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Cogment API Guide
+            
+          </span>
+        </div>
       </div>
     </div>
-    </nav>
-
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
       
-      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
-        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-        <a href="../..">Cogment</a>
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        
+<a href="https://github.com/cogment/cogment-doc/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Cogment" class="md-nav__button md-logo" aria-label="Cogment" data-md-component="logo">
+      
+  <img src="../../images/cogment_logo.png" alt="logo">
+
+    </a>
+    Cogment
+  </label>
+  
+    <div class="md-nav__source">
+      
+<a href="https://github.com/cogment/cogment-doc/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_1" type="checkbox" id="__nav_1" >
+      
+      <label class="md-nav__link" for="__nav_1">
+        Introduction
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Introduction" data-md-level="1">
+        <label class="md-nav__title" for="__nav_1">
+          <span class="md-nav__icon md-icon"></span>
+          Introduction
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        Overview
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../introduction/installation/" class="md-nav__link">
+        Installation & Setup
+      </a>
+    </li>
+  
+
+          
+        </ul>
       </nav>
+    </li>
+  
 
-      
-      <div class="wy-nav-content">
-        <div class="rst-content">
-          <div role="navigation" aria-label="breadcrumbs navigation">
-  <ul class="wy-breadcrumbs">
-    <li><a href="../..">Docs</a> &raquo;</li>
     
       
-        
-          <li>Cogment &raquo;</li>
-        
+      
+      
+
+  
+  
+  
+    
       
     
-    <li>Cogment API Guide</li>
-    <li class="wy-breadcrumbs-aside">
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
       
-        <a href="https://github.com/cogment/cogment-doc/edit/master/docs/cogment/cogment-api-guide.md"
-          class="icon icon-github"> Edit on GitHub</a>
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" >
+      
+      <label class="md-nav__link" for="__nav_2">
+        Support
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Support" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          Support
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../support/community-channels/" class="md-nav__link">
+        Community channels
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+      
+      <label class="md-nav__link" for="__nav_3">
+        Concepts
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Concepts" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          Concepts
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../concepts/core-concepts/" class="md-nav__link">
+        Core Concepts
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../concepts/glossary/" class="md-nav__link">
+        Glossary
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" checked>
+      
+      <label class="md-nav__link" for="__nav_4">
+        Cogment
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Cogment" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          Cogment
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_1" type="checkbox" id="__nav_4_1" >
+      
+      <label class="md-nav__link" for="__nav_4_1">
+        Tutorial
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Tutorial" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_1">
+          <span class="md-nav__icon md-icon"></span>
+          Tutorial
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tutorial/introduction/" class="md-nav__link">
+        Introduction
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tutorial/1-bootstrap-and-data-structures/" class="md-nav__link">
+        Step 1: Bootstrap a Cogment app
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tutorial/2-random-player/" class="md-nav__link">
+        Step 2: Implement actor and environment
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tutorial/3-rewards/" class="md-nav__link">
+        Step 3: Introduce rewards
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tutorial/4-heuristic-player/" class="md-nav__link">
+        Step 4: Create a heuristic player
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tutorial/5-human-player/" class="md-nav__link">
+        Step 5: Add a human player in the loop
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tutorial/6-web-client/" class="md-nav__link">
+        Step 6: Implement a web client for the human player
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tutorial/7-dqn-player/" class="md-nav__link">
+        Step 7: Add a player trained with Reinforcement Learning using DQN
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Cogment API Guide
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Cogment API Guide
+      </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    Prerequisites
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-cogmentyaml-file" class="md-nav__link">
+    The cogment.yaml file
+  </a>
+  
+    <nav class="md-nav" aria-label="The cogment.yaml file">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#compiling-the-cogmentyaml" class="md-nav__link">
+    Compiling the cogment.yaml
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#environment" class="md-nav__link">
+    Environment
+  </a>
+  
+    <nav class="md-nav" aria-label="Environment">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sending-observations" class="md-nav__link">
+    Sending observations
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#actor" class="md-nav__link">
+    Actor
+  </a>
+  
+    <nav class="md-nav" aria-label="Actor">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#service-actor-client-actor" class="md-nav__link">
+    Service actor / Client actor
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#controller" class="md-nav__link">
+    Controller
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rewards" class="md-nav__link">
+    Rewards
+  </a>
+  
+    <nav class="md-nav" aria-label="Rewards">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#creating" class="md-nav__link">
+    Creating
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#consuming" class="md-nav__link">
+    Consuming
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#messages" class="md-nav__link">
+    Messages
+  </a>
+  
+    <nav class="md-nav" aria-label="Messages">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#creating_1" class="md-nav__link">
+    Creating
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#consuming_1" class="md-nav__link">
+    Consuming
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#delta-encoding" class="md-nav__link">
+    Delta Encoding
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
-  </ul>
   
-  <hr/>
-</div>
-          <div role="main">
-            <div class="section">
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_3" type="checkbox" id="__nav_4_3" >
+      
+      <label class="md-nav__link" for="__nav_4_3">
+        Cogment API Reference
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Cogment API Reference" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_3">
+          <span class="md-nav__icon md-icon"></span>
+          Cogment API Reference
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cogment-api-reference/cogment-yaml/" class="md-nav__link">
+        cogment.yaml
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cogment-api-reference/python/" class="md-nav__link">
+        python
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_3_3" type="checkbox" id="__nav_4_3_3" >
+      
+      <label class="md-nav__link" for="__nav_4_3_3">
+        Javascript/Typescript SDK
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Javascript/Typescript SDK" data-md-level="3">
+        <label class="md-nav__title" for="__nav_4_3_3">
+          <span class="md-nav__icon md-icon"></span>
+          Javascript/Typescript SDK
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cogment-api-reference/javascript/modules/" class="md-nav__link">
+        Modules
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cogment-api-reference/javascript/classes/actorsession/" class="md-nav__link">
+        Class: ActorSession
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cogment-api-reference/javascript/classes/cogmentservice/" class="md-nav__link">
+        Class: CogmentService
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cogment-api-reference/javascript/classes/trialcontroller/" class="md-nav__link">
+        Class: TrialController
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cogment-api-reference/javascript/enums/eventtype/" class="md-nav__link">
+        Enum: EventType
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cogment-api-reference/javascript/interfaces/cogmentyaml/" class="md-nav__link">
+        Interface: CogmentYaml
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cogment-api-reference/javascript/interfaces/cogmentyamlactor/" class="md-nav__link">
+        Interface: CogmentYamlActor
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cogment-api-reference/javascript/interfaces/cogmentyamlactorclass/" class="md-nav__link">
+        Interface: CogmentYamlActorClass
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cogment-api-reference/javascript/interfaces/cogmentyamldatalog/" class="md-nav__link">
+        Interface: CogmentYamlDatalog
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cogment-api-reference/javascript/interfaces/cogmentyamltrialparameters/" class="md-nav__link">
+        Interface: CogmentYamlTrialParameters
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cogment-api-reference/javascript/interfaces/cogsettings/" class="md-nav__link">
+        Interface: CogSettings
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cogment-api-reference/javascript/interfaces/cogsettingsactorclass/" class="md-nav__link">
+        Interface: CogSettingsActorClass
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cogment-api-reference/javascript/interfaces/createserviceoptions/" class="md-nav__link">
+        Interface: CreateServiceOptions
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cogment-api-reference/javascript/interfaces/event/" class="md-nav__link">
+        Interface: Event
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cogment-api-reference/javascript/interfaces/reward/" class="md-nav__link">
+        Interface: Reward
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cogment-api-reference/javascript/interfaces/sendmessageoptions/" class="md-nav__link">
+        Interface: SendMessageOptions
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cogment-api-reference/javascript/interfaces/trialactor/" class="md-nav__link">
+        Interface: TrialActor
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_4" type="checkbox" id="__nav_4_4" >
+      
+      <label class="md-nav__link" for="__nav_4_4">
+        Cogment Low Level API Guide
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Cogment Low Level API Guide" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_4">
+          <span class="md-nav__icon md-icon"></span>
+          Cogment Low Level API Guide
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cogment-low-level-api-guide/overview/" class="md-nav__link">
+        Overview
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cogment-low-level-api-guide/grpc/" class="md-nav__link">
+        gRPC API Reference
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../license/" class="md-nav__link">
+        License
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
               
-                <h1 id="cogment-high-level-api-guide-python">Cogment High-Level API guide (Python)</h1>
-<h2 id="prerequisites">Prerequisites</h2>
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    Prerequisites
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-cogmentyaml-file" class="md-nav__link">
+    The cogment.yaml file
+  </a>
+  
+    <nav class="md-nav" aria-label="The cogment.yaml file">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#compiling-the-cogmentyaml" class="md-nav__link">
+    Compiling the cogment.yaml
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#environment" class="md-nav__link">
+    Environment
+  </a>
+  
+    <nav class="md-nav" aria-label="Environment">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sending-observations" class="md-nav__link">
+    Sending observations
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#actor" class="md-nav__link">
+    Actor
+  </a>
+  
+    <nav class="md-nav" aria-label="Actor">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#service-actor-client-actor" class="md-nav__link">
+    Service actor / Client actor
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#controller" class="md-nav__link">
+    Controller
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rewards" class="md-nav__link">
+    Rewards
+  </a>
+  
+    <nav class="md-nav" aria-label="Rewards">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#creating" class="md-nav__link">
+    Creating
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#consuming" class="md-nav__link">
+    Consuming
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#messages" class="md-nav__link">
+    Messages
+  </a>
+  
+    <nav class="md-nav" aria-label="Messages">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#creating_1" class="md-nav__link">
+    Creating
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#consuming_1" class="md-nav__link">
+    Consuming
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#delta-encoding" class="md-nav__link">
+    Delta Encoding
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/cogment/cogment-doc/edit/main/src/cogment/cogment-api-guide.md" title="Edit this page" class="md-content__button md-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
+                  </a>
+                
+                
+                <h1 id="cogment-high-level-api-guide-python">Cogment High-Level API guide (Python)<a class="headerlink" href="#cogment-high-level-api-guide-python" title="Permanent link">&para;</a></h1>
+<h2 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">&para;</a></h2>
 <p>This document assumes the reader is familiar with the <a href="../../concepts/core-concepts/">Cogment Fundamentals</a>.</p>
-<p>The High-level Cogment API expects users to use <a href="https://developers.google.com/protocol-buffers/">protocol buffers</a> to declare a project's data structures. The intricacies of protobufs are beyond the scope of this document. Basic knowledge of the technology and its usage is assumed.</p>
-<h2 id="the-cogmentyaml-file">The cogment.yaml file</h2>
+<p>The High-level Cogment API expects users to use <a href="https://developers.google.com/protocol-buffers/" target="_blank">protocol buffers</a> to declare a project's data structures. The intricacies of protobufs are beyond the scope of this document. Basic knowledge of the technology and its usage is assumed.</p>
+<h2 id="the-cogmentyaml-file">The cogment.yaml file<a class="headerlink" href="#the-cogmentyaml-file" title="Permanent link">&para;</a></h2>
 <p>An <a href="../../concepts/glossary/#actor-class">actor class</a> is primarily defined by its <a href="../concepts/glossary#observation-space">observation space</a> and <a href="../concepts/glossary#action-space">action space</a>.</p>
 <p>The data structures describing these spaces are declared by using a protocol buffer message type. <a href="../../concepts/glossary/#observation">Observations</a> and <a href="../../concepts/glossary/#action">actions</a> will simply be instances of the matching type.</p>
 <p>For example, in the following, <code>driver</code> and <code>pedestrian</code> share a common view of the environment, hence use the same observation space, but have different actions available to them.</p>
-<pre><code class="yaml">import:
-  proto:
-    - city.proto
+<div class="highlight"><pre><span></span><code><span class="nt">import</span><span class="p">:</span>
+  <span class="nt">proto</span><span class="p">:</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">city.proto</span>
 
-actors:
-  driver:
-    observation:
-      space: city.Observation
+<span class="nt">actors</span><span class="p">:</span>
+  <span class="nt">driver</span><span class="p">:</span>
+    <span class="nt">observation</span><span class="p">:</span>
+      <span class="nt">space</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">city.Observation</span>
 
-    action:
-      space: city.DriverAction
+    <span class="nt">action</span><span class="p">:</span>
+      <span class="nt">space</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">city.DriverAction</span>
 
-  pedestrian:
-    observation:
-      space: city.Observation
+  <span class="nt">pedestrian</span><span class="p">:</span>
+    <span class="nt">observation</span><span class="p">:</span>
+      <span class="nt">space</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">city.Observation</span>
 
-    action:
-      space: city.PedestrianAction
-</code></pre>
+    <span class="nt">action</span><span class="p">:</span>
+      <span class="nt">space</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">city.PedestrianAction</span>
+</code></pre></div>
 
 <blockquote>
 <p>⚠️ This shows only the relevant part of the full <code>cogment.yaml</code>, you can find the full list of configurable options <a href="../cogment-api-reference/cogment-yaml/">in the reference page</a>.</p>
 </blockquote>
-<h3 id="compiling-the-cogmentyaml">Compiling the cogment.yaml</h3>
+<h3 id="compiling-the-cogmentyaml">Compiling the cogment.yaml<a class="headerlink" href="#compiling-the-cogmentyaml" title="Permanent link">&para;</a></h3>
 <p>In order to use the <code>cogment.yaml</code> file within python scripts, it needs to be interpreted into a python module. This is done by the <strong>cogment cli</strong> (Command Line Interface) that can be installed following <a href="../../introduction/installation/#install-the-latest-cogment-cli">those directions</a>.</p>
-<pre><code class="console">$ cogment run --file /path/to/cogment.yaml --python_dir=./
-</code></pre>
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>cogment run --file /path/to/cogment.yaml --python_dir<span class="o">=</span>./
+</code></pre></div>
 
 <p>This will create a <code>cog_settings.py</code> module in the current directory.</p>
 <p>The cogment cli will also compile the imported <a href="../../concepts/glossary/#protocol-buffer"><code>.proto</code></a> files in python modules living in the same location.</p>
-<h2 id="environment">Environment</h2>
+<h2 id="environment">Environment<a class="headerlink" href="#environment" title="Permanent link">&para;</a></h2>
 <p><a href="../../concepts/glossary/#environment">Environments</a> are implemented by a Python function that uses a <a href="../cogment-api-reference/python/#class-environmentsessionsession"><code>cogment.EnvironmentSession</code></a> instance.</p>
 <p>This function will be called once for each [trial][../concepts/glossary.md#trial)]. This function usually consists of three sections.</p>
 <ul>
@@ -282,61 +1262,61 @@ actors:
 <li>Its <strong>termination</strong>, where cleanup occurs.</li>
 </ul>
 <p>In the common case where all actors within a trial share the same observation, a bare-minimum environment service would look like this:</p>
-<pre><code class="python">async def environment(environment_session):
-    # -- Initialization --
+<div class="highlight"><pre><span></span><code><span class="k">async</span> <span class="k">def</span> <span class="nf">environment</span><span class="p">(</span><span class="n">environment_session</span><span class="p">):</span>
+    <span class="c1"># -- Initialization --</span>
 
-    # Retrieve the actors participating in the trial
-    actors = environment_session.get_active_actors()
+    <span class="c1"># Retrieve the actors participating in the trial</span>
+    <span class="n">actors</span> <span class="o">=</span> <span class="n">environment_session</span><span class="o">.</span><span class="n">get_active_actors</span><span class="p">()</span>
 
-    # Start the trial and send a default observation to all actors
-    environment_session.start([(&quot;*&quot;, Observation())])
+    <span class="c1"># Start the trial and send a default observation to all actors</span>
+    <span class="n">environment_session</span><span class="o">.</span><span class="n">start</span><span class="p">([(</span><span class="s2">&quot;*&quot;</span><span class="p">,</span> <span class="n">Observation</span><span class="p">())])</span>
 
-    # -- Event loop --
-    async for event in environment_session.event_loop():
-        if event.actions:
-            # `event.actions` is a list of the actions done by the actors (with a 1-1 matching)
-            actions = event.actions
-            if event.type == cogment.EventType.ACTIVE:
-              # The trial is active, produce an observation in response to the actions
-              environment_session.produce_observations([(&quot;*&quot;, Observation())])
-              # Alternatively the environment can decide to **end** the trial with the following
-              # environment_session.end([(&quot;*&quot;, Observation())])
-            else:
-              # The trial termination has been requested by an external controller
-              # Produce a final observation
-              environment_session.end([(&quot;*&quot;, Observation())])
+    <span class="c1"># -- Event loop --</span>
+    <span class="k">async</span> <span class="k">for</span> <span class="n">event</span> <span class="ow">in</span> <span class="n">environment_session</span><span class="o">.</span><span class="n">event_loop</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">actions</span><span class="p">:</span>
+            <span class="c1"># `event.actions` is a list of the actions done by the actors (with a 1-1 matching)</span>
+            <span class="n">actions</span> <span class="o">=</span> <span class="n">event</span><span class="o">.</span><span class="n">actions</span>
+            <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">cogment</span><span class="o">.</span><span class="n">EventType</span><span class="o">.</span><span class="n">ACTIVE</span><span class="p">:</span>
+              <span class="c1"># The trial is active, produce an observation in response to the actions</span>
+              <span class="n">environment_session</span><span class="o">.</span><span class="n">produce_observations</span><span class="p">([(</span><span class="s2">&quot;*&quot;</span><span class="p">,</span> <span class="n">Observation</span><span class="p">())])</span>
+              <span class="c1"># Alternatively the environment can decide to **end** the trial with the following</span>
+              <span class="c1"># environment_session.end([(&quot;*&quot;, Observation())])</span>
+            <span class="k">else</span><span class="p">:</span>
+              <span class="c1"># The trial termination has been requested by an external controller</span>
+              <span class="c1"># Produce a final observation</span>
+              <span class="n">environment_session</span><span class="o">.</span><span class="n">end</span><span class="p">([(</span><span class="s2">&quot;*&quot;</span><span class="p">,</span> <span class="n">Observation</span><span class="p">())])</span>
 
-        for message in event.messages:
-            # `event.messages` is a list of all the messages received by the environment (it can be empty)
+        <span class="k">for</span> <span class="n">message</span> <span class="ow">in</span> <span class="n">event</span><span class="o">.</span><span class="n">messages</span><span class="p">:</span>
+            <span class="c1"># `event.messages` is a list of all the messages received by the environment (it can be empty)</span>
 
-            # Handle each message here.
+            <span class="c1"># Handle each message here.</span>
 
-    # -- Termination --
-</code></pre>
+    <span class="c1"># -- Termination --</span>
+</code></pre></div>
 
 <p>This environment implementation needs to be registered and served so that the <a href="../../concepts/glossary/#orchestrator">orchestrator</a> can reach it. This can be done through a <a href="../cogment-api-reference/python/#class-cogmentcontext"><code>Context</code></a> instance.</p>
-<pre><code class="python">context = cogment.Context(cog_settings=cog_settings, user_id=&quot;my_user_id&quot;)
+<div class="highlight"><pre><span></span><code><span class="n">context</span> <span class="o">=</span> <span class="n">cogment</span><span class="o">.</span><span class="n">Context</span><span class="p">(</span><span class="n">cog_settings</span><span class="o">=</span><span class="n">cog_settings</span><span class="p">,</span> <span class="n">user_id</span><span class="o">=</span><span class="s2">&quot;my_user_id&quot;</span><span class="p">)</span>
 
-context.register_environment(impl=environment)
+<span class="n">context</span><span class="o">.</span><span class="n">register_environment</span><span class="p">(</span><span class="n">impl</span><span class="o">=</span><span class="n">environment</span><span class="p">)</span>
 
-await context.serve_all_registered(port=9000)
-</code></pre>
+<span class="k">await</span> <span class="n">context</span><span class="o">.</span><span class="n">serve_all_registered</span><span class="p">(</span><span class="n">port</span><span class="o">=</span><span class="mi">9000</span><span class="p">)</span>
+</code></pre></div>
 
-<h3 id="sending-observations">Sending observations</h3>
+<h3 id="sending-observations">Sending observations<a class="headerlink" href="#sending-observations" title="Permanent link">&para;</a></h3>
 <p>The environment session has 3 different methods able to send observations: <code>start</code>, <code>produce_observations</code> and <code>end</code>. Each of those methods takes a list of 2-tuples destination / observation.</p>
 <p>As demonstrated above, sending the same observation to all actors is done using <code>"*"</code> as the destination.</p>
-<pre><code class="python">environment_session.produce_observations([(&quot;*&quot;, Observation(...))])
-</code></pre>
+<div class="highlight"><pre><span></span><code><span class="n">environment_session</span><span class="o">.</span><span class="n">produce_observations</span><span class="p">([(</span><span class="s2">&quot;*&quot;</span><span class="p">,</span> <span class="n">Observation</span><span class="p">(</span><span class="o">...</span><span class="p">))])</span>
+</code></pre></div>
 
 <p>It is also possible to send different observations to different actors. This can be useful to send observations of the <em>world</em> from the point of view of the actor or to send partial observations.</p>
-<pre><code class="python">environment_session.produce_observations([
-  (&quot;my_first_actor_name&quot;, Observation(...)),
-  (&quot;my_second_actor_name&quot;, Observation(...))
-])
-</code></pre>
+<div class="highlight"><pre><span></span><code><span class="n">environment_session</span><span class="o">.</span><span class="n">produce_observations</span><span class="p">([</span>
+  <span class="p">(</span><span class="s2">&quot;my_first_actor_name&quot;</span><span class="p">,</span> <span class="n">Observation</span><span class="p">(</span><span class="o">...</span><span class="p">)),</span>
+  <span class="p">(</span><span class="s2">&quot;my_second_actor_name&quot;</span><span class="p">,</span> <span class="n">Observation</span><span class="p">(</span><span class="o">...</span><span class="p">))</span>
+<span class="p">])</span>
+</code></pre></div>
 
 <p>Please note that the environment should always send observations such as each actor in the trial receives one.</p>
-<h2 id="actor">Actor</h2>
+<h2 id="actor">Actor<a class="headerlink" href="#actor" title="Permanent link">&para;</a></h2>
 <p><a href="../../concepts/glossary/#actor">Actors</a> implementations look a lot like the <a href="#environment">environment's</a>. They take a <a href="../cogment-api-reference/python/#class-actorsessionsession"><code>cogment.ActorSession</code></a> instance and have the same three sections: <strong>initialization</strong>, <strong>event loop</strong> and <strong>termination</strong>.</p>
 <p>The event loops in Actors' implementations handle three basic types of events:</p>
 <ul>
@@ -345,213 +1325,268 @@ await context.serve_all_registered(port=9000)
 <li><code>messages</code> sent by other actors or the environment, we'll talk about them in more details <a href="#messages">below</a>.</li>
 </ul>
 <p>A typical actor implementation would look like this:</p>
-<pre><code class="python">async def driver_actor(actor_session):
-    # -- Initialization --
+<div class="highlight"><pre><span></span><code><span class="k">async</span> <span class="k">def</span> <span class="nf">driver_actor</span><span class="p">(</span><span class="n">actor_session</span><span class="p">):</span>
+    <span class="c1"># -- Initialization --</span>
 
-    # Notify that the actor is ready for the trial to start.
-    actor_session.start()
+    <span class="c1"># Notify that the actor is ready for the trial to start.</span>
+    <span class="n">actor_session</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
 
-    async for event in actor_session.event_loop():
-        if event.observation:
-            # `event.observation` is an instance of the Observation produced by the environment
-            observation = event.observation
-            if event.type == cogment.EventType.ACTIVE:
-              # The trial is active, it is expecting the agent to do an action
-              actor_session.do_action(DriverAction(...))
+    <span class="k">async</span> <span class="k">for</span> <span class="n">event</span> <span class="ow">in</span> <span class="n">actor_session</span><span class="o">.</span><span class="n">event_loop</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">observation</span><span class="p">:</span>
+            <span class="c1"># `event.observation` is an instance of the Observation produced by the environment</span>
+            <span class="n">observation</span> <span class="o">=</span> <span class="n">event</span><span class="o">.</span><span class="n">observation</span>
+            <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">cogment</span><span class="o">.</span><span class="n">EventType</span><span class="o">.</span><span class="n">ACTIVE</span><span class="p">:</span>
+              <span class="c1"># The trial is active, it is expecting the agent to do an action</span>
+              <span class="n">actor_session</span><span class="o">.</span><span class="n">do_action</span><span class="p">(</span><span class="n">DriverAction</span><span class="p">(</span><span class="o">...</span><span class="p">))</span>
 
-        for reward in event.rewards:
-            # `event.rewards` is a list of all the rewards received by the actor (it can be empty)
+        <span class="k">for</span> <span class="n">reward</span> <span class="ow">in</span> <span class="n">event</span><span class="o">.</span><span class="n">rewards</span><span class="p">:</span>
+            <span class="c1"># `event.rewards` is a list of all the rewards received by the actor (it can be empty)</span>
 
-            # Handle each reward here.
+            <span class="c1"># Handle each reward here.</span>
 
-        for message in event.messages:
-            # `event.messages` is a list of all the messages received by the actor (it can be empty)
+        <span class="k">for</span> <span class="n">message</span> <span class="ow">in</span> <span class="n">event</span><span class="o">.</span><span class="n">messages</span><span class="p">:</span>
+            <span class="c1"># `event.messages` is a list of all the messages received by the actor (it can be empty)</span>
 
-            # Handle each message here.
-</code></pre>
+            <span class="c1"># Handle each message here.</span>
+</code></pre></div>
 
-<h3 id="service-actor-client-actor">Service actor / Client actor</h3>
+<h3 id="service-actor-client-actor">Service actor / Client actor<a class="headerlink" href="#service-actor-client-actor" title="Permanent link">&para;</a></h3>
 <p>A Cogment app can use two types of actors, they are identical in terms of implementation but differ in how they interact with the app's <a href="../../concepts/glossary/#orchestrator">Orchestrator</a>.</p>
 <p><strong>Service actors</strong> are accessible in the same way the environment is, through a <a href="../cogment-api-reference/python/#class-cogmentcontext"><code>Context</code></a> instance.</p>
-<pre><code class="python">context = cogment.Context(cog_settings=cog_settings, user_id=&quot;rps&quot;)
-context.register_actor(
-    impl=actor,
-    impl_name=&quot;driver_actor&quot;,
-    actor_classes=[&quot;driver&quot;])
+<div class="highlight"><pre><span></span><code><span class="n">context</span> <span class="o">=</span> <span class="n">cogment</span><span class="o">.</span><span class="n">Context</span><span class="p">(</span><span class="n">cog_settings</span><span class="o">=</span><span class="n">cog_settings</span><span class="p">,</span> <span class="n">user_id</span><span class="o">=</span><span class="s2">&quot;rps&quot;</span><span class="p">)</span>
+<span class="n">context</span><span class="o">.</span><span class="n">register_actor</span><span class="p">(</span>
+    <span class="n">impl</span><span class="o">=</span><span class="n">actor</span><span class="p">,</span>
+    <span class="n">impl_name</span><span class="o">=</span><span class="s2">&quot;driver_actor&quot;</span><span class="p">,</span>
+    <span class="n">actor_classes</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;driver&quot;</span><span class="p">])</span>
 
 
-await context.serve_all_registered(port=9000)
-</code></pre>
+<span class="k">await</span> <span class="n">context</span><span class="o">.</span><span class="n">serve_all_registered</span><span class="p">(</span><span class="n">port</span><span class="o">=</span><span class="mi">9000</span><span class="p">)</span>
+</code></pre></div>
 
 <p>Please note that this is also through this registrating that the implementation is associated with one or more <a href="../../concepts/glossary/#actor-class">actor classes</a> it implements.</p>
 <p><strong>Client actors</strong>, contrary to Service actors, are not served to the <a href="../../concepts/glossary/#orchestrator">orchestrator</a>. They connect as clients of the orchestrator and join a <a href="../../concepts/glossary/#trial">trial</a> that has started.</p>
-<pre><code class="python">context = cogment.Context(cog_settings=cog_settings, user_id=&quot;rps&quot;)
-context.register_actor(
-    impl=actor,
-    impl_name=&quot;driver_actor&quot;,
-    actor_classes=[&quot;driver&quot;])
+<div class="highlight"><pre><span></span><code><span class="n">context</span> <span class="o">=</span> <span class="n">cogment</span><span class="o">.</span><span class="n">Context</span><span class="p">(</span><span class="n">cog_settings</span><span class="o">=</span><span class="n">cog_settings</span><span class="p">,</span> <span class="n">user_id</span><span class="o">=</span><span class="s2">&quot;rps&quot;</span><span class="p">)</span>
+<span class="n">context</span><span class="o">.</span><span class="n">register_actor</span><span class="p">(</span>
+    <span class="n">impl</span><span class="o">=</span><span class="n">actor</span><span class="p">,</span>
+    <span class="n">impl_name</span><span class="o">=</span><span class="s2">&quot;driver_actor&quot;</span><span class="p">,</span>
+    <span class="n">actor_classes</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;driver&quot;</span><span class="p">])</span>
 
-await context.join_trial(
-  trial_id=trial_id,
-  endpoint=&quot;orchestrator:9000&quot;,
-  impl_name=&quot;human&quot;)
-</code></pre>
+<span class="k">await</span> <span class="n">context</span><span class="o">.</span><span class="n">join_trial</span><span class="p">(</span>
+  <span class="n">trial_id</span><span class="o">=</span><span class="n">trial_id</span><span class="p">,</span>
+  <span class="n">endpoint</span><span class="o">=</span><span class="s2">&quot;orchestrator:9000&quot;</span><span class="p">,</span>
+  <span class="n">impl_name</span><span class="o">=</span><span class="s2">&quot;human&quot;</span><span class="p">)</span>
+</code></pre></div>
 
 <p>Please note, that a trial including one or more client actors will wait for all of them to join before any actor can start processing events.</p>
-<p>Due to the different network requirements, client actors are a good fit when implementing a <a href="../../concepts/glossary/#frontend">frontend</a> for human actors. In addition to the <a href="../cogment-api-reference/python/">python</a> SDK demonstrated above, client actors can be implemented in <a href="./cogment-api-reference/javascript.md">javascript</a> using the corresponding SDK.</p>
-<h2 id="controller">Controller</h2>
+<p>Due to the different network requirements, client actors are a good fit when implementing a <a href="../../concepts/glossary/#frontend">frontend</a> for human actors. In addition to the <a href="../cogment-api-reference/python/">python</a> SDK demonstrated above, client actors can be implemented in <a href="../cogment-api-reference/javascript/modules/">javascript</a> using the corresponding SDK.</p>
+<h2 id="controller">Controller<a class="headerlink" href="#controller" title="Permanent link">&para;</a></h2>
 <p><a href="../../concepts/glossary/#trial">Trials</a> are started by clients of the <a href="../../concepts/glossary/#orchestrator">Orchestrator</a> using a Controller. Instances of a controller are built from the <a href="../cogment-api-reference/python/#class-cogmentcontext"><code>Context</code></a> instance and connect to an Orchestrator endpoint.</p>
-<pre><code class="python">controller = context.get_controller(
-  endpoint=cogment.Endpoint(&quot;orchestrator:9000&quot;)
-)
-</code></pre>
+<div class="highlight"><pre><span></span><code><span class="n">controller</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="n">get_controller</span><span class="p">(</span>
+  <span class="n">endpoint</span><span class="o">=</span><span class="n">cogment</span><span class="o">.</span><span class="n">Endpoint</span><span class="p">(</span><span class="s2">&quot;orchestrator:9000&quot;</span><span class="p">)</span>
+<span class="p">)</span>
+</code></pre></div>
 
 <p>The controller can then be used to create trials and request their termination.</p>
-<pre><code class="python">trial_id = await controller.start_trial(trial_config=TrialConfig())
+<div class="highlight"><pre><span></span><code><span class="n">trial_id</span> <span class="o">=</span> <span class="k">await</span> <span class="n">controller</span><span class="o">.</span><span class="n">start_trial</span><span class="p">(</span><span class="n">trial_config</span><span class="o">=</span><span class="n">TrialConfig</span><span class="p">())</span>
 
-# ...
+<span class="c1"># ...</span>
 
-await controller.terminate_trial(trial_id)
-</code></pre>
+<span class="k">await</span> <span class="n">controller</span><span class="o">.</span><span class="n">terminate_trial</span><span class="p">(</span><span class="n">trial_id</span><span class="p">)</span>
+</code></pre></div>
 
 <p>The controller can also be used to subscribe to events occuring in the trials run by the Orchestrator it connects to. For example, this can be used to wait for a trial's end:</p>
-<pre><code class="python">async for trial_info in controller.watch_trials(trial_state_filters=[cogment.TrialState.ENDED]):
-    # The trial having id {trial_info.trial_id} ended.
-</code></pre>
+<div class="highlight"><pre><span></span><code><span class="k">async</span> <span class="k">for</span> <span class="n">trial_info</span> <span class="ow">in</span> <span class="n">controller</span><span class="o">.</span><span class="n">watch_trials</span><span class="p">(</span><span class="n">trial_state_filters</span><span class="o">=</span><span class="p">[</span><span class="n">cogment</span><span class="o">.</span><span class="n">TrialState</span><span class="o">.</span><span class="n">ENDED</span><span class="p">]):</span>
+    <span class="c1"># The trial having id {trial_info.trial_id} ended.</span>
+</code></pre></div>
 
 <p>The full documentation for the controller can be found <a href="../cogment-api-reference/python/#class-controller">here</a>.</p>
-<h2 id="rewards">Rewards</h2>
-<h3 id="creating">Creating</h3>
+<h2 id="rewards">Rewards<a class="headerlink" href="#rewards" title="Permanent link">&para;</a></h2>
+<h3 id="creating">Creating<a class="headerlink" href="#creating" title="Permanent link">&para;</a></h3>
 <p><a href="../../concepts/glossary/#reward">Rewards</a> are sent to <a href="../../concepts/glossary/#actor">actors</a> from another actor or the <a href="../../concepts/glossary/#environment">environment</a>. The <code>session</code> instance passed to their implementation can be used for this purpose.</p>
-<pre><code class="python">session.add_reward(
-  value=-1,
-  confidence=1,
-  tick_id=-1,
-  to=['an_actor_name'])
-</code></pre>
+<div class="highlight"><pre><span></span><code><span class="n">session</span><span class="o">.</span><span class="n">add_reward</span><span class="p">(</span>
+  <span class="n">value</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span>
+  <span class="n">confidence</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+  <span class="n">tick_id</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span>
+  <span class="n">to</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;an_actor_name&#39;</span><span class="p">])</span>
+</code></pre></div>
 
 <p>Rewards consist of an arbitrary numerical <strong>value</strong> describing how the reward "sender" <em>believes</em> the actor performed. It is <em>weighted</em> by a value between 0 and 1 qualifying the <strong>confidence</strong> of the "sender" in its reward, from a very low confidence just above 0 to a very high confidence approaching 1. The confidence value is used to collate all the rewards sent to an actor at the same time. Optionally, a reward can be provided with arbitrary user data.</p>
 <p>Each reward applies to a list of recipients (either all the actors, all the actors of a given class or a specific actor) at a specific point in time, during the trial, defined as a <a href="../../concepts/glossary/#tick"><strong>tick</strong></a>.</p>
 <p>The full documentation for <code>session.add_reward</code> can be found <a href="../cogment-api-reference/python/#add_rewardself-value-confidence-to-tick_id-1-user_datanone">here</a>.</p>
-<h3 id="consuming">Consuming</h3>
+<h3 id="consuming">Consuming<a class="headerlink" href="#consuming" title="Permanent link">&para;</a></h3>
 <p>All the <a href="../../concepts/glossary/#reward">rewards</a> that are sent and destined to each specific <a href="../../concepts/glossary/#actor">actor</a> for a given point in time are collated together by the framework.</p>
 <p>The <a href="../../concepts/glossary/#actor">actor</a> can take into account the reward directly as the <a href="../../concepts/glossary/#trial">trial</a> is running by consuming the <code>"reward"</code> event in their event loop.</p>
-<pre><code class="python">async for event in actor_session.event_loop():
-    # [...]
-    for reward in event.rewards:
-        # `reward.tick_id` is the id of the tick this reward concerns.
-        tick_id = reward.tick_id
-        # `reward.value` is the aggregated value of the reward.
-        value = reward.value
-        for (src_value, src_confidence, sender, user_data) in reward.all_sources():
-            # Iterate over individual source rewards.
-</code></pre>
+<div class="highlight"><pre><span></span><code><span class="k">async</span> <span class="k">for</span> <span class="n">event</span> <span class="ow">in</span> <span class="n">actor_session</span><span class="o">.</span><span class="n">event_loop</span><span class="p">():</span>
+    <span class="c1"># [...]</span>
+    <span class="k">for</span> <span class="n">reward</span> <span class="ow">in</span> <span class="n">event</span><span class="o">.</span><span class="n">rewards</span><span class="p">:</span>
+        <span class="c1"># `reward.tick_id` is the id of the tick this reward concerns.</span>
+        <span class="n">tick_id</span> <span class="o">=</span> <span class="n">reward</span><span class="o">.</span><span class="n">tick_id</span>
+        <span class="c1"># `reward.value` is the aggregated value of the reward.</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="n">reward</span><span class="o">.</span><span class="n">value</span>
+        <span class="k">for</span> <span class="p">(</span><span class="n">src_value</span><span class="p">,</span> <span class="n">src_confidence</span><span class="p">,</span> <span class="n">sender</span><span class="p">,</span> <span class="n">user_data</span><span class="p">)</span> <span class="ow">in</span> <span class="n">reward</span><span class="o">.</span><span class="n">all_sources</span><span class="p">():</span>
+            <span class="c1"># Iterate over individual source rewards.</span>
+</code></pre></div>
 
-<h2 id="messages">Messages</h2>
-<h3 id="creating_1">Creating</h3>
+<h2 id="messages">Messages<a class="headerlink" href="#messages" title="Permanent link">&para;</a></h2>
+<h3 id="creating_1">Creating<a class="headerlink" href="#creating_1" title="Permanent link">&para;</a></h3>
 <p><a href="../../concepts/glossary/#message">Messages</a> can be created and sent between <a href="../../concepts/glossary/#actor">actors</a> or the <a href="../../concepts/glossary/#environment">environment</a> within a trial using their <code>session</code> instance.</p>
-<pre><code class="python">session.send_message
-  user_data=MyProtobufDataStructure(...), # any protobuf data structure can be used here.
-  to=['pedestrian:*'], # send the message to all the actors of the &quot;pedestrian&quot; class
-  to_environment=False)
-</code></pre>
+<div class="highlight"><pre><span></span><code><span class="n">session</span><span class="o">.</span><span class="n">send_message</span>
+  <span class="n">user_data</span><span class="o">=</span><span class="n">MyProtobufDataStructure</span><span class="p">(</span><span class="o">...</span><span class="p">),</span> <span class="c1"># any protobuf data structure can be used here.</span>
+  <span class="n">to</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;pedestrian:*&#39;</span><span class="p">],</span> <span class="c1"># send the message to all the actors of the &quot;pedestrian&quot; class</span>
+  <span class="n">to_environment</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</code></pre></div>
 
 <p>Messages consist of an arbitrary payload, their <code>user_data</code>, defined as an instance of any protobuf data structure.</p>
 <p>A message can be sent to one, many or all actors in a trial and / or to the environment.</p>
 <p>The full documentation for <code>session.send_message</code> can be found <a href="../cogment-api-reference/python/#send_messageself-user_data-to-to_environmentfalse">here</a>.</p>
-<h3 id="consuming_1">Consuming</h3>
+<h3 id="consuming_1">Consuming<a class="headerlink" href="#consuming_1" title="Permanent link">&para;</a></h3>
 <p>All the <a href="../../concepts/glossary/#message">messages</a> that are sent and intended for each specific actor or environment will be received by the target actor or environment.</p>
 <p>Actors or the environment can use the message directly, live, as the <a href="../../concepts/glossary/#message">trial</a> is running by consuming message event in their event loop.</p>
-<pre><code class="python">async for event in actor_session.event_loop():
-    # [...]
-    for message in event.messages:
-        # `message.sender_name` is the name of the actor who sent a message
-        sender_name = message.sender_name
-        # `message.payload` is the content of the message, it needs to be unpacked
-        payload = message.payload
-</code></pre>
+<div class="highlight"><pre><span></span><code><span class="k">async</span> <span class="k">for</span> <span class="n">event</span> <span class="ow">in</span> <span class="n">actor_session</span><span class="o">.</span><span class="n">event_loop</span><span class="p">():</span>
+    <span class="c1"># [...]</span>
+    <span class="k">for</span> <span class="n">message</span> <span class="ow">in</span> <span class="n">event</span><span class="o">.</span><span class="n">messages</span><span class="p">:</span>
+        <span class="c1"># `message.sender_name` is the name of the actor who sent a message</span>
+        <span class="n">sender_name</span> <span class="o">=</span> <span class="n">message</span><span class="o">.</span><span class="n">sender_name</span>
+        <span class="c1"># `message.payload` is the content of the message, it needs to be unpacked</span>
+        <span class="n">payload</span> <span class="o">=</span> <span class="n">message</span><span class="o">.</span><span class="n">payload</span>
+</code></pre></div>
 
-<h2 id="delta-encoding">Delta Encoding</h2>
+<h2 id="delta-encoding">Delta Encoding<a class="headerlink" href="#delta-encoding" title="Permanent link">&para;</a></h2>
 <p>By default, <a href="../../concepts/glossary/#observation">observations</a> are sent in their entirety from the <a href="../../concepts/glossary/#environment">environment</a> to the <a href="../../concepts/glossary/#actors">actors</a>. However, it's fairly common to only have a small portion of an <a href="../../concepts/glossary/#observation">observation</a> to change from one update to the next.</p>
 <p>Cogment allows you to specify a separate data structure to encode partial observation updates. However, if you do so, you must provide
 a method that can apply the deltas to previous observations.</p>
-<pre><code class="python"># delta.py
-def apply_delta(previous_observation, delta):
-    # Return the updated observation, more often
-    # than not, this should be the previous
-    # observation that was modified in-place.
-    previous_observation.car_position = delta.new_car_pos
-    return previous_observation
-</code></pre>
+<div class="highlight"><pre><span></span><code><span class="c1"># delta.py</span>
+<span class="k">def</span> <span class="nf">apply_delta</span><span class="p">(</span><span class="n">previous_observation</span><span class="p">,</span> <span class="n">delta</span><span class="p">):</span>
+    <span class="c1"># Return the updated observation, more often</span>
+    <span class="c1"># than not, this should be the previous</span>
+    <span class="c1"># observation that was modified in-place.</span>
+    <span class="n">previous_observation</span><span class="o">.</span><span class="n">car_position</span> <span class="o">=</span> <span class="n">delta</span><span class="o">.</span><span class="n">new_car_pos</span>
+    <span class="k">return</span> <span class="n">previous_observation</span>
+</code></pre></div>
 
-<pre><code class="yaml"># cogment.yaml
-import:
-  proto:
-    - city.proto
-  python:
-    - delta
+<div class="highlight"><pre><span></span><code><span class="c1"># cogment.yaml</span>
+<span class="nt">import</span><span class="p">:</span>
+  <span class="nt">proto</span><span class="p">:</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">city.proto</span>
+  <span class="nt">python</span><span class="p">:</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">delta</span>
 
-actors:
-  my_class:
-    observation:
-      space: city.Observation
-      delta: city.ObservationDelta
-      delta_apply_fn:
-        python: delta.apply_delta
-</code></pre>
+<span class="nt">actors</span><span class="p">:</span>
+  <span class="nt">my_class</span><span class="p">:</span>
+    <span class="nt">observation</span><span class="p">:</span>
+      <span class="nt">space</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">city.Observation</span>
+      <span class="nt">delta</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">city.ObservationDelta</span>
+      <span class="nt">delta_apply_fn</span><span class="p">:</span>
+        <span class="nt">python</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">delta.apply_delta</span>
+</code></pre></div>
+                
               
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+        
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        <a href="../tutorial/7-dqn-player/" class="md-footer__link md-footer__link--prev" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Step 7: Add a player trained with Reinforcement Learning using DQN
             </div>
           </div>
-          <footer>
+        </a>
+      
+      
+        <a href="../cogment-api-reference/cogment-yaml/" class="md-footer__link md-footer__link--next" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              cogment.yaml
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
   
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+          <div class="md-footer-copyright__highlight">
+            Copyright 2021 AI Redefined Inc. <dev+cogment@ai-r.com>
+          </div>
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+        
+      </div>
       
-        <a href="../cogment-api-reference/cogment-yaml/" class="btn btn-neutral float-right" title="cogment.yaml">Next <span class="icon icon-circle-arrow-right"></span></a>
+  <div class="md-footer-social">
+    
       
       
-        <a href="../tutorial/7-dqn-player/" class="btn btn-neutral" title="Step 7: Add a player trained with Reinforcement Learning using DQN"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        
+        
       
-    </div>
-  
-
-  <hr/>
-
-  <div role="contentinfo">
-    <!-- Copyright etc -->
+      <a href="https://github.com/cogment" target="_blank" rel="noopener" title="github.com" class="md-footer-social__link">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+      </a>
+    
+      
+      
+        
+        
+      
+      <a href="https://twitter.com/AI_Redefined" target="_blank" rel="noopener" title="twitter.com" class="md-footer-social__link">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"/></svg>
+      </a>
+    
+      
+      
+        
+        
+      
+      <a href="https://www.linkedin.com/company/ai-r" target="_blank" rel="noopener" title="www.linkedin.com" class="md-footer-social__link">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"/></svg>
+      </a>
     
   </div>
 
-  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+    </div>
+  </div>
 </footer>
       
-        </div>
-      </div>
-
-    </section>
-
-  </div>
-
-  <div class="rst-versions" role="note" aria-label="versions">
-    <span class="rst-current-version" data-toggle="rst-current-version">
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.sections"], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}, "search": "../../assets/javascripts/workers/search.d351de03.min.js", "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.a1609d9a.min.js"></script>
       
-          <a href="https://github.com/cogment/cogment-doc/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
-      
-      
-        <span><a href="../tutorial/7-dqn-player/" style="color: #fcfcfc;">&laquo; Previous</a></span>
-      
-      
-        <span style="margin-left: 15px"><a href="../cogment-api-reference/cogment-yaml/" style="color: #fcfcfc">Next &raquo;</a></span>
-      
-    </span>
-</div>
-    <script>var base_url = '../..';</script>
-    <script src="../../js/theme.js" defer></script>
-      <script src="../../search/main.js" defer></script>
-    <script defer>
-        window.onload = function () {
-            SphinxRtdTheme.Navigation.enable(true);
-        };
-    </script>
-
-</body>
+    
+  </body>
 </html>

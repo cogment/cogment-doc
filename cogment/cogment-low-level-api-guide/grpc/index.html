@@ -1,373 +1,2465 @@
-<!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
-  
-  <link rel="canonical" href="https://docs.cogment.ai/cogment/cogment-low-level-api-guide/grpc/">
-  <link rel="shortcut icon" href="../../../img/favicon.ico">
-  <title>gRPC API Reference - Cogment</title>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
 
-  <link rel="stylesheet" href="../../../css/theme.css" />
-  <link rel="stylesheet" href="../../../css/theme_extra.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
-  
-  <script>
-    // Current page data
-    var mkdocs_page_name = "gRPC API Reference";
-    var mkdocs_page_input_path = "cogment/cogment-low-level-api-guide/grpc.md";
-    var mkdocs_page_url = "/cogment/cogment-low-level-api-guide/grpc/";
-  </script>
-  
-  <script src="../../../js/jquery-2.1.1.min.js" defer></script>
-  <script src="../../../js/modernizr-2.8.3.min.js" defer></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
-  <script>hljs.initHighlightingOnLoad();</script> 
-  
-</head>
-
-<body class="wy-body-for-nav" role="document">
-
-  <div class="wy-grid-for-nav">
-
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
     
-    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
-    <div class="wy-side-scroll">
-      <div class="wy-side-nav-search">
-        <a href="../../.." class="icon icon-home"> Cogment</a>
-        <div role="search">
-  <form id ="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
-  </form>
-</div>
-      </div>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Cogment user documentation - Cogment is an innovative open source AI platform designed to leverage the advent of AI to benefit humankind through human-AI collaboration">
+      
+      
+      
+        <meta name="author" content="AI Redefined">
+      
+      
+        <link rel="canonical" href="https://docs.cogment.ai/cogment/cogment-low-level-api-guide/grpc/">
+      
+      <link rel="icon" href="../../../images/cogment_favicon.png">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-7.1.5">
+    
+    
+      
+        <title>gRPC API Reference - Cogment</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.bde7dde4.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ef6f36e2.min.css">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>:root{--md-text-font-family:"Roboto";--md-code-font-family:"Roboto Mono"}</style>
+      
+    
+    
+    
+      <link rel="stylesheet" href="../../../style/theme.css">
+    
+    
+      
+        
+<script>window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga("create","UA-146998765-2","doc.cogment.ai"),ga("set","anonymizeIp",!0),ga("send","pageview"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){var e;this.value&&(e=document.location.pathname,ga("send","pageview",e+"?q="+this.value))}),"undefined"!=typeof location$&&location$.subscribe(function(e){ga("send","pageview",e.pathname)})})</script>
+<script async src="https://www.google-analytics.com/analytics.js"></script>
+      
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
+  
+    
+    <script>function __prefix(e){return new URL("../../..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#cogment-grpc-api" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="Cogment" class="md-header__button md-logo" aria-label="Cogment" data-md-component="logo">
+      
+  <img src="../../../images/cogment_logo.png" alt="logo">
 
-      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-                <p class="caption"><span class="caption-text">Introduction</span></p>
-                <ul>
-                    <li class="toctree-l1"><a class="reference internal" href="../../..">Overview</a>
-                    </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../../../introduction/installation/">Installation & Setup</a>
-                    </li>
-                </ul>
-                <p class="caption"><span class="caption-text">Support</span></p>
-                <ul>
-                    <li class="toctree-l1"><a class="reference internal" href="../../../support/community-channels/">Community channels</a>
-                    </li>
-                </ul>
-                <p class="caption"><span class="caption-text">Concepts</span></p>
-                <ul>
-                    <li class="toctree-l1"><a class="reference internal" href="../../../concepts/core-concepts/">Core Concepts</a>
-                    </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../../../concepts/glossary/">Glossary</a>
-                    </li>
-                </ul>
-                <p class="caption"><span class="caption-text">Cogment</span></p>
-                <ul class="current">
-                    <li class="toctree-l1"><a class="reference internal" href="#">Tutorial</a>
-    <ul>
-                <li class="toctree-l2"><a class="reference internal" href="../../tutorial/introduction/">Introduction</a>
-                </li>
-                <li class="toctree-l2"><a class="reference internal" href="../../tutorial/1-bootstrap-and-data-structures/">Step 1: Bootstrap a Cogment app</a>
-                </li>
-                <li class="toctree-l2"><a class="reference internal" href="../../tutorial/2-random-player/">Step 2: Implement actor and environment</a>
-                </li>
-                <li class="toctree-l2"><a class="reference internal" href="../../tutorial/3-rewards/">Step 3: Introduce rewards</a>
-                </li>
-                <li class="toctree-l2"><a class="reference internal" href="../../tutorial/4-heuristic-player/">Step 4: Create a heuristic player</a>
-                </li>
-                <li class="toctree-l2"><a class="reference internal" href="../../tutorial/5-human-player/">Step 5: Add a human player in the loop</a>
-                </li>
-                <li class="toctree-l2"><a class="reference internal" href="../../tutorial/6-web-client/">Step 6: Implement a web client for the human player</a>
-                </li>
-                <li class="toctree-l2"><a class="reference internal" href="../../tutorial/7-dqn-player/">Step 7: Add a player trained with Reinforcement Learning using DQN</a>
-                </li>
-    </ul>
-                    </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../../cogment-api-guide/">Cogment API Guide</a>
-                    </li>
-                    <li class="toctree-l1"><a class="reference internal" href="#">Cogment API Reference</a>
-    <ul>
-                <li class="toctree-l2"><a class="reference internal" href="../../cogment-api-reference/cogment-yaml/">cogment.yaml</a>
-                </li>
-                <li class="toctree-l2"><a class="reference internal" href="../../cogment-api-reference/python/">python</a>
-                </li>
-                <li class="toctree-l2"><a class="reference internal" href="#">Javascript/Typescript SDK</a>
-    <ul>
-                <li class="toctree-l3"><a class="reference internal" href="../../cogment-api-reference/javascript/modules/">Modules</a>
-                </li>
-                <li class="toctree-l3"><a class="reference internal" href="../../cogment-api-reference/javascript/classes/actorsession/">Class: ActorSession</a>
-                </li>
-                <li class="toctree-l3"><a class="reference internal" href="../../cogment-api-reference/javascript/classes/cogmentservice/">Class: CogmentService</a>
-                </li>
-                <li class="toctree-l3"><a class="reference internal" href="../../cogment-api-reference/javascript/classes/trialcontroller/">Class: TrialController</a>
-                </li>
-                <li class="toctree-l3"><a class="reference internal" href="../../cogment-api-reference/javascript/enums/eventtype/">Enum: EventType</a>
-                </li>
-                <li class="toctree-l3"><a class="reference internal" href="../../cogment-api-reference/javascript/interfaces/cogmentyaml/">Interface: CogmentYaml</a>
-                </li>
-                <li class="toctree-l3"><a class="reference internal" href="../../cogment-api-reference/javascript/interfaces/cogmentyamlactor/">Interface: CogmentYamlActor</a>
-                </li>
-                <li class="toctree-l3"><a class="reference internal" href="../../cogment-api-reference/javascript/interfaces/cogmentyamlactorclass/">Interface: CogmentYamlActorClass</a>
-                </li>
-                <li class="toctree-l3"><a class="reference internal" href="../../cogment-api-reference/javascript/interfaces/cogmentyamldatalog/">Interface: CogmentYamlDatalog</a>
-                </li>
-                <li class="toctree-l3"><a class="reference internal" href="../../cogment-api-reference/javascript/interfaces/cogmentyamltrialparameters/">Interface: CogmentYamlTrialParameters</a>
-                </li>
-                <li class="toctree-l3"><a class="reference internal" href="../../cogment-api-reference/javascript/interfaces/cogsettings/">Interface: CogSettings</a>
-                </li>
-                <li class="toctree-l3"><a class="reference internal" href="../../cogment-api-reference/javascript/interfaces/cogsettingsactorclass/">Interface: CogSettingsActorClass</a>
-                </li>
-                <li class="toctree-l3"><a class="reference internal" href="../../cogment-api-reference/javascript/interfaces/createserviceoptions/">Interface: CreateServiceOptions</a>
-                </li>
-                <li class="toctree-l3"><a class="reference internal" href="../../cogment-api-reference/javascript/interfaces/event/">Interface: Event</a>
-                </li>
-                <li class="toctree-l3"><a class="reference internal" href="../../cogment-api-reference/javascript/interfaces/reward/">Interface: Reward</a>
-                </li>
-                <li class="toctree-l3"><a class="reference internal" href="../../cogment-api-reference/javascript/interfaces/sendmessageoptions/">Interface: SendMessageOptions</a>
-                </li>
-                <li class="toctree-l3"><a class="reference internal" href="../../cogment-api-reference/javascript/interfaces/trialactor/">Interface: TrialActor</a>
-                </li>
-    </ul>
-                </li>
-    </ul>
-                    </li>
-                    <li class="toctree-l1 current"><a class="reference internal current" href="#">Cogment Low Level API Guide</a>
-    <ul class="current">
-                <li class="toctree-l2"><a class="reference internal" href="../overview/">Overview</a>
-                </li>
-                <li class="toctree-l2 current"><a class="reference internal current" href="./">gRPC API Reference</a>
-    <ul class="current">
-    <li class="toctree-l3"><a class="reference internal" href="#general">General</a>
-        <ul>
-    <li class="toctree-l4"><a class="reference internal" href="#limitations">Limitations</a>
-    </li>
-        </ul>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#common-types">Common types</a>
-        <ul>
-    <li class="toctree-l4"><a class="reference internal" href="#versionrequest">VersionRequest</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#versioninfo">VersionInfo</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#trialparams">TrialParams</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#environmentparams">EnvironmentParams</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#actorparams">ActorParams</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#trialconfig-actorconfig-environmentconfig">TrialConfig, ActorConfig, EnvironmentConfig</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#trialactor">TrialActor</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#observation">Observation</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#observationdata">ObservationData</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#action">Action</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#message">Message</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#rewardsource">RewardSource</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#reward">Reward</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#actorperioddata">ActorPeriodData</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#observationset">ObservationSet</a>
-    </li>
-        </ul>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#control-api">Control API</a>
-        <ul>
-    <li class="toctree-l4"><a class="reference internal" href="#service-triallifecycle">Service TrialLifecycle</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#trialstartrequest">TrialStartRequest</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#trialstartreply">TrialStartReply</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#terminatetrialrequest">TerminateTrialRequest</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#terminatetrialreply">TerminateTrialReply</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#trialinforequest">TrialInfoRequest</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#trialinforeply">TrialInfoReply</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#trialstate">TrialState</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#trialinfo">TrialInfo</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#triallistrequest">TrialListRequest</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#triallistentry">TrialListEntry</a>
-    </li>
-        </ul>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#client-actor-api">Client Actor API</a>
-        <ul>
-    <li class="toctree-l4"><a class="reference internal" href="#service-clientactor">Service ClientActor</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#trialjoinrequest">TrialJoinRequest</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#trialjoinreply">TrialJoinReply</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#trialheartbeatrequest">TrialHeartbeatRequest</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#trialheartbeatreply">TrialHeartbeatReply</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#trialactionrequest">TrialActionRequest</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#trialactionreply">TrialActionReply</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#trialrewardrequest">TrialRewardRequest</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#trialrewardreply">TrialRewardReply</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#trialmessagerequest">TrialMessageRequest</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#trialmessagereply">TrialMessageReply</a>
-    </li>
-        </ul>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#agent-actor-api">Agent Actor API</a>
-        <ul>
-    <li class="toctree-l4"><a class="reference internal" href="#service-agentendpoint">Service AgentEndpoint</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#agentstartrequest">AgentStartRequest</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#agentstartreply">AgentStartReply</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#agentobservationrequest">AgentObservationRequest</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#agenactionreply">AgenActionReply</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#agentrewardrequest">AgentRewardRequest</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#agentrewardreply">AgentRewardReply</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#agentmessagerequest">AgentMessageRequest</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#agentmessagereply">AgentMessageReply</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#agentendrequest">AgentEndRequest</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#agentendreply">AgentEndReply</a>
-    </li>
-        </ul>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#environment-api">Environment API</a>
-        <ul>
-    <li class="toctree-l4"><a class="reference internal" href="#service-environmentendpoint">Service EnvironmentEndpoint</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#envstartrequest">EnvStartRequest</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#envstartreply">EnvStartReply</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#envactionrequest">EnvActionRequest</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#envactionreply">EnvActionReply</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#envmessagerequest">EnvMessageRequest</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#envmessagereply">EnvMessageReply</a>
-    </li>
-        </ul>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#datalog-api">Data/Log API</a>
-        <ul>
-    <li class="toctree-l4"><a class="reference internal" href="#service-logexporter">Service LogExporter</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#logexportersamplerequest">LogExporterSampleRequest</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#logexportersamplereply">LogExporterSampleReply</a>
-    </li>
-        </ul>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#hook-api">Hook API</a>
-        <ul>
-    <li class="toctree-l4"><a class="reference internal" href="#service-trialhooks">Service TrialHooks</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#pretrialcontext">PreTrialContext</a>
-    </li>
-        </ul>
-    </li>
-    </ul>
-                </li>
-    </ul>
-                    </li>
-                </ul>
-                <p class="caption"><span class="caption-text">Deployment Guide</span></p>
-                <ul>
-                    <li class="toctree-l1"><a class="reference internal" href="../../../deployment-guide/local-deployement/">Local Deployment</a>
-                    </li>
-                </ul>
-                <ul>
-                    <li class="toctree-l1"><a class="reference internal" href="../../../license/">License</a>
-                    </li>
-                </ul>
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Cogment
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              gRPC API Reference
+            
+          </span>
+        </div>
       </div>
     </div>
-    </nav>
-
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
       
-      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
-        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-        <a href="../../..">Cogment</a>
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        
+<a href="https://github.com/cogment/cogment-doc/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Cogment" class="md-nav__button md-logo" aria-label="Cogment" data-md-component="logo">
+      
+  <img src="../../../images/cogment_logo.png" alt="logo">
+
+    </a>
+    Cogment
+  </label>
+  
+    <div class="md-nav__source">
+      
+<a href="https://github.com/cogment/cogment-doc/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_1" type="checkbox" id="__nav_1" >
+      
+      <label class="md-nav__link" for="__nav_1">
+        Introduction
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Introduction" data-md-level="1">
+        <label class="md-nav__title" for="__nav_1">
+          <span class="md-nav__icon md-icon"></span>
+          Introduction
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        Overview
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../introduction/installation/" class="md-nav__link">
+        Installation & Setup
+      </a>
+    </li>
+  
+
+          
+        </ul>
       </nav>
+    </li>
+  
 
-      
-      <div class="wy-nav-content">
-        <div class="rst-content">
-          <div role="navigation" aria-label="breadcrumbs navigation">
-  <ul class="wy-breadcrumbs">
-    <li><a href="../../..">Docs</a> &raquo;</li>
     
       
-        
-          <li>Cogment Low Level API Guide &raquo;</li>
-        
       
-        
-          <li>Cogment &raquo;</li>
-        
+      
+
+  
+  
+  
+    
       
     
-    <li>gRPC API Reference</li>
-    <li class="wy-breadcrumbs-aside">
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
       
-        <a href="https://github.com/cogment/cogment-doc/edit/master/docs/cogment/cogment-low-level-api-guide/grpc.md"
-          class="icon icon-github"> Edit on GitHub</a>
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" >
+      
+      <label class="md-nav__link" for="__nav_2">
+        Support
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Support" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          Support
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../support/community-channels/" class="md-nav__link">
+        Community channels
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+      
+      <label class="md-nav__link" for="__nav_3">
+        Concepts
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Concepts" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          Concepts
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../concepts/core-concepts/" class="md-nav__link">
+        Core Concepts
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../concepts/glossary/" class="md-nav__link">
+        Glossary
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" checked>
+      
+      <label class="md-nav__link" for="__nav_4">
+        Cogment
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Cogment" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          Cogment
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_1" type="checkbox" id="__nav_4_1" >
+      
+      <label class="md-nav__link" for="__nav_4_1">
+        Tutorial
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Tutorial" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_1">
+          <span class="md-nav__icon md-icon"></span>
+          Tutorial
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorial/introduction/" class="md-nav__link">
+        Introduction
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorial/1-bootstrap-and-data-structures/" class="md-nav__link">
+        Step 1: Bootstrap a Cogment app
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorial/2-random-player/" class="md-nav__link">
+        Step 2: Implement actor and environment
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorial/3-rewards/" class="md-nav__link">
+        Step 3: Introduce rewards
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorial/4-heuristic-player/" class="md-nav__link">
+        Step 4: Create a heuristic player
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorial/5-human-player/" class="md-nav__link">
+        Step 5: Add a human player in the loop
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorial/6-web-client/" class="md-nav__link">
+        Step 6: Implement a web client for the human player
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorial/7-dqn-player/" class="md-nav__link">
+        Step 7: Add a player trained with Reinforcement Learning using DQN
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cogment-api-guide/" class="md-nav__link">
+        Cogment API Guide
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_3" type="checkbox" id="__nav_4_3" >
+      
+      <label class="md-nav__link" for="__nav_4_3">
+        Cogment API Reference
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Cogment API Reference" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_3">
+          <span class="md-nav__icon md-icon"></span>
+          Cogment API Reference
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cogment-api-reference/cogment-yaml/" class="md-nav__link">
+        cogment.yaml
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cogment-api-reference/python/" class="md-nav__link">
+        python
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_3_3" type="checkbox" id="__nav_4_3_3" >
+      
+      <label class="md-nav__link" for="__nav_4_3_3">
+        Javascript/Typescript SDK
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Javascript/Typescript SDK" data-md-level="3">
+        <label class="md-nav__title" for="__nav_4_3_3">
+          <span class="md-nav__icon md-icon"></span>
+          Javascript/Typescript SDK
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cogment-api-reference/javascript/modules/" class="md-nav__link">
+        Modules
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cogment-api-reference/javascript/classes/actorsession/" class="md-nav__link">
+        Class: ActorSession
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cogment-api-reference/javascript/classes/cogmentservice/" class="md-nav__link">
+        Class: CogmentService
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cogment-api-reference/javascript/classes/trialcontroller/" class="md-nav__link">
+        Class: TrialController
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cogment-api-reference/javascript/enums/eventtype/" class="md-nav__link">
+        Enum: EventType
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cogment-api-reference/javascript/interfaces/cogmentyaml/" class="md-nav__link">
+        Interface: CogmentYaml
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cogment-api-reference/javascript/interfaces/cogmentyamlactor/" class="md-nav__link">
+        Interface: CogmentYamlActor
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cogment-api-reference/javascript/interfaces/cogmentyamlactorclass/" class="md-nav__link">
+        Interface: CogmentYamlActorClass
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cogment-api-reference/javascript/interfaces/cogmentyamldatalog/" class="md-nav__link">
+        Interface: CogmentYamlDatalog
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cogment-api-reference/javascript/interfaces/cogmentyamltrialparameters/" class="md-nav__link">
+        Interface: CogmentYamlTrialParameters
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cogment-api-reference/javascript/interfaces/cogsettings/" class="md-nav__link">
+        Interface: CogSettings
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cogment-api-reference/javascript/interfaces/cogsettingsactorclass/" class="md-nav__link">
+        Interface: CogSettingsActorClass
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cogment-api-reference/javascript/interfaces/createserviceoptions/" class="md-nav__link">
+        Interface: CreateServiceOptions
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cogment-api-reference/javascript/interfaces/event/" class="md-nav__link">
+        Interface: Event
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cogment-api-reference/javascript/interfaces/reward/" class="md-nav__link">
+        Interface: Reward
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cogment-api-reference/javascript/interfaces/sendmessageoptions/" class="md-nav__link">
+        Interface: SendMessageOptions
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cogment-api-reference/javascript/interfaces/trialactor/" class="md-nav__link">
+        Interface: TrialActor
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_4" type="checkbox" id="__nav_4_4" checked>
+      
+      <label class="md-nav__link" for="__nav_4_4">
+        Cogment Low Level API Guide
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Cogment Low Level API Guide" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_4">
+          <span class="md-nav__icon md-icon"></span>
+          Cogment Low Level API Guide
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../overview/" class="md-nav__link">
+        Overview
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          gRPC API Reference
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        gRPC API Reference
+      </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#general" class="md-nav__link">
+    General
+  </a>
+  
+    <nav class="md-nav" aria-label="General">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#limitations" class="md-nav__link">
+    Limitations
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#common-types" class="md-nav__link">
+    Common types
+  </a>
+  
+    <nav class="md-nav" aria-label="Common types">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#versionrequest" class="md-nav__link">
+    VersionRequest
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#versioninfo" class="md-nav__link">
+    VersionInfo
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#trialparams" class="md-nav__link">
+    TrialParams
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#environmentparams" class="md-nav__link">
+    EnvironmentParams
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#actorparams" class="md-nav__link">
+    ActorParams
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#trialconfig-actorconfig-environmentconfig" class="md-nav__link">
+    TrialConfig, ActorConfig, EnvironmentConfig
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#trialactor" class="md-nav__link">
+    TrialActor
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#observation" class="md-nav__link">
+    Observation
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#observationdata" class="md-nav__link">
+    ObservationData
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#action" class="md-nav__link">
+    Action
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#message" class="md-nav__link">
+    Message
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rewardsource" class="md-nav__link">
+    RewardSource
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reward" class="md-nav__link">
+    Reward
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#actorperioddata" class="md-nav__link">
+    ActorPeriodData
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#observationset" class="md-nav__link">
+    ObservationSet
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#control-api" class="md-nav__link">
+    Control API
+  </a>
+  
+    <nav class="md-nav" aria-label="Control API">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#service-triallifecycle" class="md-nav__link">
+    Service TrialLifecycle
+  </a>
+  
+    <nav class="md-nav" aria-label="Service TrialLifecycle">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#starttrial" class="md-nav__link">
+    StartTrial()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#terminatetrial" class="md-nav__link">
+    TerminateTrial()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gettrialinfo" class="md-nav__link">
+    GetTrialInfo()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#watchtrials" class="md-nav__link">
+    WatchTrials()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#version" class="md-nav__link">
+    Version()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#trialstartrequest" class="md-nav__link">
+    TrialStartRequest
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#trialstartreply" class="md-nav__link">
+    TrialStartReply
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#terminatetrialrequest" class="md-nav__link">
+    TerminateTrialRequest
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#terminatetrialreply" class="md-nav__link">
+    TerminateTrialReply
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#trialinforequest" class="md-nav__link">
+    TrialInfoRequest
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#trialinforeply" class="md-nav__link">
+    TrialInfoReply
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#trialstate" class="md-nav__link">
+    TrialState
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#trialinfo" class="md-nav__link">
+    TrialInfo
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#triallistrequest" class="md-nav__link">
+    TrialListRequest
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#triallistentry" class="md-nav__link">
+    TrialListEntry
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#client-actor-api" class="md-nav__link">
+    Client Actor API
+  </a>
+  
+    <nav class="md-nav" aria-label="Client Actor API">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#service-clientactor" class="md-nav__link">
+    Service ClientActor
+  </a>
+  
+    <nav class="md-nav" aria-label="Service ClientActor">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#jointrial" class="md-nav__link">
+    JoinTrial()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#actionstream" class="md-nav__link">
+    ActionStream()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#heartbeat" class="md-nav__link">
+    Heartbeat()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sendreward" class="md-nav__link">
+    SendReward()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sendmessage" class="md-nav__link">
+    SendMessage()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#version_1" class="md-nav__link">
+    Version()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#trialjoinrequest" class="md-nav__link">
+    TrialJoinRequest
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#trialjoinreply" class="md-nav__link">
+    TrialJoinReply
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#trialheartbeatrequest" class="md-nav__link">
+    TrialHeartbeatRequest
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#trialheartbeatreply" class="md-nav__link">
+    TrialHeartbeatReply
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#trialactionrequest" class="md-nav__link">
+    TrialActionRequest
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#trialactionreply" class="md-nav__link">
+    TrialActionReply
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#trialrewardrequest" class="md-nav__link">
+    TrialRewardRequest
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#trialrewardreply" class="md-nav__link">
+    TrialRewardReply
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#trialmessagerequest" class="md-nav__link">
+    TrialMessageRequest
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#trialmessagereply" class="md-nav__link">
+    TrialMessageReply
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#agent-actor-api" class="md-nav__link">
+    Agent Actor API
+  </a>
+  
+    <nav class="md-nav" aria-label="Agent Actor API">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#service-agentendpoint" class="md-nav__link">
+    Service AgentEndpoint
+  </a>
+  
+    <nav class="md-nav" aria-label="Service AgentEndpoint">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#onstart" class="md-nav__link">
+    OnStart()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#onobservation" class="md-nav__link">
+    OnObservation()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#onreward" class="md-nav__link">
+    OnReward()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#onmessage" class="md-nav__link">
+    OnMessage()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#onend" class="md-nav__link">
+    OnEnd()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#version_2" class="md-nav__link">
+    Version()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#agentstartrequest" class="md-nav__link">
+    AgentStartRequest
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#agentstartreply" class="md-nav__link">
+    AgentStartReply
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#agentobservationrequest" class="md-nav__link">
+    AgentObservationRequest
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#agenactionreply" class="md-nav__link">
+    AgenActionReply
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#agentrewardrequest" class="md-nav__link">
+    AgentRewardRequest
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#agentrewardreply" class="md-nav__link">
+    AgentRewardReply
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#agentmessagerequest" class="md-nav__link">
+    AgentMessageRequest
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#agentmessagereply" class="md-nav__link">
+    AgentMessageReply
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#agentendrequest" class="md-nav__link">
+    AgentEndRequest
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#agentendreply" class="md-nav__link">
+    AgentEndReply
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#environment-api" class="md-nav__link">
+    Environment API
+  </a>
+  
+    <nav class="md-nav" aria-label="Environment API">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#service-environmentendpoint" class="md-nav__link">
+    Service EnvironmentEndpoint
+  </a>
+  
+    <nav class="md-nav" aria-label="Service EnvironmentEndpoint">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#onstart_1" class="md-nav__link">
+    OnStart()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#onaction" class="md-nav__link">
+    OnAction()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#onmessage_1" class="md-nav__link">
+    OnMessage()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#onend_1" class="md-nav__link">
+    OnEnd()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#version_3" class="md-nav__link">
+    Version()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#envstartrequest" class="md-nav__link">
+    EnvStartRequest
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#envstartreply" class="md-nav__link">
+    EnvStartReply
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#envactionrequest" class="md-nav__link">
+    EnvActionRequest
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#envactionreply" class="md-nav__link">
+    EnvActionReply
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#envmessagerequest" class="md-nav__link">
+    EnvMessageRequest
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#envmessagereply" class="md-nav__link">
+    EnvMessageReply
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#datalog-api" class="md-nav__link">
+    Data/Log API
+  </a>
+  
+    <nav class="md-nav" aria-label="Data/Log API">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#service-logexporter" class="md-nav__link">
+    Service LogExporter
+  </a>
+  
+    <nav class="md-nav" aria-label="Service LogExporter">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#onlogsample" class="md-nav__link">
+    OnLogSample()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#version_4" class="md-nav__link">
+    Version()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#logexportersamplerequest" class="md-nav__link">
+    LogExporterSampleRequest
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#logexportersamplereply" class="md-nav__link">
+    LogExporterSampleReply
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hook-api" class="md-nav__link">
+    Hook API
+  </a>
+  
+    <nav class="md-nav" aria-label="Hook API">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#service-trialhooks" class="md-nav__link">
+    Service TrialHooks
+  </a>
+  
+    <nav class="md-nav" aria-label="Service TrialHooks">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#onpretrial" class="md-nav__link">
+    OnPreTrial()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#version_5" class="md-nav__link">
+    Version()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pretrialcontext" class="md-nav__link">
+    PreTrialContext
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
-  </ul>
   
-  <hr/>
-</div>
-          <div role="main">
-            <div class="section">
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../license/" class="md-nav__link">
+        License
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
               
-                <h1 id="cogment-grpc-api">Cogment gRPC API</h1>
-<p>The low-level cogment communication API is implemented using <a href="https://grpc.github.io/">gRPC</a> services.
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#general" class="md-nav__link">
+    General
+  </a>
+  
+    <nav class="md-nav" aria-label="General">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#limitations" class="md-nav__link">
+    Limitations
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#common-types" class="md-nav__link">
+    Common types
+  </a>
+  
+    <nav class="md-nav" aria-label="Common types">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#versionrequest" class="md-nav__link">
+    VersionRequest
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#versioninfo" class="md-nav__link">
+    VersionInfo
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#trialparams" class="md-nav__link">
+    TrialParams
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#environmentparams" class="md-nav__link">
+    EnvironmentParams
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#actorparams" class="md-nav__link">
+    ActorParams
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#trialconfig-actorconfig-environmentconfig" class="md-nav__link">
+    TrialConfig, ActorConfig, EnvironmentConfig
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#trialactor" class="md-nav__link">
+    TrialActor
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#observation" class="md-nav__link">
+    Observation
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#observationdata" class="md-nav__link">
+    ObservationData
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#action" class="md-nav__link">
+    Action
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#message" class="md-nav__link">
+    Message
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rewardsource" class="md-nav__link">
+    RewardSource
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reward" class="md-nav__link">
+    Reward
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#actorperioddata" class="md-nav__link">
+    ActorPeriodData
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#observationset" class="md-nav__link">
+    ObservationSet
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#control-api" class="md-nav__link">
+    Control API
+  </a>
+  
+    <nav class="md-nav" aria-label="Control API">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#service-triallifecycle" class="md-nav__link">
+    Service TrialLifecycle
+  </a>
+  
+    <nav class="md-nav" aria-label="Service TrialLifecycle">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#starttrial" class="md-nav__link">
+    StartTrial()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#terminatetrial" class="md-nav__link">
+    TerminateTrial()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gettrialinfo" class="md-nav__link">
+    GetTrialInfo()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#watchtrials" class="md-nav__link">
+    WatchTrials()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#version" class="md-nav__link">
+    Version()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#trialstartrequest" class="md-nav__link">
+    TrialStartRequest
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#trialstartreply" class="md-nav__link">
+    TrialStartReply
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#terminatetrialrequest" class="md-nav__link">
+    TerminateTrialRequest
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#terminatetrialreply" class="md-nav__link">
+    TerminateTrialReply
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#trialinforequest" class="md-nav__link">
+    TrialInfoRequest
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#trialinforeply" class="md-nav__link">
+    TrialInfoReply
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#trialstate" class="md-nav__link">
+    TrialState
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#trialinfo" class="md-nav__link">
+    TrialInfo
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#triallistrequest" class="md-nav__link">
+    TrialListRequest
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#triallistentry" class="md-nav__link">
+    TrialListEntry
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#client-actor-api" class="md-nav__link">
+    Client Actor API
+  </a>
+  
+    <nav class="md-nav" aria-label="Client Actor API">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#service-clientactor" class="md-nav__link">
+    Service ClientActor
+  </a>
+  
+    <nav class="md-nav" aria-label="Service ClientActor">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#jointrial" class="md-nav__link">
+    JoinTrial()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#actionstream" class="md-nav__link">
+    ActionStream()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#heartbeat" class="md-nav__link">
+    Heartbeat()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sendreward" class="md-nav__link">
+    SendReward()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sendmessage" class="md-nav__link">
+    SendMessage()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#version_1" class="md-nav__link">
+    Version()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#trialjoinrequest" class="md-nav__link">
+    TrialJoinRequest
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#trialjoinreply" class="md-nav__link">
+    TrialJoinReply
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#trialheartbeatrequest" class="md-nav__link">
+    TrialHeartbeatRequest
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#trialheartbeatreply" class="md-nav__link">
+    TrialHeartbeatReply
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#trialactionrequest" class="md-nav__link">
+    TrialActionRequest
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#trialactionreply" class="md-nav__link">
+    TrialActionReply
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#trialrewardrequest" class="md-nav__link">
+    TrialRewardRequest
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#trialrewardreply" class="md-nav__link">
+    TrialRewardReply
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#trialmessagerequest" class="md-nav__link">
+    TrialMessageRequest
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#trialmessagereply" class="md-nav__link">
+    TrialMessageReply
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#agent-actor-api" class="md-nav__link">
+    Agent Actor API
+  </a>
+  
+    <nav class="md-nav" aria-label="Agent Actor API">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#service-agentendpoint" class="md-nav__link">
+    Service AgentEndpoint
+  </a>
+  
+    <nav class="md-nav" aria-label="Service AgentEndpoint">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#onstart" class="md-nav__link">
+    OnStart()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#onobservation" class="md-nav__link">
+    OnObservation()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#onreward" class="md-nav__link">
+    OnReward()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#onmessage" class="md-nav__link">
+    OnMessage()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#onend" class="md-nav__link">
+    OnEnd()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#version_2" class="md-nav__link">
+    Version()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#agentstartrequest" class="md-nav__link">
+    AgentStartRequest
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#agentstartreply" class="md-nav__link">
+    AgentStartReply
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#agentobservationrequest" class="md-nav__link">
+    AgentObservationRequest
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#agenactionreply" class="md-nav__link">
+    AgenActionReply
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#agentrewardrequest" class="md-nav__link">
+    AgentRewardRequest
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#agentrewardreply" class="md-nav__link">
+    AgentRewardReply
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#agentmessagerequest" class="md-nav__link">
+    AgentMessageRequest
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#agentmessagereply" class="md-nav__link">
+    AgentMessageReply
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#agentendrequest" class="md-nav__link">
+    AgentEndRequest
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#agentendreply" class="md-nav__link">
+    AgentEndReply
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#environment-api" class="md-nav__link">
+    Environment API
+  </a>
+  
+    <nav class="md-nav" aria-label="Environment API">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#service-environmentendpoint" class="md-nav__link">
+    Service EnvironmentEndpoint
+  </a>
+  
+    <nav class="md-nav" aria-label="Service EnvironmentEndpoint">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#onstart_1" class="md-nav__link">
+    OnStart()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#onaction" class="md-nav__link">
+    OnAction()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#onmessage_1" class="md-nav__link">
+    OnMessage()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#onend_1" class="md-nav__link">
+    OnEnd()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#version_3" class="md-nav__link">
+    Version()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#envstartrequest" class="md-nav__link">
+    EnvStartRequest
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#envstartreply" class="md-nav__link">
+    EnvStartReply
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#envactionrequest" class="md-nav__link">
+    EnvActionRequest
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#envactionreply" class="md-nav__link">
+    EnvActionReply
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#envmessagerequest" class="md-nav__link">
+    EnvMessageRequest
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#envmessagereply" class="md-nav__link">
+    EnvMessageReply
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#datalog-api" class="md-nav__link">
+    Data/Log API
+  </a>
+  
+    <nav class="md-nav" aria-label="Data/Log API">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#service-logexporter" class="md-nav__link">
+    Service LogExporter
+  </a>
+  
+    <nav class="md-nav" aria-label="Service LogExporter">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#onlogsample" class="md-nav__link">
+    OnLogSample()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#version_4" class="md-nav__link">
+    Version()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#logexportersamplerequest" class="md-nav__link">
+    LogExporterSampleRequest
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#logexportersamplereply" class="md-nav__link">
+    LogExporterSampleReply
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hook-api" class="md-nav__link">
+    Hook API
+  </a>
+  
+    <nav class="md-nav" aria-label="Hook API">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#service-trialhooks" class="md-nav__link">
+    Service TrialHooks
+  </a>
+  
+    <nav class="md-nav" aria-label="Service TrialHooks">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#onpretrial" class="md-nav__link">
+    OnPreTrial()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#version_5" class="md-nav__link">
+    Version()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pretrialcontext" class="md-nav__link">
+    PreTrialContext
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/cogment/cogment-doc/edit/main/src/cogment/cogment-low-level-api-guide/grpc.md" title="Edit this page" class="md-content__button md-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
+                  </a>
+                
+                
+                <h1 id="cogment-grpc-api">Cogment gRPC API<a class="headerlink" href="#cogment-grpc-api" title="Permanent link">&para;</a></h1>
+<p>The low-level cogment communication API is implemented using <a href="https://grpc.github.io/" target="_blank">gRPC</a> services.
 These services are collections of procedures to be called remotely (RPC).
 gRPC abstracts the network communication with familiar looking functions (representing the defined procedures), in any number of programming languages.
 How services are implemented or accessed is highly dependant on the programming language being interfaced, and is beyond the scope of this document (see gRPC API documentation).</p>
 <p>This reference requires a basic understanding of gRPC, and in particular the format of the <code>proto</code> files.</p>
-<h2 id="general">General</h2>
-<p>In this API, the <code>bytes</code> data type is normally used to contain the serialized data of externally defined messages.  These messages are well defined in the <code>cogment.yaml</code> file.</p>
+<h2 id="general">General<a class="headerlink" href="#general" title="Permanent link">&para;</a></h2>
+<p>In this API, the <code>bytes</code> data type is normally used to contain the serialized data of externally defined messages. These messages are well defined in the <code>cogment.yaml</code> file.</p>
 <p>On the other hand, the <code>google.protobuf.Any</code> data type is normally used to contain messages that are not pre-defined, and may be decided at runtime.</p>
 <p>Empty messages are normally used as a placeholder for easy future, backward compatible, extension of the API.</p>
-<p>In this API, <a href="https://grpc.io/docs/what-is-grpc/core-concepts/#metadata">gRPC metadata</a> is normally used only for service request (procedure calls) for identifying purposes.  The details of the required metadata are described with the service calls.  Service replies are not expecting to provide metadata.</p>
+<p>In this API, <a href="https://grpc.io/docs/what-is-grpc/core-concepts/#metadata" target="_blank">gRPC metadata</a> is normally used only for service request (procedure calls) for identifying purposes. The details of the required metadata are described with the service calls. Service replies are not expecting to provide metadata.</p>
 <p>In many places in the API, we use a list of actor data without information about which actor is where in the list.
 These lists have a constant length and order throughout a trial (set in the trial parameters), and thus can/must be cross referenced with other such lists within the same trial (e.g. <code>actors_in_trial</code>, <code>actors_map</code>).
 The actor can be infered by the position in the list, and the index into the list can sometimes be used to identify an actor.</p>
-<h3 id="limitations">Limitations</h3>
+<h3 id="limitations">Limitations<a class="headerlink" href="#limitations" title="Permanent link">&para;</a></h3>
 <p>Due to normal network delays and unpredictability of the various componenents, there are limitations related to the communication with the Ochestrator that translate in issues that can arise.</p>
 <ul>
 <li>In the current version, to simplify the implementation, there is an expectation of "good behavior" from the various components:</li>
@@ -378,334 +2470,333 @@ The actor can be infered by the position in the list, and the index into the lis
 <li>A <code>TerminateTrial</code> (from the Control API) is called only a reasonable amount of time after a <code>StartTrial</code> (e.g. more than 2 sec).</li>
 <li>All components are started after the Orchestrator is running.</li>
 <li>Note that what constitutes a "reasonable" amount of time is dependent on many variables and the numbers given here are only vaguely safe values for most systems.</li>
-<li>It is generally understood that most actors do not know when a trial will end.  Because of this, there may be unpredictable behavior at the end of a trial:</li>
+<li>It is generally understood that most actors do not know when a trial will end. Because of this, there may be unpredictable behavior at the end of a trial:</li>
 <li>Rewards and messages sent after the last action may not reach their destination.</li>
 <li>If a trial is terminated by the Control API, actions from some actors may not reach the environment before the end of the trial.</li>
 </ul>
-<h2 id="common-types">Common types</h2>
-<p>Most of the messages are defined in the <code>common.proto</code> file.  <code>ObservationSet</code> is defined in <code>environment.proto</code>.</p>
-<h3 id="versionrequest"><code>VersionRequest</code></h3>
+<h2 id="common-types">Common types<a class="headerlink" href="#common-types" title="Permanent link">&para;</a></h2>
+<p>Most of the messages are defined in the <code>common.proto</code> file. <code>ObservationSet</code> is defined in <code>environment.proto</code>.</p>
+<h3 id="versionrequest"><code>VersionRequest</code><a class="headerlink" href="#versionrequest" title="Permanent link">&para;</a></h3>
 <p>Empty message to serve as the request for the <code>Version</code> procedure (present in all gRPC services defined in the Cogment API).</p>
-<pre><code class="protobuf">message VersionRequest {}
-</code></pre>
+<div class="highlight"><pre><span></span><code><span class="kd">message</span> <span class="nc">VersionRequest</span> <span class="p">{}</span>
+</code></pre></div>
 
-<h3 id="versioninfo"><code>VersionInfo</code></h3>
+<h3 id="versioninfo"><code>VersionInfo</code><a class="headerlink" href="#versioninfo" title="Permanent link">&para;</a></h3>
 <p>Reply message for the <code>Version</code> procedure (present in all gRPC services defined in the API).
 It contains a list of version information.
-The Cogment framework expects at least "cogment-api" and "grpc" versions present in the list.  The "cogment-api" is for the local version of the Cogment API used by the service.  The "grpc" is for the version of gRPC used by the service.
+The Cogment framework expects at least "cogment-api" and "grpc" versions present in the list. The "cogment-api" is for the local version of the Cogment API used by the service. The "grpc" is for the version of gRPC used by the service.
 Other reported versions are specific to the service called, possibly for use by utility and management tools.</p>
-<pre><code class="protobuf">message Version {
-  string name = 1;
-  string version = 2;
-}
+<div class="highlight"><pre><span></span><code><span class="kd">message</span> <span class="nc">Version</span> <span class="p">{</span>
+  <span class="kt">string</span> <span class="na">name</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="kt">string</span> <span class="na">version</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+<span class="p">}</span>
 
-message VersionInfo {
-  repeated Version versions = 1;
-}
-</code></pre>
+<span class="kd">message</span> <span class="nc">VersionInfo</span> <span class="p">{</span>
+  <span class="k">repeated</span> <span class="n">Version</span> <span class="na">versions</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
 
 <ul>
 <li>versions: List of version information</li>
-<li>name: The name/software/module for which the version is given.  E.g. "cogment-api"</li>
-<li>version: The version related to the name.  E.g. "1.0.0b5"</li>
+<li>name: The name/software/module for which the version is given. E.g. "cogment-api"</li>
+<li>version: The version related to the name. E.g. "1.0.0b5"</li>
 </ul>
-<h3 id="trialparams"><code>TrialParams</code></h3>
+<h3 id="trialparams"><code>TrialParams</code><a class="headerlink" href="#trialparams" title="Permanent link">&para;</a></h3>
 <p>Global parameters for a trial.</p>
-<pre><code class="protobuf">message TrialParams {
-  TrialConfig trial_config = 1;
-  EnvironmentParams environment = 2;
-  repeated ActorParams actors = 3;
-  uint32 max_steps = 4;
-  uint32 max_inactivity = 5;
-}
-</code></pre>
+<div class="highlight"><pre><span></span><code><span class="kd">message</span> <span class="nc">TrialParams</span> <span class="p">{</span>
+  <span class="n">TrialConfig</span> <span class="na">trial_config</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="n">EnvironmentParams</span> <span class="na">environment</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+  <span class="k">repeated</span> <span class="n">ActorParams</span> <span class="na">actors</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+  <span class="kt">uint32</span> <span class="na">max_steps</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
+  <span class="kt">uint32</span> <span class="na">max_inactivity</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
 
 <ul>
 <li>trial_config: (optional) The user config for the controler of the trial.</li>
 <li>environment: The parameters for the environment of the trial.</li>
-<li>actors: The parameters for all actors involved in the trial.  This length and order of this list defines the length and order of the lists of actors provided in different places in the API (e.g. <code>actors_in_trial</code>), for the trial.</li>
-<li>max_steps: The maximum number of steps/ticks that the trial should run.  After this number of steps/ticks, an end request will be sent to the environment.</li>
-<li>max_inactivity: The maximum amount of time (in seconds) that the trial should be without activity before an end request is sent to the environment (or the trial is forcefully terminated).  Activity is defined as a message received by the Orchestrator from a user component.</li>
+<li>actors: The parameters for all actors involved in the trial. This length and order of this list defines the length and order of the lists of actors provided in different places in the API (e.g. <code>actors_in_trial</code>), for the trial.</li>
+<li>max_steps: The maximum number of steps/ticks that the trial should run. After this number of steps/ticks, an end request will be sent to the environment.</li>
+<li>max_inactivity: The maximum amount of time (in seconds) that the trial should be without activity before an end request is sent to the environment (or the trial is forcefully terminated). Activity is defined as a message received by the Orchestrator from a user component.</li>
 </ul>
-<h3 id="environmentparams"><code>EnvironmentParams</code></h3>
+<h3 id="environmentparams"><code>EnvironmentParams</code><a class="headerlink" href="#environmentparams" title="Permanent link">&para;</a></h3>
 <p>Parameters related to an environment.</p>
-<pre><code class="protobuf">message EnvironmentParams {
-  string endpoint = 1;
-  EnvironmentConfig config = 2;
-  string implementation = 3;
-}
-</code></pre>
+<div class="highlight"><pre><span></span><code><span class="kd">message</span> <span class="nc">EnvironmentParams</span> <span class="p">{</span>
+  <span class="kt">string</span> <span class="na">endpoint</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="n">EnvironmentConfig</span> <span class="na">config</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+  <span class="kt">string</span> <span class="na">implementation</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
 
 <ul>
-<li>endpoint: The URL where the environment is being served.  This is used by the Orchestrator to connect to the environment using the <code>EnvironmentEndpoint</code> gRPC service.</li>
+<li>endpoint: The URL where the environment is being served. This is used by the Orchestrator to connect to the environment using the <code>EnvironmentEndpoint</code> gRPC service.</li>
 <li>config: (optional) The user config for the environment.</li>
 <li>implementation: (optional) The name of the implementation of the environment to run.</li>
 </ul>
-<h3 id="actorparams"><code>ActorParams</code></h3>
+<h3 id="actorparams"><code>ActorParams</code><a class="headerlink" href="#actorparams" title="Permanent link">&para;</a></h3>
 <p>Parameters related to an actor.</p>
-<pre><code class="protobuf">message ActorParams {
-  string name = 1;
-  string actor_class = 2;
-  string endpoint = 3;  
-  string implementation = 4;
-  ActorConfig config = 5;
-}
-</code></pre>
+<div class="highlight"><pre><span></span><code><span class="kd">message</span> <span class="nc">ActorParams</span> <span class="p">{</span>
+  <span class="kt">string</span> <span class="na">name</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="kt">string</span> <span class="na">actor_class</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+  <span class="kt">string</span> <span class="na">endpoint</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+  <span class="kt">string</span> <span class="na">implementation</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
+  <span class="n">ActorConfig</span> <span class="na">config</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
 
 <ul>
 <li>name: The name of the actor.</li>
-<li>actor_class: The name of the class of actor.  Actor classes are defined in the <code>cogment.yaml</code> file in the <code>actor_classes:id</code> sections.</li>
-<li>endpoint: The URL where the actor is being served, or "client".  The URL is used by the Orchestrator to connect to the actor using the <code>AgentEndpoint</code> gRPC service.  If set to "client", then the actor is a client and will connect to the Orchestrator instead, using the <code>ClientActor</code> gRPC service.</li>
+<li>actor_class: The name of the class of actor. Actor classes are defined in the <code>cogment.yaml</code> file in the <code>actor_classes:id</code> sections.</li>
+<li>endpoint: The URL where the actor is being served, or "client". The URL is used by the Orchestrator to connect to the actor using the <code>AgentEndpoint</code> gRPC service. If set to "client", then the actor is a client and will connect to the Orchestrator instead, using the <code>ClientActor</code> gRPC service.</li>
 <li>implementation: (optional) The name of the implementation of the actor class to run.</li>
 <li>config: (optional) The user config for the actor.</li>
 </ul>
-<h3 id="trialconfig-actorconfig-environmentconfig"><code>TrialConfig</code>, <code>ActorConfig</code>, <code>EnvironmentConfig</code></h3>
+<h3 id="trialconfig-actorconfig-environmentconfig"><code>TrialConfig</code>, <code>ActorConfig</code>, <code>EnvironmentConfig</code><a class="headerlink" href="#trialconfig-actorconfig-environmentconfig" title="Permanent link">&para;</a></h3>
 <p>These contain the config data for various user components.</p>
-<pre><code class="protobuf">message EnvironmentConfig {
-  bytes content = 1;
-}
+<div class="highlight"><pre><span></span><code><span class="kd">message</span> <span class="nc">EnvironmentConfig</span> <span class="p">{</span>
+  <span class="kt">bytes</span> <span class="na">content</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
 
-message ActorConfig {
-  bytes content = 1;
-}
+<span class="kd">message</span> <span class="nc">ActorConfig</span> <span class="p">{</span>
+  <span class="kt">bytes</span> <span class="na">content</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
 
-message TrialConfig {
-  bytes content = 1;
-}
-
-</code></pre>
+<span class="kd">message</span> <span class="nc">TrialConfig</span> <span class="p">{</span>
+  <span class="kt">bytes</span> <span class="na">content</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
 
 <ul>
-<li>content: The serialized protobuf message representing a config.  The actual message type is defined in the <code>cogment.yaml</code> file in its respective section: <code>environment:config_type</code>, <code>actor_classes:config_type</code>, and <code>trial:config_type</code>.  Environment config is for use by environments.  Actor config is for use by actors (each actor class can have a different config type).  Trial config is for use by controlers.</li>
+<li>content: The serialized protobuf message representing a config. The actual message type is defined in the <code>cogment.yaml</code> file in its respective section: <code>environment:config_type</code>, <code>actor_classes:config_type</code>, and <code>trial:config_type</code>. Environment config is for use by environments. Actor config is for use by actors (each actor class can have a different config type). Trial config is for use by controlers.</li>
 </ul>
-<h3 id="trialactor"><code>TrialActor</code></h3>
+<h3 id="trialactor"><code>TrialActor</code><a class="headerlink" href="#trialactor" title="Permanent link">&para;</a></h3>
 <p>Details of an actor participating in a trial.</p>
-<pre><code class="protobuf">message TrialActor {
-  string actor_class = 1;
-  string name = 2;
-}
-</code></pre>
+<div class="highlight"><pre><span></span><code><span class="kd">message</span> <span class="nc">TrialActor</span> <span class="p">{</span>
+  <span class="kt">string</span> <span class="na">actor_class</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="kt">string</span> <span class="na">name</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
 
 <ul>
-<li>actor_class: The name of the class of actor.  Actor classes are defined in the <code>cogment.yaml</code> file in the <code>actor_classes:id</code> sections.</li>
+<li>actor_class: The name of the class of actor. Actor classes are defined in the <code>cogment.yaml</code> file in the <code>actor_classes:id</code> sections.</li>
 <li>name: The name of the actor.</li>
 </ul>
-<h3 id="observation"><code>Observation</code></h3>
+<h3 id="observation"><code>Observation</code><a class="headerlink" href="#observation" title="Permanent link">&para;</a></h3>
 <p>A singular observation.</p>
-<pre><code class="protobuf">message Observation {
-  uint64 tick_id = 1;
-  fixed64 timestamp = 2;
-  ObservationData data = 3;
-}
-</code></pre>
+<div class="highlight"><pre><span></span><code><span class="kd">message</span> <span class="nc">Observation</span> <span class="p">{</span>
+  <span class="kt">uint64</span> <span class="na">tick_id</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="kt">fixed64</span> <span class="na">timestamp</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+  <span class="n">ObservationData</span> <span class="na">data</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
 
 <ul>
 <li>tick_id: The monotonic Time, related to the number of observations since the start of the trial.</li>
 <li>timestamp: The wall-clock time of the observation.</li>
 <li>data: The observation data.</li>
 </ul>
-<h3 id="observationdata"><code>ObservationData</code></h3>
+<h3 id="observationdata"><code>ObservationData</code><a class="headerlink" href="#observationdata" title="Permanent link">&para;</a></h3>
 <p>The data payload of an observation.</p>
-<pre><code class="protobuf">message ObservationData {
-  bytes content = 1;
-  bool snapshot = 2;
-}
-</code></pre>
+<div class="highlight"><pre><span></span><code><span class="kd">message</span> <span class="nc">ObservationData</span> <span class="p">{</span>
+  <span class="kt">bytes</span> <span class="na">content</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="kt">bool</span> <span class="na">snapshot</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
 
 <ul>
-<li>content: The serialized protobuf message representing an observation for a specific actor.  If the <code>snapshot</code> field value is true, the type of message is an observation <em>space</em> (i.e. a full observation snapshot) defined in section <code>actor_classes:observation:space</code> of the <code>cogment.yaml</code> file.  If the <code>snapshot</code> field value is false, the type is an observation <em>delta</em> (i.e. a difference from a previous observation) defined in the section <code>actor_classes:observation:delta</code> of the <code>cogment.yaml</code> file.  Note that the specific actor represented is defined by the enclosing message.</li>
+<li>content: The serialized protobuf message representing an observation for a specific actor. If the <code>snapshot</code> field value is true, the type of message is an observation <em>space</em> (i.e. a full observation snapshot) defined in section <code>actor_classes:observation:space</code> of the <code>cogment.yaml</code> file. If the <code>snapshot</code> field value is false, the type is an observation <em>delta</em> (i.e. a difference from a previous observation) defined in the section <code>actor_classes:observation:delta</code> of the <code>cogment.yaml</code> file. Note that the specific actor represented is defined by the enclosing message.</li>
 <li>snapshot: Determines the type of the message in the <code>content</code> field.</li>
 </ul>
-<h3 id="action"><code>Action</code></h3>
+<h3 id="action"><code>Action</code><a class="headerlink" href="#action" title="Permanent link">&para;</a></h3>
 <p>Data associated with an actor's action.</p>
-<pre><code class="protobuf">message Action {
-  bytes content = 1;
-  uint64 tick_id = 2;
-}
-</code></pre>
+<div class="highlight"><pre><span></span><code><span class="kd">message</span> <span class="nc">Action</span> <span class="p">{</span>
+  <span class="kt">bytes</span> <span class="na">content</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="kt">uint64</span> <span class="na">tick_id</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
 
 <ul>
-<li>content: The serialized protobuf message representing an action from a specific actor.  The actual message type for the action space is defined in the <code>cogment.yaml</code> file for each actor class in section <code>actor_classes:action:space</code>.  Note that the specific actor represented is defined by the enclosing message.</li>
+<li>content: The serialized protobuf message representing an action from a specific actor. The actual message type for the action space is defined in the <code>cogment.yaml</code> file for each actor class in section <code>actor_classes:action:space</code>. Note that the specific actor represented is defined by the enclosing message.</li>
 <li>tick_id: The tick ID of the observation on which the action is taken.</li>
 </ul>
-<h3 id="message"><code>Message</code></h3>
+<h3 id="message"><code>Message</code><a class="headerlink" href="#message" title="Permanent link">&para;</a></h3>
 <p>Data associated with a communication (message) destined for an actor or the environment.</p>
-<pre><code class="protobuf">message Message {
-  sint64 tick_id = 1;
-  string sender_name = 2;
-  string receiver_name = 3;
-  google.protobuf.Any payload = 4;
-}
-</code></pre>
+<div class="highlight"><pre><span></span><code><span class="kd">message</span> <span class="nc">Message</span> <span class="p">{</span>
+  <span class="kt">sint64</span> <span class="na">tick_id</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="kt">string</span> <span class="na">sender_name</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+  <span class="kt">string</span> <span class="na">receiver_name</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+  <span class="n">google.protobuf.Any</span> <span class="na">payload</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
 
 <ul>
 <li>tick_id: Time associated with the message.</li>
-<li>sender_name: The name of the sending actor.  "env" for the environment. This is optional when sending messages (i.e. the sender is already known).</li>
-<li>receiver_name: The name of the target/receiving actor.  "env" for the environment.</li>
-<li>payload: Data for the target actor/environment.  It is the responsibility of the target to understand the type received.</li>
+<li>sender_name: The name of the sending actor. "env" for the environment. This is optional when sending messages (i.e. the sender is already known).</li>
+<li>receiver_name: The name of the target/receiving actor. "env" for the environment.</li>
+<li>payload: Data for the target actor/environment. It is the responsibility of the target to understand the type received.</li>
 </ul>
-<h3 id="rewardsource"><code>RewardSource</code></h3>
+<h3 id="rewardsource"><code>RewardSource</code><a class="headerlink" href="#rewardsource" title="Permanent link">&para;</a></h3>
 <p>Data representing a simple reward source made by a single component/sender, usually for the purpose of training automated agents.</p>
-<pre><code class="protobuf">message RewardSource {
-  string sender_name = 1;
-  float value = 2;
-  float confidence = 3;
-  google.protobuf.Any user_data = 4;
-}
-</code></pre>
+<div class="highlight"><pre><span></span><code><span class="kd">message</span> <span class="nc">RewardSource</span> <span class="p">{</span>
+  <span class="kt">string</span> <span class="na">sender_name</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="kt">float</span> <span class="na">value</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+  <span class="kt">float</span> <span class="na">confidence</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+  <span class="n">google.protobuf.Any</span> <span class="na">user_data</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
 
 <ul>
-<li>sender_name: Name of the sender that sent the reward.  This is not needed when sending becasue it will be set by the orchestrator.  It is only used by receiving actors.</li>
+<li>sender_name: Name of the sender that sent the reward. This is not needed when sending becasue it will be set by the orchestrator. It is only used by receiving actors.</li>
 <li>value: The numerical value of the provided reward.</li>
 <li>confidence: The weight of this reward in computing the final (aggregated) reward.</li>
-<li>user_data: Additional user data to be consumed by the receiving actor.  It is the responsibility of the receiver to understand the type received.</li>
+<li>user_data: Additional user data to be consumed by the receiving actor. It is the responsibility of the receiver to understand the type received.</li>
 </ul>
-<h3 id="reward"><code>Reward</code></h3>
+<h3 id="reward"><code>Reward</code><a class="headerlink" href="#reward" title="Permanent link">&para;</a></h3>
 <p>Data representing a reward sent or received, usually for the purpose of training automated agents.
 This is an aggregate of possibly multiple <code>RewardSource</code> (but at least one).</p>
-<pre><code class="protobuf">message Reward {
-  string receiver_name = 1;
-  sint64 tick_id = 2;
-  float value = 3;
-  repeated RewardSource sources = 4;
-}
-</code></pre>
+<div class="highlight"><pre><span></span><code><span class="kd">message</span> <span class="nc">Reward</span> <span class="p">{</span>
+  <span class="kt">string</span> <span class="na">receiver_name</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="kt">sint64</span> <span class="na">tick_id</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+  <span class="kt">float</span> <span class="na">value</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+  <span class="k">repeated</span> <span class="n">RewardSource</span> <span class="na">sources</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
 
 <ul>
 <li>receiver_name: Name of the receiving actor (the reward destination).</li>
-<li>tick_id: The time step associated with the reward.  If set to <code>-1</code> when sending a reward, the orchestrator will automatically assign the latest tick.  This will always be a valid tick when receiving a reward.</li>
-<li>value: The aggregated value (weighted sum) of the provided reward sources.  May be ignored when sending a reward; The final value will be computed by the orchestrator.</li>
+<li>tick_id: The time step associated with the reward. If set to <code>-1</code> when sending a reward, the orchestrator will automatically assign the latest tick. This will always be a valid tick when receiving a reward.</li>
+<li>value: The aggregated value (weighted sum) of the provided reward sources. May be ignored when sending a reward; The final value will be computed by the orchestrator.</li>
 <li>sources: The simple reward sources that form this aggregated reward. There must be at least one.</li>
 </ul>
-<h3 id="actorperioddata"><code>ActorPeriodData</code></h3>
-<p>Timely trial data sent to an actor.  The data may span a period of time.</p>
-<pre><code class="protobuf">message ActorPeriodData {
-  repeated Observation observations = 1;
-  repeated Reward rewards = 2;
-  repeated Message messages = 3;
-}
-</code></pre>
+<h3 id="actorperioddata"><code>ActorPeriodData</code><a class="headerlink" href="#actorperioddata" title="Permanent link">&para;</a></h3>
+<p>Timely trial data sent to an actor. The data may span a period of time.</p>
+<div class="highlight"><pre><span></span><code><span class="kd">message</span> <span class="nc">ActorPeriodData</span> <span class="p">{</span>
+  <span class="k">repeated</span> <span class="n">Observation</span> <span class="na">observations</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="k">repeated</span> <span class="n">Reward</span> <span class="na">rewards</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+  <span class="k">repeated</span> <span class="n">Message</span> <span class="na">messages</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
 
 <ul>
-<li>observations: Observations from the environment for a period of time.  Typically only for one time step (tick). If there are multiple, they are ordered by tick_id.</li>
+<li>observations: Observations from the environment for a period of time. Typically only for one time step (tick). If there are multiple, they are ordered by tick_id.</li>
 <li>rewards: List of rewards sent by actors or the environment. Ordered by tick_id.</li>
 <li>messages: List of user data sent by actors or the environment. Ordered by tick_id.</li>
 </ul>
-<h3 id="observationset"><code>ObservationSet</code></h3>
+<h3 id="observationset"><code>ObservationSet</code><a class="headerlink" href="#observationset" title="Permanent link">&para;</a></h3>
 <p>A set of environment observations for all actors in the trial.</p>
-<pre><code class="protobuf">message ObservationSet {
-  uint64 tick_id = 1;
-  fixed64 timestamp = 2;
-  repeated ObservationData observations = 3;
-  repeated int32 actors_map = 4;
-}
-</code></pre>
+<div class="highlight"><pre><span></span><code><span class="kd">message</span> <span class="nc">ObservationSet</span> <span class="p">{</span>
+  <span class="kt">uint64</span> <span class="na">tick_id</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="kt">fixed64</span> <span class="na">timestamp</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+  <span class="k">repeated</span> <span class="n">ObservationData</span> <span class="na">observations</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+  <span class="k">repeated</span> <span class="kt">int32</span> <span class="na">actors_map</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
 
 <ul>
 <li>tick_id: The time step (tick) to which the observations relate to.</li>
-<li>timestamp: A wall clock time stamp when the observation set was made.  Unix Epoch in nanoseconds.</li>
-<li>observations: A list of observations.  Indexed into by the <code>actors_map</code>.</li>
-<li>actors_map: A list of indexes into the <code>observations</code> list above.  This list of indexes has the same length and order as the list of actors provided in different places in the API (e.g. <code>actors_in_trial</code>), for the same trial.</li>
+<li>timestamp: A wall clock time stamp when the observation set was made. Unix Epoch in nanoseconds.</li>
+<li>observations: A list of observations. Indexed into by the <code>actors_map</code>.</li>
+<li>actors_map: A list of indexes into the <code>observations</code> list above. This list of indexes has the same length and order as the list of actors provided in different places in the API (e.g. <code>actors_in_trial</code>), for the same trial.</li>
 </ul>
-<h2 id="control-api">Control API</h2>
+<h2 id="control-api">Control API<a class="headerlink" href="#control-api" title="Permanent link">&para;</a></h2>
 <p>This API is defined in <code>orchestrator.proto</code>. It is implemented by the cogment orchestrator, and client applications are expected to connect to it using the gRPC client API.</p>
 <p>This API is used for general control and services related to trials.</p>
-<h3 id="service-triallifecycle">Service <code>TrialLifecycle</code></h3>
-<pre><code class="protobuf">service TrialLifecycle {
-  rpc StartTrial(TrialStartRequest) returns (TrialStartReply) {}
-  rpc TerminateTrial(TerminateTrialRequest) returns (TerminateTrialReply) {}
-  rpc GetTrialInfo(TrialInfoRequest) returns (TrialInfoReply) {}
-  rpc WatchTrials(TrialListRequest) returns (stream TrialListEntry) {}
-  rpc Version(VersionRequest) returns (VersionInfo) {}
-}
-</code></pre>
+<h3 id="service-triallifecycle">Service <code>TrialLifecycle</code><a class="headerlink" href="#service-triallifecycle" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="kd">service</span> <span class="n">TrialLifecycle</span> <span class="p">{</span>
+  <span class="k">rpc</span> <span class="n">StartTrial</span><span class="p">(</span><span class="n">TrialStartRequest</span><span class="p">)</span> <span class="k">returns</span> <span class="p">(</span><span class="n">TrialStartReply</span><span class="p">)</span> <span class="p">{}</span>
+  <span class="k">rpc</span> <span class="n">TerminateTrial</span><span class="p">(</span><span class="n">TerminateTrialRequest</span><span class="p">)</span> <span class="k">returns</span> <span class="p">(</span><span class="n">TerminateTrialReply</span><span class="p">)</span> <span class="p">{}</span>
+  <span class="k">rpc</span> <span class="n">GetTrialInfo</span><span class="p">(</span><span class="n">TrialInfoRequest</span><span class="p">)</span> <span class="k">returns</span> <span class="p">(</span><span class="n">TrialInfoReply</span><span class="p">)</span> <span class="p">{}</span>
+  <span class="k">rpc</span> <span class="n">WatchTrials</span><span class="p">(</span><span class="n">TrialListRequest</span><span class="p">)</span> <span class="k">returns</span> <span class="p">(</span><span class="n">stream</span> <span class="n">TrialListEntry</span><span class="p">)</span> <span class="p">{}</span>
+  <span class="k">rpc</span> <span class="n">Version</span><span class="p">(</span><span class="n">VersionRequest</span><span class="p">)</span> <span class="k">returns</span> <span class="p">(</span><span class="n">VersionInfo</span><span class="p">)</span> <span class="p">{}</span>
+<span class="p">}</span>
+</code></pre></div>
 
-<h4 id="starttrial"><code>StartTrial()</code></h4>
+<h4 id="starttrial"><code>StartTrial()</code><a class="headerlink" href="#starttrial" title="Permanent link">&para;</a></h4>
 <p>Start a new trial.</p>
 <p>Metadata: None</p>
-<h4 id="terminatetrial"><code>TerminateTrial()</code></h4>
+<h4 id="terminatetrial"><code>TerminateTrial()</code><a class="headerlink" href="#terminatetrial" title="Permanent link">&para;</a></h4>
 <p>Request the environment to terminate an existing trial.</p>
 <p>Metadata:</p>
 <ul>
 <li><code>trial-id</code>: UUID of the trial to terminate.</li>
 </ul>
-<h4 id="gettrialinfo"><code>GetTrialInfo()</code></h4>
+<h4 id="gettrialinfo"><code>GetTrialInfo()</code><a class="headerlink" href="#gettrialinfo" title="Permanent link">&para;</a></h4>
 <p>Get extra information about an existing trial.</p>
 <p>Metadata:</p>
 <ul>
-<li><code>trial-id</code>: (<em>optional</em>) UUID of the trial to terminate.  If not provided, the request is for informatrion about all running trials.</li>
+<li><code>trial-id</code>: (<em>optional</em>) UUID of the trial to terminate. If not provided, the request is for informatrion about all running trials.</li>
 </ul>
-<h4 id="watchtrials"><code>WatchTrials()</code></h4>
+<h4 id="watchtrials"><code>WatchTrials()</code><a class="headerlink" href="#watchtrials" title="Permanent link">&para;</a></h4>
 <p>Stream state changes from trials.</p>
 <p>Metadata: None</p>
-<h4 id="version"><code>Version()</code></h4>
+<h4 id="version"><code>Version()</code><a class="headerlink" href="#version" title="Permanent link">&para;</a></h4>
 <p>Request version data.</p>
 <p>Metadata: None</p>
-<h3 id="trialstartrequest"><code>TrialStartRequest</code></h3>
+<h3 id="trialstartrequest"><code>TrialStartRequest</code><a class="headerlink" href="#trialstartrequest" title="Permanent link">&para;</a></h3>
 <p>Request message for the <code>StartTrial</code> procedure.</p>
-<pre><code class="protobuf">message TrialStartRequest {
-  TrialConfig config = 1;
-  string user_id = 2;
-}
-</code></pre>
+<div class="highlight"><pre><span></span><code><span class="kd">message</span> <span class="nc">TrialStartRequest</span> <span class="p">{</span>
+  <span class="n">TrialConfig</span> <span class="na">config</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="kt">string</span> <span class="na">user_id</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
 
 <ul>
-<li>config: The trial config data.  This data can be used by the pre-trial hooks to determine the config for the rest of the componenents.</li>
+<li>config: The trial config data. This data can be used by the pre-trial hooks to determine the config for the rest of the componenents.</li>
 <li>user_id: The ID of the user that is starting the trial.</li>
 </ul>
-<h3 id="trialstartreply">TrialStartReply</h3>
+<h3 id="trialstartreply">TrialStartReply<a class="headerlink" href="#trialstartreply" title="Permanent link">&para;</a></h3>
 <p>Reply message for the <code>StartTrial</code> procedure.</p>
-<pre><code class="protobuf">message TrialStartReply {
-  string trial_id = 1;
-  repeated TrialActor actors_in_trial = 2;
-}
-</code></pre>
+<div class="highlight"><pre><span></span><code><span class="kd">message</span> <span class="nc">TrialStartReply</span> <span class="p">{</span>
+  <span class="kt">string</span> <span class="na">trial_id</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="k">repeated</span> <span class="n">TrialActor</span> <span class="na">actors_in_trial</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
 
 <ul>
 <li>trial_id: UUID of the newly started trial.</li>
-<li>actors_in_trial: The list of all actors in the trial.  This list has the same length and order as the list of actors provided in different places in the API, for the same trial.  The list can be empty (or not present) in some circumstances, even if there are actors (if necessary the list can be obtained in other ways).</li>
+<li>actors_in_trial: The list of all actors in the trial. This list has the same length and order as the list of actors provided in different places in the API, for the same trial. The list can be empty (or not present) in some circumstances, even if there are actors (if necessary the list can be obtained in other ways).</li>
 </ul>
-<h3 id="terminatetrialrequest"><code>TerminateTrialRequest</code></h3>
+<h3 id="terminatetrialrequest"><code>TerminateTrialRequest</code><a class="headerlink" href="#terminatetrialrequest" title="Permanent link">&para;</a></h3>
 <p>Request message for the <code>TerminateTrial</code> procedure.</p>
-<pre><code class="protobuf">message TerminateTrialRequest {}
-</code></pre>
+<div class="highlight"><pre><span></span><code><span class="kd">message</span> <span class="nc">TerminateTrialRequest</span> <span class="p">{}</span>
+</code></pre></div>
 
-<h3 id="terminatetrialreply"><code>TerminateTrialReply</code></h3>
+<h3 id="terminatetrialreply"><code>TerminateTrialReply</code><a class="headerlink" href="#terminatetrialreply" title="Permanent link">&para;</a></h3>
 <p>Reply message for the <code>TerminateTrial</code> procedure.</p>
-<pre><code class="protobuf">message TerminateTrialReply {}
-</code></pre>
+<div class="highlight"><pre><span></span><code><span class="kd">message</span> <span class="nc">TerminateTrialReply</span> <span class="p">{}</span>
+</code></pre></div>
 
-<h3 id="trialinforequest"><code>TrialInfoRequest</code></h3>
+<h3 id="trialinforequest"><code>TrialInfoRequest</code><a class="headerlink" href="#trialinforequest" title="Permanent link">&para;</a></h3>
 <p>Request message for the <code>GetTrialInfo</code> procedure.</p>
-<pre><code class="protobuf">message TrialInfoRequest {
-  bool get_latest_observation = 1;
-}
-</code></pre>
+<div class="highlight"><pre><span></span><code><span class="kd">message</span> <span class="nc">TrialInfoRequest</span> <span class="p">{</span>
+  <span class="kt">bool</span> <span class="na">get_latest_observation</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
 
 <ul>
 <li>get_latest_observation: If true, request the latest environment observation available for the trial (in addition to standard information).</li>
 </ul>
-<h3 id="trialinforeply"><code>TrialInfoReply</code></h3>
+<h3 id="trialinforeply"><code>TrialInfoReply</code><a class="headerlink" href="#trialinforeply" title="Permanent link">&para;</a></h3>
 <p>Reply message for the <code>GetTrialInfo</code> procedure.</p>
-<pre><code class="protobuf">message TrialInfoReply {
-  repeated TrialInfo trial = 1;
-}
-</code></pre>
+<div class="highlight"><pre><span></span><code><span class="kd">message</span> <span class="nc">TrialInfoReply</span> <span class="p">{</span>
+  <span class="k">repeated</span> <span class="n">TrialInfo</span> <span class="na">trial</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
 
 <ul>
-<li>trial: List of information about the trials.  Contains only the requested trial info if a trial ID was provided when the call was made (as metadata to the procedure).  Otherwise contains information about all active trials.</li>
+<li>trial: List of information about the trials. Contains only the requested trial info if a trial ID was provided when the call was made (as metadata to the procedure). Otherwise contains information about all active trials.</li>
 </ul>
-<h3 id="trialstate"><code>TrialState</code></h3>
+<h3 id="trialstate"><code>TrialState</code><a class="headerlink" href="#trialstate" title="Permanent link">&para;</a></h3>
 <p>Enum representing the state of a trial.</p>
-<pre><code class="protobuf">enum TrialState {
-  UNKNOWN = 0;
-  INITIALIZING = 1;
-  PENDING = 2;
-  RUNNING = 3;
-  TERMINATING = 4;
-  ENDED = 5;
-}
-</code></pre>
+<div class="highlight"><pre><span></span><code><span class="kd">enum</span> <span class="n">TrialState</span> <span class="p">{</span>
+  <span class="na">UNKNOWN</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="na">INITIALIZING</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="na">PENDING</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+  <span class="na">RUNNING</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+  <span class="na">TERMINATING</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
+  <span class="na">ENDED</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
 
 <ul>
 <li>UNKNOWN: Should not be used (requirements of protobuf enums to have a 0 default value).</li>
@@ -713,243 +2804,242 @@ This is an aggregate of possibly multiple <code>RewardSource</code> (but at leas
 <li>PENDING: The trial is waiting for its final parameters, before running.</li>
 <li>RUNNING: The trial is running.</li>
 <li>TERMINATING: The trial is in the process of terminating (either a request to terminate has been received or the last observation has been received).</li>
-<li>ENDED: The trial has ended.  Only a set number of ended trials will be kept (configured in the Orchestrator).</li>
+<li>ENDED: The trial has ended. Only a set number of ended trials will be kept (configured in the Orchestrator).</li>
 </ul>
-<h3 id="trialinfo"><code>TrialInfo</code></h3>
+<h3 id="trialinfo"><code>TrialInfo</code><a class="headerlink" href="#trialinfo" title="Permanent link">&para;</a></h3>
 <p>Message containing information about a trial.</p>
-<pre><code class="protobuf">message TrialInfo {
-  string trial_id = 1;
-  TrialState state = 2;
-  uint64 tick_id = 3;
-  fixed64 trial_duration = 4;
-  ObservationSet latest_observation = 3;
-  repeated TrialActor actors_in_trial = 6;
-}
-</code></pre>
+<div class="highlight"><pre><span></span><code><span class="kd">message</span> <span class="nc">TrialInfo</span> <span class="p">{</span>
+  <span class="kt">string</span> <span class="na">trial_id</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="n">TrialState</span> <span class="na">state</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+  <span class="kt">uint64</span> <span class="na">tick_id</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+  <span class="kt">fixed64</span> <span class="na">trial_duration</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
+  <span class="n">ObservationSet</span> <span class="na">latest_observation</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+  <span class="k">repeated</span> <span class="n">TrialActor</span> <span class="na">actors_in_trial</span> <span class="o">=</span> <span class="mi">6</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
 
 <ul>
 <li>trial_id: The UUID of the trial.</li>
 <li>state: The state of the trial.</li>
 <li>tick_id: The current tick ID of the trial.</li>
-<li>trial_duration: The duration of the trial so far, in nanoseconds.  If the trial has ended, this is the duration from start to end of the trial.  This is meant as an indicator; resolution may not be a nanosecond, and precision is not garanteed.</li>
-<li>latest_observation: The latest environment observations for all actors.  This will be provided only if requested in the <code>TrialInfoRequest</code>.</li>
+<li>trial_duration: The duration of the trial so far, in nanoseconds. If the trial has ended, this is the duration from start to end of the trial. This is meant as an indicator; resolution may not be a nanosecond, and precision is not garanteed.</li>
+<li>latest_observation: The latest environment observations for all actors. This will be provided only if requested in the <code>TrialInfoRequest</code>.</li>
 <li>actors_in_trial: The list of active actors in the trial.</li>
 </ul>
-<h3 id="triallistrequest"><code>TrialListRequest</code></h3>
+<h3 id="triallistrequest"><code>TrialListRequest</code><a class="headerlink" href="#triallistrequest" title="Permanent link">&para;</a></h3>
 <p>Request message for the <code>WatchTrials</code> procedure.</p>
-<pre><code class="protobuf">message TrialListRequest {
-  repeated TrialState filter = 1;
-}
-</code></pre>
+<div class="highlight"><pre><span></span><code><span class="kd">message</span> <span class="nc">TrialListRequest</span> <span class="p">{</span>
+  <span class="k">repeated</span> <span class="n">TrialState</span> <span class="na">filter</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
 
 <ul>
-<li>filter: The list of states that are requested.  If a trial is not in a state found in this list, it will not be reported.  If the list is empty, all states will be reported.</li>
+<li>filter: The list of states that are requested. If a trial is not in a state found in this list, it will not be reported. If the list is empty, all states will be reported.</li>
 </ul>
-<h3 id="triallistentry"><code>TrialListEntry</code></h3>
+<h3 id="triallistentry"><code>TrialListEntry</code><a class="headerlink" href="#triallistentry" title="Permanent link">&para;</a></h3>
 <p>Stream reply message for the <code>WatchTrials</code> procedure.</p>
-<pre><code class="protobuf">message TrialListEntry {
-  string trial_id = 1;
-  TrialState state = 2;
-}
-
-</code></pre>
+<div class="highlight"><pre><span></span><code><span class="kd">message</span> <span class="nc">TrialListEntry</span> <span class="p">{</span>
+  <span class="kt">string</span> <span class="na">trial_id</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="n">TrialState</span> <span class="na">state</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
 
 <ul>
 <li>trial_id: The UUID of the trial.</li>
 <li>state: The state of the trial.</li>
 </ul>
-<h2 id="client-actor-api">Client Actor API</h2>
+<h2 id="client-actor-api">Client Actor API<a class="headerlink" href="#client-actor-api" title="Permanent link">&para;</a></h2>
 <p>This API is defined in <code>orchestrator.proto</code>. It is implemented by the cogment orchestrator, and client applications are expected to connect to the orchestrator using the gRPC client API.</p>
 <p>This API is used by client actors participating in existing trials.
 Multiple simultaneous actors can connect using a single client application instance.
-The actors connecting this way must have an endpoint set to "client" in the <a href="concepts/glossary.md#trial-parameters">trial parameters</a>.</p>
-<h3 id="service-clientactor">Service <code>ClientActor</code></h3>
-<pre><code class="protobuf">service ClientActor {
-  rpc JoinTrial(TrialJoinRequest) returns (TrialJoinReply) {}
-  rpc ActionStream(stream TrialActionRequest) returns (stream TrialActionReply) {}
-  rpc Heartbeat(TrialHeartbeatRequest) returns (TrialHeartbeatReply) {}
-  rpc SendReward(TrialRewardRequest) returns (TrialRewardReply) {}
-  rpc SendMessage(TrialMessageRequest) returns (TrialMessageReply) {}
-  rpc Version(VersionRequest) returns (VersionInfo) {}
-}
-</code></pre>
+The actors connecting this way must have an endpoint set to "client" in the <a href="../../cogment-api-reference/cogment-yaml/#trial-params">trial parameters</a>.</p>
+<h3 id="service-clientactor">Service <code>ClientActor</code><a class="headerlink" href="#service-clientactor" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="kd">service</span> <span class="n">ClientActor</span> <span class="p">{</span>
+  <span class="k">rpc</span> <span class="n">JoinTrial</span><span class="p">(</span><span class="n">TrialJoinRequest</span><span class="p">)</span> <span class="k">returns</span> <span class="p">(</span><span class="n">TrialJoinReply</span><span class="p">)</span> <span class="p">{}</span>
+  <span class="k">rpc</span> <span class="n">ActionStream</span><span class="p">(</span><span class="n">stream</span> <span class="n">TrialActionRequest</span><span class="p">)</span> <span class="k">returns</span> <span class="p">(</span><span class="n">stream</span> <span class="n">TrialActionReply</span><span class="p">)</span> <span class="p">{}</span>
+  <span class="k">rpc</span> <span class="n">Heartbeat</span><span class="p">(</span><span class="n">TrialHeartbeatRequest</span><span class="p">)</span> <span class="k">returns</span> <span class="p">(</span><span class="n">TrialHeartbeatReply</span><span class="p">)</span> <span class="p">{}</span>
+  <span class="k">rpc</span> <span class="n">SendReward</span><span class="p">(</span><span class="n">TrialRewardRequest</span><span class="p">)</span> <span class="k">returns</span> <span class="p">(</span><span class="n">TrialRewardReply</span><span class="p">)</span> <span class="p">{}</span>
+  <span class="k">rpc</span> <span class="n">SendMessage</span><span class="p">(</span><span class="n">TrialMessageRequest</span><span class="p">)</span> <span class="k">returns</span> <span class="p">(</span><span class="n">TrialMessageReply</span><span class="p">)</span> <span class="p">{}</span>
+  <span class="k">rpc</span> <span class="n">Version</span><span class="p">(</span><span class="n">VersionRequest</span><span class="p">)</span> <span class="k">returns</span> <span class="p">(</span><span class="n">VersionInfo</span><span class="p">)</span> <span class="p">{}</span>
+<span class="p">}</span>
+</code></pre></div>
 
-<h4 id="jointrial"><code>JoinTrial()</code></h4>
+<h4 id="jointrial"><code>JoinTrial()</code><a class="headerlink" href="#jointrial" title="Permanent link">&para;</a></h4>
 <p>Join an existing trial.</p>
 <p>Metadata: None</p>
-<h4 id="actionstream"><code>ActionStream()</code></h4>
-<p>Main call to participate in the trial.  It is typically active for the duration of the trial.
+<h4 id="actionstream"><code>ActionStream()</code><a class="headerlink" href="#actionstream" title="Permanent link">&para;</a></h4>
+<p>Main call to participate in the trial. It is typically active for the duration of the trial.
 Actor actions are provided to the orchestrator in the request stream, and trial data is provided by the orchestrator in the reply stream.</p>
 <p>Metadata:</p>
 <ul>
-<li><code>trial-id</code>: UUID of the trial the current actor is participating in.  This comes from the <code>JoinTrial</code> reply.</li>
-<li><code>actor-name</code>: The name of the current actor participating in the trial.  This is supplied (or confirmed) in the <code>JoinTrial</code> reply.</li>
+<li><code>trial-id</code>: UUID of the trial the current actor is participating in. This comes from the <code>JoinTrial</code> reply.</li>
+<li><code>actor-name</code>: The name of the current actor participating in the trial. This is supplied (or confirmed) in the <code>JoinTrial</code> reply.</li>
 </ul>
-<h4 id="heartbeat"><code>Heartbeat()</code></h4>
+<h4 id="heartbeat"><code>Heartbeat()</code><a class="headerlink" href="#heartbeat" title="Permanent link">&para;</a></h4>
 <p>This should be called on a regular basis (at least every 30 seconds), if there are no actions sent in the <code>ActionStream</code>.
 Otherwise the actor will be considered terminated and be disconnected.</p>
 <p>Metadata:</p>
 <ul>
-<li><code>trial-id</code>: UUID of the trial the current actor is participating in.  This comes from the <code>JoinTrial</code> reply.</li>
-<li><code>actor-name</code>: The name of the current actor participating in the trial.  This is supplied (or confirmed) in the <code>JoinTrial</code> reply.</li>
+<li><code>trial-id</code>: UUID of the trial the current actor is participating in. This comes from the <code>JoinTrial</code> reply.</li>
+<li><code>actor-name</code>: The name of the current actor participating in the trial. This is supplied (or confirmed) in the <code>JoinTrial</code> reply.</li>
 </ul>
-<h4 id="sendreward"><code>SendReward()</code></h4>
+<h4 id="sendreward"><code>SendReward()</code><a class="headerlink" href="#sendreward" title="Permanent link">&para;</a></h4>
 <p>Used to provide feedback to other actors in the same trial as current actor.</p>
 <p>Metadata:</p>
 <ul>
-<li><code>trial-id</code>: UUID of the trial the current actor is participating in.  This comes from the <code>JoinTrial</code> reply.</li>
-<li><code>actor-name</code>: The name of the current actor participating in the trial.  This is supplied (or confirmed) in the <code>JoinTrial</code> reply.</li>
+<li><code>trial-id</code>: UUID of the trial the current actor is participating in. This comes from the <code>JoinTrial</code> reply.</li>
+<li><code>actor-name</code>: The name of the current actor participating in the trial. This is supplied (or confirmed) in the <code>JoinTrial</code> reply.</li>
 </ul>
-<h4 id="sendmessage"><code>SendMessage()</code></h4>
+<h4 id="sendmessage"><code>SendMessage()</code><a class="headerlink" href="#sendmessage" title="Permanent link">&para;</a></h4>
 <p>Used to asynchronously send data to other actors (or the environment) in the same trial as current actor.</p>
 <p>Metadata:</p>
 <ul>
-<li><code>trial-id</code>: UUID of the trial the current actor is participating in.  This comes from the <code>JoinTrial</code> reply.</li>
-<li><code>actor-name</code>: The name of the current actor participating in the trial.  This is supplied (or confirmed) in the <code>JoinTrial</code> reply.</li>
+<li><code>trial-id</code>: UUID of the trial the current actor is participating in. This comes from the <code>JoinTrial</code> reply.</li>
+<li><code>actor-name</code>: The name of the current actor participating in the trial. This is supplied (or confirmed) in the <code>JoinTrial</code> reply.</li>
 </ul>
-<h4 id="version_1"><code>Version()</code></h4>
+<h4 id="version_1"><code>Version()</code><a class="headerlink" href="#version_1" title="Permanent link">&para;</a></h4>
 <p>Request version data.</p>
 <p>Metadata: None</p>
-<h3 id="trialjoinrequest"><code>TrialJoinRequest</code></h3>
+<h3 id="trialjoinrequest"><code>TrialJoinRequest</code><a class="headerlink" href="#trialjoinrequest" title="Permanent link">&para;</a></h3>
 <p>Request message for the <code>JoinTrial</code> procedure.</p>
-<pre><code class="protobuf">message TrialJoinRequest {
-  string trial_id = 1;
+<div class="highlight"><pre><span></span><code><span class="kd">message</span> <span class="nc">TrialJoinRequest</span> <span class="p">{</span>
+  <span class="kt">string</span> <span class="na">trial_id</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
 
-  oneof slot_selection {
-    string actor_class = 2;
-    string actor_name = 3;
-  }
-}
-</code></pre>
+  <span class="k">oneof</span> <span class="n">slot_selection</span> <span class="p">{</span>
+    <span class="kt">string</span> <span class="na">actor_class</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+    <span class="kt">string</span> <span class="na">actor_name</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
 
 <ul>
 <li>trial_id: The UUID of the trial the actor requests to join.</li>
-<li>actor_class: The class the actor requests to join as.  No actor name should be requested if this is used.</li>
-<li>actor_name: The name the actor requests to join as.  No actor class should be requested if this is used.</li>
+<li>actor_class: The class the actor requests to join as. No actor name should be requested if this is used.</li>
+<li>actor_name: The name the actor requests to join as. No actor class should be requested if this is used.</li>
 </ul>
-<h3 id="trialjoinreply"><code>TrialJoinReply</code></h3>
+<h3 id="trialjoinreply"><code>TrialJoinReply</code><a class="headerlink" href="#trialjoinreply" title="Permanent link">&para;</a></h3>
 <p>Reply message for the <code>JoinTrial</code> procedure.</p>
-<pre><code class="protobuf">message TrialJoinReply {
-  string actor_name = 1;
-  string trial_id = 2;
-  ActorConfig config = 3;
-  repeated TrialActor actors_in_trial = 4;
-}
-</code></pre>
+<div class="highlight"><pre><span></span><code><span class="kd">message</span> <span class="nc">TrialJoinReply</span> <span class="p">{</span>
+  <span class="kt">string</span> <span class="na">actor_name</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="kt">string</span> <span class="na">trial_id</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+  <span class="n">ActorConfig</span> <span class="na">config</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+  <span class="k">repeated</span> <span class="n">TrialActor</span> <span class="na">actors_in_trial</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
 
 <ul>
 <li>actor_name: The name assignbed to the current actor in joining the trial.</li>
 <li>trial_id: The UUID of the trial joined.</li>
 <li>config: The configuration to start the actor.</li>
-<li>actors_in_trial: The list of all actors in the trial (including current actor). This list has the same length and order as the list of actors provided in different places in the API, for the same trial.  The list can be empty (or not present) in some circumstances, even if there are actors (if necessary the list can be obtained in other ways).</li>
+<li>actors_in_trial: The list of all actors in the trial (including current actor). This list has the same length and order as the list of actors provided in different places in the API, for the same trial. The list can be empty (or not present) in some circumstances, even if there are actors (if necessary the list can be obtained in other ways).</li>
 </ul>
-<h3 id="trialheartbeatrequest"><code>TrialHeartbeatRequest</code></h3>
+<h3 id="trialheartbeatrequest"><code>TrialHeartbeatRequest</code><a class="headerlink" href="#trialheartbeatrequest" title="Permanent link">&para;</a></h3>
 <p>Request message for the <code>Heartbeat</code> procedure.</p>
-<pre><code class="protobuf">message TrialHeartbeatRequest {}
-</code></pre>
+<div class="highlight"><pre><span></span><code><span class="kd">message</span> <span class="nc">TrialHeartbeatRequest</span> <span class="p">{}</span>
+</code></pre></div>
 
-<h3 id="trialheartbeatreply"><code>TrialHeartbeatReply</code></h3>
+<h3 id="trialheartbeatreply"><code>TrialHeartbeatReply</code><a class="headerlink" href="#trialheartbeatreply" title="Permanent link">&para;</a></h3>
 <p>Reply message for the <code>Heartbeat</code> procedure.</p>
-<pre><code class="protobuf">message TrialHeartbeatReply {}
-</code></pre>
+<div class="highlight"><pre><span></span><code><span class="kd">message</span> <span class="nc">TrialHeartbeatReply</span> <span class="p">{}</span>
+</code></pre></div>
 
-<h3 id="trialactionrequest"><code>TrialActionRequest</code></h3>
+<h3 id="trialactionrequest"><code>TrialActionRequest</code><a class="headerlink" href="#trialactionrequest" title="Permanent link">&para;</a></h3>
 <p>Stream request message for the <code>ActionStream</code> procedure.</p>
-<pre><code class="protobuf">message TrialActionRequest {
-  Action action = 1;
-}
-</code></pre>
+<div class="highlight"><pre><span></span><code><span class="kd">message</span> <span class="nc">TrialActionRequest</span> <span class="p">{</span>
+  <span class="n">Action</span> <span class="na">action</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
 
 <ul>
-<li>action: The action taken by the current actor.  This is typically in response to an observation (from the reply message).  The first action after joining a trial (before any observations have been received) should be empty.</li>
+<li>action: The action taken by the current actor. This is typically in response to an observation (from the reply message). The first action after joining a trial (before any observations have been received) should be empty.</li>
 </ul>
-<h3 id="trialactionreply"><code>TrialActionReply</code></h3>
+<h3 id="trialactionreply"><code>TrialActionReply</code><a class="headerlink" href="#trialactionreply" title="Permanent link">&para;</a></h3>
 <p>Stream reply message for the <code>ActionStream</code> procedure.</p>
-<pre><code class="protobuf">message TrialActionReply {
-  ActorPeriodData data = 1;
-  bool final_data = 2;
-}
-</code></pre>
+<div class="highlight"><pre><span></span><code><span class="kd">message</span> <span class="nc">TrialActionReply</span> <span class="p">{</span>
+  <span class="n">ActorPeriodData</span> <span class="na">data</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="kt">bool</span> <span class="na">final_data</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
 
 <ul>
-<li>data: The trial data for the current actor.  This data can span a period of time, but is typically for one time step (tick).</li>
+<li>data: The trial data for the current actor. This data can span a period of time, but is typically for one time step (tick).</li>
 <li>final_data: If this is true, the data provided is final and no more reply messages will be received after this one.</li>
 </ul>
-<h3 id="trialrewardrequest"><code>TrialRewardRequest</code></h3>
+<h3 id="trialrewardrequest"><code>TrialRewardRequest</code><a class="headerlink" href="#trialrewardrequest" title="Permanent link">&para;</a></h3>
 <p>Request message for the <code>SendReward</code> procedure.</p>
-<pre><code class="protobuf">message TrialRewardRequest {
-  repeated Reward rewards = 1;
-}
-</code></pre>
+<div class="highlight"><pre><span></span><code><span class="kd">message</span> <span class="nc">TrialRewardRequest</span> <span class="p">{</span>
+  <span class="k">repeated</span> <span class="n">Reward</span> <span class="na">rewards</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
 
 <ul>
 <li>rewards: The rewards to send to one or more actors.</li>
 </ul>
-<h3 id="trialrewardreply"><code>TrialRewardReply</code></h3>
+<h3 id="trialrewardreply"><code>TrialRewardReply</code><a class="headerlink" href="#trialrewardreply" title="Permanent link">&para;</a></h3>
 <p>Reply message for the <code>SendReward</code> procedure.</p>
-<pre><code class="protobuf">message TrialRewardReply {}
-</code></pre>
+<div class="highlight"><pre><span></span><code><span class="kd">message</span> <span class="nc">TrialRewardReply</span> <span class="p">{}</span>
+</code></pre></div>
 
-<h3 id="trialmessagerequest"><code>TrialMessageRequest</code></h3>
+<h3 id="trialmessagerequest"><code>TrialMessageRequest</code><a class="headerlink" href="#trialmessagerequest" title="Permanent link">&para;</a></h3>
 <p>Request message for the <code>SendMessage</code> procedure.</p>
-<pre><code class="protobuf">message TrialMessageRequest {
-  repeated Message messages = 1;
-}
-</code></pre>
+<div class="highlight"><pre><span></span><code><span class="kd">message</span> <span class="nc">TrialMessageRequest</span> <span class="p">{</span>
+  <span class="k">repeated</span> <span class="n">Message</span> <span class="na">messages</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
 
 <ul>
-<li>messages: User data to send to other actors or the environment.  The sender_name entry should not be set (it is part of the metadata of the procedure).</li>
+<li>messages: User data to send to other actors or the environment. The sender_name entry should not be set (it is part of the metadata of the procedure).</li>
 </ul>
-<h3 id="trialmessagereply"><code>TrialMessageReply</code></h3>
+<h3 id="trialmessagereply"><code>TrialMessageReply</code><a class="headerlink" href="#trialmessagereply" title="Permanent link">&para;</a></h3>
 <p>Reply message for the <code>SendMessage</code> procedure.</p>
-<pre><code class="protobuf">message TrialMessageReply {}
-</code></pre>
+<div class="highlight"><pre><span></span><code><span class="kd">message</span> <span class="nc">TrialMessageReply</span> <span class="p">{}</span>
+</code></pre></div>
 
-<h2 id="agent-actor-api">Agent Actor API</h2>
+<h2 id="agent-actor-api">Agent Actor API<a class="headerlink" href="#agent-actor-api" title="Permanent link">&para;</a></h2>
 <p>This API is defined in <code>agent.proto</code>. It is implemented by the agent application using the gRPC server API, and the orchestrator connects to the agent application.</p>
 <p>This API is used by agent actors that will be participating in new trials.
 Multiple simultaneous agent actors can be served from a single agent application instance.
-An actor endpoint, for the orchestrator to connect to, is defined in the <a href="concepts/glossary.md#trial-parameters">trial parameters</a>.</p>
-<h3 id="service-agentendpoint">Service <code>AgentEndpoint</code></h3>
-<pre><code class="protobuf">service AgentEndpoint {
-  rpc OnStart(AgentStartRequest) returns (AgentStartReply) {}
-  rpc OnObservation(stream AgentObservationRequest) returns (stream AgentActionReply) {}
-  rpc OnReward(AgentRewardRequest) returns (AgentRewardReply) {}
-  rpc OnMessage(AgentMessageRequest) returns (AgentMessageReply) {}
-  rpc OnEnd(AgentEndRequest) returns (AgentEndReply) {}
-  rpc Version(VersionRequest) returns (VersionInfo) {}
-}
-</code></pre>
+An actor endpoint, for the orchestrator to connect to, is defined in the <a href="../../cogment-api-reference/cogment-yaml/#trial-params">trial parameters</a>.</p>
+<h3 id="service-agentendpoint">Service <code>AgentEndpoint</code><a class="headerlink" href="#service-agentendpoint" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="kd">service</span> <span class="n">AgentEndpoint</span> <span class="p">{</span>
+  <span class="k">rpc</span> <span class="n">OnStart</span><span class="p">(</span><span class="n">AgentStartRequest</span><span class="p">)</span> <span class="k">returns</span> <span class="p">(</span><span class="n">AgentStartReply</span><span class="p">)</span> <span class="p">{}</span>
+  <span class="k">rpc</span> <span class="n">OnObservation</span><span class="p">(</span><span class="n">stream</span> <span class="n">AgentObservationRequest</span><span class="p">)</span> <span class="k">returns</span> <span class="p">(</span><span class="n">stream</span> <span class="n">AgentActionReply</span><span class="p">)</span> <span class="p">{}</span>
+  <span class="k">rpc</span> <span class="n">OnReward</span><span class="p">(</span><span class="n">AgentRewardRequest</span><span class="p">)</span> <span class="k">returns</span> <span class="p">(</span><span class="n">AgentRewardReply</span><span class="p">)</span> <span class="p">{}</span>
+  <span class="k">rpc</span> <span class="n">OnMessage</span><span class="p">(</span><span class="n">AgentMessageRequest</span><span class="p">)</span> <span class="k">returns</span> <span class="p">(</span><span class="n">AgentMessageReply</span><span class="p">)</span> <span class="p">{}</span>
+  <span class="k">rpc</span> <span class="n">OnEnd</span><span class="p">(</span><span class="n">AgentEndRequest</span><span class="p">)</span> <span class="k">returns</span> <span class="p">(</span><span class="n">AgentEndReply</span><span class="p">)</span> <span class="p">{}</span>
+  <span class="k">rpc</span> <span class="n">Version</span><span class="p">(</span><span class="n">VersionRequest</span><span class="p">)</span> <span class="k">returns</span> <span class="p">(</span><span class="n">VersionInfo</span><span class="p">)</span> <span class="p">{}</span>
+<span class="p">}</span>
+</code></pre></div>
 
-<h4 id="onstart"><code>OnStart()</code></h4>
+<h4 id="onstart"><code>OnStart()</code><a class="headerlink" href="#onstart" title="Permanent link">&para;</a></h4>
 <p>Called when a new trial is started.</p>
 <p>Metadata:</p>
 <ul>
 <li><code>trial-id</code>: UUID of the new trial the actor is participating in.</li>
 <li><code>actor-name</code>: The name the actor has been assigned in the new trial.</li>
 </ul>
-<h4 id="onobservation"><code>OnObservation()</code></h4>
+<h4 id="onobservation"><code>OnObservation()</code><a class="headerlink" href="#onobservation" title="Permanent link">&para;</a></h4>
 <p>Called when a new observation from the environment is available.</p>
 <p>Metadata:</p>
 <ul>
 <li><code>trial-id</code>: UUID of the trial that is the source of the data.</li>
 <li><code>actor-name</code>: The name of the actor for which the data is intended.</li>
 </ul>
-<h4 id="onreward"><code>OnReward()</code></h4>
+<h4 id="onreward"><code>OnReward()</code><a class="headerlink" href="#onreward" title="Permanent link">&para;</a></h4>
 <p>Called when a new reward is available.</p>
 <p>Metadata:</p>
 <ul>
 <li><code>trial-id</code>: UUID of the trial that is the source of the data.</li>
 <li><code>actor-name</code>: The name of the actor for which the data is intended.</li>
 </ul>
-<h4 id="onmessage"><code>OnMessage()</code></h4>
+<h4 id="onmessage"><code>OnMessage()</code><a class="headerlink" href="#onmessage" title="Permanent link">&para;</a></h4>
 <p>Called when new user data (messages) is available.</p>
 <p>Metadata:</p>
 <ul>
 <li><code>trial-id</code>: UUID of the trial that is the source of the data.</li>
 <li><code>actor-name</code>: The name of the actor for which the data is intended.</li>
 </ul>
-<h4 id="onend"><code>OnEnd()</code></h4>
+<h4 id="onend"><code>OnEnd()</code><a class="headerlink" href="#onend" title="Permanent link">&para;</a></h4>
 <p>Called at the end of the trial.
 No more calls will be done related to the trial after this call.</p>
 <p>Metadata:</p>
@@ -957,150 +3047,150 @@ No more calls will be done related to the trial after this call.</p>
 <li><code>trial-id</code>: UUID of the trial that ended.</li>
 <li><code>actor-name</code>: The name of the actor for which the data is intended.</li>
 </ul>
-<h4 id="version_2"><code>Version()</code></h4>
+<h4 id="version_2"><code>Version()</code><a class="headerlink" href="#version_2" title="Permanent link">&para;</a></h4>
 <p>Called to request version data.</p>
 <p>Metadata: None</p>
-<h3 id="agentstartrequest"><code>AgentStartRequest</code></h3>
+<h3 id="agentstartrequest"><code>AgentStartRequest</code><a class="headerlink" href="#agentstartrequest" title="Permanent link">&para;</a></h3>
 <p>Request message for the <code>OnStart</code> procedure.</p>
-<pre><code class="protobuf">message AgentStartRequest {
-  string impl_name = 1;
-  ActorConfig config = 2;
-  repeated TrialActor actors_in_trial = 3;
-}
-</code></pre>
+<div class="highlight"><pre><span></span><code><span class="kd">message</span> <span class="nc">AgentStartRequest</span> <span class="p">{</span>
+  <span class="kt">string</span> <span class="na">impl_name</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="n">ActorConfig</span> <span class="na">config</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+  <span class="k">repeated</span> <span class="n">TrialActor</span> <span class="na">actors_in_trial</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
 
 <ul>
 <li>impl_name: (optional) Name of the implementation that should run the actor in this trial. If not provided, an arbitrary implementation will be used.</li>
 <li>config: The configuration to start the actor.</li>
-<li>actors_in_trial: The list of all actors in the trial (including current actor). This list has the same length and order as the list of actors provided in different places in the API, for the same trial.  The list can be empty (or not present) in some circumstances, even if there are actors (if necessary the list can be obtained in other ways).</li>
+<li>actors_in_trial: The list of all actors in the trial (including current actor). This list has the same length and order as the list of actors provided in different places in the API, for the same trial. The list can be empty (or not present) in some circumstances, even if there are actors (if necessary the list can be obtained in other ways).</li>
 </ul>
-<h3 id="agentstartreply"><code>AgentStartReply</code></h3>
+<h3 id="agentstartreply"><code>AgentStartReply</code><a class="headerlink" href="#agentstartreply" title="Permanent link">&para;</a></h3>
 <p>Reply message for the <code>OnStart</code> procedure.</p>
-<pre><code class="protobuf">message AgentStartReply {}
-</code></pre>
+<div class="highlight"><pre><span></span><code><span class="kd">message</span> <span class="nc">AgentStartReply</span> <span class="p">{}</span>
+</code></pre></div>
 
-<h3 id="agentobservationrequest"><code>AgentObservationRequest</code></h3>
+<h3 id="agentobservationrequest"><code>AgentObservationRequest</code><a class="headerlink" href="#agentobservationrequest" title="Permanent link">&para;</a></h3>
 <p>Request message for the <code>OnObservation</code> procedure.</p>
-<pre><code class="protobuf">message AgentObservationRequest {
-  Observation observation = 1;
-}
-</code></pre>
+<div class="highlight"><pre><span></span><code><span class="kd">message</span> <span class="nc">AgentObservationRequest</span> <span class="p">{</span>
+  <span class="n">Observation</span> <span class="na">observation</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
 
 <ul>
 <li>observation: An observation from the environment.</li>
 </ul>
-<h3 id="agenactionreply"><code>AgenActionReply</code></h3>
+<h3 id="agenactionreply"><code>AgenActionReply</code><a class="headerlink" href="#agenactionreply" title="Permanent link">&para;</a></h3>
 <p>Reply message for the <code>OnObservation</code> procedure.</p>
-<pre><code class="protobuf">message AgentActionReply {
-  Action action = 1;
-  repeated Reward rewards = 2;
-  repeated Message messages = 3;
-}
-</code></pre>
+<div class="highlight"><pre><span></span><code><span class="kd">message</span> <span class="nc">AgentActionReply</span> <span class="p">{</span>
+  <span class="n">Action</span> <span class="na">action</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="k">repeated</span> <span class="n">Reward</span> <span class="na">rewards</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+  <span class="k">repeated</span> <span class="n">Message</span> <span class="na">messages</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
 
 <ul>
 <li>action: An action for the environment.</li>
 <li>rewards: Rewards for other actors.</li>
-<li>messages: User data to send to other actors or the environment.  The sender_name entry should not be set.</li>
+<li>messages: User data to send to other actors or the environment. The sender_name entry should not be set.</li>
 </ul>
-<h3 id="agentrewardrequest"><code>AgentRewardRequest</code></h3>
+<h3 id="agentrewardrequest"><code>AgentRewardRequest</code><a class="headerlink" href="#agentrewardrequest" title="Permanent link">&para;</a></h3>
 <p>Request message for the <code>OnReward</code> procedure.</p>
-<pre><code class="protobuf">message AgentRewardRequest {
-  Reward reward = 1;
-}
-</code></pre>
+<div class="highlight"><pre><span></span><code><span class="kd">message</span> <span class="nc">AgentRewardRequest</span> <span class="p">{</span>
+  <span class="n">Reward</span> <span class="na">reward</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
 
 <ul>
 <li>reward: Reward received from aggregating various rewards from actors or the environment.</li>
 </ul>
-<h3 id="agentrewardreply"><code>AgentRewardReply</code></h3>
+<h3 id="agentrewardreply"><code>AgentRewardReply</code><a class="headerlink" href="#agentrewardreply" title="Permanent link">&para;</a></h3>
 <p>Reply message for the <code>OnReward</code> procedure.</p>
-<pre><code class="protobuf">message AgentRewardReply {}
-</code></pre>
+<div class="highlight"><pre><span></span><code><span class="kd">message</span> <span class="nc">AgentRewardReply</span> <span class="p">{}</span>
+</code></pre></div>
 
-<h3 id="agentmessagerequest"><code>AgentMessageRequest</code></h3>
+<h3 id="agentmessagerequest"><code>AgentMessageRequest</code><a class="headerlink" href="#agentmessagerequest" title="Permanent link">&para;</a></h3>
 <p>Request message for the <code>OnMessage</code> procedure.</p>
-<pre><code class="protobuf">message AgentMessageRequest {
-  repeated Message messages = 1;
-}
-</code></pre>
+<div class="highlight"><pre><span></span><code><span class="kd">message</span> <span class="nc">AgentMessageRequest</span> <span class="p">{</span>
+  <span class="k">repeated</span> <span class="n">Message</span> <span class="na">messages</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
 
 <ul>
 <li>messages: List of messages from actors or the environment.</li>
 </ul>
-<h3 id="agentmessagereply"><code>AgentMessageReply</code></h3>
+<h3 id="agentmessagereply"><code>AgentMessageReply</code><a class="headerlink" href="#agentmessagereply" title="Permanent link">&para;</a></h3>
 <p>Reply message for the <code>OnMessage</code> procedure.</p>
-<pre><code class="protobuf">message AgentMessageReply {}
-</code></pre>
+<div class="highlight"><pre><span></span><code><span class="kd">message</span> <span class="nc">AgentMessageReply</span> <span class="p">{}</span>
+</code></pre></div>
 
-<h3 id="agentendrequest"><code>AgentEndRequest</code></h3>
+<h3 id="agentendrequest"><code>AgentEndRequest</code><a class="headerlink" href="#agentendrequest" title="Permanent link">&para;</a></h3>
 <p>Request message for the <code>OnEnd</code> procedure.</p>
-<pre><code class="protobuf">message AgentEndRequest {
-  ActorPeriodData final_data = 1;
-}
-</code></pre>
+<div class="highlight"><pre><span></span><code><span class="kd">message</span> <span class="nc">AgentEndRequest</span> <span class="p">{</span>
+  <span class="n">ActorPeriodData</span> <span class="na">final_data</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
 
 <ul>
 <li>final_data: The final (last) data for the trial.</li>
 </ul>
-<h3 id="agentendreply"><code>AgentEndReply</code></h3>
+<h3 id="agentendreply"><code>AgentEndReply</code><a class="headerlink" href="#agentendreply" title="Permanent link">&para;</a></h3>
 <p>Reply message for the <code>OnEnd</code> procedure.</p>
-<pre><code class="protobuf">message AgentEndReply {}
-</code></pre>
+<div class="highlight"><pre><span></span><code><span class="kd">message</span> <span class="nc">AgentEndReply</span> <span class="p">{}</span>
+</code></pre></div>
 
-<h2 id="environment-api">Environment API</h2>
+<h2 id="environment-api">Environment API<a class="headerlink" href="#environment-api" title="Permanent link">&para;</a></h2>
 <p>This API is defined in <code>environment.proto</code>. It is implemented by the environment application using the gRPC server API, and the orchestrator connects to the environment application.</p>
 <p>This API is used by environments that will run trials.
 There is only one environment per trial.
 Multiple simultaneous environments can be served from a single environment application instance (for different trials).
-The environment endpoint, for the orchestrator to connect to, is defined in the <a href="concepts/glossary.md#trial-parameters">trial parameters</a>.</p>
-<h3 id="service-environmentendpoint">Service <code>EnvironmentEndpoint</code></h3>
-<pre><code class="protobuf">service EnvironmentEndpoint {
-  rpc OnStart(EnvStartRequest) returns (EnvStartReply) {}
-  rpc OnAction(stream EnvActionRequest) returns (stream EnvActionReply) {}
-  rpc OnMessage(EnvMessageRequest) returns (EnvMessageReply) {}
-  rpc OnEnd(EnvActionRequest) returns (EnvActionReply) {}
-  rpc Version(VersionRequest) returns (VersionInfo) {}
-}
-</code></pre>
+The environment endpoint, for the orchestrator to connect to, is defined in the <a href="../../cogment-api-reference/cogment-yaml/#trial-params">trial parameters</a>.</p>
+<h3 id="service-environmentendpoint">Service <code>EnvironmentEndpoint</code><a class="headerlink" href="#service-environmentendpoint" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="kd">service</span> <span class="n">EnvironmentEndpoint</span> <span class="p">{</span>
+  <span class="k">rpc</span> <span class="n">OnStart</span><span class="p">(</span><span class="n">EnvStartRequest</span><span class="p">)</span> <span class="k">returns</span> <span class="p">(</span><span class="n">EnvStartReply</span><span class="p">)</span> <span class="p">{}</span>
+  <span class="k">rpc</span> <span class="n">OnAction</span><span class="p">(</span><span class="n">stream</span> <span class="n">EnvActionRequest</span><span class="p">)</span> <span class="k">returns</span> <span class="p">(</span><span class="n">stream</span> <span class="n">EnvActionReply</span><span class="p">)</span> <span class="p">{}</span>
+  <span class="k">rpc</span> <span class="n">OnMessage</span><span class="p">(</span><span class="n">EnvMessageRequest</span><span class="p">)</span> <span class="k">returns</span> <span class="p">(</span><span class="n">EnvMessageReply</span><span class="p">)</span> <span class="p">{}</span>
+  <span class="k">rpc</span> <span class="n">OnEnd</span><span class="p">(</span><span class="n">EnvActionRequest</span><span class="p">)</span> <span class="k">returns</span> <span class="p">(</span><span class="n">EnvActionReply</span><span class="p">)</span> <span class="p">{}</span>
+  <span class="k">rpc</span> <span class="n">Version</span><span class="p">(</span><span class="n">VersionRequest</span><span class="p">)</span> <span class="k">returns</span> <span class="p">(</span><span class="n">VersionInfo</span><span class="p">)</span> <span class="p">{}</span>
+<span class="p">}</span>
+</code></pre></div>
 
-<h4 id="onstart_1"><code>OnStart()</code></h4>
+<h4 id="onstart_1"><code>OnStart()</code><a class="headerlink" href="#onstart_1" title="Permanent link">&para;</a></h4>
 <p>Called when a new trial is started.</p>
 <p>Metadata:</p>
 <ul>
 <li><code>trial-id</code>: UUID of the new trial the environment is running.</li>
 </ul>
-<h4 id="onaction"><code>OnAction()</code></h4>
+<h4 id="onaction"><code>OnAction()</code><a class="headerlink" href="#onaction" title="Permanent link">&para;</a></h4>
 <p>Called when a set of actions from actors is available.</p>
 <p>Metadata:</p>
 <ul>
 <li><code>trial-id</code>: UUID of the trial that is the source of the data.</li>
 </ul>
-<h4 id="onmessage_1"><code>OnMessage()</code></h4>
+<h4 id="onmessage_1"><code>OnMessage()</code><a class="headerlink" href="#onmessage_1" title="Permanent link">&para;</a></h4>
 <p>Called when user data from actors is received.</p>
 <p>Metadata:</p>
 <ul>
 <li><code>trial-id</code>: UUID of the trial that is the source of the data.</li>
 </ul>
-<h4 id="onend_1"><code>OnEnd()</code></h4>
+<h4 id="onend_1"><code>OnEnd()</code><a class="headerlink" href="#onend_1" title="Permanent link">&para;</a></h4>
 <p>Called to request the end of the trial.
 If no reply is sent within a pre-determined time, the environment is considered stalled, and the trial will force terminate.</p>
 <p>Metadata:</p>
 <ul>
 <li><code>trial-id</code>: UUID of the trial to end.</li>
 </ul>
-<h4 id="version_3"><code>Version()</code></h4>
+<h4 id="version_3"><code>Version()</code><a class="headerlink" href="#version_3" title="Permanent link">&para;</a></h4>
 <p>Called to request version data.</p>
 <p>Metadata: None</p>
-<h3 id="envstartrequest"><code>EnvStartRequest</code></h3>
+<h3 id="envstartrequest"><code>EnvStartRequest</code><a class="headerlink" href="#envstartrequest" title="Permanent link">&para;</a></h3>
 <p>Request message for the <code>OnStart</code> procedure.</p>
-<pre><code class="protobuf">message EnvStartRequest {
-  string impl_name = 1;
-  EnvironmentConfig config = 2;
-  repeated TrialActor actors_in_trial = 3;
-  uint64 tick_id = 4;
-}
-</code></pre>
+<div class="highlight"><pre><span></span><code><span class="kd">message</span> <span class="nc">EnvStartRequest</span> <span class="p">{</span>
+  <span class="kt">string</span> <span class="na">impl_name</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="n">EnvironmentConfig</span> <span class="na">config</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+  <span class="k">repeated</span> <span class="n">TrialActor</span> <span class="na">actors_in_trial</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+  <span class="kt">uint64</span> <span class="na">tick_id</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
 
 <ul>
 <li>impl_name: (optional) Name of the implementation that should run the environment for this trial. If not provided, an arbitrary implementation will be used.</li>
@@ -1108,104 +3198,104 @@ If no reply is sent within a pre-determined time, the environment is considered 
 <li>actors_in_trial: The list of all actors in the trial. This list has the same length and order as the list of actors provided in different places in the API, for the same trial.</li>
 <li>tick_id: The expected tick ID of the observation set returned in <code>EnvStartReply</code>.</li>
 </ul>
-<h3 id="envstartreply"><code>EnvStartReply</code></h3>
+<h3 id="envstartreply"><code>EnvStartReply</code><a class="headerlink" href="#envstartreply" title="Permanent link">&para;</a></h3>
 <p>Reply message for the <code>OnStart</code> procedure.</p>
-<pre><code class="protobuf">message EnvStartReply {
-  ObservationSet observation_set = 1;
-}
-</code></pre>
+<div class="highlight"><pre><span></span><code><span class="kd">message</span> <span class="nc">EnvStartReply</span> <span class="p">{</span>
+  <span class="n">ObservationSet</span> <span class="na">observation_set</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
 
 <ul>
-<li>observation_set:  A set of observations for all actors of the trial.</li>
+<li>observation_set: A set of observations for all actors of the trial.</li>
 </ul>
-<h3 id="envactionrequest"><code>EnvActionRequest</code></h3>
+<h3 id="envactionrequest"><code>EnvActionRequest</code><a class="headerlink" href="#envactionrequest" title="Permanent link">&para;</a></h3>
 <p>Request message for the <code>OnAction</code> and <code>OnEnd</code> procedures.</p>
-<pre><code class="protobuf">message ActionSet {
-  repeated bytes actions = 1;
-  uint64 tick_id = 2;
-}
+<div class="highlight"><pre><span></span><code><span class="kd">message</span> <span class="nc">ActionSet</span> <span class="p">{</span>
+  <span class="k">repeated</span> <span class="kt">bytes</span> <span class="na">actions</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="kt">uint64</span> <span class="na">tick_id</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+<span class="p">}</span>
 
-message EnvActionRequest {
-  ActionSet action_set = 1;
-  bool reply_with_snapshot = 2;
-}
-</code></pre>
+<span class="kd">message</span> <span class="nc">EnvActionRequest</span> <span class="p">{</span>
+  <span class="n">ActionSet</span> <span class="na">action_set</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="kt">bool</span> <span class="na">reply_with_snapshot</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
 
 <ul>
-<li>actions: A list of actions, one for each actor of the trial.  This list has the same length and order as the list of actors provided in different places in the API (e.g. <code>actors_in_trial</code>), for the same trial. Each action is the serialization of the appropriate type for the actor (as defined in the <code>cogment.yaml</code> file).</li>
+<li>actions: A list of actions, one for each actor of the trial. This list has the same length and order as the list of actors provided in different places in the API (e.g. <code>actors_in_trial</code>), for the same trial. Each action is the serialization of the appropriate type for the actor (as defined in the <code>cogment.yaml</code> file).</li>
 <li>tick_id: The tick ID of the observations on which the actions are taken.</li>
 <li>action_set: The set of actions for all actors.</li>
-<li>reply_with_snapshot: If true, then request that the observations for the actors (in the reply) be snapshots.  If false, the observations can be snapshots or deltas (at the discretion of the environment).  See <a href="#ObservationData">ObservationData</a>.</li>
+<li>reply_with_snapshot: If true, then request that the observations for the actors (in the reply) be snapshots. If false, the observations can be snapshots or deltas (at the discretion of the environment). See <a href="#observationdata">ObservationData</a>.</li>
 </ul>
-<h3 id="envactionreply"><code>EnvActionReply</code></h3>
+<h3 id="envactionreply"><code>EnvActionReply</code><a class="headerlink" href="#envactionreply" title="Permanent link">&para;</a></h3>
 <p>Reply message for the <code>OnAction</code> and <code>OnEnd</code> procedures.</p>
-<pre><code class="protobuf">message EnvActionReply {
-  ObservationSet observation_set = 1;
-  repeated Reward rewards = 2;
-  repeated Message messages = 3;
-  bool final_update = 4;
-}
-</code></pre>
+<div class="highlight"><pre><span></span><code><span class="kd">message</span> <span class="nc">EnvActionReply</span> <span class="p">{</span>
+  <span class="n">ObservationSet</span> <span class="na">observation_set</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="k">repeated</span> <span class="n">Reward</span> <span class="na">rewards</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+  <span class="k">repeated</span> <span class="n">Message</span> <span class="na">messages</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+  <span class="kt">bool</span> <span class="na">final_update</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
 
 <ul>
-<li>observation_set:  A set of observations for all actors of the trial.</li>
+<li>observation_set: A set of observations for all actors of the trial.</li>
 <li>rewards: A list of rewards for actors.</li>
-<li>messages: User data to send to actors.  The sender_name entry should not be set.</li>
-<li>messages: A list of messages for actors.  The sender actor entry should not be filled.</li>
+<li>messages: User data to send to actors. The sender_name entry should not be set.</li>
+<li>messages: A list of messages for actors. The sender actor entry should not be filled.</li>
 <li>final_update: If true, this will be the final update of the environment for this trial (i.e. end of the trial). This should always be true when replying to an <code>OnEnd</code> procedure call.</li>
 </ul>
-<h3 id="envmessagerequest"><code>EnvMessageRequest</code></h3>
+<h3 id="envmessagerequest"><code>EnvMessageRequest</code><a class="headerlink" href="#envmessagerequest" title="Permanent link">&para;</a></h3>
 <p>Request message for the <code>OnMessage</code> procedure.</p>
-<pre><code class="protobuf">message EnvMessageRequest {
-  repeated Message messages = 1;
-}
-</code></pre>
+<div class="highlight"><pre><span></span><code><span class="kd">message</span> <span class="nc">EnvMessageRequest</span> <span class="p">{</span>
+  <span class="k">repeated</span> <span class="n">Message</span> <span class="na">messages</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
 
 <ul>
 <li>messages: List of messages from actors.</li>
 </ul>
-<h3 id="envmessagereply"><code>EnvMessageReply</code></h3>
+<h3 id="envmessagereply"><code>EnvMessageReply</code><a class="headerlink" href="#envmessagereply" title="Permanent link">&para;</a></h3>
 <p>Reply message for the <code>OnMessage</code> procedure.</p>
-<pre><code class="protobuf">message EnvMessageReply {}
-</code></pre>
+<div class="highlight"><pre><span></span><code><span class="kd">message</span> <span class="nc">EnvMessageReply</span> <span class="p">{}</span>
+</code></pre></div>
 
-<h2 id="datalog-api">Data/Log API</h2>
+<h2 id="datalog-api">Data/Log API<a class="headerlink" href="#datalog-api" title="Permanent link">&para;</a></h2>
 <p>This API is defined in <code>datalog.proto</code>. It is implemented by the data logger application using the gRPC server API, and the orchestrator connects to the data logger application.</p>
 <p>The data logger endpoint, for the orchestrator to connect to, is defined in the <code>cogment.yaml</code> file.</p>
-<h3 id="service-logexporter">Service <code>LogExporter</code></h3>
-<pre><code class="protobuf">service LogExporter {
-  rpc OnLogSample(stream LogExporterSampleRequest) returns (LogExporterSampleReply) {}
-  rpc Version(VersionRequest) returns (VersionInfo) {}
-}
-</code></pre>
+<h3 id="service-logexporter">Service <code>LogExporter</code><a class="headerlink" href="#service-logexporter" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="kd">service</span> <span class="n">LogExporter</span> <span class="p">{</span>
+  <span class="k">rpc</span> <span class="n">OnLogSample</span><span class="p">(</span><span class="n">stream</span> <span class="n">LogExporterSampleRequest</span><span class="p">)</span> <span class="k">returns</span> <span class="p">(</span><span class="n">LogExporterSampleReply</span><span class="p">)</span> <span class="p">{}</span>
+  <span class="k">rpc</span> <span class="n">Version</span><span class="p">(</span><span class="n">VersionRequest</span><span class="p">)</span> <span class="k">returns</span> <span class="p">(</span><span class="n">VersionInfo</span><span class="p">)</span> <span class="p">{}</span>
+<span class="p">}</span>
+</code></pre></div>
 
-<h4 id="onlogsample"><code>OnLogSample()</code></h4>
+<h4 id="onlogsample"><code>OnLogSample()</code><a class="headerlink" href="#onlogsample" title="Permanent link">&para;</a></h4>
 <p>Called the first time a sample is available.
 This call will normally stay active as long as the orchestrator is running.
 If disconnected, the orchestrator will not reconnect unless restarted.
 Data samples are provided by the orchestrator in the request stream.</p>
 <p>Metadata: None</p>
-<h4 id="version_4"><code>Version()</code></h4>
+<h4 id="version_4"><code>Version()</code><a class="headerlink" href="#version_4" title="Permanent link">&para;</a></h4>
 <p>Called to request version data.</p>
 <p>Metadata: None</p>
-<h3 id="logexportersamplerequest"><code>LogExporterSampleRequest</code></h3>
+<h3 id="logexportersamplerequest"><code>LogExporterSampleRequest</code><a class="headerlink" href="#logexportersamplerequest" title="Permanent link">&para;</a></h3>
 <p>Stream request message for the <code>OnLogSample</code> procedure.</p>
-<pre><code class="protobuf">message DatalogSample {
-  string user_id = 1;
+<div class="highlight"><pre><span></span><code><span class="kd">message</span> <span class="nc">DatalogSample</span> <span class="p">{</span>
+  <span class="kt">string</span> <span class="na">user_id</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
 
-  ObservationSet observations = 2;
-  repeated Action actions = 3;
-  repeated Reward rewards = 4;
-  repeated Message messages = 5;
-}
+  <span class="n">ObservationSet</span> <span class="na">observations</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+  <span class="k">repeated</span> <span class="n">Action</span> <span class="na">actions</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+  <span class="k">repeated</span> <span class="n">Reward</span> <span class="na">rewards</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
+  <span class="k">repeated</span> <span class="n">Message</span> <span class="na">messages</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
+<span class="p">}</span>
 
-message LogExporterSampleRequest {
-  oneof msg {
-    TrialParams trial_params = 1;
-    DatalogSample sample = 2;
-  }
-}
-</code></pre>
+<span class="kd">message</span> <span class="nc">LogExporterSampleRequest</span> <span class="p">{</span>
+  <span class="k">oneof</span> <span class="n">msg</span> <span class="p">{</span>
+    <span class="n">TrialParams</span> <span class="na">trial_params</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="n">DatalogSample</span> <span class="na">sample</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
 
 <ul>
 <li>user_id: The ID of the user that started the trial.</li>
@@ -1213,100 +3303,155 @@ message LogExporterSampleRequest {
 <li>actions: Actions from all actors. This list has the same length and order as the list of actors provided in different places in the API (e.g. <code>actors_in_trial</code>), for the same trial. Of interest here; it matches the list of actors provided in <code>trial_params</code>.</li>
 <li>rewards: List of rewards sent to actors.</li>
 <li>messages: List of user data sent to actors or the environment.</li>
-<li>trial_params: Trial params used for a new trial.  This is usually sent on start of a trial before any other sample from the trial.</li>
+<li>trial_params: Trial params used for a new trial. This is usually sent on start of a trial before any other sample from the trial.</li>
 <li>sample: A data sample to be logged.</li>
 </ul>
-<h3 id="logexportersamplereply"><code>LogExporterSampleReply</code></h3>
+<h3 id="logexportersamplereply"><code>LogExporterSampleReply</code><a class="headerlink" href="#logexportersamplereply" title="Permanent link">&para;</a></h3>
 <p>Reply message for the <code>OnLogSample</code> procedure.</p>
-<pre><code class="protobuf">message LogExporterSampleReply {}
-</code></pre>
+<div class="highlight"><pre><span></span><code><span class="kd">message</span> <span class="nc">LogExporterSampleReply</span> <span class="p">{}</span>
+</code></pre></div>
 
-<h2 id="hook-api">Hook API</h2>
+<h2 id="hook-api">Hook API<a class="headerlink" href="#hook-api" title="Permanent link">&para;</a></h2>
 <p>This API is defined in <code>hooks.proto</code>. It is implemented by the pre-trial hook application using the gRPC server API, and the orchestrator connects to the application.</p>
 <p>The pre-trial hook endpoint, for the orchestrator to connect to, is defined in the <code>cogment.yaml</code> file.</p>
-<h3 id="service-trialhooks">Service <code>TrialHooks</code></h3>
-<pre><code class="protobuf">service TrialHooks {
-  rpc OnPreTrial(PreTrialContext) returns (PreTrialContext) {}
-  rpc Version(VersionRequest) returns (VersionInfo) {}
-}
-</code></pre>
+<h3 id="service-trialhooks">Service <code>TrialHooks</code><a class="headerlink" href="#service-trialhooks" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="kd">service</span> <span class="n">TrialHooks</span> <span class="p">{</span>
+  <span class="k">rpc</span> <span class="n">OnPreTrial</span><span class="p">(</span><span class="n">PreTrialContext</span><span class="p">)</span> <span class="k">returns</span> <span class="p">(</span><span class="n">PreTrialContext</span><span class="p">)</span> <span class="p">{}</span>
+  <span class="k">rpc</span> <span class="n">Version</span><span class="p">(</span><span class="n">VersionRequest</span><span class="p">)</span> <span class="k">returns</span> <span class="p">(</span><span class="n">VersionInfo</span><span class="p">)</span> <span class="p">{}</span>
+<span class="p">}</span>
+</code></pre></div>
 
-<h4 id="onpretrial"><code>OnPreTrial()</code></h4>
+<h4 id="onpretrial"><code>OnPreTrial()</code><a class="headerlink" href="#onpretrial" title="Permanent link">&para;</a></h4>
 <p>Called before a trial is started to set or modify the parameters for the trial.</p>
 <p>Metadata:</p>
 <ul>
 <li><code>trial-id</code>: UUID of the new trial that will be started.</li>
 </ul>
-<h4 id="version_5"><code>Version()</code></h4>
+<h4 id="version_5"><code>Version()</code><a class="headerlink" href="#version_5" title="Permanent link">&para;</a></h4>
 <p>Called to request version data.</p>
 <p>Metadata: None</p>
-<h3 id="pretrialcontext"><code>PreTrialContext</code></h3>
+<h3 id="pretrialcontext"><code>PreTrialContext</code><a class="headerlink" href="#pretrialcontext" title="Permanent link">&para;</a></h3>
 <p>Request and reply message for the <code>OnPreTrial</code> procedure.</p>
-<pre><code class="protobuf">message PreTrialContext {
-  string impl_name = 1;
-  TrialParams params = 2;
-  string user_id = 3;
-}
-</code></pre>
+<div class="highlight"><pre><span></span><code><span class="kd">message</span> <span class="nc">PreTrialContext</span> <span class="p">{</span>
+  <span class="kt">string</span> <span class="na">impl_name</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="n">TrialParams</span> <span class="na">params</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+  <span class="kt">string</span> <span class="na">user_id</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
 
 <ul>
 <li>impl_name: (optional) Name of the implementation that should run the hook. If not provided, an arbitrary implementation will be used. Set on a request, ignored when replying.</li>
-<li>params: The trial parameters so far. The first hook to be called will receive the default parameters present in the <code>cogment.yaml</code> file, and subsequent hooks will receive the parameters sent from the previous hook.  Typically, changes are made to this data and the message sent as a reply.</li>
+<li>params: The trial parameters so far. The first hook to be called will receive the default parameters present in the <code>cogment.yaml</code> file, and subsequent hooks will receive the parameters sent from the previous hook. Typically, changes are made to this data and the message sent as a reply.</li>
 <li>user_id: The ID of the user that is starting the trial. Set on a request, ignored when replying.</li>
 </ul>
+                
               
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+        
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        <a href="../overview/" class="md-footer__link md-footer__link--prev" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Overview
             </div>
           </div>
-          <footer>
+        </a>
+      
+      
+        <a href="../../../license/" class="md-footer__link md-footer__link--next" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              License
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
   
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+          <div class="md-footer-copyright__highlight">
+            Copyright 2021 AI Redefined Inc. <dev+cogment@ai-r.com>
+          </div>
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+        
+      </div>
       
-        <a href="../../../deployment-guide/local-deployement/" class="btn btn-neutral float-right" title="Local Deployment">Next <span class="icon icon-circle-arrow-right"></span></a>
+  <div class="md-footer-social">
+    
       
       
-        <a href="../overview/" class="btn btn-neutral" title="Overview"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        
+        
       
-    </div>
-  
-
-  <hr/>
-
-  <div role="contentinfo">
-    <!-- Copyright etc -->
+      <a href="https://github.com/cogment" target="_blank" rel="noopener" title="github.com" class="md-footer-social__link">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+      </a>
+    
+      
+      
+        
+        
+      
+      <a href="https://twitter.com/AI_Redefined" target="_blank" rel="noopener" title="twitter.com" class="md-footer-social__link">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"/></svg>
+      </a>
+    
+      
+      
+        
+        
+      
+      <a href="https://www.linkedin.com/company/ai-r" target="_blank" rel="noopener" title="www.linkedin.com" class="md-footer-social__link">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"/></svg>
+      </a>
     
   </div>
 
-  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+    </div>
+  </div>
 </footer>
       
-        </div>
-      </div>
-
-    </section>
-
-  </div>
-
-  <div class="rst-versions" role="note" aria-label="versions">
-    <span class="rst-current-version" data-toggle="rst-current-version">
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["navigation.sections"], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}, "search": "../../../assets/javascripts/workers/search.d351de03.min.js", "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.a1609d9a.min.js"></script>
       
-          <a href="https://github.com/cogment/cogment-doc/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
-      
-      
-        <span><a href="../overview/" style="color: #fcfcfc;">&laquo; Previous</a></span>
-      
-      
-        <span style="margin-left: 15px"><a href="../../../deployment-guide/local-deployement/" style="color: #fcfcfc">Next &raquo;</a></span>
-      
-    </span>
-</div>
-    <script>var base_url = '../../..';</script>
-    <script src="../../../js/theme.js" defer></script>
-      <script src="../../../search/main.js" defer></script>
-    <script defer>
-        window.onload = function () {
-            SphinxRtdTheme.Navigation.enable(true);
-        };
-    </script>
-
-</body>
+    
+  </body>
 </html>
