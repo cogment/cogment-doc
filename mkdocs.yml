@@ -22,6 +22,7 @@ theme:
     repo: fontawesome/brands/github
 
 markdown_extensions:
+  - admonition
   - attr_list
   - pymdownx.highlight
   - pymdownx.superfences
@@ -84,6 +85,7 @@ nav:
       - "Low Level API Guide":
           - "Overview": "cogment/cogment-low-level-api-guide/overview.md"
           - "gRPC API Reference": "cogment/cogment-low-level-api-guide/grpc.md"
+  - "Metrics & Dashboard": "dashboard/metrics-and-dashboard.md"
   #- "Deployment Guide":
   # - "Local Deployment": "deployment-guide/local-deployement.md"
   # - "Cloud Deployment": "deployment-guide/cloud-deployement.md" # out-of-scope for ɑ
