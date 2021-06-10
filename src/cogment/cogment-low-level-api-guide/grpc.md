@@ -41,6 +41,13 @@ Due to normal network delays and unpredictability of the various componenents, t
 
 Most of the messages are defined in the `common.proto` file. `ObservationSet` is defined in `environment.proto`.
 
+### Common Values
+
+Some values (and their standardized names) are recurrent throughout the gRPC API.
+
+- tick_id: (uint64) The monotonic time, in number of steps, since the start of the trial. As an ID, it represents a discrete step in the processing of the trial. A step starts with observations representing a specific point in time, that are followed by actions, rewards and messages in relation to these observations. The first tick ID is 0.
+- timestamp: (fixed64) The wall-clock time in nanoseconds since 00:00:00UTC January 1, 1970 (Unix Epoch time).
+
 ### `VersionRequest`
 
 Empty message to serve as the request for the `Version` procedure (present in all gRPC services defined in the Cogment API).
@@ -174,8 +181,8 @@ message Observation {
 }
 ```
 
-- tick_id: The monotonic Time, related to the number of observations since the start of the trial.
-- timestamp: The wall-clock time of the observation.
+- tick_id: Tick of this observation.
+- timestamp: The time of the observation.
 - data: The observation data.
 
 ### `ObservationData`
@@ -204,7 +211,7 @@ message Action {
 ```
 
 - content: The serialized protobuf message representing an action from a specific actor. The actual message type for the action space is defined in the `cogment.yaml` file for each actor class in section `actor_classes:action:space`. Note that the specific actor represented is defined by the enclosing message.
-- tick_id: The tick ID of the observation on which the action is taken.
+- tick_id: The tick of the observation on which the action is taken.
 
 ### `Message`
 
@@ -219,7 +226,7 @@ message Message {
 }
 ```
 
-- tick_id: Time associated with the message.
+- tick_id: Tick associated with the message.
 - sender_name: The name of the sending actor. "env" for the environment. This is optional when sending messages (i.e. the sender is already known).
 - receiver_name: The name of the target/receiving actor. "env" for the environment.
 - payload: Data for the target actor/environment. It is the responsibility of the target to understand the type received.
@@ -257,7 +264,7 @@ message Reward {
 ```
 
 - receiver_name: Name of the receiving actor (the reward destination).
-- tick_id: The time step associated with the reward. If set to `-1` when sending a reward, the orchestrator will automatically assign the latest tick. This will always be a valid tick when receiving a reward.
+- tick_id: The tick associated with the reward. If set to `-1` when sending a reward, the orchestrator will automatically assign the latest tick. This will always be a valid tick (i.e. >= 0) when receiving a reward.
 - value: The aggregated value (weighted sum) of the provided reward sources. May be ignored when sending a reward; The final value will be computed by the orchestrator.
 - sources: The simple reward sources that form this aggregated reward. There must be at least one.
 
@@ -290,8 +297,8 @@ message ObservationSet {
 }
 ```
 
-- tick_id: The time step (tick) to which the observations relate to.
-- timestamp: A wall clock time stamp when the observation set was made. Unix Epoch in nanoseconds.
+- tick_id: The tick to which the observations relate to.
+- timestamp: The time when the observation set was made.
 - observations: A list of observations. Indexed into by the `actors_map`.
 - actors_map: A list of indexes into the `observations` list above. This list of indexes has the same length and order as the list of actors provided in different places in the API (e.g. `actors_in_trial`), for the same trial.
 
@@ -454,7 +461,7 @@ message TrialInfo {
 
 - trial_id: The UUID of the trial.
 - state: The state of the trial.
-- tick_id: The current tick ID of the trial.
+- tick_id: The current tick of the trial.
 - trial_duration: The duration of the trial so far, in nanoseconds. If the trial has ended, this is the duration from start to end of the trial. This is meant as an indicator; resolution may not be a nanosecond, and precision is not garanteed.
 - latest_observation: The latest environment observations for all actors. This will be provided only if requested in the `TrialInfoRequest`.
 - actors_in_trial: The list of active actors in the trial.
@@ -937,7 +944,7 @@ message EnvStartRequest {
 - impl_name: (optional) Name of the implementation that should run the environment for this trial. If not provided, an arbitrary implementation will be used.
 - config: The configuration to start the environment.
 - actors_in_trial: The list of all actors in the trial. This list has the same length and order as the list of actors provided in different places in the API, for the same trial.
-- tick_id: The expected tick ID of the observation set returned in `EnvStartReply`.
+- tick_id: The expected tick of the observation set returned in `EnvStartReply`.
 
 ### `EnvStartReply`
 
@@ -968,7 +975,7 @@ message EnvActionRequest {
 ```
 
 - actions: A list of actions, one for each actor of the trial. This list has the same length and order as the list of actors provided in different places in the API (e.g. `actors_in_trial`), for the same trial. Each action is the serialization of the appropriate type for the actor (as defined in the `cogment.yaml` file).
-- tick_id: The tick ID of the observations on which the actions are taken.
+- tick_id: The tick of the observations on which the actions are taken.
 - action_set: The set of actions for all actors.
 - reply_with_snapshot: If true, then request that the observations for the actors (in the reply) be snapshots. If false, the observations can be snapshots or deltas (at the discretion of the environment). See [ObservationData](#observationdata).
 
@@ -1046,6 +1053,12 @@ Metadata: None
 Stream request message for the `OnLogSample` procedure.
 
 ```protobuf
+message TrialData {
+  uint64 tick_id = 1;
+  fixed64 timestamp = 2;
+  TrialState state = 3;
+}
+
 message DatalogSample {
   string user_id = 1;
 
@@ -1053,6 +1066,7 @@ message DatalogSample {
   repeated Action actions = 3;
   repeated Reward rewards = 4;
   repeated Message messages = 5;
+  TrialData trial_data = 6;
 }
 
 message LogExporterSampleRequest {
@@ -1063,6 +1077,9 @@ message LogExporterSampleRequest {
 }
 ```
 
+- tick_id: The current tick of the trial.
+- timestamp: The time at the end of the tick ID.
+- state: The state of the trial at the end of the tick ID.
 - user_id: The ID of the user that started the trial.
 - observations: A set of observations for all actors.
 - actions: Actions from all actors. This list has the same length and order as the list of actors provided in different places in the API (e.g. `actors_in_trial`), for the same trial. Of interest here; it matches the list of actors provided in `trial_params`.
