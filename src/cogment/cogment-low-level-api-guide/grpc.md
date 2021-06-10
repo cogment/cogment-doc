@@ -1078,8 +1078,8 @@ message LogExporterSampleRequest {
 ```
 
 - tick_id: The current tick of the trial.
-- timestamp: The time at the end of the tick ID.
-- state: The state of the trial at the end of the tick ID.
+- timestamp: The time at the beginning of the tick.
+- state: The state of the trial at the end of the tick.
 - user_id: The ID of the user that started the trial.
 - observations: A set of observations for all actors.
 - actions: Actions from all actors. This list has the same length and order as the list of actors provided in different places in the API (e.g. `actors_in_trial`), for the same trial. Of interest here; it matches the list of actors provided in `trial_params`.
