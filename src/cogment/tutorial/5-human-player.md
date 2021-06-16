@@ -82,6 +82,8 @@ We first need to import the data structures needed to send actions.
 from data_pb2 import PlayerAction, ROCK, PAPER, SCISSORS
 
 MOVES = [ROCK, PAPER, SCISSORS]
+MOVES_STR = ["👊 rock", "✋ paper", "✌️ scissors"]
+MOVES_PROMPT = ', '.join([ f"{name} ({idx})" for idx, name in enumerate(MOVES_STR)])
 ```
 
 In the `main` function we then implement the `human_player` actor implementation, only playing `PAPER` for the moment, register the implementation and join the trial once it is initialized.
@@ -152,8 +154,6 @@ Let's add a text user interface to our client in order to finally challenge AIs 
 First we'll want to display what was played in the previous round. We will implement a dedicated function `print_observation`.
 
 ```python
-MOVES_STR = ["👊 rock", "✋ paper", "✌️ scissors"]
-
 def print_observation(round_index, observation):
     print(f"🧑 played {MOVES_STR[observation.snapshot.me.last_move]}")
     print(f"🤖 played {MOVES_STR[observation.snapshot.them.last_move]}")
@@ -178,7 +178,7 @@ Last but not least, instead of always picking `PAPER` we will read from the keyb
 Note that the following implementation expects a number between 1 and 3 and doesn't handle well any other input.
 
 ```python
-move = MOVES[int(input(f"What's your move: {', '.join([ f"{name} ({idx + 1})" for idx, name in enumerate(MOVES_STR)])} ? "))]
+move = MOVES[int(input(MOVES_PROMPT))]
 next_action = PlayerAction(move=move)
 ```
 

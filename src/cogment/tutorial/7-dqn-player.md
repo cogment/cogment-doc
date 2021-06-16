@@ -134,7 +134,7 @@ We have set everything up, we can now focus on implementing our DQN agent.
 
 A Deep Q Network is a neural network taking an observation as input, and outputs the Q value for each of the actions in the action space. The Q Value is an estimation of the expected value of all the rewards if a given action is taken. The DQN agent action policy is therefore to take the action having the largest predicted Q Value. Let's start by implementing this part and we will then deal with training this model.
 
-In the rest of this tutorial we will use [Tensorflow and its Keras API](https://www.tensorflow.org){target=\_blank} for the model itself, as well as [numpy](https://numpy.org){target=\_blank} for datastructures. Let's import these at the top of `dqn_agent/main.py`.
+In the rest of this tutorial we will use [Tensorflow and its Keras API](https://www.tensorflow.org){target=\_blank} for the model itself, as well as [numpy](https://numpy.org){target=\_blank} for datastructures. Let's add these to `dqn_agent/requirements.txt` and import them at the top of `dqn_agent/main.py`.
 
 ```python
 import numpy as np
@@ -194,7 +194,7 @@ def model_ins_from_observations(observations):
     }
 ```
 
-Finally we can make it work together by replacing the random choice of action by the use of the model. At the moment the model will just use the random initialization weights so don't expect much !
+Finally we can make it work together by replacing the random choice of action by the use of the model. At the moment the model will just use the random initialization weights so don't expect much!
 
 Here is how the event loop in the `dqn_agent` function will need to be updated to:
 
@@ -294,7 +294,7 @@ def append_trial_replay_buffer(trial_rb):
   for key in _rb.keys():
     # Append the trial data to the current vector
     _rb[key] = np.append(_rb[key], trial_rb[key])
-    # Enfore the size limit by discarding older data
+    # Enforce the size limit by discarding older data
     if len(_rb[key]) > max_replay_buffer_size:
         _rb[key] = _rb[key][-max_replay_buffer_size:]
 

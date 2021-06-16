@@ -70,6 +70,7 @@ from data_pb2 import ROCK, PAPER, SCISSORS
 import random
 
 MOVES = [ROCK, PAPER, SCISSORS]
+MOVES_STR = ["👊 rock", "✋ paper", "✌️ scissors"]
 ```
 
 Once this is available we can simply update the _taking decision_ part of the actor's implementation to compute a random move whenever it is needed.
