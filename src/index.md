@@ -5,11 +5,11 @@
 
 ## What is Cogment?
 
-[Cogment](https://cogment.ai) is an innovative open source AI platform designed to leverage the advent of AI to benefit humankind through human-AI collaboration developed by [AI Redefined](https://ai-r.com). Cogment enables AI researchers and engineers to build, train and operate AI agents in simulated or real environments shared with humans.
+[Cogment](https://cogment.ai) is an innovative open source AI platform developed by [AI Redefined](https://ai-r.com), designed to leverage the advent of AI to benefit humankind through human-AI collaboration. Cogment enables AI researchers and engineers to build, train and operate AI agents in simulated or real environments shared with humans.
 
 ### When to use Cogment?
 
-Cogment is designed to allow the training of complex agent architectures in complex environments, with human users in the loop. It is especially well suited to address multi-agent contexts, regardless of their learning mechanisms (or, for that matter, whether they are of the learning kind or not). Cogment also allows for the Actor's abstraction, meaning that human users and learning or non-learning agents alike are treated in the same way from a high level point of view, being interchangeable.
+Cogment is designed to allow the training of complex agent architectures in complex environments, with human users in the loop. It is especially well suited to address multi-agent contexts, regardless of their learning mechanisms (or, for that matter, whether they are of the learning kind or not). Cogment also allows for the Actor's abstraction, meaning that human users and learning or non-learning agents alike are treated in the same way from a high level point of view, rendering them interchangeable.
 
 As such, Cogment is suited for, among others, these contexts:
 
