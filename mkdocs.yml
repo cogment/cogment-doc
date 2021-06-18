@@ -59,8 +59,8 @@ nav:
           - "Step 5: Add a human player in the loop": "cogment/tutorial/5-human-player.md"
           - "Step 6: Implement a web client for the human player": "cogment/tutorial/6-web-client.md"
           - "Step 7: Add a player trained with Reinforcement Learning using DQN": "cogment/tutorial/7-dqn-player.md"
-      - "Cogment API Guide": "cogment/cogment-api-guide.md"
-      - "Cogment API Reference":
+      - "API Guide": "cogment/cogment-api-guide.md"
+      - "API Reference":
           - "cogment.yaml": "cogment/cogment-api-reference/cogment-yaml.md"
           - "python": "cogment/cogment-api-reference/python.md"
           - "Javascript/Typescript SDK":
@@ -81,7 +81,7 @@ nav:
               - "Interface: Reward": "cogment/cogment-api-reference/javascript/interfaces/reward.md"
               - "Interface: SendMessageOptions": "cogment/cogment-api-reference/javascript/interfaces/sendmessageoptions.md"
               - "Interface: TrialActor": "cogment/cogment-api-reference/javascript/interfaces/trialactor.md"
-      - "Cogment Low Level API Guide":
+      - "Low Level API Guide":
           - "Overview": "cogment/cogment-low-level-api-guide/overview.md"
           - "gRPC API Reference": "cogment/cogment-low-level-api-guide/grpc.md"
   #- "Deployment Guide":
