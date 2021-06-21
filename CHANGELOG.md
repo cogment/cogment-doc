@@ -12,6 +12,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Documentation page for metrics & dashboard
 - Documentation for `TrialData` (in `DatalogSample`)
 
+### Changed
+
+- Documenting the new `prometheus_registry` parameter in the `cogment.Context` constructor.
+
 ## v1.1.0 - 2021-05-31
 
 ### Added

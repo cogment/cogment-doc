@@ -147,4 +147,28 @@ def my_func()
     MY_COUNTER.inc()
 ```
 
-Several types of metrics are avaialbe in Prometheus. Connsult the prometheus [documentation](https://prometheus.io/docs/concepts/metric_types/) for futher references.
+Several types of metrics are availalbe in Prometheus. Connsult the prometheus [documentation](https://prometheus.io/docs/concepts/metric_types/) for futher references.
+
+## Using a custom registry
+
+By default, Cogment SDKs rely on the default Prometheus global registry. To change the used regitry, it needs to be given to the context when built.
+
+Here's how it looks in python.
+
+```python
+import cog_settings
+
+import cogment
+import prometheus_client
+
+# [...]
+
+registry = prometheus_client.CollectorRegistry()
+context = cogment.Context(cog_settings=cog_settings, user_id="my_user_id", prometheus_registry=registry)
+```
+
+It is also possible to completely deactivate the gathering of the Prometheus metrics by setting `prometheus_registry` to `None`.
+
+```python
+context = cogment.Context(cog_settings=cog_settings, user_id="my_user_id", prometheus_registry=None)
+```
