@@ -135,7 +135,27 @@ You can now [build and run](./1-bootstrap-and-data-structures.md#building-and-ru
 
 ## Using the **metrics** and **dashboard** services to retrieve & visualize the rewards over time
 
-🚧
+Now that we have introduced rewards, it's a good time to take a look at Cogment's dashboard, a web app centralizing metrics from the various Cogment components. To learn more about this, refer to the [dedicated page](../../dashboard/metrics-and-dashboard.md).
+
+If it's not already running, start the Cogment app:
+
+```console
+$ cogment run start
+```
+
+In your browser of choice you can now open <http://localhost:3003> and explore. If you haven't yet launched any trials, it should be mostly empty. To launch a trial, proceed as usual: in another terminal run,
+
+```console
+$ cogment run client
+```
+
+You can now check the **reward dashboard** to see which of the players performs better. Keep in mind that both players play randomly so don't expect to observe any interesting trends yet. You can launch several trials to get more data.
+
+![Reward dashboard with 2 random players](./figures/reward_dashboard.png)
+
+The screenshot above shows the default reward dashboard. On the top row, it shows the reward received per individual actor, on the left is the rate averaged over the last 2 minutes, on the right is the total per trial. On the middle row, you'll find the same metrics but aggregated per actor implementation, one in our case. On the bottom row is the averaged reward over the last 5 minutes for all the actors.
+
+In [tutorial 7](./7-dqn-player.md), we will use this dashboard to monitor the training of an agent implementation.
 
 This concludes the step 3 of the tutorial: you've learned about environment configuration, implemented your reward sending and used the **metrics** and **dashboard** services.
 
