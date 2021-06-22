@@ -1,8 +1,8 @@
-# Step 7: Add a web client for the human player
+# Step 7: Add a player trained with Reinforcement Learning using DQN
 
 > This part of the tutorial follows [step 5](./5-human-player.md) and [step 6](./6-web-client.md), make sure you've gone through either one of those before starting this one. Alternatively the completed step 5 can be retrieved from the [tutorial's repository](https://github.com/cogment/cogment-tutorial-rps){target=\_blank}.
 
-In this step of the tutorial, we will go over yet another actor implementation and this implementation will be learning from its experience. We will implement an RPS player using Reinforcement Learning (RL) and more precisely a [Deep Q Network](https://arxiv.org/pdf/1312.5602.pdf){target=\_blank}, one of the foundational algorithm of modern RL.
+In this step of the tutorial, we will go over yet another actor implementation and this implementation will be learning from its experience. We will implement an RPS player using Reinforcement Learning (RL) and more precisely a [Deep Q Network](https://arxiv.org/pdf/1312.5602.pdf){target=\_blank}, one of the foundational algorithms of modern RL.
 
 While we will explain some aspects of RL and DQN along the way, we won't go into all the details. Interested readers can refer to ["Reinforcement Learning: An Introduction" by Richard S. Sutton and Andrew G. Barto](http://incompleteideas.net/book/the-book-2nd.html){target=\_blank} or to the original Deep Q Network article linked above.
 
@@ -10,7 +10,7 @@ While we will explain some aspects of RL and DQN along the way, we won't go into
 
 Back in [step 4](../4-heuristic-player), we created a new implementation of the `player` actor class in the same service as the previous one. It was a sound choice for this implementation because it was small and didn't require additional dependencies. In some cases it makes more sense to create a fully separated service for a new actor implementation. This is what we will do here.
 
-Start by copy/pasting the `random_agent` folder and name the copy `dqn_agent`. Let's then clean up `dqn_agent/main.py` to keep only a single actor implentation and name it `dqn_agent`. You should have something like the following.
+Start by copy/pasting the `random_agent` folder and name the copy `dqn_agent`. Let's then clean up `dqn_agent/main.py` to keep only a single actor implentation and name it `dqn_agent`. You should end up with something like the following.
 
 ```python
 import cog_settings
@@ -43,7 +43,7 @@ if __name__ == "__main__":
     asyncio.run(main())
 ```
 
-Since we have created a new service we need to reference it at several places for everything to work properly. First, let's edit `docker-compose.yaml` to add the new service. To do that simply add the following under the `services` key, it tells docker-compose about the new service.
+Since we have created a new service we need to reference it at several places for everything to work properly. First, let's edit `docker-compose.yaml` to add the new service. To do that, simply add the following under the `services` key: it tells docker-compose about the new service.
 
 ```yaml
 dqn-agent:
@@ -52,7 +52,7 @@ dqn-agent:
     dockerfile: ../py_service.dockerfile
 ```
 
-Then we will need to edit `cogment.yaml` to make `cogment run generate` run in the new service's directory and have `cogment run build` and `cogment run start` respectively trigger its build and its start. We will change the `generate`, `build` and `start` key under `commands`.
+Then we will need to edit `cogment.yaml` to make `cogment run generate` run in the new service's directory and have `cogment run build` and `cogment run start` respectively trigger its build and its start. We will change the `generate`, `build` and `start` keys under `commands`.
 
 ```yaml
 commands:
@@ -82,7 +82,7 @@ Finally, the metrics server needs to know about this new data source. In `metric
 
 ## Playing against the heuristic player
 
-We will train our new player against the [heuristic player](./4-heuristic-player.md) we previously developed. We first need to update the trial config in `cogment.yaml`: `player_1` will be our new actor implementation while `player_2` will be the heuristic implementation, trials will be 20 games long to generate enough meaningful data between each training steps.
+We will train our new player against the [heuristic player](./4-heuristic-player.md) we previously developed. We first need to update the trial config in `cogment.yaml`: `player_1` will be our new actor implementation while `player_2` will be the heuristic implementation. Trials will be 20 games long to generate enough meaningful data between each training step.
 
 ```yaml
 trial_params:
@@ -132,7 +132,7 @@ You can now [build and run](./1-bootstrap-and-data-structures.md#building-and-ru
 
 We have set everything up, we can now focus on implementing our DQN agent.
 
-A Deep Q Network is a neural network taking an observation as input, and outputs the Q value for each of the actions in the action space. The Q Value is an estimation of the expected value of all the rewards if a given action is taken. The DQN agent action policy is therefore to take the action having the largest predicted Q Value. Let's start by implementing this part and we will then deal with training this model.
+A Deep Q Network is a neural network taking an observation as input, and outputing the Q value for each of the actions in the action space. The Q Value is an estimation of the expected value of all the rewards if a given action is taken. The DQN agent action policy is therefore to take the action having the largest predicted Q Value. Let's start by implementing this part and we will then deal with training this model.
 
 In the rest of this tutorial we will use [Tensorflow and its Keras API](https://www.tensorflow.org){target=\_blank} for the model itself, as well as [numpy](https://numpy.org){target=\_blank} for datastructures. Let's add these to `dqn_agent/requirements.txt` and import them at the top of `dqn_agent/main.py`.
 
@@ -147,7 +147,7 @@ Let's get into the meat of the matter by implementing a function to create our m
 2. Each input is [one-hot encoded](https://en.wikipedia.org/wiki/One-hot#Machine_learning_and_statistics){target=\_blank} to avoid assuming an unwanted ordering and quantitative relationship between the moves.
 3. The two encoded inputs are concatenated to a single vector.
 4. A dense non-linear hidden layer is added.
-5. The output layers estimates the Q value for each move.
+5. The output layer estimates the Q value for each move.
 
 Everything then gets wrapped up and returned.
 
@@ -182,7 +182,7 @@ def create_model():
 _model = create_model()
 ```
 
-The other piece of the puzzle is implementing a small function that'll convert our observations into inputs for the model we just created. As most of the encoding is handled by the model itself it's fairly straightforward.
+The other piece of the puzzle is implementing a small function that will convert our observations into inputs for the model we just created. As most of the encoding is handled by the model itself it's fairly straightforward.
 
 ```python
 def model_ins_from_observations(observations):
@@ -196,11 +196,11 @@ def model_ins_from_observations(observations):
 
 Finally we can make it work together by replacing the random choice of action by the use of the model. At the moment the model will just use the random initialization weights so don't expect much!
 
-Here is how the event loop in the `dqn_agent` function will need to be updated to:
+Here is how the event loop in the `dqn_agent` function will need to be updated:
 
 1. Use `model_ins_from_observations` to compute the model inputs,
 2. Use the model in inference mode to compute the q value of each of the possible actions,
-3. Finally do the action having the largest q value.
+3. Finally, do the action having the largest q value.
 
 ```python
 if event.observation:
@@ -219,7 +219,7 @@ You can now [build and run](./1-bootstrap-and-data-structures.md#building-and-ru
 
 With the previous code, you might have noticed that the agent will play exactly the same action given the same set of observations, this is because the weights of the model are fixed. However, especially at the beginning of the training process we want the agent to _experience_ a variety of situations. We address this issue by introducing a decaying exploration rate _epsilon_.
 
-First we will define as global variables, the parameters for this epsilon value: its minimum value, its maximum and initial value and its decay per tick. We also define as a global variable the current value of epsilon. You can add the following after the imports in `dqn_agent/main.py`.
+First we will define the parameters for this epsilon value as global variables: its minimum value, its maximum and initial value and its decay per tick. We also define as a global variable the current value of epsilon. You can add the following after the imports in `dqn_agent/main.py`.
 
 ```python
 epsilon_min = 0.05
@@ -231,7 +231,7 @@ epsilon_decay_per_tick = (
 _epsilon = epsilon_max
 ```
 
-We then create a simple function we can use everytime an action needs to be taken to retrieve and update `_epsilon`
+We then create a simple function we can use everytime an action needs to be taken to retrieve and update `_epsilon`.
 
 ```python
 def get_and_update_epsilon():
@@ -242,7 +242,7 @@ def get_and_update_epsilon():
   return current_epsilon
 ```
 
-This function can then be used to do random actions occasionally to facilitate the exploration. To do that, we need to modify slightly how the actions are computed and submitted.
+This function can then be used to occasionally do random actions, to facilitate the exploration. To do that, we need to slightly modify how the actions are computed and submitted.
 
 ```python
 if event.type == cogment.EventType.ACTIVE:
@@ -310,7 +310,7 @@ def append_trial_replay_buffer(trial_rb):
   )
 ```
 
-The `dqn_agent` function can then be updated to collect received observations and reward and sent actions. By default every action gets a _zero_ reward. When a reward for a specific tick is received its value gets updated.
+The `dqn_agent` function can then be updated to collect received observations, rewards and sent actions. By default every action gets a _zero_ reward. When a reward for a specific tick is received, its value gets updated.
 
 ```python
 async def dqn_agent(actor_session):
@@ -354,7 +354,7 @@ You can now [build and run](./1-bootstrap-and-data-structures.md#building-and-ru
 
 ## Training!
 
-Here we are, all the pieces are in place we can implement the training proper. The function is a standard implementation of DQN and is decomposed in 4 steps:
+Here we are, all the pieces are in place, we can implement the training proper. The function is a standard implementation of DQN and is decomposed in 4 steps:
 
 1. Select a random batch of samples from the replay buffer
 2. Compute the target Q value for each sample from the received reward and the next observation using a previous version of the model.
@@ -431,7 +431,7 @@ def train():
 
 This function then needs to be called at the end of each trial after the call to `append_trial_replay_buffer`.
 
-You can now [build and run](./1-bootstrap-and-data-structures.md#building-and-running-the-app) the application. The dqn agent will start to learn and quickly prevails against the heuristic implementation.
+You can now [build and run](./1-bootstrap-and-data-structures.md#building-and-running-the-app) the application. The dqn agent will start to learn and quickly prevail against the heuristic implementation.
 
 This can be observed by opening the dashboard at <http://localhost:3003>{target=\_blank} and opening the reward page. You should be able to track the progression of the dqn implementation.
 

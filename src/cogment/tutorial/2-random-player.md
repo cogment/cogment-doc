@@ -13,7 +13,7 @@ In the `rps` directory, the `random_agent` directory contains the python impleme
 
 Open `main.py` and take a look at the generated content.
 
-At the bottom you'll find the `main` function, it initializes Cogment's context, registers the `random_agent` actor's implementation, then starts the service itsef on tcp port 9000 and await for its termination.
+At the bottom you'll find the `main` function, it initializes Cogment's context, registers the `random_agent` actor's implementation, then starts the service itsef on tcp port 9000 and awaits its termination.
 
 > Cogment's python sdk leverages Python's [asynchronous features](https://docs.python.org/3/library/asyncio-task.html){target=\_blank}, you'll need a basic understanding of them.
 
@@ -41,7 +41,7 @@ The generated implementation is very simple:
 - it handles the three main kind of events: **observations**, **rewards** and **messages**,
 - it does a default **action** whenever required, i.e. in response to an observation.
 
-We will further learn about how to use observations in [step 4](./4-heuristic-player.md) and rewards in [step 3](./3-rewards.md). Messages are out of the scope for this _basics_ tutorial.
+We will further learn about how to use rewards in [step 3](./3-rewards.md) and observations in [step 4](./4-heuristic-player.md). Messages are out of the scope for this _basics_ tutorial.
 
 Please note the import and usage of `PlayerAction` which is the data structure from `data.proto` defining the actor's action space.
 

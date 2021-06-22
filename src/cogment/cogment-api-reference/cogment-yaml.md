@@ -1,28 +1,28 @@
 # Cogment.yaml
 
-At the heart of every Cogment project is a `cogment.yaml` file (default name). This file is used by the Cogment CLI tool to configure the language specific SDK.  It is also used by the orchestrator to initialize the runtime environment.
+At the heart of every Cogment project is a `cogment.yaml` file (default name). This file is used by the Cogment CLI tool to configure the language specific SDK. It is also used by the orchestrator to initialize the runtime environment.
 
 The top level sections in the file are:
 
-- [import](#Import): Used to import other files into the defintion of the project
-- [commands](#Commands): Defines commands that can be run by the Cogment CLI
-- [trial](#Trial): Define trial speficic properties
-- [environment](#Environment): Define environment specific properties
-- [actor_classes](#Actor-Classes): Define actor specific properties (for each actor class)
-- [trial_params](#Trial-Params): Defines the default parameters to run a trial
-- [datalog](#Datalog): Defines the data logging specific properties
+- [import](#import): Used to import other files into the defintion of the project
+- [commands](#commands): Defines commands that can be run by the Cogment CLI
+- [trial](#trial): Define trial speficic properties
+- [environment](#environment): Define environment specific properties
+- [actor_classes](#actor-classes): Define actor specific properties (for each actor class)
+- [trial_params](#trial-params): Defines the default parameters to run a trial
+- [datalog](#datalog): Defines the data logging specific properties
 
 In this document, "section" refers to YAML mappings.
 
 ## Import
 
-The import section is used to specify external data structures, and optionally code, that is referenced in other parts of the file.  The referenced files must be in the same folder as the `cogment.yaml` file.  The import sections are:
+The import section is used to specify external data structures, and optionally code, that is referenced in other parts of the file. The referenced files must be in the same folder as the `cogment.yaml` file. The import sections are:
 
-- `proto`: List of protobuf definition files.  Message types defined in these files are used to communicate between the various components
+- `proto`: List of protobuf definition files. Message types defined in these files are used to communicate between the various components
 - `python`: (optional) List of Python modules
 - `javascript`: (optional) List of Javascript files
 
-All Cogment projects will need at least one `proto` import to define the data structures exchanged between the various components.  Python and/or javascript imports will be needed if you make use of delta encodings.
+All Cogment projects will need at least one `proto` import to define the data structures exchanged between the various components. Python and/or javascript imports will be needed if you make use of delta encodings.
 
 E.g.:
 
@@ -37,12 +37,11 @@ import:
     - filename.js
 ```
 
-**N.B.**
-When using message types imported from a `.proto` file, types need to be referred through their *package* namespace, not the filename containing them.
+> ⚠️ **N.B.** When using message types imported from a `.proto` file, types need to be referred through their _package_ namespace, not the filename containing them.
 
 ## Commands
 
-This section is optional and defines commands that can then be executed using the Cogment CLI `run` command.  The commands will be executed by a sub-shell and thus can be any shell command.  The commands can also recursively call Cogment, either builtin CLI or other commands defined here.  But care should be taken not to create infinite recursive calls.
+This section is optional and defines commands that can then be executed using the Cogment CLI `run` command. The commands will be executed by a sub-shell and thus can be any shell command. The commands can also recursively call Cogment, either built-in CLI commands, or other commands defined here. But care should be taken not to create infinite recursive calls.
 
 E.g.:
 
@@ -53,14 +52,14 @@ commands:
   play: cogment run start && docker-compose run launcher
 ```
 
-To run one of these commands, the Cogment CLI command `run` must be used, e.g.: `cogment run start`.  And as such there is no problem differentiating between `cogment run generate` and `cogment generate` (the latter is the builtin CLI command, and the former is the command defined in the `cogment.yaml` file).
+To run one of these commands, the Cogment CLI command `run` must be used, e.g.: `cogment run start`. And as such there is no problem differentiating between `cogment run generate` and `cogment generate` (the latter is the builtin CLI command, and the former is the command defined in the `cogment.yaml` file).
 
 ## Trial
 
-This section defines properties related to the trial and trial management.  It has the properties:
+This section defines properties related to the trial and trial management. It has the properties:
 
 - `config_type`: (optional) The protobuf message type (data structure) that will be passed on to the pre-trial hooks.
-- `pre_hooks`: (optional) List of endpoint for pre-trial hook processing services.  The services will all be called, and their responses waited upon before the trial starts.  The services are called in order of listing.  The first service to be called will receive the default parameters (set in the `trial_params` section of `cogment.yaml`) and can change them.  Each subsequent service will receive the parameters updated by the previous service, and can change them further.  If no service is defined, the default parameters are used directly.
+- `pre_hooks`: (optional) List of endpoints for pre-trial hook processing services. The services will all be called, and their responses waited upon before the trial starts. The services are called by order of listing. The first service to be called will receive the default parameters (set in the `trial_params` section of `cogment.yaml`) and can change them. Each subsequent service will receive the parameters updated by the previous service, and can change them further. If no service is defined, the default parameters are used directly.
 
 E.g.:
 
@@ -88,17 +87,16 @@ environment:
 
 Arguably the most important section of the `cogment.yaml` file, the actor classes section describes the actor types that can be present in the project's trials.
 
-The content of this section is a list of actor classes, each containing the necessary properties to define an actor class.  These properties are:
+The content of this section is a list of actor classes, each containing the necessary properties to define an actor class. These properties are:
 
 - `id`: The name by which this actor class is known
-- `action`: Mapping of properties
-  - `space`: The protobuf message type that represents all the possible actions that this actor class can perform (its action space)
+- `action`: Mapping of properties- `space`: The protobuf message type that represents all the possible actions that this actor class can perform (its action space)
 - `observation`: Mapping of properties
-  - `space`: The protobuf message type that represents a snapshot of the data that this actor class has access to (its observation space)
-  - `delta`: (optional) The protobuf message type that represents the difference between two observation spaces (snapshots)
-  - `delta_apply_fn`: (optional) Mapping for a function to combine an observation space and a delta, into a new observation space: *fn(observation, delta) -> observation*.  Only one of the following can be defined
-    - `python`: The function defined in python
-    - `javascript`: The function defined in Javascript
+    - `space`: The protobuf message type that represents a snapshot of the data that this actor class has access to (its observation space)
+    - `delta`: (optional) The protobuf message type that represents the difference between two observation spaces (snapshots)
+    - `delta_apply_fn`: (optional) Mapping for a function to combine an observation space and a delta, into a new observation space: _fn(observation, delta) -> observation_. Only one of the following can be defined
+        - `python`: The function defined in python
+        - `javascript`: The function defined in Javascript
 - `config_type`: (optional) Defines the protobuf message type used to configure this actor class
 
 Each actor class should define both an observation and action space as protobuf message types.
@@ -138,20 +136,20 @@ actor_classes:
 
 ## Trial Params
 
-This section defines the different parameters that can be adjusted by pre-trial hooks for each trial.  It also defines the default values for these parameters.  These parameters are:
+This section defines the different parameters that can be adjusted by pre-trial hooks for each trial. It also defines the default values for these parameters. These parameters are:
 
 - `trial`: Mapping of properties
   - `config`: Definition of properties to match the definition of `config_type` for the trial. I.e. the yaml definition needs to match the definition of the protobuf class declared as `config_type`.
 - `environment`: Mapping of properties
   - `endpoint`: The URL where the environment gRPC server resides
-  - `implementation`: The name of the implementation to be used for this instance of the environment.  This must match an implementation that is defined at the endpoint.  If not defined, an arbitraary implementation will be chosen at runtime
+  - `implementation`: The name of the implementation to be used for this instance of the environment. This must match an implementation that is defined at the endpoint. If not defined, an arbitraary implementation will be chosen at runtime
   - `config`: Definition of properties to match the definition of `config_type` for the environment. I.e. the yaml definition needs to match the definition of the protobuf class declared as `config_type`.
 - `actors`: List of actor properties
   - `name`: The name of this actor (i.e. name of the specific instance of the actor class)
-  - `actor_class`: The name of the actor class.  The actor class must be defined in the `actor_classes` section above
-  - `endpoint`: The URL where the actor gRPC server resides.  If this is `client`, the actor will connect as a client (the orchestrator being the server in this case).
-  - `implementation`: The name of the implementation to be used for this actor instance.  This must match an implementation that is defined at the endpoint.  If not defined, an arbitraary implementation will be chosen at runtime.
-  - `config`: Definition of properties to match the definition of `config_type` for this actor class.  I.e. the yaml definition needs to match the definition of the protobuf class declared as `config_type`.
+  - `actor_class`: The name of the actor class. The actor class must be defined in the `actor_classes` section above
+  - `endpoint`: The URL where the actor gRPC server resides. If this is `client`, the actor will connect as a client (the orchestrator being the server in this case).
+  - `implementation`: The name of the implementation to be used for this actor instance. This must match an implementation that is defined at the endpoint. If not defined, an arbitraary implementation will be chosen at runtime.
+  - `config`: Definition of properties to match the definition of `config_type` for this actor class. I.e. the yaml definition needs to match the definition of the protobuf class declared as `config_type`.
 
 E.g.:
 
@@ -192,11 +190,11 @@ trial_params:
 
 ## Datalog
 
-This section defines the properties related to the logging of the data.  It has the properties:
+This section defines the properties related to the logging of the data. It has the properties:
 
 - `fields`: (optional) Mapping of properties
   - `exclude`: List of fields to exclude from the data to send for logging
-- `type`: The type of data to send for logging.  Can be `grpc` or `none`.
+- `type`: The type of data to send for logging. Can be `grpc` or `none`.
 - `url`: URL where to send the data to be logged
 
 ```yaml

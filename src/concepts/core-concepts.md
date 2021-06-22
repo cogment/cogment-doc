@@ -86,4 +86,4 @@ Please note that rewards can also be retrieved after the fact using an [activity
 Beyond the core services described above, a Cogment deployment can include these additional ones:
 
 - **Pre trial hooks** can be used to dynamically setup Trials from a given configuration, for example changing the number of Actors or pointing to other Environment or Actor implementations.
-- **Activity Logger** can be used to listen to the activity during a trial (actions, observations, rewards, messages), for example, to do store these data in order to do offline training of AI agents.
+- **Activity Logger** can be used to listen to the activity during a trial (actions, observations, rewards, messages) in order to, for example, store these data for the offline training of AI agents.

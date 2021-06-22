@@ -8,7 +8,7 @@ Terminology is a very important part of understanding new concepts and learning 
 
 ### Actor
 
-An actor is somebody or something who/which interacts with the environment by executing certain actions, taking observations, and receiving rewards (positive or negative) for this. An Actor can be an [Agent](#agent) (of any level of complexity and any type of flexibility, from bots to ML agents), or a human user.
+An actor is somebody or something who/which interacts with the environment by executing certain actions, taking observations in, and receiving rewards (positive or negative) for this interaction. An Actor can be an [Agent](#agent) (of any level of complexity and any type of flexibility, from bots to ML agents), or a human user.
 
 ### Actor Class
 
@@ -21,7 +21,7 @@ Each [Actor](#actor) always belongs to a single Actor Class. An Actor Class is p
 
 ### Agent
 
-We usually call agent, non-human [Actors](#actor). Agents can use on any sort of decision-making underlying system, able to learn or not.
+We usually call agent any non-human [Actor](#actor). Agents can use any sort of decision-making underlying system, able to learn or not.
 
 ## E
 
@@ -49,9 +49,9 @@ The interface, usually an app, that humans use to interact with the rest of the 
 
 ## H
 
-### Human / Artificial Intelligence Interaction Loop Training
+### Human - Artificial Intelligence Interaction Loop Training
 
-We call Human / AI interaction loop training the fundamental paradigm our [Framework](#framework) was build for: a continuous loop between humans and agents where they learn from each other. It’s a way to train [agents](#agent) in an environment where direct human interactions, whether between humans, between humans and the environment, or between humans and agents, provide live data to the agents (first part of the loop), _**as well as**_ a way for agents to interact with humans, either directly or through the environment (second part of the loop).
+We call Human - AI interaction loop training the fundamental paradigm our [Framework](#framework) was build for: a continuous loop between humans and agents where they learn from each other. It’s a way to train [agents](#agent) in an environment where direct human interactions, whether between humans, between humans and the environment, or between humans and agents, provide live data to the agents (first part of the loop), _**as well as**_ a way for agents to interact with humans, either directly or through the environment (second part of the loop).
 
 ## M
 
@@ -67,7 +67,7 @@ A model is a representation, usually a mathematical one in our context, of a con
 
 ### Observation
 
-An observation is the subset of the [environment state](#environment-state) that an [Actor](#actor) based its choice of [Action](#action) on.
+An observation is the subset of the [environment state](#environment-state) that an [Actor](#actor) based its choice of [Action](#action) (or lack thereof) on.
 
 ### Observation delta
 
@@ -106,7 +106,7 @@ A binary data format for serialized communication, `.proto` files are used to sp
 
 ### Reward
 
-1. A sent reward is a measure of an [Actor’s](#actor) performance within the environment at a given [tick](#tick). The reward can be sent by the environment, and/or a different Actor. They are sent to the [Orchestrator](#orchestrator), which collate before they are received by the target actor.
+1. A sent reward is a measure of an [Actor’s](#actor) performance within the environment at a given [tick](#tick). The reward can be sent by the environment, and/or a different Actor. They are sent to the [Orchestrator](#orchestrator), which collates them before they are received by the target actor.
 
 2. A received reward is a single measure of an [Actor’s](#actor) performance. It is produced when at least one reward is sent to the actor at a given [tick](#tick).
 
@@ -122,11 +122,11 @@ RL is a specific method to train [agents](#agent), using [reward functions](#rew
 
 ### Tick
 
-A tick is a discrete timestep between two [states of the environment](#environment-state), in our [Framework](#framework), ticks within a trial are numbered.
+A tick is a discrete timestep between two [states of the environment](#environment-state). In our [Framework](#framework), ticks within a trial are numbered.
 
 ### Trial
 
-A trial is a single run of a use case, with a beginning and end, populated with a single instance of the use case’s [environment](#environment) and its [actors](#actor).
+A trial is a single run of a [use case](#use-case), with a beginning and end, populated with a single instance of the use case’s [environment](#environment) and its [actors](#actor).
 
 ## U
 

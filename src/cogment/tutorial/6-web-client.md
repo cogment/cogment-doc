@@ -8,7 +8,7 @@ In this step of the tutorial, we will go over a web client implementation, to en
 
 To develop a web client, we will need a working installation of Node.js. You can download and install this from:
 
-https://nodejs.org/en/download/
+<https://nodejs.org/en/download/>{target=\_blank}
 
 ## The web client
 
@@ -38,7 +38,7 @@ We will be using Material UI for this web client. This will provide us with a ni
 Install Material UI by running the following commands from inside of the web-client folder:
 
 ```console
-$ npm i @mateiral-ui/core
+$ npm i @material-ui/core
 $ npm i @material-ui/icons
 ```
 
@@ -46,7 +46,7 @@ $ npm i @material-ui/icons
 
 In addition to the docker-compose services we already have, we'll need two more for this web client. One to run it, and another for a proxy service called `grpcwebproxy`.
 
-> NOTE: `grpcwebproxy` [link](https://github.com/improbable-eng/grpc-web/tree/master/go/grpcwebproxy){target=\_blank} is a helpful program that allows grpc endpoints to be utilized by web applications. Web applications cannot natively use the grpc protocol that all Cogment elements use to communicate with one another. Using this proxy to translate the web socket connections it accepts into grpc requests solves this issue.
+> NOTE: `grpcwebproxy` [(link)](https://github.com/improbable-eng/grpc-web/tree/master/go/grpcwebproxy){target=\_blank} is a helpful program that allows grpc endpoints to be utilized by web applications. Web applications cannot natively use the grpc protocol that all Cogment elements use to communicate with one another. Using this proxy to translate the web socket connections it accepts into grpc requests solves this issue.
 
 For these services, let's add the following to the end of our docker-compose.yaml:
 
@@ -135,7 +135,7 @@ The easiest way to add Cogment to any web client is to start with a React app, t
 
     while inside of the web-client folder
 
-2.  Copy in the hooks folder from the [tutorial's repository](https://github.com/cogment/cogment-tutorial-rps){target=\_blank}, found at [6-web-client/web-client/src/hooks](./6-web-client/web-client/src/hooks), into your src directory.
+2.  Copy the hooks folder from the [tutorial's repository](https://github.com/cogment/cogment-tutorial-rps){target=\_blank}, found at [6-web-client/web-client/src/](https://github.com/cogment/cogment-tutorial-rps/tree/main/6-web-client/web-client/src), into your src directory.
 
 3.  Navigate one folder up to your project directory (where you have your cogment.yaml) then run the following command to generate Javascript files from your defined protobufs:
     ```console
@@ -421,10 +421,7 @@ export const useActions = (cogSettings, actorName, actorClass) => {
         This is massively useful for network streams.
       */
       for await (const event of actorSession.eventLoop()) {
-        //Parse the observation into a regular JS object
-        //TODO: this will eventually be part of the API
-
-        //Eventually observations will be regular Javascript objects (same with messages, and rewards). But for now we must convert it to an object.
+        //Convert observations to a regular JS object.
         let observationOBJ = event.observation && event.observation.toObject();
         event.observation = observationOBJ;
 

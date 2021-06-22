@@ -53,7 +53,7 @@ The cogment cli will also compile the imported [`.proto`](../concepts/glossary.m
 
 [Environments](../concepts/glossary.md#environment) are implemented by a Python function that uses a [`cogment.EnvironmentSession`](./cogment-api-reference/python.md#class-environmentsessionsession) instance.
 
-This function will be called once for each [trial][../concepts/glossary.md#trial)]. This function usually consists of three sections.
+This function will be called once for each [trial](../concepts/glossary.md#trial). This function usually consists of three sections.
 
 - The environment's **initialization**, where its internal state can be initialized and processes started. It ends with the sending of the initial observations to the actors participating in the trial.
 - Its **event loop**, where the environment iterates through the events occurring during the trial and produces [observations](../concepts/glossary.md#observation) as well as receives [messages](../concepts/glossary.md#message). In this loop the environment can end the trial on its own or the end can be requested by a [controller](#controller).
@@ -180,7 +180,7 @@ context.register_actor(
 await context.serve_all_registered(port=9000)
 ```
 
-Please note that this is also through this registrating that the implementation is associated with one or more [actor classes](../concepts/glossary.md#actor-class) it implements.
+Please note that it is also through this registrating that the implementation is associated with one or more [actor classes](../concepts/glossary.md#actor-class) it implements.
 
 **Client actors**, contrary to Service actors, are not served to the [orchestrator](../concepts/glossary.md#orchestrator). They connect as clients of the orchestrator and join a [trial](../concepts/glossary.md#trial) that has started.
 
@@ -197,7 +197,7 @@ await context.join_trial(
   impl_name="human")
 ```
 
-Please note, that a trial including one or more client actors will wait for all of them to join before any actor can start processing events.
+Please note that a trial including one or more client actors will wait for all of them to join before any actor can start processing events.
 
 Due to the different network requirements, client actors are a good fit when implementing a [frontend](../concepts/glossary.md#frontend) for human actors. In addition to the [python](./cogment-api-reference/python.md) SDK demonstrated above, client actors can be implemented in [javascript](./cogment-api-reference/javascript/modules.md) using the corresponding SDK.
 
@@ -285,7 +285,7 @@ Messages consist of an arbitrary payload, their `user_data`, defined as an insta
 
 A message can be sent to one, many or all actors in a trial and / or to the environment.
 
-The full documentation for `session.send_message` can be found [here](./cogment-api-reference/python.md#send_messageself-user_data-to-to_environmentfalse).
+The full documentation for `session.send_message` can be found [here](./cogment-api-reference/python.md#send_messageself-payload-to-to_environmentfalse).
 
 ### Consuming
 

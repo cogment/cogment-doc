@@ -2,11 +2,11 @@
 
 You've reached the Cogment tutorial, the best way to learn about the concepts and the usage details of Cogment by using it to create a Rock-Paper-Scissors simulation and build AIs to play the game.
 
-Full sources for the tutorials are available at <https://github.com/cogment/cogment-tutorial-rps>{target=\_blank}
+Full sources for the tutorials are available at <https://github.com/cogment/cogment-tutorial-rps>{target=\_blank}.
 
 ## Rock-Paper-Scissors (RPS)
 
-Let's quote [wikipedia](https://en.wikipedia.org/wiki/Rock_paper_scissors){target=\_blank}
+Let's quote [wikipedia](https://en.wikipedia.org/wiki/Rock_paper_scissors){target=\_blank}:
 
 > Rock paper scissors [...] is a hand game usually played between two people, in which each player simultaneously forms one of three shapes with an outstretched hand. These shapes are "rock" (a closed fist), "paper" (a flat hand), and "scissors" (a fist with the index finger and middle finger extended, forming a V). "Scissors" is identical to the two-fingered V sign (also indicating "victory" or "peace") except that it is pointed horizontally instead of being held upright in the air.
 >
@@ -42,14 +42,14 @@ The implementations will be done in Python 3, you'll need a good knowledge of th
 
 In the sixth step of the tutorial, you'll implement your first webapp to provide a more user friendly interface for the human player.
 
-The implementation will be done in Javascript and using React.
+The implementation will be done in Javascript, using React.
 
 - [Step 6: Implement a web client for the human player](./6-web-client.md)
 
 ## Learning actors
 
-In the seventh step of the tutorial, you'll implement your an actor trained with Reinforcement Learning.
+In the seventh step of the tutorial, you'll implement an actor trained with Reinforcement Learning.
 
-The implementation will be done in Python and using Tensorflow.
+The implementation will be done in Python, using Tensorflow.
 
 - [Step 7: Add a player trained with Reinforcement Learning using DQN](./7-dqn-player.md)

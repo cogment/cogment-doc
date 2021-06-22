@@ -2,9 +2,9 @@
 
 > This part of the tutorial follows [step 2](./2-random-player.md), make sure you've gone through it before starting this one. Alternatively the completed step 2 can be retrieved from the [tutorial's repository](https://github.com/cogment/cogment-tutorial-rps){target=\_blank}.
 
-In this step of the tutorial, we will start thinking about rewards. Rewards are a way to evaluate how an actor performs at a task. They can be used to evaluate or compare different implementations of an actor, or, especially in the context or Reinforcement Learning, train an model. In Cogment, both the environment and other actors can evaluate an actor. Here, we will focus on sending reward from the environment.
+In this step of the tutorial, we will start thinking about rewards. Rewards are a way to evaluate how an actor performs at a task. They can be used to evaluate or compare different implementations of an actor, or, especially in the context or Reinforcement Learning, train an model. In Cogment, both the environment and other actors can evaluate an actor. Here, we will focus on sending rewards from the environment.
 
-The first thing we'll do for this step is to add the concept of multi-round game to our RPS implementation. We'll learn to configure the environment along the way. Then, we will adapt the environment implementation to send a reward to the actor winning a game. Finally, we will retrieve rewards and other metrics from the running Cogment app.
+The first thing we'll do for this step is to add the concept of multi-round games to our RPS implementation. We'll learn to configure the environment along the way. Then, we will adapt the environment implementation to send a reward to the actor winning a game. Finally, we will retrieve rewards and other metrics from the running Cogment app.
 
 ## Adding the concept of a game
 
@@ -113,7 +113,7 @@ The environment is now able to:
 
 Please note, that not all actions need to be rewarded.
 
-When a game is won, the environment will add a **positive reward to the winner** (we chose a value of 1) and a **negative reward to the loser** (we chose a value of -1). Cogment also supports the notion of _confidence_, a weight, between 0 and 1 that expresses the qualification of the reward sender in its appreciation. In this case we are applying objective rules, so we use a confidence of 1.
+When a game is won, the environment will add a **positive reward to the winner** (we chose a value of 1) and a **negative reward to the loser** (we chose a value of -1). Cogment also supports the notion of _confidence_, a weight between 0 and 1 that expresses the qualification of the reward sender in its appreciation. In this case we are applying objective rules, so we use a confidence of 1.
 
 In the **event loop**, when the first player wins a game we add the following.
 

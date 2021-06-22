@@ -8,7 +8,7 @@ To follow this tutorial you'll need a working installation of **Cogment**. If yo
 
 The Cogment command line interface (CLI) includes a simple tool to generate the base files and folder structures for a Cogment app. The first thing we'll do is use it to create an app with 2 AIs able to play games of RPS.
 
-Using Cogment's terminology, we will create 2 actors sharing a single implementation picking a random move for each round. We will develop a **service actor** implementation which is well suited for AIs and no **client actor** implementation which would be required for an interactive actor, for exemple, an actor controlled by a Human player. In the [step 5](../5-human-player) we will create such implementation.
+Using Cogment's terminology, we will create 2 actors sharing a single implementation picking a random move for each round. We will develop a **service actor** implementation which is well suited for AIs rather than a **client actor** implementation, which would be required for an interactive actor; for exemple, an actor controlled by a Human player. In the [step 5](../5-human-player) we will create such implementation.
 
 Run the following to bootstrap the app in a `rps` directory:
 
@@ -32,7 +32,7 @@ To summarize, for this 2 players game, we created:
 - 1 actor implementation for this class, `random_agent`, because at the moment we only want to implement one way of playing,
 - 2 actor instances, because the game has 2 players.
 
-> ℹ️ For the remainder of this tutorial, unless mentioned, it is assumed that all operations are run in the `rps` directory.
+> ℹ️ For the remainder of this tutorial, unless otherwise mentioned, it is assumed that all operations are run in the `rps` directory.
 
 ## Building and running the app
 
