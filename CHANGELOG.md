@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## Unreleased
 
+## v1.2.0 - 2021-06-22
+
 ### Added
 
 -   Documentation page for metrics & dashboard
