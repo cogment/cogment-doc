@@ -28,9 +28,9 @@ $ cd rps
 
 To summarize, for this 2 players game, we created:
 
-- 1 actor class, `player`, because RPS is a symmetric game, both players have the same role within the game,
-- 1 actor implementation for this class, `random_agent`, because at the moment we only want to implement one way of playing,
-- 2 actor instances, because the game has 2 players.
+-   1 actor class, `player`, because RPS is a symmetric game, both players have the same role within the game,
+-   1 actor implementation for this class, `random_agent`, because at the moment we only want to implement one way of playing,
+-   2 actor instances, because the game has 2 players.
 
 > ℹ️ For the remainder of this tutorial, unless otherwise mentioned, it is assumed that all operations are run in the `rps` directory.
 
@@ -91,8 +91,8 @@ This file is the main configuration for your Cogment app. In it, you will see a 
 
 ```yaml
 import:
-  proto:
-    - data.proto
+    proto:
+        - data.proto
 ```
 
 `EnvConfig` and `TrialConfig` will be discussed in the coming steps. For now we'll focus on defining the **Action Space and Observation Space** for our RPS app.

@@ -8,8 +8,8 @@ In this step of the tutorial, we will implement the (very simple) decison logic 
 
 In the `rps` directory, the `random_agent` directory contains the python implementation for the eponymous service. You'll find two files here:
 
-- `requirements.txt` is a [pip requirement file](https://pip.pypa.io/en/stable/reference/pip_install/?highlight=requirements#requirements-file-format){target=\_blank} defining the dependencies of the service. For the moment it only lists [`cogment`](https://pypi.org/project/cogment/){target=\_blank}, Cogment's python SDK.
-- `main.py` contains the implementation of the service.
+-   `requirements.txt` is a [pip requirement file](https://pip.pypa.io/en/stable/reference/pip_install/?highlight=requirements#requirements-file-format){target=\_blank} defining the dependencies of the service. For the moment it only lists [`cogment`](https://pypi.org/project/cogment/){target=\_blank}, Cogment's python SDK.
+-   `main.py` contains the implementation of the service.
 
 Open `main.py` and take a look at the generated content.
 
@@ -32,14 +32,14 @@ async def main():
 
 At the beginning of the file, the function `random_agent` is the actor's implementation. This function is called once per actor and per trial and handles the full lifetime of the actor.
 
-- The actor's **initialization**, before the `async for`. This is where, for example, actor's internal data can be defined before calling `actor_session.start()` to notify that it is ready,
-- Its **event loop**, the content of the `async for`. This is where resides the implementation of the actor's response to various events,
-- Its **termination**, after the `async for`.
+-   The actor's **initialization**, before the `async for`. This is where, for example, actor's internal data can be defined before calling `actor_session.start()` to notify that it is ready,
+-   Its **event loop**, the content of the `async for`. This is where resides the implementation of the actor's response to various events,
+-   Its **termination**, after the `async for`.
 
 The generated implementation is very simple:
 
-- it handles the three main kind of events: **observations**, **rewards** and **messages**,
-- it does a default **action** whenever required, i.e. in response to an observation.
+-   it handles the three main kind of events: **observations**, **rewards** and **messages**,
+-   it does a default **action** whenever required, i.e. in response to an observation.
 
 We will further learn about how to use rewards in [step 3](./3-rewards.md) and observations in [step 4](./4-heuristic-player.md). Messages are out of the scope for this _basics_ tutorial.
 

@@ -25,17 +25,17 @@ The actor can be infered by the position in the list, and the index into the lis
 
 Due to normal network delays and unpredictability of the various componenents, there are limitations related to the communication with the Ochestrator that translate in issues that can arise.
 
-- In the current version, to simplify the implementation, there is an expectation of "good behavior" from the various components:
-  - Actors are expected to respond with an action only after receiving an observation, and to send only one action per observation received.
-  - The environment is expected to respond with an observation set only after receiving an action set, and to send only one observation set per action set received.
-  - All components are expected to respond within a reasonable time (e.g. less than 5 sec).
-  - Hooks do not assume to receive specific parameters, reply only with well formed parameters, and do not assume a specific order of hooks being called (when multiple hooks are defined).
-  - A `TerminateTrial` (from the Control API) is called only a reasonable amount of time after a `StartTrial` (e.g. more than 2 sec).
-  - All components are started after the Orchestrator is running.
-  - Note that what constitutes a "reasonable" amount of time is dependent on many variables and the numbers given here are only vaguely safe values for most systems.
-- It is generally understood that most actors do not know when a trial will end. Because of this, there may be unpredictable behavior at the end of a trial:
-  - Rewards and messages sent after the last action may not reach their destination.
-  - If a trial is terminated by the Control API, actions from some actors may not reach the environment before the end of the trial.
+-   In the current version, to simplify the implementation, there is an expectation of "good behavior" from the various components:
+    -   Actors are expected to respond with an action only after receiving an observation, and to send only one action per observation received.
+    -   The environment is expected to respond with an observation set only after receiving an action set, and to send only one observation set per action set received.
+    -   All components are expected to respond within a reasonable time (e.g. less than 5 sec).
+    -   Hooks do not assume to receive specific parameters, reply only with well formed parameters, and do not assume a specific order of hooks being called (when multiple hooks are defined).
+    -   A `TerminateTrial` (from the Control API) is called only a reasonable amount of time after a `StartTrial` (e.g. more than 2 sec).
+    -   All components are started after the Orchestrator is running.
+    -   Note that what constitutes a "reasonable" amount of time is dependent on many variables and the numbers given here are only vaguely safe values for most systems.
+-   It is generally understood that most actors do not know when a trial will end. Because of this, there may be unpredictable behavior at the end of a trial:
+    -   Rewards and messages sent after the last action may not reach their destination.
+    -   If a trial is terminated by the Control API, actions from some actors may not reach the environment before the end of the trial.
 
 ## Common types
 
@@ -45,8 +45,8 @@ Most of the messages are defined in the `common.proto` file. `ObservationSet` is
 
 Some values (and their standardized names) are recurrent throughout the gRPC API.
 
-- tick_id: (uint64) The monotonic time, in number of steps, since the start of the trial. As an ID, it represents a discrete step in the processing of the trial. A step starts with observations representing a specific point in time, that are followed by actions, rewards and messages in relation to these observations. The first tick ID is 0.
-- timestamp: (fixed64) The wall-clock time in nanoseconds since 00:00:00UTC January 1, 1970 (Unix Epoch time).
+-   tick_id: (uint64) The monotonic time, in number of steps, since the start of the trial. As an ID, it represents a discrete step in the processing of the trial. A step starts with observations representing a specific point in time, that are followed by actions, rewards and messages in relation to these observations. The first tick ID is 0.
+-   timestamp: (fixed64) The wall-clock time in nanoseconds since 00:00:00UTC January 1, 1970 (Unix Epoch time).
 
 ### `VersionRequest`
 
@@ -74,9 +74,9 @@ message VersionInfo {
 }
 ```
 
-- versions: List of version information
-- name: The name/software/module for which the version is given. E.g. "cogment-api"
-- version: The version related to the name. E.g. "1.0.0b5"
+-   versions: List of version information
+-   name: The name/software/module for which the version is given. E.g. "cogment-api"
+-   version: The version related to the name. E.g. "1.0.0b5"
 
 ### `TrialParams`
 
@@ -92,11 +92,11 @@ message TrialParams {
 }
 ```
 
-- trial_config: (optional) The user config for the controler of the trial.
-- environment: The parameters for the environment of the trial.
-- actors: The parameters for all actors involved in the trial. This length and order of this list defines the length and order of the lists of actors provided in different places in the API (e.g. `actors_in_trial`), for the trial.
-- max_steps: The maximum number of steps/ticks that the trial should run. After this number of steps/ticks, an end request will be sent to the environment.
-- max_inactivity: The maximum amount of time (in seconds) that the trial should be without activity before an end request is sent to the environment (or the trial is forcefully terminated). Activity is defined as a message received by the Orchestrator from a user component.
+-   trial_config: (optional) The user config for the controler of the trial.
+-   environment: The parameters for the environment of the trial.
+-   actors: The parameters for all actors involved in the trial. This length and order of this list defines the length and order of the lists of actors provided in different places in the API (e.g. `actors_in_trial`), for the trial.
+-   max_steps: The maximum number of steps/ticks that the trial should run. After this number of steps/ticks, an end request will be sent to the environment.
+-   max_inactivity: The maximum amount of time (in seconds) that the trial should be without activity before an end request is sent to the environment (or the trial is forcefully terminated). Activity is defined as a message received by the Orchestrator from a user component.
 
 ### `EnvironmentParams`
 
@@ -110,9 +110,9 @@ message EnvironmentParams {
 }
 ```
 
-- endpoint: The URL where the environment is being served. This is used by the Orchestrator to connect to the environment using the `EnvironmentEndpoint` gRPC service.
-- config: (optional) The user config for the environment.
-- implementation: (optional) The name of the implementation of the environment to run.
+-   endpoint: The URL where the environment is being served. This is used by the Orchestrator to connect to the environment using the `EnvironmentEndpoint` gRPC service.
+-   config: (optional) The user config for the environment.
+-   implementation: (optional) The name of the implementation of the environment to run.
 
 ### `ActorParams`
 
@@ -128,11 +128,11 @@ message ActorParams {
 }
 ```
 
-- name: The name of the actor.
-- actor_class: The name of the class of actor. Actor classes are defined in the `cogment.yaml` file in the `actor_classes:id` sections.
-- endpoint: The URL where the actor is being served, or "client". The URL is used by the Orchestrator to connect to the actor using the `AgentEndpoint` gRPC service. If set to "client", then the actor is a client and will connect to the Orchestrator instead, using the `ClientActor` gRPC service.
-- implementation: (optional) The name of the implementation of the actor class to run.
-- config: (optional) The user config for the actor.
+-   name: The name of the actor.
+-   actor_class: The name of the class of actor. Actor classes are defined in the `cogment.yaml` file in the `actor_classes:id` sections.
+-   endpoint: The URL where the actor is being served, or "client". The URL is used by the Orchestrator to connect to the actor using the `AgentEndpoint` gRPC service. If set to "client", then the actor is a client and will connect to the Orchestrator instead, using the `ClientActor` gRPC service.
+-   implementation: (optional) The name of the implementation of the actor class to run.
+-   config: (optional) The user config for the actor.
 
 ### `TrialConfig`, `ActorConfig`, `EnvironmentConfig`
 
@@ -153,7 +153,7 @@ message TrialConfig {
 
 ```
 
-- content: The serialized protobuf message representing a config. The actual message type is defined in the `cogment.yaml` file in its respective section: `environment:config_type`, `actor_classes:config_type`, and `trial:config_type`. Environment config is for use by environments. Actor config is for use by actors (each actor class can have a different config type). Trial config is for use by controlers.
+-   content: The serialized protobuf message representing a config. The actual message type is defined in the `cogment.yaml` file in its respective section: `environment:config_type`, `actor_classes:config_type`, and `trial:config_type`. Environment config is for use by environments. Actor config is for use by actors (each actor class can have a different config type). Trial config is for use by controlers.
 
 ### `TrialActor`
 
@@ -166,8 +166,8 @@ message TrialActor {
 }
 ```
 
-- actor_class: The name of the class of actor. Actor classes are defined in the `cogment.yaml` file in the `actor_classes:id` sections.
-- name: The name of the actor.
+-   actor_class: The name of the class of actor. Actor classes are defined in the `cogment.yaml` file in the `actor_classes:id` sections.
+-   name: The name of the actor.
 
 ### `Observation`
 
@@ -181,9 +181,9 @@ message Observation {
 }
 ```
 
-- tick_id: Tick of this observation.
-- timestamp: The time of the observation.
-- data: The observation data.
+-   tick_id: Tick of this observation.
+-   timestamp: The time of the observation.
+-   data: The observation data.
 
 ### `ObservationData`
 
@@ -196,8 +196,8 @@ message ObservationData {
 }
 ```
 
-- content: The serialized protobuf message representing an observation for a specific actor. If the `snapshot` field value is true, the type of message is an observation _space_ (i.e. a full observation snapshot) defined in section `actor_classes:observation:space` of the `cogment.yaml` file. If the `snapshot` field value is false, the type is an observation _delta_ (i.e. a difference from a previous observation) defined in the section `actor_classes:observation:delta` of the `cogment.yaml` file. Note that the specific actor represented is defined by the enclosing message.
-- snapshot: Determines the type of the message in the `content` field.
+-   content: The serialized protobuf message representing an observation for a specific actor. If the `snapshot` field value is true, the type of message is an observation _space_ (i.e. a full observation snapshot) defined in section `actor_classes:observation:space` of the `cogment.yaml` file. If the `snapshot` field value is false, the type is an observation _delta_ (i.e. a difference from a previous observation) defined in the section `actor_classes:observation:delta` of the `cogment.yaml` file. Note that the specific actor represented is defined by the enclosing message.
+-   snapshot: Determines the type of the message in the `content` field.
 
 ### `Action`
 
@@ -210,8 +210,8 @@ message Action {
 }
 ```
 
-- content: The serialized protobuf message representing an action from a specific actor. The actual message type for the action space is defined in the `cogment.yaml` file for each actor class in section `actor_classes:action:space`. Note that the specific actor represented is defined by the enclosing message.
-- tick_id: The tick of the observation on which the action is taken.
+-   content: The serialized protobuf message representing an action from a specific actor. The actual message type for the action space is defined in the `cogment.yaml` file for each actor class in section `actor_classes:action:space`. Note that the specific actor represented is defined by the enclosing message.
+-   tick_id: The tick of the observation on which the action is taken.
 
 ### `Message`
 
@@ -226,10 +226,10 @@ message Message {
 }
 ```
 
-- tick_id: Tick associated with the message.
-- sender_name: The name of the sending actor. "env" for the environment. This is optional when sending messages (i.e. the sender is already known).
-- receiver_name: The name of the target/receiving actor. "env" for the environment.
-- payload: Data for the target actor/environment. It is the responsibility of the target to understand the type received.
+-   tick_id: Tick associated with the message.
+-   sender_name: The name of the sending actor. "env" for the environment. This is optional when sending messages (i.e. the sender is already known).
+-   receiver_name: The name of the target/receiving actor. "env" for the environment.
+-   payload: Data for the target actor/environment. It is the responsibility of the target to understand the type received.
 
 ### `RewardSource`
 
@@ -244,10 +244,10 @@ message RewardSource {
 }
 ```
 
-- sender_name: Name of the sender that sent the reward. This is not needed when sending becasue it will be set by the orchestrator. It is only used by receiving actors.
-- value: The numerical value of the provided reward.
-- confidence: The weight of this reward in computing the final (aggregated) reward.
-- user_data: Additional user data to be consumed by the receiving actor. It is the responsibility of the receiver to understand the type received.
+-   sender_name: Name of the sender that sent the reward. This is not needed when sending becasue it will be set by the orchestrator. It is only used by receiving actors.
+-   value: The numerical value of the provided reward.
+-   confidence: The weight of this reward in computing the final (aggregated) reward.
+-   user_data: Additional user data to be consumed by the receiving actor. It is the responsibility of the receiver to understand the type received.
 
 ### `Reward`
 
@@ -263,10 +263,10 @@ message Reward {
 }
 ```
 
-- receiver_name: Name of the receiving actor (the reward destination).
-- tick_id: The tick associated with the reward. If set to `-1` when sending a reward, the orchestrator will automatically assign the latest tick. This will always be a valid tick (i.e. >= 0) when receiving a reward.
-- value: The aggregated value (weighted sum) of the provided reward sources. May be ignored when sending a reward; The final value will be computed by the orchestrator.
-- sources: The simple reward sources that form this aggregated reward. There must be at least one.
+-   receiver_name: Name of the receiving actor (the reward destination).
+-   tick_id: The tick associated with the reward. If set to `-1` when sending a reward, the orchestrator will automatically assign the latest tick. This will always be a valid tick (i.e. >= 0) when receiving a reward.
+-   value: The aggregated value (weighted sum) of the provided reward sources. May be ignored when sending a reward; The final value will be computed by the orchestrator.
+-   sources: The simple reward sources that form this aggregated reward. There must be at least one.
 
 ### `ActorPeriodData`
 
@@ -280,9 +280,9 @@ message ActorPeriodData {
 }
 ```
 
-- observations: Observations from the environment for a period of time. Typically only for one time step (tick). If there are multiple, they are ordered by tick_id.
-- rewards: List of rewards sent by actors or the environment. Ordered by tick_id.
-- messages: List of user data sent by actors or the environment. Ordered by tick_id.
+-   observations: Observations from the environment for a period of time. Typically only for one time step (tick). If there are multiple, they are ordered by tick_id.
+-   rewards: List of rewards sent by actors or the environment. Ordered by tick_id.
+-   messages: List of user data sent by actors or the environment. Ordered by tick_id.
 
 ### `ObservationSet`
 
@@ -297,10 +297,10 @@ message ObservationSet {
 }
 ```
 
-- tick_id: The tick to which the observations relate to.
-- timestamp: The time when the observation set was made.
-- observations: A list of observations. Indexed into by the `actors_map`.
-- actors_map: A list of indexes into the `observations` list above. This list of indexes has the same length and order as the list of actors provided in different places in the API (e.g. `actors_in_trial`), for the same trial.
+-   tick_id: The tick to which the observations relate to.
+-   timestamp: The time when the observation set was made.
+-   observations: A list of observations. Indexed into by the `actors_map`.
+-   actors_map: A list of indexes into the `observations` list above. This list of indexes has the same length and order as the list of actors provided in different places in the API (e.g. `actors_in_trial`), for the same trial.
 
 ## Control API
 
@@ -332,7 +332,7 @@ Request the environment to terminate an existing trial.
 
 Metadata:
 
-- `trial-id`: UUID of the trial to terminate.
+-   `trial-id`: UUID of the trial to terminate.
 
 #### `GetTrialInfo()`
 
@@ -340,7 +340,7 @@ Get extra information about an existing trial.
 
 Metadata:
 
-- `trial-id`: (_optional_) UUID of the trial to terminate. If not provided, the request is for informatrion about all running trials.
+-   `trial-id`: (_optional_) UUID of the trial to terminate. If not provided, the request is for informatrion about all running trials.
 
 #### `WatchTrials()`
 
@@ -365,8 +365,8 @@ message TrialStartRequest {
 }
 ```
 
-- config: The trial config data. This data can be used by the pre-trial hooks to determine the config for the rest of the componenents.
-- user_id: The ID of the user that is starting the trial.
+-   config: The trial config data. This data can be used by the pre-trial hooks to determine the config for the rest of the componenents.
+-   user_id: The ID of the user that is starting the trial.
 
 ### TrialStartReply
 
@@ -379,8 +379,8 @@ message TrialStartReply {
 }
 ```
 
-- trial_id: UUID of the newly started trial.
-- actors_in_trial: The list of all actors in the trial. This list has the same length and order as the list of actors provided in different places in the API, for the same trial. The list can be empty (or not present) in some circumstances, even if there are actors (if necessary the list can be obtained in other ways).
+-   trial_id: UUID of the newly started trial.
+-   actors_in_trial: The list of all actors in the trial. This list has the same length and order as the list of actors provided in different places in the API, for the same trial. The list can be empty (or not present) in some circumstances, even if there are actors (if necessary the list can be obtained in other ways).
 
 ### `TerminateTrialRequest`
 
@@ -408,7 +408,7 @@ message TrialInfoRequest {
 }
 ```
 
-- get_latest_observation: If true, request the latest environment observation available for the trial (in addition to standard information).
+-   get_latest_observation: If true, request the latest environment observation available for the trial (in addition to standard information).
 
 ### `TrialInfoReply`
 
@@ -420,7 +420,7 @@ message TrialInfoReply {
 }
 ```
 
-- trial: List of information about the trials. Contains only the requested trial info if a trial ID was provided when the call was made (as metadata to the procedure). Otherwise contains information about all active trials.
+-   trial: List of information about the trials. Contains only the requested trial info if a trial ID was provided when the call was made (as metadata to the procedure). Otherwise contains information about all active trials.
 
 ### `TrialState`
 
@@ -437,12 +437,12 @@ enum TrialState {
 }
 ```
 
-- UNKNOWN: Should not be used (requirements of protobuf enums to have a 0 default value).
-- INITIALIZING: The trial is in the process of starting.
-- PENDING: The trial is waiting for its final parameters, before running.
-- RUNNING: The trial is running.
-- TERMINATING: The trial is in the process of terminating (either a request to terminate has been received or the last observation has been received).
-- ENDED: The trial has ended. Only a set number of ended trials will be kept (configured in the Orchestrator).
+-   UNKNOWN: Should not be used (requirements of protobuf enums to have a 0 default value).
+-   INITIALIZING: The trial is in the process of starting.
+-   PENDING: The trial is waiting for its final parameters, before running.
+-   RUNNING: The trial is running.
+-   TERMINATING: The trial is in the process of terminating (either a request to terminate has been received or the last observation has been received).
+-   ENDED: The trial has ended. Only a set number of ended trials will be kept (configured in the Orchestrator).
 
 ### `TrialInfo`
 
@@ -459,12 +459,12 @@ message TrialInfo {
 }
 ```
 
-- trial_id: The UUID of the trial.
-- state: The state of the trial.
-- tick_id: The current tick of the trial.
-- trial_duration: The duration of the trial so far, in nanoseconds. If the trial has ended, this is the duration from start to end of the trial. This is meant as an indicator; resolution may not be a nanosecond, and precision is not garanteed.
-- latest_observation: The latest environment observations for all actors. This will be provided only if requested in the `TrialInfoRequest`.
-- actors_in_trial: The list of active actors in the trial.
+-   trial_id: The UUID of the trial.
+-   state: The state of the trial.
+-   tick_id: The current tick of the trial.
+-   trial_duration: The duration of the trial so far, in nanoseconds. If the trial has ended, this is the duration from start to end of the trial. This is meant as an indicator; resolution may not be a nanosecond, and precision is not garanteed.
+-   latest_observation: The latest environment observations for all actors. This will be provided only if requested in the `TrialInfoRequest`.
+-   actors_in_trial: The list of active actors in the trial.
 
 ### `TrialListRequest`
 
@@ -476,7 +476,7 @@ message TrialListRequest {
 }
 ```
 
-- filter: The list of states that are requested. If a trial is not in a state found in this list, it will not be reported. If the list is empty, all states will be reported.
+-   filter: The list of states that are requested. If a trial is not in a state found in this list, it will not be reported. If the list is empty, all states will be reported.
 
 ### `TrialListEntry`
 
@@ -490,8 +490,8 @@ message TrialListEntry {
 
 ```
 
-- trial_id: The UUID of the trial.
-- state: The state of the trial.
+-   trial_id: The UUID of the trial.
+-   state: The state of the trial.
 
 ## Client Actor API
 
@@ -527,8 +527,8 @@ Actor actions are provided to the orchestrator in the request stream, and trial 
 
 Metadata:
 
-- `trial-id`: UUID of the trial the current actor is participating in. This comes from the `JoinTrial` reply.
-- `actor-name`: The name of the current actor participating in the trial. This is supplied (or confirmed) in the `JoinTrial` reply.
+-   `trial-id`: UUID of the trial the current actor is participating in. This comes from the `JoinTrial` reply.
+-   `actor-name`: The name of the current actor participating in the trial. This is supplied (or confirmed) in the `JoinTrial` reply.
 
 #### `Heartbeat()`
 
@@ -537,8 +537,8 @@ Otherwise the actor will be considered terminated and be disconnected.
 
 Metadata:
 
-- `trial-id`: UUID of the trial the current actor is participating in. This comes from the `JoinTrial` reply.
-- `actor-name`: The name of the current actor participating in the trial. This is supplied (or confirmed) in the `JoinTrial` reply.
+-   `trial-id`: UUID of the trial the current actor is participating in. This comes from the `JoinTrial` reply.
+-   `actor-name`: The name of the current actor participating in the trial. This is supplied (or confirmed) in the `JoinTrial` reply.
 
 #### `SendReward()`
 
@@ -546,8 +546,8 @@ Used to provide feedback to other actors in the same trial as current actor.
 
 Metadata:
 
-- `trial-id`: UUID of the trial the current actor is participating in. This comes from the `JoinTrial` reply.
-- `actor-name`: The name of the current actor participating in the trial. This is supplied (or confirmed) in the `JoinTrial` reply.
+-   `trial-id`: UUID of the trial the current actor is participating in. This comes from the `JoinTrial` reply.
+-   `actor-name`: The name of the current actor participating in the trial. This is supplied (or confirmed) in the `JoinTrial` reply.
 
 #### `SendMessage()`
 
@@ -555,8 +555,8 @@ Used to asynchronously send data to other actors (or the environment) in the sam
 
 Metadata:
 
-- `trial-id`: UUID of the trial the current actor is participating in. This comes from the `JoinTrial` reply.
-- `actor-name`: The name of the current actor participating in the trial. This is supplied (or confirmed) in the `JoinTrial` reply.
+-   `trial-id`: UUID of the trial the current actor is participating in. This comes from the `JoinTrial` reply.
+-   `actor-name`: The name of the current actor participating in the trial. This is supplied (or confirmed) in the `JoinTrial` reply.
 
 #### `Version()`
 
@@ -579,9 +579,9 @@ message TrialJoinRequest {
 }
 ```
 
-- trial_id: The UUID of the trial the actor requests to join.
-- actor_class: The class the actor requests to join as. No actor name should be requested if this is used.
-- actor_name: The name the actor requests to join as. No actor class should be requested if this is used.
+-   trial_id: The UUID of the trial the actor requests to join.
+-   actor_class: The class the actor requests to join as. No actor name should be requested if this is used.
+-   actor_name: The name the actor requests to join as. No actor class should be requested if this is used.
 
 ### `TrialJoinReply`
 
@@ -596,10 +596,10 @@ message TrialJoinReply {
 }
 ```
 
-- actor_name: The name assignbed to the current actor in joining the trial.
-- trial_id: The UUID of the trial joined.
-- config: The configuration to start the actor.
-- actors_in_trial: The list of all actors in the trial (including current actor). This list has the same length and order as the list of actors provided in different places in the API, for the same trial. The list can be empty (or not present) in some circumstances, even if there are actors (if necessary the list can be obtained in other ways).
+-   actor_name: The name assignbed to the current actor in joining the trial.
+-   trial_id: The UUID of the trial joined.
+-   config: The configuration to start the actor.
+-   actors_in_trial: The list of all actors in the trial (including current actor). This list has the same length and order as the list of actors provided in different places in the API, for the same trial. The list can be empty (or not present) in some circumstances, even if there are actors (if necessary the list can be obtained in other ways).
 
 ### `TrialHeartbeatRequest`
 
@@ -627,7 +627,7 @@ message TrialActionRequest {
 }
 ```
 
-- action: The action taken by the current actor. This is typically in response to an observation (from the reply message). The first action after joining a trial (before any observations have been received) should be empty.
+-   action: The action taken by the current actor. This is typically in response to an observation (from the reply message). The first action after joining a trial (before any observations have been received) should be empty.
 
 ### `TrialActionReply`
 
@@ -640,8 +640,8 @@ message TrialActionReply {
 }
 ```
 
-- data: The trial data for the current actor. This data can span a period of time, but is typically for one time step (tick).
-- final_data: If this is true, the data provided is final and no more reply messages will be received after this one.
+-   data: The trial data for the current actor. This data can span a period of time, but is typically for one time step (tick).
+-   final_data: If this is true, the data provided is final and no more reply messages will be received after this one.
 
 ### `TrialRewardRequest`
 
@@ -653,7 +653,7 @@ message TrialRewardRequest {
 }
 ```
 
-- rewards: The rewards to send to one or more actors.
+-   rewards: The rewards to send to one or more actors.
 
 ### `TrialRewardReply`
 
@@ -673,7 +673,7 @@ message TrialMessageRequest {
 }
 ```
 
-- messages: User data to send to other actors or the environment. The sender_name entry should not be set (it is part of the metadata of the procedure).
+-   messages: User data to send to other actors or the environment. The sender_name entry should not be set (it is part of the metadata of the procedure).
 
 ### `TrialMessageReply`
 
@@ -710,8 +710,8 @@ Called when a new trial is started.
 
 Metadata:
 
-- `trial-id`: UUID of the new trial the actor is participating in.
-- `actor-name`: The name the actor has been assigned in the new trial.
+-   `trial-id`: UUID of the new trial the actor is participating in.
+-   `actor-name`: The name the actor has been assigned in the new trial.
 
 #### `OnObservation()`
 
@@ -719,8 +719,8 @@ Called when a new observation from the environment is available.
 
 Metadata:
 
-- `trial-id`: UUID of the trial that is the source of the data.
-- `actor-name`: The name of the actor for which the data is intended.
+-   `trial-id`: UUID of the trial that is the source of the data.
+-   `actor-name`: The name of the actor for which the data is intended.
 
 #### `OnReward()`
 
@@ -728,8 +728,8 @@ Called when a new reward is available.
 
 Metadata:
 
-- `trial-id`: UUID of the trial that is the source of the data.
-- `actor-name`: The name of the actor for which the data is intended.
+-   `trial-id`: UUID of the trial that is the source of the data.
+-   `actor-name`: The name of the actor for which the data is intended.
 
 #### `OnMessage()`
 
@@ -737,8 +737,8 @@ Called when new user data (messages) is available.
 
 Metadata:
 
-- `trial-id`: UUID of the trial that is the source of the data.
-- `actor-name`: The name of the actor for which the data is intended.
+-   `trial-id`: UUID of the trial that is the source of the data.
+-   `actor-name`: The name of the actor for which the data is intended.
 
 #### `OnEnd()`
 
@@ -747,8 +747,8 @@ No more calls will be done related to the trial after this call.
 
 Metadata:
 
-- `trial-id`: UUID of the trial that ended.
-- `actor-name`: The name of the actor for which the data is intended.
+-   `trial-id`: UUID of the trial that ended.
+-   `actor-name`: The name of the actor for which the data is intended.
 
 #### `Version()`
 
@@ -768,9 +768,9 @@ message AgentStartRequest {
 }
 ```
 
-- impl_name: (optional) Name of the implementation that should run the actor in this trial. If not provided, an arbitrary implementation will be used.
-- config: The configuration to start the actor.
-- actors_in_trial: The list of all actors in the trial (including current actor). This list has the same length and order as the list of actors provided in different places in the API, for the same trial. The list can be empty (or not present) in some circumstances, even if there are actors (if necessary the list can be obtained in other ways).
+-   impl_name: (optional) Name of the implementation that should run the actor in this trial. If not provided, an arbitrary implementation will be used.
+-   config: The configuration to start the actor.
+-   actors_in_trial: The list of all actors in the trial (including current actor). This list has the same length and order as the list of actors provided in different places in the API, for the same trial. The list can be empty (or not present) in some circumstances, even if there are actors (if necessary the list can be obtained in other ways).
 
 ### `AgentStartReply`
 
@@ -790,7 +790,7 @@ message AgentObservationRequest {
 }
 ```
 
-- observation: An observation from the environment.
+-   observation: An observation from the environment.
 
 ### `AgenActionReply`
 
@@ -804,9 +804,9 @@ message AgentActionReply {
 }
 ```
 
-- action: An action for the environment.
-- rewards: Rewards for other actors.
-- messages: User data to send to other actors or the environment. The sender_name entry should not be set.
+-   action: An action for the environment.
+-   rewards: Rewards for other actors.
+-   messages: User data to send to other actors or the environment. The sender_name entry should not be set.
 
 ### `AgentRewardRequest`
 
@@ -818,7 +818,7 @@ message AgentRewardRequest {
 }
 ```
 
-- reward: Reward received from aggregating various rewards from actors or the environment.
+-   reward: Reward received from aggregating various rewards from actors or the environment.
 
 ### `AgentRewardReply`
 
@@ -838,7 +838,7 @@ message AgentMessageRequest {
 }
 ```
 
-- messages: List of messages from actors or the environment.
+-   messages: List of messages from actors or the environment.
 
 ### `AgentMessageReply`
 
@@ -858,7 +858,7 @@ message AgentEndRequest {
 }
 ```
 
-- final_data: The final (last) data for the trial.
+-   final_data: The final (last) data for the trial.
 
 ### `AgentEndReply`
 
@@ -895,7 +895,7 @@ Called when a new trial is started.
 
 Metadata:
 
-- `trial-id`: UUID of the new trial the environment is running.
+-   `trial-id`: UUID of the new trial the environment is running.
 
 #### `OnAction()`
 
@@ -903,7 +903,7 @@ Called when a set of actions from actors is available.
 
 Metadata:
 
-- `trial-id`: UUID of the trial that is the source of the data.
+-   `trial-id`: UUID of the trial that is the source of the data.
 
 #### `OnMessage()`
 
@@ -911,7 +911,7 @@ Called when user data from actors is received.
 
 Metadata:
 
-- `trial-id`: UUID of the trial that is the source of the data.
+-   `trial-id`: UUID of the trial that is the source of the data.
 
 #### `OnEnd()`
 
@@ -920,7 +920,7 @@ If no reply is sent within a pre-determined time, the environment is considered 
 
 Metadata:
 
-- `trial-id`: UUID of the trial to end.
+-   `trial-id`: UUID of the trial to end.
 
 #### `Version()`
 
@@ -941,10 +941,10 @@ message EnvStartRequest {
 }
 ```
 
-- impl_name: (optional) Name of the implementation that should run the environment for this trial. If not provided, an arbitrary implementation will be used.
-- config: The configuration to start the environment.
-- actors_in_trial: The list of all actors in the trial. This list has the same length and order as the list of actors provided in different places in the API, for the same trial.
-- tick_id: The expected tick of the observation set returned in `EnvStartReply`.
+-   impl_name: (optional) Name of the implementation that should run the environment for this trial. If not provided, an arbitrary implementation will be used.
+-   config: The configuration to start the environment.
+-   actors_in_trial: The list of all actors in the trial. This list has the same length and order as the list of actors provided in different places in the API, for the same trial.
+-   tick_id: The expected tick of the observation set returned in `EnvStartReply`.
 
 ### `EnvStartReply`
 
@@ -956,7 +956,7 @@ message EnvStartReply {
 }
 ```
 
-- observation_set: A set of observations for all actors of the trial.
+-   observation_set: A set of observations for all actors of the trial.
 
 ### `EnvActionRequest`
 
@@ -974,10 +974,10 @@ message EnvActionRequest {
 }
 ```
 
-- actions: A list of actions, one for each actor of the trial. This list has the same length and order as the list of actors provided in different places in the API (e.g. `actors_in_trial`), for the same trial. Each action is the serialization of the appropriate type for the actor (as defined in the `cogment.yaml` file).
-- tick_id: The tick of the observations on which the actions are taken.
-- action_set: The set of actions for all actors.
-- reply_with_snapshot: If true, then request that the observations for the actors (in the reply) be snapshots. If false, the observations can be snapshots or deltas (at the discretion of the environment). See [ObservationData](#observationdata).
+-   actions: A list of actions, one for each actor of the trial. This list has the same length and order as the list of actors provided in different places in the API (e.g. `actors_in_trial`), for the same trial. Each action is the serialization of the appropriate type for the actor (as defined in the `cogment.yaml` file).
+-   tick_id: The tick of the observations on which the actions are taken.
+-   action_set: The set of actions for all actors.
+-   reply_with_snapshot: If true, then request that the observations for the actors (in the reply) be snapshots. If false, the observations can be snapshots or deltas (at the discretion of the environment). See [ObservationData](#observationdata).
 
 ### `EnvActionReply`
 
@@ -992,11 +992,11 @@ message EnvActionReply {
 }
 ```
 
-- observation_set: A set of observations for all actors of the trial.
-- rewards: A list of rewards for actors.
-- messages: User data to send to actors. The sender_name entry should not be set.
-- messages: A list of messages for actors. The sender actor entry should not be filled.
-- final_update: If true, this will be the final update of the environment for this trial (i.e. end of the trial). This should always be true when replying to an `OnEnd` procedure call.
+-   observation_set: A set of observations for all actors of the trial.
+-   rewards: A list of rewards for actors.
+-   messages: User data to send to actors. The sender_name entry should not be set.
+-   messages: A list of messages for actors. The sender actor entry should not be filled.
+-   final_update: If true, this will be the final update of the environment for this trial (i.e. end of the trial). This should always be true when replying to an `OnEnd` procedure call.
 
 ### `EnvMessageRequest`
 
@@ -1008,7 +1008,7 @@ message EnvMessageRequest {
 }
 ```
 
-- messages: List of messages from actors.
+-   messages: List of messages from actors.
 
 ### `EnvMessageReply`
 
@@ -1077,16 +1077,16 @@ message LogExporterSampleRequest {
 }
 ```
 
-- tick_id: The current tick of the trial.
-- timestamp: The time at the beginning of the tick.
-- state: The state of the trial at the end of the tick.
-- user_id: The ID of the user that started the trial.
-- observations: A set of observations for all actors.
-- actions: Actions from all actors. This list has the same length and order as the list of actors provided in different places in the API (e.g. `actors_in_trial`), for the same trial. Of interest here; it matches the list of actors provided in `trial_params`.
-- rewards: List of rewards sent to actors.
-- messages: List of user data sent to actors or the environment.
-- trial_params: Trial params used for a new trial. This is usually sent on start of a trial before any other sample from the trial.
-- sample: A data sample to be logged.
+-   tick_id: The current tick of the trial.
+-   timestamp: The time at the beginning of the tick.
+-   state: The state of the trial at the end of the tick.
+-   user_id: The ID of the user that started the trial.
+-   observations: A set of observations for all actors.
+-   actions: Actions from all actors. This list has the same length and order as the list of actors provided in different places in the API (e.g. `actors_in_trial`), for the same trial. Of interest here; it matches the list of actors provided in `trial_params`.
+-   rewards: List of rewards sent to actors.
+-   messages: List of user data sent to actors or the environment.
+-   trial_params: Trial params used for a new trial. This is usually sent on start of a trial before any other sample from the trial.
+-   sample: A data sample to be logged.
 
 ### `LogExporterSampleReply`
 
@@ -1117,7 +1117,7 @@ Called before a trial is started to set or modify the parameters for the trial.
 
 Metadata:
 
-- `trial-id`: UUID of the new trial that will be started.
+-   `trial-id`: UUID of the new trial that will be started.
 
 #### `Version()`
 
@@ -1137,6 +1137,6 @@ message PreTrialContext {
 }
 ```
 
-- impl_name: (optional) Name of the implementation that should run the hook. If not provided, an arbitrary implementation will be used. Set on a request, ignored when replying.
-- params: The trial parameters so far. The first hook to be called will receive the default parameters present in the `cogment.yaml` file, and subsequent hooks will receive the parameters sent from the previous hook. Typically, changes are made to this data and the message sent as a reply.
-- user_id: The ID of the user that is starting the trial. Set on a request, ignored when replying.
+-   impl_name: (optional) Name of the implementation that should run the hook. If not provided, an arbitrary implementation will be used. Set on a request, ignored when replying.
+-   params: The trial parameters so far. The first hook to be called will receive the default parameters present in the `cogment.yaml` file, and subsequent hooks will receive the parameters sent from the previous hook. Typically, changes are made to this data and the message sent as a reply.
+-   user_id: The ID of the user that is starting the trial. Set on a request, ignored when replying.

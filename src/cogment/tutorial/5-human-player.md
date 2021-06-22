@@ -41,11 +41,11 @@ We can then set its value for the default trial in `cogment.yaml`.
 
 ```yaml
 trial_params:
-  environment:
-    endpoint: grpc://environment:9000
-    config:
-      target_game_score: 2
-      target_games_count: 5
+    environment:
+        endpoint: grpc://environment:9000
+        config:
+            target_game_score: 2
+            target_games_count: 5
 ```
 
 Environment implementations can trigger the end of a trial by calling the `end` function on the session instance. In our existing implementation, we will first prepare the observations instead of producing them right away.
@@ -138,11 +138,11 @@ We then need to modify the `cogment.yaml` to let the orchestrator know that `pla
 
 ```yaml
 actors:
-  - name: player_1
-    actor_class: player
-    endpoint: client
-    # implementation: random_agent
-    # endpoint: grpc://random-agent:9000
+    - name: player_1
+      actor_class: player
+      endpoint: client
+      # implementation: random_agent
+      # endpoint: grpc://random-agent:9000
 ```
 
 You can now [build and run](./1-bootstrap-and-data-structures.md#building-and-running-the-app) the application. Everything should work but player 1 shouldn't fare too well as it only ever plays `PAPER`.

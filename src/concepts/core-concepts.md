@@ -12,13 +12,13 @@ Cogment is built around concepts adapted from multi-agent systems (agents, envir
 
 During the trial:
 
-- The [Environment](./glossary.md#environment) generates [**observations**](./glossary.md#observation) of its internal state and sends them to the [actors](./glossary.md#actor).
-- Given these [observations](./glossary.md#observation), each [actor](./glossary.md#actor) might choose and take an [**action**](./glossary.md#action).
-- The [Environment](./glossary.md#environment) receives the [actions](./glossary.md#action) and updates its state.
-- [**Rewards**](./glossary.md#reward) can be sent to the [actors](./glossary.md#actor) from either the environment or other actors.
-- [Actors](./glossary.md#actor) receive [**rewards**](./glossary.md#reward).
-- The [actors](./glossary.md#actor) or the [environment](./glossary.md#environment) can send [**messages**](./glossary.md#message) to actors or the environment.
-- A log of the activity during the trial (observations, actions, rewards & messages) is produced and can be stored.
+-   The [Environment](./glossary.md#environment) generates [**observations**](./glossary.md#observation) of its internal state and sends them to the [actors](./glossary.md#actor).
+-   Given these [observations](./glossary.md#observation), each [actor](./glossary.md#actor) might choose and take an [**action**](./glossary.md#action).
+-   The [Environment](./glossary.md#environment) receives the [actions](./glossary.md#action) and updates its state.
+-   [**Rewards**](./glossary.md#reward) can be sent to the [actors](./glossary.md#actor) from either the environment or other actors.
+-   [Actors](./glossary.md#actor) receive [**rewards**](./glossary.md#reward).
+-   The [actors](./glossary.md#actor) or the [environment](./glossary.md#environment) can send [**messages**](./glossary.md#message) to actors or the environment.
+-   A log of the activity during the trial (observations, actions, rewards & messages) is produced and can be stored.
 
 A trial is defined by the participating [Actors](./glossary.md#actor) and the host [Environment](./glossary.md#environment). As a concept, Trials are quite close to Reinforcement Learning (RL)'s **Episodes**, i.e. all the states that come between an initial state and a terminal state. However, because Cogment can be used outside of an RL context, we prefer using the more generic term of Trial.
 
@@ -64,10 +64,10 @@ The Environment implementation is accessed by the [Orchestrator](./glossary.md#o
 
 Using one of [Cogment's SDKs](../cogment/cogment-api-guide.md), the Environment can be implemented as a function integrating a _"state of the world"_ with the [Trial](./glossary.md#trial). This function performs the following tasks during the Trial:
 
-- Generate [Observations](./glossary.md#observation) from the current _state of the world_, for example retrieving the visible objects from a 3D simulation.
-- Apply the [Actions](./glossary.md#action), thus updating the _state of the world_, for example changing the velocity of a moving vehicle in a race simulation.
-- Evaluate the performance of [Actors](./glossary.md#actor) and send them [Rewards](./glossary.md#reward), for example by checking if a vehicle crossed the finish line in a race simulation.
-- Send and receive direct messages.
+-   Generate [Observations](./glossary.md#observation) from the current _state of the world_, for example retrieving the visible objects from a 3D simulation.
+-   Apply the [Actions](./glossary.md#action), thus updating the _state of the world_, for example changing the velocity of a moving vehicle in a race simulation.
+-   Evaluate the performance of [Actors](./glossary.md#actor) and send them [Rewards](./glossary.md#reward), for example by checking if a vehicle crossed the finish line in a race simulation.
+-   Send and receive direct messages.
 
 ### Actors
 
@@ -75,9 +75,9 @@ Actors can be implemented in two different ways, either as a service or as a cli
 
 Using one of [Cogment's SDKs](../cogment/cogment-api-guide.md) Actors can be implemented as functions handling the integration between a decision-making Actor ([software agent](./glossary.md#agent) or Human) and the [Trial](./glossary.md#trial). This function performs the following tasks during the Trial:
 
-- Receive [Observations](./glossary.md#observation) and do [Actions](./glossary.md#action) in response, for example vectorizing the retrieved observation, feeding it to a neural network and converting its output to an Action.
-- Receive [Rewards](./glossary.md#reward), for example using them to update a neural network.
-- Send and receive direct messages.
+-   Receive [Observations](./glossary.md#observation) and do [Actions](./glossary.md#action) in response, for example vectorizing the retrieved observation, feeding it to a neural network and converting its output to an Action.
+-   Receive [Rewards](./glossary.md#reward), for example using them to update a neural network.
+-   Send and receive direct messages.
 
 Please note that rewards can also be retrieved after the fact using an [activity logger](#additional-optional-services).
 
@@ -85,5 +85,5 @@ Please note that rewards can also be retrieved after the fact using an [activity
 
 Beyond the core services described above, a Cogment deployment can include these additional ones:
 
-- **Pre trial hooks** can be used to dynamically setup Trials from a given configuration, for example changing the number of Actors or pointing to other Environment or Actor implementations.
-- **Activity Logger** can be used to listen to the activity during a trial (actions, observations, rewards, messages) in order to, for example, store these data for the offline training of AI agents.
+-   **Pre trial hooks** can be used to dynamically setup Trials from a given configuration, for example changing the number of Actors or pointing to other Environment or Actor implementations.
+-   **Activity Logger** can be used to listen to the activity during a trial (actions, observations, rewards, messages) in order to, for example, store these data for the offline training of AI agents.

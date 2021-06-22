@@ -16,6 +16,8 @@ taskipy = "^1.2.1"
 [tool.taskipy.tasks]
 dev = "mkdocs serve"
 build = "mkdocs build --clean"
+lint = "npx prettier --check ."
+lint_fix = "npx prettier --write ."
 
 [build-system]
 requires = ["poetry>=0.12"]

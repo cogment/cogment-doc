@@ -29,14 +29,14 @@ We can now configure one of the `player` in the default trial, defined in `cogme
 
 ```yaml
 actors:
-  - name: player_1
-    actor_class: player
-    implementation: random_agent
-    endpoint: grpc://random-agent:9000
-  - name: player_2
-    actor_class: player
-    implementation: heuristic_agent
-    endpoint: grpc://random-agent:9000
+    - name: player_1
+      actor_class: player
+      implementation: random_agent
+      endpoint: grpc://random-agent:9000
+    - name: player_2
+      actor_class: player
+      implementation: heuristic_agent
+      endpoint: grpc://random-agent:9000
 ```
 
 Modify the `cogment.yaml` file to include the above addition.
@@ -49,9 +49,9 @@ While the `random_player` ignored the state of the game, picking its move at ran
 
 We will implement a subset of the strategies described in [this](https://towardsai.net/p/artificial-intelligence/towards-an-ai-for-rock-paper-scissors-3fb05780271f){target=\_blank} article:
 
-- If I won the last round, do the same thing,
-- If my opponent won the last round, play the move that would have won against his,
-- If the last round was a draw, play a random move.
+-   If I won the last round, do the same thing,
+-   If my opponent won the last round, play the move that would have won against his,
+-   If the last round was a draw, play a random move.
 
 We will start by redefining in `random_agent/main.py` the same `DEFEATS` we used by the environment.
 

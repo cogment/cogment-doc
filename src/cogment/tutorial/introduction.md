@@ -14,11 +14,11 @@ Let's quote [wikipedia](https://en.wikipedia.org/wiki/Rock_paper_scissors){targe
 
 Its rules can be expressed with the following statements:
 
-- 2 players are competing to win the most rounds in a game;
-- During each round, players play one move each, simultaneously;
-- 3 moves are available, rock, paper and scissors;
-- rock beats scissors, scissors beats paper and paper beats rock;
-- playing the same move leads to a draw and the round needs to be replayed.
+-   2 players are competing to win the most rounds in a game;
+-   During each round, players play one move each, simultaneously;
+-   3 moves are available, rock, paper and scissors;
+-   rock beats scissors, scissors beats paper and paper beats rock;
+-   playing the same move leads to a draw and the round needs to be replayed.
 
 RPS is a very simple game with straightforward rules. As long as we "forbid" pure random moves, that are very difficult to beat, it is an interesting testbed to develop AIs that compete with Humans. Unlike _deep_ games such as chess or go, the power is not really in the brute force exploration of possible outcomes but in getting some level of understanding of how the opponent plays to be able to anticipate their moves.
 
@@ -32,11 +32,11 @@ In the first 5 steps of the tutorial, you'll go from a blank state to a Cogment 
 
 The implementations will be done in Python 3, you'll need a good knowledge of the language to follow through.
 
-- [Step 1: Bootstrap the RPS project and define observation & action space data structures](./1-bootstrap-and-data-structures.md)
-- [Step 2: Implement a first actor and environment](./2-random-player.md)
-- [Step 3: Introduce rewards](./3-rewards.md)
-- [Step 4: Create a second actor implementation based on a heuristic](./4-heuristic-player.md)
-- [Step 5: Add a human player in the loop](./5-human-player.md)
+-   [Step 1: Bootstrap the RPS project and define observation & action space data structures](./1-bootstrap-and-data-structures.md)
+-   [Step 2: Implement a first actor and environment](./2-random-player.md)
+-   [Step 3: Introduce rewards](./3-rewards.md)
+-   [Step 4: Create a second actor implementation based on a heuristic](./4-heuristic-player.md)
+-   [Step 5: Add a human player in the loop](./5-human-player.md)
 
 ## Webapp
 
@@ -44,7 +44,7 @@ In the sixth step of the tutorial, you'll implement your first webapp to provide
 
 The implementation will be done in Javascript, using React.
 
-- [Step 6: Implement a web client for the human player](./6-web-client.md)
+-   [Step 6: Implement a web client for the human player](./6-web-client.md)
 
 ## Learning actors
 
@@ -52,4 +52,4 @@ In the seventh step of the tutorial, you'll implement an actor trained with Rein
 
 The implementation will be done in Python, using Tensorflow.
 
-- [Step 7: Add a player trained with Reinforcement Learning using DQN](./7-dqn-player.md)
+-   [Step 7: Add a player trained with Reinforcement Learning using DQN](./7-dqn-player.md)

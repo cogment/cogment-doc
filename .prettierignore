@@ -1,0 +1,6 @@
+# Output directories
+publish
+public
+
+# Generated files
+src/cogment/cogment-api-reference/javascript

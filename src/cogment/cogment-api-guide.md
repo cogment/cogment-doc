@@ -16,23 +16,23 @@ For example, in the following, `driver` and `pedestrian` share a common view of 
 
 ```yaml
 import:
-  proto:
-    - city.proto
+    proto:
+        - city.proto
 
 actors:
-  driver:
-    observation:
-      space: city.Observation
+    driver:
+        observation:
+            space: city.Observation
 
-    action:
-      space: city.DriverAction
+        action:
+            space: city.DriverAction
 
-  pedestrian:
-    observation:
-      space: city.Observation
+    pedestrian:
+        observation:
+            space: city.Observation
 
-    action:
-      space: city.PedestrianAction
+        action:
+            space: city.PedestrianAction
 ```
 
 > ⚠️ This shows only the relevant part of the full `cogment.yaml`, you can find the full list of configurable options [in the reference page](./cogment-api-reference/cogment-yaml.md).
@@ -55,9 +55,9 @@ The cogment cli will also compile the imported [`.proto`](../concepts/glossary.m
 
 This function will be called once for each [trial](../concepts/glossary.md#trial). This function usually consists of three sections.
 
-- The environment's **initialization**, where its internal state can be initialized and processes started. It ends with the sending of the initial observations to the actors participating in the trial.
-- Its **event loop**, where the environment iterates through the events occurring during the trial and produces [observations](../concepts/glossary.md#observation) as well as receives [messages](../concepts/glossary.md#message). In this loop the environment can end the trial on its own or the end can be requested by a [controller](#controller).
-- Its **termination**, where cleanup occurs.
+-   The environment's **initialization**, where its internal state can be initialized and processes started. It ends with the sending of the initial observations to the actors participating in the trial.
+-   Its **event loop**, where the environment iterates through the events occurring during the trial and produces [observations](../concepts/glossary.md#observation) as well as receives [messages](../concepts/glossary.md#message). In this loop the environment can end the trial on its own or the end can be requested by a [controller](#controller).
+-   Its **termination**, where cleanup occurs.
 
 In the common case where all actors within a trial share the same observation, a bare-minimum environment service would look like this:
 
@@ -131,9 +131,9 @@ Please note that the environment should always send observations such as each ac
 
 The event loops in Actors' implementations handle three basic types of events:
 
-- `observation` produced by the environment and that should lead to an action being done.
-- `rewards` sent by other actors or the environment, we'll talk about them in more details [below](#reward).
-- `messages` sent by other actors or the environment, we'll talk about them in more details [below](#messages).
+-   `observation` produced by the environment and that should lead to an action being done.
+-   `rewards` sent by other actors or the environment, we'll talk about them in more details [below](#reward).
+-   `messages` sent by other actors or the environment, we'll talk about them in more details [below](#messages).
 
 A typical actor implementation would look like this:
 
@@ -323,16 +323,16 @@ def apply_delta(previous_observation, delta):
 ```yaml
 # cogment.yaml
 import:
-  proto:
-    - city.proto
-  python:
-    - delta
+    proto:
+        - city.proto
+    python:
+        - delta
 
 actors:
-  my_class:
-    observation:
-      space: city.Observation
-      delta: city.ObservationDelta
-      delta_apply_fn:
-        python: delta.apply_delta
+    my_class:
+        observation:
+            space: city.Observation
+            delta: city.ObservationDelta
+            delta_apply_fn:
+                python: delta.apply_delta
 ```

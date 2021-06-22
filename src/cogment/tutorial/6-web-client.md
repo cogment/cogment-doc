@@ -52,28 +52,28 @@ For these services, let's add the following to the end of our docker-compose.yam
 
 ```yaml
 web-client:
-  build:
-    context: web-client
-    dockerfile: ../js_service.dockerfile
-  environment:
-    - NODE_ENV=development
-    - CHOKIDAR_USEPOLLING=true
-    - REACT_APP_APP_VERSION=dev
-  restart: on-failure
-  ports:
-    - "3000:3000"
-  depends_on:
-    - grpcwebproxy
+    build:
+        context: web-client
+        dockerfile: ../js_service.dockerfile
+    environment:
+        - NODE_ENV=development
+        - CHOKIDAR_USEPOLLING=true
+        - REACT_APP_APP_VERSION=dev
+    restart: on-failure
+    ports:
+        - "3000:3000"
+    depends_on:
+        - grpcwebproxy
 
 grpcwebproxy:
-  build:
-    context: ./grpcwebproxy
-    dockerfile: ../grpcwebproxy.dockerfile
-  restart: on-failure
-  ports:
-    - "8080:8080"
-  depends_on:
-    - orchestrator
+    build:
+        context: ./grpcwebproxy
+        dockerfile: ../grpcwebproxy.dockerfile
+    restart: on-failure
+    ports:
+        - "8080:8080"
+    depends_on:
+        - orchestrator
 ```
 
 We will also need two additional dockerfiles to go along these entries. The first one will be `grpcwebproxy.dockerfile`, with the following content:
@@ -160,8 +160,8 @@ index.css:
 
 ```css
 body {
-  margin: 0;
-  background-color: #c5cce8;
+    margin: 0;
+    background-color: #c5cce8;
 }
 ```
 
@@ -173,32 +173,32 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import { App } from "./App";
 import {
-  createMuiTheme,
-  responsiveFontSizes,
-  ThemeProvider,
+    createMuiTheme,
+    responsiveFontSizes,
+    ThemeProvider,
 } from "@material-ui/core/styles";
 
 let theme = createMuiTheme({
-  palette: {
-    primary: {
-      light: "#c5cce8",
-      main: "#6B80C4",
+    palette: {
+        primary: {
+            light: "#c5cce8",
+            main: "#6B80C4",
+        },
+        secondary: {
+            main: "#ffb400",
+        },
     },
-    secondary: {
-      main: "#ffb400",
-    },
-  },
 });
 
 theme = responsiveFontSizes(theme);
 
 ReactDOM.render(
-  <React.StrictMode>
-    <ThemeProvider theme={theme}>
-      <App />
-    </ThemeProvider>
-  </React.StrictMode>,
-  document.getElementById("root")
+    <React.StrictMode>
+        <ThemeProvider theme={theme}>
+            <App />
+        </ThemeProvider>
+    </React.StrictMode>,
+    document.getElementById("root")
 );
 ```
 
@@ -214,11 +214,11 @@ import React, { useEffect } from "react";
 
 //Then some imports for icons and Material UI functionality we'll be using
 import {
-  Box,
-  Button,
-  makeStyles,
-  Typography,
-  useTheme,
+    Box,
+    Button,
+    makeStyles,
+    Typography,
+    useTheme,
 } from "@material-ui/core";
 
 //And here's the important part: we're importing the two things that will allow us to use Cogment.
@@ -239,16 +239,16 @@ Then we add a function that will convert the play, encoded as the same "move" en
 
 ```jsx
 function getMoveText(move) {
-  switch (move) {
-    case 0:
-      return "rock";
-    case 1:
-      return "paper";
-    case 2:
-      return "scissors";
-    default:
-      throw new Error("Not a rock, paper, or scissors");
-  }
+    switch (move) {
+        case 0:
+            return "rock";
+        case 1:
+            return "paper";
+        case 2:
+            return "scissors";
+        default:
+            throw new Error("Not a rock, paper, or scissors");
+    }
 }
 ```
 
@@ -258,112 +258,112 @@ At the start of this component is the most important part of our application: th
 
 This hook returns an array with 3 elements:
 
-- event: this contains all the information about any observation, reward, or message we've received this tick. We will use this to see what plays we and the computer made.
+-   event: this contains all the information about any observation, reward, or message we've received this tick. We will use this to see what plays we and the computer made.
 
-- startTrial: this is a function which takes no arguments, and is a very simple way to start a new trial with our player actor.
+-   startTrial: this is a function which takes no arguments, and is a very simple way to start a new trial with our player actor.
 
-- sendAction: this is a function which takes an argument of type 'Action'. This class can be imported from data_pb.js, but we'll see that later in this tutorial.
+-   sendAction: this is a function which takes an argument of type 'Action'. This class can be imported from data_pb.js, but we'll see that later in this tutorial.
 
 This hook takes in 3 arguments:
 
-- cogSettings: this is what's imported from CogSettings.js. It provides all the relevant information about data.proto to this hook so that it can function.
+-   cogSettings: this is what's imported from CogSettings.js. It provides all the relevant information about data.proto to this hook so that it can function.
 
-- actorName: the name of the human actor which this web client will be representing. This is defined in cogment.yaml.
+-   actorName: the name of the human actor which this web client will be representing. This is defined in cogment.yaml.
 
-- actorClass: the class of the human actor which this web client will be representing. This is defined in cogment.yaml.
+-   actorClass: the class of the human actor which this web client will be representing. This is defined in cogment.yaml.
 
 ```jsx
 export const App = () => {
-  const [event, startTrial, sendAction] = useActions(
-    cogSettings,
-    "player_1",
-    "player"
-  );
+    const [event, startTrial, sendAction] = useActions(
+        cogSettings,
+        "player_1",
+        "player"
+    );
 
-  //Function to construct the Action which the player will send when they click either rock, paper, or scissors
-  const choose = (move) => {
-    const action = new PlayerAction();
-    action.setMove(move);
-    sendAction(action);
-  };
+    //Function to construct the Action which the player will send when they click either rock, paper, or scissors
+    const choose = (move) => {
+        const action = new PlayerAction();
+        action.setMove(move);
+        sendAction(action);
+    };
 
-  //This will start a trial as soon as we're connected to the orchestrator
-  useEffect(() => {
-    if (startTrial) startTrial();
-  }, [startTrial]);
+    //This will start a trial as soon as we're connected to the orchestrator
+    useEffect(() => {
+        if (startTrial) startTrial();
+    }, [startTrial]);
 
-  //Get any observation from the current event, events have observations, messages, and rewards, and all three can be unpacked from the event object
-  //We will also unpack a helpful variable called 'last', this will allow us to know when the trial has ended
-  const { observation, last } = event;
+    //Get any observation from the current event, events have observations, messages, and rewards, and all three can be unpacked from the event object
+    //We will also unpack a helpful variable called 'last', this will allow us to know when the trial has ended
+    const { observation, last } = event;
 
-  const [gameState, setGameState] = useState({
-    gameStage: "start",
-    roundIndex: 0,
-    lastMoveComputer: 0,
-    lastMoveHuman: 0,
-  });
-  const [firstObservation, setFirstObservation] = useState(true);
-
-  useEffect(() => {
-    //Parse game state out of the observation
-    //Some events don't contain an observation, so we need to store the observation contents in a state
-    if (!observation) return;
-
-    //The first observation is not useful, as it just contains the default game state, before players have made moves
-    if (firstObservation) {
-      setFirstObservation(false);
-      return;
-    }
-
-    //Get all relevant information from the observation
-    const roundIndex = gameState.roundIndex + 1;
-    const gameStage = "playing";
-    const lastMoveComputer = observation.them.lastMove;
-    const lastMoveHuman = observation.me.lastMove;
-    const lastWonComputer = observation.them.wonLast;
-    const lastWonHuman = observation.me.wonLast;
-
-    setGameState({
-      gameStage,
-      roundIndex,
-      lastMoveComputer,
-      lastMoveHuman,
-      lastWonComputer,
-      lastWonHuman,
+    const [gameState, setGameState] = useState({
+        gameStage: "start",
+        roundIndex: 0,
+        lastMoveComputer: 0,
+        lastMoveHuman: 0,
     });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [observation]);
+    const [firstObservation, setFirstObservation] = useState(true);
 
-  //The layout of the page
-  return (
-    <Box>
-      {/*
+    useEffect(() => {
+        //Parse game state out of the observation
+        //Some events don't contain an observation, so we need to store the observation contents in a state
+        if (!observation) return;
+
+        //The first observation is not useful, as it just contains the default game state, before players have made moves
+        if (firstObservation) {
+            setFirstObservation(false);
+            return;
+        }
+
+        //Get all relevant information from the observation
+        const roundIndex = gameState.roundIndex + 1;
+        const gameStage = "playing";
+        const lastMoveComputer = observation.them.lastMove;
+        const lastMoveHuman = observation.me.lastMove;
+        const lastWonComputer = observation.them.wonLast;
+        const lastWonHuman = observation.me.wonLast;
+
+        setGameState({
+            gameStage,
+            roundIndex,
+            lastMoveComputer,
+            lastMoveHuman,
+            lastWonComputer,
+            lastWonHuman,
+        });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [observation]);
+
+    //The layout of the page
+    return (
+        <Box>
+            {/*
         Tell the player everything we know about the trial state, such as, plays, who won, etc...
       */}
-      <Typography>Game stage: {gameState.gameStage}</Typography>
-      <Typography>
-        Human's move:{" "}
-        {gameState.gameStage !== "start" &&
-          getMoveText(gameState.lastMoveHuman)}
-      </Typography>
-      <Typography>
-        Computer's move:{" "}
-        {gameState.gameStage !== "start" &&
-          getMoveText(gameState.lastMoveComputer)}
-      </Typography>
-      <Typography>
-        Did Human win last round?{" "}
-        {observation && gameState.lastWonHuman ? "Yes" : "No"}
-      </Typography>
-      <Typography>
-        Did Computer win last round?{" "}
-        {observation && gameState.lastWonComputer ? "Yes" : "No"}
-      </Typography>
-      <Button onClick={() => choose(0)}>Rock</Button>
-      <Button onClick={() => choose(1)}>Paper</Button>
-      <Button onClick={() => choose(2)}>Scissors</Button>
-    </Box>
-  );
+            <Typography>Game stage: {gameState.gameStage}</Typography>
+            <Typography>
+                Human's move:{" "}
+                {gameState.gameStage !== "start" &&
+                    getMoveText(gameState.lastMoveHuman)}
+            </Typography>
+            <Typography>
+                Computer's move:{" "}
+                {gameState.gameStage !== "start" &&
+                    getMoveText(gameState.lastMoveComputer)}
+            </Typography>
+            <Typography>
+                Did Human win last round?{" "}
+                {observation && gameState.lastWonHuman ? "Yes" : "No"}
+            </Typography>
+            <Typography>
+                Did Computer win last round?{" "}
+                {observation && gameState.lastWonComputer ? "Yes" : "No"}
+            </Typography>
+            <Button onClick={() => choose(0)}>Rock</Button>
+            <Button onClick={() => choose(1)}>Paper</Button>
+            <Button onClick={() => choose(2)}>Scissors</Button>
+        </Box>
+    );
 };
 ```
 
@@ -376,43 +376,46 @@ import { useEffect, useState } from "react";
 import * as cogment from "@cogment/cogment-js-sdk";
 
 export const useActions = (cogSettings, actorName, actorClass) => {
-  //Events are composed of a possible observation, message, and reward
-  const [event, setEvent] = useState({
-    observation: null,
-    message: null,
-    reward: null,
-  });
-
-  //startTrial and sendAction will be set after the connected agent joins the trial
-  const [startTrial, setStartTrial] = useState(null);
-  const [sendAction, setSendAction] = useState(null);
-
-  //Set up the connection and register the actor only once
-
-  //In this hook, the connected agent is immediatly registered to any existing trial sitting at port 8080 (more accurately any grpcwebproxy pointing to a trial). Most of the time, this is the desired behaviour, but it could be changed in different circumstances by replacing this with something like setState(joinTrial), similar to setStartTrial further down this code
-  useEffect(() => {
-    //First we create our service, which will be our primary point of contact to the orchestrator
-    const service = cogment.createService({
-      cogSettings,
-      //grpcURL is an optional argument that in fact defaults to the following value. Here we're just showing that it can be set explicitly
-      grpcURL:
-        window.location.protocol + "//" + window.location.hostname + ":8080",
+    //Events are composed of a possible observation, message, and reward
+    const [event, setEvent] = useState({
+        observation: null,
+        message: null,
+        reward: null,
     });
 
-    //Set up the actor object. An actorName and an actorClass is enough to define a unique actor to be added to a trial
-    const actor = { name: actorName, actorClass: actorClass };
+    //startTrial and sendAction will be set after the connected agent joins the trial
+    const [startTrial, setStartTrial] = useState(null);
+    const [sendAction, setSendAction] = useState(null);
 
-    //Use the service to register an actor. registerActor takes two arguments, the second of which is a callback function which is given the actorSession of the registered actor as its only argument. With the provided actorSession, we can send actions, and receive events.
-    service.registerActor(actor, async (actorSession) => {
-      //Start the session
-      actorSession.start();
+    //Set up the connection and register the actor only once
 
-      //Double arrow function here because React will turn a single one into a lazy loaded function
-      setSendAction(() => (action) => {
-        actorSession.sendAction(action);
-      });
+    //In this hook, the connected agent is immediatly registered to any existing trial sitting at port 8080 (more accurately any grpcwebproxy pointing to a trial). Most of the time, this is the desired behaviour, but it could be changed in different circumstances by replacing this with something like setState(joinTrial), similar to setStartTrial further down this code
+    useEffect(() => {
+        //First we create our service, which will be our primary point of contact to the orchestrator
+        const service = cogment.createService({
+            cogSettings,
+            //grpcURL is an optional argument that in fact defaults to the following value. Here we're just showing that it can be set explicitly
+            grpcURL:
+                window.location.protocol +
+                "//" +
+                window.location.hostname +
+                ":8080",
+        });
 
-      /*actorSession.eventLoop is an async generator function, meaning we can use the syntax
+        //Set up the actor object. An actorName and an actorClass is enough to define a unique actor to be added to a trial
+        const actor = { name: actorName, actorClass: actorClass };
+
+        //Use the service to register an actor. registerActor takes two arguments, the second of which is a callback function which is given the actorSession of the registered actor as its only argument. With the provided actorSession, we can send actions, and receive events.
+        service.registerActor(actor, async (actorSession) => {
+            //Start the session
+            actorSession.start();
+
+            //Double arrow function here because React will turn a single one into a lazy loaded function
+            setSendAction(() => (action) => {
+                actorSession.sendAction(action);
+            });
+
+            /*actorSession.eventLoop is an async generator function, meaning we can use the syntax
         for await(const foo of generator()){
           do stuff
         }
@@ -420,33 +423,36 @@ export const useActions = (cogSettings, actorName, actorClass) => {
 
         This is massively useful for network streams.
       */
-      for await (const event of actorSession.eventLoop()) {
-        //Convert observations to a regular JS object.
-        let observationOBJ = event.observation && event.observation.toObject();
-        event.observation = observationOBJ;
+            for await (const event of actorSession.eventLoop()) {
+                //Convert observations to a regular JS object.
+                let observationOBJ =
+                    event.observation && event.observation.toObject();
+                event.observation = observationOBJ;
 
-        //If the type of the event is 3 (Ending), store that in event.last so we can use it later
-        event.last = event.type === 3;
+                //If the type of the event is 3 (Ending), store that in event.last so we can use it later
+                event.last = event.type === 3;
 
-        //Set the event state to the received event, causing a hook update
-        setEvent(event);
-      }
-    });
+                //Set the event state to the received event, causing a hook update
+                setEvent(event);
+            }
+        });
 
-    //Creating the trial controller must happen after actors are registered
-    const trialController = service.createTrialController();
+        //Creating the trial controller must happen after actors are registered
+        const trialController = service.createTrialController();
 
-    //Need to output a function so that the user can start the trial when all actors are connected
-    //Again, double arrow function cause React will turn a single one into a lazy loaded function
-    setStartTrial(() => async () => {
-      //Start and join the trial. When we start a trial, we receive an object containing the trialID that can then be used to join it.
-      //We will almost always want to do both these actions in sequence, since trials do not proceed without the connected agent if cogment.yaml specifies that a connected agent exists
-      const { trialId } = await trialController.startTrial(actor.actorClass);
-      await trialController.joinTrial(trialId, actor);
-    });
-  }, [cogSettings, actorName, actorClass]);
+        //Need to output a function so that the user can start the trial when all actors are connected
+        //Again, double arrow function cause React will turn a single one into a lazy loaded function
+        setStartTrial(() => async () => {
+            //Start and join the trial. When we start a trial, we receive an object containing the trialID that can then be used to join it.
+            //We will almost always want to do both these actions in sequence, since trials do not proceed without the connected agent if cogment.yaml specifies that a connected agent exists
+            const { trialId } = await trialController.startTrial(
+                actor.actorClass
+            );
+            await trialController.joinTrial(trialId, actor);
+        });
+    }, [cogSettings, actorName, actorClass]);
 
-  return [event, startTrial, sendAction];
+    return [event, startTrial, sendAction];
 };
 ```
 
@@ -478,24 +484,25 @@ If we want a fancier interface, there is a completed UI in the tutorials reposit
 
 ```jsx
 <Box>
-  <Header observation={observation} gameState={gameState} />
-  <Container className={classes.container}>
-    <Player
-      score={humanScore}
-      color={theme.palette.primary.main}
-      IconClass={PersonIcon}
-      choose={choose}
-      isHuman
-    />
+    <Header observation={observation} gameState={gameState} />
+    <Container className={classes.container}>
+        <Player
+            score={humanScore}
+            color={theme.palette.primary.main}
+            IconClass={PersonIcon}
+            choose={choose}
+            isHuman
+        />
 
-    <Player
-      score={computerScore}
-      color={theme.palette.secondary.main}
-      IconClass={ComputerIcon}
-      selected={
-        gameState !== "start" && getMoveText(observation.them.lastRoundMove)
-      }
-    />
-  </Container>
+        <Player
+            score={computerScore}
+            color={theme.palette.secondary.main}
+            IconClass={ComputerIcon}
+            selected={
+                gameState !== "start" &&
+                getMoveText(observation.them.lastRoundMove)
+            }
+        />
+    </Container>
 </Box>
 ```

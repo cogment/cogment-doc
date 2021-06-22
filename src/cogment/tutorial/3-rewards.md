@@ -91,10 +91,10 @@ Now that the data structure is modified and the environment implementation uses 
 
 ```yaml
 trial_params:
-  environment:
-    endpoint: grpc://environment:9000
-    config:
-      target_game_score: 2
+    environment:
+        endpoint: grpc://environment:9000
+        config:
+            target_game_score: 2
 ```
 
 Modify the `cogment.yaml` file with this update.
@@ -107,9 +107,9 @@ In this simple implementation, the concept of game is local to the environment. 
 
 The environment is now able to:
 
-- compute when an actor wins a game,
-- communicate this information to it and to the other Cogment app services,
-- send **rewards** when an actor reaches a measurable goal, in our case, when it wins a game.
+-   compute when an actor wins a game,
+-   communicate this information to it and to the other Cogment app services,
+-   send **rewards** when an actor reaches a measurable goal, in our case, when it wins a game.
 
 Please note, that not all actions need to be rewarded.
 

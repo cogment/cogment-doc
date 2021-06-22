@@ -40,8 +40,8 @@ An environment state is the specific set of conditions in which the environment 
 
 These two elements combined are what we call the framework:
 
-- [Orchestrator](#orchestrator)
-- SDKs
+-   [Orchestrator](#orchestrator)
+-   SDKs
 
 ### Frontend
 
@@ -85,11 +85,11 @@ An Observation space is the set of all possible [observations](#observation) an 
 
 The Orchestrator is the central piece of our [framework](#framework); it’s an executable that handles several things:
 
-- It circulates data flows between [Actors](#actor) and [Environments](#environment).
-- It dumps datasets in the chosen storage location.
-- It compresses & encrypts data.
-- It collates various [reward](#reward) sources (usually [environment](#environment) or [actors](#actor)) into a single reward for an Actor.
-- It instantiates the [trials](#trial).
+-   It circulates data flows between [Actors](#actor) and [Environments](#environment).
+-   It dumps datasets in the chosen storage location.
+-   It compresses & encrypts data.
+-   It collates various [reward](#reward) sources (usually [environment](#environment) or [actors](#actor)) into a single reward for an Actor.
+-   It instantiates the [trials](#trial).
 
 ## P
 

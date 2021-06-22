@@ -47,25 +47,25 @@ Since we have created a new service we need to reference it at several places fo
 
 ```yaml
 dqn-agent:
-  build:
-    context: dqn_agent
-    dockerfile: ../py_service.dockerfile
+    build:
+        context: dqn_agent
+        dockerfile: ../py_service.dockerfile
 ```
 
 Then we will need to edit `cogment.yaml` to make `cogment run generate` run in the new service's directory and have `cogment run build` and `cogment run start` respectively trigger its build and its start. We will change the `generate`, `build` and `start` keys under `commands`.
 
 ```yaml
 commands:
-  generate: >
-    cogment generate
-    --python_dir environment
-    --python_dir client
-    --python_dir random_agent
-    --python_dir dqn_agent
-  # ...
-  build: docker-compose build client dashboard metrics orchestrator environment random-agent dqn-agent
-  # ...
-  start: docker-compose up dashboard metrics orchestrator environment random-agent dqn-agent
+    generate: >
+        cogment generate
+        --python_dir environment
+        --python_dir client
+        --python_dir random_agent
+        --python_dir dqn_agent
+    # ...
+    build: docker-compose build client dashboard metrics orchestrator environment random-agent dqn-agent
+    # ...
+    start: docker-compose up dashboard metrics orchestrator environment random-agent dqn-agent
 ```
 
 Finally, the metrics server needs to know about this new data source. In `metrics/prometheus.yml`, add a new item under the `scrape_configs` key.
@@ -73,11 +73,11 @@ Finally, the metrics server needs to know about this new data source. In `metric
 ```yaml
 - job_name: "dqn-agent"
   dns_sd_configs:
-    - names:
-        - "dqn-agent"
-      type: "A"
-      port: 8000
-      refresh_interval: 5s
+      - names:
+            - "dqn-agent"
+        type: "A"
+        port: 8000
+        refresh_interval: 5s
 ```
 
 ## Playing against the heuristic player
@@ -86,20 +86,20 @@ We will train our new player against the [heuristic player](./4-heuristic-player
 
 ```yaml
 trial_params:
-  environment:
-    endpoint: grpc://environment:9000
-    config:
-      target_game_score: 2
-      target_games_count: 20
-  actors:
-    - name: player_1
-      actor_class: player
-      implementation: dqn_agent
-      endpoint: grpc://dqn-agent:9000
-    - name: player_2
-      actor_class: player
-      implementation: heuristic_agent
-      endpoint: grpc://random-agent:9000
+    environment:
+        endpoint: grpc://environment:9000
+        config:
+            target_game_score: 2
+            target_games_count: 20
+    actors:
+        - name: player_1
+          actor_class: player
+          implementation: dqn_agent
+          endpoint: grpc://dqn-agent:9000
+        - name: player_2
+          actor_class: player
+          implementation: heuristic_agent
+          endpoint: grpc://random-agent:9000
 ```
 
 We can also update `client/main.py` to run a bunch of trials sequentially.

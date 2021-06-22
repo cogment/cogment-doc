@@ -34,9 +34,9 @@ Another useful sub-dashboard pertains to the rewards. This enables you to follow
 
 To setup dashboard and metrics on a docker-based Cogment deployment only two files need to be modified and a third file needs to be created:
 
-- `docker-compose.yaml`
-- `cogment.yaml`
-- Add a `metrics/prometheus.yml`
+-   `docker-compose.yaml`
+-   `cogment.yaml`
+-   Add a `metrics/prometheus.yml`
 
 ### Setup services in `docker-compose.yaml`
 
@@ -46,12 +46,12 @@ Create a service named `metrics` using the `cogment/metrics` docker image. Log l
 
 ```yaml
 metrics:
-  user: 0:0
-  image: cogment/metrics:latest
-  command: --config.file=/etc/prometheus/prometheus.yml --log.level=error
-  volumes:
-    - ./metrics/prometheus.yml:/etc/prometheus/prometheus.yml:ro
-    - ./metrics/data:/prometheus
+    user: 0:0
+    image: cogment/metrics:latest
+    command: --config.file=/etc/prometheus/prometheus.yml --log.level=error
+    volumes:
+        - ./metrics/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+        - ./metrics/data:/prometheus
 ```
 
 <!-- prettier-ignore -->
@@ -64,11 +64,11 @@ Create a service named `dashboard` and pick an exposed port to consult.
 
 ```yaml
 dashboard:
-  image: cogment/dashboard:latest
-  ports:
-    - 3003:3000/tcp
-  depends_on:
-    - metrics
+    image: cogment/dashboard:latest
+    ports:
+        - 3003:3000/tcp
+    depends_on:
+        - metrics
 ```
 
 <!-- prettier-ignore -->
@@ -92,19 +92,19 @@ Inside `metrics/prometheus.yml`, each service that will be monitored should be a
 
 ```yaml
 global:
-  scrape_interval: 5s # Set the scrape interval to every 5 seconds. Default is every 1 minute.
-  evaluation_interval: 5s # Evaluate rules every 5 seconds. The default is every 1 minute.
+    scrape_interval: 5s # Set the scrape interval to every 5 seconds. Default is every 1 minute.
+    evaluation_interval: 5s # Evaluate rules every 5 seconds. The default is every 1 minute.
 
 # A scrape configuration containing exactly one endpoint to scrape:
 scrape_configs:
-  # The job name is added as a label `job=<job_name>` to any timeseries scraped from this config.
-  - job_name: "environment"
-    dns_sd_configs:
-      - names:
-          - "environment" # Hostname of the environment service (from ./docker-compose.yaml)
-        type: "A"
-        port: 8000
-        refresh_interval: 5s
+    # The job name is added as a label `job=<job_name>` to any timeseries scraped from this config.
+    - job_name: "environment"
+      dns_sd_configs:
+          - names:
+                - "environment" # Hostname of the environment service (from ./docker-compose.yaml)
+            type: "A"
+            port: 8000
+            refresh_interval: 5s
 ```
 
 ## Recipes
@@ -115,15 +115,15 @@ To add other services from which to collect data, simply add other `scrape_confi
 
 ```yaml
 scrape_configs:
-  # Here you should have existing configuration for other services.
-  # Here add a new service that will be monitored
-  - job_name: "new_service"
-    dns_sd_configs:
-      - names:
-          - "new_service" # Hostname of the service as defined in ./docker-compose.yaml
-        type: "A"
-        port: 8000 # Port on which the prometheus agent is running, Cogment SDKs uses 8000 by default
-        refresh_interval: 5s
+    # Here you should have existing configuration for other services.
+    # Here add a new service that will be monitored
+    - job_name: "new_service"
+      dns_sd_configs:
+          - names:
+                - "new_service" # Hostname of the service as defined in ./docker-compose.yaml
+            type: "A"
+            port: 8000 # Port on which the prometheus agent is running, Cogment SDKs uses 8000 by default
+            refresh_interval: 5s
 ```
 
 More information can be found in the [Prometheus documentation](https://prometheus.io/docs/prometheus/latest/getting_started/)

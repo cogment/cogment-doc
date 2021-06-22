@@ -8,8 +8,8 @@ This is the documentation for the Cogment framework. For further Cogment informa
 
 ## Documentation architecture
 
-- `mkdocs.yml` is the main configuration file for the documentation.
-- `./src` contains the source for the documentation, mostly markdown file and images.
+-   `mkdocs.yml` is the main configuration file for the documentation.
+-   `./src` contains the source for the documentation, mostly markdown file and images.
 
 ## Developers
 
@@ -33,6 +33,22 @@ open <http://127.0.0.1:8000>
 
 ```console
 poetry run task build
+```
+
+### Formatting
+
+This project is formatted using prettier. Most editors have support for it. The only requirement is a working Node.js environment. For further information, refer to <https://prettier.io>.
+
+To run a check manually:
+
+```console
+poetry run task lint
+```
+
+To fix all the files automatically
+
+```console
+poetry run task lint_fix
 ```
 
 ### Release process
