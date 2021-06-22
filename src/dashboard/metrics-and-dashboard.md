@@ -2,7 +2,7 @@
 
 Cogment provides two services out of the box dedicated to the monitoring of a Cogment deployment: `cogment-metrics` and `cogment-dashboard`.
 
-`cogment-metrics` is gathering data coming from all the Cogment services: orchestrator, actors, environment, .... These _metrics_ can be used to gather insights regarding the performances of actor or environment implementations. They can also be used to follow the attribution of rewards, giving insight into how, or even if agents are learning.
+`cogment-metrics` is gathering data coming from all the Cogment services: orchestrator, actors, environment, etc. These _metrics_ can be used to gather insights regarding the performances of actor or environment implementations. They can also be used to follow the attribution of rewards, giving insight into how, or even if agents are learning.
 
 `cogment-metrics` is a [Prometheus](https://prometheus.io/) instance, so it can be easily augmented to visualize your own data.
 
@@ -147,11 +147,11 @@ def my_func()
     MY_COUNTER.inc()
 ```
 
-Several types of metrics are availalbe in Prometheus. Connsult the prometheus [documentation](https://prometheus.io/docs/concepts/metric_types/) for futher references.
+Several types of metrics are available in Prometheus. Consult the prometheus [documentation](https://prometheus.io/docs/concepts/metric_types/) for futher reference.
 
 ## Using a custom registry
 
-By default, Cogment SDKs rely on the default Prometheus global registry. To change the used regitry, it needs to be given to the context when built.
+By default, Cogment SDKs rely on the default Prometheus global registry. To change the used registry, it needs to be given to the context when built.
 
 Here's how it looks in python.
 

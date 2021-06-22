@@ -43,14 +43,14 @@ The low-level API is fully described within the gRPC service definitions found i
 
 -   `StartTrial()` to request the start of a new trial.
 -   `TerminateTrial()` to request the end of the trial.
--   `SendMessage()` to send a message to an agent or the environment
+-   `SendMessage()` to send a message to an agent or the environment.
 -   `TrialInfo()` to request additional information about an existing trial.
 
 ### Data Log Exporter API
 
 `api/cogment/data.proto` describes the services provided to save all trial data (for archival, replay or offline analysis).
 
--   `Log()` to log a data sample (i.e. normally all data from a single tick/timestep)
+-   `Log()` to log a data sample (i.e. normally all data from a single tick/timestep).
 
 ### Hooks API
 
