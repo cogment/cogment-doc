@@ -899,6 +899,13 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#common-values" class="md-nav__link">
+    Common Values
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#versionrequest" class="md-nav__link">
     VersionRequest
   </a>
@@ -1647,6 +1654,21 @@
   
   
     <li class="md-nav__item">
+      <a href="../../../dashboard/metrics-and-dashboard/" class="md-nav__link">
+        Metrics & Dashboard
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../license/" class="md-nav__link">
         License
       </a>
@@ -1706,6 +1728,13 @@
   
     <nav class="md-nav" aria-label="Common types">
       <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#common-values" class="md-nav__link">
+    Common Values
+  </a>
+  
+</li>
         
           <li class="md-nav__item">
   <a href="#versionrequest" class="md-nav__link">
@@ -2476,6 +2505,12 @@ The actor can be infered by the position in the list, and the index into the lis
 </ul>
 <h2 id="common-types">Common types<a class="headerlink" href="#common-types" title="Permanent link">&para;</a></h2>
 <p>Most of the messages are defined in the <code>common.proto</code> file. <code>ObservationSet</code> is defined in <code>environment.proto</code>.</p>
+<h3 id="common-values">Common Values<a class="headerlink" href="#common-values" title="Permanent link">&para;</a></h3>
+<p>Some values (and their standardized names) are recurrent throughout the gRPC API.</p>
+<ul>
+<li>tick_id: (uint64) The monotonic time, in number of steps, since the start of the trial. As an ID, it represents a discrete step in the processing of the trial. A step starts with observations representing a specific point in time, that are followed by actions, rewards and messages in relation to these observations. The first tick ID is 0.</li>
+<li>timestamp: (fixed64) The wall-clock time in nanoseconds since 00:00:00UTC January 1, 1970 (Unix Epoch time).</li>
+</ul>
 <h3 id="versionrequest"><code>VersionRequest</code><a class="headerlink" href="#versionrequest" title="Permanent link">&para;</a></h3>
 <p>Empty message to serve as the request for the <code>Version</code> procedure (present in all gRPC services defined in the Cogment API).</p>
 <div class="highlight"><pre><span></span><code><span class="kd">message</span> <span class="nc">VersionRequest</span> <span class="p">{}</span>
@@ -2591,8 +2626,8 @@ Other reported versions are specific to the service called, possibly for use by 
 </code></pre></div>
 
 <ul>
-<li>tick_id: The monotonic Time, related to the number of observations since the start of the trial.</li>
-<li>timestamp: The wall-clock time of the observation.</li>
+<li>tick_id: Tick of this observation.</li>
+<li>timestamp: The time of the observation.</li>
 <li>data: The observation data.</li>
 </ul>
 <h3 id="observationdata"><code>ObservationData</code><a class="headerlink" href="#observationdata" title="Permanent link">&para;</a></h3>
@@ -2617,7 +2652,7 @@ Other reported versions are specific to the service called, possibly for use by 
 
 <ul>
 <li>content: The serialized protobuf message representing an action from a specific actor. The actual message type for the action space is defined in the <code>cogment.yaml</code> file for each actor class in section <code>actor_classes:action:space</code>. Note that the specific actor represented is defined by the enclosing message.</li>
-<li>tick_id: The tick ID of the observation on which the action is taken.</li>
+<li>tick_id: The tick of the observation on which the action is taken.</li>
 </ul>
 <h3 id="message"><code>Message</code><a class="headerlink" href="#message" title="Permanent link">&para;</a></h3>
 <p>Data associated with a communication (message) destined for an actor or the environment.</p>
@@ -2630,7 +2665,7 @@ Other reported versions are specific to the service called, possibly for use by 
 </code></pre></div>
 
 <ul>
-<li>tick_id: Time associated with the message.</li>
+<li>tick_id: Tick associated with the message.</li>
 <li>sender_name: The name of the sending actor. "env" for the environment. This is optional when sending messages (i.e. the sender is already known).</li>
 <li>receiver_name: The name of the target/receiving actor. "env" for the environment.</li>
 <li>payload: Data for the target actor/environment. It is the responsibility of the target to understand the type received.</li>
@@ -2664,7 +2699,7 @@ This is an aggregate of possibly multiple <code>RewardSource</code> (but at leas
 
 <ul>
 <li>receiver_name: Name of the receiving actor (the reward destination).</li>
-<li>tick_id: The time step associated with the reward. If set to <code>-1</code> when sending a reward, the orchestrator will automatically assign the latest tick. This will always be a valid tick when receiving a reward.</li>
+<li>tick_id: The tick associated with the reward. If set to <code>-1</code> when sending a reward, the orchestrator will automatically assign the latest tick. This will always be a valid tick (i.e. &gt;= 0) when receiving a reward.</li>
 <li>value: The aggregated value (weighted sum) of the provided reward sources. May be ignored when sending a reward; The final value will be computed by the orchestrator.</li>
 <li>sources: The simple reward sources that form this aggregated reward. There must be at least one.</li>
 </ul>
@@ -2693,8 +2728,8 @@ This is an aggregate of possibly multiple <code>RewardSource</code> (but at leas
 </code></pre></div>
 
 <ul>
-<li>tick_id: The time step (tick) to which the observations relate to.</li>
-<li>timestamp: A wall clock time stamp when the observation set was made. Unix Epoch in nanoseconds.</li>
+<li>tick_id: The tick to which the observations relate to.</li>
+<li>timestamp: The time when the observation set was made.</li>
 <li>observations: A list of observations. Indexed into by the <code>actors_map</code>.</li>
 <li>actors_map: A list of indexes into the <code>observations</code> list above. This list of indexes has the same length and order as the list of actors provided in different places in the API (e.g. <code>actors_in_trial</code>), for the same trial.</li>
 </ul>
@@ -2821,7 +2856,7 @@ This is an aggregate of possibly multiple <code>RewardSource</code> (but at leas
 <ul>
 <li>trial_id: The UUID of the trial.</li>
 <li>state: The state of the trial.</li>
-<li>tick_id: The current tick ID of the trial.</li>
+<li>tick_id: The current tick of the trial.</li>
 <li>trial_duration: The duration of the trial so far, in nanoseconds. If the trial has ended, this is the duration from start to end of the trial. This is meant as an indicator; resolution may not be a nanosecond, and precision is not garanteed.</li>
 <li>latest_observation: The latest environment observations for all actors. This will be provided only if requested in the <code>TrialInfoRequest</code>.</li>
 <li>actors_in_trial: The list of active actors in the trial.</li>
@@ -3196,7 +3231,7 @@ If no reply is sent within a pre-determined time, the environment is considered 
 <li>impl_name: (optional) Name of the implementation that should run the environment for this trial. If not provided, an arbitrary implementation will be used.</li>
 <li>config: The configuration to start the environment.</li>
 <li>actors_in_trial: The list of all actors in the trial. This list has the same length and order as the list of actors provided in different places in the API, for the same trial.</li>
-<li>tick_id: The expected tick ID of the observation set returned in <code>EnvStartReply</code>.</li>
+<li>tick_id: The expected tick of the observation set returned in <code>EnvStartReply</code>.</li>
 </ul>
 <h3 id="envstartreply"><code>EnvStartReply</code><a class="headerlink" href="#envstartreply" title="Permanent link">&para;</a></h3>
 <p>Reply message for the <code>OnStart</code> procedure.</p>
@@ -3223,7 +3258,7 @@ If no reply is sent within a pre-determined time, the environment is considered 
 
 <ul>
 <li>actions: A list of actions, one for each actor of the trial. This list has the same length and order as the list of actors provided in different places in the API (e.g. <code>actors_in_trial</code>), for the same trial. Each action is the serialization of the appropriate type for the actor (as defined in the <code>cogment.yaml</code> file).</li>
-<li>tick_id: The tick ID of the observations on which the actions are taken.</li>
+<li>tick_id: The tick of the observations on which the actions are taken.</li>
 <li>action_set: The set of actions for all actors.</li>
 <li>reply_with_snapshot: If true, then request that the observations for the actors (in the reply) be snapshots. If false, the observations can be snapshots or deltas (at the discretion of the environment). See <a href="#observationdata">ObservationData</a>.</li>
 </ul>
@@ -3280,13 +3315,20 @@ Data samples are provided by the orchestrator in the request stream.</p>
 <p>Metadata: None</p>
 <h3 id="logexportersamplerequest"><code>LogExporterSampleRequest</code><a class="headerlink" href="#logexportersamplerequest" title="Permanent link">&para;</a></h3>
 <p>Stream request message for the <code>OnLogSample</code> procedure.</p>
-<div class="highlight"><pre><span></span><code><span class="kd">message</span> <span class="nc">DatalogSample</span> <span class="p">{</span>
+<div class="highlight"><pre><span></span><code><span class="kd">message</span> <span class="nc">TrialData</span> <span class="p">{</span>
+  <span class="kt">uint64</span> <span class="na">tick_id</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="kt">fixed64</span> <span class="na">timestamp</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+  <span class="n">TrialState</span> <span class="na">state</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kd">message</span> <span class="nc">DatalogSample</span> <span class="p">{</span>
   <span class="kt">string</span> <span class="na">user_id</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
 
   <span class="n">ObservationSet</span> <span class="na">observations</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
   <span class="k">repeated</span> <span class="n">Action</span> <span class="na">actions</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
   <span class="k">repeated</span> <span class="n">Reward</span> <span class="na">rewards</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
   <span class="k">repeated</span> <span class="n">Message</span> <span class="na">messages</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
+  <span class="n">TrialData</span> <span class="na">trial_data</span> <span class="o">=</span> <span class="mi">6</span><span class="p">;</span>
 <span class="p">}</span>
 
 <span class="kd">message</span> <span class="nc">LogExporterSampleRequest</span> <span class="p">{</span>
@@ -3298,6 +3340,9 @@ Data samples are provided by the orchestrator in the request stream.</p>
 </code></pre></div>
 
 <ul>
+<li>tick_id: The current tick of the trial.</li>
+<li>timestamp: The time at the beginning of the tick.</li>
+<li>state: The state of the trial at the end of the tick.</li>
 <li>user_id: The ID of the user that started the trial.</li>
 <li>observations: A set of observations for all actors.</li>
 <li>actions: Actions from all actors. This list has the same length and order as the list of actors provided in different places in the API (e.g. <code>actors_in_trial</code>), for the same trial. Of interest here; it matches the list of actors provided in <code>trial_params</code>.</li>
@@ -3377,13 +3422,13 @@ Data samples are provided by the orchestrator in the request stream.</p>
         </a>
       
       
-        <a href="../../../license/" class="md-footer__link md-footer__link--next" rel="next">
+        <a href="../../../dashboard/metrics-and-dashboard/" class="md-footer__link md-footer__link--next" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
                 Next
               </span>
-              License
+              Metrics & Dashboard
             </div>
           </div>
           <div class="md-footer__button md-icon">

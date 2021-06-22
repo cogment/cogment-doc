@@ -919,6 +919,21 @@
   
   
     <li class="md-nav__item">
+      <a href="../../../dashboard/metrics-and-dashboard/" class="md-nav__link">
+        Metrics & Dashboard
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../license/" class="md-nav__link">
         License
       </a>
@@ -993,8 +1008,8 @@
 <blockquote>
 <p>This part of the tutorial follows <a href="../2-random-player/">step 2</a>, make sure you've gone through it before starting this one. Alternatively the completed step 2 can be retrieved from the <a href="https://github.com/cogment/cogment-tutorial-rps" target="_blank">tutorial's repository</a>.</p>
 </blockquote>
-<p>In this step of the tutorial, we will start thinking about rewards. Rewards are a way to evaluate how an actor performs at a task. They can be used to evaluate or compare different implementations of an actor, or, especially in the context or Reinforcement Learning, train an model. In Cogment, both the environment and other actors can evaluate an actor. Here, we will focus on sending reward from the environment.</p>
-<p>The first thing we'll do for this step is to add the concept of multi-round game to our RPS implementation. We'll learn to configure the environment along the way. Then, we will adapt the environment implementation to send a reward to the actor winning a game. Finally, we will retrieve rewards and other metrics from the running Cogment app.</p>
+<p>In this step of the tutorial, we will start thinking about rewards. Rewards are a way to evaluate how an actor performs at a task. They can be used to evaluate or compare different implementations of an actor, or, especially in the context or Reinforcement Learning, train an model. In Cogment, both the environment and other actors can evaluate an actor. Here, we will focus on sending rewards from the environment.</p>
+<p>The first thing we'll do for this step is to add the concept of multi-round games to our RPS implementation. We'll learn to configure the environment along the way. Then, we will adapt the environment implementation to send a reward to the actor winning a game. Finally, we will retrieve rewards and other metrics from the running Cogment app.</p>
 <h2 id="adding-the-concept-of-a-game">Adding the concept of a game<a class="headerlink" href="#adding-the-concept-of-a-game" title="Permanent link">&para;</a></h2>
 <p>Up until now, our implementation of RPS focused on rounds. However, RPS is usually played in games won by the player reaching a target score, i.e. a number of won rounds.</p>
 <p>Before sending rewards we need to adapt our implementation to support games. We will make the target score of each game configurable.</p>
@@ -1076,7 +1091,7 @@
 <li>send <strong>rewards</strong> when an actor reaches a measurable goal, in our case, when it wins a game.</li>
 </ul>
 <p>Please note, that not all actions need to be rewarded.</p>
-<p>When a game is won, the environment will add a <strong>positive reward to the winner</strong> (we chose a value of 1) and a <strong>negative reward to the loser</strong> (we chose a value of -1). Cogment also supports the notion of <em>confidence</em>, a weight, between 0 and 1 that expresses the qualification of the reward sender in its appreciation. In this case we are applying objective rules, so we use a confidence of 1.</p>
+<p>When a game is won, the environment will add a <strong>positive reward to the winner</strong> (we chose a value of 1) and a <strong>negative reward to the loser</strong> (we chose a value of -1). Cogment also supports the notion of <em>confidence</em>, a weight between 0 and 1 that expresses the qualification of the reward sender in its appreciation. In this case we are applying objective rules, so we use a confidence of 1.</p>
 <p>In the <strong>event loop</strong>, when the first player wins a game we add the following.</p>
 <div class="highlight"><pre><span></span><code><span class="n">environment_session</span><span class="o">.</span><span class="n">add_reward</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">confidence</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">to</span><span class="o">=</span><span class="p">[</span><span class="n">p1</span><span class="o">.</span><span class="n">actor_name</span><span class="p">])</span>
 <span class="n">environment_session</span><span class="o">.</span><span class="n">add_reward</span><span class="p">(</span><span class="n">value</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">confidence</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">to</span><span class="o">=</span><span class="p">[</span><span class="n">p2</span><span class="o">.</span><span class="n">actor_name</span><span class="p">])</span>
@@ -1090,7 +1105,19 @@
 <p>Modify the <code>environment/main.py</code> file to include the above additions.</p>
 <p>You can now <a href="../1-bootstrap-and-data-structures/#building-and-running-the-app">build and run</a> the application to check that it works as expected. In particular you should see logs relative to the reception of rewards on the actor side.</p>
 <h2 id="using-the-metrics-and-dashboard-services-to-retrieve-visualize-the-rewards-over-time">Using the <strong>metrics</strong> and <strong>dashboard</strong> services to retrieve &amp; visualize the rewards over time<a class="headerlink" href="#using-the-metrics-and-dashboard-services-to-retrieve-visualize-the-rewards-over-time" title="Permanent link">&para;</a></h2>
-<p>🚧</p>
+<p>Now that we have introduced rewards, it's a good time to take a look at Cogment's dashboard, a web app centralizing metrics from the various Cogment components. To learn more about this, refer to the <a href="../../../dashboard/metrics-and-dashboard/">dedicated page</a>.</p>
+<p>If it's not already running, start the Cogment app:</p>
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>cogment run start
+</code></pre></div>
+
+<p>In your browser of choice you can now open <a href="http://localhost:3003">http://localhost:3003</a> and explore. If you haven't yet launched any trials, it should be mostly empty. To launch a trial, proceed as usual: in another terminal run,</p>
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>cogment run client
+</code></pre></div>
+
+<p>You can now check the <strong>reward dashboard</strong> to see which of the players performs better. Keep in mind that both players play randomly so don't expect to observe any interesting trends yet. You can launch several trials to get more data.</p>
+<p><img alt="Reward dashboard with 2 random players" src="../figures/reward_dashboard.png" /></p>
+<p>The screenshot above shows the default reward dashboard. On the top row, it shows the reward received per individual actor, on the left is the rate averaged over the last 2 minutes, on the right is the total per trial. On the middle row, you'll find the same metrics but aggregated per actor implementation, one in our case. On the bottom row is the averaged reward over the last 5 minutes for all the actors.</p>
+<p>In <a href="../7-dqn-player/">tutorial 7</a>, we will use this dashboard to monitor the training of an agent implementation.</p>
 <p>This concludes the step 3 of the tutorial: you've learned about environment configuration, implemented your reward sending and used the <strong>metrics</strong> and <strong>dashboard</strong> services.</p>
 <p>Let’s move on to implementing an RPS player that actually considers what was played before deciding on its next move in <a href="../4-heuristic-player/">step 4</a>.</p>
                 

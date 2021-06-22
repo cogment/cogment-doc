@@ -1,147 +1,151 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><url>
      <loc>https://docs.cogment.ai/</loc>
-     <lastmod>2021-06-18</lastmod>
+     <lastmod>2021-06-22</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://docs.cogment.ai/introduction/installation/</loc>
-     <lastmod>2021-06-18</lastmod>
+     <lastmod>2021-06-22</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://docs.cogment.ai/support/community-channels/</loc>
-     <lastmod>2021-06-18</lastmod>
+     <lastmod>2021-06-22</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://docs.cogment.ai/concepts/core-concepts/</loc>
-     <lastmod>2021-06-18</lastmod>
+     <lastmod>2021-06-22</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://docs.cogment.ai/concepts/glossary/</loc>
-     <lastmod>2021-06-18</lastmod>
+     <lastmod>2021-06-22</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://docs.cogment.ai/cogment/tutorial/introduction/</loc>
-     <lastmod>2021-06-18</lastmod>
+     <lastmod>2021-06-22</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://docs.cogment.ai/cogment/tutorial/1-bootstrap-and-data-structures/</loc>
-     <lastmod>2021-06-18</lastmod>
+     <lastmod>2021-06-22</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://docs.cogment.ai/cogment/tutorial/2-random-player/</loc>
-     <lastmod>2021-06-18</lastmod>
+     <lastmod>2021-06-22</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://docs.cogment.ai/cogment/tutorial/3-rewards/</loc>
-     <lastmod>2021-06-18</lastmod>
+     <lastmod>2021-06-22</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://docs.cogment.ai/cogment/tutorial/4-heuristic-player/</loc>
-     <lastmod>2021-06-18</lastmod>
+     <lastmod>2021-06-22</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://docs.cogment.ai/cogment/tutorial/5-human-player/</loc>
-     <lastmod>2021-06-18</lastmod>
+     <lastmod>2021-06-22</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://docs.cogment.ai/cogment/tutorial/6-web-client/</loc>
-     <lastmod>2021-06-18</lastmod>
+     <lastmod>2021-06-22</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://docs.cogment.ai/cogment/tutorial/7-dqn-player/</loc>
-     <lastmod>2021-06-18</lastmod>
+     <lastmod>2021-06-22</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://docs.cogment.ai/cogment/cogment-api-guide/</loc>
-     <lastmod>2021-06-18</lastmod>
+     <lastmod>2021-06-22</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://docs.cogment.ai/cogment/cogment-api-reference/cogment-yaml/</loc>
-     <lastmod>2021-06-18</lastmod>
+     <lastmod>2021-06-22</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://docs.cogment.ai/cogment/cogment-api-reference/python/</loc>
-     <lastmod>2021-06-18</lastmod>
+     <lastmod>2021-06-22</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://docs.cogment.ai/cogment/cogment-api-reference/javascript/modules/</loc>
-     <lastmod>2021-06-18</lastmod>
+     <lastmod>2021-06-22</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://docs.cogment.ai/cogment/cogment-api-reference/javascript/classes/actorsession/</loc>
-     <lastmod>2021-06-18</lastmod>
+     <lastmod>2021-06-22</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://docs.cogment.ai/cogment/cogment-api-reference/javascript/classes/cogmentservice/</loc>
-     <lastmod>2021-06-18</lastmod>
+     <lastmod>2021-06-22</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://docs.cogment.ai/cogment/cogment-api-reference/javascript/classes/trialcontroller/</loc>
-     <lastmod>2021-06-18</lastmod>
+     <lastmod>2021-06-22</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://docs.cogment.ai/cogment/cogment-api-reference/javascript/enums/eventtype/</loc>
-     <lastmod>2021-06-18</lastmod>
+     <lastmod>2021-06-22</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://docs.cogment.ai/cogment/cogment-api-reference/javascript/interfaces/cogmentyaml/</loc>
-     <lastmod>2021-06-18</lastmod>
+     <lastmod>2021-06-22</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://docs.cogment.ai/cogment/cogment-api-reference/javascript/interfaces/cogmentyamlactor/</loc>
-     <lastmod>2021-06-18</lastmod>
+     <lastmod>2021-06-22</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://docs.cogment.ai/cogment/cogment-api-reference/javascript/interfaces/cogmentyamlactorclass/</loc>
-     <lastmod>2021-06-18</lastmod>
+     <lastmod>2021-06-22</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://docs.cogment.ai/cogment/cogment-api-reference/javascript/interfaces/cogmentyamldatalog/</loc>
-     <lastmod>2021-06-18</lastmod>
+     <lastmod>2021-06-22</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://docs.cogment.ai/cogment/cogment-api-reference/javascript/interfaces/cogmentyamltrialparameters/</loc>
-     <lastmod>2021-06-18</lastmod>
+     <lastmod>2021-06-22</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://docs.cogment.ai/cogment/cogment-api-reference/javascript/interfaces/cogsettings/</loc>
-     <lastmod>2021-06-18</lastmod>
+     <lastmod>2021-06-22</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://docs.cogment.ai/cogment/cogment-api-reference/javascript/interfaces/cogsettingsactorclass/</loc>
-     <lastmod>2021-06-18</lastmod>
+     <lastmod>2021-06-22</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://docs.cogment.ai/cogment/cogment-api-reference/javascript/interfaces/createserviceoptions/</loc>
-     <lastmod>2021-06-18</lastmod>
+     <lastmod>2021-06-22</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://docs.cogment.ai/cogment/cogment-api-reference/javascript/interfaces/event/</loc>
-     <lastmod>2021-06-18</lastmod>
+     <lastmod>2021-06-22</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://docs.cogment.ai/cogment/cogment-api-reference/javascript/interfaces/reward/</loc>
-     <lastmod>2021-06-18</lastmod>
+     <lastmod>2021-06-22</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://docs.cogment.ai/cogment/cogment-api-reference/javascript/interfaces/sendmessageoptions/</loc>
-     <lastmod>2021-06-18</lastmod>
+     <lastmod>2021-06-22</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://docs.cogment.ai/cogment/cogment-api-reference/javascript/interfaces/trialactor/</loc>
-     <lastmod>2021-06-18</lastmod>
+     <lastmod>2021-06-22</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://docs.cogment.ai/cogment/cogment-low-level-api-guide/overview/</loc>
-     <lastmod>2021-06-18</lastmod>
+     <lastmod>2021-06-22</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://docs.cogment.ai/cogment/cogment-low-level-api-guide/grpc/</loc>
-     <lastmod>2021-06-18</lastmod>
+     <lastmod>2021-06-22</lastmod>
+     <changefreq>daily</changefreq>
+    </url><url>
+     <loc>https://docs.cogment.ai/dashboard/metrics-and-dashboard/</loc>
+     <lastmod>2021-06-22</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://docs.cogment.ai/license/</loc>
-     <lastmod>2021-06-18</lastmod>
+     <lastmod>2021-06-22</lastmod>
      <changefreq>daily</changefreq>
     </url>
 </urlset>

@@ -1031,6 +1031,21 @@
   
   
     <li class="md-nav__item">
+      <a href="../../dashboard/metrics-and-dashboard/" class="md-nav__link">
+        Metrics & Dashboard
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../license/" class="md-nav__link">
         License
       </a>
@@ -1255,7 +1270,7 @@
 <p>The cogment cli will also compile the imported <a href="../../concepts/glossary/#protocol-buffer"><code>.proto</code></a> files in python modules living in the same location.</p>
 <h2 id="environment">Environment<a class="headerlink" href="#environment" title="Permanent link">&para;</a></h2>
 <p><a href="../../concepts/glossary/#environment">Environments</a> are implemented by a Python function that uses a <a href="../cogment-api-reference/python/#class-environmentsessionsession"><code>cogment.EnvironmentSession</code></a> instance.</p>
-<p>This function will be called once for each [trial][../concepts/glossary.md#trial)]. This function usually consists of three sections.</p>
+<p>This function will be called once for each <a href="../../concepts/glossary/#trial">trial</a>. This function usually consists of three sections.</p>
 <ul>
 <li>The environment's <strong>initialization</strong>, where its internal state can be initialized and processes started. It ends with the sending of the initial observations to the actors participating in the trial.</li>
 <li>Its <strong>event loop</strong>, where the environment iterates through the events occurring during the trial and produces <a href="../../concepts/glossary/#observation">observations</a> as well as receives <a href="../../concepts/glossary/#message">messages</a>. In this loop the environment can end the trial on its own or the end can be requested by a <a href="#controller">controller</a>.</li>
@@ -1363,7 +1378,7 @@
 <span class="k">await</span> <span class="n">context</span><span class="o">.</span><span class="n">serve_all_registered</span><span class="p">(</span><span class="n">port</span><span class="o">=</span><span class="mi">9000</span><span class="p">)</span>
 </code></pre></div>
 
-<p>Please note that this is also through this registrating that the implementation is associated with one or more <a href="../../concepts/glossary/#actor-class">actor classes</a> it implements.</p>
+<p>Please note that it is also through this registrating that the implementation is associated with one or more <a href="../../concepts/glossary/#actor-class">actor classes</a> it implements.</p>
 <p><strong>Client actors</strong>, contrary to Service actors, are not served to the <a href="../../concepts/glossary/#orchestrator">orchestrator</a>. They connect as clients of the orchestrator and join a <a href="../../concepts/glossary/#trial">trial</a> that has started.</p>
 <div class="highlight"><pre><span></span><code><span class="n">context</span> <span class="o">=</span> <span class="n">cogment</span><span class="o">.</span><span class="n">Context</span><span class="p">(</span><span class="n">cog_settings</span><span class="o">=</span><span class="n">cog_settings</span><span class="p">,</span> <span class="n">user_id</span><span class="o">=</span><span class="s2">&quot;rps&quot;</span><span class="p">)</span>
 <span class="n">context</span><span class="o">.</span><span class="n">register_actor</span><span class="p">(</span>
@@ -1377,7 +1392,7 @@
   <span class="n">impl_name</span><span class="o">=</span><span class="s2">&quot;human&quot;</span><span class="p">)</span>
 </code></pre></div>
 
-<p>Please note, that a trial including one or more client actors will wait for all of them to join before any actor can start processing events.</p>
+<p>Please note that a trial including one or more client actors will wait for all of them to join before any actor can start processing events.</p>
 <p>Due to the different network requirements, client actors are a good fit when implementing a <a href="../../concepts/glossary/#frontend">frontend</a> for human actors. In addition to the <a href="../cogment-api-reference/python/">python</a> SDK demonstrated above, client actors can be implemented in <a href="../cogment-api-reference/javascript/modules/">javascript</a> using the corresponding SDK.</p>
 <h2 id="controller">Controller<a class="headerlink" href="#controller" title="Permanent link">&para;</a></h2>
 <p><a href="../../concepts/glossary/#trial">Trials</a> are started by clients of the <a href="../../concepts/glossary/#orchestrator">Orchestrator</a> using a Controller. Instances of a controller are built from the <a href="../cogment-api-reference/python/#class-cogmentcontext"><code>Context</code></a> instance and connect to an Orchestrator endpoint.</p>
@@ -1438,7 +1453,7 @@
 
 <p>Messages consist of an arbitrary payload, their <code>user_data</code>, defined as an instance of any protobuf data structure.</p>
 <p>A message can be sent to one, many or all actors in a trial and / or to the environment.</p>
-<p>The full documentation for <code>session.send_message</code> can be found <a href="../cogment-api-reference/python/#send_messageself-user_data-to-to_environmentfalse">here</a>.</p>
+<p>The full documentation for <code>session.send_message</code> can be found <a href="../cogment-api-reference/python/#send_messageself-payload-to-to_environmentfalse">here</a>.</p>
 <h3 id="consuming_1">Consuming<a class="headerlink" href="#consuming_1" title="Permanent link">&para;</a></h3>
 <p>All the <a href="../../concepts/glossary/#message">messages</a> that are sent and intended for each specific actor or environment will be received by the target actor or environment.</p>
 <p>Actors or the environment can use the message directly, live, as the <a href="../../concepts/glossary/#message">trial</a> is running by consuming message event in their event loop.</p>

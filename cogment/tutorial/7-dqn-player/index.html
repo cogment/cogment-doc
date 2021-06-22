@@ -71,7 +71,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#step-7-add-a-web-client-for-the-human-player" class="md-skip">
+        <a href="#step-7-add-a-player-trained-with-reinforcement-learning-using-dqn" class="md-skip">
           Skip to content
         </a>
       
@@ -940,6 +940,21 @@
   
   
     <li class="md-nav__item">
+      <a href="../../../dashboard/metrics-and-dashboard/" class="md-nav__link">
+        Metrics & Dashboard
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../license/" class="md-nav__link">
         License
       </a>
@@ -1031,15 +1046,15 @@
                   </a>
                 
                 
-                <h1 id="step-7-add-a-web-client-for-the-human-player">Step 7: Add a web client for the human player<a class="headerlink" href="#step-7-add-a-web-client-for-the-human-player" title="Permanent link">&para;</a></h1>
+                <h1 id="step-7-add-a-player-trained-with-reinforcement-learning-using-dqn">Step 7: Add a player trained with Reinforcement Learning using DQN<a class="headerlink" href="#step-7-add-a-player-trained-with-reinforcement-learning-using-dqn" title="Permanent link">&para;</a></h1>
 <blockquote>
 <p>This part of the tutorial follows <a href="../5-human-player/">step 5</a> and <a href="../6-web-client/">step 6</a>, make sure you've gone through either one of those before starting this one. Alternatively the completed step 5 can be retrieved from the <a href="https://github.com/cogment/cogment-tutorial-rps" target="_blank">tutorial's repository</a>.</p>
 </blockquote>
-<p>In this step of the tutorial, we will go over yet another actor implementation and this implementation will be learning from its experience. We will implement an RPS player using Reinforcement Learning (RL) and more precisely a <a href="https://arxiv.org/pdf/1312.5602.pdf" target="_blank">Deep Q Network</a>, one of the foundational algorithm of modern RL.</p>
+<p>In this step of the tutorial, we will go over yet another actor implementation and this implementation will be learning from its experience. We will implement an RPS player using Reinforcement Learning (RL) and more precisely a <a href="https://arxiv.org/pdf/1312.5602.pdf" target="_blank">Deep Q Network</a>, one of the foundational algorithms of modern RL.</p>
 <p>While we will explain some aspects of RL and DQN along the way, we won't go into all the details. Interested readers can refer to <a href="http://incompleteideas.net/book/the-book-2nd.html" target="_blank">"Reinforcement Learning: An Introduction" by Richard S. Sutton and Andrew G. Barto</a> or to the original Deep Q Network article linked above.</p>
 <h2 id="creating-an-actor-service">Creating an actor service<a class="headerlink" href="#creating-an-actor-service" title="Permanent link">&para;</a></h2>
 <p>Back in <a href="../4-heuristic-player">step 4</a>, we created a new implementation of the <code>player</code> actor class in the same service as the previous one. It was a sound choice for this implementation because it was small and didn't require additional dependencies. In some cases it makes more sense to create a fully separated service for a new actor implementation. This is what we will do here.</p>
-<p>Start by copy/pasting the <code>random_agent</code> folder and name the copy <code>dqn_agent</code>. Let's then clean up <code>dqn_agent/main.py</code> to keep only a single actor implentation and name it <code>dqn_agent</code>. You should have something like the following.</p>
+<p>Start by copy/pasting the <code>random_agent</code> folder and name the copy <code>dqn_agent</code>. Let's then clean up <code>dqn_agent/main.py</code> to keep only a single actor implentation and name it <code>dqn_agent</code>. You should end up with something like the following.</p>
 <div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">cog_settings</span>
 <span class="kn">from</span> <span class="nn">data_pb2</span> <span class="kn">import</span> <span class="n">PlayerAction</span>
 
@@ -1070,14 +1085,14 @@
     <span class="n">asyncio</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">main</span><span class="p">())</span>
 </code></pre></div>
 
-<p>Since we have created a new service we need to reference it at several places for everything to work properly. First, let's edit <code>docker-compose.yaml</code> to add the new service. To do that simply add the following under the <code>services</code> key, it tells docker-compose about the new service.</p>
+<p>Since we have created a new service we need to reference it at several places for everything to work properly. First, let's edit <code>docker-compose.yaml</code> to add the new service. To do that, simply add the following under the <code>services</code> key: it tells docker-compose about the new service.</p>
 <div class="highlight"><pre><span></span><code><span class="nt">dqn-agent</span><span class="p">:</span>
   <span class="nt">build</span><span class="p">:</span>
     <span class="nt">context</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">dqn_agent</span>
     <span class="nt">dockerfile</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">../py_service.dockerfile</span>
 </code></pre></div>
 
-<p>Then we will need to edit <code>cogment.yaml</code> to make <code>cogment run generate</code> run in the new service's directory and have <code>cogment run build</code> and <code>cogment run start</code> respectively trigger its build and its start. We will change the <code>generate</code>, <code>build</code> and <code>start</code> key under <code>commands</code>.</p>
+<p>Then we will need to edit <code>cogment.yaml</code> to make <code>cogment run generate</code> run in the new service's directory and have <code>cogment run build</code> and <code>cogment run start</code> respectively trigger its build and its start. We will change the <code>generate</code>, <code>build</code> and <code>start</code> keys under <code>commands</code>.</p>
 <div class="highlight"><pre><span></span><code><span class="nt">commands</span><span class="p">:</span>
   <span class="nt">generate</span><span class="p">:</span> <span class="p p-Indicator">&gt;</span>
     <span class="no">cogment generate</span>
@@ -1102,7 +1117,7 @@
 </code></pre></div>
 
 <h2 id="playing-against-the-heuristic-player">Playing against the heuristic player<a class="headerlink" href="#playing-against-the-heuristic-player" title="Permanent link">&para;</a></h2>
-<p>We will train our new player against the <a href="../4-heuristic-player/">heuristic player</a> we previously developed. We first need to update the trial config in <code>cogment.yaml</code>: <code>player_1</code> will be our new actor implementation while <code>player_2</code> will be the heuristic implementation, trials will be 20 games long to generate enough meaningful data between each training steps.</p>
+<p>We will train our new player against the <a href="../4-heuristic-player/">heuristic player</a> we previously developed. We first need to update the trial config in <code>cogment.yaml</code>: <code>player_1</code> will be our new actor implementation while <code>player_2</code> will be the heuristic implementation. Trials will be 20 games long to generate enough meaningful data between each training step.</p>
 <div class="highlight"><pre><span></span><code><span class="nt">trial_params</span><span class="p">:</span>
   <span class="nt">environment</span><span class="p">:</span>
     <span class="nt">endpoint</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">grpc://environment:9000</span>
@@ -1145,8 +1160,8 @@
 <p>You can now <a href="../1-bootstrap-and-data-structures/#building-and-running-the-app">build and run</a> the application. It should take a few minutes to run as it goes through the trial campaign.</p>
 <h2 id="implementing-the-deep-q-network">Implementing the Deep Q Network<a class="headerlink" href="#implementing-the-deep-q-network" title="Permanent link">&para;</a></h2>
 <p>We have set everything up, we can now focus on implementing our DQN agent.</p>
-<p>A Deep Q Network is a neural network taking an observation as input, and outputs the Q value for each of the actions in the action space. The Q Value is an estimation of the expected value of all the rewards if a given action is taken. The DQN agent action policy is therefore to take the action having the largest predicted Q Value. Let's start by implementing this part and we will then deal with training this model.</p>
-<p>In the rest of this tutorial we will use <a href="https://www.tensorflow.org" target="_blank">Tensorflow and its Keras API</a> for the model itself, as well as <a href="https://numpy.org" target="_blank">numpy</a> for datastructures. Let's import these at the top of <code>dqn_agent/main.py</code>.</p>
+<p>A Deep Q Network is a neural network taking an observation as input, and outputing the Q value for each of the actions in the action space. The Q Value is an estimation of the expected value of all the rewards if a given action is taken. The DQN agent action policy is therefore to take the action having the largest predicted Q Value. Let's start by implementing this part and we will then deal with training this model.</p>
+<p>In the rest of this tutorial we will use <a href="https://www.tensorflow.org" target="_blank">Tensorflow and its Keras API</a> for the model itself, as well as <a href="https://numpy.org" target="_blank">numpy</a> for datastructures. Let's add these to <code>dqn_agent/requirements.txt</code> and import them at the top of <code>dqn_agent/main.py</code>.</p>
 <div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
 </code></pre></div>
@@ -1157,7 +1172,7 @@
 <li>Each input is <a href="https://en.wikipedia.org/wiki/One-hot#Machine_learning_and_statistics" target="_blank">one-hot encoded</a> to avoid assuming an unwanted ordering and quantitative relationship between the moves.</li>
 <li>The two encoded inputs are concatenated to a single vector.</li>
 <li>A dense non-linear hidden layer is added.</li>
-<li>The output layers estimates the Q value for each move.</li>
+<li>The output layer estimates the Q value for each move.</li>
 </ol>
 <p>Everything then gets wrapped up and returned.</p>
 <p>This function is then used to create a global <code>_model</code> that we will use in the actor implementation.</p>
@@ -1189,7 +1204,7 @@
 <span class="n">_model</span> <span class="o">=</span> <span class="n">create_model</span><span class="p">()</span>
 </code></pre></div>
 
-<p>The other piece of the puzzle is implementing a small function that'll convert our observations into inputs for the model we just created. As most of the encoding is handled by the model itself it's fairly straightforward.</p>
+<p>The other piece of the puzzle is implementing a small function that will convert our observations into inputs for the model we just created. As most of the encoding is handled by the model itself it's fairly straightforward.</p>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">model_ins_from_observations</span><span class="p">(</span><span class="n">observations</span><span class="p">):</span>
     <span class="k">return</span> <span class="p">{</span>
         <span class="s2">&quot;obs_me_last_move&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">o</span><span class="o">.</span><span class="n">snapshot</span><span class="o">.</span><span class="n">me</span><span class="o">.</span><span class="n">last_move</span><span class="p">]</span> <span class="k">for</span> <span class="n">o</span> <span class="ow">in</span> <span class="n">observations</span><span class="p">]),</span>
@@ -1199,12 +1214,12 @@
     <span class="p">}</span>
 </code></pre></div>
 
-<p>Finally we can make it work together by replacing the random choice of action by the use of the model. At the moment the model will just use the random initialization weights so don't expect much !</p>
-<p>Here is how the event loop in the <code>dqn_agent</code> function will need to be updated to:</p>
+<p>Finally we can make it work together by replacing the random choice of action by the use of the model. At the moment the model will just use the random initialization weights so don't expect much!</p>
+<p>Here is how the event loop in the <code>dqn_agent</code> function will need to be updated:</p>
 <ol>
 <li>Use <code>model_ins_from_observations</code> to compute the model inputs,</li>
 <li>Use the model in inference mode to compute the q value of each of the possible actions,</li>
-<li>Finally do the action having the largest q value.</li>
+<li>Finally, do the action having the largest q value.</li>
 </ol>
 <div class="highlight"><pre><span></span><code><span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">observation</span><span class="p">:</span>
   <span class="n">model_ins</span> <span class="o">=</span> <span class="n">model_ins_from_observations</span><span class="p">([</span><span class="n">event</span><span class="o">.</span><span class="n">observation</span><span class="p">])</span>
@@ -1220,7 +1235,7 @@
 </blockquote>
 <h2 id="random-exploration">Random exploration<a class="headerlink" href="#random-exploration" title="Permanent link">&para;</a></h2>
 <p>With the previous code, you might have noticed that the agent will play exactly the same action given the same set of observations, this is because the weights of the model are fixed. However, especially at the beginning of the training process we want the agent to <em>experience</em> a variety of situations. We address this issue by introducing a decaying exploration rate <em>epsilon</em>.</p>
-<p>First we will define as global variables, the parameters for this epsilon value: its minimum value, its maximum and initial value and its decay per tick. We also define as a global variable the current value of epsilon. You can add the following after the imports in <code>dqn_agent/main.py</code>.</p>
+<p>First we will define the parameters for this epsilon value as global variables: its minimum value, its maximum and initial value and its decay per tick. We also define as a global variable the current value of epsilon. You can add the following after the imports in <code>dqn_agent/main.py</code>.</p>
 <div class="highlight"><pre><span></span><code><span class="n">epsilon_min</span> <span class="o">=</span> <span class="mf">0.05</span>
 <span class="n">epsilon_max</span> <span class="o">=</span> <span class="mf">1.0</span>
 <span class="n">epsilon_decay_per_tick</span> <span class="o">=</span> <span class="p">(</span>
@@ -1230,7 +1245,7 @@
 <span class="n">_epsilon</span> <span class="o">=</span> <span class="n">epsilon_max</span>
 </code></pre></div>
 
-<p>We then create a simple function we can use everytime an action needs to be taken to retrieve and update <code>_epsilon</code></p>
+<p>We then create a simple function we can use everytime an action needs to be taken to retrieve and update <code>_epsilon</code>.</p>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">get_and_update_epsilon</span><span class="p">():</span>
   <span class="k">global</span> <span class="n">_epsilon</span>
   <span class="n">current_epsilon</span> <span class="o">=</span> <span class="n">_epsilon</span>
@@ -1239,7 +1254,7 @@
   <span class="k">return</span> <span class="n">current_epsilon</span>
 </code></pre></div>
 
-<p>This function can then be used to do random actions occasionally to facilitate the exploration. To do that, we need to modify slightly how the actions are computed and submitted.</p>
+<p>This function can then be used to occasionally do random actions, to facilitate the exploration. To do that, we need to slightly modify how the actions are computed and submitted.</p>
 <div class="highlight"><pre><span></span><code><span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">cogment</span><span class="o">.</span><span class="n">EventType</span><span class="o">.</span><span class="n">ACTIVE</span><span class="p">:</span>
   <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">get_and_update_epsilon</span><span class="p">():</span>
     <span class="c1"># Take random action</span>
@@ -1281,7 +1296,7 @@
   <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">_rb</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
     <span class="c1"># Append the trial data to the current vector</span>
     <span class="n">_rb</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">_rb</span><span class="p">[</span><span class="n">key</span><span class="p">],</span> <span class="n">trial_rb</span><span class="p">[</span><span class="n">key</span><span class="p">])</span>
-    <span class="c1"># Enfore the size limit by discarding older data</span>
+    <span class="c1"># Enforce the size limit by discarding older data</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">_rb</span><span class="p">[</span><span class="n">key</span><span class="p">])</span> <span class="o">&gt;</span> <span class="n">max_replay_buffer_size</span><span class="p">:</span>
         <span class="n">_rb</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">_rb</span><span class="p">[</span><span class="n">key</span><span class="p">][</span><span class="o">-</span><span class="n">max_replay_buffer_size</span><span class="p">:]</span>
 
@@ -1297,7 +1312,7 @@
   <span class="p">)</span>
 </code></pre></div>
 
-<p>The <code>dqn_agent</code> function can then be updated to collect received observations and reward and sent actions. By default every action gets a <em>zero</em> reward. When a reward for a specific tick is received its value gets updated.</p>
+<p>The <code>dqn_agent</code> function can then be updated to collect received observations, rewards and sent actions. By default every action gets a <em>zero</em> reward. When a reward for a specific tick is received, its value gets updated.</p>
 <div class="highlight"><pre><span></span><code><span class="k">async</span> <span class="k">def</span> <span class="nf">dqn_agent</span><span class="p">(</span><span class="n">actor_session</span><span class="p">):</span>
   <span class="n">actor_session</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
 
@@ -1337,7 +1352,7 @@
 
 <p>You can now <a href="../1-bootstrap-and-data-structures/#building-and-running-the-app">build and run</a> the application. The behavior should be the same but the log should confirm that data gets accumulated.</p>
 <h2 id="training">Training!<a class="headerlink" href="#training" title="Permanent link">&para;</a></h2>
-<p>Here we are, all the pieces are in place we can implement the training proper. The function is a standard implementation of DQN and is decomposed in 4 steps:</p>
+<p>Here we are, all the pieces are in place, we can implement the training proper. The function is a standard implementation of DQN and is decomposed in 4 steps:</p>
 <ol>
 <li>Select a random batch of samples from the replay buffer</li>
 <li>Compute the target Q value for each sample from the received reward and the next observation using a previous version of the model.</li>
@@ -1412,7 +1427,7 @@
 </code></pre></div>
 
 <p>This function then needs to be called at the end of each trial after the call to <code>append_trial_replay_buffer</code>.</p>
-<p>You can now <a href="../1-bootstrap-and-data-structures/#building-and-running-the-app">build and run</a> the application. The dqn agent will start to learn and quickly prevails against the heuristic implementation.</p>
+<p>You can now <a href="../1-bootstrap-and-data-structures/#building-and-running-the-app">build and run</a> the application. The dqn agent will start to learn and quickly prevail against the heuristic implementation.</p>
 <p>This can be observed by opening the dashboard at <a href="http://localhost:3003" target="_blank">http://localhost:3003</a> and opening the reward page. You should be able to track the progression of the dqn implementation.</p>
 <p><img alt="Cumulative reward by agent type diagram showing the dqn implementation prevailing against the heuristic agent" src="../figures/dqn_agent_rewards.png" /></p>
 <p>This concludes the step 7 of the tutorial: you implemented your first trained actor implementation!</p>

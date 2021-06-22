@@ -946,6 +946,21 @@
   
   
     <li class="md-nav__item">
+      <a href="../../../dashboard/metrics-and-dashboard/" class="md-nav__link">
+        Metrics & Dashboard
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../license/" class="md-nav__link">
         License
       </a>
@@ -1048,7 +1063,7 @@
 <p>To follow this tutorial you'll need a working installation of <strong>Cogment</strong>. If you haven't done so already, follow our <a href="../../../introduction/installation/">installation instructions</a>.</p>
 <h2 id="bootstrap-the-app">Bootstrap the app<a class="headerlink" href="#bootstrap-the-app" title="Permanent link">&para;</a></h2>
 <p>The Cogment command line interface (CLI) includes a simple tool to generate the base files and folder structures for a Cogment app. The first thing we'll do is use it to create an app with 2 AIs able to play games of RPS.</p>
-<p>Using Cogment's terminology, we will create 2 actors sharing a single implementation picking a random move for each round. We will develop a <strong>service actor</strong> implementation which is well suited for AIs and no <strong>client actor</strong> implementation which would be required for an interactive actor, for exemple, an actor controlled by a Human player. In the <a href="../5-human-player">step 5</a> we will create such implementation.</p>
+<p>Using Cogment's terminology, we will create 2 actors sharing a single implementation picking a random move for each round. We will develop a <strong>service actor</strong> implementation which is well suited for AIs rather than a <strong>client actor</strong> implementation, which would be required for an interactive actor; for exemple, an actor controlled by a Human player. In the <a href="../5-human-player">step 5</a> we will create such implementation.</p>
 <p>Run the following to bootstrap the app in a <code>rps</code> directory:</p>
 <div class="highlight"><pre><span></span><code><span class="gp">$ </span>cogment init rps
 
@@ -1070,7 +1085,7 @@
 <li>2 actor instances, because the game has 2 players.</li>
 </ul>
 <blockquote>
-<p>ℹ️ For the remainder of this tutorial, unless mentioned, it is assumed that all operations are run in the <code>rps</code> directory.</p>
+<p>ℹ️ For the remainder of this tutorial, unless otherwise mentioned, it is assumed that all operations are run in the <code>rps</code> directory.</p>
 </blockquote>
 <h2 id="building-and-running-the-app">Building and running the app<a class="headerlink" href="#building-and-running-the-app" title="Permanent link">&para;</a></h2>
 <p>We can now check that everything works as expected.</p>

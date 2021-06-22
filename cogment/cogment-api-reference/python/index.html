@@ -651,8 +651,8 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#__init__self-user_id-cog_settings" class="md-nav__link">
-    __init__(self, user_id, cog_settings)
+  <a href="#__init__self-user_id-cog_settings-prometheus_registryprometheus_clientcoreregistry" class="md-nav__link">
+    __init__(self, user_id, cog_settings, prometheus_registry=prometheus_client.core.REGISTRY)
   </a>
   
 </li>
@@ -1069,7 +1069,7 @@
         
           <li class="md-nav__item">
   <a href="#get_nb_sourcesself" class="md-nav__link">
-    ``get_nb_sources(self)
+    get_nb_sources(self)
   </a>
   
 </li>
@@ -1403,6 +1403,21 @@
   
   
     <li class="md-nav__item">
+      <a href="../../../dashboard/metrics-and-dashboard/" class="md-nav__link">
+        Metrics & Dashboard
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../license/" class="md-nav__link">
         License
       </a>
@@ -1498,8 +1513,8 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#__init__self-user_id-cog_settings" class="md-nav__link">
-    __init__(self, user_id, cog_settings)
+  <a href="#__init__self-user_id-cog_settings-prometheus_registryprometheus_clientcoreregistry" class="md-nav__link">
+    __init__(self, user_id, cog_settings, prometheus_registry=prometheus_client.core.REGISTRY)
   </a>
   
 </li>
@@ -1916,7 +1931,7 @@
         
           <li class="md-nav__item">
   <a href="#get_nb_sourcesself" class="md-nav__link">
-    ``get_nb_sources(self)
+    get_nb_sources(self)
   </a>
   
 </li>
@@ -1958,18 +1973,18 @@
                 
                 
                 <h1 id="python-sdk">Python SDK<a class="headerlink" href="#python-sdk" title="Permanent link">&para;</a></h1>
-<p>The Python SDK is designed to run concurently and asynchronously using the Python <code>asyncio</code> library.  As such, it should be run in an <code>asyncio.Task</code>.</p>
+<p>The Python SDK is designed to run concurently and asynchronously using the Python <code>asyncio</code> library. As such, it should be run in an <code>asyncio.Task</code>.</p>
 <h2 id="installation">Installation<a class="headerlink" href="#installation" title="Permanent link">&para;</a></h2>
 <p>The simplest way to install the python SDK is to just install it using pip:
 <code>pip install cogment</code></p>
-<p>The basic requiremetns is Python 3.7.</p>
+<p>The basic requirement is Python 3.7.</p>
 <h2 id="general-usage">General usage<a class="headerlink" href="#general-usage" title="Permanent link">&para;</a></h2>
 <h3 id="cogmentyaml">cogment.yaml<a class="headerlink" href="#cogmentyaml" title="Permanent link">&para;</a></h3>
 <p>The <a href="../cogment-yaml/">cogment.yaml</a> file (including imported files) defines the high level API.</p>
 <p>For example, an <a href="../../../concepts/glossary/#actor-class">actor class</a> is defined by its required <a href="../../../concepts/glossary/#observation-space">observation space</a> and <a href="../../../concepts/glossary/#action-space">action space</a>.</p>
 <p>These "spaces" are defined by using protobuf message types (from the imported files). <a href="../../../concepts/glossary/#observation">Observations</a> and <a href="../../../concepts/glossary/#action">actions</a> will simply be instances of the appropriate type.</p>
-<p>Messages and feedback user data don't have a set type, they can be any type as long as the receiver can manage that type (i.e. the object received is an instance of <code>google.protobuf.Any</code> and the contained type should be checked against known types before handling).  The type is determined by the provided message from the originator.</p>
-<p>The <code>trial_params</code> section represents default values that can be dynamically changed for each trial with pre-trial hooks.  Therefore, below, when this section of the <code>cogment.yaml</code> file is refered, we mean the final parameters after any pre-trial hooks.</p>
+<p>Messages and feedback user data don't have a set type, they can be any type as long as the receiver can manage that type (i.e. the object received is an instance of <code>google.protobuf.Any</code> and the contained type should be checked against known types before handling). The type is determined by the provided message from the originator.</p>
+<p>The <code>trial_params</code> section represents default values that can be dynamically changed for each trial with pre-trial hooks. Therefore, below, when this section of the <code>cogment.yaml</code> file is refered, we mean the final parameters after any pre-trial hooks.</p>
 <h4 id="compiling-the-cogmentyaml">Compiling the cogment.yaml<a class="headerlink" href="#compiling-the-cogmentyaml" title="Permanent link">&para;</a></h4>
 <p>In order to use the configuration found in the <code>cogment.yaml</code> file within python scripts, it needs to be compiled into python modules. This is done by a tool called the “cogment cli” (Command Line Interface).</p>
 <p>The cogment cli requires <code>protoc</code> (the Protobuf compiler).</p>
@@ -1977,7 +1992,7 @@
 <div class="highlight"><pre><span></span><code>$ docker run -v $(pwd):/data --rm cogment/cli --file /data/cogment.yaml --python_dir=/data
 </code></pre></div>
 
-<p>This will create a <code>cog_settings.py</code> module in the <code>--python-dir</code> directory.  The cogment cli will also compile the imported <code>*.proto</code> files in python modules living in the same location (e.g. <code>data_pb2.py</code> in this case). There is no need to invoke <code>protoc</code> yourself for the imported files.</p>
+<p>This will create a <code>cog_settings.py</code> module in the <code>--python-dir</code> directory. The cogment cli will also compile the imported <code>*.proto</code> files in python modules living in the same location (e.g. <code>data_pb2.py</code> in this case). There is no need to invoke <code>protoc</code> yourself for the imported files.</p>
 <h3 id="cog_settingspy">cog_settings.py<a class="headerlink" href="#cog_settingspy" title="Permanent link">&para;</a></h3>
 <p>All API entrypoints require a cogment configuration object. This configuration object can be determined
 from the content of a project's <code>cogment.yaml</code>. As such, it should be generated using the <code>cogment</code> tool.</p>
@@ -1994,18 +2009,19 @@ $ cogment generate --python_dir<span class="o">=</span>path/to/project
 
 <h2 id="class-cogmentcontext">class cogment.Context<a class="headerlink" href="#class-cogmentcontext" title="Permanent link">&para;</a></h2>
 <p>Class to setup and run all the different aspects of trials.</p>
-<h3 id="__init__self-user_id-cog_settings"><code>__init__(self, user_id, cog_settings)</code><a class="headerlink" href="#__init__self-user_id-cog_settings" title="Permanent link">&para;</a></h3>
+<h3 id="__init__self-user_id-cog_settings-prometheus_registryprometheus_clientcoreregistry"><code>__init__(self, user_id, cog_settings, prometheus_registry=prometheus_client.core.REGISTRY)</code><a class="headerlink" href="#__init__self-user_id-cog_settings-prometheus_registryprometheus_clientcoreregistry" title="Permanent link">&para;</a></h3>
 <p>Parameters:</p>
 <ul>
 <li><code>user_id</code>: <em>str</em> - Identifier for the user of this context.</li>
 <li><code>cog_settings</code>: <em>module</em> - Settings module associated with trials that will be run (<a href="#cog_settings.py">cog_settings</a> namespace).</li>
+<li><code>prometheus_registry</code>: <em>prometheus_client.core.CollectorRegistry instance</em> - Prometheus registry that'll be used by the Cogment metrics in this context. Can be set to <code>None</code> to completely deactivate them. The default value is Prometheus' default global registry.</li>
 </ul>
 <h3 id="async-serve_all_registeredself-served_endpoint-prometheus_port-8000"><code>async serve_all_registered(self, served_endpoint, prometheus_port = 8000)</code><a class="headerlink" href="#async-serve_all_registeredself-served_endpoint-prometheus_port-8000" title="Permanent link">&para;</a></h3>
 <p>Method to start and run the communication server for the registered components (environment, actor, prehook, datalog). This coroutine will end when all activity has stopped.</p>
 <p>Parameters:</p>
 <ul>
 <li><code>served_endpoint</code>: <em>ServedEndpoint instance</em> - Details of the connection for the served components.</li>
-<li><code>prometheus_port</code>: <em>int</em> - TCP/IP port number for Prometheus</li>
+<li><code>prometheus_port</code>: <em>int</em> - TCP/IP port number for Prometheus. Can be set to None to deactivate the Prometheus metrics server.</li>
 </ul>
 <p>Return: None</p>
 <h3 id="get_controllerself-endpoint"><code>get_controller(self, endpoint)</code><a class="headerlink" href="#get_controllerself-endpoint" title="Permanent link">&para;</a></h3>
@@ -2021,8 +2037,8 @@ $ cogment generate --python_dir<span class="o">=</span>path/to/project
 <ul>
 <li><code>trial_id</code>: <em>str</em> - The UUID of the trial to join.</li>
 <li><code>endpoint</code>: <em>Endpoint instance</em> - Details of the connection to the Orchestrator.</li>
-<li><code>impl_name</code>: <em>str</em> - The implementation name of the actor to join the trial.  The implementation must have previously been registered with the <code>register_actor</code> method.</li>
-<li><code>actor_name</code>: <em>str</em> - Name of the actor joining the trial. If <code>None</code>, the actor will join as any of the configured (free) actors of the actor class registered for <code>impl_name</code>.  Otherwise, the name must match an actor with an actor_class compatible with <code>impl_name</code> as defined in <code>cogment.yaml</code> in the sections <code>trial_params:actors:actor_class</code> and <code>trial_params:actors:name</code>.</li>
+<li><code>impl_name</code>: <em>str</em> - The implementation name of the actor to join the trial. The implementation must have previously been registered with the <code>register_actor</code> method.</li>
+<li><code>actor_name</code>: <em>str</em> - Name of the actor joining the trial. If <code>None</code>, the actor will join as any of the configured (free) actors of the actor class registered for <code>impl_name</code>. Otherwise, the name must match an actor with an actor_class compatible with <code>impl_name</code> as defined in <code>cogment.yaml</code> in the sections <code>trial_params:actors:actor_class</code> and <code>trial_params:actors:name</code>.</li>
 </ul>
 <p>Return: None</p>
 <h3 id="register_environmentself-impl-impl_name-default"><code>register_environment(self, impl, impl_name = "default")</code><a class="headerlink" href="#register_environmentself-impl-impl_name-default" title="Permanent link">&para;</a></h3>
@@ -2039,18 +2055,18 @@ $ cogment generate --python_dir<span class="o">=</span>path/to/project
 <ul>
 <li><code>impl</code>: <em>async func(ActorSession instance)</em> - Callback function to be registered.</li>
 <li><code>impl_name</code>: <em>str</em> - Name for the actor implementation being run by the given callback function.</li>
-<li><code>actor_classes</code>: <em>list[str]</em> - The actor class name(s) that can be run by the given callback function. The possible names are specified in file <code>cogment.yaml</code> under section <code>actor_classes:name</code>.  If the list is empty, this implementation can run any actor class.</li>
+<li><code>actor_classes</code>: <em>list[str]</em> - The actor class name(s) that can be run by the given callback function. The possible names are specified in file <code>cogment.yaml</code> under section <code>actor_classes:name</code>. If the list is empty, this implementation can run any actor class.</li>
 </ul>
 <p>Return: None</p>
 <h3 id="register_pre_trial_hookself-impl"><code>register_pre_trial_hook(self, impl)</code><a class="headerlink" href="#register_pre_trial_hookself-impl" title="Permanent link">&para;</a></h3>
 <p>Method to register an asynchronous callback function that will be called before a trial is started.</p>
 <p>Parameters:</p>
 <ul>
-<li><code>impl</code>: <em>async func(PrehookSession instance)</em> - Callback function to be registered.  The <code>PrehookSession</code> instance member data should be changed as needed for the new trial before returning from this function.</li>
+<li><code>impl</code>: <em>async func(PrehookSession instance)</em> - Callback function to be registered. The <code>PrehookSession</code> instance member data should be changed as needed for the new trial before returning from this function.</li>
 </ul>
 <p>Return: None</p>
 <h3 id="register_datalogself-impl"><code>register_datalog(self, impl)</code><a class="headerlink" href="#register_datalogself-impl" title="Permanent link">&para;</a></h3>
-<p>Method to register an asynchronous callback function that will be called for each log request (for any trial).  Only one such function can be registered.</p>
+<p>Method to register an asynchronous callback function that will be called for each log request (for any trial). Only one such function can be registered.</p>
 <p>Parameters:</p>
 <ul>
 <li><code>impl</code>: <em>async func(DatalogSession instance)</em> - Callback function to be registered</li>
@@ -2059,33 +2075,33 @@ $ cogment generate --python_dir<span class="o">=</span>path/to/project
 <h2 id="class-controller">class Controller<a class="headerlink" href="#class-controller" title="Permanent link">&para;</a></h2>
 <p>Class containing data and methods to control and manage trials.</p>
 <h3 id="async-start_trialself-trial_confignone"><code>async start_trial(self, trial_config=None)</code><a class="headerlink" href="#async-start_trialself-trial_confignone" title="Permanent link">&para;</a></h3>
-<p>Method to start a new trial.  The parameters of the trial will be set by the pre-trial hooks (registered in <code>cogment.Context</code>), and the hooks will receive the provided trial config.</p>
+<p>Method to start a new trial. The parameters of the trial will be set by the pre-trial hooks (registered in <code>cogment.Context</code>), and the hooks will receive the provided trial config.</p>
 <p>Parameters:</p>
 <ul>
-<li><code>trial_config</code>: <em>protobuf class instance</em> - Configuration for the trial.  The type is specified in file <code>cogment.yaml</code> under the section <code>trial:config_type</code>.  Can be <code>None</code> if no configuration is provided.</li>
+<li><code>trial_config</code>: <em>protobuf class instance</em> - Configuration for the trial. The type is specified in file <code>cogment.yaml</code> under the section <code>trial:config_type</code>. Can be <code>None</code> if no configuration is provided.</li>
 </ul>
 <p>Return: <em>str</em> - The newly started trial ID.</p>
 <h3 id="terminate_trialself-trial_id"><code>terminate_trial(self, trial_id)</code><a class="headerlink" href="#terminate_trialself-trial_id" title="Permanent link">&para;</a></h3>
 <p>Method to request the end of a trial.</p>
 <p>Parameters:</p>
 <ul>
-<li><code>trial_id</code>: <em>str</em> - The trial ID to request to terminate.</li>
+<li><code>trial_id</code>: <em>str</em> - The trial ID the request is to terminate.</li>
 </ul>
 <p>Return: None</p>
 <h3 id="async-get_trial_infoself-trial_id"><code>async get_trial_info(self, trial_id)</code><a class="headerlink" href="#async-get_trial_infoself-trial_id" title="Permanent link">&para;</a></h3>
 <p>Method to get information about a trial.</p>
 <p>Parameters:</p>
 <ul>
-<li><code>trial_id</code>: <em>str</em> - The trial ID from which to request information.  If <code>None</code> returns information about all trials.  Note that ended trials may only appear for a short time in this list after they have ended.</li>
+<li><code>trial_id</code>: <em>str</em> - The trial ID from which to request information. If <code>None</code>, returns information about all trials. Note that ended trials may only appear for a short time in this list after they have ended.</li>
 </ul>
-<p>Return: <em>list[TrialInfo instance]</em> - List of trial information, one per trial.  Can be empty if no trial matches.</p>
+<p>Return: <em>list[TrialInfo instance]</em> - List of trial information, one per trial. Can be empty if no trial matches.</p>
 <h3 id="async-watch_trialsself-trial_state_filters"><code>async watch_trials(self, trial_state_filters=[])</code><a class="headerlink" href="#async-watch_trialsself-trial_state_filters" title="Permanent link">&para;</a></h3>
-<p>Generator method to iterate, in real-time, through all trial states matching the filters.  When called, it will first iterate over the current states matching the filters, for all trials.  Afterward, it will iterate in real-time over the matching states as they change.</p>
+<p>Generator method to iterate, in real-time, through all trial states matching the filters. When called, it will first iterate over the current states matching the filters, for all trials. Afterwards, it will iterate in real-time over the matching states as they change.</p>
 <p>Parameters:</p>
 <ul>
-<li><code>trial_state_filters</code>: <em>list[cogment.TrialState]</em> - List of enum values from <code>cogment.TrialState</code>.   for which we are intersted to receive state change.</li>
+<li><code>trial_state_filters</code>: <em>list[cogment.TrialState]</em> - List of enum values from <code>cogment.TrialState</code> for which we are interested in receiving state changes.</li>
 </ul>
-<p>Return: <em>generator(TrialInfo instance)</em> - A generator for the state changes that arrive.  The <code>TrialInfo</code> received here only contain the trial ID and the state.</p>
+<p>Return: <em>generator(TrialInfo instance)</em> - A generator for the state changes that arrive. The <code>TrialInfo</code> received here only contains the trial ID and the state.</p>
 <h3 id="async-get_actorsself-trial_id"><code>async get_actors(self, trial_id)</code><a class="headerlink" href="#async-get_actorsself-trial_id" title="Permanent link">&para;</a></h3>
 <p>Method to get the list of configured actors in a trial.</p>
 <p>Parameters:</p>
@@ -2094,7 +2110,7 @@ $ cogment generate --python_dir<span class="o">=</span>path/to/project
 </ul>
 <p>Return: <em>list[ActorInfo instance]</em> - List of actors configured in this trial.</p>
 <h2 id="class-session">class Session<a class="headerlink" href="#class-session" title="Permanent link">&para;</a></h2>
-<p>Abstract class containing data and methods common to all sessions that manage aspects of a trial.</p>
+<p>Abstract class that manages aspects of a trial. Contains data and methods common to all sessions .</p>
 <h3 id="get_trial_idself"><code>get_trial_id(self)</code><a class="headerlink" href="#get_trial_idself" title="Permanent link">&para;</a></h3>
 <p>Method to get the UUID of the trial managed by this session.</p>
 <p>Parameters: None</p>
@@ -2108,95 +2124,95 @@ $ cogment generate --python_dir<span class="o">=</span>path/to/project
 <p>Parameters: None</p>
 <p>Return: <em>bool</em> - True if the trial has ended, false otherwise.</p>
 <h3 id="get_active_actorsself"><code>get_active_actors(self)</code><a class="headerlink" href="#get_active_actorsself" title="Permanent link">&para;</a></h3>
-<p>Method to get the list of active actors in the trial.  This may be expensive to retrieve and thus should be stored if the list is not expected to change throughout the trial.</p>
+<p>Method to get the list of active actors in the trial. This may be expensive to retrieve and thus should be stored if the list is not expected to change throughout the trial.</p>
 <p>Parameters: None</p>
 <p>Return: <em>list[ActorInfo instance]</em> - List of active actors and classes involved in this trial.</p>
 <h3 id="add_rewardself-value-confidence-to-tick_id-1-user_datanone"><code>add_reward(self, value, confidence, to, tick_id=-1, user_data=None)</code><a class="headerlink" href="#add_rewardself-value-confidence-to-tick_id-1-user_datanone" title="Permanent link">&para;</a></h3>
 <p>Method to send a reward to one or more actors.</p>
 <p>Parameters:</p>
 <ul>
-<li><code>value</code>: <em>float</em> - Value of the reward.  This will be aggregated with other rewards for the same target actor.</li>
+<li><code>value</code>: <em>float</em> - Value of the reward. This will be aggregated with other rewards for the same target actor.</li>
 <li><code>confidence</code>: <em>float</em> - Weight of this reward value in determining the final aggregated reward.</li>
-<li><code>to</code>: <em>list[str]</em> - Target(s) of reward.  A list value could be the name of an actor in the trial.  Or it could represent a set of actors; A set of actors can be represented with the wildcard character "<code>*</code>" for all actors (of all classes), or "<code>actor_class.*</code>" for all actors of a specific class (the <code>actor_class</code> is the name of the class as specified in <code>cogment.yaml</code>).</li>
-<li><code>tick_id</code>: <em>int</em> - The tick id (time step) for which the reward should be applied.  If "-1", then the reward applies to the current time step.</li>
-<li><code>user_data</code>: <em>protobuf class instance</em> - Extra user data to be sent with the reward. The class can be any protobuf class.  It is the responsibility of the receiving actor to manage the class received (packed in a <code>google.protobuf.Any</code>).</li>
+<li><code>to</code>: <em>list[str]</em> - Target(s) of reward. A list value could be the name of an actor in the trial. Or it could represent a set of actors; A set of actors can be represented with the wildcard character "<code>*</code>" for all actors (of all classes), or "<code>actor_class.*</code>" for all actors of a specific class (the <code>actor_class</code> is the name of the class as specified in <code>cogment.yaml</code>).</li>
+<li><code>tick_id</code>: <em>int</em> - The tick id (time step) for which the reward should be applied. If "-1", then the reward applies to the current time step.</li>
+<li><code>user_data</code>: <em>protobuf class instance</em> - Extra user data to be sent with the reward. The class can be any protobuf class. It is the responsibility of the receiving actor to manage the class received (packed in a <code>google.protobuf.Any</code>).</li>
 </ul>
 <p>Return: None</p>
 <h3 id="send_messageself-payload-to-to_environmentfalse"><code>send_message(self, payload, to, to_environment=False)</code><a class="headerlink" href="#send_messageself-payload-to-to_environmentfalse" title="Permanent link">&para;</a></h3>
-<p>Method to send a message related to current time step (tick id).</p>
+<p>Method to send a message related to the current time step (tick id).</p>
 <p>Parameters:</p>
 <ul>
-<li><code>payload</code>: <em>protobuf class instance</em> - The message data to be sent. The class can be any protobuf class.  It is the responsibility of the receiving actor or environment to manage the class received (packed in a <code>google.protobuf.Any</code>).</li>
-<li><code>to</code>: <em>list[str]</em> - Targets of feedback.  A list value could be the name of an actor in the trial.  Or it could represent a set of actors; A set of actors can be represented with the wildcard character "<code>*</code>" for all actors (of all classes), or "<code>actor_class.*</code>" for all actors of a specific class (the <code>actor_class</code> is the name of the class as specified in <code>cogment.yaml</code>).</li>
-<li><code>to_environment</code>: <em>bool</em> - If True, the message is also sent to the environment, otherwise the message is only sent to the actors specified.</li>
+<li><code>payload</code>: <em>protobuf class instance</em> - The message data to be sent. The class can be any protobuf class. It is the responsibility of the receiving actor or environment to manage the class received (packed in a <code>google.protobuf.Any</code>).</li>
+<li><code>to</code>: <em>list[str]</em> - Targets of feedback. A list value could be the name of an actor in the trial. Or it could represent a set of actors; A set of actors can be represented with the wildcard character "<code>*</code>" for all actors (of all classes), or "<code>actor_class.*</code>" for all actors of a specific class (the <code>actor_class</code> is the name of the class as specified in <code>cogment.yaml</code>).</li>
+<li><code>to_environment</code>: <em>bool</em> - If True, the message is also sent to the environment, otherwise the message is only sent to the specified actors.</li>
 </ul>
 <p>Return: None</p>
 <h2 id="class-environmentsessionsession">class EnvironmentSession(Session)<a class="headerlink" href="#class-environmentsessionsession" title="Permanent link">&para;</a></h2>
-<p>Abstract class based on <code>Session</code>, containing session data and methods necessary to run an environment for a trial.  An instance of this class is passed as argument to the environment callback function registered with <code>cogment.Context.register_environment</code>.</p>
+<p>Abstract class based on <code>Session</code>, containing session data and methods necessary to run an environment for a trial. An instance of this class is passed as an argument to the environment callback function registered with <code>cogment.Context.register_environment</code>.</p>
 <p><code>impl_name</code>: <em>str</em> - Name of the implementation running this environment.</p>
-<p><code>config</code>: <em>protobuf class instance</em> - User configuration received for this environment instance.  Can be <code>None</code> if no configuration was provided.  The type of the protobuf class is specified in <code>cogment.yaml</code> in section <code>environment:config_type</code>.</p>
+<p><code>config</code>: <em>protobuf class instance</em> - User configuration received for this environment instance. Can be <code>None</code> if no configuration was provided. The type of the protobuf class is specified in <code>cogment.yaml</code> in the section <code>environment:config_type</code>.</p>
 <h3 id="startself-observations"><code>start(self, observations)</code><a class="headerlink" href="#startself-observations" title="Permanent link">&para;</a></h3>
-<p>Method to report that the environment is starting to run the trial.  The method should be called before any other method in the session.</p>
+<p>Method to report that the environment is starting to run the trial. The method should be called before any other method in the session.</p>
 <p>Parameters:</p>
 <ul>
-<li><code>observations</code>: <em>list[tuple(str, protobuf class instance)]</em> - The initial observations from which the environment is starting the trial.  This is the same as the parameter for <code>self.produce_observations</code>.</li>
+<li><code>observations</code>: <em>list[tuple(str, protobuf class instance)]</em> - The initial observations from which the environment is starting the trial. This is the same as the parameter for <code>self.produce_observations</code>.</li>
 </ul>
 <p>Return: None</p>
 <h3 id="async-event_loopself"><code>async event_loop(self)</code><a class="headerlink" href="#async-event_loopself" title="Permanent link">&para;</a></h3>
-<p>Generator method to iterate over all events (actions, messages) as they are received.  This will block and wait for an event.
+<p>Generator method to iterate over all events (actions, messages) as they are received. This will block and wait for an event.
 When this generator exits, the callback function (registered with <code>register_environment</code>) should return to end the trial cleanly.
 The generator will exit for various reasons indicating the termination of the trial, a loss of communication with the orchestrator, or if the generator is sent "False" (in which case the callback function does not necessarily need to exit).</p>
 <p>Parameters: None</p>
-<p>Return: <em>generator(RecvEvent instance)</em> - A generator for the events that arrive.  The <code>RecvEvent</code> instances received from this generator will only contain actions or messages; no observations nor rewards.  When receiving actions in the event, the <code>self.produce_observation</code> method is normally used to "reply" (or <code>self.end</code> to end the trial).</p>
+<p>Return: <em>generator(RecvEvent instance)</em> - A generator for the events that arrive. The <code>RecvEvent</code> instances received from this generator will only contain actions or messages; no observations nor rewards. When receiving actions in the event, the <code>self.produce_observation</code> method is normally used to "reply" (or <code>self.end</code> to end the trial).</p>
 <h3 id="produce_observationsself-observations"><code>produce_observations(self, observations)</code><a class="headerlink" href="#produce_observationsself-observations" title="Permanent link">&para;</a></h3>
-<p>Method to send observations to actors.  If called after receiving an event of type <code>EventType.ENDING</code>, the observation will be consired the final observation (equivalent to calling <code>end()</code>).</p>
+<p>Method to send observations to actors. If called after receiving an event of type <code>EventType.ENDING</code>, the observation will be consired the final observation (equivalent to calling <code>end()</code>).</p>
 <p>Parameters:</p>
 <ul>
-<li><code>observations</code>: <em>list[tuple(str, protobuf class instance)]</em> - The observations to send to actors.  The string in the tuple is the name of the destination actor (or "*" for all actors).  The name of the actors can be found in <code>cogment.yaml</code> under <code>trial_params:actors:name</code>.  The protobuf class is Observation Space for that actor, found in <code>cogment.yaml</code> in the corresponding section <code>actor_classes:observation:space</code>.</li>
+<li><code>observations</code>: <em>list[tuple(str, protobuf class instance)]</em> - The observations to send to actors. The string in the tuple is the name of the destination actor (or "*" for all actors). The name of the actors can be found in <code>cogment.yaml</code> under <code>trial_params:actors:name</code>. The protobuf class is the Observation Space for that actor, found in <code>cogment.yaml</code> in the corresponding section <code>actor_classes:observation:space</code>.</li>
 </ul>
 <p>Return: None</p>
 <h3 id="endself-final_observations"><code>end(self, final_observations)</code><a class="headerlink" href="#endself-final_observations" title="Permanent link">&para;</a></h3>
 <p>Method to report the end of the environment. This will effectively end the trial.</p>
 <p>Parameters:</p>
 <ul>
-<li><code>final_observations</code>: <em>list[tuple(str, protobuf class instance)]</em> - The final observations to send to the actors.  This is the same as the parameter for <code>self.produce_observations</code>.</li>
+<li><code>final_observations</code>: <em>list[tuple(str, protobuf class instance)]</em> - The final observations to send to the actors. This is the same as the parameter for <code>self.produce_observations</code>.</li>
 </ul>
 <p>Return: None</p>
 <h2 id="class-actorsessionsession">class ActorSession(Session)<a class="headerlink" href="#class-actorsessionsession" title="Permanent link">&para;</a></h2>
-<p>Abstract class based on <code>Session</code>, containing session/trial data and methods necessary to run an actor for a trial.  An instance of this class is passed as argument to the actor callback function registered with <code>cogment.Context.register_actor</code>.</p>
-<p><code>class_name</code>: <em>str</em> - Name of the class of actor this instance represents.  Specified in <code>cogment.yaml</code> as <code>actor_classes:name</code>.</p>
+<p>Abstract class based on <code>Session</code>, containing session/trial data and methods necessary to run an actor for a trial. An instance of this class is passed as argument to the actor callback function registered with <code>cogment.Context.register_actor</code>.</p>
+<p><code>class_name</code>: <em>str</em> - Name of the class of actor this instance represents. Specified in <code>cogment.yaml</code> as <code>actor_classes:name</code>.</p>
 <p><code>impl_name</code>: <em>str</em> - Name of the implementation of the actor represented by this instance.</p>
-<p><code>config</code>: <em>protobuf class instance</em> - User configuration received for this actor instance.  Can be <code>None</code> is no configuration was provided.  The type of the protobuf class is specified in <code>cogment.yaml</code> in section <code>actor_classes:config_type</code>.</p>
+<p><code>config</code>: <em>protobuf class instance</em> - User configuration received for this actor instance. Can be <code>None</code> is no configuration was provided. The type of the protobuf class is specified in <code>cogment.yaml</code> in the section <code>actor_classes:config_type</code>.</p>
 <p><code>name</code>: <em>str</em> - Name of the actor this instance represents.</p>
 <h3 id="startself"><code>start(self)</code><a class="headerlink" href="#startself" title="Permanent link">&para;</a></h3>
-<p>Method to start the actor.  This method should be called before any other method in the session.</p>
+<p>Method to start the actor. This method should be called before any other method in the session.</p>
 <p>Parameters: None</p>
 <p>Return: None</p>
 <h3 id="async-event_loopself_1"><code>async event_loop(self)</code><a class="headerlink" href="#async-event_loopself_1" title="Permanent link">&para;</a></h3>
-<p>Generator method to iterate over all events (observations, rewards, messages) as they are received.  This will block and wait for an event.
+<p>Generator method to iterate over all events (observations, rewards, messages) as they are received. This will block and wait for an event.
 When this generator exits, the callback function (registered with <code>register_actor</code>) should return to end the trial cleanly.
 The generator will exit for various reasons indicating the end of the trial, a loss of communication with the orchestrator, or if the generator is sent "False".</p>
 <p>Parameters: None</p>
-<p>Return: <em>generator(RecvEvent instance)</em> - A generator for the events that arrive.  The <code>RecvEvent</code> instances received from this generator will not contain actions.  When receiving an observation in the event, the <code>self.do_action</code> method is normally used to "reply" (if the event type is <code>EventType.ACTIVE</code>).</p>
+<p>Return: <em>generator(RecvEvent instance)</em> - A generator for the events that arrive. The <code>RecvEvent</code> instances received from this generator will not contain actions. When receiving an observation in the event, the <code>self.do_action</code> method is normally used to "reply" (if the event type is <code>EventType.ACTIVE</code>).</p>
 <h3 id="do_actionself-action"><code>do_action(self, action)</code><a class="headerlink" href="#do_actionself-action" title="Permanent link">&para;</a></h3>
 <p>Method to send actions to the environment.</p>
 <p>Parameters:</p>
 <ul>
-<li><code>action</code>: <em>protobuf class instance</em> - An instance of the action space class specified in the corresponding section <code>actor_classes:action:space</code> of the <code>cogment.yaml</code> file.  If <code>None</code>, then no action space is sent (empty content) and the environment will receive a default initialized action space of the appropriate type.</li>
+<li><code>action</code>: <em>protobuf class instance</em> - An instance of the action space class specified in the corresponding section <code>actor_classes:action:space</code> of the <code>cogment.yaml</code> file. If <code>None</code>, then no action space is sent (empty content) and the environment will receive a default initialized action space of the appropriate type.</li>
 </ul>
 <p>Return: None</p>
 <h2 id="class-prehooksession">class PrehookSession<a class="headerlink" href="#class-prehooksession" title="Permanent link">&para;</a></h2>
-<p>Abstract class containing trial configuration data to define the specifics of a trial.  An instance of this class is passed as argument to the prehook callback function registered with <code>cogment.Context.register_pre_trial_hook</code>, and is part of the <code>DatalogSession</code>.</p>
-<p><code>trial_config</code>: <em>protobuf class instance</em> - Configuration for the new trial.  The type is specified in file <code>cogment.yaml</code> under the section <code>trial:config_type</code>.</p>
+<p>Abstract class containing trial configuration data to define the specifics of a trial. An instance of this class is passed as argument to the prehook callback function registered with <code>cogment.Context.register_pre_trial_hook</code>, and is part of the <code>DatalogSession</code>.</p>
+<p><code>trial_config</code>: <em>protobuf class instance</em> - Configuration for the new trial. The type is specified in the file <code>cogment.yaml</code> under the section <code>trial:config_type</code>.</p>
 <p><code>trial_max_steps</code>: <em>int</em> - The maximum number of time steps (ticks) that the trial will run before terminating.</p>
-<p><code>trial_max_inactivity</code>: <em>int</em> - The number of seconds of inactivity after which a trial will be terminated.  If 0, the trial will not be terminated because of inactivity.</p>
-<p><code>environment_config</code>: <em>protobuf class instance</em> - Configuration for the environment in the new trial.  This configuration will be sent to the environment on start.  The type is specified in file <code>cogment.yaml</code> under the section <code>environment:config_type</code>.</p>
-<p><code>environment_endpoint</code>: <em>str</em> - The URL to connect to the environment.  The protocol must be "grpc".  E.g. "grpc://myenv:9000"</p>
-<p><code>actors</code>: <em>list[dict]</em> - Each item (dictionary) of the list represents an actor.  Each actor dictionary contains these key-value pairs:</p>
+<p><code>trial_max_inactivity</code>: <em>int</em> - The number of seconds of inactivity after which a trial will be terminated. If 0, the trial will not be terminated because of inactivity.</p>
+<p><code>environment_config</code>: <em>protobuf class instance</em> - Configuration for the environment in the new trial. This configuration will be sent to the environment on start. The type is specified in the file <code>cogment.yaml</code> under the section <code>environment:config_type</code>.</p>
+<p><code>environment_endpoint</code>: <em>str</em> - The URL to connect to the environment. The protocol must be "grpc". E.g. "grpc://myenv:9000"</p>
+<p><code>actors</code>: <em>list[dict]</em> - Each item (dictionary) of the list represents an actor. Each actor dictionary contains these key-value pairs:</p>
 <ul>
 <li>"name": <em>str</em> - Name of the actor</li>
-<li>"actor_class": <em>str</em> - The actor class for the actor</li>
-<li>"endpoint": <em>str</em> - The URL to connect to the actor.  If, instead of a URL, the value is "client", then this actor will connect in (as opposed to be to connected to), and the actor will need to provide the URL to connect to the orchestrator.</li>
+<li>"actor<em>class": _str</em> - The actor class for the actor</li>
+<li>"endpoint": <em>str</em> - The URL to connect to the actor. If, instead of a URL, the value is "client", then this actor will connect in (rather than be connected to), and the actor will need to provide the URL to connect to the orchestrator.</li>
 <li>"implementation: <em>str</em> - The name of the implementation to run this actor</li>
 <li>"config": <em>protobuf class instance</em> - The configuration data for the actor.</li>
 </ul>
@@ -2205,15 +2221,15 @@ The generator will exit for various reasons indicating the end of the trial, a l
 <p>Parameters: None</p>
 <p>Return: <em>str</em> - UUID of the trial.</p>
 <h3 id="validateself"><code>validate(self)</code><a class="headerlink" href="#validateself" title="Permanent link">&para;</a></h3>
-<p>Method to validate that the data is valid.  This is a superficial check; even if the data validates successfully, there can still be problems with the data.  This method should be called if changes have been made to the data members of the class.  Exceptions are raised on error.</p>
+<p>Method to validate that the data is valid. This is a superficial check; even if the data validates successfully, there can still be problems with the data. This method should be called if changes have been made to the data members of the class. Exceptions are raised on error.</p>
 <p>Parameters: None</p>
 <p>Return: None</p>
 <h2 id="cogmentapicommon_pb2trialparams">cogment.api.common_pb2.TrialParams<a class="headerlink" href="#cogmentapicommon_pb2trialparams" title="Permanent link">&para;</a></h2>
-<p><a href="cogment-doc/cogment/cogment-low-level-api-guide/grpc/#trialparams">TrialParams</a> is defined in the low level grpc api. </p>
+<p><a href="cogment-doc/cogment/cogment-low-level-api-guide/grpc/#trialparams">TrialParams</a> is defined in the low level grpc api.</p>
 <h2 id="cogmentapidatalogdatalogsample">cogment.api.datalog.DatalogSample<a class="headerlink" href="#cogmentapidatalogdatalogsample" title="Permanent link">&para;</a></h2>
 <p><a href="cogment-doc/cogment/cogment-low-level-api-guide/grpc/#logexportersamplerequest">DatalogSample</a> is defined in the low level grpc api.</p>
 <h2 id="class-datalogsession">class DatalogSession<a class="headerlink" href="#class-datalogsession" title="Permanent link">&para;</a></h2>
-<p>Abstract class containing session data and methods necessary to manage logging of trial run data.  An instance of this class is passed as argument to the datalog callback function registered with <code>cogment.Context.register_datalog</code>.</p>
+<p>Abstract class containing session data and methods necessary to manage the logging of trial run data. An instance of this class is passed as an argument to the datalog callback function registered with <code>cogment.Context.register_datalog</code>.</p>
 <p><code>trial_id</code>: <em>str</em> - UUID of the trial managed by this instance.</p>
 <p><code>trial_params</code>: <em>dictionary</em> - Parameters of the trial. This parameter has been <strong>deprecated</strong>.</p>
 <p><code>raw_trial_params</code>: <em>cogment.api.common_pb2.TrialParams</em> - Parameters of the trial.</p>
@@ -2239,7 +2255,7 @@ The generator will exit for various reasons indicating the end of the trial, a l
 <h2 id="class-cogmentservedendpoint">class cogment.ServedEndpoint<a class="headerlink" href="#class-cogmentservedendpoint" title="Permanent link">&para;</a></h2>
 <p>Class enclosing the details for connection from an Orchestrator.</p>
 <p><code>port</code>: <em>str</em> - The TCP/IP port where the service will be awaiting the Orchestrator connection.</p>
-<p><code>private_key_certificate_chain_pairs</code>: <em>list[tupple(str, str)]</em> - To use TLS for incoming connections, this must be se to a list of tuples of the form (PEM-encoded private key, PEM-encoded certificate chain).</p>
+<p><code>private_key_certificate_chain_pairs</code>: <em>list[tupple(str, str)]</em> - To use TLS for incoming connections, this must be set to a list of tuples of the form (PEM-encoded private key, PEM-encoded certificate chain).</p>
 <p><code>root_certificates</code>: <em>str</em> - If using TLS for the connection (i.e. <code>private_key_certificate_chain_pairs</code> is not <code>None</code>), this should be set to PEM-encoded Orchestrator root certificates that the server will use to verify Orchestrator authentication.</p>
 <h3 id="__init__self-port"><code>__init__(self, port)</code><a class="headerlink" href="#__init__self-port" title="Permanent link">&para;</a></h3>
 <p>Parameters:</p>
@@ -2254,50 +2270,50 @@ The generator will exit for various reasons indicating the end of the trial, a l
 <li>PENDING: The trial is waiting for its final parameters, before running.</li>
 <li>RUNNING: The trial is running.</li>
 <li>TERMINATING: The trial is in the process of terminating (either a request to terminate has been received or the last observation has been received).</li>
-<li>ENDED: The trial has ended.  Only a set number of ended trials will be kept (configured in the Orchestrator).</li>
+<li>ENDED: The trial has ended. Only a set number of ended trials will be kept (configured in the Orchestrator).</li>
 </ul>
 <h2 id="class-trialinfo">class TrialInfo<a class="headerlink" href="#class-trialinfo" title="Permanent link">&para;</a></h2>
 <p>Class enclosing the details of a trial.</p>
-<p><code>trial_id</code>: <em>str</em> - The trial ID for which the details pertain.</p>
+<p><code>trial_id</code>: <em>str</em> - The trial ID to which the details pertain.</p>
 <p><code>state</code>: <em>cogment.TrialState</em> - The current state of the trial.</p>
-<p><code>tick_id</code>: <em>int</em> - The time step that the information relates to.  Only provided from a call to <code>get_trial_info</code>.</p>
-<p><code>duration</code>: <em>int</em> - The time (in nanoseconds) that the trial has run.  Only provided from a call to <code>get_trial_info</code>.</p>
+<p><code>tick_id</code>: <em>int</em> - The time step that the information relates to. Only provided from a call to <code>get_trial_info</code>.</p>
+<p><code>duration</code>: <em>int</em> - The time (in nanoseconds) that the trial has run. Only provided from a call to <code>get_trial_info</code>.</p>
 <h2 id="class-actorinfo">class ActorInfo<a class="headerlink" href="#class-actorinfo" title="Permanent link">&para;</a></h2>
 <p>Class enclosing the details of an actor.</p>
 <p><code>actor_name</code>: <em>str</em> - The name of the actor.</p>
 <p><code>actor_class_name</code>: <em>str</em> - The name of the actor's class (as defined in <code>cogment.yaml</code>).</p>
 <h2 id="class-recvevent">class RecvEvent<a class="headerlink" href="#class-recvevent" title="Permanent link">&para;</a></h2>
-<p>Class representing a received event (for environments and actors).  It can contain any combination of data according to the receiver needs, or even be empty, but it will always have a type.</p>
+<p>Class representing a received event (for environments and actors). It can contain any combination of data according to the receiver needs, or even be empty, but it will always have a type.</p>
 <p><code>type</code>: <em>Enum EventType</em> - Type of event the enclosed data represents.</p>
-<p><code>observation</code>: <em>RecvObservation instance</em> - Observation data.  This can only be received by actors.  <code>None</code> if not present.</p>
-<p><code>actions</code>: <em>list[RecvAction instance]</em> - Action data from actors.  This can only be received by the environment.  The list is empty if not present.</p>
-<p><code>rewards</code>: <em>list[RecvReward instance]</em> - Reward values and data.  This can only be received by actors.  The list is empty if not present.</p>
-<p><code>messages</code>: *list[RecvMessage instance] - Message data.  The list is empty if not present.</p>
+<p><code>observation</code>: <em>RecvObservation instance</em> - Observation data. This can only be received by actors. <code>None</code> if not present.</p>
+<p><code>actions</code>: <em>list[RecvAction instance]</em> - Action data from actors. This can only be received by the environment. The list is empty if not present.</p>
+<p><code>rewards</code>: <em>list[RecvReward instance]</em> - Reward values and data. This can only be received by actors. The list is empty if not present.</p>
+<p><code>messages</code>: *list[RecvMessage instance] - Message data. The list is empty if not present.</p>
 <h3 id="class-cogmenteventtypeenumenum">class cogment.EventType(enum.Enum)<a class="headerlink" href="#class-cogmenteventtypeenumenum" title="Permanent link">&para;</a></h3>
 <p>Enum representing the type of an event.</p>
 <ul>
 <li>
-<p><code>EventType.NONE</code>: Empty event.  This kind of event should never be received.</p>
+<p><code>EventType.NONE</code>: Empty event. This kind of event should never be received.</p>
 </li>
 <li>
 <p><code>EventType.ACTIVE</code>: Normal event from an active trial. Most events will be of this type.</p>
 </li>
 <li>
-<p><code>EventType.ENDING</code>: Events from a trial in the process of ending.  For the environment, this means that these events contain the last actions from the actors, and the trial is awaiting a final observation. For the actors, this means that the trial is ending and no action can/need to be sent in response.  Note that because of network timing, there may be <code>ACTIVE</code> events (e.g. rewards or messages) arriving after some <code>ENDING</code> events, but the trial is ending regardless.</p>
+<p><code>EventType.ENDING</code>: Events from a trial in the process of ending. For the environment, this means that these events contain the last actions from the actors, and the trial is awaiting a final observation. For the actors, this means that the trial is ending and no action can/need to be sent in response. Note that because of network timing, there may be <code>ACTIVE</code> events (e.g. rewards or messages) arriving after some <code>ENDING</code> events, but the trial is ending regardless.</p>
 </li>
 <li>
-<p><code>EventType.FINAL</code>: Final event for the trial.  This does not contain data. The event loop will exit after this event is delivered.  This event can be ignored if nothing needs to be done before exiting the loop.</p>
+<p><code>EventType.FINAL</code>: Final event for the trial. This does not contain data. The event loop will exit after this event is delivered. This event can be ignored if nothing needs to be done before exiting the loop.</p>
 </li>
 </ul>
 <h2 id="class-recvobservation">class RecvObservation<a class="headerlink" href="#class-recvobservation" title="Permanent link">&para;</a></h2>
 <p>Class containing the details of an observation for an actor.</p>
 <p><code>tick_id</code>: <em>int</em> - The time step that the observation relates to.</p>
 <p><code>timestamp</code>: <em>int</em> - Unix style Epoch timestamp in nanoseconds (time since 00:00:00 UTC Jan 1, 1970).</p>
-<p><code>snapshot</code>: <em>protobuf class instance</em> - Snaphot Observation (as opposed to a delta observation) received from the environment.  The class of the snapshot observation is defined as observation space for the actor class.  This is specified in section <code>actor_classes:observation:space</code> in <code>cogment.yaml</code> for the appropriate/receiving actor class.</p>
+<p><code>snapshot</code>: <em>protobuf class instance</em> - Snaphot Observation (as opposed to a delta observation) received from the environment. The class of the snapshot observation is defined as observation space for the actor class. This is specified in section <code>actor_classes:observation:space</code> in <code>cogment.yaml</code> for the appropriate/receiving actor class.</p>
 <h2 id="class-recvaction">class RecvAction<a class="headerlink" href="#class-recvaction" title="Permanent link">&para;</a></h2>
 <p>Class containing the details of an action from an actor.</p>
-<p><code>actor_index</code>: <em>int</em> - Index of actor in the list of all trial actors (returned by <code>Session.get_active_actors</code>).</p>
-<p><code>action</code>: <em>protobuf class instance</em> - Action from the actor wich has index <code>actor_index</code> in the trial. The class of the action is defined as action space for the specific actor in section <code>actor_classes:action:space</code> in <code>cogment.yaml</code> .</p>
+<p><code>actor_index</code>: <em>int</em> - Index of the actor in the list of all trial actors (returned by <code>Session.get_active_actors</code>).</p>
+<p><code>action</code>: <em>protobuf class instance</em> - Action from the actor which has index <code>actor_index</code> in the trial. The class of the action is defined as action space for the specific actor in the section <code>actor_classes:action:space</code> in <code>cogment.yaml</code> .</p>
 <h2 id="class-recvmessage">class RecvMessage<a class="headerlink" href="#class-recvmessage" title="Permanent link">&para;</a></h2>
 <p>Class containing a message.</p>
 <p><code>tick_id</code>: <em>int</em> - The time step that the message relates to.</p>
@@ -2307,7 +2323,7 @@ The generator will exit for various reasons indicating the end of the trial, a l
 <p>Class containing the details of a received reward.</p>
 <p><code>tick_id</code>: <em>int</em> - The tick id (time step) for which the reward should be applied.</p>
 <p><code>value</code>: <em>float</em> - Value of the reward (aggregated from the sources)</p>
-<h3 id="get_nb_sourcesself"><code>``get_nb_sources(self)</code><a class="headerlink" href="#get_nb_sourcesself" title="Permanent link">&para;</a></h3>
+<h3 id="get_nb_sourcesself"><code>get_nb_sources(self)</code><a class="headerlink" href="#get_nb_sourcesself" title="Permanent link">&para;</a></h3>
 <p>Return the number of source rewards this reward is based upon.</p>
 <p>Parameters: None</p>
 <p>Return: <em>int</em> - Number of sources.</p>
@@ -2317,10 +2333,10 @@ The generator will exit for various reasons indicating the end of the trial, a l
 <p>Return: <em>generator(RecvRewardSource instance)</em> - A generator for the sources in the reward (simple rewards that make up this final/aggregate reward).</p>
 <h2 id="class-recvrewardsource">class RecvRewardSource<a class="headerlink" href="#class-recvrewardsource" title="Permanent link">&para;</a></h2>
 <p>Class containing the details of a received single source reward.</p>
-<p><code>value</code>: <em>float</em> - Value of the reward from the sender</p>
+<p><code>value</code>: <em>float</em> - Value of the reward from the sender.</p>
 <p><code>confidence</code>: <em>float</em> - Confidence level of this reward value.</p>
 <p><code>sender_name</code>: <em>str</em> - Name of the sender of this reward (the name of an actor, or "env" if the environment sent the reward).</p>
-<p><code>user_data</code>: <em>google.protobuf.Any instance</em> - Data for a user-specific reward format.  Can be <code>None</code> if no specific data was provided. The class enclosed in <code>google.protobuf.Any</code> is of the type set by the sender; It is the responsibility of the receiver to manage the data received (i.e. determine the type and unpack the data).</p>
+<p><code>user_data</code>: <em>google.protobuf.Any instance</em> - Data for a user-specific reward format. Can be <code>None</code> if no specific data was provided. The class enclosed in <code>google.protobuf.Any</code> is of the type set by the sender; it is the responsibility of the receiver to manage the data received (i.e. determine the type and unpack the data).</p>
                 
               
               

@@ -921,6 +921,21 @@
   
   
     <li class="md-nav__item">
+      <a href="../../../dashboard/metrics-and-dashboard/" class="md-nav__link">
+        Metrics & Dashboard
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../license/" class="md-nav__link">
         License
       </a>
@@ -1009,7 +1024,7 @@
 <li><code>main.py</code> contains the implementation of the service.</li>
 </ul>
 <p>Open <code>main.py</code> and take a look at the generated content.</p>
-<p>At the bottom you'll find the <code>main</code> function, it initializes Cogment's context, registers the <code>random_agent</code> actor's implementation, then starts the service itsef on tcp port 9000 and await for its termination.</p>
+<p>At the bottom you'll find the <code>main</code> function, it initializes Cogment's context, registers the <code>random_agent</code> actor's implementation, then starts the service itsef on tcp port 9000 and awaits its termination.</p>
 <blockquote>
 <p>Cogment's python sdk leverages Python's <a href="https://docs.python.org/3/library/asyncio-task.html" target="_blank">asynchronous features</a>, you'll need a basic understanding of them.</p>
 </blockquote>
@@ -1036,7 +1051,7 @@
 <li>it handles the three main kind of events: <strong>observations</strong>, <strong>rewards</strong> and <strong>messages</strong>,</li>
 <li>it does a default <strong>action</strong> whenever required, i.e. in response to an observation.</li>
 </ul>
-<p>We will further learn about how to use observations in <a href="../4-heuristic-player/">step 4</a> and rewards in <a href="../3-rewards/">step 3</a>. Messages are out of the scope for this <em>basics</em> tutorial.</p>
+<p>We will further learn about how to use rewards in <a href="../3-rewards/">step 3</a> and observations in <a href="../4-heuristic-player/">step 4</a>. Messages are out of the scope for this <em>basics</em> tutorial.</p>
 <p>Please note the import and usage of <code>PlayerAction</code> which is the data structure from <code>data.proto</code> defining the actor's action space.</p>
 <div class="highlight"><pre><span></span><code><span class="k">async</span> <span class="k">def</span> <span class="nf">random_agent</span><span class="p">(</span><span class="n">actor_session</span><span class="p">):</span>
     <span class="n">actor_session</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
@@ -1060,6 +1075,7 @@
 <span class="kn">import</span> <span class="nn">random</span>
 
 <span class="n">MOVES</span> <span class="o">=</span> <span class="p">[</span><span class="n">ROCK</span><span class="p">,</span> <span class="n">PAPER</span><span class="p">,</span> <span class="n">SCISSORS</span><span class="p">]</span>
+<span class="n">MOVES_STR</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;👊 rock&quot;</span><span class="p">,</span> <span class="s2">&quot;✋ paper&quot;</span><span class="p">,</span> <span class="s2">&quot;✌️ scissors&quot;</span><span class="p">]</span>
 </code></pre></div>
 
 <p>Once this is available we can simply update the <em>taking decision</em> part of the actor's implementation to compute a random move whenever it is needed.</p>

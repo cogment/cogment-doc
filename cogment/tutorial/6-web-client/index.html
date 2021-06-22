@@ -940,6 +940,21 @@
   
   
     <li class="md-nav__item">
+      <a href="../../../dashboard/metrics-and-dashboard/" class="md-nav__link">
+        Metrics & Dashboard
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../license/" class="md-nav__link">
         License
       </a>
@@ -1038,13 +1053,13 @@
 <p>In this step of the tutorial, we will go over a web client implementation, to enable Humans to play RPS, while being able to take advantage of various web technologies.</p>
 <h2 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">&para;</a></h2>
 <p>To develop a web client, we will need a working installation of Node.js. You can download and install this from:</p>
-<p>https://nodejs.org/en/download/</p>
+<p><a href="https://nodejs.org/en/download/" target="_blank">https://nodejs.org/en/download/</a></p>
 <h2 id="the-web-client">The web client<a class="headerlink" href="#the-web-client" title="Permanent link">&para;</a></h2>
 <p>In the previous steps, we triggered the trials by running <code>cogment run client</code>. This launched a trial using code in <code>client/main.py</code>. In this step we will trigger a trial using a React app.</p>
 <p>Before we start with the Cogment side of things, we'll need to get a few prerequisite files setup.</p>
 <h2 id="creating-a-react-app">Creating a React app<a class="headerlink" href="#creating-a-react-app" title="Permanent link">&para;</a></h2>
 <p>First, we will initialize a React app. This can be done very simply by running:</p>
-<div class="highlight"><pre><span></span><code><span class="gp">$ </span>npx create-React-app web-client
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>npx create-react-app web-client
 </code></pre></div>
 
 <p>Once this is done, we will be able to open a React app in our browser by running the following commands:</p>
@@ -1055,14 +1070,14 @@
 <h2 id="adding-material-ui">Adding Material UI<a class="headerlink" href="#adding-material-ui" title="Permanent link">&para;</a></h2>
 <p>We will be using Material UI for this web client. This will provide us with a nice and clean way to add styles to our application, as well as some components which we will use to reduce code size.</p>
 <p>Install Material UI by running the following commands from inside of the web-client folder:</p>
-<div class="highlight"><pre><span></span><code><span class="gp">$ </span>npm i @mateiral-ui/core
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>npm i @material-ui/core
 <span class="gp">$ </span>npm i @material-ui/icons
 </code></pre></div>
 
 <h2 id="setting-up-docker">Setting up Docker<a class="headerlink" href="#setting-up-docker" title="Permanent link">&para;</a></h2>
 <p>In addition to the docker-compose services we already have, we'll need two more for this web client. One to run it, and another for a proxy service called <code>grpcwebproxy</code>.</p>
 <blockquote>
-<p>NOTE: <code>grpcwebproxy</code> <a href="https://github.com/improbable-eng/grpc-web/tree/master/go/grpcwebproxy" target="_blank">link</a> is a helpful program that allows grpc endpoints to be utilized by web applications. Web applications cannot natively use the grpc protocol that all Cogment elements use to communicate with one another. Using this proxy to translate the web socket connections it accepts into grpc requests solves this issue.</p>
+<p>NOTE: <code>grpcwebproxy</code> <a href="https://github.com/improbable-eng/grpc-web/tree/master/go/grpcwebproxy" target="_blank">(link)</a> is a helpful program that allows grpc endpoints to be utilized by web applications. Web applications cannot natively use the grpc protocol that all Cogment elements use to communicate with one another. Using this proxy to translate the web socket connections it accepts into grpc requests solves this issue.</p>
 </blockquote>
 <p>For these services, let's add the following to the end of our docker-compose.yaml:</p>
 <div class="highlight"><pre><span></span><code><span class="nt">web-client</span><span class="p">:</span>
@@ -1143,7 +1158,7 @@
 <p>while inside of the web-client folder</p>
 </li>
 <li>
-<p>Copy in the hooks folder from the <a href="https://github.com/cogment/cogment-tutorial-rps" target="_blank">tutorial's repository</a>, found at <a href="./6-web-client/web-client/src/hooks">6-web-client/web-client/src/hooks</a>, into your src directory.</p>
+<p>Copy the hooks folder from the <a href="https://github.com/cogment/cogment-tutorial-rps" target="_blank">tutorial's repository</a>, found at <a href="https://github.com/cogment/cogment-tutorial-rps/tree/main/6-web-client/web-client/src">6-web-client/web-client/src/</a>, into your src directory.</p>
 </li>
 <li>
 <p>Navigate one folder up to your project directory (where you have your cogment.yaml) then run the following command to generate Javascript files from your defined protobufs:
@@ -1172,8 +1187,8 @@
 </code></pre></div>
 
 <p>index.js</p>
-<div class="highlight"><pre><span></span><code>import React from &quot;React&quot;;
-import ReactDOM from &quot;React-dom&quot;;
+<div class="highlight"><pre><span></span><code>import React from &quot;react&quot;;
+import ReactDOM from &quot;react-dom&quot;;
 import &quot;./index.css&quot;;
 import { App } from &quot;./App&quot;;
 import {
@@ -1210,7 +1225,7 @@ ReactDOM.render(
 <h2 id="appjs">App.js<a class="headerlink" href="#appjs" title="Permanent link">&para;</a></h2>
 <p>We'll start with a few imports. Some of these files don't exist yet, so we'll be creating them:</p>
 <div class="highlight"><pre><span></span><code>//First is some React imports
-import React, { useEffect } from &quot;React&quot;;
+import React, { useEffect } from &quot;react&quot;;
 
 //Then some imports for icons and Material UI functionality we&#39;ll be using
 import {
@@ -1372,7 +1387,7 @@ import { PlayerAction } from &quot;./data_pb&quot;;
 
 <h2 id="hooksuseactionsjs">hooks/useActions.js<a class="headerlink" href="#hooksuseactionsjs" title="Permanent link">&para;</a></h2>
 <p>This hook does multiple things. It starts a trial, joins a trial, sends actions, and receives information from the orchestrator. The following is its annotated code:</p>
-<div class="highlight"><pre><span></span><code>import { useEffect, useState } from &quot;React&quot;;
+<div class="highlight"><pre><span></span><code>import { useEffect, useState } from &quot;react&quot;;
 import * as cogment from &quot;@cogment/cogment-js-sdk&quot;;
 
 export const useActions = (cogSettings, actorName, actorClass) =&gt; {
@@ -1420,15 +1435,8 @@ export const useActions = (cogSettings, actorName, actorClass) =&gt; {
 
         This is massively useful for network streams.
       */
-      for await (const {
-        observation,
-        message,
-        reward,
-      } of actorSession.eventLoop()) {
-        //Parse the observation into a regular JS object
-        //TODO: this will eventually be part of the API
-
-        //Eventually observations will be regular Javascript objects (same with messages, and rewards). But for now we must convert it to an object.
+      for await (const event of actorSession.eventLoop()) {
+        //Convert observations to a regular JS object.
         let observationOBJ = event.observation &amp;&amp; event.observation.toObject();
         event.observation = observationOBJ;
 
@@ -1458,6 +1466,12 @@ export const useActions = (cogSettings, actorName, actorClass) =&gt; {
 </code></pre></div>
 
 <p>Please note that the <code>useActions</code> hook is generated by <code>cogment init</code>. We've still gone through it in this tutorial, because that is where most of the Cogment related code is contained, and it must be understood if we want to use Cogment without React.JS.</p>
+<p>We also need to add the following to <code>web-client/.eslintignore</code>:</p>
+<div class="highlight"><pre><span></span><code>src/*_pb*
+src/cog_settings*
+</code></pre></div>
+
+<p>Normally this file will be created by <code>cogment init</code>, but if you have been following the tutorial step-by-step, you need to create it manually.</p>
 <p>You can now see our app fully functional by going to the folder where our cogment.yaml sits, and running the commands:</p>
 <div class="highlight"><pre><span></span><code><span class="gp">$ </span>cogment run build
 <span class="gp">$ </span>cogment run start

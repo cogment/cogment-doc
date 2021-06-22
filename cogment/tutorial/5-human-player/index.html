@@ -926,6 +926,21 @@
   
   
     <li class="md-nav__item">
+      <a href="../../../dashboard/metrics-and-dashboard/" class="md-nav__link">
+        Metrics & Dashboard
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../license/" class="md-nav__link">
         License
       </a>
@@ -1063,6 +1078,8 @@
 <div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">data_pb2</span> <span class="kn">import</span> <span class="n">PlayerAction</span><span class="p">,</span> <span class="n">ROCK</span><span class="p">,</span> <span class="n">PAPER</span><span class="p">,</span> <span class="n">SCISSORS</span>
 
 <span class="n">MOVES</span> <span class="o">=</span> <span class="p">[</span><span class="n">ROCK</span><span class="p">,</span> <span class="n">PAPER</span><span class="p">,</span> <span class="n">SCISSORS</span><span class="p">]</span>
+<span class="n">MOVES_STR</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;👊 rock&quot;</span><span class="p">,</span> <span class="s2">&quot;✋ paper&quot;</span><span class="p">,</span> <span class="s2">&quot;✌️ scissors&quot;</span><span class="p">]</span>
+<span class="n">MOVES_PROMPT</span> <span class="o">=</span> <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="n">idx</span><span class="si">}</span><span class="s2">)&quot;</span> <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">name</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">MOVES_STR</span><span class="p">)])</span>
 </code></pre></div>
 
 <p>In the <code>main</code> function we then implement the <code>human_player</code> actor implementation, only playing <code>PAPER</code> for the moment, register the implementation and join the trial once it is initialized.</p>
@@ -1123,9 +1140,7 @@
 <h2 id="interactive-prompt-to-let-humans-play-rps">Interactive prompt to let Humans play RPS<a class="headerlink" href="#interactive-prompt-to-let-humans-play-rps" title="Permanent link">&para;</a></h2>
 <p>Let's add a text user interface to our client in order to finally challenge AIs to a game of RPS.</p>
 <p>First we'll want to display what was played in the previous round. We will implement a dedicated function <code>print_observation</code>.</p>
-<div class="highlight"><pre><span></span><code><span class="n">MOVES_STR</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;👊 rock&quot;</span><span class="p">,</span> <span class="s2">&quot;✋ paper&quot;</span><span class="p">,</span> <span class="s2">&quot;✌️ scissors&quot;</span><span class="p">]</span>
-
-<span class="k">def</span> <span class="nf">print_observation</span><span class="p">(</span><span class="n">round_index</span><span class="p">,</span> <span class="n">observation</span><span class="p">):</span>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">print_observation</span><span class="p">(</span><span class="n">round_index</span><span class="p">,</span> <span class="n">observation</span><span class="p">):</span>
     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;🧑 played </span><span class="si">{</span><span class="n">MOVES_STR</span><span class="p">[</span><span class="n">observation</span><span class="o">.</span><span class="n">snapshot</span><span class="o">.</span><span class="n">me</span><span class="o">.</span><span class="n">last_move</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;🤖 played </span><span class="si">{</span><span class="n">MOVES_STR</span><span class="p">[</span><span class="n">observation</span><span class="o">.</span><span class="n">snapshot</span><span class="o">.</span><span class="n">them</span><span class="o">.</span><span class="n">last_move</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">observation</span><span class="o">.</span><span class="n">snapshot</span><span class="o">.</span><span class="n">me</span><span class="o">.</span><span class="n">won_last</span><span class="p">:</span>
@@ -1144,7 +1159,7 @@
 
 <p>Last but not least, instead of always picking <code>PAPER</code> we will read from the keyboard input what the player wishes to play. Using python's <a href="https://docs.python.org/3.7/library/functions.html#input" target="_blank"><code>input</code></a> function we can print a prompt and read whatever the user enters before pressing <code>&lt;ENTER&gt;</code>.</p>
 <p>Note that the following implementation expects a number between 1 and 3 and doesn't handle well any other input.</p>
-<div class="highlight"><pre><span></span><code><span class="n">move</span> <span class="o">=</span> <span class="n">MOVES</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;What&#39;s your move: </span><span class="si">{</span><span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="n">idx</span> <span class="o">+</span> <span class="mi">1</span><span class="si">}</span><span class="s2">)&quot;</span> <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">name</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">MOVES_STR</span><span class="p">)])</span><span class="si">}</span><span class="s2"> ? &quot;</span><span class="p">))]</span>
+<div class="highlight"><pre><span></span><code><span class="n">move</span> <span class="o">=</span> <span class="n">MOVES</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="n">MOVES_PROMPT</span><span class="p">))]</span>
 <span class="n">next_action</span> <span class="o">=</span> <span class="n">PlayerAction</span><span class="p">(</span><span class="n">move</span><span class="o">=</span><span class="n">move</span><span class="p">)</span>
 </code></pre></div>
 

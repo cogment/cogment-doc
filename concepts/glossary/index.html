@@ -479,7 +479,7 @@
         
           <li class="md-nav__item">
   <a href="#human-artificial-intelligence-interaction-loop-training" class="md-nav__link">
-    Human / Artificial Intelligence Interaction Loop Training
+    Human - Artificial Intelligence Interaction Loop Training
   </a>
   
 </li>
@@ -1194,6 +1194,21 @@
   
   
     <li class="md-nav__item">
+      <a href="../../dashboard/metrics-and-dashboard/" class="md-nav__link">
+        Metrics & Dashboard
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../license/" class="md-nav__link">
         License
       </a>
@@ -1331,7 +1346,7 @@
         
           <li class="md-nav__item">
   <a href="#human-artificial-intelligence-interaction-loop-training" class="md-nav__link">
-    Human / Artificial Intelligence Interaction Loop Training
+    Human - Artificial Intelligence Interaction Loop Training
   </a>
   
 </li>
@@ -1546,7 +1561,7 @@
 <p><a href="#a">A</a>—B—C—D—<a href="#e">E</a>—<a href="#f">F</a>—G—<a href="#h">H</a>—I—J—K—L—<a href="#m">M</a>—N—<a href="#o">O</a>—<a href="#p">P</a>—Q—<a href="#8">R</a>—S—<a href="#t">T</a>—<a href="#u">U</a>—V—W—X—Y</p>
 <h2 id="a">A<a class="headerlink" href="#a" title="Permanent link">&para;</a></h2>
 <h3 id="actor">Actor<a class="headerlink" href="#actor" title="Permanent link">&para;</a></h3>
-<p>An actor is somebody or something who/which interacts with the environment by executing certain actions, taking observations, and receiving rewards (positive or negative) for this. An Actor can be an <a href="#agent">Agent</a> (of any level of complexity and any type of flexibility, from bots to ML agents), or a human user.</p>
+<p>An actor is somebody or something who/which interacts with the environment by executing certain actions, taking observations in, and receiving rewards (positive or negative) for this interaction. An Actor can be an <a href="#agent">Agent</a> (of any level of complexity and any type of flexibility, from bots to ML agents), or a human user.</p>
 <h3 id="actor-class">Actor Class<a class="headerlink" href="#actor-class" title="Permanent link">&para;</a></h3>
 <p>Each <a href="#actor">Actor</a> always belongs to a single Actor Class. An Actor Class is primarily defined by its associated <a href="#action-space">Action Space</a>, as a property of an <a href="#environment">environment</a>. For example, pilot and passenger could be two different Actor Classes.</p>
 <h3 id="action">Action<a class="headerlink" href="#action" title="Permanent link">&para;</a></h3>
@@ -1555,7 +1570,7 @@
 <li>A single element of an Action Space.</li>
 </ol>
 <h3 id="agent">Agent<a class="headerlink" href="#agent" title="Permanent link">&para;</a></h3>
-<p>We usually call agent, non-human <a href="#actor">Actors</a>. Agents can use on any sort of decision-making underlying system, able to learn or not.</p>
+<p>We usually call agent any non-human <a href="#actor">Actor</a>. Agents can use any sort of decision-making underlying system, able to learn or not.</p>
 <h2 id="e">E<a class="headerlink" href="#e" title="Permanent link">&para;</a></h2>
 <h3 id="environment">Environment<a class="headerlink" href="#environment" title="Permanent link">&para;</a></h3>
 <ol>
@@ -1574,8 +1589,8 @@
 <h3 id="frontend">Frontend<a class="headerlink" href="#frontend" title="Permanent link">&para;</a></h3>
 <p>The interface, usually an app, that humans use to interact with the rest of the system; the software that turns humans into <a href="#actor">Actors</a>.</p>
 <h2 id="h">H<a class="headerlink" href="#h" title="Permanent link">&para;</a></h2>
-<h3 id="human-artificial-intelligence-interaction-loop-training">Human / Artificial Intelligence Interaction Loop Training<a class="headerlink" href="#human-artificial-intelligence-interaction-loop-training" title="Permanent link">&para;</a></h3>
-<p>We call Human / AI interaction loop training the fundamental paradigm our <a href="#framework">Framework</a> was build for: a continuous loop between humans and agents where they learn from each other. It’s a way to train <a href="#agent">agents</a> in an environment where direct human interactions, whether between humans, between humans and the environment, or between humans and agents, provide live data to the agents (first part of the loop), <em><strong>as well as</strong></em> a way for agents to interact with humans, either directly or through the environment (second part of the loop).</p>
+<h3 id="human-artificial-intelligence-interaction-loop-training">Human - Artificial Intelligence Interaction Loop Training<a class="headerlink" href="#human-artificial-intelligence-interaction-loop-training" title="Permanent link">&para;</a></h3>
+<p>We call Human - AI interaction loop training the fundamental paradigm our <a href="#framework">Framework</a> was build for: a continuous loop between humans and agents where they learn from each other. It’s a way to train <a href="#agent">agents</a> in an environment where direct human interactions, whether between humans, between humans and the environment, or between humans and agents, provide live data to the agents (first part of the loop), <em><strong>as well as</strong></em> a way for agents to interact with humans, either directly or through the environment (second part of the loop).</p>
 <h2 id="m">M<a class="headerlink" href="#m" title="Permanent link">&para;</a></h2>
 <h3 id="message">Message<a class="headerlink" href="#message" title="Permanent link">&para;</a></h3>
 <p>Messages can be sent from any actor or the environment to any <a href="#actor">actor</a> or the <a href="#environment">environment</a>. The message can be any protobuf class. This creates channels between any set of <a href="#actor">actors</a> and the <a href="#environment">environment</a>. These channels can be used for applications where communication between actors and the environment need to be outside of the standard observation and action spaces.</p>
@@ -1583,7 +1598,7 @@
 <p>A model is a representation, usually a mathematical one in our context, of a concept, structure, system, or an aspect of the real world. It is usually a simplified and abstracted representation.</p>
 <h2 id="o">O<a class="headerlink" href="#o" title="Permanent link">&para;</a></h2>
 <h3 id="observation">Observation<a class="headerlink" href="#observation" title="Permanent link">&para;</a></h3>
-<p>An observation is the subset of the <a href="#environment-state">environment state</a> that an <a href="#actor">Actor</a> based its choice of <a href="#action">Action</a> on.</p>
+<p>An observation is the subset of the <a href="#environment-state">environment state</a> that an <a href="#actor">Actor</a> based its choice of <a href="#action">Action</a> (or lack thereof) on.</p>
 <h3 id="observation-delta">Observation delta<a class="headerlink" href="#observation-delta" title="Permanent link">&para;</a></h3>
 <p>An observation delta is the difference between two <a href="#observation">observations</a>. Usually, we encode deltas from the past to the future.</p>
 <h3 id="observation-transition">Observation transition<a class="headerlink" href="#observation-transition" title="Permanent link">&para;</a></h3>
@@ -1609,7 +1624,7 @@ We provide plugins that handle special features such as Deployment, Dataset stor
 <h3 id="reward">Reward<a class="headerlink" href="#reward" title="Permanent link">&para;</a></h3>
 <ol>
 <li>
-<p>A sent reward is a measure of an <a href="#actor">Actor’s</a> performance within the environment at a given <a href="#tick">tick</a>. The reward can be sent by the environment, and/or a different Actor. They are sent to the <a href="#orchestrator">Orchestrator</a>, which collate before they are received by the target actor.</p>
+<p>A sent reward is a measure of an <a href="#actor">Actor’s</a> performance within the environment at a given <a href="#tick">tick</a>. The reward can be sent by the environment, and/or a different Actor. They are sent to the <a href="#orchestrator">Orchestrator</a>, which collates them before they are received by the target actor.</p>
 </li>
 <li>
 <p>A received reward is a single measure of an <a href="#actor">Actor’s</a> performance. It is produced when at least one reward is sent to the actor at a given <a href="#tick">tick</a>.</p>
@@ -1621,9 +1636,9 @@ We provide plugins that handle special features such as Deployment, Dataset stor
 <p>RL is a specific method to train <a href="#agent">agents</a>, using <a href="#reward-function">reward functions</a>.</p>
 <h2 id="t">T<a class="headerlink" href="#t" title="Permanent link">&para;</a></h2>
 <h3 id="tick">Tick<a class="headerlink" href="#tick" title="Permanent link">&para;</a></h3>
-<p>A tick is a discrete timestep between two <a href="#environment-state">states of the environment</a>, in our <a href="#framework">Framework</a>, ticks within a trial are numbered.</p>
+<p>A tick is a discrete timestep between two <a href="#environment-state">states of the environment</a>. In our <a href="#framework">Framework</a>, ticks within a trial are numbered.</p>
 <h3 id="trial">Trial<a class="headerlink" href="#trial" title="Permanent link">&para;</a></h3>
-<p>A trial is a single run of a use case, with a beginning and end, populated with a single instance of the use case’s <a href="#environment">environment</a> and its <a href="#actor">actors</a>.</p>
+<p>A trial is a single run of a <a href="#use-case">use case</a>, with a beginning and end, populated with a single instance of the use case’s <a href="#environment">environment</a> and its <a href="#actor">actors</a>.</p>
 <h2 id="u">U<a class="headerlink" href="#u" title="Permanent link">&para;</a></h2>
 <h3 id="use-case">Use case<a class="headerlink" href="#use-case" title="Permanent link">&para;</a></h3>
 <p>The problem one wants to solve.</p>
