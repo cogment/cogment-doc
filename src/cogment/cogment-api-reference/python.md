@@ -391,11 +391,11 @@ Return: None
 
 ## cogment.api.common_pb2.TrialParams
 
-[TrialParams](cogment-doc/cogment/cogment-low-level-api-guide/grpc/#trialparams) is defined in the low level grpc api.
+[TrialParams](../cogment-low-level-api-guide/grpc.md#trialparams) is defined in the low level grpc api.
 
 ## cogment.api.datalog.DatalogSample
 
-[DatalogSample](cogment-doc/cogment/cogment-low-level-api-guide/grpc/#logexportersamplerequest) is defined in the low level grpc api.
+[DatalogSample](../cogment-low-level-api-guide/grpc.md#logexportersamplerequest) is defined in the low level grpc api.
 
 ## class DatalogSession
 
@@ -405,7 +405,7 @@ Abstract class containing session data and methods necessary to manage the loggi
 
 `trial_params`: _dictionary_ - Parameters of the trial. This parameter has been **deprecated**.
 
-`raw_trial_params`: _cogment.api.common_pb2.TrialParams_ - Parameters of the trial.
+`raw_trial_params`: _[cogment.api.common_pb2.TrialParams](#cogmentapicommon_pb2trialparams)_ - Parameters of the trial.
 
 ### `start(self)`
 
@@ -421,7 +421,7 @@ Generator method to iterate over all samples as they are received (waiting for e
 
 Parameters: None
 
-Return: _generator(cogment.api.datalog.DatalogSample)_ - A generator for the samples received.
+Return: _generator([cogment.api.datalog.DatalogSample](#cogmentapidatalogdatalogsample))_ - A generator for the samples received.
 
 ## class cogment.Endpoint
 
