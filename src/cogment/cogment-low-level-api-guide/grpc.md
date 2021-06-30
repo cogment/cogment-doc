@@ -1035,12 +1035,14 @@ service LogExporter {
 
 #### `OnLogSample()`
 
-Called the first time a sample is available.
-This call will normally stay active as long as the orchestrator is running.
-If disconnected, the orchestrator will not reconnect unless restarted.
-Data samples are provided by the orchestrator in the request stream.
+Called for each trial, at the start of the trial.
+The first data received are the parameters.
+Data samples are provided in the request stream following the parameters.
+The stream is maintained for the duration of the trial.
 
-Metadata: None
+Metadata:
+
+-   `trial-id`: UUID of the trial that is the source of the data.
 
 #### `Version()`
 
@@ -1081,11 +1083,11 @@ message LogExporterSampleRequest {
 -   timestamp: The time at the beginning of the tick.
 -   state: The state of the trial at the end of the tick.
 -   user_id: The ID of the user that started the trial.
--   observations: A set of observations for all actors.
--   actions: Actions from all actors. This list has the same length and order as the list of actors provided in different places in the API (e.g. `actors_in_trial`), for the same trial. Of interest here; it matches the list of actors provided in `trial_params`.
+-   observations: Observations from the environment.
+-   actions: Actions from all actors. This list has the same length and order as the list of actors provided in `trial_params`.
 -   rewards: List of rewards sent to actors.
 -   messages: List of user data sent to actors or the environment.
--   trial_params: Trial params used for a new trial. This is usually sent on start of a trial before any other sample from the trial.
+-   trial_params: Trial parameters used for a trial. This is sent on start of a trial, as the first message in the `OnLogSample` stream.
 -   sample: A data sample to be logged.
 
 ### `LogExporterSampleReply`
