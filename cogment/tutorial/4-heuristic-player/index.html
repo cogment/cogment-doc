@@ -1011,14 +1011,14 @@
 <p>When the service starts it will now host the two implementations.</p>
 <p>We can now configure one of the <code>player</code> in the default trial, defined in <code>cogment.yaml</code>, to use the <code>heuristic_agent</code> implementation.</p>
 <div class="highlight"><pre><span></span><code><span class="nt">actors</span><span class="p">:</span>
-  <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">player_1</span>
-    <span class="nt">actor_class</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">player</span>
-    <span class="nt">implementation</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">random_agent</span>
-    <span class="nt">endpoint</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">grpc://random-agent:9000</span>
-  <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">player_2</span>
-    <span class="nt">actor_class</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">player</span>
-    <span class="nt">implementation</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">heuristic_agent</span>
-    <span class="nt">endpoint</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">grpc://random-agent:9000</span>
+    <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">player_1</span>
+      <span class="nt">actor_class</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">player</span>
+      <span class="nt">implementation</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">random_agent</span>
+      <span class="nt">endpoint</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">grpc://random-agent:9000</span>
+    <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">player_2</span>
+      <span class="nt">actor_class</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">player</span>
+      <span class="nt">implementation</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">heuristic_agent</span>
+      <span class="nt">endpoint</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">grpc://random-agent:9000</span>
 </code></pre></div>
 
 <p>Modify the <code>cogment.yaml</code> file to include the above addition.</p>

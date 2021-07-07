@@ -1083,13 +1083,13 @@
 <p>All Cogment projects will need at least one <code>proto</code> import to define the data structures exchanged between the various components. Python and/or javascript imports will be needed if you make use of delta encodings.</p>
 <p>E.g.:</p>
 <div class="highlight"><pre><span></span><code><span class="nt">import</span><span class="p">:</span>
-  <span class="nt">proto</span><span class="p">:</span>
-    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">filename1.proto</span>
-    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">filename2.proto</span>
-  <span class="nt">python</span><span class="p">:</span>
-    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">module_name</span>
-  <span class="nt">javascript</span><span class="p">:</span>
-    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">filename.js</span>
+    <span class="nt">proto</span><span class="p">:</span>
+        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">filename1.proto</span>
+        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">filename2.proto</span>
+    <span class="nt">python</span><span class="p">:</span>
+        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">module_name</span>
+    <span class="nt">javascript</span><span class="p">:</span>
+        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">filename.js</span>
 </code></pre></div>
 
 <blockquote>
@@ -1099,9 +1099,9 @@
 <p>This section is optional and defines commands that can then be executed using the Cogment CLI <code>run</code> command. The commands will be executed by a sub-shell and thus can be any shell command. The commands can also recursively call Cogment, either built-in CLI commands, or other commands defined here. But care should be taken not to create infinite recursive calls.</p>
 <p>E.g.:</p>
 <div class="highlight"><pre><span></span><code><span class="nt">commands</span><span class="p">:</span>
-  <span class="nt">generate</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">cogment generate --python_dir=.</span>
-  <span class="nt">start</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">docker-compose up orchestrator agent env</span>
-  <span class="nt">play</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">cogment run start &amp;&amp; docker-compose run launcher</span>
+    <span class="nt">generate</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">cogment generate --python_dir=.</span>
+    <span class="nt">start</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">docker-compose up orchestrator agent env</span>
+    <span class="nt">play</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">cogment run start &amp;&amp; docker-compose run launcher</span>
 </code></pre></div>
 
 <p>To run one of these commands, the Cogment CLI command <code>run</code> must be used, e.g.: <code>cogment run start</code>. And as such there is no problem differentiating between <code>cogment run generate</code> and <code>cogment generate</code> (the latter is the builtin CLI command, and the former is the command defined in the <code>cogment.yaml</code> file).</p>
@@ -1113,11 +1113,11 @@
 </ul>
 <p>E.g.:</p>
 <div class="highlight"><pre><span></span><code><span class="nt">trial</span><span class="p">:</span>
-  <span class="nt">config_type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">namespace.DataType</span>
-  <span class="nt">pre_hooks</span><span class="p">:</span>
-    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">grpc://actorconfigserver:9000</span>
-    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">grpc://envconfigserver:9000</span>
-    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">grpc://logconfigserver:9000</span>
+    <span class="nt">config_type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">namespace.DataType</span>
+    <span class="nt">pre_hooks</span><span class="p">:</span>
+        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">grpc://actorconfigserver:9000</span>
+        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">grpc://envconfigserver:9000</span>
+        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">grpc://logconfigserver:9000</span>
 </code></pre></div>
 
 <h2 id="environment">Environment<a class="headerlink" href="#environment" title="Permanent link">&para;</a></h2>
@@ -1126,7 +1126,7 @@
 <li><code>config_type</code>: (optional) The protobuf message type used to configure the environment</li>
 </ul>
 <div class="highlight"><pre><span></span><code><span class="nt">environment</span><span class="p">:</span>
-  <span class="nt">config_type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">namespace.DataType</span>
+    <span class="nt">config_type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">namespace.DataType</span>
 </code></pre></div>
 
 <h2 id="actor-classes">Actor Classes<a class="headerlink" href="#actor-classes" title="Permanent link">&para;</a></h2>
@@ -1149,101 +1149,109 @@
 </ul>
 <p>Each actor class should define both an observation and action space as protobuf message types.</p>
 <div class="highlight"><pre><span></span><code><span class="nt">actor_classes</span><span class="p">:</span>
-  <span class="p p-Indicator">-</span> <span class="nt">id</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">BigPlayer</span>
-    <span class="nt">action</span><span class="p">:</span>
-      <span class="nt">space</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">namespace.PlayerAction</span>
-    <span class="nt">observation</span><span class="p">:</span>
-      <span class="nt">space</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">namespace.PlayerObservation</span>
-      <span class="nt">delta</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">namespace.PlayerDeltaObservation</span>
-      <span class="nt">delta_apply_fn</span><span class="p">:</span>
-        <span class="nt">python</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">module_name.PlayerDeltaProcessingFn</span>
-    <span class="nt">config_type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">namespace.PlayerConfig</span>
+    <span class="p p-Indicator">-</span> <span class="nt">id</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">BigPlayer</span>
+      <span class="nt">action</span><span class="p">:</span>
+          <span class="nt">space</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">namespace.PlayerAction</span>
+      <span class="nt">observation</span><span class="p">:</span>
+          <span class="nt">space</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">namespace.PlayerObservation</span>
+          <span class="nt">delta</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">namespace.PlayerDeltaObservation</span>
+          <span class="nt">delta_apply_fn</span><span class="p">:</span>
+              <span class="nt">python</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">module_name.PlayerDeltaProcessingFn</span>
+      <span class="nt">config_type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">namespace.PlayerConfig</span>
 
-  <span class="p p-Indicator">-</span> <span class="nt">id</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">SmallPlayer</span>
-    <span class="nt">action</span><span class="p">:</span>
-      <span class="nt">space</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">namespace.PlayerAction</span>
-    <span class="nt">observation</span><span class="p">:</span>
-      <span class="nt">space</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">namespace.PlayerObservation</span>
-      <span class="nt">delta</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">namespace.PlayerDeltaObservation</span>
-      <span class="nt">delta_apply_fn</span><span class="p">:</span>
-        <span class="nt">python</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">module_name.PlayerDeltaProcessingFn</span>
-    <span class="nt">config_type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">namespace.PlayerConfig</span>
+    <span class="p p-Indicator">-</span> <span class="nt">id</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">SmallPlayer</span>
+      <span class="nt">action</span><span class="p">:</span>
+          <span class="nt">space</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">namespace.PlayerAction</span>
+      <span class="nt">observation</span><span class="p">:</span>
+          <span class="nt">space</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">namespace.PlayerObservation</span>
+          <span class="nt">delta</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">namespace.PlayerDeltaObservation</span>
+          <span class="nt">delta_apply_fn</span><span class="p">:</span>
+              <span class="nt">python</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">module_name.PlayerDeltaProcessingFn</span>
+      <span class="nt">config_type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">namespace.PlayerConfig</span>
 
-  <span class="p p-Indicator">-</span> <span class="nt">id</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Referee</span>
-    <span class="nt">action</span><span class="p">:</span>
-      <span class="nt">space</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">namespace.RefereeAction</span>
-    <span class="nt">observation</span><span class="p">:</span>
-      <span class="nt">space</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">namespace.RefereeObservation</span>
-      <span class="nt">delta</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">namespace.RefereeDeltaObservation</span>
-      <span class="nt">delta_apply_fn</span><span class="p">:</span>
-        <span class="nt">python</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">module_name.RefereeDeltaProcessingFn</span>
-    <span class="nt">config_type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">namespace.RefereeConfig</span>
+    <span class="p p-Indicator">-</span> <span class="nt">id</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Referee</span>
+      <span class="nt">action</span><span class="p">:</span>
+          <span class="nt">space</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">namespace.RefereeAction</span>
+      <span class="nt">observation</span><span class="p">:</span>
+          <span class="nt">space</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">namespace.RefereeObservation</span>
+          <span class="nt">delta</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">namespace.RefereeDeltaObservation</span>
+          <span class="nt">delta_apply_fn</span><span class="p">:</span>
+              <span class="nt">python</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">module_name.RefereeDeltaProcessingFn</span>
+      <span class="nt">config_type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">namespace.RefereeConfig</span>
 </code></pre></div>
 
 <h2 id="trial-params">Trial Params<a class="headerlink" href="#trial-params" title="Permanent link">&para;</a></h2>
 <p>This section defines the different parameters that can be adjusted by pre-trial hooks for each trial. It also defines the default values for these parameters. These parameters are:</p>
 <ul>
-<li><code>trial</code>: Mapping of properties</li>
+<li><code>trial</code>: Mapping of properties<ul>
 <li><code>config</code>: Definition of properties to match the definition of <code>config_type</code> for the trial. I.e. the yaml definition needs to match the definition of the protobuf class declared as <code>config_type</code>.</li>
-<li><code>environment</code>: Mapping of properties</li>
+</ul>
+</li>
+<li><code>environment</code>: Mapping of properties<ul>
 <li><code>endpoint</code>: The URL where the environment gRPC server resides</li>
 <li><code>implementation</code>: The name of the implementation to be used for this instance of the environment. This must match an implementation that is defined at the endpoint. If not defined, an arbitraary implementation will be chosen at runtime</li>
 <li><code>config</code>: Definition of properties to match the definition of <code>config_type</code> for the environment. I.e. the yaml definition needs to match the definition of the protobuf class declared as <code>config_type</code>.</li>
-<li><code>actors</code>: List of actor properties</li>
+</ul>
+</li>
+<li><code>actors</code>: List of actor properties<ul>
 <li><code>name</code>: The name of this actor (i.e. name of the specific instance of the actor class)</li>
 <li><code>actor_class</code>: The name of the actor class. The actor class must be defined in the <code>actor_classes</code> section above</li>
 <li><code>endpoint</code>: The URL where the actor gRPC server resides. If this is <code>client</code>, the actor will connect as a client (the orchestrator being the server in this case).</li>
 <li><code>implementation</code>: The name of the implementation to be used for this actor instance. This must match an implementation that is defined at the endpoint. If not defined, an arbitraary implementation will be chosen at runtime.</li>
 <li><code>config</code>: Definition of properties to match the definition of <code>config_type</code> for this actor class. I.e. the yaml definition needs to match the definition of the protobuf class declared as <code>config_type</code>.</li>
 </ul>
+</li>
+</ul>
 <p>E.g.:</p>
 <div class="highlight"><pre><span></span><code><span class="nt">trial_params</span><span class="p">:</span>
-  <span class="nt">environment</span><span class="p">:</span>
-    <span class="nt">endpoint</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">grpc://env:9000</span>
-    <span class="nt">implementation</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">default</span>
-    <span class="nt">config</span><span class="p">:</span>
+    <span class="nt">environment</span><span class="p">:</span>
+        <span class="nt">endpoint</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">grpc://env:9000</span>
+        <span class="nt">implementation</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">default</span>
+        <span class="nt">config</span><span class="p">:</span>
 
-  <span class="nt">actors</span><span class="p">:</span>
-    <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Alice</span>
-      <span class="nt">actor_class</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">BigPlayer</span>
-      <span class="nt">endpoint</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">grpc://bp1:9000</span>
-      <span class="nt">implementation</span><span class="p">:</span>
-      <span class="nt">config</span><span class="p">:</span>
-    <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Bob</span>
-      <span class="nt">actor_class</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">BigPlayer</span>
-      <span class="nt">endpoint</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">grpc://bp2:9000</span>
-      <span class="nt">implementation</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Test</span>
-      <span class="nt">config</span><span class="p">:</span>
-    <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Carol</span>
-      <span class="nt">actor_class</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">SmallPlayer</span>
-      <span class="nt">endpoint</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">grpc://sp:9000</span>
-      <span class="nt">implementation</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">DQN_Hotel3</span>
-      <span class="nt">config</span><span class="p">:</span>
-    <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Dave</span>
-      <span class="nt">actor_class</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">SmallPlayer</span>
-      <span class="nt">endpoint</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">grpc://sp:9000</span>
-      <span class="nt">implementation</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">DNN_Karma3.1.17</span>
-      <span class="nt">config</span><span class="p">:</span>
-    <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Olivia</span>
-      <span class="nt">actor_class</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Referee</span>
-      <span class="nt">endpoint</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">client</span>
-      <span class="nt">implementation</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Standard</span>
-      <span class="nt">config</span><span class="p">:</span>
+    <span class="nt">actors</span><span class="p">:</span>
+        <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Alice</span>
+          <span class="nt">actor_class</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">BigPlayer</span>
+          <span class="nt">endpoint</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">grpc://bp1:9000</span>
+          <span class="nt">implementation</span><span class="p">:</span>
+          <span class="nt">config</span><span class="p">:</span>
+        <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Bob</span>
+          <span class="nt">actor_class</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">BigPlayer</span>
+          <span class="nt">endpoint</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">grpc://bp2:9000</span>
+          <span class="nt">implementation</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Test</span>
+          <span class="nt">config</span><span class="p">:</span>
+        <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Carol</span>
+          <span class="nt">actor_class</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">SmallPlayer</span>
+          <span class="nt">endpoint</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">grpc://sp:9000</span>
+          <span class="nt">implementation</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">DQN_Hotel3</span>
+          <span class="nt">config</span><span class="p">:</span>
+        <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Dave</span>
+          <span class="nt">actor_class</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">SmallPlayer</span>
+          <span class="nt">endpoint</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">grpc://sp:9000</span>
+          <span class="nt">implementation</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">DNN_Karma3.1.17</span>
+          <span class="nt">config</span><span class="p">:</span>
+        <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Olivia</span>
+          <span class="nt">actor_class</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Referee</span>
+          <span class="nt">endpoint</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">client</span>
+          <span class="nt">implementation</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Standard</span>
+          <span class="nt">config</span><span class="p">:</span>
 </code></pre></div>
 
 <h2 id="datalog">Datalog<a class="headerlink" href="#datalog" title="Permanent link">&para;</a></h2>
 <p>This section defines the properties related to the logging of the data. It has the properties:</p>
 <ul>
-<li><code>fields</code>: (optional) Mapping of properties</li>
+<li><code>fields</code>: (optional) Mapping of properties<ul>
 <li><code>exclude</code>: List of fields to exclude from the data to send for logging</li>
+</ul>
+</li>
 <li><code>type</code>: The type of data to send for logging. Can be <code>grpc</code> or <code>none</code>.</li>
 <li><code>url</code>: URL where to send the data to be logged</li>
 </ul>
 <div class="highlight"><pre><span></span><code><span class="nt">datalog</span><span class="p">:</span>
-  <span class="nt">fields</span><span class="p">:</span>
-    <span class="nt">exclude</span><span class="p">:</span> <span class="p p-Indicator">[</span><span class="nv">time</span><span class="p p-Indicator">,</span> <span class="nv">msg</span><span class="p p-Indicator">,</span> <span class="nv">status</span><span class="p p-Indicator">]</span>
-  <span class="nt">type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">grpc</span>
-  <span class="nt">url</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">logserver:9000</span>
+    <span class="nt">fields</span><span class="p">:</span>
+        <span class="nt">exclude</span><span class="p">:</span> <span class="p p-Indicator">[</span><span class="nv">time</span><span class="p p-Indicator">,</span> <span class="nv">msg</span><span class="p p-Indicator">,</span> <span class="nv">status</span><span class="p p-Indicator">]</span>
+    <span class="nt">type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">grpc</span>
+    <span class="nt">url</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">logserver:9000</span>
 </code></pre></div>
                 
               

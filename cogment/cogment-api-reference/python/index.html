@@ -2225,14 +2225,14 @@ The generator will exit for various reasons indicating the end of the trial, a l
 <p>Parameters: None</p>
 <p>Return: None</p>
 <h2 id="cogmentapicommon_pb2trialparams">cogment.api.common_pb2.TrialParams<a class="headerlink" href="#cogmentapicommon_pb2trialparams" title="Permanent link">&para;</a></h2>
-<p><a href="cogment-doc/cogment/cogment-low-level-api-guide/grpc/#trialparams">TrialParams</a> is defined in the low level grpc api.</p>
+<p><a href="../../cogment-low-level-api-guide/grpc/#trialparams">TrialParams</a> is defined in the low level grpc api.</p>
 <h2 id="cogmentapidatalogdatalogsample">cogment.api.datalog.DatalogSample<a class="headerlink" href="#cogmentapidatalogdatalogsample" title="Permanent link">&para;</a></h2>
-<p><a href="cogment-doc/cogment/cogment-low-level-api-guide/grpc/#logexportersamplerequest">DatalogSample</a> is defined in the low level grpc api.</p>
+<p><a href="../../cogment-low-level-api-guide/grpc/#logexportersamplerequest">DatalogSample</a> is defined in the low level grpc api.</p>
 <h2 id="class-datalogsession">class DatalogSession<a class="headerlink" href="#class-datalogsession" title="Permanent link">&para;</a></h2>
 <p>Abstract class containing session data and methods necessary to manage the logging of trial run data. An instance of this class is passed as an argument to the datalog callback function registered with <code>cogment.Context.register_datalog</code>.</p>
 <p><code>trial_id</code>: <em>str</em> - UUID of the trial managed by this instance.</p>
 <p><code>trial_params</code>: <em>dictionary</em> - Parameters of the trial. This parameter has been <strong>deprecated</strong>.</p>
-<p><code>raw_trial_params</code>: <em>cogment.api.common_pb2.TrialParams</em> - Parameters of the trial.</p>
+<p><code>raw_trial_params</code>: <em><a href="#cogmentapicommon_pb2trialparams">cogment.api.common_pb2.TrialParams</a></em> - Parameters of the trial.</p>
 <h3 id="startself_1"><code>start(self)</code><a class="headerlink" href="#startself_1" title="Permanent link">&para;</a></h3>
 <p>Method to start receiving samples.</p>
 <p>Parameters: None</p>
@@ -2240,7 +2240,7 @@ The generator will exit for various reasons indicating the end of the trial, a l
 <h3 id="get_all_samplesself"><code>get_all_samples(self)</code><a class="headerlink" href="#get_all_samplesself" title="Permanent link">&para;</a></h3>
 <p>Generator method to iterate over all samples as they are received (waiting for each in turn).</p>
 <p>Parameters: None</p>
-<p>Return: <em>generator(cogment.api.datalog.DatalogSample)</em> - A generator for the samples received.</p>
+<p>Return: <em>generator(<a href="#cogmentapidatalogdatalogsample">cogment.api.datalog.DatalogSample</a>)</em> - A generator for the samples received.</p>
 <h2 id="class-cogmentendpoint">class cogment.Endpoint<a class="headerlink" href="#class-cogmentendpoint" title="Permanent link">&para;</a></h2>
 <p>Class enclosing the details for connecting to an Orchestrator.</p>
 <p><code>url</code>: <em>str</em> - The URL where to connect to the Orchestrator.</p>

@@ -1048,11 +1048,11 @@
 
 <p>We can then set its value for the default trial in <code>cogment.yaml</code>.</p>
 <div class="highlight"><pre><span></span><code><span class="nt">trial_params</span><span class="p">:</span>
-  <span class="nt">environment</span><span class="p">:</span>
-    <span class="nt">endpoint</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">grpc://environment:9000</span>
-    <span class="nt">config</span><span class="p">:</span>
-      <span class="nt">target_game_score</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">2</span>
-      <span class="nt">target_games_count</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">5</span>
+    <span class="nt">environment</span><span class="p">:</span>
+        <span class="nt">endpoint</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">grpc://environment:9000</span>
+        <span class="nt">config</span><span class="p">:</span>
+            <span class="nt">target_game_score</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">2</span>
+            <span class="nt">target_games_count</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">5</span>
 </code></pre></div>
 
 <p>Environment implementations can trigger the end of a trial by calling the <code>end</code> function on the session instance. In our existing implementation, we will first prepare the observations instead of producing them right away.</p>
@@ -1129,11 +1129,11 @@
 <p>Modify the <code>client/main.py</code> file with these updates.</p>
 <p>We then need to modify the <code>cogment.yaml</code> to let the orchestrator know that <code>player_1</code> now uses a client-side implementation. To do so we use a <em>special</em> endpoint, <code>"client"</code>, and we don't need to specify an implementation name.</p>
 <div class="highlight"><pre><span></span><code><span class="nt">actors</span><span class="p">:</span>
-  <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">player_1</span>
-    <span class="nt">actor_class</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">player</span>
-    <span class="nt">endpoint</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">client</span>
-    <span class="c1"># implementation: random_agent</span>
-    <span class="c1"># endpoint: grpc://random-agent:9000</span>
+    <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">player_1</span>
+      <span class="nt">actor_class</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">player</span>
+      <span class="nt">endpoint</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">client</span>
+      <span class="c1"># implementation: random_agent</span>
+      <span class="c1"># endpoint: grpc://random-agent:9000</span>
 </code></pre></div>
 
 <p>You can now <a href="../1-bootstrap-and-data-structures/#building-and-running-the-app">build and run</a> the application. Everything should work but player 1 shouldn't fare too well as it only ever plays <code>PAPER</code>.</p>

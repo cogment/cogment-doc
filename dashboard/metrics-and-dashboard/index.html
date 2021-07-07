@@ -1150,7 +1150,7 @@
                 
                 <h1 id="metrics-and-dashboard">Metrics and Dashboard<a class="headerlink" href="#metrics-and-dashboard" title="Permanent link">&para;</a></h1>
 <p>Cogment provides two services out of the box dedicated to the monitoring of a Cogment deployment: <code>cogment-metrics</code> and <code>cogment-dashboard</code>.</p>
-<p><code>cogment-metrics</code> is gathering data coming from all the Cogment services: orchestrator, actors, environment, .... These <em>metrics</em> can be used to gather insights regarding the performances of actor or environment implementations. They can also be used to follow the attribution of rewards, giving insight into how, or even if agents are learning.</p>
+<p><code>cogment-metrics</code> is gathering data coming from all the Cogment services: orchestrator, actors, environment, etc. These <em>metrics</em> can be used to gather insights regarding the performances of actor or environment implementations. They can also be used to follow the attribution of rewards, giving insight into how, or even if agents are learning.</p>
 <p><code>cogment-metrics</code> is a <a href="https://prometheus.io/">Prometheus</a> instance, so it can be easily augmented to visualize your own data.</p>
 <p><code>cogment-dashboard</code> is used to explore the metrics data in a human-friendly way, using graphs. Some default dashboards are available, but users can create their own dashboards, as well as use their own <a href="https://prometheus.io/">Prometheus</a> requests to create their own graphs. <code>cogment-dashboard</code> is based on <a href="https://grafana.com/">Grafana</a>.</p>
 <h2 id="usage">Usage<a class="headerlink" href="#usage" title="Permanent link">&para;</a></h2>
@@ -1175,12 +1175,12 @@
 <h4 id="metrics">Metrics<a class="headerlink" href="#metrics" title="Permanent link">&para;</a></h4>
 <p>Create a service named <code>metrics</code> using the <code>cogment/metrics</code> docker image. Log level is decreased to avoid too much verbosity, the yml file is provided in a mounted volume and another one is provided for Prometheus to store its data.</p>
 <div class="highlight"><pre><span></span><code><span class="nt">metrics</span><span class="p">:</span>
-  <span class="nt">user</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0:0</span>
-  <span class="nt">image</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">cogment/metrics:latest</span>
-  <span class="nt">command</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">--config.file=/etc/prometheus/prometheus.yml --log.level=error</span>
-  <span class="nt">volumes</span><span class="p">:</span>
-    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">./metrics/prometheus.yml:/etc/prometheus/prometheus.yml:ro</span>
-    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">./metrics/data:/prometheus</span>
+    <span class="nt">user</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0:0</span>
+    <span class="nt">image</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">cogment/metrics:latest</span>
+    <span class="nt">command</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">--config.file=/etc/prometheus/prometheus.yml --log.level=error</span>
+    <span class="nt">volumes</span><span class="p">:</span>
+        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">./metrics/prometheus.yml:/etc/prometheus/prometheus.yml:ro</span>
+        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">./metrics/data:/prometheus</span>
 </code></pre></div>
 
 <!-- prettier-ignore -->
@@ -1192,11 +1192,11 @@
 <h4 id="dashboard">Dashboard<a class="headerlink" href="#dashboard" title="Permanent link">&para;</a></h4>
 <p>Create a service named <code>dashboard</code> and pick an exposed port to consult.</p>
 <div class="highlight"><pre><span></span><code><span class="nt">dashboard</span><span class="p">:</span>
-  <span class="nt">image</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">cogment/dashboard:latest</span>
-  <span class="nt">ports</span><span class="p">:</span>
-    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">3003:3000/tcp</span>
-  <span class="nt">depends_on</span><span class="p">:</span>
-    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">metrics</span>
+    <span class="nt">image</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">cogment/dashboard:latest</span>
+    <span class="nt">ports</span><span class="p">:</span>
+        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">3003:3000/tcp</span>
+    <span class="nt">depends_on</span><span class="p">:</span>
+        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">metrics</span>
 </code></pre></div>
 
 <!-- prettier-ignore -->
@@ -1215,34 +1215,34 @@
 <p>Prometheus will collect data from various services, from the environment and the actors. All those data will be stored in <code>./metrics/data</code>. More information about how Prometheus can store data is available <a href="https://prometheus.io/docs/prometheus/latest/storage/">here</a>.</p>
 <p>Inside <code>metrics/prometheus.yml</code>, each service that will be monitored should be added like below. In the following example the environment service is the only one that will be collecting data.</p>
 <div class="highlight"><pre><span></span><code><span class="nt">global</span><span class="p">:</span>
-  <span class="nt">scrape_interval</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">5s</span> <span class="c1"># Set the scrape interval to every 5 seconds. Default is every 1 minute.</span>
-  <span class="nt">evaluation_interval</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">5s</span> <span class="c1"># Evaluate rules every 5 seconds. The default is every 1 minute.</span>
+    <span class="nt">scrape_interval</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">5s</span> <span class="c1"># Set the scrape interval to every 5 seconds. Default is every 1 minute.</span>
+    <span class="nt">evaluation_interval</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">5s</span> <span class="c1"># Evaluate rules every 5 seconds. The default is every 1 minute.</span>
 
 <span class="c1"># A scrape configuration containing exactly one endpoint to scrape:</span>
 <span class="nt">scrape_configs</span><span class="p">:</span>
-  <span class="c1"># The job name is added as a label `job=&lt;job_name&gt;` to any timeseries scraped from this config.</span>
-  <span class="p p-Indicator">-</span> <span class="nt">job_name</span><span class="p">:</span> <span class="s">&quot;environment&quot;</span>
-    <span class="nt">dns_sd_configs</span><span class="p">:</span>
-      <span class="p p-Indicator">-</span> <span class="nt">names</span><span class="p">:</span>
-          <span class="p p-Indicator">-</span> <span class="s">&quot;environment&quot;</span> <span class="c1"># Hostname of the environment service (from ./docker-compose.yaml)</span>
-        <span class="nt">type</span><span class="p">:</span> <span class="s">&quot;A&quot;</span>
-        <span class="nt">port</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">8000</span>
-        <span class="nt">refresh_interval</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">5s</span>
+    <span class="c1"># The job name is added as a label `job=&lt;job_name&gt;` to any timeseries scraped from this config.</span>
+    <span class="p p-Indicator">-</span> <span class="nt">job_name</span><span class="p">:</span> <span class="s">&quot;environment&quot;</span>
+      <span class="nt">dns_sd_configs</span><span class="p">:</span>
+          <span class="p p-Indicator">-</span> <span class="nt">names</span><span class="p">:</span>
+                <span class="p p-Indicator">-</span> <span class="s">&quot;environment&quot;</span> <span class="c1"># Hostname of the environment service (from ./docker-compose.yaml)</span>
+            <span class="nt">type</span><span class="p">:</span> <span class="s">&quot;A&quot;</span>
+            <span class="nt">port</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">8000</span>
+            <span class="nt">refresh_interval</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">5s</span>
 </code></pre></div>
 
 <h2 id="recipes">Recipes<a class="headerlink" href="#recipes" title="Permanent link">&para;</a></h2>
 <h3 id="retrieving-services-from-a-new-service">Retrieving services from a new service<a class="headerlink" href="#retrieving-services-from-a-new-service" title="Permanent link">&para;</a></h3>
 <p>To add other services from which to collect data, simply add other <code>scrape_configs</code>.</p>
 <div class="highlight"><pre><span></span><code><span class="nt">scrape_configs</span><span class="p">:</span>
-  <span class="c1"># Here you should have existing configuration for other services.</span>
-  <span class="c1"># Here add a new service that will be monitored</span>
-  <span class="p p-Indicator">-</span> <span class="nt">job_name</span><span class="p">:</span> <span class="s">&quot;new_service&quot;</span>
-    <span class="nt">dns_sd_configs</span><span class="p">:</span>
-      <span class="p p-Indicator">-</span> <span class="nt">names</span><span class="p">:</span>
-          <span class="p p-Indicator">-</span> <span class="s">&quot;new_service&quot;</span> <span class="c1"># Hostname of the service as defined in ./docker-compose.yaml</span>
-        <span class="nt">type</span><span class="p">:</span> <span class="s">&quot;A&quot;</span>
-        <span class="nt">port</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">8000</span> <span class="c1"># Port on which the prometheus agent is running, Cogment SDKs uses 8000 by default</span>
-        <span class="nt">refresh_interval</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">5s</span>
+    <span class="c1"># Here you should have existing configuration for other services.</span>
+    <span class="c1"># Here add a new service that will be monitored</span>
+    <span class="p p-Indicator">-</span> <span class="nt">job_name</span><span class="p">:</span> <span class="s">&quot;new_service&quot;</span>
+      <span class="nt">dns_sd_configs</span><span class="p">:</span>
+          <span class="p p-Indicator">-</span> <span class="nt">names</span><span class="p">:</span>
+                <span class="p p-Indicator">-</span> <span class="s">&quot;new_service&quot;</span> <span class="c1"># Hostname of the service as defined in ./docker-compose.yaml</span>
+            <span class="nt">type</span><span class="p">:</span> <span class="s">&quot;A&quot;</span>
+            <span class="nt">port</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">8000</span> <span class="c1"># Port on which the prometheus agent is running, Cogment SDKs uses 8000 by default</span>
+            <span class="nt">refresh_interval</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">5s</span>
 </code></pre></div>
 
 <p>More information can be found in the <a href="https://prometheus.io/docs/prometheus/latest/getting_started/">Prometheus documentation</a></p>
@@ -1261,9 +1261,9 @@
     <span class="n">MY_COUNTER</span><span class="o">.</span><span class="n">inc</span><span class="p">()</span>
 </code></pre></div>
 
-<p>Several types of metrics are availalbe in Prometheus. Connsult the prometheus <a href="https://prometheus.io/docs/concepts/metric_types/">documentation</a> for futher references.</p>
+<p>Several types of metrics are available in Prometheus. Consult the prometheus <a href="https://prometheus.io/docs/concepts/metric_types/">documentation</a> for futher reference.</p>
 <h2 id="using-a-custom-registry">Using a custom registry<a class="headerlink" href="#using-a-custom-registry" title="Permanent link">&para;</a></h2>
-<p>By default, Cogment SDKs rely on the default Prometheus global registry. To change the used regitry, it needs to be given to the context when built.</p>
+<p>By default, Cogment SDKs rely on the default Prometheus global registry. To change the used registry, it needs to be given to the context when built.</p>
 <p>Here's how it looks in python.</p>
 <div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">cog_settings</span>
 

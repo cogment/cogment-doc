@@ -1369,8 +1369,8 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#agenactionreply" class="md-nav__link">
-    AgenActionReply
+  <a href="#agentactionreply" class="md-nav__link">
+    AgentActionReply
   </a>
   
 </li>
@@ -2200,8 +2200,8 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#agenactionreply" class="md-nav__link">
-    AgenActionReply
+  <a href="#agentactionreply" class="md-nav__link">
+    AgentActionReply
   </a>
   
 </li>
@@ -2484,24 +2484,28 @@ How services are implemented or accessed is highly dependant on the programming 
 <p>In this API, the <code>bytes</code> data type is normally used to contain the serialized data of externally defined messages. These messages are well defined in the <code>cogment.yaml</code> file.</p>
 <p>On the other hand, the <code>google.protobuf.Any</code> data type is normally used to contain messages that are not pre-defined, and may be decided at runtime.</p>
 <p>Empty messages are normally used as a placeholder for easy future, backward compatible, extension of the API.</p>
-<p>In this API, <a href="https://grpc.io/docs/what-is-grpc/core-concepts/#metadata" target="_blank">gRPC metadata</a> is normally used only for service request (procedure calls) for identifying purposes. The details of the required metadata are described with the service calls. Service replies are not expecting to provide metadata.</p>
+<p>In this API, <a href="https://grpc.io/docs/what-is-grpc/core-concepts/#metadata" target="_blank">gRPC metadata</a> is normally used only for service request (procedure calls) for identifying purposes. The details of the required metadata are described with the service calls. Service replies are not expected to provide metadata.</p>
 <p>In many places in the API, we use a list of actor data without information about which actor is where in the list.
 These lists have a constant length and order throughout a trial (set in the trial parameters), and thus can/must be cross referenced with other such lists within the same trial (e.g. <code>actors_in_trial</code>, <code>actors_map</code>).
 The actor can be infered by the position in the list, and the index into the list can sometimes be used to identify an actor.</p>
 <h3 id="limitations">Limitations<a class="headerlink" href="#limitations" title="Permanent link">&para;</a></h3>
-<p>Due to normal network delays and unpredictability of the various componenents, there are limitations related to the communication with the Ochestrator that translate in issues that can arise.</p>
+<p>Due to normal network delays and unpredictability of the various components, there are limitations related to the communication with the Ochestrator that translate in issues that can arise.</p>
 <ul>
-<li>In the current version, to simplify the implementation, there is an expectation of "good behavior" from the various components:</li>
+<li>In the current version, to simplify the implementation, there is an expectation of "good behavior" from the various components:<ul>
 <li>Actors are expected to respond with an action only after receiving an observation, and to send only one action per observation received.</li>
 <li>The environment is expected to respond with an observation set only after receiving an action set, and to send only one observation set per action set received.</li>
 <li>All components are expected to respond within a reasonable time (e.g. less than 5 sec).</li>
 <li>Hooks do not assume to receive specific parameters, reply only with well formed parameters, and do not assume a specific order of hooks being called (when multiple hooks are defined).</li>
 <li>A <code>TerminateTrial</code> (from the Control API) is called only a reasonable amount of time after a <code>StartTrial</code> (e.g. more than 2 sec).</li>
-<li>All components are started after the Orchestrator is running.</li>
+<li>All components are started after the Orchestrator is already running.</li>
 <li>Note that what constitutes a "reasonable" amount of time is dependent on many variables and the numbers given here are only vaguely safe values for most systems.</li>
-<li>It is generally understood that most actors do not know when a trial will end. Because of this, there may be unpredictable behavior at the end of a trial:</li>
+</ul>
+</li>
+<li>It is generally understood that most actors do not know when a trial will end. Because of this, there may be unpredictable behavior at the end of a trial:<ul>
 <li>Rewards and messages sent after the last action may not reach their destination.</li>
 <li>If a trial is terminated by the Control API, actions from some actors may not reach the environment before the end of the trial.</li>
+</ul>
+</li>
 </ul>
 <h2 id="common-types">Common types<a class="headerlink" href="#common-types" title="Permanent link">&para;</a></h2>
 <p>Most of the messages are defined in the <code>common.proto</code> file. <code>ObservationSet</code> is defined in <code>environment.proto</code>.</p>
@@ -2519,7 +2523,7 @@ The actor can be infered by the position in the list, and the index into the lis
 <h3 id="versioninfo"><code>VersionInfo</code><a class="headerlink" href="#versioninfo" title="Permanent link">&para;</a></h3>
 <p>Reply message for the <code>Version</code> procedure (present in all gRPC services defined in the API).
 It contains a list of version information.
-The Cogment framework expects at least "cogment-api" and "grpc" versions present in the list. The "cogment-api" is for the local version of the Cogment API used by the service. The "grpc" is for the version of gRPC used by the service.
+The Cogment framework expects at least "cogment-api" and "grpc" versions to be present in the list. The "cogment-api" is for the local version of the Cogment API used by the service. The "grpc" is for the version of gRPC used by the service.
 Other reported versions are specific to the service called, possibly for use by utility and management tools.</p>
 <div class="highlight"><pre><span></span><code><span class="kd">message</span> <span class="nc">Version</span> <span class="p">{</span>
   <span class="kt">string</span> <span class="na">name</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
@@ -2548,9 +2552,9 @@ Other reported versions are specific to the service called, possibly for use by 
 </code></pre></div>
 
 <ul>
-<li>trial_config: (optional) The user config for the controler of the trial.</li>
+<li>trial_config: (optional) The user config for the controller of the trial.</li>
 <li>environment: The parameters for the environment of the trial.</li>
-<li>actors: The parameters for all actors involved in the trial. This length and order of this list defines the length and order of the lists of actors provided in different places in the API (e.g. <code>actors_in_trial</code>), for the trial.</li>
+<li>actors: The parameters for all actors involved in the trial. This list's length and order define the length and order of the lists of actors provided in different places in the API (e.g. <code>actors_in_trial</code>) for the trial.</li>
 <li>max_steps: The maximum number of steps/ticks that the trial should run. After this number of steps/ticks, an end request will be sent to the environment.</li>
 <li>max_inactivity: The maximum amount of time (in seconds) that the trial should be without activity before an end request is sent to the environment (or the trial is forcefully terminated). Activity is defined as a message received by the Orchestrator from a user component.</li>
 </ul>
@@ -2581,7 +2585,7 @@ Other reported versions are specific to the service called, possibly for use by 
 
 <ul>
 <li>name: The name of the actor.</li>
-<li>actor_class: The name of the class of actor. Actor classes are defined in the <code>cogment.yaml</code> file in the <code>actor_classes:id</code> sections.</li>
+<li>actor_class: The name of the class of the actor. Actor classes are defined in the <code>cogment.yaml</code> file in the <code>actor_classes:id</code> sections.</li>
 <li>endpoint: The URL where the actor is being served, or "client". The URL is used by the Orchestrator to connect to the actor using the <code>AgentEndpoint</code> gRPC service. If set to "client", then the actor is a client and will connect to the Orchestrator instead, using the <code>ClientActor</code> gRPC service.</li>
 <li>implementation: (optional) The name of the implementation of the actor class to run.</li>
 <li>config: (optional) The user config for the actor.</li>
@@ -2602,7 +2606,7 @@ Other reported versions are specific to the service called, possibly for use by 
 </code></pre></div>
 
 <ul>
-<li>content: The serialized protobuf message representing a config. The actual message type is defined in the <code>cogment.yaml</code> file in its respective section: <code>environment:config_type</code>, <code>actor_classes:config_type</code>, and <code>trial:config_type</code>. Environment config is for use by environments. Actor config is for use by actors (each actor class can have a different config type). Trial config is for use by controlers.</li>
+<li>content: The serialized protobuf message representing a config. The actual message type is defined in the <code>cogment.yaml</code> file in its respective section: <code>environment:config_type</code>, <code>actor_classes:config_type</code>, and <code>trial:config_type</code>. Environment config is for use by environments. Actor config is for use by actors (each actor class can have a different config type). Trial config is for use by controllers.</li>
 </ul>
 <h3 id="trialactor"><code>TrialActor</code><a class="headerlink" href="#trialactor" title="Permanent link">&para;</a></h3>
 <p>Details of an actor participating in a trial.</p>
@@ -2681,7 +2685,7 @@ Other reported versions are specific to the service called, possibly for use by 
 </code></pre></div>
 
 <ul>
-<li>sender_name: Name of the sender that sent the reward. This is not needed when sending becasue it will be set by the orchestrator. It is only used by receiving actors.</li>
+<li>sender_name: Name of the sender that sent the reward. This is not needed when sending because it will be set by the orchestrator. It is only used by receiving actors.</li>
 <li>value: The numerical value of the provided reward.</li>
 <li>confidence: The weight of this reward in computing the final (aggregated) reward.</li>
 <li>user_data: Additional user data to be consumed by the receiving actor. It is the responsibility of the receiver to understand the type received.</li>
@@ -2759,7 +2763,7 @@ This is an aggregate of possibly multiple <code>RewardSource</code> (but at leas
 <p>Get extra information about an existing trial.</p>
 <p>Metadata:</p>
 <ul>
-<li><code>trial-id</code>: (<em>optional</em>) UUID of the trial to terminate. If not provided, the request is for informatrion about all running trials.</li>
+<li><code>trial-id</code>: (<em>optional</em>) UUID of the trial we are requesting information about. If not provided, the request is for information about all running trials.</li>
 </ul>
 <h4 id="watchtrials"><code>WatchTrials()</code><a class="headerlink" href="#watchtrials" title="Permanent link">&para;</a></h4>
 <p>Stream state changes from trials.</p>
@@ -2834,7 +2838,7 @@ This is an aggregate of possibly multiple <code>RewardSource</code> (but at leas
 </code></pre></div>
 
 <ul>
-<li>UNKNOWN: Should not be used (requirements of protobuf enums to have a 0 default value).</li>
+<li>UNKNOWN: Should not be used (it's a requirement of protobuf enums to have a 0 default value).</li>
 <li>INITIALIZING: The trial is in the process of starting.</li>
 <li>PENDING: The trial is waiting for its final parameters, before running.</li>
 <li>RUNNING: The trial is running.</li>
@@ -2857,7 +2861,7 @@ This is an aggregate of possibly multiple <code>RewardSource</code> (but at leas
 <li>trial_id: The UUID of the trial.</li>
 <li>state: The state of the trial.</li>
 <li>tick_id: The current tick of the trial.</li>
-<li>trial_duration: The duration of the trial so far, in nanoseconds. If the trial has ended, this is the duration from start to end of the trial. This is meant as an indicator; resolution may not be a nanosecond, and precision is not garanteed.</li>
+<li>trial_duration: The duration of the trial so far, in nanoseconds. If the trial has ended, this is the duration from start to end of the trial. This is meant as an indicator; resolution may not be a nanosecond, and precision is not guaranteed.</li>
 <li>latest_observation: The latest environment observations for all actors. This will be provided only if requested in the <code>TrialInfoRequest</code>.</li>
 <li>actors_in_trial: The list of active actors in the trial.</li>
 </ul>
@@ -2919,14 +2923,14 @@ Otherwise the actor will be considered terminated and be disconnected.</p>
 <li><code>actor-name</code>: The name of the current actor participating in the trial. This is supplied (or confirmed) in the <code>JoinTrial</code> reply.</li>
 </ul>
 <h4 id="sendreward"><code>SendReward()</code><a class="headerlink" href="#sendreward" title="Permanent link">&para;</a></h4>
-<p>Used to provide feedback to other actors in the same trial as current actor.</p>
+<p>Used for the current actor to provide feedback to other actors in the same trial.</p>
 <p>Metadata:</p>
 <ul>
 <li><code>trial-id</code>: UUID of the trial the current actor is participating in. This comes from the <code>JoinTrial</code> reply.</li>
 <li><code>actor-name</code>: The name of the current actor participating in the trial. This is supplied (or confirmed) in the <code>JoinTrial</code> reply.</li>
 </ul>
 <h4 id="sendmessage"><code>SendMessage()</code><a class="headerlink" href="#sendmessage" title="Permanent link">&para;</a></h4>
-<p>Used to asynchronously send data to other actors (or the environment) in the same trial as current actor.</p>
+<p>Used for the current actor to asynchronously send data to other actors (or the environment) in the same trial.</p>
 <p>Metadata:</p>
 <ul>
 <li><code>trial-id</code>: UUID of the trial the current actor is participating in. This comes from the <code>JoinTrial</code> reply.</li>
@@ -2963,7 +2967,7 @@ Otherwise the actor will be considered terminated and be disconnected.</p>
 </code></pre></div>
 
 <ul>
-<li>actor_name: The name assignbed to the current actor in joining the trial.</li>
+<li>actor_name: The name assigned to the current actor joining the trial.</li>
 <li>trial_id: The UUID of the trial joined.</li>
 <li>config: The configuration to start the actor.</li>
 <li>actors_in_trial: The list of all actors in the trial (including current actor). This list has the same length and order as the list of actors provided in different places in the API, for the same trial. The list can be empty (or not present) in some circumstances, even if there are actors (if necessary the list can be obtained in other ways).</li>
@@ -3114,7 +3118,7 @@ No more calls will be done related to the trial after this call.</p>
 <ul>
 <li>observation: An observation from the environment.</li>
 </ul>
-<h3 id="agenactionreply"><code>AgenActionReply</code><a class="headerlink" href="#agenactionreply" title="Permanent link">&para;</a></h3>
+<h3 id="agentactionreply"><code>AgentActionReply</code><a class="headerlink" href="#agentactionreply" title="Permanent link">&para;</a></h3>
 <p>Reply message for the <code>OnObservation</code> procedure.</p>
 <div class="highlight"><pre><span></span><code><span class="kd">message</span> <span class="nc">AgentActionReply</span> <span class="p">{</span>
   <span class="n">Action</span> <span class="na">action</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
@@ -3305,11 +3309,14 @@ If no reply is sent within a pre-determined time, the environment is considered 
 </code></pre></div>
 
 <h4 id="onlogsample"><code>OnLogSample()</code><a class="headerlink" href="#onlogsample" title="Permanent link">&para;</a></h4>
-<p>Called the first time a sample is available.
-This call will normally stay active as long as the orchestrator is running.
-If disconnected, the orchestrator will not reconnect unless restarted.
-Data samples are provided by the orchestrator in the request stream.</p>
-<p>Metadata: None</p>
+<p>Called for each trial, at the start of the trial.
+The first data received are the parameters.
+Data samples are provided in the request stream following the parameters.
+The stream is maintained for the duration of the trial.</p>
+<p>Metadata:</p>
+<ul>
+<li><code>trial-id</code>: UUID of the trial that is the source of the data.</li>
+</ul>
 <h4 id="version_4"><code>Version()</code><a class="headerlink" href="#version_4" title="Permanent link">&para;</a></h4>
 <p>Called to request version data.</p>
 <p>Metadata: None</p>
@@ -3344,11 +3351,11 @@ Data samples are provided by the orchestrator in the request stream.</p>
 <li>timestamp: The time at the beginning of the tick.</li>
 <li>state: The state of the trial at the end of the tick.</li>
 <li>user_id: The ID of the user that started the trial.</li>
-<li>observations: A set of observations for all actors.</li>
-<li>actions: Actions from all actors. This list has the same length and order as the list of actors provided in different places in the API (e.g. <code>actors_in_trial</code>), for the same trial. Of interest here; it matches the list of actors provided in <code>trial_params</code>.</li>
+<li>observations: Observations from the environment.</li>
+<li>actions: Actions from all actors. This list has the same length and order as the list of actors provided in <code>trial_params</code>.</li>
 <li>rewards: List of rewards sent to actors.</li>
 <li>messages: List of user data sent to actors or the environment.</li>
-<li>trial_params: Trial params used for a new trial. This is usually sent on start of a trial before any other sample from the trial.</li>
+<li>trial_params: Trial parameters used for a trial. This is sent on start of a trial, as the first message in the <code>OnLogSample</code> stream.</li>
 <li>sample: A data sample to be logged.</li>
 </ul>
 <h3 id="logexportersamplereply"><code>LogExporterSampleReply</code><a class="headerlink" href="#logexportersamplereply" title="Permanent link">&para;</a></h3>

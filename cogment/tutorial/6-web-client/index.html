@@ -1081,28 +1081,28 @@
 </blockquote>
 <p>For these services, let's add the following to the end of our docker-compose.yaml:</p>
 <div class="highlight"><pre><span></span><code><span class="nt">web-client</span><span class="p">:</span>
-  <span class="nt">build</span><span class="p">:</span>
-    <span class="nt">context</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">web-client</span>
-    <span class="nt">dockerfile</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">../js_service.dockerfile</span>
-  <span class="nt">environment</span><span class="p">:</span>
-    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">NODE_ENV=development</span>
-    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">CHOKIDAR_USEPOLLING=true</span>
-    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">REACT_APP_APP_VERSION=dev</span>
-  <span class="nt">restart</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">on-failure</span>
-  <span class="nt">ports</span><span class="p">:</span>
-    <span class="p p-Indicator">-</span> <span class="s">&quot;3000:3000&quot;</span>
-  <span class="nt">depends_on</span><span class="p">:</span>
-    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">grpcwebproxy</span>
+    <span class="nt">build</span><span class="p">:</span>
+        <span class="nt">context</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">web-client</span>
+        <span class="nt">dockerfile</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">../js_service.dockerfile</span>
+    <span class="nt">environment</span><span class="p">:</span>
+        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">NODE_ENV=development</span>
+        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">CHOKIDAR_USEPOLLING=true</span>
+        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">REACT_APP_APP_VERSION=dev</span>
+    <span class="nt">restart</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">on-failure</span>
+    <span class="nt">ports</span><span class="p">:</span>
+        <span class="p p-Indicator">-</span> <span class="s">&quot;3000:3000&quot;</span>
+    <span class="nt">depends_on</span><span class="p">:</span>
+        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">grpcwebproxy</span>
 
 <span class="nt">grpcwebproxy</span><span class="p">:</span>
-  <span class="nt">build</span><span class="p">:</span>
-    <span class="nt">context</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">./grpcwebproxy</span>
-    <span class="nt">dockerfile</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">../grpcwebproxy.dockerfile</span>
-  <span class="nt">restart</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">on-failure</span>
-  <span class="nt">ports</span><span class="p">:</span>
-    <span class="p p-Indicator">-</span> <span class="s">&quot;8080:8080&quot;</span>
-  <span class="nt">depends_on</span><span class="p">:</span>
-    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">orchestrator</span>
+    <span class="nt">build</span><span class="p">:</span>
+        <span class="nt">context</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">./grpcwebproxy</span>
+        <span class="nt">dockerfile</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">../grpcwebproxy.dockerfile</span>
+    <span class="nt">restart</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">on-failure</span>
+    <span class="nt">ports</span><span class="p">:</span>
+        <span class="p p-Indicator">-</span> <span class="s">&quot;8080:8080&quot;</span>
+    <span class="nt">depends_on</span><span class="p">:</span>
+        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">orchestrator</span>
 </code></pre></div>
 
 <p>We will also need two additional dockerfiles to go along these entries. The first one will be <code>grpcwebproxy.dockerfile</code>, with the following content:</p>
@@ -1181,8 +1181,8 @@
 </blockquote>
 <p>index.css:</p>
 <div class="highlight"><pre><span></span><code><span class="nt">body</span> <span class="p">{</span>
-  <span class="k">margin</span><span class="p">:</span> <span class="mi">0</span><span class="p">;</span>
-  <span class="k">background-color</span><span class="p">:</span> <span class="mh">#c5cce8</span><span class="p">;</span>
+    <span class="k">margin</span><span class="p">:</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="k">background-color</span><span class="p">:</span> <span class="mh">#c5cce8</span><span class="p">;</span>
 <span class="p">}</span>
 </code></pre></div>
 
@@ -1192,32 +1192,32 @@ import ReactDOM from &quot;react-dom&quot;;
 import &quot;./index.css&quot;;
 import { App } from &quot;./App&quot;;
 import {
-  createMuiTheme,
-  responsiveFontSizes,
-  ThemeProvider,
+    createMuiTheme,
+    responsiveFontSizes,
+    ThemeProvider,
 } from &quot;@material-ui/core/styles&quot;;
 
 let theme = createMuiTheme({
-  palette: {
-    primary: {
-      light: &quot;#c5cce8&quot;,
-      main: &quot;#6B80C4&quot;,
+    palette: {
+        primary: {
+            light: &quot;#c5cce8&quot;,
+            main: &quot;#6B80C4&quot;,
+        },
+        secondary: {
+            main: &quot;#ffb400&quot;,
+        },
     },
-    secondary: {
-      main: &quot;#ffb400&quot;,
-    },
-  },
 });
 
 theme = responsiveFontSizes(theme);
 
 ReactDOM.render(
-  &lt;React.StrictMode&gt;
-    &lt;ThemeProvider theme={theme}&gt;
-      &lt;App /&gt;
-    &lt;/ThemeProvider&gt;
-  &lt;/React.StrictMode&gt;,
-  document.getElementById(&quot;root&quot;)
+    &lt;React.StrictMode&gt;
+        &lt;ThemeProvider theme={theme}&gt;
+            &lt;App /&gt;
+        &lt;/ThemeProvider&gt;
+    &lt;/React.StrictMode&gt;,
+    document.getElementById(&quot;root&quot;)
 );
 </code></pre></div>
 
@@ -1229,11 +1229,11 @@ import React, { useEffect } from &quot;react&quot;;
 
 //Then some imports for icons and Material UI functionality we&#39;ll be using
 import {
-  Box,
-  Button,
-  makeStyles,
-  Typography,
-  useTheme,
+    Box,
+    Button,
+    makeStyles,
+    Typography,
+    useTheme,
 } from &quot;@material-ui/core&quot;;
 
 //And here&#39;s the important part: we&#39;re importing the two things that will allow us to use Cogment.
@@ -1252,16 +1252,16 @@ import { PlayerAction } from &quot;./data_pb&quot;;
 
 <p>Then we add a function that will convert the play, encoded as the same "move" enum that we defined in our data.proto, to a string we can use in our application:</p>
 <div class="highlight"><pre><span></span><code>function getMoveText(move) {
-  switch (move) {
-    case 0:
-      return &quot;rock&quot;;
-    case 1:
-      return &quot;paper&quot;;
-    case 2:
-      return &quot;scissors&quot;;
-    default:
-      throw new Error(&quot;Not a rock, paper, or scissors&quot;);
-  }
+    switch (move) {
+        case 0:
+            return &quot;rock&quot;;
+        case 1:
+            return &quot;paper&quot;;
+        case 2:
+            return &quot;scissors&quot;;
+        default:
+            throw new Error(&quot;Not a rock, paper, or scissors&quot;);
+    }
 }
 </code></pre></div>
 
@@ -1292,96 +1292,96 @@ import { PlayerAction } from &quot;./data_pb&quot;;
 </li>
 </ul>
 <div class="highlight"><pre><span></span><code>export const App = () =&gt; {
-  const [event, startTrial, sendAction] = useActions(
-    cogSettings,
-    &quot;player_1&quot;,
-    &quot;player&quot;
-  );
+    const [event, startTrial, sendAction] = useActions(
+        cogSettings,
+        &quot;player_1&quot;,
+        &quot;player&quot;
+    );
 
-  //Function to construct the Action which the player will send when they click either rock, paper, or scissors
-  const choose = (move) =&gt; {
-    const action = new PlayerAction();
-    action.setMove(move);
-    sendAction(action);
-  };
+    //Function to construct the Action which the player will send when they click either rock, paper, or scissors
+    const choose = (move) =&gt; {
+        const action = new PlayerAction();
+        action.setMove(move);
+        sendAction(action);
+    };
 
-  //This will start a trial as soon as we&#39;re connected to the orchestrator
-  useEffect(() =&gt; {
-    if (startTrial) startTrial();
-  }, [startTrial]);
+    //This will start a trial as soon as we&#39;re connected to the orchestrator
+    useEffect(() =&gt; {
+        if (startTrial) startTrial();
+    }, [startTrial]);
 
-  //Get any observation from the current event, events have observations, messages, and rewards, and all three can be unpacked from the event object
-  //We will also unpack a helpful variable called &#39;last&#39;, this will allow us to know when the trial has ended
-  const { observation, last } = event;
+    //Get any observation from the current event, events have observations, messages, and rewards, and all three can be unpacked from the event object
+    //We will also unpack a helpful variable called &#39;last&#39;, this will allow us to know when the trial has ended
+    const { observation, last } = event;
 
-  const [gameState, setGameState] = useState({
-    gameStage: &quot;start&quot;,
-    roundIndex: 0,
-    lastMoveComputer: 0,
-    lastMoveHuman: 0,
-  });
-  const [firstObservation, setFirstObservation] = useState(true);
-
-  useEffect(() =&gt; {
-    //Parse game state out of the observation
-    //Some events don&#39;t contain an observation, so we need to store the observation contents in a state
-    if (!observation) return;
-
-    //The first observation is not useful, as it just contains the default game state, before players have made moves
-    if (firstObservation) {
-      setFirstObservation(false);
-      return;
-    }
-
-    //Get all relevant information from the observation
-    const roundIndex = gameState.roundIndex + 1;
-    const gameStage = &quot;playing&quot;;
-    const lastMoveComputer = observation.them.lastMove;
-    const lastMoveHuman = observation.me.lastMove;
-    const lastWonComputer = observation.them.wonLast;
-    const lastWonHuman = observation.me.wonLast;
-
-    setGameState({
-      gameStage,
-      roundIndex,
-      lastMoveComputer,
-      lastMoveHuman,
-      lastWonComputer,
-      lastWonHuman,
+    const [gameState, setGameState] = useState({
+        gameStage: &quot;start&quot;,
+        roundIndex: 0,
+        lastMoveComputer: 0,
+        lastMoveHuman: 0,
     });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [observation]);
+    const [firstObservation, setFirstObservation] = useState(true);
 
-  //The layout of the page
-  return (
-    &lt;Box&gt;
-      {/*
+    useEffect(() =&gt; {
+        //Parse game state out of the observation
+        //Some events don&#39;t contain an observation, so we need to store the observation contents in a state
+        if (!observation) return;
+
+        //The first observation is not useful, as it just contains the default game state, before players have made moves
+        if (firstObservation) {
+            setFirstObservation(false);
+            return;
+        }
+
+        //Get all relevant information from the observation
+        const roundIndex = gameState.roundIndex + 1;
+        const gameStage = &quot;playing&quot;;
+        const lastMoveComputer = observation.them.lastMove;
+        const lastMoveHuman = observation.me.lastMove;
+        const lastWonComputer = observation.them.wonLast;
+        const lastWonHuman = observation.me.wonLast;
+
+        setGameState({
+            gameStage,
+            roundIndex,
+            lastMoveComputer,
+            lastMoveHuman,
+            lastWonComputer,
+            lastWonHuman,
+        });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [observation]);
+
+    //The layout of the page
+    return (
+        &lt;Box&gt;
+            {/*
         Tell the player everything we know about the trial state, such as, plays, who won, etc...
       */}
-      &lt;Typography&gt;Game stage: {gameState.gameStage}&lt;/Typography&gt;
-      &lt;Typography&gt;
-        Human&#39;s move:{&quot; &quot;}
-        {gameState.gameStage !== &quot;start&quot; &amp;&amp;
-          getMoveText(gameState.lastMoveHuman)}
-      &lt;/Typography&gt;
-      &lt;Typography&gt;
-        Computer&#39;s move:{&quot; &quot;}
-        {gameState.gameStage !== &quot;start&quot; &amp;&amp;
-          getMoveText(gameState.lastMoveComputer)}
-      &lt;/Typography&gt;
-      &lt;Typography&gt;
-        Did Human win last round?{&quot; &quot;}
-        {observation &amp;&amp; gameState.lastWonHuman ? &quot;Yes&quot; : &quot;No&quot;}
-      &lt;/Typography&gt;
-      &lt;Typography&gt;
-        Did Computer win last round?{&quot; &quot;}
-        {observation &amp;&amp; gameState.lastWonComputer ? &quot;Yes&quot; : &quot;No&quot;}
-      &lt;/Typography&gt;
-      &lt;Button onClick={() =&gt; choose(0)}&gt;Rock&lt;/Button&gt;
-      &lt;Button onClick={() =&gt; choose(1)}&gt;Paper&lt;/Button&gt;
-      &lt;Button onClick={() =&gt; choose(2)}&gt;Scissors&lt;/Button&gt;
-    &lt;/Box&gt;
-  );
+            &lt;Typography&gt;Game stage: {gameState.gameStage}&lt;/Typography&gt;
+            &lt;Typography&gt;
+                Human&#39;s move:{&quot; &quot;}
+                {gameState.gameStage !== &quot;start&quot; &amp;&amp;
+                    getMoveText(gameState.lastMoveHuman)}
+            &lt;/Typography&gt;
+            &lt;Typography&gt;
+                Computer&#39;s move:{&quot; &quot;}
+                {gameState.gameStage !== &quot;start&quot; &amp;&amp;
+                    getMoveText(gameState.lastMoveComputer)}
+            &lt;/Typography&gt;
+            &lt;Typography&gt;
+                Did Human win last round?{&quot; &quot;}
+                {observation &amp;&amp; gameState.lastWonHuman ? &quot;Yes&quot; : &quot;No&quot;}
+            &lt;/Typography&gt;
+            &lt;Typography&gt;
+                Did Computer win last round?{&quot; &quot;}
+                {observation &amp;&amp; gameState.lastWonComputer ? &quot;Yes&quot; : &quot;No&quot;}
+            &lt;/Typography&gt;
+            &lt;Button onClick={() =&gt; choose(0)}&gt;Rock&lt;/Button&gt;
+            &lt;Button onClick={() =&gt; choose(1)}&gt;Paper&lt;/Button&gt;
+            &lt;Button onClick={() =&gt; choose(2)}&gt;Scissors&lt;/Button&gt;
+        &lt;/Box&gt;
+    );
 };
 </code></pre></div>
 
@@ -1391,43 +1391,46 @@ import { PlayerAction } from &quot;./data_pb&quot;;
 import * as cogment from &quot;@cogment/cogment-js-sdk&quot;;
 
 export const useActions = (cogSettings, actorName, actorClass) =&gt; {
-  //Events are composed of a possible observation, message, and reward
-  const [event, setEvent] = useState({
-    observation: null,
-    message: null,
-    reward: null,
-  });
-
-  //startTrial and sendAction will be set after the connected agent joins the trial
-  const [startTrial, setStartTrial] = useState(null);
-  const [sendAction, setSendAction] = useState(null);
-
-  //Set up the connection and register the actor only once
-
-  //In this hook, the connected agent is immediatly registered to any existing trial sitting at port 8080 (more accurately any grpcwebproxy pointing to a trial). Most of the time, this is the desired behaviour, but it could be changed in different circumstances by replacing this with something like setState(joinTrial), similar to setStartTrial further down this code
-  useEffect(() =&gt; {
-    //First we create our service, which will be our primary point of contact to the orchestrator
-    const service = cogment.createService({
-      cogSettings,
-      //grpcURL is an optional argument that in fact defaults to the following value. Here we&#39;re just showing that it can be set explicitly
-      grpcURL:
-        window.location.protocol + &quot;//&quot; + window.location.hostname + &quot;:8080&quot;,
+    //Events are composed of a possible observation, message, and reward
+    const [event, setEvent] = useState({
+        observation: null,
+        message: null,
+        reward: null,
     });
 
-    //Set up the actor object. An actorName and an actorClass is enough to define a unique actor to be added to a trial
-    const actor = { name: actorName, actorClass: actorClass };
+    //startTrial and sendAction will be set after the connected agent joins the trial
+    const [startTrial, setStartTrial] = useState(null);
+    const [sendAction, setSendAction] = useState(null);
 
-    //Use the service to register an actor. registerActor takes two arguments, the second of which is a callback function which is given the actorSession of the registered actor as its only argument. With the provided actorSession, we can send actions, and receive events.
-    service.registerActor(actor, async (actorSession) =&gt; {
-      //Start the session
-      actorSession.start();
+    //Set up the connection and register the actor only once
 
-      //Double arrow function here because React will turn a single one into a lazy loaded function
-      setSendAction(() =&gt; (action) =&gt; {
-        actorSession.sendAction(action);
-      });
+    //In this hook, the connected agent is immediatly registered to any existing trial sitting at port 8080 (more accurately any grpcwebproxy pointing to a trial). Most of the time, this is the desired behaviour, but it could be changed in different circumstances by replacing this with something like setState(joinTrial), similar to setStartTrial further down this code
+    useEffect(() =&gt; {
+        //First we create our service, which will be our primary point of contact to the orchestrator
+        const service = cogment.createService({
+            cogSettings,
+            //grpcURL is an optional argument that in fact defaults to the following value. Here we&#39;re just showing that it can be set explicitly
+            grpcURL:
+                window.location.protocol +
+                &quot;//&quot; +
+                window.location.hostname +
+                &quot;:8080&quot;,
+        });
 
-      /*actorSession.eventLoop is an async generator function, meaning we can use the syntax
+        //Set up the actor object. An actorName and an actorClass is enough to define a unique actor to be added to a trial
+        const actor = { name: actorName, actorClass: actorClass };
+
+        //Use the service to register an actor. registerActor takes two arguments, the second of which is a callback function which is given the actorSession of the registered actor as its only argument. With the provided actorSession, we can send actions, and receive events.
+        service.registerActor(actor, async (actorSession) =&gt; {
+            //Start the session
+            actorSession.start();
+
+            //Double arrow function here because React will turn a single one into a lazy loaded function
+            setSendAction(() =&gt; (action) =&gt; {
+                actorSession.sendAction(action);
+            });
+
+            /*actorSession.eventLoop is an async generator function, meaning we can use the syntax
         for await(const foo of generator()){
           do stuff
         }
@@ -1435,33 +1438,36 @@ export const useActions = (cogSettings, actorName, actorClass) =&gt; {
 
         This is massively useful for network streams.
       */
-      for await (const event of actorSession.eventLoop()) {
-        //Convert observations to a regular JS object.
-        let observationOBJ = event.observation &amp;&amp; event.observation.toObject();
-        event.observation = observationOBJ;
+            for await (const event of actorSession.eventLoop()) {
+                //Convert observations to a regular JS object.
+                let observationOBJ =
+                    event.observation &amp;&amp; event.observation.toObject();
+                event.observation = observationOBJ;
 
-        //If the type of the event is 3 (Ending), store that in event.last so we can use it later
-        event.last = event.type === 3;
+                //If the type of the event is 3 (Ending), store that in event.last so we can use it later
+                event.last = event.type === 3;
 
-        //Set the event state to the received event, causing a hook update
-        setEvent(event);
-      }
-    });
+                //Set the event state to the received event, causing a hook update
+                setEvent(event);
+            }
+        });
 
-    //Creating the trial controller must happen after actors are registered
-    const trialController = service.createTrialController();
+        //Creating the trial controller must happen after actors are registered
+        const trialController = service.createTrialController();
 
-    //Need to output a function so that the user can start the trial when all actors are connected
-    //Again, double arrow function cause React will turn a single one into a lazy loaded function
-    setStartTrial(() =&gt; async () =&gt; {
-      //Start and join the trial. When we start a trial, we receive an object containing the trialID that can then be used to join it.
-      //We will almost always want to do both these actions in sequence, since trials do not proceed without the connected agent if cogment.yaml specifies that a connected agent exists
-      const { trialId } = await trialController.startTrial(actor.actorClass);
-      await trialController.joinTrial(trialId, actor);
-    });
-  }, [cogSettings, actorName, actorClass]);
+        //Need to output a function so that the user can start the trial when all actors are connected
+        //Again, double arrow function cause React will turn a single one into a lazy loaded function
+        setStartTrial(() =&gt; async () =&gt; {
+            //Start and join the trial. When we start a trial, we receive an object containing the trialID that can then be used to join it.
+            //We will almost always want to do both these actions in sequence, since trials do not proceed without the connected agent if cogment.yaml specifies that a connected agent exists
+            const { trialId } = await trialController.startTrial(
+                actor.actorClass
+            );
+            await trialController.joinTrial(trialId, actor);
+        });
+    }, [cogSettings, actorName, actorClass]);
 
-  return [event, startTrial, sendAction];
+    return [event, startTrial, sendAction];
 };
 </code></pre></div>
 
@@ -1482,25 +1488,26 @@ src/cog_settings*
 <h2 id="making-it-look-good">Making it look good<a class="headerlink" href="#making-it-look-good" title="Permanent link">&para;</a></h2>
 <p>If we want a fancier interface, there is a completed UI in the tutorials repository that we can copy into our project. Then, along with some style code that can be found in the repository version of App.js, just replace the return statement from App.js with the following:</p>
 <div class="highlight"><pre><span></span><code>&lt;Box&gt;
-  &lt;Header observation={observation} gameState={gameState} /&gt;
-  &lt;Container className={classes.container}&gt;
-    &lt;Player
-      score={humanScore}
-      color={theme.palette.primary.main}
-      IconClass={PersonIcon}
-      choose={choose}
-      isHuman
-    /&gt;
+    &lt;Header observation={observation} gameState={gameState} /&gt;
+    &lt;Container className={classes.container}&gt;
+        &lt;Player
+            score={humanScore}
+            color={theme.palette.primary.main}
+            IconClass={PersonIcon}
+            choose={choose}
+            isHuman
+        /&gt;
 
-    &lt;Player
-      score={computerScore}
-      color={theme.palette.secondary.main}
-      IconClass={ComputerIcon}
-      selected={
-        gameState !== &quot;start&quot; &amp;&amp; getMoveText(observation.them.lastRoundMove)
-      }
-    /&gt;
-  &lt;/Container&gt;
+        &lt;Player
+            score={computerScore}
+            color={theme.palette.secondary.main}
+            IconClass={ComputerIcon}
+            selected={
+                gameState !== &quot;start&quot; &amp;&amp;
+                getMoveText(observation.them.lastRoundMove)
+            }
+        /&gt;
+    &lt;/Container&gt;
 &lt;/Box&gt;
 </code></pre></div>
                 

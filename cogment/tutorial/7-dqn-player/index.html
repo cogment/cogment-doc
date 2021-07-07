@@ -1087,52 +1087,52 @@
 
 <p>Since we have created a new service we need to reference it at several places for everything to work properly. First, let's edit <code>docker-compose.yaml</code> to add the new service. To do that, simply add the following under the <code>services</code> key: it tells docker-compose about the new service.</p>
 <div class="highlight"><pre><span></span><code><span class="nt">dqn-agent</span><span class="p">:</span>
-  <span class="nt">build</span><span class="p">:</span>
-    <span class="nt">context</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">dqn_agent</span>
-    <span class="nt">dockerfile</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">../py_service.dockerfile</span>
+    <span class="nt">build</span><span class="p">:</span>
+        <span class="nt">context</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">dqn_agent</span>
+        <span class="nt">dockerfile</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">../py_service.dockerfile</span>
 </code></pre></div>
 
 <p>Then we will need to edit <code>cogment.yaml</code> to make <code>cogment run generate</code> run in the new service's directory and have <code>cogment run build</code> and <code>cogment run start</code> respectively trigger its build and its start. We will change the <code>generate</code>, <code>build</code> and <code>start</code> keys under <code>commands</code>.</p>
 <div class="highlight"><pre><span></span><code><span class="nt">commands</span><span class="p">:</span>
-  <span class="nt">generate</span><span class="p">:</span> <span class="p p-Indicator">&gt;</span>
-    <span class="no">cogment generate</span>
-    <span class="no">--python_dir environment</span>
-    <span class="no">--python_dir client</span>
-    <span class="no">--python_dir random_agent</span>
-    <span class="no">--python_dir dqn_agent</span>
-  <span class="c1"># ...</span>
-  <span class="nt">build</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">docker-compose build client dashboard metrics orchestrator environment random-agent dqn-agent</span>
-  <span class="c1"># ...</span>
-  <span class="nt">start</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">docker-compose up dashboard metrics orchestrator environment random-agent dqn-agent</span>
+    <span class="nt">generate</span><span class="p">:</span> <span class="p p-Indicator">&gt;</span>
+        <span class="no">cogment generate</span>
+        <span class="no">--python_dir environment</span>
+        <span class="no">--python_dir client</span>
+        <span class="no">--python_dir random_agent</span>
+        <span class="no">--python_dir dqn_agent</span>
+    <span class="c1"># ...</span>
+    <span class="nt">build</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">docker-compose build client dashboard metrics orchestrator environment random-agent dqn-agent</span>
+    <span class="c1"># ...</span>
+    <span class="nt">start</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">docker-compose up dashboard metrics orchestrator environment random-agent dqn-agent</span>
 </code></pre></div>
 
 <p>Finally, the metrics server needs to know about this new data source. In <code>metrics/prometheus.yml</code>, add a new item under the <code>scrape_configs</code> key.</p>
 <div class="highlight"><pre><span></span><code><span class="p p-Indicator">-</span> <span class="nt">job_name</span><span class="p">:</span> <span class="s">&quot;dqn-agent&quot;</span>
   <span class="nt">dns_sd_configs</span><span class="p">:</span>
-    <span class="p p-Indicator">-</span> <span class="nt">names</span><span class="p">:</span>
-        <span class="p p-Indicator">-</span> <span class="s">&quot;dqn-agent&quot;</span>
-      <span class="nt">type</span><span class="p">:</span> <span class="s">&quot;A&quot;</span>
-      <span class="nt">port</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">8000</span>
-      <span class="nt">refresh_interval</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">5s</span>
+      <span class="p p-Indicator">-</span> <span class="nt">names</span><span class="p">:</span>
+            <span class="p p-Indicator">-</span> <span class="s">&quot;dqn-agent&quot;</span>
+        <span class="nt">type</span><span class="p">:</span> <span class="s">&quot;A&quot;</span>
+        <span class="nt">port</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">8000</span>
+        <span class="nt">refresh_interval</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">5s</span>
 </code></pre></div>
 
 <h2 id="playing-against-the-heuristic-player">Playing against the heuristic player<a class="headerlink" href="#playing-against-the-heuristic-player" title="Permanent link">&para;</a></h2>
 <p>We will train our new player against the <a href="../4-heuristic-player/">heuristic player</a> we previously developed. We first need to update the trial config in <code>cogment.yaml</code>: <code>player_1</code> will be our new actor implementation while <code>player_2</code> will be the heuristic implementation. Trials will be 20 games long to generate enough meaningful data between each training step.</p>
 <div class="highlight"><pre><span></span><code><span class="nt">trial_params</span><span class="p">:</span>
-  <span class="nt">environment</span><span class="p">:</span>
-    <span class="nt">endpoint</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">grpc://environment:9000</span>
-    <span class="nt">config</span><span class="p">:</span>
-      <span class="nt">target_game_score</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">2</span>
-      <span class="nt">target_games_count</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">20</span>
-  <span class="nt">actors</span><span class="p">:</span>
-    <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">player_1</span>
-      <span class="nt">actor_class</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">player</span>
-      <span class="nt">implementation</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">dqn_agent</span>
-      <span class="nt">endpoint</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">grpc://dqn-agent:9000</span>
-    <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">player_2</span>
-      <span class="nt">actor_class</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">player</span>
-      <span class="nt">implementation</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">heuristic_agent</span>
-      <span class="nt">endpoint</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">grpc://random-agent:9000</span>
+    <span class="nt">environment</span><span class="p">:</span>
+        <span class="nt">endpoint</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">grpc://environment:9000</span>
+        <span class="nt">config</span><span class="p">:</span>
+            <span class="nt">target_game_score</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">2</span>
+            <span class="nt">target_games_count</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">20</span>
+    <span class="nt">actors</span><span class="p">:</span>
+        <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">player_1</span>
+          <span class="nt">actor_class</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">player</span>
+          <span class="nt">implementation</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">dqn_agent</span>
+          <span class="nt">endpoint</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">grpc://dqn-agent:9000</span>
+        <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">player_2</span>
+          <span class="nt">actor_class</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">player</span>
+          <span class="nt">implementation</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">heuristic_agent</span>
+          <span class="nt">endpoint</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">grpc://random-agent:9000</span>
 </code></pre></div>
 
 <p>We can also update <code>client/main.py</code> to run a bunch of trials sequentially.</p>

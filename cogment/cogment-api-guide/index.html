@@ -1239,23 +1239,23 @@
 <p>The data structures describing these spaces are declared by using a protocol buffer message type. <a href="../../concepts/glossary/#observation">Observations</a> and <a href="../../concepts/glossary/#action">actions</a> will simply be instances of the matching type.</p>
 <p>For example, in the following, <code>driver</code> and <code>pedestrian</code> share a common view of the environment, hence use the same observation space, but have different actions available to them.</p>
 <div class="highlight"><pre><span></span><code><span class="nt">import</span><span class="p">:</span>
-  <span class="nt">proto</span><span class="p">:</span>
-    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">city.proto</span>
+    <span class="nt">proto</span><span class="p">:</span>
+        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">city.proto</span>
 
 <span class="nt">actors</span><span class="p">:</span>
-  <span class="nt">driver</span><span class="p">:</span>
-    <span class="nt">observation</span><span class="p">:</span>
-      <span class="nt">space</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">city.Observation</span>
+    <span class="nt">driver</span><span class="p">:</span>
+        <span class="nt">observation</span><span class="p">:</span>
+            <span class="nt">space</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">city.Observation</span>
 
-    <span class="nt">action</span><span class="p">:</span>
-      <span class="nt">space</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">city.DriverAction</span>
+        <span class="nt">action</span><span class="p">:</span>
+            <span class="nt">space</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">city.DriverAction</span>
 
-  <span class="nt">pedestrian</span><span class="p">:</span>
-    <span class="nt">observation</span><span class="p">:</span>
-      <span class="nt">space</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">city.Observation</span>
+    <span class="nt">pedestrian</span><span class="p">:</span>
+        <span class="nt">observation</span><span class="p">:</span>
+            <span class="nt">space</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">city.Observation</span>
 
-    <span class="nt">action</span><span class="p">:</span>
-      <span class="nt">space</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">city.PedestrianAction</span>
+        <span class="nt">action</span><span class="p">:</span>
+            <span class="nt">space</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">city.PedestrianAction</span>
 </code></pre></div>
 
 <blockquote>
@@ -1481,18 +1481,18 @@ a method that can apply the deltas to previous observations.</p>
 
 <div class="highlight"><pre><span></span><code><span class="c1"># cogment.yaml</span>
 <span class="nt">import</span><span class="p">:</span>
-  <span class="nt">proto</span><span class="p">:</span>
-    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">city.proto</span>
-  <span class="nt">python</span><span class="p">:</span>
-    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">delta</span>
+    <span class="nt">proto</span><span class="p">:</span>
+        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">city.proto</span>
+    <span class="nt">python</span><span class="p">:</span>
+        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">delta</span>
 
 <span class="nt">actors</span><span class="p">:</span>
-  <span class="nt">my_class</span><span class="p">:</span>
-    <span class="nt">observation</span><span class="p">:</span>
-      <span class="nt">space</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">city.Observation</span>
-      <span class="nt">delta</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">city.ObservationDelta</span>
-      <span class="nt">delta_apply_fn</span><span class="p">:</span>
-        <span class="nt">python</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">delta.apply_delta</span>
+    <span class="nt">my_class</span><span class="p">:</span>
+        <span class="nt">observation</span><span class="p">:</span>
+            <span class="nt">space</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">city.Observation</span>
+            <span class="nt">delta</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">city.ObservationDelta</span>
+            <span class="nt">delta_apply_fn</span><span class="p">:</span>
+                <span class="nt">python</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">delta.apply_delta</span>
 </code></pre></div>
                 
               

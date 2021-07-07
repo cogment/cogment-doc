@@ -1074,10 +1074,10 @@
 <p>Modify the <code>environment/main.py</code> file with these updates.</p>
 <p>Now that the data structure is modified and the environment implementation uses it, we can define, for the default trial, a value for the <code>target_game_score</code> property. Let's start with games of 2 winning rounds.</p>
 <div class="highlight"><pre><span></span><code><span class="nt">trial_params</span><span class="p">:</span>
-  <span class="nt">environment</span><span class="p">:</span>
-    <span class="nt">endpoint</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">grpc://environment:9000</span>
-    <span class="nt">config</span><span class="p">:</span>
-      <span class="nt">target_game_score</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">2</span>
+    <span class="nt">environment</span><span class="p">:</span>
+        <span class="nt">endpoint</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">grpc://environment:9000</span>
+        <span class="nt">config</span><span class="p">:</span>
+            <span class="nt">target_game_score</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">2</span>
 </code></pre></div>
 
 <p>Modify the <code>cogment.yaml</code> file with this update.</p>
