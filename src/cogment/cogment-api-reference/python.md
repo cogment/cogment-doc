@@ -367,11 +367,11 @@ Abstract class containing trial configuration data to define the specifics of a 
 
 `actors`: _list[dict]_ - Each item (dictionary) of the list represents an actor. Each actor dictionary contains these key-value pairs:
 
--   "name": _str_ - Name of the actor
--   "actor*class": \_str* - The actor class for the actor
--   "endpoint": _str_ - The URL to connect to the actor. If, instead of a URL, the value is "client", then this actor will connect in (rather than be connected to), and the actor will need to provide the URL to connect to the orchestrator.
--   "implementation: _str_ - The name of the implementation to run this actor
--   "config": _protobuf class instance_ - The configuration data for the actor.
+-   `"name"`: _str_ - Name of the actor
+-   `"actor_class"`: _str_ - The actor class for the actor
+-   `"endpoint"`: _str_ - The URL to connect to the actor. If, instead of a URL, the value is "client", then this actor will connect in (rather than be connected to), and the actor will need to provide the URL to connect to the orchestrator.
+-   `"implementation"`: _str_ - The name of the implementation to run this actor
+-   `"config"`: _protobuf class instance_ - The configuration data for the actor.
 
 ### `get_trial_id(self)`
 
