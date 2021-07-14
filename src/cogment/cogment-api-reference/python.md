@@ -393,7 +393,7 @@ Return: None
 
 [TrialParams](../cogment-low-level-api-guide/grpc.md#trialparams) is defined in the low level grpc api.
 
-## cogment.api.datalog.DatalogSample
+## cogment.api.datalog_pb2.DatalogSample
 
 [DatalogSample](../cogment-low-level-api-guide/grpc.md#logexportersamplerequest) is defined in the low level grpc api.
 
@@ -421,7 +421,7 @@ Generator method to iterate over all samples as they are received (waiting for e
 
 Parameters: None
 
-Return: _generator([cogment.api.datalog.DatalogSample](#cogmentapidatalogdatalogsample))_ - A generator for the samples received.
+Return: _generator([cogment.api.datalog_pb2.DatalogSample](#cogmentapidatalogdatalogsample))_ - A generator for the samples received.
 
 ## class cogment.Endpoint
 
