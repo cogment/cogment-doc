@@ -21,6 +21,8 @@ In many places in the API, we use a list of actor data without information about
 These lists have a constant length and order throughout a trial (set in the trial parameters), and thus can/must be cross referenced with other such lists within the same trial (e.g. `actors_in_trial`, `actors_map`).
 The actor can be infered by the position in the list, and the index into the list can sometimes be used to identify an actor.
 
+gRPC service names in Cogment are suffixed with "SP" (Service Point).
+
 ### Limitations
 
 Due to normal network delays and unpredictability of the various components, there are limitations related to the communication with the Ochestrator that translate in issues that can arise.
@@ -28,11 +30,10 @@ Due to normal network delays and unpredictability of the various components, the
 -   In the current version, to simplify the implementation, there is an expectation of "good behavior" from the various components:
     -   Actors are expected to respond with an action only after receiving an observation, and to send only one action per observation received.
     -   The environment is expected to respond with an observation set only after receiving an action set, and to send only one observation set per action set received.
-    -   All components are expected to respond within a reasonable time (e.g. less than 5 sec).
-    -   Hooks do not assume to receive specific parameters, reply only with well formed parameters, and do not assume a specific order of hooks being called (when multiple hooks are defined).
-    -   A `TerminateTrial` (from the Control API) is called only a reasonable amount of time after a `StartTrial` (e.g. more than 2 sec).
-    -   All components are started after the Orchestrator is already running.
-    -   Note that what constitutes a "reasonable" amount of time is dependent on many variables and the numbers given here are only vaguely safe values for most systems.
+    -   All components are expected to respond within a reasonable amount of time.
+    -   Hooks do not assume to receive specific parameters, they reply only with well formed parameters, and they do not assume a specific order of hooks being called (when multiple hooks are defined).
+    -   A `TerminateTrial` (from the Control API) is called only a reasonable amount of time after a `StartTrial` (e.g. at least two ticks have executed).
+    -   Note that what constitutes a "reasonable" amount of time is dependent on many variables
 -   It is generally understood that most actors do not know when a trial will end. Because of this, there may be unpredictable behavior at the end of a trial:
     -   Rewards and messages sent after the last action may not reach their destination.
     -   If a trial is terminated by the Control API, actions from some actors may not reach the environment before the end of the trial.
@@ -110,7 +111,7 @@ message EnvironmentParams {
 }
 ```
 
--   endpoint: The URL where the environment is being served. This is used by the Orchestrator to connect to the environment using the `EnvironmentEndpoint` gRPC service.
+-   endpoint: The URL where the environment is being served. This is used by the Orchestrator to connect to the environment using the `EnvironmentSP` gRPC service.
 -   config: (optional) The user config for the environment.
 -   implementation: (optional) The name of the implementation of the environment to run.
 
@@ -130,7 +131,7 @@ message ActorParams {
 
 -   name: The name of the actor.
 -   actor_class: The name of the class of the actor. Actor classes are defined in the `cogment.yaml` file in the `actor_classes:id` sections.
--   endpoint: The URL where the actor is being served, or "client". The URL is used by the Orchestrator to connect to the actor using the `AgentEndpoint` gRPC service. If set to "client", then the actor is a client and will connect to the Orchestrator instead, using the `ClientActor` gRPC service.
+-   endpoint: The URL where the actor is being served, or "client". The URL is used by the Orchestrator to connect to the actor using the `ServiceActorSP` gRPC service. If set to "client", then the actor is a client and will connect to the Orchestrator instead, using the `ClientActorSP` gRPC service.
 -   implementation: (optional) The name of the implementation of the actor class to run.
 -   config: (optional) The user config for the actor.
 
@@ -308,10 +309,10 @@ This API is defined in `orchestrator.proto`. It is implemented by the cogment or
 
 This API is used for general control and services related to trials.
 
-### Service `TrialLifecycle`
+### Service `TrialLifecycleSP`
 
 ```protobuf
-service TrialLifecycle {
+service TrialLifecycleSP {
   rpc StartTrial(TrialStartRequest) returns (TrialStartReply) {}
   rpc TerminateTrial(TerminateTrialRequest) returns (TerminateTrialReply) {}
   rpc GetTrialInfo(TrialInfoRequest) returns (TrialInfoReply) {}
@@ -501,10 +502,10 @@ This API is used by client actors participating in existing trials.
 Multiple simultaneous actors can connect using a single client application instance.
 The actors connecting this way must have an endpoint set to "client" in the [trial parameters](../cogment-api-reference/cogment-yaml.md#trial-params).
 
-### Service `ClientActor`
+### Service `ClientActorSP`
 
 ```protobuf
-service ClientActor {
+service ClientActorSP {
   rpc JoinTrial(TrialJoinRequest) returns (TrialJoinReply) {}
   rpc ActionStream(stream TrialActionRequest) returns (stream TrialActionReply) {}
   rpc Heartbeat(TrialHeartbeatRequest) returns (TrialHeartbeatReply) {}
@@ -691,10 +692,10 @@ This API is used by service actors that will be participating in new trials.
 Multiple simultaneous service actors can be served from a single actor application instance.
 An actor endpoint, for the orchestrator to connect to, is defined in the [trial parameters](../cogment-api-reference/cogment-yaml.md#trial-params).
 
-### Service `AgentEndpoint`
+### Service `ServiceActorSP`
 
 ```protobuf
-service AgentEndpoint {
+service ServiceActorSP {
   rpc OnStart(AgentStartRequest) returns (AgentStartReply) {}
   rpc OnObservation(stream AgentObservationRequest) returns (stream AgentActionReply) {}
   rpc OnReward(AgentRewardRequest) returns (AgentRewardReply) {}
@@ -877,10 +878,10 @@ There is only one environment per trial.
 Multiple simultaneous environments can be served from a single environment application instance (for different trials).
 The environment endpoint, for the orchestrator to connect to, is defined in the [trial parameters](../cogment-api-reference/cogment-yaml.md#trial-params).
 
-### Service `EnvironmentEndpoint`
+### Service `EnvironmentSP`
 
 ```protobuf
-service EnvironmentEndpoint {
+service EnvironmentSP {
   rpc OnStart(EnvStartRequest) returns (EnvStartReply) {}
   rpc OnAction(stream EnvActionRequest) returns (stream EnvActionReply) {}
   rpc OnMessage(EnvMessageRequest) returns (EnvMessageReply) {}
@@ -1024,10 +1025,10 @@ This API is defined in `datalog.proto`. It is implemented by the data logger app
 
 The orchestrator uses a data logger endpoint [defined in the `cogment.yaml` file](../cogment-api-reference/cogment-yaml.md#datalog).
 
-### Service `LogExporter`
+### Service `LogExporterSP`
 
 ```protobuf
-service LogExporter {
+service LogExporterSP {
   rpc OnLogSample(stream LogExporterSampleRequest) returns (LogExporterSampleReply) {}
   rpc Version(VersionRequest) returns (VersionInfo) {}
 }
@@ -1104,10 +1105,10 @@ This API is defined in `hooks.proto`. It is implemented by the pre-trial hook ap
 
 The pre-trial hook endpoint, for the orchestrator to connect to, is defined in the `cogment.yaml` file.
 
-### Service `TrialHooks`
+### Service `TrialHooksSP`
 
 ```protobuf
-service TrialHooks {
+service TrialHooksSP {
   rpc OnPreTrial(PreTrialContext) returns (PreTrialContext) {}
   rpc Version(VersionRequest) returns (VersionInfo) {}
 }
