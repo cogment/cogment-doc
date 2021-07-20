@@ -138,6 +138,8 @@ actor_classes:
 
 This section defines the different parameters that can be adjusted by pre-trial hooks for each trial. It also defines the default values for these parameters. These parameters are:
 
+-   `max_steps`: The maximum number of time steps (ticks) that the trial will run before terminating.
+-   `max_inactivity`: The number of seconds of inactivity after which a trial will be terminated. If 0, the trial will not be terminated because of inactivity.
 -   `trial`: Mapping of properties
     -   `config`: Definition of properties to match the definition of `config_type` for the trial. I.e. the yaml definition needs to match the definition of the protobuf class declared as `config_type`.
 -   `environment`: Mapping of properties
@@ -155,6 +157,12 @@ E.g.:
 
 ```yaml
 trial_params:
+    max_steps: 1000
+    max_inactivity: 5
+
+    trial:
+        config:
+
     environment:
         endpoint: grpc://env:9000
         implementation: default
