@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## Unreleased
 
+### Added
+
+-   Citation guidelines for research work using Cogment.
+
 ### Fixed
 
 -   Fix name of hook session actor dictionary key `actor_class`.

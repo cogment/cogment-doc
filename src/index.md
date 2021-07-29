@@ -60,3 +60,18 @@ The easiest way to get started is to use the `cogment` command line tool. Please
 Before diving right in, we recommend taking the time to read the [Core concepts](./concepts/core-concepts.md) section, as well as our [glossary](./concepts/glossary.md), which details the terminology we use for several critical concepts of the Cogment Framework. You can then proceed to read on how to [install](./introduction/installation.md) the framework.
 
 Last but not least, a [tutorial](./cogment/tutorial/introduction.md) gives you a hands on introduction on using Cogment.
+
+## Citations
+
+If you use **Cogment** in your research, please cite the [white paper](https://arxiv.org/abs/2106.11345) as follows:
+
+```bibtex
+@misc{air2021cogment,
+    title={Cogment: Open Source Framework For Distributed Multi-actor Training, Deployment & Operations},
+    author={AI Redefined and Sai Krishna Gottipati and Sagar Kurandwad and Clodéric Mars and Gregory Szriftgiser and François Chabot},
+    year={2021},
+    eprint={2106.11345},
+    archivePrefix={arXiv},
+    primaryClass={cs.AI}
+}
+```
