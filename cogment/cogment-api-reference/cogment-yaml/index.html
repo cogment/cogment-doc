@@ -1183,6 +1183,8 @@
 <h2 id="trial-params">Trial Params<a class="headerlink" href="#trial-params" title="Permanent link">&para;</a></h2>
 <p>This section defines the different parameters that can be adjusted by pre-trial hooks for each trial. It also defines the default values for these parameters. These parameters are:</p>
 <ul>
+<li><code>max_steps</code>: The maximum number of time steps (ticks) that the trial will run before terminating.</li>
+<li><code>max_inactivity</code>: The number of seconds of inactivity after which a trial will be terminated. If 0, the trial will not be terminated because of inactivity.</li>
 <li><code>trial</code>: Mapping of properties<ul>
 <li><code>config</code>: Definition of properties to match the definition of <code>config_type</code> for the trial. I.e. the yaml definition needs to match the definition of the protobuf class declared as <code>config_type</code>.</li>
 </ul>
@@ -1204,6 +1206,12 @@
 </ul>
 <p>E.g.:</p>
 <div class="highlight"><pre><span></span><code><span class="nt">trial_params</span><span class="p">:</span>
+    <span class="nt">max_steps</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">1000</span>
+    <span class="nt">max_inactivity</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">5</span>
+
+    <span class="nt">trial</span><span class="p">:</span>
+        <span class="nt">config</span><span class="p">:</span>
+
     <span class="nt">environment</span><span class="p">:</span>
         <span class="nt">endpoint</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">grpc://env:9000</span>
         <span class="nt">implementation</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">default</span>

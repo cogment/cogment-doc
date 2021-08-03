@@ -924,8 +924,8 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#cogmentapidatalogdatalogsample" class="md-nav__link">
-    cogment.api.datalog.DatalogSample
+  <a href="#cogmentapidatalog_pb2datalogsample" class="md-nav__link">
+    cogment.api.datalog_pb2.DatalogSample
   </a>
   
 </li>
@@ -1786,8 +1786,8 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#cogmentapidatalogdatalogsample" class="md-nav__link">
-    cogment.api.datalog.DatalogSample
+  <a href="#cogmentapidatalog_pb2datalogsample" class="md-nav__link">
+    cogment.api.datalog_pb2.DatalogSample
   </a>
   
 </li>
@@ -2210,11 +2210,11 @@ The generator will exit for various reasons indicating the end of the trial, a l
 <p><code>environment_endpoint</code>: <em>str</em> - The URL to connect to the environment. The protocol must be "grpc". E.g. "grpc://myenv:9000"</p>
 <p><code>actors</code>: <em>list[dict]</em> - Each item (dictionary) of the list represents an actor. Each actor dictionary contains these key-value pairs:</p>
 <ul>
-<li>"name": <em>str</em> - Name of the actor</li>
-<li>"actor<em>class": _str</em> - The actor class for the actor</li>
-<li>"endpoint": <em>str</em> - The URL to connect to the actor. If, instead of a URL, the value is "client", then this actor will connect in (rather than be connected to), and the actor will need to provide the URL to connect to the orchestrator.</li>
-<li>"implementation: <em>str</em> - The name of the implementation to run this actor</li>
-<li>"config": <em>protobuf class instance</em> - The configuration data for the actor.</li>
+<li><code>"name"</code>: <em>str</em> - Name of the actor</li>
+<li><code>"actor_class"</code>: <em>str</em> - The actor class for the actor</li>
+<li><code>"endpoint"</code>: <em>str</em> - The URL to connect to the actor. If, instead of a URL, the value is "client", then this actor will connect in (rather than be connected to), and the actor will need to provide the URL to connect to the orchestrator.</li>
+<li><code>"implementation"</code>: <em>str</em> - The name of the implementation to run this actor</li>
+<li><code>"config"</code>: <em>protobuf class instance</em> - The configuration data for the actor.</li>
 </ul>
 <h3 id="get_trial_idself_1"><code>get_trial_id(self)</code><a class="headerlink" href="#get_trial_idself_1" title="Permanent link">&para;</a></h3>
 <p>Method to retrieve the UUID of the trial.</p>
@@ -2226,7 +2226,7 @@ The generator will exit for various reasons indicating the end of the trial, a l
 <p>Return: None</p>
 <h2 id="cogmentapicommon_pb2trialparams">cogment.api.common_pb2.TrialParams<a class="headerlink" href="#cogmentapicommon_pb2trialparams" title="Permanent link">&para;</a></h2>
 <p><a href="../../cogment-low-level-api-guide/grpc/#trialparams">TrialParams</a> is defined in the low level grpc api.</p>
-<h2 id="cogmentapidatalogdatalogsample">cogment.api.datalog.DatalogSample<a class="headerlink" href="#cogmentapidatalogdatalogsample" title="Permanent link">&para;</a></h2>
+<h2 id="cogmentapidatalog_pb2datalogsample">cogment.api.datalog_pb2.DatalogSample<a class="headerlink" href="#cogmentapidatalog_pb2datalogsample" title="Permanent link">&para;</a></h2>
 <p><a href="../../cogment-low-level-api-guide/grpc/#logexportersamplerequest">DatalogSample</a> is defined in the low level grpc api.</p>
 <h2 id="class-datalogsession">class DatalogSession<a class="headerlink" href="#class-datalogsession" title="Permanent link">&para;</a></h2>
 <p>Abstract class containing session data and methods necessary to manage the logging of trial run data. An instance of this class is passed as an argument to the datalog callback function registered with <code>cogment.Context.register_datalog</code>.</p>
@@ -2240,7 +2240,7 @@ The generator will exit for various reasons indicating the end of the trial, a l
 <h3 id="get_all_samplesself"><code>get_all_samples(self)</code><a class="headerlink" href="#get_all_samplesself" title="Permanent link">&para;</a></h3>
 <p>Generator method to iterate over all samples as they are received (waiting for each in turn).</p>
 <p>Parameters: None</p>
-<p>Return: <em>generator(<a href="#cogmentapidatalogdatalogsample">cogment.api.datalog.DatalogSample</a>)</em> - A generator for the samples received.</p>
+<p>Return: <em>generator(<a href="#cogmentapidatalogdatalogsample">cogment.api.datalog_pb2.DatalogSample</a>)</em> - A generator for the samples received.</p>
 <h2 id="class-cogmentendpoint">class cogment.Endpoint<a class="headerlink" href="#class-cogmentendpoint" title="Permanent link">&para;</a></h2>
 <p>Class enclosing the details for connecting to an Orchestrator.</p>
 <p><code>url</code>: <em>str</em> - The URL where to connect to the Orchestrator.</p>
