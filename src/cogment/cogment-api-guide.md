@@ -264,8 +264,12 @@ async for event in actor_session.event_loop():
         tick_id = reward.tick_id
         # `reward.value` is the aggregated value of the reward.
         value = reward.value
-        for (src_value, src_confidence, sender, user_data) in reward.all_sources():
+        for source_reward in reward.all_sources():
             # Iterate over individual source rewards.
+            reward_value = source_reward.value
+            reward_confidence = source_reward.confidence
+            reward_sender = source_reward.sender
+            reward_user_data = source_reward.user_data
 ```
 
 ## Messages
