@@ -9,41 +9,36 @@ Please install:
 
 ## Install the latest Cogment CLI
 
-1. `cogment` CLI releases are available [here](https://github.com/cogment/cogment-cli/releases/){target=\_blank} as executable binaries.
-2. Pick a version, usually the latest one should be the right pick.
-3. At the end of the release notes, click on "Assets" to choose and download the appropriate version for your system.
-4. Rename the file to "cogment", and add it to your [`PATH` environmental variable](https://superuser.com/questions/284342/what-are-path-and-other-environment-variables-and-how-can-i-set-or-use-them){target=\_blank}.
+### Installation script (compatible with linux and macOS for `x86_64` architectures)
 
-You can follow more specific instructions for your OS in the following.
-
-### Linux
-
-The following downloads version `COGMENT_CLI_VERSION` of the cli to `/usr/local/bin`, a location already belonging to your `PATH` in most linux distributions and make sure it is executable.
-
-Simply replace `COGMENT_CLI_VERSION` with the version you want to download, e.g. `v1.0.1`.
+To install the latest version of the Cogment CLI for virtually any Linux distribution, macOS and WSL2 on windows, run the the following command:
 
 ```console
-$ curl -L https://github.com/cogment/cogment-cli/releases/download/COGMENT_CLI_VERSION/cogment-linux-amd64 -o /usr/local/bin/cogment && chmod +x /usr/local/bin/cogment
+curl --silent -L https://raw.githubusercontent.com/cogment/cogment-cli/main/install.sh | sudo bash
 ```
 
-### macOS
-
-> At the moment Cogment will only work on x86 _intel_ macs
-
-The following downloads version `COGMENT_CLI_VERSION` of the cli to `/usr/local/bin`, a location already belonging to your `PATH` in macOS and make sure it is executable.
-
-Simply replace `COGMENT_CLI_VERSION` with the version you want to download, e.g. `v1.0.1`.
+To install a specific version (here v1.0.0) run the following command:
 
 ```console
-$ curl -L https://github.com/cogment/cogment-cli/releases/download/COGMENT_CLI_VERSION/cogment-macOS-amd64 -o /usr/local/bin/cogment && chmod +x /usr/local/bin/cogment
+curl --silent -L https://raw.githubusercontent.com/cogment/cogment-cli/main/install.sh | sudo bash -s -- --version v1.0.0
 ```
 
-### Windows
+Uninstall is as simple as running:
 
-1. Download the windows version of the cogment CLI as described above.
-2. Rename the downloaded file `cogment-windows-amd64.exe` to `cogment.exe`.
-3. Copy it to an easy to find location, e.g. `c:\\cogment`.
-4. Add the `c:\\cogment` folder to your [`PATH` environmental variable](https://superuser.com/questions/284342/what-are-path-and-other-environment-variables-and-how-can-i-set-or-use-them){target=\_blank}.
+```console
+sudo rm $(which cogment)
+```
+
+### Manual installation (compatible with linux, macOS and windows for `x86_64` architectures)
+
+For windows user (and also if you prefer to do a manual install) you can go through those instructions.
+
+1. Download the desired version from [here](https://github.com/cogment/cogment-cli/releases/){target=\_blank} from your platform.
+2. Copy it as `cogment` in a location that already belongs to your `PATH` (e.g. `/usr/local/bin`) or that you'll [add to your `PATH`](https://superuser.com/questions/284342/what-are-path-and-other-environment-variables-and-how-can-i-set-or-use-them){target=\_blank} and make sure it is executable (e.g. using `chmod +x /usr/local/bin/cogment`).
+
+### Unsupported platform
+
+If your platform is not supported, especially if you are using an `arm64` architecture, add an [issue](https://github.com/cogment/cogment-cli/issues){target=\_blank} listing your platform details and do not hesitate to [contact us](../support/community-channels.md).
 
 ### Check that Cogment CLI is accessible.
 
