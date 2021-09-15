@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 -   Update installation instructions.
 
+### Fixed
+
+-   Fix example on reward consuming in the API guide.
+
 ## v1.3.0 - 2021-08-03
 
 ### Added
