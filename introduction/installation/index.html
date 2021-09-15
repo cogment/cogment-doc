@@ -290,22 +290,22 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#linux" class="md-nav__link">
-    Linux
+  <a href="#installation-script-compatible-with-linux-and-macos-for-x86_64-architectures" class="md-nav__link">
+    Installation script (compatible with linux and macOS for x86_64 architectures)
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#macos" class="md-nav__link">
-    macOS
+  <a href="#manual-installation-compatible-with-linux-macos-and-windows-for-x86_64-architectures" class="md-nav__link">
+    Manual installation (compatible with linux, macOS and windows for x86_64 architectures)
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#windows" class="md-nav__link">
-    Windows
+  <a href="#unsupported-platform" class="md-nav__link">
+    Unsupported platform
   </a>
   
 </li>
@@ -1014,22 +1014,22 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#linux" class="md-nav__link">
-    Linux
+  <a href="#installation-script-compatible-with-linux-and-macos-for-x86_64-architectures" class="md-nav__link">
+    Installation script (compatible with linux and macOS for x86_64 architectures)
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#macos" class="md-nav__link">
-    macOS
+  <a href="#manual-installation-compatible-with-linux-macos-and-windows-for-x86_64-architectures" class="md-nav__link">
+    Manual installation (compatible with linux, macOS and windows for x86_64 architectures)
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#windows" class="md-nav__link">
-    Windows
+  <a href="#unsupported-platform" class="md-nav__link">
+    Unsupported platform
   </a>
   
 </li>
@@ -1078,35 +1078,27 @@
 <li><a href="https://github.com/protocolbuffers/protobuf" target="_blank">protoc</a></li>
 </ol>
 <h2 id="install-the-latest-cogment-cli">Install the latest Cogment CLI<a class="headerlink" href="#install-the-latest-cogment-cli" title="Permanent link">&para;</a></h2>
-<ol>
-<li><code>cogment</code> CLI releases are available <a href="https://github.com/cogment/cogment-cli/releases/" target="_blank">here</a> as executable binaries.</li>
-<li>Pick a version, usually the latest one should be the right pick.</li>
-<li>At the end of the release notes, click on "Assets" to choose and download the appropriate version for your system.</li>
-<li>Rename the file to "cogment", and add it to your <a href="https://superuser.com/questions/284342/what-are-path-and-other-environment-variables-and-how-can-i-set-or-use-them" target="_blank"><code>PATH</code> environmental variable</a>.</li>
-</ol>
-<p>You can follow more specific instructions for your OS in the following.</p>
-<h3 id="linux">Linux<a class="headerlink" href="#linux" title="Permanent link">&para;</a></h3>
-<p>The following downloads version <code>COGMENT_CLI_VERSION</code> of the cli to <code>/usr/local/bin</code>, a location already belonging to your <code>PATH</code> in most linux distributions and make sure it is executable.</p>
-<p>Simply replace <code>COGMENT_CLI_VERSION</code> with the version you want to download, e.g. <code>v1.0.1</code>.</p>
-<div class="highlight"><pre><span></span><code><span class="gp">$ </span>curl -L https://github.com/cogment/cogment-cli/releases/download/COGMENT_CLI_VERSION/cogment-linux-amd64 -o /usr/local/bin/cogment <span class="o">&amp;&amp;</span> chmod +x /usr/local/bin/cogment
+<h3 id="installation-script-compatible-with-linux-and-macos-for-x86_64-architectures">Installation script (compatible with linux and macOS for <code>x86_64</code> architectures)<a class="headerlink" href="#installation-script-compatible-with-linux-and-macos-for-x86_64-architectures" title="Permanent link">&para;</a></h3>
+<p>To install the latest version of the Cogment CLI for virtually any Linux distribution, macOS and WSL2 on windows, run the the following command:</p>
+<div class="highlight"><pre><span></span><code><span class="go">curl --silent -L https://raw.githubusercontent.com/cogment/cogment-cli/main/install.sh | sudo bash</span>
 </code></pre></div>
 
-<h3 id="macos">macOS<a class="headerlink" href="#macos" title="Permanent link">&para;</a></h3>
-<blockquote>
-<p>At the moment Cogment will only work on x86 <em>intel</em> macs</p>
-</blockquote>
-<p>The following downloads version <code>COGMENT_CLI_VERSION</code> of the cli to <code>/usr/local/bin</code>, a location already belonging to your <code>PATH</code> in macOS and make sure it is executable.</p>
-<p>Simply replace <code>COGMENT_CLI_VERSION</code> with the version you want to download, e.g. <code>v1.0.1</code>.</p>
-<div class="highlight"><pre><span></span><code><span class="gp">$ </span>curl -L https://github.com/cogment/cogment-cli/releases/download/COGMENT_CLI_VERSION/cogment-macOS-amd64 -o /usr/local/bin/cogment <span class="o">&amp;&amp;</span> chmod +x /usr/local/bin/cogment
+<p>To install a specific version (here v1.0.0) run the following command:</p>
+<div class="highlight"><pre><span></span><code><span class="go">curl --silent -L https://raw.githubusercontent.com/cogment/cogment-cli/main/install.sh | sudo bash -s -- --version v1.0.0</span>
 </code></pre></div>
 
-<h3 id="windows">Windows<a class="headerlink" href="#windows" title="Permanent link">&para;</a></h3>
+<p>Uninstall is as simple as running:</p>
+<div class="highlight"><pre><span></span><code><span class="go">sudo rm $(which cogment)</span>
+</code></pre></div>
+
+<h3 id="manual-installation-compatible-with-linux-macos-and-windows-for-x86_64-architectures">Manual installation (compatible with linux, macOS and windows for <code>x86_64</code> architectures)<a class="headerlink" href="#manual-installation-compatible-with-linux-macos-and-windows-for-x86_64-architectures" title="Permanent link">&para;</a></h3>
+<p>For windows user (and also if you prefer to do a manual install) you can go through those instructions.</p>
 <ol>
-<li>Download the windows version of the cogment CLI as described above.</li>
-<li>Rename the downloaded file <code>cogment-windows-amd64.exe</code> to <code>cogment.exe</code>.</li>
-<li>Copy it to an easy to find location, e.g. <code>c:\\cogment</code>.</li>
-<li>Add the <code>c:\\cogment</code> folder to your <a href="https://superuser.com/questions/284342/what-are-path-and-other-environment-variables-and-how-can-i-set-or-use-them" target="_blank"><code>PATH</code> environmental variable</a>.</li>
+<li>Download the desired version from <a href="https://github.com/cogment/cogment-cli/releases/" target="_blank">here</a> from your platform.</li>
+<li>Copy it as <code>cogment</code> in a location that already belongs to your <code>PATH</code> (e.g. <code>/usr/local/bin</code>) or that you'll <a href="https://superuser.com/questions/284342/what-are-path-and-other-environment-variables-and-how-can-i-set-or-use-them" target="_blank">add to your <code>PATH</code></a> and make sure it is executable (e.g. using <code>chmod +x /usr/local/bin/cogment</code>).</li>
 </ol>
+<h3 id="unsupported-platform">Unsupported platform<a class="headerlink" href="#unsupported-platform" title="Permanent link">&para;</a></h3>
+<p>If your platform is not supported, especially if you are using an <code>arm64</code> architecture, add an <a href="https://github.com/cogment/cogment-cli/issues" target="_blank">issue</a> listing your platform details and do not hesitate to <a href="../../support/community-channels/">contact us</a>.</p>
 <h3 id="check-that-cogment-cli-is-accessible">Check that Cogment CLI is accessible.<a class="headerlink" href="#check-that-cogment-cli-is-accessible" title="Permanent link">&para;</a></h3>
 <p>With a working installation you can run the following in a terminal:</p>
 <div class="highlight"><pre><span></span><code><span class="gp">$ </span>cogment version

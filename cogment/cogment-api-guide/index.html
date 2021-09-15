@@ -1438,8 +1438,12 @@
         <span class="n">tick_id</span> <span class="o">=</span> <span class="n">reward</span><span class="o">.</span><span class="n">tick_id</span>
         <span class="c1"># `reward.value` is the aggregated value of the reward.</span>
         <span class="n">value</span> <span class="o">=</span> <span class="n">reward</span><span class="o">.</span><span class="n">value</span>
-        <span class="k">for</span> <span class="p">(</span><span class="n">src_value</span><span class="p">,</span> <span class="n">src_confidence</span><span class="p">,</span> <span class="n">sender</span><span class="p">,</span> <span class="n">user_data</span><span class="p">)</span> <span class="ow">in</span> <span class="n">reward</span><span class="o">.</span><span class="n">all_sources</span><span class="p">():</span>
+        <span class="k">for</span> <span class="n">source_reward</span> <span class="ow">in</span> <span class="n">reward</span><span class="o">.</span><span class="n">all_sources</span><span class="p">():</span>
             <span class="c1"># Iterate over individual source rewards.</span>
+            <span class="n">reward_value</span> <span class="o">=</span> <span class="n">source_reward</span><span class="o">.</span><span class="n">value</span>
+            <span class="n">reward_confidence</span> <span class="o">=</span> <span class="n">source_reward</span><span class="o">.</span><span class="n">confidence</span>
+            <span class="n">reward_sender</span> <span class="o">=</span> <span class="n">source_reward</span><span class="o">.</span><span class="n">sender</span>
+            <span class="n">reward_user_data</span> <span class="o">=</span> <span class="n">source_reward</span><span class="o">.</span><span class="n">user_data</span>
 </code></pre></div>
 
 <h2 id="messages">Messages<a class="headerlink" href="#messages" title="Permanent link">&para;</a></h2>
