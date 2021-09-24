@@ -91,7 +91,7 @@ Parameters:
 
 Return: _Controller instance_ - An instance of the Controller class used to manage trials.
 
-### `async join_trial(self, trial_id, endpoint, impl_name, actor_name=None)`
+### `async join_trial(self, trial_id, endpoint, impl_name=None, actor_name=None, actor_class=None)`
 
 Method for an actor to asynchronously join an existing trial. This task will normally end after the user implementation has exited.
 
@@ -99,8 +99,9 @@ Parameters:
 
 -   `trial_id`: _str_ - The UUID of the trial to join.
 -   `endpoint`: _Endpoint instance_ - Details of the connection to the Orchestrator.
--   `impl_name`: _str_ - The implementation name of the actor to join the trial. The implementation must have previously been registered with the `register_actor` method.
--   `actor_name`: _str_ - Name of the actor joining the trial. If `None`, the actor will join as any of the configured (free) actors of the actor class registered for `impl_name`. Otherwise, the name must match an actor with an actor_class compatible with `impl_name` as defined in `cogment.yaml` in the sections `trial_params:actors:actor_class` and `trial_params:actors:name`.
+-   `impl_name`: _str_ - **deprecated**
+-   `actor_name`: _str_ - Name of the actor joining the trial. If `None`, `actor_class` will be used to find the actor to join. The name must match an actor as defined in `cogment.yaml` in the sections `trial_params:actors:name` with `trial_params:actors:endpoint` set to "client".
+-   `actor_class`: _str_ - The class of actor to join the trial. If `None`, `actor_name` will be used to find the actor to join.  The class must match an actor as defined in `cogment.yaml` in the sections `trial_params:actors:actor_class` with `trial_params:actors:endpoint` set to "client".
 
 Return: None
 
@@ -323,11 +324,13 @@ Abstract class based on `Session`, containing session/trial data and methods nec
 
 `name`: _str_ - Name of the actor this instance represents.
 
-### `start(self)`
+### `start(self, auto_ack_ending=True)`
 
 Method to start the actor. This method should be called before any other method in the session.
 
-Parameters: None
+Parameters:
+
+-   `auto_ack_ending`: _bool_ - Controls when the last data acknowledgement is sent at the end of a trial.  Once sent, no more data can be sent for this trial (actions, rewards or messages).  If True, the session will automatically send the acknowledgement after receiving the last observation.  If False, the user must send the the acknowledgement once all data has been sent.
 
 Return: None
 
