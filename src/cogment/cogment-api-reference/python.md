@@ -230,6 +230,14 @@ Parameters: None
 
 Return: _bool_ - True if the trial has ended, false otherwise.
 
+### `sending_done(self)`
+
+Method to notify the Orchestrator that all data for the trial, from this session, has been sent. This can be called only when the session is ending.  When starting the session, if the `auto_done_sending` parameter is True, this method should not be called, and if the parameter is False, it MUST be called to end the trial properly.
+
+Parameters: None
+
+Return: None
+
 ### `get_active_actors(self)`
 
 Method to get the list of active actors in the trial. This may be expensive to retrieve and thus should be stored if the list is not expected to change throughout the trial.
@@ -272,7 +280,7 @@ Abstract class based on `Session`, containing session data and methods necessary
 
 `config`: _protobuf class instance_ - User configuration received for this environment instance. Can be `None` if no configuration was provided. The type of the protobuf class is specified in `cogment.yaml` in the section `environment:config_type`.
 
-### `start(self, observations)`
+### `start(self, observations, auto_done_sending=True)`
 
 Method to report that the environment is starting to run the trial. The method should be called before any other method in the session.
 
@@ -280,6 +288,7 @@ Parameters:
 
 -   `observations`: _list[tuple(str, protobuf class instance)]_ - The initial observations from which the environment is starting the trial. This is the same as the parameter for `self.produce_observations`.
 
+-   `auto_done_sending`: _bool_ - Controls when to notify the Orchestrator that all data has been sent. If True, the session will automatically send the notification after `end` is called.  If False, the user MUST call `sending_done` (after `end`) to end the trial properly.
 Return: None
 
 ### `async event_loop(self)`
@@ -304,7 +313,7 @@ Return: None
 
 ### `end(self, final_observations)`
 
-Method to report the end of the environment. This will effectively end the trial.
+Method to report the end of the environment. This will effectively end the trial. Message events can still arrive after this call.
 
 Parameters:
 
@@ -324,13 +333,13 @@ Abstract class based on `Session`, containing session/trial data and methods nec
 
 `name`: _str_ - Name of the actor this instance represents.
 
-### `start(self, auto_ack_ending=True)`
+### `start(self, auto_done_sending=True)`
 
 Method to start the actor. This method should be called before any other method in the session.
 
 Parameters:
 
--   `auto_ack_ending`: _bool_ - Controls when the last data acknowledgement is sent at the end of a trial.  Once sent, no more data can be sent for this trial (actions, rewards or messages).  If True, the session will automatically send the acknowledgement after receiving the last observation.  If False, the user must send the the acknowledgement once all data has been sent.
+-   `auto_done_sending`: _bool_ - Controls when to notify the Orchestrator that all data has been sent. If True, the session will automatically send the notification after receiving the last observation.  If False, the user MUST call `sending_done` to end the trial properly.
 
 Return: None
 
@@ -532,6 +541,8 @@ Class containing the details of an observation for an actor.
 ## class RecvAction
 
 Class containing the details of an action from an actor.
+
+`tick_id`: _int_ - The time step that the action relates to.
 
 `actor_index`: _int_ - Index of the actor in the list of all trial actors (returned by `Session.get_active_actors`).
 
