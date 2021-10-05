@@ -175,7 +175,7 @@ A typical actor implementation would look like this:
 
         // Notify that the actor is ready for the trial to start.
         actorSession.start();
-    
+
         for await (const event of actorSession.eventLoop()) {
             if (event.observation){
                 // `event.observation` is an instance of the Observation produced by the environment
@@ -184,7 +184,7 @@ A typical actor implementation would look like this:
                 // The trial is active, it is expecting the agent to do an action
                 actorSession.sendAction(new DriverAction())
             }
-                
+
 
             for (const reward of event.rewards){
                 // `event.rewards` is a list of all the rewards received by the actor (it can be empty)
@@ -207,7 +207,6 @@ A Cogment app can use two types of actors, they are identical in terms of implem
 
 **Service actors** are accessible in the same way the environment is, through a [`Context`](./cogment-api-reference/python.md#class-cogmentcontext) instance.
 
-
 ```python
 context = cogment.Context(cog_settings=cog_settings, user_id="rps")
 context.register_actor(
@@ -218,7 +217,6 @@ context.register_actor(
 
 await context.serve_all_registered(port=9000)
 ```
-
 
 Please note that it is also through this registrating that the implementation is associated with one or more [actor classes](../concepts/glossary.md#actor-class) it implements.
 
@@ -248,7 +246,7 @@ Please note that it is also through this registrating that the implementation is
         cogSettings,
         grpcURL,
     });
-    
+
     const actor = { name: actorName, actorClass: actorClass };
 
     service.registerActor(
@@ -285,7 +283,7 @@ Due to the different network requirements, client actors are a good fit when imp
         cogSettings,
         grpcURL,
     });
-    
+
     const trialController = service.createTrialController();
     ```
 
