@@ -1,4 +1,6 @@
-# Cogment High-Level API guide (Python)
+# Cogment High-Level API guide
+
+> NOTE: Some features aren't available in Javascript, if there's only python examples under a certain section, that feature is python only
 
 ## Prerequisites
 
@@ -137,37 +139,74 @@ The event loops in Actors' implementations handle three basic types of events:
 
 A typical actor implementation would look like this:
 
-```python
-async def driver_actor(actor_session):
-    # -- Initialization --
+=== "Python"
 
-    # Notify that the actor is ready for the trial to start.
-    actor_session.start()
+    ```python
+    async def driver_actor(actor_session):
+        # -- Initialization --
 
-    async for event in actor_session.event_loop():
-        if event.observation:
-            # `event.observation` is an instance of the Observation produced by the environment
-            observation = event.observation
-            if event.type == cogment.EventType.ACTIVE:
-              # The trial is active, it is expecting the agent to do an action
-              actor_session.do_action(DriverAction(...))
+        # Notify that the actor is ready for the trial to start.
+        actor_session.start()
 
-        for reward in event.rewards:
-            # `event.rewards` is a list of all the rewards received by the actor (it can be empty)
+        async for event in actor_session.event_loop():
+            if event.observation:
+                # `event.observation` is an instance of the Observation produced by the environment
+                observation = event.observation
+                if event.type == cogment.EventType.ACTIVE:
+                # The trial is active, it is expecting the agent to do an action
+                actor_session.do_action(DriverAction(...))
 
-            # Handle each reward here.
+            for reward in event.rewards:
+                # `event.rewards` is a list of all the rewards received by the actor (it can be empty)
 
-        for message in event.messages:
-            # `event.messages` is a list of all the messages received by the actor (it can be empty)
+                # Handle each reward here.
 
-            # Handle each message here.
-```
+            for message in event.messages:
+                # `event.messages` is a list of all the messages received by the actor (it can be empty)
+
+                # Handle each message here.
+    ```
+
+=== "Javascript"
+
+    ```javascript
+    const driverActor = async (actorSession) => {
+        // -- Initialization --
+
+        // Notify that the actor is ready for the trial to start.
+        actorSession.start();
+    
+        for await (const event of actorSession.eventLoop()) {
+            if (event.observation){
+                // `event.observation` is an instance of the Observation produced by the environment
+                observation = event.observation
+                if event.type == cogment.EventType.ACTIVE:
+                // The trial is active, it is expecting the agent to do an action
+                actorSession.sendAction(new DriverAction())
+            }
+                
+
+            for (const reward of event.rewards){
+                // `event.rewards` is a list of all the rewards received by the actor (it can be empty)
+
+                // Handle each reward here.
+            }
+
+            for (const message of event.messages){
+                // `event.messages` is a list of all the messages received by the actor (it can be empty)
+
+                // Handle each message here.
+            }
+        }
+    }
+    ```
 
 ### Service actor / Client actor
 
 A Cogment app can use two types of actors, they are identical in terms of implementation but differ in how they interact with the app's [Orchestrator](../concepts/glossary.md#orchestrator).
 
 **Service actors** are accessible in the same way the environment is, through a [`Context`](./cogment-api-reference/python.md#class-cogmentcontext) instance.
+
 
 ```python
 context = cogment.Context(cog_settings=cog_settings, user_id="rps")
@@ -180,22 +219,47 @@ context.register_actor(
 await context.serve_all_registered(port=9000)
 ```
 
+
 Please note that it is also through this registrating that the implementation is associated with one or more [actor classes](../concepts/glossary.md#actor-class) it implements.
 
 **Client actors**, contrary to Service actors, are not served to the [orchestrator](../concepts/glossary.md#orchestrator). They connect as clients of the orchestrator and join a [trial](../concepts/glossary.md#trial) that has started.
 
-```python
-context = cogment.Context(cog_settings=cog_settings, user_id="rps")
-context.register_actor(
-    impl=actor,
-    impl_name="driver_actor",
-    actor_classes=["driver"])
+=== "Python"
 
-await context.join_trial(
-  trial_id=trial_id,
-  endpoint="orchestrator:9000",
-  impl_name="human")
-```
+    ```python
+    context = cogment.Context(cog_settings=cog_settings, user_id="rps")
+    context.register_actor(
+        impl=actor,
+        impl_name="driver_actor",
+        actor_classes=["driver"])
+
+    await context.join_trial(
+    trial_id=trial_id,
+    endpoint="orchestrator:9000",
+    impl_name="human")
+    ```
+
+=== "Javascript"
+
+    ```javascript
+    const grpcURL = "http://someGrpcWebProxyEndpoint:port"
+
+    const service = cogment.createService({
+        cogSettings,
+        grpcURL,
+    });
+    
+    const actor = { name: actorName, actorClass: actorClass };
+
+    service.registerActor(
+        actor,
+        actorImpl
+    )
+
+    const trialController = service.createTrialController();
+
+    trialController.joinTrial(trialId, actor);
+    ```
 
 Please note that a trial including one or more client actors will wait for all of them to join before any actor can start processing events.
 
@@ -205,28 +269,66 @@ Due to the different network requirements, client actors are a good fit when imp
 
 [Trials](../concepts/glossary.md#trial) are started by clients of the [Orchestrator](../concepts/glossary.md#orchestrator) using a Controller. Instances of a controller are built from the [`Context`](./cogment-api-reference/python.md#class-cogmentcontext) instance and connect to an Orchestrator endpoint.
 
-```python
-controller = context.get_controller(
-  endpoint=cogment.Endpoint("orchestrator:9000")
-)
-```
+=== "Python"
+
+    ```python
+    controller = context.get_controller(
+    endpoint=cogment.Endpoint("orchestrator:9000")
+    )
+    ```
+
+=== "Javascript"
+
+    ```javascript
+
+    const service = cogment.createService({
+        cogSettings,
+        grpcURL,
+    });
+    
+    const trialController = service.createTrialController();
+    ```
 
 The controller can then be used to create trials and request their termination.
 
-```python
-trial_id = await controller.start_trial(trial_config=TrialConfig())
+=== "Python"
 
-# ...
+    ```python
+    trial_id = await controller.start_trial(trial_config=TrialConfig())
 
-await controller.terminate_trial(trial_id)
-```
+    # ...
+
+    await controller.terminate_trial(trial_id)
+    ```
+
+=== "Javascript"
+
+    ```javascript
+    const {trialId} = await trialController.startTrial(someActorClass, new TrialConfig());
+
+    // ...
+
+    await trialControler.terminateTrial(trialId)
+    ```
 
 The controller can also be used to subscribe to events occuring in the trials run by the Orchestrator it connects to. For example, this can be used to wait for a trial's end:
 
-```python
-async for trial_info in controller.watch_trials(trial_state_filters=[cogment.TrialState.ENDED]):
-    # The trial having id {trial_info.trial_id} ended.
-```
+=== "Python"
+
+    ```python
+    async for trial_info in controller.watch_trials(trial_state_filters=[cogment.TrialState.ENDED]):
+        # The trial having id {trial_info.trial_id} ended.
+    ```
+
+=== "Javascript"
+
+    ```javascript
+    for await (const trialListEntry of trialController.watchTrials([
+      cogment.TrialState.ENDED
+    ])) {
+      // The trial having id {trialListEntry.getTrialId()} ended.
+    }
+    ```
 
 The full documentation for the controller can be found [here](./cogment-api-reference/python.md#class-controller).
 
@@ -256,21 +358,44 @@ All the [rewards](../concepts/glossary.md#reward) that are sent and destined to 
 
 The [actor](../concepts/glossary.md#actor) can take into account the reward directly as the [trial](../concepts/glossary.md#trial) is running by consuming the `"reward"` event in their event loop.
 
-```python
-async for event in actor_session.event_loop():
-    # [...]
-    for reward in event.rewards:
-        # `reward.tick_id` is the id of the tick this reward concerns.
-        tick_id = reward.tick_id
-        # `reward.value` is the aggregated value of the reward.
-        value = reward.value
-        for source_reward in reward.all_sources():
-            # Iterate over individual source rewards.
-            reward_value = source_reward.value
-            reward_confidence = source_reward.confidence
-            reward_sender = source_reward.sender
-            reward_user_data = source_reward.user_data
-```
+=== "Python"
+
+    ```python
+    async for event in actor_session.event_loop():
+        # [...]
+        for reward in event.rewards:
+            # `reward.tick_id` is the id of the tick this reward concerns.
+            tick_id = reward.tick_id
+            # `reward.value` is the aggregated value of the reward.
+            value = reward.value
+            for source_reward in reward.all_sources():
+                # Iterate over individual source rewards.
+                reward_value = source_reward.value
+                reward_confidence = source_reward.confidence
+                reward_sender = source_reward.sender
+                reward_user_data = source_reward.user_data
+    ```
+
+=== "Javascript"
+
+    ```javascript
+    for await (const event of actorSession.eventLoop()) {
+        // [...]
+        for (const reward of event.rewards){
+            // `reward.tickId` is the id of the tick this reward concerns.
+            const tickId = reward.tickId
+            // `reward.value` is the aggregated value of the reward.
+            const value = reward.value
+            for (sourceReward of reward.sourcesList) {
+                // Iterate over individual source rewards.
+                const rewardValue = sourceReward.value
+                const rewardConfidence = sourceReward.confidence
+                const rewardSender = sourceReward.senderName
+                const rewardUserData = sourceReward.userData
+            }
+        }
+    }
+    ```
 
 ## Messages
 
@@ -278,14 +403,34 @@ async for event in actor_session.event_loop():
 
 [Messages](../concepts/glossary.md#message) can be created and sent between [actors](../concepts/glossary.md#actor) or the [environment](../concepts/glossary.md#environment) within a trial using their `session` instance.
 
-```python
-session.send_message
-  user_data=MyProtobufDataStructure(...), # any protobuf data structure can be used here.
-  to=['pedestrian:*'], # send the message to all the actors of the "pedestrian" class
-  to_environment=False)
-```
+=== "Python"
 
-Messages consist of an arbitrary payload, their `user_data`, defined as an instance of any protobuf data structure.
+    ```python
+    session.send_message
+    user_data=MyProtobufDataStructure(...), # any protobuf data structure can be used here.
+    to=['pedestrian:*'], # send the message to all the actors of the "pedestrian" class
+    to_environment=False)
+    ```
+
+=== "Javascript"
+
+    ```Javascript
+    const message = new Message();
+    message.setRequest("hello");
+
+    // Now we serialize into an Any protobuf message.
+    const anyPb = new AnyPb();
+    anyPb.pack(message.serializeBinary(), 'cogment_app.Message');
+
+    actorSession.sendMessage({
+        from: actorName,
+        payload: anyPb,
+        to: 'otherActorName',
+        trialId,
+    });
+    ```
+
+Messages consist of an arbitrary payload, their `user_data/payload`, defined as an instance of any protobuf data structure.
 
 A message can be sent to one, many or all actors in a trial and / or to the environment.
 
@@ -297,15 +442,36 @@ All the [messages](../concepts/glossary.md#message) that are sent and intended f
 
 Actors or the environment can use the message directly, live, as the [trial](../concepts/glossary.md#message) is running by consuming message event in their event loop.
 
-```python
-async for event in actor_session.event_loop():
-    # [...]
-    for message in event.messages:
-        # `message.sender_name` is the name of the actor who sent a message
-        sender_name = message.sender_name
-        # `message.payload` is the content of the message, it needs to be unpacked
-        payload = message.payload
-```
+=== "Python"
+
+    ```python
+    async for event in actor_session.event_loop():
+        # [...]
+        for message in event.messages:
+            # `message.sender_name` is the name of the actor who sent a message
+            sender_name = message.sender_name
+            # `message.payload` is the content of the message, it needs to be unpacked
+            payload = message.payload
+    ```
+
+=== "Javascript"
+
+    ```javascript
+    for await (const event of actorSession.eventLoop()) {
+        // [...]
+        for (const message of event.messages){
+            // `message.sender_name` is the name of the actor who sent a message
+            const sender = message.sender
+            // `message.data` is the content of the message, it needs to be unpacked
+            const data = message.data
+
+            const newMessage = data.unpack(
+              (x: Uint8Array) => Message.deserializeBinary(x),
+              'cogment_app.Message',
+            );
+        }
+    }
+    ```
 
 ## Delta Encoding
 
