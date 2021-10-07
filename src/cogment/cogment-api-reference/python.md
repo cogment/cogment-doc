@@ -162,13 +162,14 @@ Parameters:
 
 Return: _str_ - The newly started trial ID.
 
-### `terminate_trial(self, trial_id)`
+### `terminate_trial(self, trial_id, hard=False)`
 
 Method to request the end of a trial.
 
 Parameters:
 
 -   `trial_id`: _str_ - The trial ID the request is to terminate.
+-   `hard`: _bool_ - If `True`, the termination will be forced and not wait for any action or observation.  If `False`, the trial will wait for the next tick, to end gracefully (i.e. wait for the next full set of actions and response observations).
 
 Return: None
 
