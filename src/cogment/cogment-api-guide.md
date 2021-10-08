@@ -471,6 +471,44 @@ Actors or the environment can use the message directly, live, as the [trial](../
     }
     ```
 
+## Pre trial hook
+
+When starting a trial from a controller an instance of the message type defined in [`trial.config_type`](./cogment-api-reference/cogment-yaml.md#trial) can be provided. This instance is then passed to the registered **Pre trial hooks** defined in `trial.pre_hooks`. The role of these hooks is to fully parametrize the trial based on the provided config. To achieve that, they can modify the default trial params defined in the [`cogment.yaml`](./cogment-api-reference/cogment-yaml.md#trial-params) file to set the parameters of the environment (i.e. its endpoint, implementation name & configuration), the number and parameters of the participant actors (i.e. their name, class, endpoint, implementation name & configuration) as well as additional parameters for the trial. The pre trial hook can therefore be used to dynamically configure trials, to act as a service endpoint registry, or a load balancer.
+
+Pre trial hook implementations are registered in the same way the environment or actor implementation are and follow the same _session_ pattern.
+
+```python
+async def my_pre_trial_hook(pre_hook_session):
+    # The trial config provided by the controller can be retrieved like that
+    trial_config = pre_hook_session.trial_config
+    # The trial params can be edited directly
+    pre_hook_session.environment_config = # [...]
+    pre_hook_session.environment_endpoint = "grpc://my_environment:9000"
+    pre_hook_session.actors = [
+        {
+            "name": "my_first_actor_name",
+            "actor_class": "driver",
+            "endpoint": "grpc://driver:9000",
+            "implementation": "driver_actor",
+            "config": # [...],
+        },
+        {
+            "name": "my_second_actor_name",
+            "actor_class": "predestrian",
+            "endpoint": "client",
+            "config": # [...],
+        },
+    ]
+    # And finally should be validated
+    pre_hook_session.validate()
+
+context.register_pre_trial_hook(impl=my_pre_trial_hook)
+```
+
+Services exposing pretrial hooks need to be defined in the `cogment.yaml` file under `trial.pre_hooks`.
+
+The full documentation for the `PrehookSession` can be found [here](./cogment-api-reference/python.md#class-prehooksession).
+
 ## Delta Encoding
 
 By default, [observations](../concepts/glossary.md#observation) are sent in their entirety from the [environment](../concepts/glossary.md#environment) to the [actors](../concepts/glossary.md#actors). However, it's fairly common to only have a small portion of an [observation](../concepts/glossary.md#observation) to change from one update to the next.
@@ -480,12 +518,11 @@ a method that can apply the deltas to previous observations.
 
 ```python
 # delta.py
-def apply_delta(previous_observation, delta):
-    # Return the updated observation, more often
-    # than not, this should be the previous
-    # observation that was modified in-place.
-    previous_observation.car_position = delta.new_car_pos
-    return previous_observation
+
+def apply_delta(previous_observation, delta): # Return the updated observation, more often # than not, this should be the previous # observation that was modified in-place.
+previous_observation.car_position = delta.new_car_pos
+return previous_observation
+
 ```
 
 ```yaml

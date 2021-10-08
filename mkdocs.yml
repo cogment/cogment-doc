@@ -86,6 +86,7 @@ nav:
       - "Low Level API Reference":
           - "Overview": "cogment/cogment-low-level-api-guide/overview.md"
           - "gRPC API Reference": "cogment/cogment-low-level-api-guide/grpc.md"
+      - "Implementation recipes": "cogment/implementation-recipes.md"
   - "Cogment Components":
       - "CLI": "cogment-components/cli/cli.md"
       - "Orchestrator": "cogment-components/orchestrator/orchestrator.md"
