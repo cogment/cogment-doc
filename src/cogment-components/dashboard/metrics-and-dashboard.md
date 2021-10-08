@@ -1,8 +1,10 @@
 # Metrics and Dashboard
 
-Cogment provides two services out of the box dedicated to the monitoring of a Cogment deployment: `cogment-metrics` and `cogment-dashboard`.
+[![Repository](https://img.shields.io/badge/repository-cogment%2Fcogment--dashboard-%23ffb400?style=flat-square&logo=github)](https://github.com/cogment/cogment-dashboard) [![Latest cogment-dashboard Release](https://img.shields.io/docker/v/cogment/dashboard?label=cogment-dashboard%20docker%20release&sort=semver&style=flat-square)](https://hub.docker.com/r/cogment/dashboard) [![Latest cogment-metrics Release](https://img.shields.io/docker/v/cogment/metrics?label=cogment-metrics%20docker%20release&sort=semver&style=flat-square)](https://hub.docker.com/r/cogment/metrics)
 
-`cogment-metrics` is gathering data coming from all the Cogment services: orchestrator, actors, environment, etc. These _metrics_ can be used to gather insights regarding the performances of actor or environment implementations. They can also be used to follow the attribution of rewards, giving insight into how, or even if agents are learning.
+Cogment provides two services **out-of-the-box** dedicated to the monitoring of a Cogment deployment: `cogment-metrics` and `cogment-dashboard`.
+
+`cogment-metrics` is gathering data coming from all the Cogment services: orchestrator, actors, environment, etc. These _metrics_ can be used to gather insights regarding the performance of actor or environment implementations. They can also be used to follow the attribution of rewards, giving insight into how, or even if agents are learning.
 
 `cogment-metrics` is a [Prometheus](https://prometheus.io/) instance, so it can be easily augmented to visualize your own data.
 
@@ -10,7 +12,9 @@ Cogment provides two services out of the box dedicated to the monitoring of a Co
 
 ## Usage
 
-By initializing your project using [`cogment init`](../cogment/tutorial/1-bootstrap-and-data-structures.md), you should already have everything setup for you. Otherwise, please refer to the complete [setup](#initial-setup).
+<!-- prettier-ignore -->
+!!! note
+    After initializing your project using [`cogment init`](../../cogment/tutorial/1-bootstrap-and-data-structures.md), you should already have everything setup for a standard usage. For a fully manual setup refer to the dedicated [section](#setup).
 
 In an up-and-running Cogment deployment running on your local machine, the dashboard is accessible at <http://localhost:3003/>
 
@@ -18,7 +22,7 @@ The dashboard welcomes you with a screen giving you direct access to the default
 
 ![Cogment Dashboard - Welcome Screen](./figures/cogment-dashboard-welcome.png)
 
-For example, the agent performances sub-dashboard gives you an idea of how long it takes for actors to handle a new set of observations as well as the number of created instances for each actor implementation. Here's an example taken after a few minutes running [tutorial #7](../cogment/tutorial/7-dqn-player.md).
+For example, the agent performances sub-dashboard gives you an idea of how long it takes for actors to handle a new set of observations as well as the number of created instances for each actor implementation. Here's an example taken after a few minutes running [tutorial #7](../../cogment/tutorial/7-dqn-player.md).
 
 ![Cogment Dashboard - Agent Performances](./figures/cogment-dashboard-agent-performances.png)
 
@@ -26,11 +30,13 @@ A similar sub-dashboard is available for environment performances.
 
 ![Cogment Dashboard - Environment Performances](./figures/cogment-dashboard-environment-performances.png)
 
-Another useful sub-dashboard pertains to the rewards. This enables you to follow the progress of the different actor implementations during training. Here's another example taken after a few minutes running [tutorial #7](../cogment/tutorial/7-dqn-player.md), the DQN agent is about to surpass the heuristic baseline.
+Another useful sub-dashboard pertains to the rewards. This enables you to follow the progress of the different actor implementations during training. Here's another example taken after a few minutes running [tutorial #7](../../cogment/tutorial/7-dqn-player.md), the DQN agent is about to surpass the heuristic baseline.
 
 ![Cogment Dashboard - Rewards](./figures/cogment-dashboard-rewards.png)
 
-## Initial setup
+For specific use case based guides, check out the [recipes section](#recipes).
+
+## Setup
 
 To setup dashboard and metrics on a docker-based Cogment deployment only two files need to be modified and a third file needs to be created:
 

@@ -683,12 +683,12 @@ Reply message for the `SendMessage` procedure.
 message TrialMessageReply {}
 ```
 
-## Agent Actor API
+## Service Actor API
 
-This API is defined in `agent.proto`. It is implemented by the agent application using the gRPC server API, and the orchestrator connects to the agent application.
+This API is defined in `agent.proto`. It is implemented by the actor application using the gRPC server API, and the orchestrator connects to the actor application.
 
-This API is used by agent actors that will be participating in new trials.
-Multiple simultaneous agent actors can be served from a single agent application instance.
+This API is used by service actors that will be participating in new trials.
+Multiple simultaneous service actors can be served from a single actor application instance.
 An actor endpoint, for the orchestrator to connect to, is defined in the [trial parameters](../cogment-api-reference/cogment-yaml.md#trial-params).
 
 ### Service `AgentEndpoint`

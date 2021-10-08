@@ -1,4 +1,4 @@
-site_name: Cogment
+site_name: Cogment User Documentation
 site_url: https://docs.cogment.ai
 repo_url: https://github.com/cogment/cogment-doc
 edit_uri: "edit/main/src/"
@@ -51,7 +51,7 @@ nav:
   - "Concepts":
       - "Core Concepts": "concepts/core-concepts.md"
       - "Glossary": "concepts/glossary.md"
-  - "Cogment":
+  - "Cogment APIs":
       - "Tutorial":
           - "Introduction": "cogment/tutorial/introduction.md"
           - "Step 1: Bootstrap a Cogment app": "cogment/tutorial/1-bootstrap-and-data-structures.md"
@@ -83,10 +83,16 @@ nav:
               - "Interface: Reward": "cogment/cogment-api-reference/javascript/interfaces/reward.md"
               - "Interface: SendMessageOptions": "cogment/cogment-api-reference/javascript/interfaces/sendmessageoptions.md"
               - "Interface: TrialActor": "cogment/cogment-api-reference/javascript/interfaces/trialactor.md"
-      - "Low Level API Guide":
+      - "Low Level API Reference":
           - "Overview": "cogment/cogment-low-level-api-guide/overview.md"
           - "gRPC API Reference": "cogment/cogment-low-level-api-guide/grpc.md"
-  - "Metrics & Dashboard": "dashboard/metrics-and-dashboard.md"
+  - "Cogment Components":
+      - "CLI": "cogment-components/cli/cli.md"
+      - "Orchestrator": "cogment-components/orchestrator/orchestrator.md"
+      - "Model Registry": "cogment-components/model-registry/model-registry.md"
+      - "Trial Datastore": "cogment-components/trial-datastore/trial-datastore.md"
+      - "Metrics & Dashboard": "cogment-components/dashboard/metrics-and-dashboard.md"
+
   #- "Deployment Guide":
   # - "Local Deployment": "deployment-guide/local-deployement.md"
   # - "Cloud Deployment": "deployment-guide/cloud-deployement.md" # out-of-scope for ɑ

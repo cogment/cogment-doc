@@ -135,7 +135,7 @@ You can now [build and run](./1-bootstrap-and-data-structures.md#building-and-ru
 
 ## Using the **metrics** and **dashboard** services to retrieve & visualize the rewards over time
 
-Now that we have introduced rewards, it's a good time to take a look at Cogment's dashboard, a web app centralizing metrics from the various Cogment components. To learn more about this, refer to the [dedicated page](../../dashboard/metrics-and-dashboard.md).
+Now that we have introduced rewards, it's a good time to take a look at Cogment's dashboard, a web app centralizing metrics from the various Cogment components. To learn more about this, refer to the [dedicated page](../../cogment-components/dashboard/metrics-and-dashboard.md).
 
 If it's not already running, start the Cogment app:
 
