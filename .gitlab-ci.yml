@@ -20,6 +20,13 @@ stages:
     - echo "$SSH_KNOWN_HOSTS" >> ~/.ssh/known_hosts
     - chmod 644 ~/.ssh/known_hosts
 
+.base_poetry:
+  image: python:3.7
+  before_script:
+    - curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python -
+    - source $HOME/.poetry/env
+    - poetry install
+
 apache_licenses_check:
   stage: lint
   image: registry.gitlab.com/ai-r/apache-license-checker:latest
@@ -52,12 +59,8 @@ prettier:
     - npx prettier --check .
 
 build:
+  extends: .base_poetry
   stage: build
-  image: python:latest
-  before_script:
-    - pip install poetry
-    - poetry --version
-    - poetry install -vv
   script:
     - poetry run task build
   artifacts:
