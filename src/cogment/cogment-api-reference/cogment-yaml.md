@@ -19,10 +19,8 @@ In this document, "section" refers to YAML mappings.
 The import section is used to specify external data structures, and optionally code, that is referenced in other parts of the file. The referenced files must be in the same folder as the `cogment.yaml` file. The import sections are:
 
 -   `proto`: List of protobuf definition files. Message types defined in these files are used to communicate between the various components
--   `python`: (optional) List of Python modules
--   `javascript`: (optional) List of Javascript files
 
-All Cogment projects will need at least one `proto` import to define the data structures exchanged between the various components. Python and/or javascript imports will be needed if you make use of delta encodings.
+All Cogment projects will need at least one `proto` import to define the data structures exchanged between the various components.
 
 E.g.:
 
@@ -31,10 +29,6 @@ import:
     proto:
         - filename1.proto
         - filename2.proto
-    python:
-        - module_name
-    javascript:
-        - filename.js
 ```
 
 > ⚠️ **N.B.** When using message types imported from a `.proto` file, types need to be referred through their _package_ namespace, not the filename containing them.
@@ -93,10 +87,6 @@ The content of this section is a list of actor classes, each containing the nece
 -   `action`: Mapping of properties- `space`: The protobuf message type that represents all the possible actions that this actor class can perform (its action space)
 -   `observation`: Mapping of properties
     -   `space`: The protobuf message type that represents a snapshot of the data that this actor class has access to (its observation space)
-    -   `delta`: (optional) The protobuf message type that represents the difference between two observation spaces (snapshots)
-    -   `delta_apply_fn`: (optional) Mapping for a function to combine an observation space and a delta, into a new observation space: _fn(observation, delta) -> observation_. Only one of the following can be defined
-        -   `python`: The function defined in python
-        -   `javascript`: The function defined in Javascript
 -   `config_type`: (optional) Defines the protobuf message type used to configure this actor class
 
 Each actor class should define both an observation and action space as protobuf message types.
@@ -108,9 +98,6 @@ actor_classes:
           space: namespace.PlayerAction
       observation:
           space: namespace.PlayerObservation
-          delta: namespace.PlayerDeltaObservation
-          delta_apply_fn:
-              python: module_name.PlayerDeltaProcessingFn
       config_type: namespace.PlayerConfig
 
     - id: SmallPlayer
@@ -118,9 +105,6 @@ actor_classes:
           space: namespace.PlayerAction
       observation:
           space: namespace.PlayerObservation
-          delta: namespace.PlayerDeltaObservation
-          delta_apply_fn:
-              python: module_name.PlayerDeltaProcessingFn
       config_type: namespace.PlayerConfig
 
     - id: Referee
@@ -128,9 +112,6 @@ actor_classes:
           space: namespace.RefereeAction
       observation:
           space: namespace.RefereeObservation
-          delta: namespace.RefereeDeltaObservation
-          delta_apply_fn:
-              python: module_name.RefereeDeltaProcessingFn
       config_type: namespace.RefereeConfig
 ```
 

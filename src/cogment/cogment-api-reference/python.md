@@ -537,7 +537,9 @@ Class containing the details of an observation for an actor.
 
 `timestamp`: _int_ - Unix style Epoch timestamp in nanoseconds (time since 00:00:00 UTC Jan 1, 1970).
 
-`snapshot`: _protobuf class instance_ - Snaphot Observation (as opposed to a delta observation) received from the environment. The class of the snapshot observation is defined as observation space for the actor class. This is specified in section `actor_classes:observation:space` in `cogment.yaml` for the appropriate/receiving actor class.
+`observation`: _protobuf class instance_ - Observation received from the environment. The class of the observation is defined as observation space for the actor class. This is specified in section `actor_classes:observation:space` in `cogment.yaml` for the appropriate/receiving actor class.
+
+`snapshot`: **DEPRECATED**
 
 ## class RecvAction
 
