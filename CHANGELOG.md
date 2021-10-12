@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## Unreleased
 
+### Added
+
+-   Introduce dedicated pages for out-of-the-box components & enrich core concepts with a table summarizing the different Cogment components.
+-   Add further documentation and a new recipe related to pre trial hooks.
+
 ### Changed
 
 -   Update api guide with javascript sections
