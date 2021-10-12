@@ -1226,9 +1226,9 @@
 <!-- prettier-ignore -->
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>This module is only available as a prerelease, it is not yet fully documented nor stable</p>
+<p>This module is only available as a prerelease. It is not yet fully documented nor stable.</p>
 </div>
-<p>Cogment Model Registry is an <strong>out-of-the-box</strong> module, it is a versioned key value store dedicated to the storage of AI models used to in Cogment actors.</p>
+<p>Cogment Model Registry is an <strong>out-of-the-box</strong> component. It is a versioned key value store dedicated to the storage of AI models used in Cogment actors.</p>
 <h2 id="usage">Usage<a class="headerlink" href="#usage" title="Permanent link">&para;</a></h2>
 <!-- prettier-ignore -->
 <div class="admonition warning">
@@ -1236,8 +1236,8 @@
 <p>🚧 under construction</p>
 </div>
 <h2 id="setup">Setup<a class="headerlink" href="#setup" title="Permanent link">&para;</a></h2>
-<p>Cogment Model Registry is available as a docker container available on dockerhub as <a href="https://hub.docker.com/r/cogment/model-registry"><code>cogment/model-registry</code></a>.</p>
-<p>It can be launched using the following.</p>
+<p>Cogment Model Registry is available as a docker container on dockerhub as <a href="https://hub.docker.com/r/cogment/model-registry"><code>cogment/model-registry</code></a>.</p>
+<p>It can be launched using the following;</p>
 <div class="highlight"><pre><span></span><code><span class="go">docker run -p 9000:9000 -v $(pwd)/relative/path/to/model/archive:/data cogment/model-registry</span>
 </code></pre></div>
 <p>If you want to provide specific configuration as environment variables use docker <code>-e</code> option.</p>
@@ -1246,7 +1246,7 @@
 <p>The following environment variables can be used to configure the server:</p>
 <ul>
 <li><code>COGMENT_MODEL_REGISTRY_PORT</code>: The port to listen on. Defaults to 9000.</li>
-<li><code>COGMENT_MODEL_REGISTRY_ARCHIVE_DIR</code>: The directory to store model archives. Docker images defaults to <code>/data</code>.</li>
+<li><code>COGMENT_MODEL_REGISTRY_ARCHIVE_DIR</code>: The directory to store model archives. Docker images default to <code>/data</code>.</li>
 <li><code>COGMENT_MODEL_REGISTRY_SENT_MODEL_VERSION_DATA_CHUNK_SIZE</code>: The size of the model version data chunk sent by the server. Defaults to 5<em>1024</em>1024 (5MB).</li>
 <li><code>COGMENT_MODEL_REGISTRY_GRPC_REFLECTION</code>: Set to start a <a href="https://github.com/grpc/grpc/blob/master/doc/server-reflection.md">gRPC reflection server</a>. Defaults to <code>false</code>.</li>
 </ul>

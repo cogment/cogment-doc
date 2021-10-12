@@ -1386,14 +1386,14 @@
                 <h1 id="metrics-and-dashboard">Metrics and Dashboard<a class="headerlink" href="#metrics-and-dashboard" title="Permanent link">&para;</a></h1>
 <p><a href="https://github.com/cogment/cogment-dashboard"><img alt="Repository" src="https://img.shields.io/badge/repository-cogment%2Fcogment--dashboard-%23ffb400?style=flat-square&amp;logo=github" /></a> <a href="https://hub.docker.com/r/cogment/dashboard"><img alt="Latest cogment-dashboard Release" src="https://img.shields.io/docker/v/cogment/dashboard?label=cogment-dashboard%20docker%20release&amp;sort=semver&amp;style=flat-square" /></a> <a href="https://hub.docker.com/r/cogment/metrics"><img alt="Latest cogment-metrics Release" src="https://img.shields.io/docker/v/cogment/metrics?label=cogment-metrics%20docker%20release&amp;sort=semver&amp;style=flat-square" /></a></p>
 <p>Cogment provides two services <strong>out-of-the-box</strong> dedicated to the monitoring of a Cogment deployment: <code>cogment-metrics</code> and <code>cogment-dashboard</code>.</p>
-<p><code>cogment-metrics</code> is gathering data coming from all the Cogment services: orchestrator, actors, environment, etc. These <em>metrics</em> can be used to gather insights regarding the performances of actor or environment implementations. They can also be used to follow the attribution of rewards, giving insight into how, or even if agents are learning.</p>
+<p><code>cogment-metrics</code> is gathering data coming from all the Cogment services: orchestrator, actors, environment, etc. These <em>metrics</em> can be used to gather insights regarding the performance of actor or environment implementations. They can also be used to follow the attribution of rewards, giving insight into how, or even if agents are learning.</p>
 <p><code>cogment-metrics</code> is a <a href="https://prometheus.io/">Prometheus</a> instance, so it can be easily augmented to visualize your own data.</p>
 <p><code>cogment-dashboard</code> is used to explore the metrics data in a human-friendly way, using graphs. Some default dashboards are available, but users can create their own dashboards, as well as use their own <a href="https://prometheus.io/">Prometheus</a> requests to create their own graphs. <code>cogment-dashboard</code> is based on <a href="https://grafana.com/">Grafana</a>.</p>
 <h2 id="usage">Usage<a class="headerlink" href="#usage" title="Permanent link">&para;</a></h2>
 <!-- prettier-ignore -->
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>By initializing your project using <a href="../../../cogment/tutorial/1-bootstrap-and-data-structures/"><code>cogment init</code></a>, you should already have everything setup for a standard usage. For a fully manual setup refer to the dedicated <a href="#setup">section</a>.</p>
+<p>After initializing your project using <a href="../../../cogment/tutorial/1-bootstrap-and-data-structures/"><code>cogment init</code></a>, you should already have everything setup for a standard usage. For a fully manual setup refer to the dedicated <a href="#setup">section</a>.</p>
 </div>
 <p>In an up-and-running Cogment deployment running on your local machine, the dashboard is accessible at <a href="http://localhost:3003/">http://localhost:3003/</a></p>
 <p>The dashboard welcomes you with a screen giving you direct access to the default sub-dashboards.</p>

@@ -1704,7 +1704,7 @@
 <input id="__tabbed_3_2" name="__tabbed_3" type="radio" /><label for="__tabbed_3_2">Javascript</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code><span class="kd">const</span> <span class="nx">service</span> <span class="o">=</span> <span class="nx">cogment</span><span class="p">.</span><span class="nx">createService</span><span class="p">({</span>
     <span class="nx">cogSettings</span><span class="p">,</span>
-    <span class="nx">grpcURL</span><span class="p">,</span>
+    <span class="s2">&quot;orchestrator:9000&quot;</span><span class="p">,</span>
 <span class="p">});</span>
 
 <span class="kd">const</span> <span class="nx">trialController</span> <span class="o">=</span> <span class="nx">service</span><span class="p">.</span><span class="nx">createTrialController</span><span class="p">();</span>
@@ -1800,10 +1800,10 @@
 <h3 id="creating_1">Creating<a class="headerlink" href="#creating_1" title="Permanent link">&para;</a></h3>
 <p><a href="../../concepts/glossary/#message">Messages</a> can be created and sent between <a href="../../concepts/glossary/#actor">actors</a> or the <a href="../../concepts/glossary/#environment">environment</a> within a trial using their <code>session</code> instance.</p>
 <div class="tabbed-set" data-tabs="7:2"><input checked="checked" id="__tabbed_7_1" name="__tabbed_7" type="radio" /><label for="__tabbed_7_1">Python</label><div class="tabbed-content">
-<div class="highlight"><pre><span></span><code><span class="n">session</span><span class="o">.</span><span class="n">send_message</span>
-<span class="n">user_data</span><span class="o">=</span><span class="n">MyProtobufDataStructure</span><span class="p">(</span><span class="o">...</span><span class="p">),</span> <span class="c1"># any protobuf data structure can be used here.</span>
-<span class="n">to</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;pedestrian:*&#39;</span><span class="p">],</span> <span class="c1"># send the message to all the actors of the &quot;pedestrian&quot; class</span>
-<span class="n">to_environment</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><span class="n">session</span><span class="o">.</span><span class="n">send_message</span><span class="p">(</span>
+    <span class="n">user_data</span><span class="o">=</span><span class="n">MyProtobufDataStructure</span><span class="p">(</span><span class="o">...</span><span class="p">),</span> <span class="c1"># any protobuf data structure can be used here.</span>
+    <span class="n">to</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;pedestrian:*&#39;</span><span class="p">],</span> <span class="c1"># send the message to all the actors of the &quot;pedestrian&quot; class</span>
+    <span class="n">to_environment</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </code></pre></div>
 </div>
 <input id="__tabbed_7_2" name="__tabbed_7" type="radio" /><label for="__tabbed_7_2">Javascript</label><div class="tabbed-content">
@@ -1811,7 +1811,7 @@
 <span class="nx">message</span><span class="p">.</span><span class="nx">setRequest</span><span class="p">(</span><span class="s2">&quot;hello&quot;</span><span class="p">);</span>
 
 <span class="c1">// Now we serialize into an Any protobuf message.</span>
-<span class="kd">const</span> <span class="nx">anyPb</span> <span class="o">=</span> <span class="ow">new</span> <span class="nx">AnyPb</span><span class="p">();</span>
+<span class="kd">const</span> <span class="nx">anyPb</span> <span class="o">=</span> <span class="ow">new</span> <span class="nx">MyProtobufDataStructure</span><span class="p">();</span>
 <span class="nx">anyPb</span><span class="p">.</span><span class="nx">pack</span><span class="p">(</span><span class="nx">message</span><span class="p">.</span><span class="nx">serializeBinary</span><span class="p">(),</span> <span class="s1">&#39;cogment_app.Message&#39;</span><span class="p">);</span>
 
 <span class="nx">actorSession</span><span class="p">.</span><span class="nx">sendMessage</span><span class="p">({</span>
@@ -1858,8 +1858,8 @@
 </div>
 </div>
 <h2 id="pre-trial-hook">Pre trial hook<a class="headerlink" href="#pre-trial-hook" title="Permanent link">&para;</a></h2>
-<p>When starting a trial from a controller an instance of the message type defined in <a href="../cogment-api-reference/cogment-yaml/#trial"><code>trial.config_type</code></a> can be provided. This instance is then passed to the registered <strong>Pre trial hooks</strong> defined in <code>trial.pre_hooks</code>. The role of these hooks is to fully parametrized the trial based on the provided config. To achive that they can modify the default trial params defined in the <a href="../cogment-api-reference/cogment-yaml/#trial-params"><code>cogment.yaml</code></a> file to defines the parameters of the environment (i.e. its endpoint, implementation name &amp; configuration), the number and parameters of the participant actors (i.e. their name, class, endpoint, implementation name &amp; configuration) as well as additional parameters for the trial. The pre trial hook can therefore be used to dynamically configure trials, to act as a service endpoint registry or a load balancer.</p>
-<p>Pre trial hook implementation are registered in the same way than environment's and follow the same <em>session</em> pattern.</p>
+<p>When starting a trial from a controller an instance of the message type defined in <a href="../cogment-api-reference/cogment-yaml/#trial"><code>trial.config_type</code></a> can be provided. This instance is then passed to the registered <strong>Pre trial hooks</strong> defined in <code>trial.pre_hooks</code>. The role of these hooks is to fully parametrize the trial based on the provided config. To achieve that, they can modify the default trial params defined in the <a href="../cogment-api-reference/cogment-yaml/#trial-params"><code>cogment.yaml</code></a> file to set the parameters of the environment (i.e. its endpoint, implementation name &amp; configuration), the number and parameters of the participant actors (i.e. their name, class, endpoint, implementation name &amp; configuration) as well as additional parameters for the trial. The pre trial hook can therefore be used to dynamically configure trials, to act as a service endpoint registry, or a load balancer.</p>
+<p>Pre trial hook implementations are registered in the same way the environment or actor implementation are and follow the same <em>session</em> pattern.</p>
 <div class="highlight"><pre><span></span><code><span class="k">async</span> <span class="k">def</span> <span class="nf">my_pre_trial_hook</span><span class="p">(</span><span class="n">pre_hook_session</span><span class="p">):</span>
     <span class="c1"># The trial config provided by the controller can be retrieved like that</span>
     <span class="n">trial_config</span> <span class="o">=</span> <span class="n">pre_hook_session</span><span class="o">.</span><span class="n">trial_config</span>
@@ -1886,7 +1886,7 @@
 
 <span class="n">context</span><span class="o">.</span><span class="n">register_pre_trial_hook</span><span class="p">(</span><span class="n">impl</span><span class="o">=</span><span class="n">my_pre_trial_hook</span><span class="p">)</span>
 </code></pre></div>
-<p>Services exposing pretrial hooks needs to be defined in the <code>cogment.yaml</code> file under <code>trial.pre_hooks</code>.</p>
+<p>Services exposing pretrial hooks need to be defined in the <code>cogment.yaml</code> file under <code>trial.pre_hooks</code>.</p>
 <p>The full documentation for the <code>PrehookSession</code> can be found <a href="../cogment-api-reference/python/#class-prehooksession">here</a>.</p>
 <h2 id="delta-encoding">Delta Encoding<a class="headerlink" href="#delta-encoding" title="Permanent link">&para;</a></h2>
 <p>By default, <a href="../../concepts/glossary/#observation">observations</a> are sent in their entirety from the <a href="../../concepts/glossary/#environment">environment</a> to the <a href="../../concepts/glossary/#actors">actors</a>. However, it's fairly common to only have a small portion of an <a href="../../concepts/glossary/#observation">observation</a> to change from one update to the next.</p>

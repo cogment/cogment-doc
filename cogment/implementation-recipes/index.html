@@ -1211,7 +1211,7 @@
 <p>This page gathers implementation guides, or recipes, concerning specific topics not covered elsewhere. Beginners should start learning about using Cogment through the <a href="../tutorial/introduction/">tutorial</a> and general information are located in the <a href="../cogment-api-guide/">api guide</a>.</p>
 <p>If you feel a specific topic is not adressed, please <a href="https://github.com/cogment/cogment-doc/issues/new/choose">fill an issue</a> or <a href="../../support/community-channels/">get in touch</a>.</p>
 <h2 id="fully-configure-a-trial-from-a-controller">Fully configure a trial from a <a href="../../concepts/core-concepts/#controller"><strong>Controller</strong></a><a class="headerlink" href="#fully-configure-a-trial-from-a-controller" title="Permanent link">&para;</a></h2>
-<p>When starting a trial, the controller can only provide an instance of the <strong>trial configuration</strong> message and from this instance the pre trial hook can fill the <strong>trial parameters</strong>, including fully configuring the environment and actors involved in the trial. More details can be found <a href="../cogment-api-guide/#pre-trial-hook">here</a>. In some cases, you might want to fully configure a trial from the controller. This recipe is dedicated to this use case.</p>
+<p>When starting a trial, the controller can only provide an instance of the <strong>trial configuration</strong> message and from this instance the pre trial hook can fill the <strong>trial parameters</strong>, including a full configuring of the environment and actors involved in the trial. More details can be found <a href="../cogment-api-guide/#pre-trial-hook">here</a>. In some cases, you might want to fully configure a trial from the controller. This recipe is dedicated to this use case.</p>
 <!-- prettier-ignore -->
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
@@ -1248,7 +1248,7 @@
     <span class="p">)</span>
 <span class="p">))</span>
 </code></pre></div>
-<p>Finally a <em>pass-through</em> pretrial hook needs to be implemented, registered and served. It's endpoint must be specified in the <code>cogment.yaml</code> file under <code>trial.pre_hooks</code>.</p>
+<p>Finally a <em>pass-through</em> pretrial hook needs to be implemented, registered and served. Its endpoint must be specified in the <code>cogment.yaml</code> file under <code>trial.pre_hooks</code>.</p>
 <div class="highlight"><pre><span></span><code><span class="k">async</span> <span class="k">def</span> <span class="nf">passthrough_pre_trial_hook</span><span class="p">(</span><span class="n">pre_trial_hook_session</span><span class="p">):</span>
     <span class="n">trial_config</span> <span class="o">=</span> <span class="n">pre_trial_hook_session</span><span class="o">.</span><span class="n">trial_config</span>
     <span class="n">pre_trial_hook_session</span><span class="o">.</span><span class="n">environment_config</span> <span class="o">=</span> <span class="n">trial_config</span><span class="o">.</span><span class="n">environment</span><span class="o">.</span><span class="n">config</span>

@@ -1249,16 +1249,16 @@
                 
                 <h1 id="orchestrator">Orchestrator<a class="headerlink" href="#orchestrator" title="Permanent link">&para;</a></h1>
 <p><a href="https://github.com/cogment/cogment-orchestrator"><img alt="Repository" src="https://img.shields.io/badge/repository-cogment%2Fcogment--orchestrator-%23ffb400?style=flat-square&amp;logo=github" /></a> <a href="https://hub.docker.com/r/cogment/orchestrator"><img alt="Latest Release" src="https://img.shields.io/docker/v/cogment/orchestrator?label=docker%20release&amp;sort=semver&amp;style=flat-square" /></a></p>
-<p>Cogment Orchestrator is an <strong>out-of-the-box</strong> module, it is the central entity in the framework that ties all the services together. From the perspective of a Cogment user, it can be considered as the live interpreter of the <a href="../../../cogment/cogment-api-guide/#the-cogmentyaml-file"><code>cogment.yaml</code> configuration file</a>. It is the service that client applications will connect to in order to start and run trials.</p>
+<p>Cogment Orchestrator is an <strong>out-of-the-box</strong> component. It is the central entity in the framework that ties all the services together. From the perspective of a Cogment user, it can be considered as the live interpreter of the <a href="../../../cogment/cogment-api-guide/#the-cogmentyaml-file"><code>cogment.yaml</code> configuration file</a>. It is the service that client applications will connect to in order to start and run trials.</p>
 <h2 id="usage">Usage<a class="headerlink" href="#usage" title="Permanent link">&para;</a></h2>
 <!-- prettier-ignore -->
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>By initializing your project using <a href="../../../cogment/tutorial/1-bootstrap-and-data-structures/"><code>cogment init</code></a>, you should already have everything setup for a standard usage. For a fully manual setup refer to the dedicated <a href="#setup">section</a>.</p>
+<p>After initializing your project using <a href="../../../cogment/tutorial/1-bootstrap-and-data-structures/"><code>cogment init</code></a>, you should already have everything setup for a standard usage. For a fully manual setup refer to the dedicated <a href="#setup">section</a>.</p>
 </div>
 <p>The Orchestrator is central to any Cogment usage, please refer to the <a href="../../../cogment/cogment-api-guide/"><strong>API guide</strong></a> to learn how to interact with it using the high level APIs provided by the Cogment SDKs.</p>
 <h3 id="low-level-grpc-api">Low level gRPC API<a class="headerlink" href="#low-level-grpc-api" title="Permanent link">&para;</a></h3>
-<p>The Orchestrator implements two gRPC endpoints that are specified as part of the Cogment api:</p>
+<p>The Orchestrator implements two gRPC endpoints that are specified as part of the Cogment API:</p>
 <ul>
 <li><a href="../../../cogment/cogment-low-level-api-guide/grpc/#control-api">The Control API <code>TrialLifeCycle</code></a> that defines how to manage trial execution.</li>
 <li><a href="../../../cogment/cogment-low-level-api-guide/grpc/#client-actor-api">The Client Actor API <code>ClientActor</code></a> that enables <a href="../../../cogment/cogment-api-guide/#service-actor-client-actor">client actors</a> to join trials.</li>
