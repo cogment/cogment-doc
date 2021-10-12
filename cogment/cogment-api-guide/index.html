@@ -16,18 +16,18 @@
         <link rel="canonical" href="https://docs.cogment.ai/cogment/cogment-api-guide/">
       
       <link rel="icon" href="../../images/cogment_favicon.png">
-      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-7.1.5">
+      <meta name="generator" content="mkdocs-1.2.2, mkdocs-material-7.3.2">
     
     
       
-        <title>API Guide - Cogment</title>
+        <title>API Guide - Cogment User Documentation</title>
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.bde7dde4.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.24c991ad.min.css">
       
         
-        <link rel="stylesheet" href="../../assets/stylesheets/palette.ef6f36e2.min.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.3f5d1f46.min.css">
         
       
     
@@ -46,10 +46,19 @@
     
     
       
-        
-<script>window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga("create","UA-146998765-2","doc.cogment.ai"),ga("set","anonymizeIp",!0),ga("send","pageview"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){var e;this.value&&(e=document.location.pathname,ga("send","pageview",e+"?q="+this.value))}),"undefined"!=typeof location$&&location$.subscribe(function(e){ga("send","pageview",e.pathname)})})</script>
-<script async src="https://www.google-analytics.com/analytics.js"></script>
-      
+  
+
+
+
+  
+  
+
+
+
+  <script>window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga("create","UA-146998765-2","auto"),ga("set","anonymizeIp",!0),ga("send","pageview"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){var e;this.value&&(e=document.location.pathname,ga("send","pageview",e+"?q="+this.value))}),"undefined"!=typeof location$&&location$.subscribe(function(e){ga("send","pageview",e.pathname)})})</script>
+  <script async src="https://www.google-analytics.com/analytics.js"></script>
+
+
     
     
   </head>
@@ -71,7 +80,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#cogment-high-level-api-guide-python" class="md-skip">
+        <a href="#cogment-high-level-api-guide" class="md-skip">
           Skip to content
         </a>
       
@@ -80,9 +89,11 @@
       
     </div>
     
-      <header class="md-header" data-md-component="header">
+      
+
+<header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="../.." title="Cogment" class="md-header__button md-logo" aria-label="Cogment" data-md-component="logo">
+    <a href="../.." title="Cogment User Documentation" class="md-header__button md-logo" aria-label="Cogment User Documentation" data-md-component="logo">
       
   <img src="../../images/cogment_logo.png" alt="logo">
 
@@ -94,7 +105,7 @@
       <div class="md-header__ellipsis">
         <div class="md-header__topic">
           <span class="md-ellipsis">
-            Cogment
+            Cogment User Documentation
           </span>
         </div>
         <div class="md-header__topic" data-md-component="header-topic">
@@ -117,14 +128,18 @@
   <label class="md-search__overlay" for="__search"></label>
   <div class="md-search__inner" role="search">
     <form class="md-search__form" name="search">
-      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active" required>
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
       <label class="md-search__icon md-icon" for="__search">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
       </label>
-      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
-      </button>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+        </button>
+      </nav>
+      
     </form>
     <div class="md-search__output">
       <div class="md-search__scrollwrap" data-md-scrollfix>
@@ -154,11 +169,14 @@
       </div>
     
   </nav>
+  
 </header>
     
     <div class="md-container" data-md-component="container">
       
       
+        
+          
         
       
       <main class="md-main" data-md-component="main">
@@ -174,12 +192,12 @@
 
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../.." title="Cogment" class="md-nav__button md-logo" aria-label="Cogment" data-md-component="logo">
+    <a href="../.." title="Cogment User Documentation" class="md-nav__button md-logo" aria-label="Cogment User Documentation" data-md-component="logo">
       
   <img src="../../images/cogment_logo.png" alt="logo">
 
     </a>
-    Cogment
+    Cogment User Documentation
   </label>
   
     <div class="md-nav__source">
@@ -212,10 +230,14 @@
       
         <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_1" type="checkbox" id="__nav_1" >
       
-      <label class="md-nav__link" for="__nav_1">
-        Introduction
-        <span class="md-nav__icon md-icon"></span>
-      </label>
+      
+      
+      
+        <label class="md-nav__link" for="__nav_1">
+          Introduction
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <nav class="md-nav" aria-label="Introduction" data-md-level="1">
         <label class="md-nav__title" for="__nav_1">
           <span class="md-nav__icon md-icon"></span>
@@ -224,6 +246,7 @@
         <ul class="md-nav__list" data-md-scrollfix>
           
             
+              
   
   
   
@@ -234,8 +257,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -246,6 +271,7 @@
     </li>
   
 
+            
           
         </ul>
       </nav>
@@ -268,10 +294,14 @@
       
         <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" >
       
-      <label class="md-nav__link" for="__nav_2">
-        Support
-        <span class="md-nav__icon md-icon"></span>
-      </label>
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2">
+          Support
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <nav class="md-nav" aria-label="Support" data-md-level="1">
         <label class="md-nav__title" for="__nav_2">
           <span class="md-nav__icon md-icon"></span>
@@ -280,6 +310,7 @@
         <ul class="md-nav__list" data-md-scrollfix>
           
             
+              
   
   
   
@@ -290,6 +321,7 @@
     </li>
   
 
+            
           
         </ul>
       </nav>
@@ -312,10 +344,14 @@
       
         <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
       
-      <label class="md-nav__link" for="__nav_3">
-        Concepts
-        <span class="md-nav__icon md-icon"></span>
-      </label>
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3">
+          Concepts
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <nav class="md-nav" aria-label="Concepts" data-md-level="1">
         <label class="md-nav__title" for="__nav_3">
           <span class="md-nav__icon md-icon"></span>
@@ -324,6 +360,7 @@
         <ul class="md-nav__list" data-md-scrollfix>
           
             
+              
   
   
   
@@ -334,8 +371,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -346,6 +385,7 @@
     </li>
   
 
+            
           
         </ul>
       </nav>
@@ -370,18 +410,23 @@
       
         <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" checked>
       
-      <label class="md-nav__link" for="__nav_4">
-        Cogment
-        <span class="md-nav__icon md-icon"></span>
-      </label>
-      <nav class="md-nav" aria-label="Cogment" data-md-level="1">
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4">
+          Cogment APIs
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Cogment APIs" data-md-level="1">
         <label class="md-nav__title" for="__nav_4">
           <span class="md-nav__icon md-icon"></span>
-          Cogment
+          Cogment APIs
         </label>
         <ul class="md-nav__list" data-md-scrollfix>
           
             
+              
   
   
   
@@ -391,10 +436,14 @@
       
         <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_1" type="checkbox" id="__nav_4_1" >
       
-      <label class="md-nav__link" for="__nav_4_1">
-        Tutorial
-        <span class="md-nav__icon md-icon"></span>
-      </label>
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_1">
+          Tutorial
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <nav class="md-nav" aria-label="Tutorial" data-md-level="2">
         <label class="md-nav__title" for="__nav_4_1">
           <span class="md-nav__icon md-icon"></span>
@@ -403,6 +452,7 @@
         <ul class="md-nav__list" data-md-scrollfix>
           
             
+              
   
   
   
@@ -413,8 +463,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -425,8 +477,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -437,8 +491,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -449,8 +505,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -461,8 +519,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -473,8 +533,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -485,8 +547,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -497,14 +561,17 @@
     </li>
   
 
+            
           
         </ul>
       </nav>
     </li>
   
 
+            
           
             
+              
   
   
     
@@ -670,6 +737,13 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#pre-trial-hook" class="md-nav__link">
+    Pre trial hook
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#delta-encoding" class="md-nav__link">
     Delta Encoding
   </a>
@@ -683,8 +757,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -694,10 +770,14 @@
       
         <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_3" type="checkbox" id="__nav_4_3" >
       
-      <label class="md-nav__link" for="__nav_4_3">
-        API Reference
-        <span class="md-nav__icon md-icon"></span>
-      </label>
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_3">
+          API Reference
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <nav class="md-nav" aria-label="API Reference" data-md-level="2">
         <label class="md-nav__title" for="__nav_4_3">
           <span class="md-nav__icon md-icon"></span>
@@ -706,6 +786,7 @@
         <ul class="md-nav__list" data-md-scrollfix>
           
             
+              
   
   
   
@@ -716,8 +797,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -728,8 +811,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -739,10 +824,14 @@
       
         <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_3_3" type="checkbox" id="__nav_4_3_3" >
       
-      <label class="md-nav__link" for="__nav_4_3_3">
-        Javascript/Typescript SDK
-        <span class="md-nav__icon md-icon"></span>
-      </label>
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_3_3">
+          Javascript/Typescript SDK
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <nav class="md-nav" aria-label="Javascript/Typescript SDK" data-md-level="3">
         <label class="md-nav__title" for="__nav_4_3_3">
           <span class="md-nav__icon md-icon"></span>
@@ -751,6 +840,7 @@
         <ul class="md-nav__list" data-md-scrollfix>
           
             
+              
   
   
   
@@ -761,8 +851,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -773,8 +865,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -785,8 +879,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -797,8 +893,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -809,8 +907,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -821,8 +921,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -833,8 +935,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -845,8 +949,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -857,8 +963,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -869,8 +977,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -881,8 +991,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -893,8 +1005,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -905,8 +1019,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -917,8 +1033,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -929,8 +1047,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -941,8 +1061,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -953,20 +1075,24 @@
     </li>
   
 
+            
           
         </ul>
       </nav>
     </li>
   
 
+            
           
         </ul>
       </nav>
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -976,18 +1102,23 @@
       
         <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_4" type="checkbox" id="__nav_4_4" >
       
-      <label class="md-nav__link" for="__nav_4_4">
-        Low Level API Guide
-        <span class="md-nav__icon md-icon"></span>
-      </label>
-      <nav class="md-nav" aria-label="Low Level API Guide" data-md-level="2">
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_4">
+          Low Level API Reference
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Low Level API Reference" data-md-level="2">
         <label class="md-nav__title" for="__nav_4_4">
           <span class="md-nav__icon md-icon"></span>
-          Low Level API Guide
+          Low Level API Reference
         </label>
         <ul class="md-nav__list" data-md-scrollfix>
           
             
+              
   
   
   
@@ -998,8 +1129,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -1010,12 +1143,28 @@
     </li>
   
 
+            
           
         </ul>
       </nav>
     </li>
   
 
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../implementation-recipes/" class="md-nav__link">
+        Implementation recipes
+      </a>
+    </li>
+  
+
+            
           
         </ul>
       </nav>
@@ -1030,10 +1179,101 @@
   
   
   
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" type="checkbox" id="__nav_5" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_5">
+          Cogment Components
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Cogment Components" data-md-level="1">
+        <label class="md-nav__title" for="__nav_5">
+          <span class="md-nav__icon md-icon"></span>
+          Cogment Components
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
     <li class="md-nav__item">
-      <a href="../../dashboard/metrics-and-dashboard/" class="md-nav__link">
+      <a href="../../cogment-components/cli/cli/" class="md-nav__link">
+        CLI
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cogment-components/orchestrator/orchestrator/" class="md-nav__link">
+        Orchestrator
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cogment-components/model-registry/model-registry/" class="md-nav__link">
+        Model Registry
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cogment-components/trial-datastore/trial-datastore/" class="md-nav__link">
+        Trial Datastore
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cogment-components/dashboard/metrics-and-dashboard/" class="md-nav__link">
         Metrics & Dashboard
       </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
     </li>
   
 
@@ -1207,6 +1447,13 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#pre-trial-hook" class="md-nav__link">
+    Pre trial hook
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#delta-encoding" class="md-nav__link">
     Delta Encoding
   </a>
@@ -1230,7 +1477,10 @@
                   </a>
                 
                 
-                <h1 id="cogment-high-level-api-guide-python">Cogment High-Level API guide (Python)<a class="headerlink" href="#cogment-high-level-api-guide-python" title="Permanent link">&para;</a></h1>
+                <h1 id="cogment-high-level-api-guide">Cogment High-Level API guide<a class="headerlink" href="#cogment-high-level-api-guide" title="Permanent link">&para;</a></h1>
+<blockquote>
+<p>NOTE: Some features aren't available in Javascript, if there's only python examples under a certain section, that feature is python only</p>
+</blockquote>
 <h2 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">&para;</a></h2>
 <p>This document assumes the reader is familiar with the <a href="../../concepts/core-concepts/">Cogment Fundamentals</a>.</p>
 <p>The High-level Cogment API expects users to use <a href="https://developers.google.com/protocol-buffers/" target="_blank">protocol buffers</a> to declare a project's data structures. The intricacies of protobufs are beyond the scope of this document. Basic knowledge of the technology and its usage is assumed.</p>
@@ -1257,7 +1507,6 @@
         <span class="nt">action</span><span class="p">:</span>
             <span class="nt">space</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">city.PedestrianAction</span>
 </code></pre></div>
-
 <blockquote>
 <p>⚠️ This shows only the relevant part of the full <code>cogment.yaml</code>, you can find the full list of configurable options <a href="../cogment-api-reference/cogment-yaml/">in the reference page</a>.</p>
 </blockquote>
@@ -1265,7 +1514,6 @@
 <p>In order to use the <code>cogment.yaml</code> file within python scripts, it needs to be interpreted into a python module. This is done by the <strong>cogment cli</strong> (Command Line Interface) that can be installed following <a href="../../introduction/installation/#install-the-latest-cogment-cli">those directions</a>.</p>
 <div class="highlight"><pre><span></span><code><span class="gp">$ </span>cogment run --file /path/to/cogment.yaml --python_dir<span class="o">=</span>./
 </code></pre></div>
-
 <p>This will create a <code>cog_settings.py</code> module in the current directory.</p>
 <p>The cogment cli will also compile the imported <a href="../../concepts/glossary/#protocol-buffer"><code>.proto</code></a> files in python modules living in the same location.</p>
 <h2 id="environment">Environment<a class="headerlink" href="#environment" title="Permanent link">&para;</a></h2>
@@ -1308,7 +1556,6 @@
 
     <span class="c1"># -- Termination --</span>
 </code></pre></div>
-
 <p>This environment implementation needs to be registered and served so that the <a href="../../concepts/glossary/#orchestrator">orchestrator</a> can reach it. This can be done through a <a href="../cogment-api-reference/python/#class-cogmentcontext"><code>Context</code></a> instance.</p>
 <div class="highlight"><pre><span></span><code><span class="n">context</span> <span class="o">=</span> <span class="n">cogment</span><span class="o">.</span><span class="n">Context</span><span class="p">(</span><span class="n">cog_settings</span><span class="o">=</span><span class="n">cog_settings</span><span class="p">,</span> <span class="n">user_id</span><span class="o">=</span><span class="s2">&quot;my_user_id&quot;</span><span class="p">)</span>
 
@@ -1316,20 +1563,17 @@
 
 <span class="k">await</span> <span class="n">context</span><span class="o">.</span><span class="n">serve_all_registered</span><span class="p">(</span><span class="n">port</span><span class="o">=</span><span class="mi">9000</span><span class="p">)</span>
 </code></pre></div>
-
 <h3 id="sending-observations">Sending observations<a class="headerlink" href="#sending-observations" title="Permanent link">&para;</a></h3>
 <p>The environment session has 3 different methods able to send observations: <code>start</code>, <code>produce_observations</code> and <code>end</code>. Each of those methods takes a list of 2-tuples destination / observation.</p>
 <p>As demonstrated above, sending the same observation to all actors is done using <code>"*"</code> as the destination.</p>
 <div class="highlight"><pre><span></span><code><span class="n">environment_session</span><span class="o">.</span><span class="n">produce_observations</span><span class="p">([(</span><span class="s2">&quot;*&quot;</span><span class="p">,</span> <span class="n">Observation</span><span class="p">(</span><span class="o">...</span><span class="p">))])</span>
 </code></pre></div>
-
 <p>It is also possible to send different observations to different actors. This can be useful to send observations of the <em>world</em> from the point of view of the actor or to send partial observations.</p>
 <div class="highlight"><pre><span></span><code><span class="n">environment_session</span><span class="o">.</span><span class="n">produce_observations</span><span class="p">([</span>
   <span class="p">(</span><span class="s2">&quot;my_first_actor_name&quot;</span><span class="p">,</span> <span class="n">Observation</span><span class="p">(</span><span class="o">...</span><span class="p">)),</span>
   <span class="p">(</span><span class="s2">&quot;my_second_actor_name&quot;</span><span class="p">,</span> <span class="n">Observation</span><span class="p">(</span><span class="o">...</span><span class="p">))</span>
 <span class="p">])</span>
 </code></pre></div>
-
 <p>Please note that the environment should always send observations such as each actor in the trial receives one.</p>
 <h2 id="actor">Actor<a class="headerlink" href="#actor" title="Permanent link">&para;</a></h2>
 <p><a href="../../concepts/glossary/#actor">Actors</a> implementations look a lot like the <a href="#environment">environment's</a>. They take a <a href="../cogment-api-reference/python/#class-actorsessionsession"><code>cogment.ActorSession</code></a> instance and have the same three sections: <strong>initialization</strong>, <strong>event loop</strong> and <strong>termination</strong>.</p>
@@ -1340,6 +1584,7 @@
 <li><code>messages</code> sent by other actors or the environment, we'll talk about them in more details <a href="#messages">below</a>.</li>
 </ul>
 <p>A typical actor implementation would look like this:</p>
+<div class="tabbed-set" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><label for="__tabbed_1_1">Python</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code><span class="k">async</span> <span class="k">def</span> <span class="nf">driver_actor</span><span class="p">(</span><span class="n">actor_session</span><span class="p">):</span>
     <span class="c1"># -- Initialization --</span>
 
@@ -1351,8 +1596,8 @@
             <span class="c1"># `event.observation` is an instance of the Observation produced by the environment</span>
             <span class="n">observation</span> <span class="o">=</span> <span class="n">event</span><span class="o">.</span><span class="n">observation</span>
             <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">cogment</span><span class="o">.</span><span class="n">EventType</span><span class="o">.</span><span class="n">ACTIVE</span><span class="p">:</span>
-              <span class="c1"># The trial is active, it is expecting the agent to do an action</span>
-              <span class="n">actor_session</span><span class="o">.</span><span class="n">do_action</span><span class="p">(</span><span class="n">DriverAction</span><span class="p">(</span><span class="o">...</span><span class="p">))</span>
+            <span class="c1"># The trial is active, it is expecting the agent to do an action</span>
+            <span class="n">actor_session</span><span class="o">.</span><span class="n">do_action</span><span class="p">(</span><span class="n">DriverAction</span><span class="p">(</span><span class="o">...</span><span class="p">))</span>
 
         <span class="k">for</span> <span class="n">reward</span> <span class="ow">in</span> <span class="n">event</span><span class="o">.</span><span class="n">rewards</span><span class="p">:</span>
             <span class="c1"># `event.rewards` is a list of all the rewards received by the actor (it can be empty)</span>
@@ -1364,7 +1609,40 @@
 
             <span class="c1"># Handle each message here.</span>
 </code></pre></div>
+</div>
+<input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><label for="__tabbed_1_2">Javascript</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code><span class="kd">const</span> <span class="nx">driverActor</span> <span class="o">=</span> <span class="k">async</span> <span class="p">(</span><span class="nx">actorSession</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+    <span class="c1">// -- Initialization --</span>
 
+    <span class="c1">// Notify that the actor is ready for the trial to start.</span>
+    <span class="nx">actorSession</span><span class="p">.</span><span class="nx">start</span><span class="p">();</span>
+
+    <span class="k">for</span> <span class="k">await</span> <span class="p">(</span><span class="kd">const</span> <span class="nx">event</span> <span class="k">of</span> <span class="nx">actorSession</span><span class="p">.</span><span class="nx">eventLoop</span><span class="p">())</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">event</span><span class="p">.</span><span class="nx">observation</span><span class="p">){</span>
+            <span class="c1">// `event.observation` is an instance of the Observation produced by the environment</span>
+            <span class="nx">observation</span> <span class="o">=</span> <span class="nx">event</span><span class="p">.</span><span class="nx">observation</span>
+            <span class="k">if</span> <span class="nx">event</span><span class="p">.</span><span class="nx">type</span> <span class="o">==</span> <span class="nx">cogment</span><span class="p">.</span><span class="nx">EventType</span><span class="p">.</span><span class="nx">ACTIVE</span><span class="o">:</span>
+            <span class="c1">// The trial is active, it is expecting the agent to do an action</span>
+            <span class="nx">actorSession</span><span class="p">.</span><span class="nx">sendAction</span><span class="p">(</span><span class="ow">new</span> <span class="nx">DriverAction</span><span class="p">())</span>
+        <span class="p">}</span>
+
+
+        <span class="k">for</span> <span class="p">(</span><span class="kd">const</span> <span class="nx">reward</span> <span class="k">of</span> <span class="nx">event</span><span class="p">.</span><span class="nx">rewards</span><span class="p">){</span>
+            <span class="c1">// `event.rewards` is a list of all the rewards received by the actor (it can be empty)</span>
+
+            <span class="c1">// Handle each reward here.</span>
+        <span class="p">}</span>
+
+        <span class="k">for</span> <span class="p">(</span><span class="kd">const</span> <span class="nx">message</span> <span class="k">of</span> <span class="nx">event</span><span class="p">.</span><span class="nx">messages</span><span class="p">){</span>
+            <span class="c1">// `event.messages` is a list of all the messages received by the actor (it can be empty)</span>
+
+            <span class="c1">// Handle each message here.</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+</div>
+</div>
 <h3 id="service-actor-client-actor">Service actor / Client actor<a class="headerlink" href="#service-actor-client-actor" title="Permanent link">&para;</a></h3>
 <p>A Cogment app can use two types of actors, they are identical in terms of implementation but differ in how they interact with the app's <a href="../../concepts/glossary/#orchestrator">Orchestrator</a>.</p>
 <p><strong>Service actors</strong> are accessible in the same way the environment is, through a <a href="../cogment-api-reference/python/#class-cogmentcontext"><code>Context</code></a> instance.</p>
@@ -1377,9 +1655,9 @@
 
 <span class="k">await</span> <span class="n">context</span><span class="o">.</span><span class="n">serve_all_registered</span><span class="p">(</span><span class="n">port</span><span class="o">=</span><span class="mi">9000</span><span class="p">)</span>
 </code></pre></div>
-
 <p>Please note that it is also through this registrating that the implementation is associated with one or more <a href="../../concepts/glossary/#actor-class">actor classes</a> it implements.</p>
 <p><strong>Client actors</strong>, contrary to Service actors, are not served to the <a href="../../concepts/glossary/#orchestrator">orchestrator</a>. They connect as clients of the orchestrator and join a <a href="../../concepts/glossary/#trial">trial</a> that has started.</p>
+<div class="tabbed-set" data-tabs="2:2"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><label for="__tabbed_2_1">Python</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code><span class="n">context</span> <span class="o">=</span> <span class="n">cogment</span><span class="o">.</span><span class="n">Context</span><span class="p">(</span><span class="n">cog_settings</span><span class="o">=</span><span class="n">cog_settings</span><span class="p">,</span> <span class="n">user_id</span><span class="o">=</span><span class="s2">&quot;rps&quot;</span><span class="p">)</span>
 <span class="n">context</span><span class="o">.</span><span class="n">register_actor</span><span class="p">(</span>
     <span class="n">impl</span><span class="o">=</span><span class="n">actor</span><span class="p">,</span>
@@ -1387,33 +1665,85 @@
     <span class="n">actor_classes</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;driver&quot;</span><span class="p">])</span>
 
 <span class="k">await</span> <span class="n">context</span><span class="o">.</span><span class="n">join_trial</span><span class="p">(</span>
-  <span class="n">trial_id</span><span class="o">=</span><span class="n">trial_id</span><span class="p">,</span>
-  <span class="n">endpoint</span><span class="o">=</span><span class="s2">&quot;orchestrator:9000&quot;</span><span class="p">,</span>
-  <span class="n">impl_name</span><span class="o">=</span><span class="s2">&quot;human&quot;</span><span class="p">)</span>
+<span class="n">trial_id</span><span class="o">=</span><span class="n">trial_id</span><span class="p">,</span>
+<span class="n">endpoint</span><span class="o">=</span><span class="s2">&quot;orchestrator:9000&quot;</span><span class="p">,</span>
+<span class="n">impl_name</span><span class="o">=</span><span class="s2">&quot;human&quot;</span><span class="p">)</span>
 </code></pre></div>
+</div>
+<input id="__tabbed_2_2" name="__tabbed_2" type="radio" /><label for="__tabbed_2_2">Javascript</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code><span class="kd">const</span> <span class="nx">grpcURL</span> <span class="o">=</span> <span class="s2">&quot;http://someGrpcWebProxyEndpoint:port&quot;</span>
 
+<span class="kd">const</span> <span class="nx">service</span> <span class="o">=</span> <span class="nx">cogment</span><span class="p">.</span><span class="nx">createService</span><span class="p">({</span>
+    <span class="nx">cogSettings</span><span class="p">,</span>
+    <span class="nx">grpcURL</span><span class="p">,</span>
+<span class="p">});</span>
+
+<span class="kd">const</span> <span class="nx">actor</span> <span class="o">=</span> <span class="p">{</span> <span class="nx">name</span><span class="o">:</span> <span class="nx">actorName</span><span class="p">,</span> <span class="nx">actorClass</span><span class="o">:</span> <span class="nx">actorClass</span> <span class="p">};</span>
+
+<span class="nx">service</span><span class="p">.</span><span class="nx">registerActor</span><span class="p">(</span>
+    <span class="nx">actor</span><span class="p">,</span>
+    <span class="nx">actorImpl</span>
+<span class="p">)</span>
+
+<span class="kd">const</span> <span class="nx">trialController</span> <span class="o">=</span> <span class="nx">service</span><span class="p">.</span><span class="nx">createTrialController</span><span class="p">();</span>
+
+<span class="nx">trialController</span><span class="p">.</span><span class="nx">joinTrial</span><span class="p">(</span><span class="nx">trialId</span><span class="p">,</span> <span class="nx">actor</span><span class="p">);</span>
+</code></pre></div>
+</div>
+</div>
 <p>Please note that a trial including one or more client actors will wait for all of them to join before any actor can start processing events.</p>
 <p>Due to the different network requirements, client actors are a good fit when implementing a <a href="../../concepts/glossary/#frontend">frontend</a> for human actors. In addition to the <a href="../cogment-api-reference/python/">python</a> SDK demonstrated above, client actors can be implemented in <a href="../cogment-api-reference/javascript/modules/">javascript</a> using the corresponding SDK.</p>
 <h2 id="controller">Controller<a class="headerlink" href="#controller" title="Permanent link">&para;</a></h2>
 <p><a href="../../concepts/glossary/#trial">Trials</a> are started by clients of the <a href="../../concepts/glossary/#orchestrator">Orchestrator</a> using a Controller. Instances of a controller are built from the <a href="../cogment-api-reference/python/#class-cogmentcontext"><code>Context</code></a> instance and connect to an Orchestrator endpoint.</p>
+<div class="tabbed-set" data-tabs="3:2"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio" /><label for="__tabbed_3_1">Python</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code><span class="n">controller</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="n">get_controller</span><span class="p">(</span>
-  <span class="n">endpoint</span><span class="o">=</span><span class="n">cogment</span><span class="o">.</span><span class="n">Endpoint</span><span class="p">(</span><span class="s2">&quot;orchestrator:9000&quot;</span><span class="p">)</span>
+<span class="n">endpoint</span><span class="o">=</span><span class="n">cogment</span><span class="o">.</span><span class="n">Endpoint</span><span class="p">(</span><span class="s2">&quot;orchestrator:9000&quot;</span><span class="p">)</span>
 <span class="p">)</span>
 </code></pre></div>
+</div>
+<input id="__tabbed_3_2" name="__tabbed_3" type="radio" /><label for="__tabbed_3_2">Javascript</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code><span class="kd">const</span> <span class="nx">service</span> <span class="o">=</span> <span class="nx">cogment</span><span class="p">.</span><span class="nx">createService</span><span class="p">({</span>
+    <span class="nx">cogSettings</span><span class="p">,</span>
+    <span class="nx">grpcURL</span><span class="p">,</span>
+<span class="p">});</span>
 
+<span class="kd">const</span> <span class="nx">trialController</span> <span class="o">=</span> <span class="nx">service</span><span class="p">.</span><span class="nx">createTrialController</span><span class="p">();</span>
+</code></pre></div>
+</div>
+</div>
 <p>The controller can then be used to create trials and request their termination.</p>
+<div class="tabbed-set" data-tabs="4:2"><input checked="checked" id="__tabbed_4_1" name="__tabbed_4" type="radio" /><label for="__tabbed_4_1">Python</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code><span class="n">trial_id</span> <span class="o">=</span> <span class="k">await</span> <span class="n">controller</span><span class="o">.</span><span class="n">start_trial</span><span class="p">(</span><span class="n">trial_config</span><span class="o">=</span><span class="n">TrialConfig</span><span class="p">())</span>
 
 <span class="c1"># ...</span>
 
 <span class="k">await</span> <span class="n">controller</span><span class="o">.</span><span class="n">terminate_trial</span><span class="p">(</span><span class="n">trial_id</span><span class="p">)</span>
 </code></pre></div>
+</div>
+<input id="__tabbed_4_2" name="__tabbed_4" type="radio" /><label for="__tabbed_4_2">Javascript</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code><span class="kd">const</span> <span class="p">{</span><span class="nx">trialId</span><span class="p">}</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">trialController</span><span class="p">.</span><span class="nx">startTrial</span><span class="p">(</span><span class="nx">someActorClass</span><span class="p">,</span> <span class="ow">new</span> <span class="nx">TrialConfig</span><span class="p">());</span>
 
+<span class="c1">// ...</span>
+
+<span class="k">await</span> <span class="nx">trialControler</span><span class="p">.</span><span class="nx">terminateTrial</span><span class="p">(</span><span class="nx">trialId</span><span class="p">)</span>
+</code></pre></div>
+</div>
+</div>
 <p>The controller can also be used to subscribe to events occuring in the trials run by the Orchestrator it connects to. For example, this can be used to wait for a trial's end:</p>
+<div class="tabbed-set" data-tabs="5:2"><input checked="checked" id="__tabbed_5_1" name="__tabbed_5" type="radio" /><label for="__tabbed_5_1">Python</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code><span class="k">async</span> <span class="k">for</span> <span class="n">trial_info</span> <span class="ow">in</span> <span class="n">controller</span><span class="o">.</span><span class="n">watch_trials</span><span class="p">(</span><span class="n">trial_state_filters</span><span class="o">=</span><span class="p">[</span><span class="n">cogment</span><span class="o">.</span><span class="n">TrialState</span><span class="o">.</span><span class="n">ENDED</span><span class="p">]):</span>
     <span class="c1"># The trial having id {trial_info.trial_id} ended.</span>
 </code></pre></div>
-
+</div>
+<input id="__tabbed_5_2" name="__tabbed_5" type="radio" /><label for="__tabbed_5_2">Javascript</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code><span class="k">for</span> <span class="k">await</span> <span class="p">(</span><span class="kd">const</span> <span class="nx">trialListEntry</span> <span class="k">of</span> <span class="nx">trialController</span><span class="p">.</span><span class="nx">watchTrials</span><span class="p">([</span>
+  <span class="nx">cogment</span><span class="p">.</span><span class="nx">TrialState</span><span class="p">.</span><span class="nx">ENDED</span>
+<span class="p">]))</span> <span class="p">{</span>
+  <span class="c1">// The trial having id {trialListEntry.getTrialId()} ended.</span>
+<span class="p">}</span>
+</code></pre></div>
+</div>
+</div>
 <p>The full documentation for the controller can be found <a href="../cogment-api-reference/python/#class-controller">here</a>.</p>
 <h2 id="rewards">Rewards<a class="headerlink" href="#rewards" title="Permanent link">&para;</a></h2>
 <h3 id="creating">Creating<a class="headerlink" href="#creating" title="Permanent link">&para;</a></h3>
@@ -1424,13 +1754,13 @@
   <span class="n">tick_id</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span>
   <span class="n">to</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;an_actor_name&#39;</span><span class="p">])</span>
 </code></pre></div>
-
 <p>Rewards consist of an arbitrary numerical <strong>value</strong> describing how the reward "sender" <em>believes</em> the actor performed. It is <em>weighted</em> by a value between 0 and 1 qualifying the <strong>confidence</strong> of the "sender" in its reward, from a very low confidence just above 0 to a very high confidence approaching 1. The confidence value is used to collate all the rewards sent to an actor at the same time. Optionally, a reward can be provided with arbitrary user data.</p>
 <p>Each reward applies to a list of recipients (either all the actors, all the actors of a given class or a specific actor) at a specific point in time, during the trial, defined as a <a href="../../concepts/glossary/#tick"><strong>tick</strong></a>.</p>
 <p>The full documentation for <code>session.add_reward</code> can be found <a href="../cogment-api-reference/python/#add_rewardself-value-confidence-to-tick_id-1-user_datanone">here</a>.</p>
 <h3 id="consuming">Consuming<a class="headerlink" href="#consuming" title="Permanent link">&para;</a></h3>
 <p>All the <a href="../../concepts/glossary/#reward">rewards</a> that are sent and destined to each specific <a href="../../concepts/glossary/#actor">actor</a> for a given point in time are collated together by the framework.</p>
 <p>The <a href="../../concepts/glossary/#actor">actor</a> can take into account the reward directly as the <a href="../../concepts/glossary/#trial">trial</a> is running by consuming the <code>"reward"</code> event in their event loop.</p>
+<div class="tabbed-set" data-tabs="6:2"><input checked="checked" id="__tabbed_6_1" name="__tabbed_6" type="radio" /><label for="__tabbed_6_1">Python</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code><span class="k">async</span> <span class="k">for</span> <span class="n">event</span> <span class="ow">in</span> <span class="n">actor_session</span><span class="o">.</span><span class="n">event_loop</span><span class="p">():</span>
     <span class="c1"># [...]</span>
     <span class="k">for</span> <span class="n">reward</span> <span class="ow">in</span> <span class="n">event</span><span class="o">.</span><span class="n">rewards</span><span class="p">:</span>
@@ -1445,22 +1775,61 @@
             <span class="n">reward_sender</span> <span class="o">=</span> <span class="n">source_reward</span><span class="o">.</span><span class="n">sender</span>
             <span class="n">reward_user_data</span> <span class="o">=</span> <span class="n">source_reward</span><span class="o">.</span><span class="n">user_data</span>
 </code></pre></div>
-
+</div>
+<input id="__tabbed_6_2" name="__tabbed_6" type="radio" /><label for="__tabbed_6_2">Javascript</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code><span class="k">for</span> <span class="k">await</span> <span class="p">(</span><span class="kd">const</span> <span class="nx">event</span> <span class="k">of</span> <span class="nx">actorSession</span><span class="p">.</span><span class="nx">eventLoop</span><span class="p">())</span> <span class="p">{</span>
+    <span class="c1">// [...]</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kd">const</span> <span class="nx">reward</span> <span class="k">of</span> <span class="nx">event</span><span class="p">.</span><span class="nx">rewards</span><span class="p">){</span>
+        <span class="c1">// `reward.tickId` is the id of the tick this reward concerns.</span>
+        <span class="kd">const</span> <span class="nx">tickId</span> <span class="o">=</span> <span class="nx">reward</span><span class="p">.</span><span class="nx">tickId</span>
+        <span class="c1">// `reward.value` is the aggregated value of the reward.</span>
+        <span class="kd">const</span> <span class="nx">value</span> <span class="o">=</span> <span class="nx">reward</span><span class="p">.</span><span class="nx">value</span>
+        <span class="k">for</span> <span class="p">(</span><span class="nx">sourceReward</span> <span class="k">of</span> <span class="nx">reward</span><span class="p">.</span><span class="nx">sourcesList</span><span class="p">)</span> <span class="p">{</span>
+            <span class="c1">// Iterate over individual source rewards.</span>
+            <span class="kd">const</span> <span class="nx">rewardValue</span> <span class="o">=</span> <span class="nx">sourceReward</span><span class="p">.</span><span class="nx">value</span>
+            <span class="kd">const</span> <span class="nx">rewardConfidence</span> <span class="o">=</span> <span class="nx">sourceReward</span><span class="p">.</span><span class="nx">confidence</span>
+            <span class="kd">const</span> <span class="nx">rewardSender</span> <span class="o">=</span> <span class="nx">sourceReward</span><span class="p">.</span><span class="nx">senderName</span>
+            <span class="kd">const</span> <span class="nx">rewardUserData</span> <span class="o">=</span> <span class="nx">sourceReward</span><span class="p">.</span><span class="nx">userData</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+</div>
+</div>
 <h2 id="messages">Messages<a class="headerlink" href="#messages" title="Permanent link">&para;</a></h2>
 <h3 id="creating_1">Creating<a class="headerlink" href="#creating_1" title="Permanent link">&para;</a></h3>
 <p><a href="../../concepts/glossary/#message">Messages</a> can be created and sent between <a href="../../concepts/glossary/#actor">actors</a> or the <a href="../../concepts/glossary/#environment">environment</a> within a trial using their <code>session</code> instance.</p>
+<div class="tabbed-set" data-tabs="7:2"><input checked="checked" id="__tabbed_7_1" name="__tabbed_7" type="radio" /><label for="__tabbed_7_1">Python</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code><span class="n">session</span><span class="o">.</span><span class="n">send_message</span>
-  <span class="n">user_data</span><span class="o">=</span><span class="n">MyProtobufDataStructure</span><span class="p">(</span><span class="o">...</span><span class="p">),</span> <span class="c1"># any protobuf data structure can be used here.</span>
-  <span class="n">to</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;pedestrian:*&#39;</span><span class="p">],</span> <span class="c1"># send the message to all the actors of the &quot;pedestrian&quot; class</span>
-  <span class="n">to_environment</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">user_data</span><span class="o">=</span><span class="n">MyProtobufDataStructure</span><span class="p">(</span><span class="o">...</span><span class="p">),</span> <span class="c1"># any protobuf data structure can be used here.</span>
+<span class="n">to</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;pedestrian:*&#39;</span><span class="p">],</span> <span class="c1"># send the message to all the actors of the &quot;pedestrian&quot; class</span>
+<span class="n">to_environment</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </code></pre></div>
+</div>
+<input id="__tabbed_7_2" name="__tabbed_7" type="radio" /><label for="__tabbed_7_2">Javascript</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code><span class="kd">const</span> <span class="nx">message</span> <span class="o">=</span> <span class="ow">new</span> <span class="nx">Message</span><span class="p">();</span>
+<span class="nx">message</span><span class="p">.</span><span class="nx">setRequest</span><span class="p">(</span><span class="s2">&quot;hello&quot;</span><span class="p">);</span>
 
-<p>Messages consist of an arbitrary payload, their <code>user_data</code>, defined as an instance of any protobuf data structure.</p>
+<span class="c1">// Now we serialize into an Any protobuf message.</span>
+<span class="kd">const</span> <span class="nx">anyPb</span> <span class="o">=</span> <span class="ow">new</span> <span class="nx">AnyPb</span><span class="p">();</span>
+<span class="nx">anyPb</span><span class="p">.</span><span class="nx">pack</span><span class="p">(</span><span class="nx">message</span><span class="p">.</span><span class="nx">serializeBinary</span><span class="p">(),</span> <span class="s1">&#39;cogment_app.Message&#39;</span><span class="p">);</span>
+
+<span class="nx">actorSession</span><span class="p">.</span><span class="nx">sendMessage</span><span class="p">({</span>
+    <span class="kr">from</span><span class="o">:</span> <span class="nx">actorName</span><span class="p">,</span>
+    <span class="nx">payload</span><span class="o">:</span> <span class="nx">anyPb</span><span class="p">,</span>
+    <span class="nx">to</span><span class="o">:</span> <span class="s1">&#39;otherActorName&#39;</span><span class="p">,</span>
+    <span class="nx">trialId</span><span class="p">,</span>
+<span class="p">});</span>
+</code></pre></div>
+</div>
+</div>
+<p>Messages consist of an arbitrary payload, their <code>user_data/payload</code>, defined as an instance of any protobuf data structure.</p>
 <p>A message can be sent to one, many or all actors in a trial and / or to the environment.</p>
 <p>The full documentation for <code>session.send_message</code> can be found <a href="../cogment-api-reference/python/#send_messageself-payload-to-to_environmentfalse">here</a>.</p>
 <h3 id="consuming_1">Consuming<a class="headerlink" href="#consuming_1" title="Permanent link">&para;</a></h3>
 <p>All the <a href="../../concepts/glossary/#message">messages</a> that are sent and intended for each specific actor or environment will be received by the target actor or environment.</p>
 <p>Actors or the environment can use the message directly, live, as the <a href="../../concepts/glossary/#message">trial</a> is running by consuming message event in their event loop.</p>
+<div class="tabbed-set" data-tabs="8:2"><input checked="checked" id="__tabbed_8_1" name="__tabbed_8" type="radio" /><label for="__tabbed_8_1">Python</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code><span class="k">async</span> <span class="k">for</span> <span class="n">event</span> <span class="ow">in</span> <span class="n">actor_session</span><span class="o">.</span><span class="n">event_loop</span><span class="p">():</span>
     <span class="c1"># [...]</span>
     <span class="k">for</span> <span class="n">message</span> <span class="ow">in</span> <span class="n">event</span><span class="o">.</span><span class="n">messages</span><span class="p">:</span>
@@ -1469,20 +1838,66 @@
         <span class="c1"># `message.payload` is the content of the message, it needs to be unpacked</span>
         <span class="n">payload</span> <span class="o">=</span> <span class="n">message</span><span class="o">.</span><span class="n">payload</span>
 </code></pre></div>
+</div>
+<input id="__tabbed_8_2" name="__tabbed_8" type="radio" /><label for="__tabbed_8_2">Javascript</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code><span class="k">for</span> <span class="k">await</span> <span class="p">(</span><span class="kd">const</span> <span class="nx">event</span> <span class="k">of</span> <span class="nx">actorSession</span><span class="p">.</span><span class="nx">eventLoop</span><span class="p">())</span> <span class="p">{</span>
+    <span class="c1">// [...]</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kd">const</span> <span class="nx">message</span> <span class="k">of</span> <span class="nx">event</span><span class="p">.</span><span class="nx">messages</span><span class="p">){</span>
+        <span class="c1">// `message.sender_name` is the name of the actor who sent a message</span>
+        <span class="kd">const</span> <span class="nx">sender</span> <span class="o">=</span> <span class="nx">message</span><span class="p">.</span><span class="nx">sender</span>
+        <span class="c1">// `message.data` is the content of the message, it needs to be unpacked</span>
+        <span class="kd">const</span> <span class="nx">data</span> <span class="o">=</span> <span class="nx">message</span><span class="p">.</span><span class="nx">data</span>
 
+        <span class="kd">const</span> <span class="nx">newMessage</span> <span class="o">=</span> <span class="nx">data</span><span class="p">.</span><span class="nx">unpack</span><span class="p">(</span>
+          <span class="p">(</span><span class="nx">x</span><span class="o">:</span> <span class="nb">Uint8Array</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="nx">Message</span><span class="p">.</span><span class="nx">deserializeBinary</span><span class="p">(</span><span class="nx">x</span><span class="p">),</span>
+          <span class="s1">&#39;cogment_app.Message&#39;</span><span class="p">,</span>
+        <span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+</div>
+</div>
+<h2 id="pre-trial-hook">Pre trial hook<a class="headerlink" href="#pre-trial-hook" title="Permanent link">&para;</a></h2>
+<p>When starting a trial from a controller an instance of the message type defined in <a href="../cogment-api-reference/cogment-yaml/#trial"><code>trial.config_type</code></a> can be provided. This instance is then passed to the registered <strong>Pre trial hooks</strong> defined in <code>trial.pre_hooks</code>. The role of these hooks is to fully parametrized the trial based on the provided config. To achive that they can modify the default trial params defined in the <a href="../cogment-api-reference/cogment-yaml/#trial-params"><code>cogment.yaml</code></a> file to defines the parameters of the environment (i.e. its endpoint, implementation name &amp; configuration), the number and parameters of the participant actors (i.e. their name, class, endpoint, implementation name &amp; configuration) as well as additional parameters for the trial. The pre trial hook can therefore be used to dynamically configure trials, to act as a service endpoint registry or a load balancer.</p>
+<p>Pre trial hook implementation are registered in the same way than environment's and follow the same <em>session</em> pattern.</p>
+<div class="highlight"><pre><span></span><code><span class="k">async</span> <span class="k">def</span> <span class="nf">my_pre_trial_hook</span><span class="p">(</span><span class="n">pre_hook_session</span><span class="p">):</span>
+    <span class="c1"># The trial config provided by the controller can be retrieved like that</span>
+    <span class="n">trial_config</span> <span class="o">=</span> <span class="n">pre_hook_session</span><span class="o">.</span><span class="n">trial_config</span>
+    <span class="c1"># The trial params can be edited directly</span>
+    <span class="n">pre_hook_session</span><span class="o">.</span><span class="n">environment_config</span> <span class="o">=</span> <span class="c1"># [...]</span>
+    <span class="n">pre_hook_session</span><span class="o">.</span><span class="n">environment_endpoint</span> <span class="o">=</span> <span class="s2">&quot;grpc://my_environment:9000&quot;</span>
+    <span class="n">pre_hook_session</span><span class="o">.</span><span class="n">actors</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;my_first_actor_name&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;actor_class&quot;</span><span class="p">:</span> <span class="s2">&quot;driver&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;endpoint&quot;</span><span class="p">:</span> <span class="s2">&quot;grpc://driver:9000&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;implementation&quot;</span><span class="p">:</span> <span class="s2">&quot;driver_actor&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;config&quot;</span><span class="p">:</span> <span class="c1"># [...],</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;my_second_actor_name&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;actor_class&quot;</span><span class="p">:</span> <span class="s2">&quot;predestrian&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;endpoint&quot;</span><span class="p">:</span> <span class="s2">&quot;client&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;config&quot;</span><span class="p">:</span> <span class="c1"># [...],</span>
+        <span class="p">},</span>
+    <span class="p">]</span>
+    <span class="c1"># And finally should be validated</span>
+    <span class="n">pre_hook_session</span><span class="o">.</span><span class="n">validate</span><span class="p">()</span>
+
+<span class="n">context</span><span class="o">.</span><span class="n">register_pre_trial_hook</span><span class="p">(</span><span class="n">impl</span><span class="o">=</span><span class="n">my_pre_trial_hook</span><span class="p">)</span>
+</code></pre></div>
+<p>Services exposing pretrial hooks needs to be defined in the <code>cogment.yaml</code> file under <code>trial.pre_hooks</code>.</p>
+<p>The full documentation for the <code>PrehookSession</code> can be found <a href="../cogment-api-reference/python/#class-prehooksession">here</a>.</p>
 <h2 id="delta-encoding">Delta Encoding<a class="headerlink" href="#delta-encoding" title="Permanent link">&para;</a></h2>
 <p>By default, <a href="../../concepts/glossary/#observation">observations</a> are sent in their entirety from the <a href="../../concepts/glossary/#environment">environment</a> to the <a href="../../concepts/glossary/#actors">actors</a>. However, it's fairly common to only have a small portion of an <a href="../../concepts/glossary/#observation">observation</a> to change from one update to the next.</p>
 <p>Cogment allows you to specify a separate data structure to encode partial observation updates. However, if you do so, you must provide
 a method that can apply the deltas to previous observations.</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># delta.py</span>
-<span class="k">def</span> <span class="nf">apply_delta</span><span class="p">(</span><span class="n">previous_observation</span><span class="p">,</span> <span class="n">delta</span><span class="p">):</span>
-    <span class="c1"># Return the updated observation, more often</span>
-    <span class="c1"># than not, this should be the previous</span>
-    <span class="c1"># observation that was modified in-place.</span>
-    <span class="n">previous_observation</span><span class="o">.</span><span class="n">car_position</span> <span class="o">=</span> <span class="n">delta</span><span class="o">.</span><span class="n">new_car_pos</span>
-    <span class="k">return</span> <span class="n">previous_observation</span>
-</code></pre></div>
 
+<span class="k">def</span> <span class="nf">apply_delta</span><span class="p">(</span><span class="n">previous_observation</span><span class="p">,</span> <span class="n">delta</span><span class="p">):</span> <span class="c1"># Return the updated observation, more often # than not, this should be the previous # observation that was modified in-place.</span>
+<span class="n">previous_observation</span><span class="o">.</span><span class="n">car_position</span> <span class="o">=</span> <span class="n">delta</span><span class="o">.</span><span class="n">new_car_pos</span>
+<span class="k">return</span> <span class="n">previous_observation</span>
+</code></pre></div>
 <div class="highlight"><pre><span></span><code><span class="c1"># cogment.yaml</span>
 <span class="nt">import</span><span class="p">:</span>
     <span class="nt">proto</span><span class="p">:</span>
@@ -1516,7 +1931,8 @@ a method that can apply the deltas to previous observations.</p>
   
     <nav class="md-footer__inner md-grid" aria-label="Footer">
       
-        <a href="../tutorial/7-dqn-player/" class="md-footer__link md-footer__link--prev" rel="prev">
+        
+        <a href="../tutorial/7-dqn-player/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Step 7: Add a player trained with Reinforcement Learning using DQN" rel="prev">
           <div class="md-footer__button md-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
           </div>
@@ -1531,7 +1947,8 @@ a method that can apply the deltas to previous observations.</p>
         </a>
       
       
-        <a href="../cogment-api-reference/cogment-yaml/" class="md-footer__link md-footer__link--next" rel="next">
+        
+        <a href="../cogment-api-reference/cogment-yaml/" class="md-footer__link md-footer__link--next" aria-label="Next: cogment.yaml" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
@@ -1555,10 +1972,12 @@ a method that can apply the deltas to previous observations.</p>
             Copyright 2021 AI Redefined Inc. <dev+cogment@ai-r.com>
           </div>
         
-        Made with
-        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
-          Material for MkDocs
-        </a>
+        
+          Made with
+          <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+            Material for MkDocs
+          </a>
+        
         
       </div>
       
@@ -1601,10 +2020,10 @@ a method that can apply the deltas to previous observations.</p>
     <div class="md-dialog" data-md-component="dialog">
       <div class="md-dialog__inner md-typeset"></div>
     </div>
-    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.sections"], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}, "search": "../../assets/javascripts/workers/search.d351de03.min.js", "version": null}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.sections"], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../assets/javascripts/workers/search.e99e714c.min.js", "version": null}</script>
     
     
-      <script src="../../assets/javascripts/bundle.a1609d9a.min.js"></script>
+      <script src="../../assets/javascripts/bundle.bc35569b.min.js"></script>
       
     
   </body>

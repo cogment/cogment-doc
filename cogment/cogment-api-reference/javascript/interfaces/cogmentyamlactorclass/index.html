@@ -16,18 +16,18 @@
         <link rel="canonical" href="https://docs.cogment.ai/cogment/cogment-api-reference/javascript/interfaces/cogmentyamlactorclass/">
       
       <link rel="icon" href="../../../../../images/cogment_favicon.png">
-      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-7.1.5">
+      <meta name="generator" content="mkdocs-1.2.2, mkdocs-material-7.3.2">
     
     
       
-        <title>Interface: CogmentYamlActorClass - Cogment</title>
+        <title>Interface: CogmentYamlActorClass - Cogment User Documentation</title>
       
     
     
-      <link rel="stylesheet" href="../../../../../assets/stylesheets/main.bde7dde4.min.css">
+      <link rel="stylesheet" href="../../../../../assets/stylesheets/main.24c991ad.min.css">
       
         
-        <link rel="stylesheet" href="../../../../../assets/stylesheets/palette.ef6f36e2.min.css">
+        <link rel="stylesheet" href="../../../../../assets/stylesheets/palette.3f5d1f46.min.css">
         
       
     
@@ -46,10 +46,19 @@
     
     
       
-        
-<script>window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga("create","UA-146998765-2","doc.cogment.ai"),ga("set","anonymizeIp",!0),ga("send","pageview"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){var e;this.value&&(e=document.location.pathname,ga("send","pageview",e+"?q="+this.value))}),"undefined"!=typeof location$&&location$.subscribe(function(e){ga("send","pageview",e.pathname)})})</script>
-<script async src="https://www.google-analytics.com/analytics.js"></script>
-      
+  
+
+
+
+  
+  
+
+
+
+  <script>window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga("create","UA-146998765-2","auto"),ga("set","anonymizeIp",!0),ga("send","pageview"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){var e;this.value&&(e=document.location.pathname,ga("send","pageview",e+"?q="+this.value))}),"undefined"!=typeof location$&&location$.subscribe(function(e){ga("send","pageview",e.pathname)})})</script>
+  <script async src="https://www.google-analytics.com/analytics.js"></script>
+
+
     
     
   </head>
@@ -80,9 +89,11 @@
       
     </div>
     
-      <header class="md-header" data-md-component="header">
+      
+
+<header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="../../../../.." title="Cogment" class="md-header__button md-logo" aria-label="Cogment" data-md-component="logo">
+    <a href="../../../../.." title="Cogment User Documentation" class="md-header__button md-logo" aria-label="Cogment User Documentation" data-md-component="logo">
       
   <img src="../../../../../images/cogment_logo.png" alt="logo">
 
@@ -94,7 +105,7 @@
       <div class="md-header__ellipsis">
         <div class="md-header__topic">
           <span class="md-ellipsis">
-            Cogment
+            Cogment User Documentation
           </span>
         </div>
         <div class="md-header__topic" data-md-component="header-topic">
@@ -117,14 +128,18 @@
   <label class="md-search__overlay" for="__search"></label>
   <div class="md-search__inner" role="search">
     <form class="md-search__form" name="search">
-      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active" required>
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
       <label class="md-search__icon md-icon" for="__search">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
       </label>
-      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
-      </button>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+        </button>
+      </nav>
+      
     </form>
     <div class="md-search__output">
       <div class="md-search__scrollwrap" data-md-scrollfix>
@@ -154,11 +169,14 @@
       </div>
     
   </nav>
+  
 </header>
     
     <div class="md-container" data-md-component="container">
       
       
+        
+          
         
       
       <main class="md-main" data-md-component="main">
@@ -174,12 +192,12 @@
 
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../../../../.." title="Cogment" class="md-nav__button md-logo" aria-label="Cogment" data-md-component="logo">
+    <a href="../../../../.." title="Cogment User Documentation" class="md-nav__button md-logo" aria-label="Cogment User Documentation" data-md-component="logo">
       
   <img src="../../../../../images/cogment_logo.png" alt="logo">
 
     </a>
-    Cogment
+    Cogment User Documentation
   </label>
   
     <div class="md-nav__source">
@@ -212,10 +230,14 @@
       
         <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_1" type="checkbox" id="__nav_1" >
       
-      <label class="md-nav__link" for="__nav_1">
-        Introduction
-        <span class="md-nav__icon md-icon"></span>
-      </label>
+      
+      
+      
+        <label class="md-nav__link" for="__nav_1">
+          Introduction
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <nav class="md-nav" aria-label="Introduction" data-md-level="1">
         <label class="md-nav__title" for="__nav_1">
           <span class="md-nav__icon md-icon"></span>
@@ -224,6 +246,7 @@
         <ul class="md-nav__list" data-md-scrollfix>
           
             
+              
   
   
   
@@ -234,8 +257,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -246,6 +271,7 @@
     </li>
   
 
+            
           
         </ul>
       </nav>
@@ -268,10 +294,14 @@
       
         <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" >
       
-      <label class="md-nav__link" for="__nav_2">
-        Support
-        <span class="md-nav__icon md-icon"></span>
-      </label>
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2">
+          Support
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <nav class="md-nav" aria-label="Support" data-md-level="1">
         <label class="md-nav__title" for="__nav_2">
           <span class="md-nav__icon md-icon"></span>
@@ -280,6 +310,7 @@
         <ul class="md-nav__list" data-md-scrollfix>
           
             
+              
   
   
   
@@ -290,6 +321,7 @@
     </li>
   
 
+            
           
         </ul>
       </nav>
@@ -312,10 +344,14 @@
       
         <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
       
-      <label class="md-nav__link" for="__nav_3">
-        Concepts
-        <span class="md-nav__icon md-icon"></span>
-      </label>
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3">
+          Concepts
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <nav class="md-nav" aria-label="Concepts" data-md-level="1">
         <label class="md-nav__title" for="__nav_3">
           <span class="md-nav__icon md-icon"></span>
@@ -324,6 +360,7 @@
         <ul class="md-nav__list" data-md-scrollfix>
           
             
+              
   
   
   
@@ -334,8 +371,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -346,6 +385,7 @@
     </li>
   
 
+            
           
         </ul>
       </nav>
@@ -370,18 +410,23 @@
       
         <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" checked>
       
-      <label class="md-nav__link" for="__nav_4">
-        Cogment
-        <span class="md-nav__icon md-icon"></span>
-      </label>
-      <nav class="md-nav" aria-label="Cogment" data-md-level="1">
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4">
+          Cogment APIs
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Cogment APIs" data-md-level="1">
         <label class="md-nav__title" for="__nav_4">
           <span class="md-nav__icon md-icon"></span>
-          Cogment
+          Cogment APIs
         </label>
         <ul class="md-nav__list" data-md-scrollfix>
           
             
+              
   
   
   
@@ -391,10 +436,14 @@
       
         <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_1" type="checkbox" id="__nav_4_1" >
       
-      <label class="md-nav__link" for="__nav_4_1">
-        Tutorial
-        <span class="md-nav__icon md-icon"></span>
-      </label>
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_1">
+          Tutorial
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <nav class="md-nav" aria-label="Tutorial" data-md-level="2">
         <label class="md-nav__title" for="__nav_4_1">
           <span class="md-nav__icon md-icon"></span>
@@ -403,6 +452,7 @@
         <ul class="md-nav__list" data-md-scrollfix>
           
             
+              
   
   
   
@@ -413,8 +463,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -425,8 +477,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -437,8 +491,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -449,8 +505,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -461,8 +519,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -473,8 +533,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -485,8 +547,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -497,14 +561,17 @@
     </li>
   
 
+            
           
         </ul>
       </nav>
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -515,8 +582,10 @@
     </li>
   
 
+            
           
             
+              
   
   
     
@@ -528,10 +597,14 @@
       
         <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_3" type="checkbox" id="__nav_4_3" checked>
       
-      <label class="md-nav__link" for="__nav_4_3">
-        API Reference
-        <span class="md-nav__icon md-icon"></span>
-      </label>
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_3">
+          API Reference
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <nav class="md-nav" aria-label="API Reference" data-md-level="2">
         <label class="md-nav__title" for="__nav_4_3">
           <span class="md-nav__icon md-icon"></span>
@@ -540,6 +613,7 @@
         <ul class="md-nav__list" data-md-scrollfix>
           
             
+              
   
   
   
@@ -550,8 +624,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -562,8 +638,10 @@
     </li>
   
 
+            
           
             
+              
   
   
     
@@ -575,10 +653,14 @@
       
         <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_3_3" type="checkbox" id="__nav_4_3_3" checked>
       
-      <label class="md-nav__link" for="__nav_4_3_3">
-        Javascript/Typescript SDK
-        <span class="md-nav__icon md-icon"></span>
-      </label>
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_3_3">
+          Javascript/Typescript SDK
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <nav class="md-nav" aria-label="Javascript/Typescript SDK" data-md-level="3">
         <label class="md-nav__title" for="__nav_4_3_3">
           <span class="md-nav__icon md-icon"></span>
@@ -587,6 +669,7 @@
         <ul class="md-nav__list" data-md-scrollfix>
           
             
+              
   
   
   
@@ -597,8 +680,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -609,8 +694,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -621,8 +708,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -633,8 +722,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -645,8 +736,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -657,8 +750,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -669,8 +764,10 @@
     </li>
   
 
+            
           
             
+              
   
   
     
@@ -777,8 +874,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -789,8 +888,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -801,8 +902,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -813,8 +916,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -825,8 +930,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -837,8 +944,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -849,8 +958,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -861,8 +972,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -873,8 +986,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -885,20 +1000,24 @@
     </li>
   
 
+            
           
         </ul>
       </nav>
     </li>
   
 
+            
           
         </ul>
       </nav>
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -908,18 +1027,23 @@
       
         <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_4" type="checkbox" id="__nav_4_4" >
       
-      <label class="md-nav__link" for="__nav_4_4">
-        Low Level API Guide
-        <span class="md-nav__icon md-icon"></span>
-      </label>
-      <nav class="md-nav" aria-label="Low Level API Guide" data-md-level="2">
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_4">
+          Low Level API Reference
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Low Level API Reference" data-md-level="2">
         <label class="md-nav__title" for="__nav_4_4">
           <span class="md-nav__icon md-icon"></span>
-          Low Level API Guide
+          Low Level API Reference
         </label>
         <ul class="md-nav__list" data-md-scrollfix>
           
             
+              
   
   
   
@@ -930,8 +1054,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -942,12 +1068,28 @@
     </li>
   
 
+            
           
         </ul>
       </nav>
     </li>
   
 
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../implementation-recipes/" class="md-nav__link">
+        Implementation recipes
+      </a>
+    </li>
+  
+
+            
           
         </ul>
       </nav>
@@ -962,10 +1104,101 @@
   
   
   
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" type="checkbox" id="__nav_5" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_5">
+          Cogment Components
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Cogment Components" data-md-level="1">
+        <label class="md-nav__title" for="__nav_5">
+          <span class="md-nav__icon md-icon"></span>
+          Cogment Components
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
     <li class="md-nav__item">
-      <a href="../../../../../dashboard/metrics-and-dashboard/" class="md-nav__link">
+      <a href="../../../../../cogment-components/cli/cli/" class="md-nav__link">
+        CLI
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../cogment-components/orchestrator/orchestrator/" class="md-nav__link">
+        Orchestrator
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../cogment-components/model-registry/model-registry/" class="md-nav__link">
+        Model Registry
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../cogment-components/trial-datastore/trial-datastore/" class="md-nav__link">
+        Trial Datastore
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../cogment-components/dashboard/metrics-and-dashboard/" class="md-nav__link">
         Metrics & Dashboard
       </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
     </li>
   
 
@@ -1168,7 +1401,8 @@ register actor implementations with <a href="../../classes/cogmentservice/#regis
   
     <nav class="md-footer__inner md-grid" aria-label="Footer">
       
-        <a href="../cogmentyamlactor/" class="md-footer__link md-footer__link--prev" rel="prev">
+        
+        <a href="../cogmentyamlactor/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Interface: CogmentYamlActor" rel="prev">
           <div class="md-footer__button md-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
           </div>
@@ -1183,7 +1417,8 @@ register actor implementations with <a href="../../classes/cogmentservice/#regis
         </a>
       
       
-        <a href="../cogmentyamldatalog/" class="md-footer__link md-footer__link--next" rel="next">
+        
+        <a href="../cogmentyamldatalog/" class="md-footer__link md-footer__link--next" aria-label="Next: Interface: CogmentYamlDatalog" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
@@ -1207,10 +1442,12 @@ register actor implementations with <a href="../../classes/cogmentservice/#regis
             Copyright 2021 AI Redefined Inc. <dev+cogment@ai-r.com>
           </div>
         
-        Made with
-        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
-          Material for MkDocs
-        </a>
+        
+          Made with
+          <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+            Material for MkDocs
+          </a>
+        
         
       </div>
       
@@ -1253,10 +1490,10 @@ register actor implementations with <a href="../../classes/cogmentservice/#regis
     <div class="md-dialog" data-md-component="dialog">
       <div class="md-dialog__inner md-typeset"></div>
     </div>
-    <script id="__config" type="application/json">{"base": "../../../../..", "features": ["navigation.sections"], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}, "search": "../../../../../assets/javascripts/workers/search.d351de03.min.js", "version": null}</script>
+    <script id="__config" type="application/json">{"base": "../../../../..", "features": ["navigation.sections"], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../../../../assets/javascripts/workers/search.e99e714c.min.js", "version": null}</script>
     
     
-      <script src="../../../../../assets/javascripts/bundle.a1609d9a.min.js"></script>
+      <script src="../../../../../assets/javascripts/bundle.bc35569b.min.js"></script>
       
     
   </body>

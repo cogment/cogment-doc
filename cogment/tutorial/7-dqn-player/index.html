@@ -16,18 +16,18 @@
         <link rel="canonical" href="https://docs.cogment.ai/cogment/tutorial/7-dqn-player/">
       
       <link rel="icon" href="../../../images/cogment_favicon.png">
-      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-7.1.5">
+      <meta name="generator" content="mkdocs-1.2.2, mkdocs-material-7.3.2">
     
     
       
-        <title>Step 7: Add a player trained with Reinforcement Learning using DQN - Cogment</title>
+        <title>Step 7: Add a player trained with Reinforcement Learning using DQN - Cogment User Documentation</title>
       
     
     
-      <link rel="stylesheet" href="../../../assets/stylesheets/main.bde7dde4.min.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.24c991ad.min.css">
       
         
-        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ef6f36e2.min.css">
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.3f5d1f46.min.css">
         
       
     
@@ -46,10 +46,19 @@
     
     
       
-        
-<script>window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga("create","UA-146998765-2","doc.cogment.ai"),ga("set","anonymizeIp",!0),ga("send","pageview"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){var e;this.value&&(e=document.location.pathname,ga("send","pageview",e+"?q="+this.value))}),"undefined"!=typeof location$&&location$.subscribe(function(e){ga("send","pageview",e.pathname)})})</script>
-<script async src="https://www.google-analytics.com/analytics.js"></script>
-      
+  
+
+
+
+  
+  
+
+
+
+  <script>window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga("create","UA-146998765-2","auto"),ga("set","anonymizeIp",!0),ga("send","pageview"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){var e;this.value&&(e=document.location.pathname,ga("send","pageview",e+"?q="+this.value))}),"undefined"!=typeof location$&&location$.subscribe(function(e){ga("send","pageview",e.pathname)})})</script>
+  <script async src="https://www.google-analytics.com/analytics.js"></script>
+
+
     
     
   </head>
@@ -80,9 +89,11 @@
       
     </div>
     
-      <header class="md-header" data-md-component="header">
+      
+
+<header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="../../.." title="Cogment" class="md-header__button md-logo" aria-label="Cogment" data-md-component="logo">
+    <a href="../../.." title="Cogment User Documentation" class="md-header__button md-logo" aria-label="Cogment User Documentation" data-md-component="logo">
       
   <img src="../../../images/cogment_logo.png" alt="logo">
 
@@ -94,7 +105,7 @@
       <div class="md-header__ellipsis">
         <div class="md-header__topic">
           <span class="md-ellipsis">
-            Cogment
+            Cogment User Documentation
           </span>
         </div>
         <div class="md-header__topic" data-md-component="header-topic">
@@ -117,14 +128,18 @@
   <label class="md-search__overlay" for="__search"></label>
   <div class="md-search__inner" role="search">
     <form class="md-search__form" name="search">
-      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active" required>
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
       <label class="md-search__icon md-icon" for="__search">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
       </label>
-      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
-      </button>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+        </button>
+      </nav>
+      
     </form>
     <div class="md-search__output">
       <div class="md-search__scrollwrap" data-md-scrollfix>
@@ -154,11 +169,14 @@
       </div>
     
   </nav>
+  
 </header>
     
     <div class="md-container" data-md-component="container">
       
       
+        
+          
         
       
       <main class="md-main" data-md-component="main">
@@ -174,12 +192,12 @@
 
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../../.." title="Cogment" class="md-nav__button md-logo" aria-label="Cogment" data-md-component="logo">
+    <a href="../../.." title="Cogment User Documentation" class="md-nav__button md-logo" aria-label="Cogment User Documentation" data-md-component="logo">
       
   <img src="../../../images/cogment_logo.png" alt="logo">
 
     </a>
-    Cogment
+    Cogment User Documentation
   </label>
   
     <div class="md-nav__source">
@@ -212,10 +230,14 @@
       
         <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_1" type="checkbox" id="__nav_1" >
       
-      <label class="md-nav__link" for="__nav_1">
-        Introduction
-        <span class="md-nav__icon md-icon"></span>
-      </label>
+      
+      
+      
+        <label class="md-nav__link" for="__nav_1">
+          Introduction
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <nav class="md-nav" aria-label="Introduction" data-md-level="1">
         <label class="md-nav__title" for="__nav_1">
           <span class="md-nav__icon md-icon"></span>
@@ -224,6 +246,7 @@
         <ul class="md-nav__list" data-md-scrollfix>
           
             
+              
   
   
   
@@ -234,8 +257,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -246,6 +271,7 @@
     </li>
   
 
+            
           
         </ul>
       </nav>
@@ -268,10 +294,14 @@
       
         <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" >
       
-      <label class="md-nav__link" for="__nav_2">
-        Support
-        <span class="md-nav__icon md-icon"></span>
-      </label>
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2">
+          Support
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <nav class="md-nav" aria-label="Support" data-md-level="1">
         <label class="md-nav__title" for="__nav_2">
           <span class="md-nav__icon md-icon"></span>
@@ -280,6 +310,7 @@
         <ul class="md-nav__list" data-md-scrollfix>
           
             
+              
   
   
   
@@ -290,6 +321,7 @@
     </li>
   
 
+            
           
         </ul>
       </nav>
@@ -312,10 +344,14 @@
       
         <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
       
-      <label class="md-nav__link" for="__nav_3">
-        Concepts
-        <span class="md-nav__icon md-icon"></span>
-      </label>
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3">
+          Concepts
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <nav class="md-nav" aria-label="Concepts" data-md-level="1">
         <label class="md-nav__title" for="__nav_3">
           <span class="md-nav__icon md-icon"></span>
@@ -324,6 +360,7 @@
         <ul class="md-nav__list" data-md-scrollfix>
           
             
+              
   
   
   
@@ -334,8 +371,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -346,6 +385,7 @@
     </li>
   
 
+            
           
         </ul>
       </nav>
@@ -370,18 +410,23 @@
       
         <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" checked>
       
-      <label class="md-nav__link" for="__nav_4">
-        Cogment
-        <span class="md-nav__icon md-icon"></span>
-      </label>
-      <nav class="md-nav" aria-label="Cogment" data-md-level="1">
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4">
+          Cogment APIs
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Cogment APIs" data-md-level="1">
         <label class="md-nav__title" for="__nav_4">
           <span class="md-nav__icon md-icon"></span>
-          Cogment
+          Cogment APIs
         </label>
         <ul class="md-nav__list" data-md-scrollfix>
           
             
+              
   
   
     
@@ -393,10 +438,14 @@
       
         <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_1" type="checkbox" id="__nav_4_1" checked>
       
-      <label class="md-nav__link" for="__nav_4_1">
-        Tutorial
-        <span class="md-nav__icon md-icon"></span>
-      </label>
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_1">
+          Tutorial
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <nav class="md-nav" aria-label="Tutorial" data-md-level="2">
         <label class="md-nav__title" for="__nav_4_1">
           <span class="md-nav__icon md-icon"></span>
@@ -405,6 +454,7 @@
         <ul class="md-nav__list" data-md-scrollfix>
           
             
+              
   
   
   
@@ -415,8 +465,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -427,8 +479,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -439,8 +493,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -451,8 +507,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -463,8 +521,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -475,8 +535,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -487,8 +549,10 @@
     </li>
   
 
+            
           
             
+              
   
   
     
@@ -574,14 +638,17 @@
     </li>
   
 
+            
           
         </ul>
       </nav>
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -592,8 +659,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -603,10 +672,14 @@
       
         <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_3" type="checkbox" id="__nav_4_3" >
       
-      <label class="md-nav__link" for="__nav_4_3">
-        API Reference
-        <span class="md-nav__icon md-icon"></span>
-      </label>
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_3">
+          API Reference
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <nav class="md-nav" aria-label="API Reference" data-md-level="2">
         <label class="md-nav__title" for="__nav_4_3">
           <span class="md-nav__icon md-icon"></span>
@@ -615,6 +688,7 @@
         <ul class="md-nav__list" data-md-scrollfix>
           
             
+              
   
   
   
@@ -625,8 +699,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -637,8 +713,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -648,10 +726,14 @@
       
         <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_3_3" type="checkbox" id="__nav_4_3_3" >
       
-      <label class="md-nav__link" for="__nav_4_3_3">
-        Javascript/Typescript SDK
-        <span class="md-nav__icon md-icon"></span>
-      </label>
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_3_3">
+          Javascript/Typescript SDK
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <nav class="md-nav" aria-label="Javascript/Typescript SDK" data-md-level="3">
         <label class="md-nav__title" for="__nav_4_3_3">
           <span class="md-nav__icon md-icon"></span>
@@ -660,6 +742,7 @@
         <ul class="md-nav__list" data-md-scrollfix>
           
             
+              
   
   
   
@@ -670,8 +753,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -682,8 +767,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -694,8 +781,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -706,8 +795,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -718,8 +809,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -730,8 +823,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -742,8 +837,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -754,8 +851,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -766,8 +865,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -778,8 +879,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -790,8 +893,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -802,8 +907,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -814,8 +921,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -826,8 +935,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -838,8 +949,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -850,8 +963,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -862,20 +977,24 @@
     </li>
   
 
+            
           
         </ul>
       </nav>
     </li>
   
 
+            
           
         </ul>
       </nav>
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -885,18 +1004,23 @@
       
         <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_4" type="checkbox" id="__nav_4_4" >
       
-      <label class="md-nav__link" for="__nav_4_4">
-        Low Level API Guide
-        <span class="md-nav__icon md-icon"></span>
-      </label>
-      <nav class="md-nav" aria-label="Low Level API Guide" data-md-level="2">
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_4">
+          Low Level API Reference
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Low Level API Reference" data-md-level="2">
         <label class="md-nav__title" for="__nav_4_4">
           <span class="md-nav__icon md-icon"></span>
-          Low Level API Guide
+          Low Level API Reference
         </label>
         <ul class="md-nav__list" data-md-scrollfix>
           
             
+              
   
   
   
@@ -907,8 +1031,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -919,12 +1045,28 @@
     </li>
   
 
+            
           
         </ul>
       </nav>
     </li>
   
 
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../implementation-recipes/" class="md-nav__link">
+        Implementation recipes
+      </a>
+    </li>
+  
+
+            
           
         </ul>
       </nav>
@@ -939,10 +1081,101 @@
   
   
   
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" type="checkbox" id="__nav_5" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_5">
+          Cogment Components
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Cogment Components" data-md-level="1">
+        <label class="md-nav__title" for="__nav_5">
+          <span class="md-nav__icon md-icon"></span>
+          Cogment Components
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
     <li class="md-nav__item">
-      <a href="../../../dashboard/metrics-and-dashboard/" class="md-nav__link">
+      <a href="../../../cogment-components/cli/cli/" class="md-nav__link">
+        CLI
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../cogment-components/orchestrator/orchestrator/" class="md-nav__link">
+        Orchestrator
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../cogment-components/model-registry/model-registry/" class="md-nav__link">
+        Model Registry
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../cogment-components/trial-datastore/trial-datastore/" class="md-nav__link">
+        Trial Datastore
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../cogment-components/dashboard/metrics-and-dashboard/" class="md-nav__link">
         Metrics & Dashboard
       </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
     </li>
   
 
@@ -1084,14 +1317,12 @@
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
     <span class="n">asyncio</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">main</span><span class="p">())</span>
 </code></pre></div>
-
 <p>Since we have created a new service we need to reference it at several places for everything to work properly. First, let's edit <code>docker-compose.yaml</code> to add the new service. To do that, simply add the following under the <code>services</code> key: it tells docker-compose about the new service.</p>
 <div class="highlight"><pre><span></span><code><span class="nt">dqn-agent</span><span class="p">:</span>
     <span class="nt">build</span><span class="p">:</span>
         <span class="nt">context</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">dqn_agent</span>
         <span class="nt">dockerfile</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">../py_service.dockerfile</span>
 </code></pre></div>
-
 <p>Then we will need to edit <code>cogment.yaml</code> to make <code>cogment run generate</code> run in the new service's directory and have <code>cogment run build</code> and <code>cogment run start</code> respectively trigger its build and its start. We will change the <code>generate</code>, <code>build</code> and <code>start</code> keys under <code>commands</code>.</p>
 <div class="highlight"><pre><span></span><code><span class="nt">commands</span><span class="p">:</span>
     <span class="nt">generate</span><span class="p">:</span> <span class="p p-Indicator">&gt;</span>
@@ -1105,7 +1336,6 @@
     <span class="c1"># ...</span>
     <span class="nt">start</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">docker-compose up dashboard metrics orchestrator environment random-agent dqn-agent</span>
 </code></pre></div>
-
 <p>Finally, the metrics server needs to know about this new data source. In <code>metrics/prometheus.yml</code>, add a new item under the <code>scrape_configs</code> key.</p>
 <div class="highlight"><pre><span></span><code><span class="p p-Indicator">-</span> <span class="nt">job_name</span><span class="p">:</span> <span class="s">&quot;dqn-agent&quot;</span>
   <span class="nt">dns_sd_configs</span><span class="p">:</span>
@@ -1115,7 +1345,6 @@
         <span class="nt">port</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">8000</span>
         <span class="nt">refresh_interval</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">5s</span>
 </code></pre></div>
-
 <h2 id="playing-against-the-heuristic-player">Playing against the heuristic player<a class="headerlink" href="#playing-against-the-heuristic-player" title="Permanent link">&para;</a></h2>
 <p>We will train our new player against the <a href="../4-heuristic-player/">heuristic player</a> we previously developed. We first need to update the trial config in <code>cogment.yaml</code>: <code>player_1</code> will be our new actor implementation while <code>player_2</code> will be the heuristic implementation. Trials will be 20 games long to generate enough meaningful data between each training step.</p>
 <div class="highlight"><pre><span></span><code><span class="nt">trial_params</span><span class="p">:</span>
@@ -1134,7 +1363,6 @@
           <span class="nt">implementation</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">heuristic_agent</span>
           <span class="nt">endpoint</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">grpc://random-agent:9000</span>
 </code></pre></div>
-
 <p>We can also update <code>client/main.py</code> to run a bunch of trials sequentially.</p>
 <div class="highlight"><pre><span></span><code><span class="k">async</span> <span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Client starting...&quot;</span><span class="p">)</span>
@@ -1156,7 +1384,6 @@
             <span class="k">if</span> <span class="n">trial_info</span><span class="o">.</span><span class="n">trial_id</span> <span class="o">==</span> <span class="n">trial_id</span><span class="p">:</span>
                 <span class="k">break</span>
 </code></pre></div>
-
 <p>You can now <a href="../1-bootstrap-and-data-structures/#building-and-running-the-app">build and run</a> the application. It should take a few minutes to run as it goes through the trial campaign.</p>
 <h2 id="implementing-the-deep-q-network">Implementing the Deep Q Network<a class="headerlink" href="#implementing-the-deep-q-network" title="Permanent link">&para;</a></h2>
 <p>We have set everything up, we can now focus on implementing our DQN agent.</p>
@@ -1165,7 +1392,6 @@
 <div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
 </code></pre></div>
-
 <p>Let's get into the meat of the matter by implementing a function to create our model. We are using <a href="https://www.tensorflow.org/guide/keras/functional" target="_blank">Keras functional API</a> to create the following layers:</p>
 <ol>
 <li>Two scalar inputs, the last moves of the player and the opponent.</li>
@@ -1203,7 +1429,6 @@
 
 <span class="n">_model</span> <span class="o">=</span> <span class="n">create_model</span><span class="p">()</span>
 </code></pre></div>
-
 <p>The other piece of the puzzle is implementing a small function that will convert our observations into inputs for the model we just created. As most of the encoding is handled by the model itself it's fairly straightforward.</p>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">model_ins_from_observations</span><span class="p">(</span><span class="n">observations</span><span class="p">):</span>
     <span class="k">return</span> <span class="p">{</span>
@@ -1213,7 +1438,6 @@
         <span class="p">),</span>
     <span class="p">}</span>
 </code></pre></div>
-
 <p>Finally we can make it work together by replacing the random choice of action by the use of the model. At the moment the model will just use the random initialization weights so don't expect much!</p>
 <p>Here is how the event loop in the <code>dqn_agent</code> function will need to be updated:</p>
 <ol>
@@ -1228,7 +1452,6 @@
     <span class="n">action</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">math</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">model_outs</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
     <span class="n">actor_session</span><span class="o">.</span><span class="n">do_action</span><span class="p">(</span><span class="n">PlayerAction</span><span class="p">(</span><span class="n">move</span><span class="o">=</span><span class="n">action</span><span class="p">))</span>
 </code></pre></div>
-
 <p>You can now <a href="../1-bootstrap-and-data-structures/#building-and-running-the-app">build and run</a> the application. It should take a few minutes to run as it goes through the trial campaign.</p>
 <blockquote>
 <p>In this example we define <code>_model</code> (and other variables in the following sections) as global mutable variables. It works in our case because the dqn agents are neither distributed nor multithreaded.</p>
@@ -1244,7 +1467,6 @@
 
 <span class="n">_epsilon</span> <span class="o">=</span> <span class="n">epsilon_max</span>
 </code></pre></div>
-
 <p>We then create a simple function we can use everytime an action needs to be taken to retrieve and update <code>_epsilon</code>.</p>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">get_and_update_epsilon</span><span class="p">():</span>
   <span class="k">global</span> <span class="n">_epsilon</span>
@@ -1253,7 +1475,6 @@
   <span class="n">_epsilon</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">_epsilon</span><span class="p">,</span> <span class="n">epsilon_min</span><span class="p">)</span>
   <span class="k">return</span> <span class="n">current_epsilon</span>
 </code></pre></div>
-
 <p>This function can then be used to occasionally do random actions, to facilitate the exploration. To do that, we need to slightly modify how the actions are computed and submitted.</p>
 <div class="highlight"><pre><span></span><code><span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">cogment</span><span class="o">.</span><span class="n">EventType</span><span class="o">.</span><span class="n">ACTIVE</span><span class="p">:</span>
   <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">get_and_update_epsilon</span><span class="p">():</span>
@@ -1264,7 +1485,6 @@
     <span class="n">action</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">math</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">model_outs</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
   <span class="n">actor_session</span><span class="o">.</span><span class="n">do_action</span><span class="p">(</span><span class="n">PlayerAction</span><span class="p">(</span><span class="n">move</span><span class="o">=</span><span class="n">action</span><span class="p">))</span>
 </code></pre></div>
-
 <p>You can now <a href="../1-bootstrap-and-data-structures/#building-and-running-the-app">build and run</a> the application. Nothing should appear different at this stage.</p>
 <h2 id="replay-buffer">Replay buffer<a class="headerlink" href="#replay-buffer" title="Permanent link">&para;</a></h2>
 <p>In our journey to train a model, the next stage is to build an experience replay buffer to collect actions/observations/rewards triples over the course of the trials. Once done, it'll be usable to train the model using this data.</p>
@@ -1281,7 +1501,6 @@
 
 <span class="n">_rb</span> <span class="o">=</span> <span class="n">create_replay_buffer</span><span class="p">()</span>
 </code></pre></div>
-
 <p>During each trial the agent will collect its data points in a <em>trial</em> replay buffer then append it to the global one. To achieve that we will first create the function in charge of the appending then collect data during the trial and call the "append" function.</p>
 <p>The following function will take a <em>trial</em> replay buffer and append it to the global <code>_rb</code>. To avoid memory overflow the replay buffer size is capped.</p>
 <div class="highlight"><pre><span></span><code><span class="n">_collected_samples_count</span> <span class="o">=</span> <span class="mi">0</span>
@@ -1311,7 +1530,6 @@
     <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">trial_rb_size</span><span class="si">}</span><span class="s2"> new samples stored after a trial, now having </span><span class="si">{</span><span class="n">rb_size</span><span class="si">}</span><span class="s2"> samples over a total of </span><span class="si">{</span><span class="n">_collected_samples_count</span><span class="si">}</span><span class="s2"> collected samples.&quot;</span>
   <span class="p">)</span>
 </code></pre></div>
-
 <p>The <code>dqn_agent</code> function can then be updated to collect received observations, rewards and sent actions. By default every action gets a <em>zero</em> reward. When a reward for a specific tick is received, its value gets updated.</p>
 <div class="highlight"><pre><span></span><code><span class="k">async</span> <span class="k">def</span> <span class="nf">dqn_agent</span><span class="p">(</span><span class="n">actor_session</span><span class="p">):</span>
   <span class="n">actor_session</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
@@ -1349,7 +1567,6 @@
   <span class="n">trial_rb</span><span class="p">[</span><span class="s2">&quot;obs_them_last_move&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">trial_rb</span><span class="p">[</span><span class="s2">&quot;obs_them_last_move&quot;</span><span class="p">][:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
   <span class="n">append_trial_replay_buffer</span><span class="p">(</span><span class="n">trial_rb</span><span class="p">)</span>
 </code></pre></div>
-
 <p>You can now <a href="../1-bootstrap-and-data-structures/#building-and-running-the-app">build and run</a> the application. The behavior should be the same but the log should confirm that data gets accumulated.</p>
 <h2 id="training">Training!<a class="headerlink" href="#training" title="Permanent link">&para;</a></h2>
 <p>Here we are, all the pieces are in place, we can implement the training proper. The function is a standard implementation of DQN and is decomposed in 4 steps:</p>
@@ -1425,7 +1642,6 @@
     <span class="k">if</span> <span class="n">_collected_samples_count</span> <span class="o">%</span> <span class="n">target_model_update_interval</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
       <span class="n">_target_model</span><span class="o">.</span><span class="n">set_weights</span><span class="p">(</span><span class="n">_model</span><span class="o">.</span><span class="n">get_weights</span><span class="p">())</span>
 </code></pre></div>
-
 <p>This function then needs to be called at the end of each trial after the call to <code>append_trial_replay_buffer</code>.</p>
 <p>You can now <a href="../1-bootstrap-and-data-structures/#building-and-running-the-app">build and run</a> the application. The dqn agent will start to learn and quickly prevail against the heuristic implementation.</p>
 <p>This can be observed by opening the dashboard at <a href="http://localhost:3003" target="_blank">http://localhost:3003</a> and opening the reward page. You should be able to track the progression of the dqn implementation.</p>
@@ -1449,7 +1665,8 @@
   
     <nav class="md-footer__inner md-grid" aria-label="Footer">
       
-        <a href="../6-web-client/" class="md-footer__link md-footer__link--prev" rel="prev">
+        
+        <a href="../6-web-client/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Step 6: Implement a web client for the human player" rel="prev">
           <div class="md-footer__button md-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
           </div>
@@ -1464,7 +1681,8 @@
         </a>
       
       
-        <a href="../../cogment-api-guide/" class="md-footer__link md-footer__link--next" rel="next">
+        
+        <a href="../../cogment-api-guide/" class="md-footer__link md-footer__link--next" aria-label="Next: API Guide" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
@@ -1488,10 +1706,12 @@
             Copyright 2021 AI Redefined Inc. <dev+cogment@ai-r.com>
           </div>
         
-        Made with
-        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
-          Material for MkDocs
-        </a>
+        
+          Made with
+          <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+            Material for MkDocs
+          </a>
+        
         
       </div>
       
@@ -1534,10 +1754,10 @@
     <div class="md-dialog" data-md-component="dialog">
       <div class="md-dialog__inner md-typeset"></div>
     </div>
-    <script id="__config" type="application/json">{"base": "../../..", "features": ["navigation.sections"], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}, "search": "../../../assets/javascripts/workers/search.d351de03.min.js", "version": null}</script>
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["navigation.sections"], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../../assets/javascripts/workers/search.e99e714c.min.js", "version": null}</script>
     
     
-      <script src="../../../assets/javascripts/bundle.a1609d9a.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.bc35569b.min.js"></script>
       
     
   </body>

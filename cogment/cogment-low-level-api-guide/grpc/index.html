@@ -16,18 +16,18 @@
         <link rel="canonical" href="https://docs.cogment.ai/cogment/cogment-low-level-api-guide/grpc/">
       
       <link rel="icon" href="../../../images/cogment_favicon.png">
-      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-7.1.5">
+      <meta name="generator" content="mkdocs-1.2.2, mkdocs-material-7.3.2">
     
     
       
-        <title>gRPC API Reference - Cogment</title>
+        <title>gRPC API Reference - Cogment User Documentation</title>
       
     
     
-      <link rel="stylesheet" href="../../../assets/stylesheets/main.bde7dde4.min.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.24c991ad.min.css">
       
         
-        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ef6f36e2.min.css">
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.3f5d1f46.min.css">
         
       
     
@@ -46,10 +46,19 @@
     
     
       
-        
-<script>window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga("create","UA-146998765-2","doc.cogment.ai"),ga("set","anonymizeIp",!0),ga("send","pageview"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){var e;this.value&&(e=document.location.pathname,ga("send","pageview",e+"?q="+this.value))}),"undefined"!=typeof location$&&location$.subscribe(function(e){ga("send","pageview",e.pathname)})})</script>
-<script async src="https://www.google-analytics.com/analytics.js"></script>
-      
+  
+
+
+
+  
+  
+
+
+
+  <script>window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga("create","UA-146998765-2","auto"),ga("set","anonymizeIp",!0),ga("send","pageview"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){var e;this.value&&(e=document.location.pathname,ga("send","pageview",e+"?q="+this.value))}),"undefined"!=typeof location$&&location$.subscribe(function(e){ga("send","pageview",e.pathname)})})</script>
+  <script async src="https://www.google-analytics.com/analytics.js"></script>
+
+
     
     
   </head>
@@ -80,9 +89,11 @@
       
     </div>
     
-      <header class="md-header" data-md-component="header">
+      
+
+<header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="../../.." title="Cogment" class="md-header__button md-logo" aria-label="Cogment" data-md-component="logo">
+    <a href="../../.." title="Cogment User Documentation" class="md-header__button md-logo" aria-label="Cogment User Documentation" data-md-component="logo">
       
   <img src="../../../images/cogment_logo.png" alt="logo">
 
@@ -94,7 +105,7 @@
       <div class="md-header__ellipsis">
         <div class="md-header__topic">
           <span class="md-ellipsis">
-            Cogment
+            Cogment User Documentation
           </span>
         </div>
         <div class="md-header__topic" data-md-component="header-topic">
@@ -117,14 +128,18 @@
   <label class="md-search__overlay" for="__search"></label>
   <div class="md-search__inner" role="search">
     <form class="md-search__form" name="search">
-      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active" required>
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
       <label class="md-search__icon md-icon" for="__search">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
       </label>
-      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
-      </button>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+        </button>
+      </nav>
+      
     </form>
     <div class="md-search__output">
       <div class="md-search__scrollwrap" data-md-scrollfix>
@@ -154,11 +169,14 @@
       </div>
     
   </nav>
+  
 </header>
     
     <div class="md-container" data-md-component="container">
       
       
+        
+          
         
       
       <main class="md-main" data-md-component="main">
@@ -174,12 +192,12 @@
 
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../../.." title="Cogment" class="md-nav__button md-logo" aria-label="Cogment" data-md-component="logo">
+    <a href="../../.." title="Cogment User Documentation" class="md-nav__button md-logo" aria-label="Cogment User Documentation" data-md-component="logo">
       
   <img src="../../../images/cogment_logo.png" alt="logo">
 
     </a>
-    Cogment
+    Cogment User Documentation
   </label>
   
     <div class="md-nav__source">
@@ -212,10 +230,14 @@
       
         <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_1" type="checkbox" id="__nav_1" >
       
-      <label class="md-nav__link" for="__nav_1">
-        Introduction
-        <span class="md-nav__icon md-icon"></span>
-      </label>
+      
+      
+      
+        <label class="md-nav__link" for="__nav_1">
+          Introduction
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <nav class="md-nav" aria-label="Introduction" data-md-level="1">
         <label class="md-nav__title" for="__nav_1">
           <span class="md-nav__icon md-icon"></span>
@@ -224,6 +246,7 @@
         <ul class="md-nav__list" data-md-scrollfix>
           
             
+              
   
   
   
@@ -234,8 +257,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -246,6 +271,7 @@
     </li>
   
 
+            
           
         </ul>
       </nav>
@@ -268,10 +294,14 @@
       
         <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" >
       
-      <label class="md-nav__link" for="__nav_2">
-        Support
-        <span class="md-nav__icon md-icon"></span>
-      </label>
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2">
+          Support
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <nav class="md-nav" aria-label="Support" data-md-level="1">
         <label class="md-nav__title" for="__nav_2">
           <span class="md-nav__icon md-icon"></span>
@@ -280,6 +310,7 @@
         <ul class="md-nav__list" data-md-scrollfix>
           
             
+              
   
   
   
@@ -290,6 +321,7 @@
     </li>
   
 
+            
           
         </ul>
       </nav>
@@ -312,10 +344,14 @@
       
         <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
       
-      <label class="md-nav__link" for="__nav_3">
-        Concepts
-        <span class="md-nav__icon md-icon"></span>
-      </label>
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3">
+          Concepts
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <nav class="md-nav" aria-label="Concepts" data-md-level="1">
         <label class="md-nav__title" for="__nav_3">
           <span class="md-nav__icon md-icon"></span>
@@ -324,6 +360,7 @@
         <ul class="md-nav__list" data-md-scrollfix>
           
             
+              
   
   
   
@@ -334,8 +371,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -346,6 +385,7 @@
     </li>
   
 
+            
           
         </ul>
       </nav>
@@ -370,18 +410,23 @@
       
         <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" checked>
       
-      <label class="md-nav__link" for="__nav_4">
-        Cogment
-        <span class="md-nav__icon md-icon"></span>
-      </label>
-      <nav class="md-nav" aria-label="Cogment" data-md-level="1">
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4">
+          Cogment APIs
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Cogment APIs" data-md-level="1">
         <label class="md-nav__title" for="__nav_4">
           <span class="md-nav__icon md-icon"></span>
-          Cogment
+          Cogment APIs
         </label>
         <ul class="md-nav__list" data-md-scrollfix>
           
             
+              
   
   
   
@@ -391,10 +436,14 @@
       
         <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_1" type="checkbox" id="__nav_4_1" >
       
-      <label class="md-nav__link" for="__nav_4_1">
-        Tutorial
-        <span class="md-nav__icon md-icon"></span>
-      </label>
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_1">
+          Tutorial
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <nav class="md-nav" aria-label="Tutorial" data-md-level="2">
         <label class="md-nav__title" for="__nav_4_1">
           <span class="md-nav__icon md-icon"></span>
@@ -403,6 +452,7 @@
         <ul class="md-nav__list" data-md-scrollfix>
           
             
+              
   
   
   
@@ -413,8 +463,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -425,8 +477,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -437,8 +491,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -449,8 +505,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -461,8 +519,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -473,8 +533,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -485,8 +547,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -497,14 +561,17 @@
     </li>
   
 
+            
           
         </ul>
       </nav>
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -515,8 +582,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -526,10 +595,14 @@
       
         <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_3" type="checkbox" id="__nav_4_3" >
       
-      <label class="md-nav__link" for="__nav_4_3">
-        API Reference
-        <span class="md-nav__icon md-icon"></span>
-      </label>
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_3">
+          API Reference
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <nav class="md-nav" aria-label="API Reference" data-md-level="2">
         <label class="md-nav__title" for="__nav_4_3">
           <span class="md-nav__icon md-icon"></span>
@@ -538,6 +611,7 @@
         <ul class="md-nav__list" data-md-scrollfix>
           
             
+              
   
   
   
@@ -548,8 +622,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -560,8 +636,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -571,10 +649,14 @@
       
         <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_3_3" type="checkbox" id="__nav_4_3_3" >
       
-      <label class="md-nav__link" for="__nav_4_3_3">
-        Javascript/Typescript SDK
-        <span class="md-nav__icon md-icon"></span>
-      </label>
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_3_3">
+          Javascript/Typescript SDK
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <nav class="md-nav" aria-label="Javascript/Typescript SDK" data-md-level="3">
         <label class="md-nav__title" for="__nav_4_3_3">
           <span class="md-nav__icon md-icon"></span>
@@ -583,6 +665,7 @@
         <ul class="md-nav__list" data-md-scrollfix>
           
             
+              
   
   
   
@@ -593,8 +676,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -605,8 +690,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -617,8 +704,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -629,8 +718,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -641,8 +732,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -653,8 +746,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -665,8 +760,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -677,8 +774,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -689,8 +788,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -701,8 +802,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -713,8 +816,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -725,8 +830,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -737,8 +844,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -749,8 +858,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -761,8 +872,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -773,8 +886,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -785,20 +900,24 @@
     </li>
   
 
+            
           
         </ul>
       </nav>
     </li>
   
 
+            
           
         </ul>
       </nav>
     </li>
   
 
+            
           
             
+              
   
   
     
@@ -810,18 +929,23 @@
       
         <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_4" type="checkbox" id="__nav_4_4" checked>
       
-      <label class="md-nav__link" for="__nav_4_4">
-        Low Level API Guide
-        <span class="md-nav__icon md-icon"></span>
-      </label>
-      <nav class="md-nav" aria-label="Low Level API Guide" data-md-level="2">
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_4">
+          Low Level API Reference
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Low Level API Reference" data-md-level="2">
         <label class="md-nav__title" for="__nav_4_4">
           <span class="md-nav__icon md-icon"></span>
-          Low Level API Guide
+          Low Level API Reference
         </label>
         <ul class="md-nav__list" data-md-scrollfix>
           
             
+              
   
   
   
@@ -832,8 +956,10 @@
     </li>
   
 
+            
           
             
+              
   
   
     
@@ -1285,11 +1411,11 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#agent-actor-api" class="md-nav__link">
-    Agent Actor API
+  <a href="#service-actor-api" class="md-nav__link">
+    Service Actor API
   </a>
   
-    <nav class="md-nav" aria-label="Agent Actor API">
+    <nav class="md-nav" aria-label="Service Actor API">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -1633,12 +1759,28 @@
     </li>
   
 
+            
           
         </ul>
       </nav>
     </li>
   
 
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../implementation-recipes/" class="md-nav__link">
+        Implementation recipes
+      </a>
+    </li>
+  
+
+            
           
         </ul>
       </nav>
@@ -1653,10 +1795,101 @@
   
   
   
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" type="checkbox" id="__nav_5" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_5">
+          Cogment Components
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Cogment Components" data-md-level="1">
+        <label class="md-nav__title" for="__nav_5">
+          <span class="md-nav__icon md-icon"></span>
+          Cogment Components
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
     <li class="md-nav__item">
-      <a href="../../../dashboard/metrics-and-dashboard/" class="md-nav__link">
+      <a href="../../../cogment-components/cli/cli/" class="md-nav__link">
+        CLI
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../cogment-components/orchestrator/orchestrator/" class="md-nav__link">
+        Orchestrator
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../cogment-components/model-registry/model-registry/" class="md-nav__link">
+        Model Registry
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../cogment-components/trial-datastore/trial-datastore/" class="md-nav__link">
+        Trial Datastore
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../cogment-components/dashboard/metrics-and-dashboard/" class="md-nav__link">
         Metrics & Dashboard
       </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
     </li>
   
 
@@ -2116,11 +2349,11 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#agent-actor-api" class="md-nav__link">
-    Agent Actor API
+  <a href="#service-actor-api" class="md-nav__link">
+    Service Actor API
   </a>
   
-    <nav class="md-nav" aria-label="Agent Actor API">
+    <nav class="md-nav" aria-label="Service Actor API">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -2519,7 +2752,6 @@ The actor can be infered by the position in the list, and the index into the lis
 <p>Empty message to serve as the request for the <code>Version</code> procedure (present in all gRPC services defined in the Cogment API).</p>
 <div class="highlight"><pre><span></span><code><span class="kd">message</span> <span class="nc">VersionRequest</span> <span class="p">{}</span>
 </code></pre></div>
-
 <h3 id="versioninfo"><code>VersionInfo</code><a class="headerlink" href="#versioninfo" title="Permanent link">&para;</a></h3>
 <p>Reply message for the <code>Version</code> procedure (present in all gRPC services defined in the API).
 It contains a list of version information.
@@ -2534,7 +2766,6 @@ Other reported versions are specific to the service called, possibly for use by 
   <span class="k">repeated</span> <span class="n">Version</span> <span class="na">versions</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
 <span class="p">}</span>
 </code></pre></div>
-
 <ul>
 <li>versions: List of version information</li>
 <li>name: The name/software/module for which the version is given. E.g. "cogment-api"</li>
@@ -2550,7 +2781,6 @@ Other reported versions are specific to the service called, possibly for use by 
   <span class="kt">uint32</span> <span class="na">max_inactivity</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
 <span class="p">}</span>
 </code></pre></div>
-
 <ul>
 <li>trial_config: (optional) The user config for the controller of the trial.</li>
 <li>environment: The parameters for the environment of the trial.</li>
@@ -2566,7 +2796,6 @@ Other reported versions are specific to the service called, possibly for use by 
   <span class="kt">string</span> <span class="na">implementation</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
 <span class="p">}</span>
 </code></pre></div>
-
 <ul>
 <li>endpoint: The URL where the environment is being served. This is used by the Orchestrator to connect to the environment using the <code>EnvironmentEndpoint</code> gRPC service.</li>
 <li>config: (optional) The user config for the environment.</li>
@@ -2582,7 +2811,6 @@ Other reported versions are specific to the service called, possibly for use by 
   <span class="n">ActorConfig</span> <span class="na">config</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
 <span class="p">}</span>
 </code></pre></div>
-
 <ul>
 <li>name: The name of the actor.</li>
 <li>actor_class: The name of the class of the actor. Actor classes are defined in the <code>cogment.yaml</code> file in the <code>actor_classes:id</code> sections.</li>
@@ -2604,7 +2832,6 @@ Other reported versions are specific to the service called, possibly for use by 
   <span class="kt">bytes</span> <span class="na">content</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
 <span class="p">}</span>
 </code></pre></div>
-
 <ul>
 <li>content: The serialized protobuf message representing a config. The actual message type is defined in the <code>cogment.yaml</code> file in its respective section: <code>environment:config_type</code>, <code>actor_classes:config_type</code>, and <code>trial:config_type</code>. Environment config is for use by environments. Actor config is for use by actors (each actor class can have a different config type). Trial config is for use by controllers.</li>
 </ul>
@@ -2615,7 +2842,6 @@ Other reported versions are specific to the service called, possibly for use by 
   <span class="kt">string</span> <span class="na">name</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
 <span class="p">}</span>
 </code></pre></div>
-
 <ul>
 <li>actor_class: The name of the class of actor. Actor classes are defined in the <code>cogment.yaml</code> file in the <code>actor_classes:id</code> sections.</li>
 <li>name: The name of the actor.</li>
@@ -2628,7 +2854,6 @@ Other reported versions are specific to the service called, possibly for use by 
   <span class="n">ObservationData</span> <span class="na">data</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
 <span class="p">}</span>
 </code></pre></div>
-
 <ul>
 <li>tick_id: Tick of this observation.</li>
 <li>timestamp: The time of the observation.</li>
@@ -2641,7 +2866,6 @@ Other reported versions are specific to the service called, possibly for use by 
   <span class="kt">bool</span> <span class="na">snapshot</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
 <span class="p">}</span>
 </code></pre></div>
-
 <ul>
 <li>content: The serialized protobuf message representing an observation for a specific actor. If the <code>snapshot</code> field value is true, the type of message is an observation <em>space</em> (i.e. a full observation snapshot) defined in section <code>actor_classes:observation:space</code> of the <code>cogment.yaml</code> file. If the <code>snapshot</code> field value is false, the type is an observation <em>delta</em> (i.e. a difference from a previous observation) defined in the section <code>actor_classes:observation:delta</code> of the <code>cogment.yaml</code> file. Note that the specific actor represented is defined by the enclosing message.</li>
 <li>snapshot: Determines the type of the message in the <code>content</code> field.</li>
@@ -2653,7 +2877,6 @@ Other reported versions are specific to the service called, possibly for use by 
   <span class="kt">uint64</span> <span class="na">tick_id</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
 <span class="p">}</span>
 </code></pre></div>
-
 <ul>
 <li>content: The serialized protobuf message representing an action from a specific actor. The actual message type for the action space is defined in the <code>cogment.yaml</code> file for each actor class in section <code>actor_classes:action:space</code>. Note that the specific actor represented is defined by the enclosing message.</li>
 <li>tick_id: The tick of the observation on which the action is taken.</li>
@@ -2667,7 +2890,6 @@ Other reported versions are specific to the service called, possibly for use by 
   <span class="n">google.protobuf.Any</span> <span class="na">payload</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
 <span class="p">}</span>
 </code></pre></div>
-
 <ul>
 <li>tick_id: Tick associated with the message.</li>
 <li>sender_name: The name of the sending actor. "env" for the environment. This is optional when sending messages (i.e. the sender is already known).</li>
@@ -2683,7 +2905,6 @@ Other reported versions are specific to the service called, possibly for use by 
   <span class="n">google.protobuf.Any</span> <span class="na">user_data</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
 <span class="p">}</span>
 </code></pre></div>
-
 <ul>
 <li>sender_name: Name of the sender that sent the reward. This is not needed when sending because it will be set by the orchestrator. It is only used by receiving actors.</li>
 <li>value: The numerical value of the provided reward.</li>
@@ -2700,7 +2921,6 @@ This is an aggregate of possibly multiple <code>RewardSource</code> (but at leas
   <span class="k">repeated</span> <span class="n">RewardSource</span> <span class="na">sources</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
 <span class="p">}</span>
 </code></pre></div>
-
 <ul>
 <li>receiver_name: Name of the receiving actor (the reward destination).</li>
 <li>tick_id: The tick associated with the reward. If set to <code>-1</code> when sending a reward, the orchestrator will automatically assign the latest tick. This will always be a valid tick (i.e. &gt;= 0) when receiving a reward.</li>
@@ -2715,7 +2935,6 @@ This is an aggregate of possibly multiple <code>RewardSource</code> (but at leas
   <span class="k">repeated</span> <span class="n">Message</span> <span class="na">messages</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
 <span class="p">}</span>
 </code></pre></div>
-
 <ul>
 <li>observations: Observations from the environment for a period of time. Typically only for one time step (tick). If there are multiple, they are ordered by tick_id.</li>
 <li>rewards: List of rewards sent by actors or the environment. Ordered by tick_id.</li>
@@ -2730,7 +2949,6 @@ This is an aggregate of possibly multiple <code>RewardSource</code> (but at leas
   <span class="k">repeated</span> <span class="kt">int32</span> <span class="na">actors_map</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
 <span class="p">}</span>
 </code></pre></div>
-
 <ul>
 <li>tick_id: The tick to which the observations relate to.</li>
 <li>timestamp: The time when the observation set was made.</li>
@@ -2749,7 +2967,6 @@ This is an aggregate of possibly multiple <code>RewardSource</code> (but at leas
   <span class="k">rpc</span> <span class="n">Version</span><span class="p">(</span><span class="n">VersionRequest</span><span class="p">)</span> <span class="k">returns</span> <span class="p">(</span><span class="n">VersionInfo</span><span class="p">)</span> <span class="p">{}</span>
 <span class="p">}</span>
 </code></pre></div>
-
 <h4 id="starttrial"><code>StartTrial()</code><a class="headerlink" href="#starttrial" title="Permanent link">&para;</a></h4>
 <p>Start a new trial.</p>
 <p>Metadata: None</p>
@@ -2778,7 +2995,6 @@ This is an aggregate of possibly multiple <code>RewardSource</code> (but at leas
   <span class="kt">string</span> <span class="na">user_id</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
 <span class="p">}</span>
 </code></pre></div>
-
 <ul>
 <li>config: The trial config data. This data can be used by the pre-trial hooks to determine the config for the rest of the componenents.</li>
 <li>user_id: The ID of the user that is starting the trial.</li>
@@ -2790,7 +3006,6 @@ This is an aggregate of possibly multiple <code>RewardSource</code> (but at leas
   <span class="k">repeated</span> <span class="n">TrialActor</span> <span class="na">actors_in_trial</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
 <span class="p">}</span>
 </code></pre></div>
-
 <ul>
 <li>trial_id: UUID of the newly started trial.</li>
 <li>actors_in_trial: The list of all actors in the trial. This list has the same length and order as the list of actors provided in different places in the API, for the same trial. The list can be empty (or not present) in some circumstances, even if there are actors (if necessary the list can be obtained in other ways).</li>
@@ -2799,19 +3014,16 @@ This is an aggregate of possibly multiple <code>RewardSource</code> (but at leas
 <p>Request message for the <code>TerminateTrial</code> procedure.</p>
 <div class="highlight"><pre><span></span><code><span class="kd">message</span> <span class="nc">TerminateTrialRequest</span> <span class="p">{}</span>
 </code></pre></div>
-
 <h3 id="terminatetrialreply"><code>TerminateTrialReply</code><a class="headerlink" href="#terminatetrialreply" title="Permanent link">&para;</a></h3>
 <p>Reply message for the <code>TerminateTrial</code> procedure.</p>
 <div class="highlight"><pre><span></span><code><span class="kd">message</span> <span class="nc">TerminateTrialReply</span> <span class="p">{}</span>
 </code></pre></div>
-
 <h3 id="trialinforequest"><code>TrialInfoRequest</code><a class="headerlink" href="#trialinforequest" title="Permanent link">&para;</a></h3>
 <p>Request message for the <code>GetTrialInfo</code> procedure.</p>
 <div class="highlight"><pre><span></span><code><span class="kd">message</span> <span class="nc">TrialInfoRequest</span> <span class="p">{</span>
   <span class="kt">bool</span> <span class="na">get_latest_observation</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
 <span class="p">}</span>
 </code></pre></div>
-
 <ul>
 <li>get_latest_observation: If true, request the latest environment observation available for the trial (in addition to standard information).</li>
 </ul>
@@ -2821,7 +3033,6 @@ This is an aggregate of possibly multiple <code>RewardSource</code> (but at leas
   <span class="k">repeated</span> <span class="n">TrialInfo</span> <span class="na">trial</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
 <span class="p">}</span>
 </code></pre></div>
-
 <ul>
 <li>trial: List of information about the trials. Contains only the requested trial info if a trial ID was provided when the call was made (as metadata to the procedure). Otherwise contains information about all active trials.</li>
 </ul>
@@ -2836,7 +3047,6 @@ This is an aggregate of possibly multiple <code>RewardSource</code> (but at leas
   <span class="na">ENDED</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
 <span class="p">}</span>
 </code></pre></div>
-
 <ul>
 <li>UNKNOWN: Should not be used (it's a requirement of protobuf enums to have a 0 default value).</li>
 <li>INITIALIZING: The trial is in the process of starting.</li>
@@ -2856,7 +3066,6 @@ This is an aggregate of possibly multiple <code>RewardSource</code> (but at leas
   <span class="k">repeated</span> <span class="n">TrialActor</span> <span class="na">actors_in_trial</span> <span class="o">=</span> <span class="mi">6</span><span class="p">;</span>
 <span class="p">}</span>
 </code></pre></div>
-
 <ul>
 <li>trial_id: The UUID of the trial.</li>
 <li>state: The state of the trial.</li>
@@ -2871,7 +3080,6 @@ This is an aggregate of possibly multiple <code>RewardSource</code> (but at leas
   <span class="k">repeated</span> <span class="n">TrialState</span> <span class="na">filter</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
 <span class="p">}</span>
 </code></pre></div>
-
 <ul>
 <li>filter: The list of states that are requested. If a trial is not in a state found in this list, it will not be reported. If the list is empty, all states will be reported.</li>
 </ul>
@@ -2882,7 +3090,6 @@ This is an aggregate of possibly multiple <code>RewardSource</code> (but at leas
   <span class="n">TrialState</span> <span class="na">state</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
 <span class="p">}</span>
 </code></pre></div>
-
 <ul>
 <li>trial_id: The UUID of the trial.</li>
 <li>state: The state of the trial.</li>
@@ -2902,7 +3109,6 @@ The actors connecting this way must have an endpoint set to "client" in the <a h
   <span class="k">rpc</span> <span class="n">Version</span><span class="p">(</span><span class="n">VersionRequest</span><span class="p">)</span> <span class="k">returns</span> <span class="p">(</span><span class="n">VersionInfo</span><span class="p">)</span> <span class="p">{}</span>
 <span class="p">}</span>
 </code></pre></div>
-
 <h4 id="jointrial"><code>JoinTrial()</code><a class="headerlink" href="#jointrial" title="Permanent link">&para;</a></h4>
 <p>Join an existing trial.</p>
 <p>Metadata: None</p>
@@ -2950,7 +3156,6 @@ Otherwise the actor will be considered terminated and be disconnected.</p>
   <span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div>
-
 <ul>
 <li>trial_id: The UUID of the trial the actor requests to join.</li>
 <li>actor_class: The class the actor requests to join as. No actor name should be requested if this is used.</li>
@@ -2965,7 +3170,6 @@ Otherwise the actor will be considered terminated and be disconnected.</p>
   <span class="k">repeated</span> <span class="n">TrialActor</span> <span class="na">actors_in_trial</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
 <span class="p">}</span>
 </code></pre></div>
-
 <ul>
 <li>actor_name: The name assigned to the current actor joining the trial.</li>
 <li>trial_id: The UUID of the trial joined.</li>
@@ -2976,19 +3180,16 @@ Otherwise the actor will be considered terminated and be disconnected.</p>
 <p>Request message for the <code>Heartbeat</code> procedure.</p>
 <div class="highlight"><pre><span></span><code><span class="kd">message</span> <span class="nc">TrialHeartbeatRequest</span> <span class="p">{}</span>
 </code></pre></div>
-
 <h3 id="trialheartbeatreply"><code>TrialHeartbeatReply</code><a class="headerlink" href="#trialheartbeatreply" title="Permanent link">&para;</a></h3>
 <p>Reply message for the <code>Heartbeat</code> procedure.</p>
 <div class="highlight"><pre><span></span><code><span class="kd">message</span> <span class="nc">TrialHeartbeatReply</span> <span class="p">{}</span>
 </code></pre></div>
-
 <h3 id="trialactionrequest"><code>TrialActionRequest</code><a class="headerlink" href="#trialactionrequest" title="Permanent link">&para;</a></h3>
 <p>Stream request message for the <code>ActionStream</code> procedure.</p>
 <div class="highlight"><pre><span></span><code><span class="kd">message</span> <span class="nc">TrialActionRequest</span> <span class="p">{</span>
   <span class="n">Action</span> <span class="na">action</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
 <span class="p">}</span>
 </code></pre></div>
-
 <ul>
 <li>action: The action taken by the current actor. This is typically in response to an observation (from the reply message). The first action after joining a trial (before any observations have been received) should be empty.</li>
 </ul>
@@ -2999,7 +3200,6 @@ Otherwise the actor will be considered terminated and be disconnected.</p>
   <span class="kt">bool</span> <span class="na">final_data</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
 <span class="p">}</span>
 </code></pre></div>
-
 <ul>
 <li>data: The trial data for the current actor. This data can span a period of time, but is typically for one time step (tick).</li>
 <li>final_data: If this is true, the data provided is final and no more reply messages will be received after this one.</li>
@@ -3010,7 +3210,6 @@ Otherwise the actor will be considered terminated and be disconnected.</p>
   <span class="k">repeated</span> <span class="n">Reward</span> <span class="na">rewards</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
 <span class="p">}</span>
 </code></pre></div>
-
 <ul>
 <li>rewards: The rewards to send to one or more actors.</li>
 </ul>
@@ -3018,14 +3217,12 @@ Otherwise the actor will be considered terminated and be disconnected.</p>
 <p>Reply message for the <code>SendReward</code> procedure.</p>
 <div class="highlight"><pre><span></span><code><span class="kd">message</span> <span class="nc">TrialRewardReply</span> <span class="p">{}</span>
 </code></pre></div>
-
 <h3 id="trialmessagerequest"><code>TrialMessageRequest</code><a class="headerlink" href="#trialmessagerequest" title="Permanent link">&para;</a></h3>
 <p>Request message for the <code>SendMessage</code> procedure.</p>
 <div class="highlight"><pre><span></span><code><span class="kd">message</span> <span class="nc">TrialMessageRequest</span> <span class="p">{</span>
   <span class="k">repeated</span> <span class="n">Message</span> <span class="na">messages</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
 <span class="p">}</span>
 </code></pre></div>
-
 <ul>
 <li>messages: User data to send to other actors or the environment. The sender_name entry should not be set (it is part of the metadata of the procedure).</li>
 </ul>
@@ -3033,11 +3230,10 @@ Otherwise the actor will be considered terminated and be disconnected.</p>
 <p>Reply message for the <code>SendMessage</code> procedure.</p>
 <div class="highlight"><pre><span></span><code><span class="kd">message</span> <span class="nc">TrialMessageReply</span> <span class="p">{}</span>
 </code></pre></div>
-
-<h2 id="agent-actor-api">Agent Actor API<a class="headerlink" href="#agent-actor-api" title="Permanent link">&para;</a></h2>
-<p>This API is defined in <code>agent.proto</code>. It is implemented by the agent application using the gRPC server API, and the orchestrator connects to the agent application.</p>
-<p>This API is used by agent actors that will be participating in new trials.
-Multiple simultaneous agent actors can be served from a single agent application instance.
+<h2 id="service-actor-api">Service Actor API<a class="headerlink" href="#service-actor-api" title="Permanent link">&para;</a></h2>
+<p>This API is defined in <code>agent.proto</code>. It is implemented by the actor application using the gRPC server API, and the orchestrator connects to the actor application.</p>
+<p>This API is used by service actors that will be participating in new trials.
+Multiple simultaneous service actors can be served from a single actor application instance.
 An actor endpoint, for the orchestrator to connect to, is defined in the <a href="../../cogment-api-reference/cogment-yaml/#trial-params">trial parameters</a>.</p>
 <h3 id="service-agentendpoint">Service <code>AgentEndpoint</code><a class="headerlink" href="#service-agentendpoint" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="kd">service</span> <span class="n">AgentEndpoint</span> <span class="p">{</span>
@@ -3049,7 +3245,6 @@ An actor endpoint, for the orchestrator to connect to, is defined in the <a href
   <span class="k">rpc</span> <span class="n">Version</span><span class="p">(</span><span class="n">VersionRequest</span><span class="p">)</span> <span class="k">returns</span> <span class="p">(</span><span class="n">VersionInfo</span><span class="p">)</span> <span class="p">{}</span>
 <span class="p">}</span>
 </code></pre></div>
-
 <h4 id="onstart"><code>OnStart()</code><a class="headerlink" href="#onstart" title="Permanent link">&para;</a></h4>
 <p>Called when a new trial is started.</p>
 <p>Metadata:</p>
@@ -3097,7 +3292,6 @@ No more calls will be done related to the trial after this call.</p>
   <span class="k">repeated</span> <span class="n">TrialActor</span> <span class="na">actors_in_trial</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
 <span class="p">}</span>
 </code></pre></div>
-
 <ul>
 <li>impl_name: (optional) Name of the implementation that should run the actor in this trial. If not provided, an arbitrary implementation will be used.</li>
 <li>config: The configuration to start the actor.</li>
@@ -3107,14 +3301,12 @@ No more calls will be done related to the trial after this call.</p>
 <p>Reply message for the <code>OnStart</code> procedure.</p>
 <div class="highlight"><pre><span></span><code><span class="kd">message</span> <span class="nc">AgentStartReply</span> <span class="p">{}</span>
 </code></pre></div>
-
 <h3 id="agentobservationrequest"><code>AgentObservationRequest</code><a class="headerlink" href="#agentobservationrequest" title="Permanent link">&para;</a></h3>
 <p>Request message for the <code>OnObservation</code> procedure.</p>
 <div class="highlight"><pre><span></span><code><span class="kd">message</span> <span class="nc">AgentObservationRequest</span> <span class="p">{</span>
   <span class="n">Observation</span> <span class="na">observation</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
 <span class="p">}</span>
 </code></pre></div>
-
 <ul>
 <li>observation: An observation from the environment.</li>
 </ul>
@@ -3126,7 +3318,6 @@ No more calls will be done related to the trial after this call.</p>
   <span class="k">repeated</span> <span class="n">Message</span> <span class="na">messages</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
 <span class="p">}</span>
 </code></pre></div>
-
 <ul>
 <li>action: An action for the environment.</li>
 <li>rewards: Rewards for other actors.</li>
@@ -3138,7 +3329,6 @@ No more calls will be done related to the trial after this call.</p>
   <span class="n">Reward</span> <span class="na">reward</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
 <span class="p">}</span>
 </code></pre></div>
-
 <ul>
 <li>reward: Reward received from aggregating various rewards from actors or the environment.</li>
 </ul>
@@ -3146,14 +3336,12 @@ No more calls will be done related to the trial after this call.</p>
 <p>Reply message for the <code>OnReward</code> procedure.</p>
 <div class="highlight"><pre><span></span><code><span class="kd">message</span> <span class="nc">AgentRewardReply</span> <span class="p">{}</span>
 </code></pre></div>
-
 <h3 id="agentmessagerequest"><code>AgentMessageRequest</code><a class="headerlink" href="#agentmessagerequest" title="Permanent link">&para;</a></h3>
 <p>Request message for the <code>OnMessage</code> procedure.</p>
 <div class="highlight"><pre><span></span><code><span class="kd">message</span> <span class="nc">AgentMessageRequest</span> <span class="p">{</span>
   <span class="k">repeated</span> <span class="n">Message</span> <span class="na">messages</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
 <span class="p">}</span>
 </code></pre></div>
-
 <ul>
 <li>messages: List of messages from actors or the environment.</li>
 </ul>
@@ -3161,14 +3349,12 @@ No more calls will be done related to the trial after this call.</p>
 <p>Reply message for the <code>OnMessage</code> procedure.</p>
 <div class="highlight"><pre><span></span><code><span class="kd">message</span> <span class="nc">AgentMessageReply</span> <span class="p">{}</span>
 </code></pre></div>
-
 <h3 id="agentendrequest"><code>AgentEndRequest</code><a class="headerlink" href="#agentendrequest" title="Permanent link">&para;</a></h3>
 <p>Request message for the <code>OnEnd</code> procedure.</p>
 <div class="highlight"><pre><span></span><code><span class="kd">message</span> <span class="nc">AgentEndRequest</span> <span class="p">{</span>
   <span class="n">ActorPeriodData</span> <span class="na">final_data</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
 <span class="p">}</span>
 </code></pre></div>
-
 <ul>
 <li>final_data: The final (last) data for the trial.</li>
 </ul>
@@ -3176,7 +3362,6 @@ No more calls will be done related to the trial after this call.</p>
 <p>Reply message for the <code>OnEnd</code> procedure.</p>
 <div class="highlight"><pre><span></span><code><span class="kd">message</span> <span class="nc">AgentEndReply</span> <span class="p">{}</span>
 </code></pre></div>
-
 <h2 id="environment-api">Environment API<a class="headerlink" href="#environment-api" title="Permanent link">&para;</a></h2>
 <p>This API is defined in <code>environment.proto</code>. It is implemented by the environment application using the gRPC server API, and the orchestrator connects to the environment application.</p>
 <p>This API is used by environments that will run trials.
@@ -3192,7 +3377,6 @@ The environment endpoint, for the orchestrator to connect to, is defined in the 
   <span class="k">rpc</span> <span class="n">Version</span><span class="p">(</span><span class="n">VersionRequest</span><span class="p">)</span> <span class="k">returns</span> <span class="p">(</span><span class="n">VersionInfo</span><span class="p">)</span> <span class="p">{}</span>
 <span class="p">}</span>
 </code></pre></div>
-
 <h4 id="onstart_1"><code>OnStart()</code><a class="headerlink" href="#onstart_1" title="Permanent link">&para;</a></h4>
 <p>Called when a new trial is started.</p>
 <p>Metadata:</p>
@@ -3230,7 +3414,6 @@ If no reply is sent within a pre-determined time, the environment is considered 
   <span class="kt">uint64</span> <span class="na">tick_id</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
 <span class="p">}</span>
 </code></pre></div>
-
 <ul>
 <li>impl_name: (optional) Name of the implementation that should run the environment for this trial. If not provided, an arbitrary implementation will be used.</li>
 <li>config: The configuration to start the environment.</li>
@@ -3243,7 +3426,6 @@ If no reply is sent within a pre-determined time, the environment is considered 
   <span class="n">ObservationSet</span> <span class="na">observation_set</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
 <span class="p">}</span>
 </code></pre></div>
-
 <ul>
 <li>observation_set: A set of observations for all actors of the trial.</li>
 </ul>
@@ -3259,7 +3441,6 @@ If no reply is sent within a pre-determined time, the environment is considered 
   <span class="kt">bool</span> <span class="na">reply_with_snapshot</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
 <span class="p">}</span>
 </code></pre></div>
-
 <ul>
 <li>actions: A list of actions, one for each actor of the trial. This list has the same length and order as the list of actors provided in different places in the API (e.g. <code>actors_in_trial</code>), for the same trial. Each action is the serialization of the appropriate type for the actor (as defined in the <code>cogment.yaml</code> file).</li>
 <li>tick_id: The tick of the observations on which the actions are taken.</li>
@@ -3275,7 +3456,6 @@ If no reply is sent within a pre-determined time, the environment is considered 
   <span class="kt">bool</span> <span class="na">final_update</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
 <span class="p">}</span>
 </code></pre></div>
-
 <ul>
 <li>observation_set: A set of observations for all actors of the trial.</li>
 <li>rewards: A list of rewards for actors.</li>
@@ -3289,7 +3469,6 @@ If no reply is sent within a pre-determined time, the environment is considered 
   <span class="k">repeated</span> <span class="n">Message</span> <span class="na">messages</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
 <span class="p">}</span>
 </code></pre></div>
-
 <ul>
 <li>messages: List of messages from actors.</li>
 </ul>
@@ -3297,7 +3476,6 @@ If no reply is sent within a pre-determined time, the environment is considered 
 <p>Reply message for the <code>OnMessage</code> procedure.</p>
 <div class="highlight"><pre><span></span><code><span class="kd">message</span> <span class="nc">EnvMessageReply</span> <span class="p">{}</span>
 </code></pre></div>
-
 <h2 id="datalog-api">Data/Log API<a class="headerlink" href="#datalog-api" title="Permanent link">&para;</a></h2>
 <p>This API is defined in <code>datalog.proto</code>. It is implemented by the data logger application using the gRPC server API, and the orchestrator connects to the data logger application.</p>
 <p>The data logger endpoint, for the orchestrator to connect to, is defined in the <code>cogment.yaml</code> file.</p>
@@ -3307,7 +3485,6 @@ If no reply is sent within a pre-determined time, the environment is considered 
   <span class="k">rpc</span> <span class="n">Version</span><span class="p">(</span><span class="n">VersionRequest</span><span class="p">)</span> <span class="k">returns</span> <span class="p">(</span><span class="n">VersionInfo</span><span class="p">)</span> <span class="p">{}</span>
 <span class="p">}</span>
 </code></pre></div>
-
 <h4 id="onlogsample"><code>OnLogSample()</code><a class="headerlink" href="#onlogsample" title="Permanent link">&para;</a></h4>
 <p>Called for each trial, at the start of the trial.
 The first data received are the parameters.
@@ -3345,7 +3522,6 @@ The stream is maintained for the duration of the trial.</p>
   <span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div>
-
 <ul>
 <li>tick_id: The current tick of the trial.</li>
 <li>timestamp: The time at the beginning of the tick.</li>
@@ -3362,7 +3538,6 @@ The stream is maintained for the duration of the trial.</p>
 <p>Reply message for the <code>OnLogSample</code> procedure.</p>
 <div class="highlight"><pre><span></span><code><span class="kd">message</span> <span class="nc">LogExporterSampleReply</span> <span class="p">{}</span>
 </code></pre></div>
-
 <h2 id="hook-api">Hook API<a class="headerlink" href="#hook-api" title="Permanent link">&para;</a></h2>
 <p>This API is defined in <code>hooks.proto</code>. It is implemented by the pre-trial hook application using the gRPC server API, and the orchestrator connects to the application.</p>
 <p>The pre-trial hook endpoint, for the orchestrator to connect to, is defined in the <code>cogment.yaml</code> file.</p>
@@ -3372,7 +3547,6 @@ The stream is maintained for the duration of the trial.</p>
   <span class="k">rpc</span> <span class="n">Version</span><span class="p">(</span><span class="n">VersionRequest</span><span class="p">)</span> <span class="k">returns</span> <span class="p">(</span><span class="n">VersionInfo</span><span class="p">)</span> <span class="p">{}</span>
 <span class="p">}</span>
 </code></pre></div>
-
 <h4 id="onpretrial"><code>OnPreTrial()</code><a class="headerlink" href="#onpretrial" title="Permanent link">&para;</a></h4>
 <p>Called before a trial is started to set or modify the parameters for the trial.</p>
 <p>Metadata:</p>
@@ -3390,7 +3564,6 @@ The stream is maintained for the duration of the trial.</p>
   <span class="kt">string</span> <span class="na">user_id</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
 <span class="p">}</span>
 </code></pre></div>
-
 <ul>
 <li>impl_name: (optional) Name of the implementation that should run the hook. If not provided, an arbitrary implementation will be used. Set on a request, ignored when replying.</li>
 <li>params: The trial parameters so far. The first hook to be called will receive the default parameters present in the <code>cogment.yaml</code> file, and subsequent hooks will receive the parameters sent from the previous hook. Typically, changes are made to this data and the message sent as a reply.</li>
@@ -3414,7 +3587,8 @@ The stream is maintained for the duration of the trial.</p>
   
     <nav class="md-footer__inner md-grid" aria-label="Footer">
       
-        <a href="../overview/" class="md-footer__link md-footer__link--prev" rel="prev">
+        
+        <a href="../overview/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Overview" rel="prev">
           <div class="md-footer__button md-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
           </div>
@@ -3429,13 +3603,14 @@ The stream is maintained for the duration of the trial.</p>
         </a>
       
       
-        <a href="../../../dashboard/metrics-and-dashboard/" class="md-footer__link md-footer__link--next" rel="next">
+        
+        <a href="../../implementation-recipes/" class="md-footer__link md-footer__link--next" aria-label="Next: Implementation recipes" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
                 Next
               </span>
-              Metrics & Dashboard
+              Implementation recipes
             </div>
           </div>
           <div class="md-footer__button md-icon">
@@ -3453,10 +3628,12 @@ The stream is maintained for the duration of the trial.</p>
             Copyright 2021 AI Redefined Inc. <dev+cogment@ai-r.com>
           </div>
         
-        Made with
-        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
-          Material for MkDocs
-        </a>
+        
+          Made with
+          <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+            Material for MkDocs
+          </a>
+        
         
       </div>
       
@@ -3499,10 +3676,10 @@ The stream is maintained for the duration of the trial.</p>
     <div class="md-dialog" data-md-component="dialog">
       <div class="md-dialog__inner md-typeset"></div>
     </div>
-    <script id="__config" type="application/json">{"base": "../../..", "features": ["navigation.sections"], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}, "search": "../../../assets/javascripts/workers/search.d351de03.min.js", "version": null}</script>
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["navigation.sections"], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../../assets/javascripts/workers/search.e99e714c.min.js", "version": null}</script>
     
     
-      <script src="../../../assets/javascripts/bundle.a1609d9a.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.bc35569b.min.js"></script>
       
     
   </body>

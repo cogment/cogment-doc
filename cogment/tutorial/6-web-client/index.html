@@ -16,18 +16,18 @@
         <link rel="canonical" href="https://docs.cogment.ai/cogment/tutorial/6-web-client/">
       
       <link rel="icon" href="../../../images/cogment_favicon.png">
-      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-7.1.5">
+      <meta name="generator" content="mkdocs-1.2.2, mkdocs-material-7.3.2">
     
     
       
-        <title>Step 6: Implement a web client for the human player - Cogment</title>
+        <title>Step 6: Implement a web client for the human player - Cogment User Documentation</title>
       
     
     
-      <link rel="stylesheet" href="../../../assets/stylesheets/main.bde7dde4.min.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.24c991ad.min.css">
       
         
-        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ef6f36e2.min.css">
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.3f5d1f46.min.css">
         
       
     
@@ -46,10 +46,19 @@
     
     
       
-        
-<script>window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga("create","UA-146998765-2","doc.cogment.ai"),ga("set","anonymizeIp",!0),ga("send","pageview"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){var e;this.value&&(e=document.location.pathname,ga("send","pageview",e+"?q="+this.value))}),"undefined"!=typeof location$&&location$.subscribe(function(e){ga("send","pageview",e.pathname)})})</script>
-<script async src="https://www.google-analytics.com/analytics.js"></script>
-      
+  
+
+
+
+  
+  
+
+
+
+  <script>window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga("create","UA-146998765-2","auto"),ga("set","anonymizeIp",!0),ga("send","pageview"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){var e;this.value&&(e=document.location.pathname,ga("send","pageview",e+"?q="+this.value))}),"undefined"!=typeof location$&&location$.subscribe(function(e){ga("send","pageview",e.pathname)})})</script>
+  <script async src="https://www.google-analytics.com/analytics.js"></script>
+
+
     
     
   </head>
@@ -80,9 +89,11 @@
       
     </div>
     
-      <header class="md-header" data-md-component="header">
+      
+
+<header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="../../.." title="Cogment" class="md-header__button md-logo" aria-label="Cogment" data-md-component="logo">
+    <a href="../../.." title="Cogment User Documentation" class="md-header__button md-logo" aria-label="Cogment User Documentation" data-md-component="logo">
       
   <img src="../../../images/cogment_logo.png" alt="logo">
 
@@ -94,7 +105,7 @@
       <div class="md-header__ellipsis">
         <div class="md-header__topic">
           <span class="md-ellipsis">
-            Cogment
+            Cogment User Documentation
           </span>
         </div>
         <div class="md-header__topic" data-md-component="header-topic">
@@ -117,14 +128,18 @@
   <label class="md-search__overlay" for="__search"></label>
   <div class="md-search__inner" role="search">
     <form class="md-search__form" name="search">
-      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active" required>
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
       <label class="md-search__icon md-icon" for="__search">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
       </label>
-      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
-      </button>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+        </button>
+      </nav>
+      
     </form>
     <div class="md-search__output">
       <div class="md-search__scrollwrap" data-md-scrollfix>
@@ -154,11 +169,14 @@
       </div>
     
   </nav>
+  
 </header>
     
     <div class="md-container" data-md-component="container">
       
       
+        
+          
         
       
       <main class="md-main" data-md-component="main">
@@ -174,12 +192,12 @@
 
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../../.." title="Cogment" class="md-nav__button md-logo" aria-label="Cogment" data-md-component="logo">
+    <a href="../../.." title="Cogment User Documentation" class="md-nav__button md-logo" aria-label="Cogment User Documentation" data-md-component="logo">
       
   <img src="../../../images/cogment_logo.png" alt="logo">
 
     </a>
-    Cogment
+    Cogment User Documentation
   </label>
   
     <div class="md-nav__source">
@@ -212,10 +230,14 @@
       
         <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_1" type="checkbox" id="__nav_1" >
       
-      <label class="md-nav__link" for="__nav_1">
-        Introduction
-        <span class="md-nav__icon md-icon"></span>
-      </label>
+      
+      
+      
+        <label class="md-nav__link" for="__nav_1">
+          Introduction
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <nav class="md-nav" aria-label="Introduction" data-md-level="1">
         <label class="md-nav__title" for="__nav_1">
           <span class="md-nav__icon md-icon"></span>
@@ -224,6 +246,7 @@
         <ul class="md-nav__list" data-md-scrollfix>
           
             
+              
   
   
   
@@ -234,8 +257,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -246,6 +271,7 @@
     </li>
   
 
+            
           
         </ul>
       </nav>
@@ -268,10 +294,14 @@
       
         <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" >
       
-      <label class="md-nav__link" for="__nav_2">
-        Support
-        <span class="md-nav__icon md-icon"></span>
-      </label>
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2">
+          Support
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <nav class="md-nav" aria-label="Support" data-md-level="1">
         <label class="md-nav__title" for="__nav_2">
           <span class="md-nav__icon md-icon"></span>
@@ -280,6 +310,7 @@
         <ul class="md-nav__list" data-md-scrollfix>
           
             
+              
   
   
   
@@ -290,6 +321,7 @@
     </li>
   
 
+            
           
         </ul>
       </nav>
@@ -312,10 +344,14 @@
       
         <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
       
-      <label class="md-nav__link" for="__nav_3">
-        Concepts
-        <span class="md-nav__icon md-icon"></span>
-      </label>
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3">
+          Concepts
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <nav class="md-nav" aria-label="Concepts" data-md-level="1">
         <label class="md-nav__title" for="__nav_3">
           <span class="md-nav__icon md-icon"></span>
@@ -324,6 +360,7 @@
         <ul class="md-nav__list" data-md-scrollfix>
           
             
+              
   
   
   
@@ -334,8 +371,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -346,6 +385,7 @@
     </li>
   
 
+            
           
         </ul>
       </nav>
@@ -370,18 +410,23 @@
       
         <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" checked>
       
-      <label class="md-nav__link" for="__nav_4">
-        Cogment
-        <span class="md-nav__icon md-icon"></span>
-      </label>
-      <nav class="md-nav" aria-label="Cogment" data-md-level="1">
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4">
+          Cogment APIs
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Cogment APIs" data-md-level="1">
         <label class="md-nav__title" for="__nav_4">
           <span class="md-nav__icon md-icon"></span>
-          Cogment
+          Cogment APIs
         </label>
         <ul class="md-nav__list" data-md-scrollfix>
           
             
+              
   
   
     
@@ -393,10 +438,14 @@
       
         <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_1" type="checkbox" id="__nav_4_1" checked>
       
-      <label class="md-nav__link" for="__nav_4_1">
-        Tutorial
-        <span class="md-nav__icon md-icon"></span>
-      </label>
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_1">
+          Tutorial
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <nav class="md-nav" aria-label="Tutorial" data-md-level="2">
         <label class="md-nav__title" for="__nav_4_1">
           <span class="md-nav__icon md-icon"></span>
@@ -405,6 +454,7 @@
         <ul class="md-nav__list" data-md-scrollfix>
           
             
+              
   
   
   
@@ -415,8 +465,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -427,8 +479,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -439,8 +493,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -451,8 +507,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -463,8 +521,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -475,8 +535,10 @@
     </li>
   
 
+            
           
             
+              
   
   
     
@@ -562,8 +624,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -574,14 +638,17 @@
     </li>
   
 
+            
           
         </ul>
       </nav>
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -592,8 +659,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -603,10 +672,14 @@
       
         <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_3" type="checkbox" id="__nav_4_3" >
       
-      <label class="md-nav__link" for="__nav_4_3">
-        API Reference
-        <span class="md-nav__icon md-icon"></span>
-      </label>
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_3">
+          API Reference
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <nav class="md-nav" aria-label="API Reference" data-md-level="2">
         <label class="md-nav__title" for="__nav_4_3">
           <span class="md-nav__icon md-icon"></span>
@@ -615,6 +688,7 @@
         <ul class="md-nav__list" data-md-scrollfix>
           
             
+              
   
   
   
@@ -625,8 +699,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -637,8 +713,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -648,10 +726,14 @@
       
         <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_3_3" type="checkbox" id="__nav_4_3_3" >
       
-      <label class="md-nav__link" for="__nav_4_3_3">
-        Javascript/Typescript SDK
-        <span class="md-nav__icon md-icon"></span>
-      </label>
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_3_3">
+          Javascript/Typescript SDK
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <nav class="md-nav" aria-label="Javascript/Typescript SDK" data-md-level="3">
         <label class="md-nav__title" for="__nav_4_3_3">
           <span class="md-nav__icon md-icon"></span>
@@ -660,6 +742,7 @@
         <ul class="md-nav__list" data-md-scrollfix>
           
             
+              
   
   
   
@@ -670,8 +753,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -682,8 +767,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -694,8 +781,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -706,8 +795,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -718,8 +809,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -730,8 +823,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -742,8 +837,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -754,8 +851,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -766,8 +865,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -778,8 +879,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -790,8 +893,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -802,8 +907,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -814,8 +921,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -826,8 +935,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -838,8 +949,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -850,8 +963,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -862,20 +977,24 @@
     </li>
   
 
+            
           
         </ul>
       </nav>
     </li>
   
 
+            
           
         </ul>
       </nav>
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -885,18 +1004,23 @@
       
         <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_4" type="checkbox" id="__nav_4_4" >
       
-      <label class="md-nav__link" for="__nav_4_4">
-        Low Level API Guide
-        <span class="md-nav__icon md-icon"></span>
-      </label>
-      <nav class="md-nav" aria-label="Low Level API Guide" data-md-level="2">
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_4">
+          Low Level API Reference
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Low Level API Reference" data-md-level="2">
         <label class="md-nav__title" for="__nav_4_4">
           <span class="md-nav__icon md-icon"></span>
-          Low Level API Guide
+          Low Level API Reference
         </label>
         <ul class="md-nav__list" data-md-scrollfix>
           
             
+              
   
   
   
@@ -907,8 +1031,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -919,12 +1045,28 @@
     </li>
   
 
+            
           
         </ul>
       </nav>
     </li>
   
 
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../implementation-recipes/" class="md-nav__link">
+        Implementation recipes
+      </a>
+    </li>
+  
+
+            
           
         </ul>
       </nav>
@@ -939,10 +1081,101 @@
   
   
   
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" type="checkbox" id="__nav_5" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_5">
+          Cogment Components
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Cogment Components" data-md-level="1">
+        <label class="md-nav__title" for="__nav_5">
+          <span class="md-nav__icon md-icon"></span>
+          Cogment Components
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
     <li class="md-nav__item">
-      <a href="../../../dashboard/metrics-and-dashboard/" class="md-nav__link">
+      <a href="../../../cogment-components/cli/cli/" class="md-nav__link">
+        CLI
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../cogment-components/orchestrator/orchestrator/" class="md-nav__link">
+        Orchestrator
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../cogment-components/model-registry/model-registry/" class="md-nav__link">
+        Model Registry
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../cogment-components/trial-datastore/trial-datastore/" class="md-nav__link">
+        Trial Datastore
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../cogment-components/dashboard/metrics-and-dashboard/" class="md-nav__link">
         Metrics & Dashboard
       </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
     </li>
   
 
@@ -1061,19 +1294,16 @@
 <p>First, we will initialize a React app. This can be done very simply by running:</p>
 <div class="highlight"><pre><span></span><code><span class="gp">$ </span>npx create-react-app web-client
 </code></pre></div>
-
 <p>Once this is done, we will be able to open a React app in our browser by running the following commands:</p>
 <div class="highlight"><pre><span></span><code><span class="gp">$ </span><span class="nb">cd</span> web-client
 <span class="gp">$ </span>npm start
 </code></pre></div>
-
 <h2 id="adding-material-ui">Adding Material UI<a class="headerlink" href="#adding-material-ui" title="Permanent link">&para;</a></h2>
 <p>We will be using Material UI for this web client. This will provide us with a nice and clean way to add styles to our application, as well as some components which we will use to reduce code size.</p>
 <p>Install Material UI by running the following commands from inside of the web-client folder:</p>
 <div class="highlight"><pre><span></span><code><span class="gp">$ </span>npm i @material-ui/core
 <span class="gp">$ </span>npm i @material-ui/icons
 </code></pre></div>
-
 <h2 id="setting-up-docker">Setting up Docker<a class="headerlink" href="#setting-up-docker" title="Permanent link">&para;</a></h2>
 <p>In addition to the docker-compose services we already have, we'll need two more for this web client. One to run it, and another for a proxy service called <code>grpcwebproxy</code>.</p>
 <blockquote>
@@ -1104,7 +1334,6 @@
     <span class="nt">depends_on</span><span class="p">:</span>
         <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">orchestrator</span>
 </code></pre></div>
-
 <p>We will also need two additional dockerfiles to go along these entries. The first one will be <code>grpcwebproxy.dockerfile</code>, with the following content:</p>
 <div class="highlight"><pre><span></span><code><span class="k">FROM</span> <span class="s">golang:1.15.2</span> <span class="k">as</span> <span class="s">dev</span>
 
@@ -1122,7 +1351,6 @@
 
 <span class="k">CMD</span> <span class="p">[</span><span class="s2">&quot;grpcwebproxy&quot;</span><span class="p">,</span> <span class="s2">&quot;--backend_addr=orchestrator:9000&quot;</span><span class="p">,</span> <span class="s2">&quot;--run_tls_server=false&quot;</span><span class="p">,</span> <span class="s2">&quot;--allow_all_origins&quot;</span><span class="p">,</span> <span class="s2">&quot;--use_websockets&quot;</span><span class="p">]</span>
 </code></pre></div>
-
 <p>The second one will be <code>js_service.dockerfile</code>, with the following content:</p>
 <div class="highlight"><pre><span></span><code><span class="c"># pull official base image</span>
 <span class="k">FROM</span> <span class="s">node:14</span> <span class="k">as</span> <span class="s">dev</span>
@@ -1137,7 +1365,6 @@
 <span class="c"># start app</span>
 <span class="k">CMD</span> <span class="p">[</span><span class="s2">&quot;npm&quot;</span><span class="p">,</span> <span class="s2">&quot;start&quot;</span><span class="p">]</span>
 </code></pre></div>
-
 <blockquote>
 <p>NOTE: Since the port for <code>grpcwebproxy</code> is exposed outside of the docker network, the docker-compose entry and corresponding dockerfile are not actually needed for the web-client; it can just as easily be run outside of docker. However, doing it like this makes the command to startup the application much simpler.</p>
 </blockquote>
@@ -1146,7 +1373,6 @@
 <span class="nt">start</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">docker-compose up orchestrator environment random_agent web-client grpcwebproxy</span>
 <span class="nt">stop</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">docker-compose stop orchestrator environment random_agent web-client grpcwebproxy</span>
 </code></pre></div>
-
 <h2 id="adding-cogment-to-our-web-client">Adding Cogment to our web client<a class="headerlink" href="#adding-cogment-to-our-web-client" title="Permanent link">&para;</a></h2>
 <p>The easiest way to add Cogment to any web client is to start with a React app, then follow the three steps below:</p>
 <ol>
@@ -1154,7 +1380,6 @@
 <p>Install the Javascript SDK using:</p>
 <div class="highlight"><pre><span></span><code><span class="gp">$ </span>npm i @cogment/cogment-js-sdk
 </code></pre></div>
-
 <p>while inside of the web-client folder</p>
 </li>
 <li>
@@ -1185,7 +1410,6 @@
     <span class="k">background-color</span><span class="p">:</span> <span class="mh">#c5cce8</span><span class="p">;</span>
 <span class="p">}</span>
 </code></pre></div>
-
 <p>index.js</p>
 <div class="highlight"><pre><span></span><code>import React from &quot;react&quot;;
 import ReactDOM from &quot;react-dom&quot;;
@@ -1220,7 +1444,6 @@ ReactDOM.render(
     document.getElementById(&quot;root&quot;)
 );
 </code></pre></div>
-
 <p>This is simply to provide styles to our Material UI components. We haven't started with the actual Cogment part yet, which is exactly what we'll be doing next.</p>
 <h2 id="appjs">App.js<a class="headerlink" href="#appjs" title="Permanent link">&para;</a></h2>
 <p>We'll start with a few imports. Some of these files don't exist yet, so we'll be creating them:</p>
@@ -1249,7 +1472,6 @@ import { cogSettings } from &quot;./CogSettings&quot;;
 //These are messages which were defined in data.proto. These imports will need to change whenever their corresponding messages in data.proto are changed and `cogment generate` is run.
 import { PlayerAction } from &quot;./data_pb&quot;;
 </code></pre></div>
-
 <p>Then we add a function that will convert the play, encoded as the same "move" enum that we defined in our data.proto, to a string we can use in our application:</p>
 <div class="highlight"><pre><span></span><code>function getMoveText(move) {
     switch (move) {
@@ -1264,7 +1486,6 @@ import { PlayerAction } from &quot;./data_pb&quot;;
     }
 }
 </code></pre></div>
-
 <p>Finally, the React component.</p>
 <p>At the start of this component is the most important part of our application: the useAction hook.</p>
 <p>This hook returns an array with 3 elements:</p>
@@ -1384,7 +1605,6 @@ import { PlayerAction } from &quot;./data_pb&quot;;
     );
 };
 </code></pre></div>
-
 <h2 id="hooksuseactionsjs">hooks/useActions.js<a class="headerlink" href="#hooksuseactionsjs" title="Permanent link">&para;</a></h2>
 <p>This hook does multiple things. It starts a trial, joins a trial, sends actions, and receives information from the orchestrator. The following is its annotated code:</p>
 <div class="highlight"><pre><span></span><code>import { useEffect, useState } from &quot;react&quot;;
@@ -1470,19 +1690,16 @@ export const useActions = (cogSettings, actorName, actorClass) =&gt; {
     return [event, startTrial, sendAction];
 };
 </code></pre></div>
-
 <p>Please note that the <code>useActions</code> hook is generated by <code>cogment init</code>. We've still gone through it in this tutorial, because that is where most of the Cogment related code is contained, and it must be understood if we want to use Cogment without React.JS.</p>
 <p>We also need to add the following to <code>web-client/.eslintignore</code>:</p>
 <div class="highlight"><pre><span></span><code>src/*_pb*
 src/cog_settings*
 </code></pre></div>
-
 <p>Normally this file will be created by <code>cogment init</code>, but if you have been following the tutorial step-by-step, you need to create it manually.</p>
 <p>You can now see our app fully functional by going to the folder where our cogment.yaml sits, and running the commands:</p>
 <div class="highlight"><pre><span></span><code><span class="gp">$ </span>cogment run build
 <span class="gp">$ </span>cogment run start
 </code></pre></div>
-
 <p>And opening up localhost:3000 in our browser.</p>
 <p>And with that we're done!</p>
 <h2 id="making-it-look-good">Making it look good<a class="headerlink" href="#making-it-look-good" title="Permanent link">&para;</a></h2>
@@ -1528,7 +1745,8 @@ src/cog_settings*
   
     <nav class="md-footer__inner md-grid" aria-label="Footer">
       
-        <a href="../5-human-player/" class="md-footer__link md-footer__link--prev" rel="prev">
+        
+        <a href="../5-human-player/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Step 5: Add a human player in the loop" rel="prev">
           <div class="md-footer__button md-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
           </div>
@@ -1543,7 +1761,8 @@ src/cog_settings*
         </a>
       
       
-        <a href="../7-dqn-player/" class="md-footer__link md-footer__link--next" rel="next">
+        
+        <a href="../7-dqn-player/" class="md-footer__link md-footer__link--next" aria-label="Next: Step 7: Add a player trained with Reinforcement Learning using DQN" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
@@ -1567,10 +1786,12 @@ src/cog_settings*
             Copyright 2021 AI Redefined Inc. <dev+cogment@ai-r.com>
           </div>
         
-        Made with
-        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
-          Material for MkDocs
-        </a>
+        
+          Made with
+          <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+            Material for MkDocs
+          </a>
+        
         
       </div>
       
@@ -1613,10 +1834,10 @@ src/cog_settings*
     <div class="md-dialog" data-md-component="dialog">
       <div class="md-dialog__inner md-typeset"></div>
     </div>
-    <script id="__config" type="application/json">{"base": "../../..", "features": ["navigation.sections"], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}, "search": "../../../assets/javascripts/workers/search.d351de03.min.js", "version": null}</script>
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["navigation.sections"], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../../assets/javascripts/workers/search.e99e714c.min.js", "version": null}</script>
     
     
-      <script src="../../../assets/javascripts/bundle.a1609d9a.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.bc35569b.min.js"></script>
       
     
   </body>

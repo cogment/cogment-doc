@@ -16,18 +16,18 @@
         <link rel="canonical" href="https://docs.cogment.ai/cogment/tutorial/3-rewards/">
       
       <link rel="icon" href="../../../images/cogment_favicon.png">
-      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-7.1.5">
+      <meta name="generator" content="mkdocs-1.2.2, mkdocs-material-7.3.2">
     
     
       
-        <title>Step 3: Introduce rewards - Cogment</title>
+        <title>Step 3: Introduce rewards - Cogment User Documentation</title>
       
     
     
-      <link rel="stylesheet" href="../../../assets/stylesheets/main.bde7dde4.min.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.24c991ad.min.css">
       
         
-        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ef6f36e2.min.css">
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.3f5d1f46.min.css">
         
       
     
@@ -46,10 +46,19 @@
     
     
       
-        
-<script>window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga("create","UA-146998765-2","doc.cogment.ai"),ga("set","anonymizeIp",!0),ga("send","pageview"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){var e;this.value&&(e=document.location.pathname,ga("send","pageview",e+"?q="+this.value))}),"undefined"!=typeof location$&&location$.subscribe(function(e){ga("send","pageview",e.pathname)})})</script>
-<script async src="https://www.google-analytics.com/analytics.js"></script>
-      
+  
+
+
+
+  
+  
+
+
+
+  <script>window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga("create","UA-146998765-2","auto"),ga("set","anonymizeIp",!0),ga("send","pageview"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){var e;this.value&&(e=document.location.pathname,ga("send","pageview",e+"?q="+this.value))}),"undefined"!=typeof location$&&location$.subscribe(function(e){ga("send","pageview",e.pathname)})})</script>
+  <script async src="https://www.google-analytics.com/analytics.js"></script>
+
+
     
     
   </head>
@@ -80,9 +89,11 @@
       
     </div>
     
-      <header class="md-header" data-md-component="header">
+      
+
+<header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="../../.." title="Cogment" class="md-header__button md-logo" aria-label="Cogment" data-md-component="logo">
+    <a href="../../.." title="Cogment User Documentation" class="md-header__button md-logo" aria-label="Cogment User Documentation" data-md-component="logo">
       
   <img src="../../../images/cogment_logo.png" alt="logo">
 
@@ -94,7 +105,7 @@
       <div class="md-header__ellipsis">
         <div class="md-header__topic">
           <span class="md-ellipsis">
-            Cogment
+            Cogment User Documentation
           </span>
         </div>
         <div class="md-header__topic" data-md-component="header-topic">
@@ -117,14 +128,18 @@
   <label class="md-search__overlay" for="__search"></label>
   <div class="md-search__inner" role="search">
     <form class="md-search__form" name="search">
-      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active" required>
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
       <label class="md-search__icon md-icon" for="__search">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
       </label>
-      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
-      </button>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+        </button>
+      </nav>
+      
     </form>
     <div class="md-search__output">
       <div class="md-search__scrollwrap" data-md-scrollfix>
@@ -154,11 +169,14 @@
       </div>
     
   </nav>
+  
 </header>
     
     <div class="md-container" data-md-component="container">
       
       
+        
+          
         
       
       <main class="md-main" data-md-component="main">
@@ -174,12 +192,12 @@
 
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../../.." title="Cogment" class="md-nav__button md-logo" aria-label="Cogment" data-md-component="logo">
+    <a href="../../.." title="Cogment User Documentation" class="md-nav__button md-logo" aria-label="Cogment User Documentation" data-md-component="logo">
       
   <img src="../../../images/cogment_logo.png" alt="logo">
 
     </a>
-    Cogment
+    Cogment User Documentation
   </label>
   
     <div class="md-nav__source">
@@ -212,10 +230,14 @@
       
         <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_1" type="checkbox" id="__nav_1" >
       
-      <label class="md-nav__link" for="__nav_1">
-        Introduction
-        <span class="md-nav__icon md-icon"></span>
-      </label>
+      
+      
+      
+        <label class="md-nav__link" for="__nav_1">
+          Introduction
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <nav class="md-nav" aria-label="Introduction" data-md-level="1">
         <label class="md-nav__title" for="__nav_1">
           <span class="md-nav__icon md-icon"></span>
@@ -224,6 +246,7 @@
         <ul class="md-nav__list" data-md-scrollfix>
           
             
+              
   
   
   
@@ -234,8 +257,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -246,6 +271,7 @@
     </li>
   
 
+            
           
         </ul>
       </nav>
@@ -268,10 +294,14 @@
       
         <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" >
       
-      <label class="md-nav__link" for="__nav_2">
-        Support
-        <span class="md-nav__icon md-icon"></span>
-      </label>
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2">
+          Support
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <nav class="md-nav" aria-label="Support" data-md-level="1">
         <label class="md-nav__title" for="__nav_2">
           <span class="md-nav__icon md-icon"></span>
@@ -280,6 +310,7 @@
         <ul class="md-nav__list" data-md-scrollfix>
           
             
+              
   
   
   
@@ -290,6 +321,7 @@
     </li>
   
 
+            
           
         </ul>
       </nav>
@@ -312,10 +344,14 @@
       
         <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
       
-      <label class="md-nav__link" for="__nav_3">
-        Concepts
-        <span class="md-nav__icon md-icon"></span>
-      </label>
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3">
+          Concepts
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <nav class="md-nav" aria-label="Concepts" data-md-level="1">
         <label class="md-nav__title" for="__nav_3">
           <span class="md-nav__icon md-icon"></span>
@@ -324,6 +360,7 @@
         <ul class="md-nav__list" data-md-scrollfix>
           
             
+              
   
   
   
@@ -334,8 +371,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -346,6 +385,7 @@
     </li>
   
 
+            
           
         </ul>
       </nav>
@@ -370,18 +410,23 @@
       
         <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" checked>
       
-      <label class="md-nav__link" for="__nav_4">
-        Cogment
-        <span class="md-nav__icon md-icon"></span>
-      </label>
-      <nav class="md-nav" aria-label="Cogment" data-md-level="1">
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4">
+          Cogment APIs
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Cogment APIs" data-md-level="1">
         <label class="md-nav__title" for="__nav_4">
           <span class="md-nav__icon md-icon"></span>
-          Cogment
+          Cogment APIs
         </label>
         <ul class="md-nav__list" data-md-scrollfix>
           
             
+              
   
   
     
@@ -393,10 +438,14 @@
       
         <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_1" type="checkbox" id="__nav_4_1" checked>
       
-      <label class="md-nav__link" for="__nav_4_1">
-        Tutorial
-        <span class="md-nav__icon md-icon"></span>
-      </label>
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_1">
+          Tutorial
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <nav class="md-nav" aria-label="Tutorial" data-md-level="2">
         <label class="md-nav__title" for="__nav_4_1">
           <span class="md-nav__icon md-icon"></span>
@@ -405,6 +454,7 @@
         <ul class="md-nav__list" data-md-scrollfix>
           
             
+              
   
   
   
@@ -415,8 +465,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -427,8 +479,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -439,8 +493,10 @@
     </li>
   
 
+            
           
             
+              
   
   
     
@@ -505,8 +561,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -517,8 +575,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -529,8 +589,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -541,8 +603,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -553,14 +617,17 @@
     </li>
   
 
+            
           
         </ul>
       </nav>
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -571,8 +638,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -582,10 +651,14 @@
       
         <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_3" type="checkbox" id="__nav_4_3" >
       
-      <label class="md-nav__link" for="__nav_4_3">
-        API Reference
-        <span class="md-nav__icon md-icon"></span>
-      </label>
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_3">
+          API Reference
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <nav class="md-nav" aria-label="API Reference" data-md-level="2">
         <label class="md-nav__title" for="__nav_4_3">
           <span class="md-nav__icon md-icon"></span>
@@ -594,6 +667,7 @@
         <ul class="md-nav__list" data-md-scrollfix>
           
             
+              
   
   
   
@@ -604,8 +678,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -616,8 +692,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -627,10 +705,14 @@
       
         <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_3_3" type="checkbox" id="__nav_4_3_3" >
       
-      <label class="md-nav__link" for="__nav_4_3_3">
-        Javascript/Typescript SDK
-        <span class="md-nav__icon md-icon"></span>
-      </label>
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_3_3">
+          Javascript/Typescript SDK
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <nav class="md-nav" aria-label="Javascript/Typescript SDK" data-md-level="3">
         <label class="md-nav__title" for="__nav_4_3_3">
           <span class="md-nav__icon md-icon"></span>
@@ -639,6 +721,7 @@
         <ul class="md-nav__list" data-md-scrollfix>
           
             
+              
   
   
   
@@ -649,8 +732,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -661,8 +746,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -673,8 +760,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -685,8 +774,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -697,8 +788,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -709,8 +802,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -721,8 +816,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -733,8 +830,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -745,8 +844,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -757,8 +858,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -769,8 +872,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -781,8 +886,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -793,8 +900,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -805,8 +914,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -817,8 +928,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -829,8 +942,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -841,20 +956,24 @@
     </li>
   
 
+            
           
         </ul>
       </nav>
     </li>
   
 
+            
           
         </ul>
       </nav>
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -864,18 +983,23 @@
       
         <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_4" type="checkbox" id="__nav_4_4" >
       
-      <label class="md-nav__link" for="__nav_4_4">
-        Low Level API Guide
-        <span class="md-nav__icon md-icon"></span>
-      </label>
-      <nav class="md-nav" aria-label="Low Level API Guide" data-md-level="2">
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_4">
+          Low Level API Reference
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Low Level API Reference" data-md-level="2">
         <label class="md-nav__title" for="__nav_4_4">
           <span class="md-nav__icon md-icon"></span>
-          Low Level API Guide
+          Low Level API Reference
         </label>
         <ul class="md-nav__list" data-md-scrollfix>
           
             
+              
   
   
   
@@ -886,8 +1010,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -898,12 +1024,28 @@
     </li>
   
 
+            
           
         </ul>
       </nav>
     </li>
   
 
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../implementation-recipes/" class="md-nav__link">
+        Implementation recipes
+      </a>
+    </li>
+  
+
+            
           
         </ul>
       </nav>
@@ -918,10 +1060,101 @@
   
   
   
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" type="checkbox" id="__nav_5" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_5">
+          Cogment Components
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Cogment Components" data-md-level="1">
+        <label class="md-nav__title" for="__nav_5">
+          <span class="md-nav__icon md-icon"></span>
+          Cogment Components
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
     <li class="md-nav__item">
-      <a href="../../../dashboard/metrics-and-dashboard/" class="md-nav__link">
+      <a href="../../../cogment-components/cli/cli/" class="md-nav__link">
+        CLI
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../cogment-components/orchestrator/orchestrator/" class="md-nav__link">
+        Orchestrator
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../cogment-components/model-registry/model-registry/" class="md-nav__link">
+        Model Registry
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../cogment-components/trial-datastore/trial-datastore/" class="md-nav__link">
+        Trial Datastore
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../cogment-components/dashboard/metrics-and-dashboard/" class="md-nav__link">
         Metrics & Dashboard
       </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
     </li>
   
 
@@ -1018,13 +1251,11 @@
   <span class="kt">int32</span> <span class="na">target_game_score</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
 <span class="p">}</span>
 </code></pre></div>
-
 <p>Modify the <code>data.proto</code> file with this update.</p>
 <p>The environment implementation can now be updated to know about games.</p>
 <p>During the <strong>initialization</strong> phase of the <code>environment</code> function, we can retrieve the value from the environment's configuration.</p>
 <div class="highlight"><pre><span></span><code><span class="n">target_game_score</span> <span class="o">=</span> <span class="n">environment_session</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">target_game_score</span>
 </code></pre></div>
-
 <p>Instead of counting <em>rounds</em> we update the <code>state</code> variable to count <em>games</em> and the score of the ongoing game.</p>
 <div class="highlight"><pre><span></span><code><span class="n">state</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s2">&quot;games_count&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
@@ -1038,7 +1269,6 @@
     <span class="p">},</span>
 <span class="p">}</span>
 </code></pre></div>
-
 <p>In the <strong>event loop</strong> we need to make two changes.</p>
 <p>First, Instead of counting the rounds, we will update each player <code>current_game_score</code>.</p>
 <div class="highlight"><pre><span></span><code><span class="k">if</span> <span class="n">p1_state</span><span class="o">.</span><span class="n">won_last</span><span class="p">:</span>
@@ -1046,7 +1276,6 @@
 <span class="k">elif</span> <span class="n">p2_state</span><span class="o">.</span><span class="n">won_last</span><span class="p">:</span>
     <span class="n">state</span><span class="p">[</span><span class="s2">&quot;p2&quot;</span><span class="p">][</span><span class="s2">&quot;current_game_score&quot;</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
 </code></pre></div>
-
 <p>Second, once the observation is sent, we detect the end of each game and update the <code>state</code> accordingly.</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># Update the game scores</span>
 <span class="k">if</span> <span class="n">state</span><span class="p">[</span><span class="s2">&quot;p1&quot;</span><span class="p">][</span><span class="s2">&quot;current_game_score&quot;</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">target_game_score</span><span class="p">:</span>
@@ -1064,13 +1293,11 @@
 
     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">p2</span><span class="o">.</span><span class="n">actor_name</span><span class="si">}</span><span class="s2"> won game #</span><span class="si">{</span><span class="n">state</span><span class="p">[</span><span class="s1">&#39;games_count&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </code></pre></div>
-
 <p>Finally, during the <strong>termination</strong>, we display stats about the games.</p>
 <div class="highlight"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2"> * </span><span class="si">{</span><span class="n">state</span><span class="p">[</span><span class="s1">&#39;games_count&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2"> games played&quot;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2"> * </span><span class="si">{</span><span class="n">p1</span><span class="o">.</span><span class="n">actor_name</span><span class="si">}</span><span class="s2"> won </span><span class="si">{</span><span class="n">state</span><span class="p">[</span><span class="s1">&#39;p1&#39;</span><span class="p">][</span><span class="s1">&#39;won_games_count&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2"> games&quot;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2"> * </span><span class="si">{</span><span class="n">p2</span><span class="o">.</span><span class="n">actor_name</span><span class="si">}</span><span class="s2"> won </span><span class="si">{</span><span class="n">state</span><span class="p">[</span><span class="s1">&#39;p2&#39;</span><span class="p">][</span><span class="s1">&#39;won_games_count&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2"> games&quot;</span><span class="p">)</span>
 </code></pre></div>
-
 <p>Modify the <code>environment/main.py</code> file with these updates.</p>
 <p>Now that the data structure is modified and the environment implementation uses it, we can define, for the default trial, a value for the <code>target_game_score</code> property. Let's start with games of 2 winning rounds.</p>
 <div class="highlight"><pre><span></span><code><span class="nt">trial_params</span><span class="p">:</span>
@@ -1079,7 +1306,6 @@
         <span class="nt">config</span><span class="p">:</span>
             <span class="nt">target_game_score</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">2</span>
 </code></pre></div>
-
 <p>Modify the <code>cogment.yaml</code> file with this update.</p>
 <p>You can now <a href="../1-bootstrap-and-data-structures/#building-and-running-the-app">build and run</a> the application to check that it works as expected.</p>
 <p>In this simple implementation, the concept of game is local to the environment. It has no impact on the observation and action spaces, and thus no impact on the actor implementation. This means an actor wouldn't <em>know</em> that the round it currently plays is the tie breaker in a game or its very first round. As a result the actor will play every round the same way.</p>
@@ -1096,24 +1322,20 @@
 <div class="highlight"><pre><span></span><code><span class="n">environment_session</span><span class="o">.</span><span class="n">add_reward</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">confidence</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">to</span><span class="o">=</span><span class="p">[</span><span class="n">p1</span><span class="o">.</span><span class="n">actor_name</span><span class="p">])</span>
 <span class="n">environment_session</span><span class="o">.</span><span class="n">add_reward</span><span class="p">(</span><span class="n">value</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">confidence</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">to</span><span class="o">=</span><span class="p">[</span><span class="n">p2</span><span class="o">.</span><span class="n">actor_name</span><span class="p">])</span>
 </code></pre></div>
-
 <p>When the second player wins a game we add the following.</p>
 <div class="highlight"><pre><span></span><code><span class="n">environment_session</span><span class="o">.</span><span class="n">add_reward</span><span class="p">(</span><span class="n">value</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">confidence</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">to</span><span class="o">=</span><span class="p">[</span><span class="n">p1</span><span class="o">.</span><span class="n">actor_name</span><span class="p">])</span>
 <span class="n">environment_session</span><span class="o">.</span><span class="n">add_reward</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">confidence</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">to</span><span class="o">=</span><span class="p">[</span><span class="n">p2</span><span class="o">.</span><span class="n">actor_name</span><span class="p">])</span>
 </code></pre></div>
-
 <p>Modify the <code>environment/main.py</code> file to include the above additions.</p>
 <p>You can now <a href="../1-bootstrap-and-data-structures/#building-and-running-the-app">build and run</a> the application to check that it works as expected. In particular you should see logs relative to the reception of rewards on the actor side.</p>
 <h2 id="using-the-metrics-and-dashboard-services-to-retrieve-visualize-the-rewards-over-time">Using the <strong>metrics</strong> and <strong>dashboard</strong> services to retrieve &amp; visualize the rewards over time<a class="headerlink" href="#using-the-metrics-and-dashboard-services-to-retrieve-visualize-the-rewards-over-time" title="Permanent link">&para;</a></h2>
-<p>Now that we have introduced rewards, it's a good time to take a look at Cogment's dashboard, a web app centralizing metrics from the various Cogment components. To learn more about this, refer to the <a href="../../../dashboard/metrics-and-dashboard/">dedicated page</a>.</p>
+<p>Now that we have introduced rewards, it's a good time to take a look at Cogment's dashboard, a web app centralizing metrics from the various Cogment components. To learn more about this, refer to the <a href="../../../cogment-components/dashboard/metrics-and-dashboard/">dedicated page</a>.</p>
 <p>If it's not already running, start the Cogment app:</p>
 <div class="highlight"><pre><span></span><code><span class="gp">$ </span>cogment run start
 </code></pre></div>
-
 <p>In your browser of choice you can now open <a href="http://localhost:3003">http://localhost:3003</a> and explore. If you haven't yet launched any trials, it should be mostly empty. To launch a trial, proceed as usual: in another terminal run,</p>
 <div class="highlight"><pre><span></span><code><span class="gp">$ </span>cogment run client
 </code></pre></div>
-
 <p>You can now check the <strong>reward dashboard</strong> to see which of the players performs better. Keep in mind that both players play randomly so don't expect to observe any interesting trends yet. You can launch several trials to get more data.</p>
 <p><img alt="Reward dashboard with 2 random players" src="../figures/reward_dashboard.png" /></p>
 <p>The screenshot above shows the default reward dashboard. On the top row, it shows the reward received per individual actor, on the left is the rate averaged over the last 2 minutes, on the right is the total per trial. On the middle row, you'll find the same metrics but aggregated per actor implementation, one in our case. On the bottom row is the averaged reward over the last 5 minutes for all the actors.</p>
@@ -1138,7 +1360,8 @@
   
     <nav class="md-footer__inner md-grid" aria-label="Footer">
       
-        <a href="../2-random-player/" class="md-footer__link md-footer__link--prev" rel="prev">
+        
+        <a href="../2-random-player/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Step 2: Implement actor and environment" rel="prev">
           <div class="md-footer__button md-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
           </div>
@@ -1153,7 +1376,8 @@
         </a>
       
       
-        <a href="../4-heuristic-player/" class="md-footer__link md-footer__link--next" rel="next">
+        
+        <a href="../4-heuristic-player/" class="md-footer__link md-footer__link--next" aria-label="Next: Step 4: Create a heuristic player" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
@@ -1177,10 +1401,12 @@
             Copyright 2021 AI Redefined Inc. <dev+cogment@ai-r.com>
           </div>
         
-        Made with
-        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
-          Material for MkDocs
-        </a>
+        
+          Made with
+          <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+            Material for MkDocs
+          </a>
+        
         
       </div>
       
@@ -1223,10 +1449,10 @@
     <div class="md-dialog" data-md-component="dialog">
       <div class="md-dialog__inner md-typeset"></div>
     </div>
-    <script id="__config" type="application/json">{"base": "../../..", "features": ["navigation.sections"], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}, "search": "../../../assets/javascripts/workers/search.d351de03.min.js", "version": null}</script>
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["navigation.sections"], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../../assets/javascripts/workers/search.e99e714c.min.js", "version": null}</script>
     
     
-      <script src="../../../assets/javascripts/bundle.a1609d9a.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.bc35569b.min.js"></script>
       
     
   </body>
