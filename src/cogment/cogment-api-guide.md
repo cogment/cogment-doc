@@ -281,7 +281,7 @@ Due to the different network requirements, client actors are a good fit when imp
 
     const service = cogment.createService({
         cogSettings,
-        grpcURL,
+        "orchestrator:9000",
     });
 
     const trialController = service.createTrialController();
@@ -404,10 +404,10 @@ The [actor](../concepts/glossary.md#actor) can take into account the reward dire
 === "Python"
 
     ```python
-    session.send_message
-    user_data=MyProtobufDataStructure(...), # any protobuf data structure can be used here.
-    to=['pedestrian:*'], # send the message to all the actors of the "pedestrian" class
-    to_environment=False)
+    session.send_message(
+        user_data=MyProtobufDataStructure(...), # any protobuf data structure can be used here.
+        to=['pedestrian:*'], # send the message to all the actors of the "pedestrian" class
+        to_environment=False)
     ```
 
 === "Javascript"
@@ -417,7 +417,7 @@ The [actor](../concepts/glossary.md#actor) can take into account the reward dire
     message.setRequest("hello");
 
     // Now we serialize into an Any protobuf message.
-    const anyPb = new AnyPb();
+    const anyPb = new MyProtobufDataStructure();
     anyPb.pack(message.serializeBinary(), 'cogment_app.Message');
 
     actorSession.sendMessage({
