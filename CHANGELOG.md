@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## Unreleased
 
+## v1.5.0 - 2021-10-12
+
 ### Added
 
 -   Introduce dedicated pages for out-of-the-box components & enrich core concepts with a table summarizing the different Cogment components.
