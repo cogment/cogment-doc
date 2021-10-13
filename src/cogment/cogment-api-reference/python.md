@@ -418,6 +418,8 @@ Abstract class containing session data and methods necessary to manage the loggi
 
 `trial_id`: _str_ - UUID of the trial managed by this instance.
 
+`user_id`: _str_ - Identifier of the user that started the trial.
+
 `trial_params`: _dictionary_ - Parameters of the trial. This parameter has been **deprecated**.
 
 `raw_trial_params`: _[cogment.api.common_pb2.TrialParams](#cogmentapicommon_pb2trialparams)_ - Parameters of the trial.

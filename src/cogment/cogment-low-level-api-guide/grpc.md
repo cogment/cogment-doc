@@ -1044,6 +1044,7 @@ The stream is maintained for the duration of the trial.
 Metadata:
 
 -   `trial-id`: UUID of the trial that is the source of the data.
+-   `user-id`: Identifier of the user that started the trial.
 
 #### `Version()`
 
@@ -1056,20 +1057,20 @@ Metadata: None
 Stream request message for the `OnLogSample` procedure.
 
 ```protobuf
-message TrialData {
+message SampleInfo {
   uint64 tick_id = 1;
   fixed64 timestamp = 2;
   TrialState state = 3;
+  repeated string special_events = 4;
 }
 
 message DatalogSample {
-  string user_id = 1;
+  SampleInfo info = 1;
 
   ObservationSet observations = 2;
   repeated Action actions = 3;
   repeated Reward rewards = 4;
   repeated Message messages = 5;
-  TrialData trial_data = 6;
 }
 
 message LogExporterSampleRequest {
@@ -1083,7 +1084,7 @@ message LogExporterSampleRequest {
 -   tick_id: The current tick of the trial.
 -   timestamp: The time at the beginning of the tick.
 -   state: The state of the trial at the end of the tick.
--   user_id: The ID of the user that started the trial.
+-   special_events: Events not visible from the rest of the data may appear in here.
 -   observations: Observations from the environment.
 -   actions: Actions from all actors. This list has the same length and order as the list of actors provided in `trial_params`.
 -   rewards: List of rewards sent to actors.
