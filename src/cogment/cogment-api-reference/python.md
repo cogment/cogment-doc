@@ -130,11 +130,11 @@ Return: None
 
 ### `register_pre_trial_hook(self, impl)`
 
-Method to register an asynchronous callback function that will be called before a trial is started.
+Method to register an asynchronous callback function that will be called before a trial is started. Only one such function can be registered.
 
 Parameters:
 
--   `impl`: _async func(PrehookSession instance)_ - Callback function to be registered. The `PrehookSession` instance member data should be changed as needed for the new trial before returning from this function.
+-   `impl`: _async func(PrehookSession instance)_ - Callback function to be registered. The `PrehookSession` instance member data should be changed as needed for the new trial before returning from this function.  Note that there may be multiple pre-trial hook services registered in `cogment.yaml` and all these services will be pipelined for each trial start, but the order of the calls is indeterminate.
 
 Return: None
 
@@ -395,6 +395,14 @@ Method to retrieve the UUID of the trial.
 Parameters: None
 
 Return: _str_ - UUID of the trial.
+
+### `get_user_id(self)`
+
+Method to retrieve the identifier of the user that started the trial.
+
+Parameters: None
+
+Return: _str_ - Identifier of the user that started the trial.
 
 ### `validate(self)`
 

@@ -1110,7 +1110,7 @@ The pre-trial hook endpoint, for the orchestrator to connect to, is defined in t
 
 ```protobuf
 service TrialHooksSP {
-  rpc OnPreTrial(PreTrialContext) returns (PreTrialContext) {}
+  rpc OnPreTrial(PreTrialParams) returns (PreTrialParams) {}
   rpc Version(VersionRequest) returns (VersionInfo) {}
 }
 ```
@@ -1122,6 +1122,7 @@ Called before a trial is started to set or modify the parameters for the trial.
 Metadata:
 
 -   `trial-id`: UUID of the new trial that will be started.
+-   `user-id`: Identifier of the user that started the trial.
 
 #### `Version()`
 
@@ -1129,21 +1130,17 @@ Called to request version data.
 
 Metadata: None
 
-### `PreTrialContext`
+### `PreTrialParams`
 
 Request and reply message for the `OnPreTrial` procedure.
 
 ```protobuf
-message PreTrialContext {
-  string impl_name = 1;
-  TrialParams params = 2;
-  string user_id = 3;
+message PreTrialParams {
+  TrialParams params = 1;
 }
 ```
 
--   impl_name: (optional) Name of the implementation that should run the hook. If not provided, an arbitrary implementation will be used. Set on a request, ignored when replying.
--   params: The trial parameters so far. The first hook to be called will receive the default parameters present in the `cogment.yaml` file, and subsequent hooks will receive the parameters sent from the previous hook. Typically, changes are made to this data and the message sent as a reply.
--   user_id: The ID of the user that is starting the trial. Set on a request, ignored when replying.
+-   params: The trial parameters so far. The first hook to be called will receive the default parameters present in the `cogment.yaml` file, and subsequent hooks will receive the updated parameters from the previous hook. The last hook reply will be the final parameters to use for the new trial.
 
 ## Model Registry API
 
@@ -1730,3 +1727,4 @@ Reply for [`TrialDatastoreSP.DeleteTrials()`](#deletetrials).
 ```protobuf
 message DeleteTrialsReply {}
 ```
+
