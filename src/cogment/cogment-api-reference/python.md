@@ -152,13 +152,14 @@ Return: None
 
 Class containing data and methods to control and manage trials.
 
-### `async start_trial(self, trial_config=None)`
+### `async start_trial(self, trial_config=None, trial_id_requested=None)`
 
 Method to start a new trial. The parameters of the trial will be set by the pre-trial hooks (registered in `cogment.Context`), and the hooks will receive the provided trial config.
 
 Parameters:
 
 -   `trial_config`: _protobuf class instance_ - Configuration for the trial. The type is specified in file `cogment.yaml` under the section `trial:config_type`. Can be `None` if no configuration is provided.
+-   `trial_id_requested`: _str_ - The trial identifier requested for the new trial.  It must be unique.  If provided, the Orchestrator will try to use this trial_id, otherwise, a UUID will be created.
 
 Return: _str_ - The newly started trial ID.
 

@@ -363,11 +363,13 @@ Request message for the `StartTrial` procedure.
 message TrialStartRequest {
   TrialConfig config = 1;
   string user_id = 2;
+  string trial_id_requested = 3;
 }
 ```
 
 -   config: The trial config data. This data can be used by the pre-trial hooks to determine the config for the rest of the componenents.
 -   user_id: The ID of the user that is starting the trial.
+-   trial_id_requested: The trial identifier requested for the new trial.  It must be unique.  If not empty, the Orchestrator will try to use this trial_id, otherwise, a UUID will be created.
 
 ### TrialStartReply
 
@@ -376,12 +378,10 @@ Reply message for the `StartTrial` procedure.
 ```protobuf
 message TrialStartReply {
   string trial_id = 1;
-  repeated TrialActor actors_in_trial = 2;
 }
 ```
 
--   trial_id: UUID of the newly started trial.
--   actors_in_trial: The list of all actors in the trial. This list has the same length and order as the list of actors provided in different places in the API, for the same trial. The list can be empty (or not present) in some circumstances, even if there are actors (if necessary the list can be obtained in other ways).
+-   trial_id: ID of the newly started trial.  Empty if the requested trial ID could not be used.
 
 ### `TerminateTrialRequest`
 
