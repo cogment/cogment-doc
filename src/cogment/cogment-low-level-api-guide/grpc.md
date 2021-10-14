@@ -269,22 +269,6 @@ message Reward {
 -   value: The aggregated value (weighted sum) of the provided reward sources. May be ignored when sending a reward; The final value will be computed by the orchestrator.
 -   sources: The simple reward sources that form this aggregated reward. There must be at least one.
 
-### `ActorPeriodData`
-
-Timely trial data sent to an actor. The data may span a period of time.
-
-```protobuf
-message ActorPeriodData {
-  repeated Observation observations = 1;
-  repeated Reward rewards = 2;
-  repeated Message messages = 3;
-}
-```
-
--   observations: Observations from the environment for a period of time. Typically only for one time step (tick). If there are multiple, they are ordered by tick_id.
--   rewards: List of rewards sent by actors or the environment. Ordered by tick_id.
--   messages: List of user data sent by actors or the environment. Ordered by tick_id.
-
 ### `ObservationSet`
 
 A set of environment observations for all actors in the trial.
