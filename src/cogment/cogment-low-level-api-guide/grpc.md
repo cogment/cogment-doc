@@ -1020,9 +1020,9 @@ message EnvMessageReply {}
 
 ## Data/Log API
 
-This API is defined in `datalog.proto`. It is implemented by the data logger application using the gRPC server API, and the orchestrator connects to the data logger application.
+This API is defined in `datalog.proto`. It is implemented by the data logger application using the gRPC server API, including the out-of-the-box component [`cogment-trial-datastore`](../../cogment-components/trial-datastore/trial-datastore.md).
 
-The data logger endpoint, for the orchestrator to connect to, is defined in the `cogment.yaml` file.
+The orchestrator uses a data logger endpoint [defined in the `cogment.yaml` file](../cogment-api-reference/cogment-yaml.md#datalog).
 
 ### Service `LogExporter`
 
@@ -1142,3 +1142,589 @@ message PreTrialContext {
 -   impl_name: (optional) Name of the implementation that should run the hook. If not provided, an arbitrary implementation will be used. Set on a request, ignored when replying.
 -   params: The trial parameters so far. The first hook to be called will receive the default parameters present in the `cogment.yaml` file, and subsequent hooks will receive the parameters sent from the previous hook. Typically, changes are made to this data and the message sent as a reply.
 -   user_id: The ID of the user that is starting the trial. Set on a request, ignored when replying.
+
+## Model Registry API
+
+This API is defined in `model_registry.proto`. It is implemented by [`cogment-model-registry`](../../cogment-components/model-registry/model-registry.md).
+
+### Service `ModelRegistrySP`
+
+This gRPC API defines a service able to store versioned model, e.g. neural network architecture, weights and any additional parameters.
+
+```protobuf
+service ModelRegistrySP {
+  rpc CreateOrUpdateModel(CreateOrUpdateModelRequest) returns (CreateOrUpdateModelReply) {}
+  rpc DeleteModel(DeleteModelRequest) returns (DeleteModelReply) {}
+  rpc RetrieveModels(RetrieveModelsRequest) returns (RetrieveModelsReply) {}
+
+  rpc CreateVersion(stream CreateVersionRequestChunk) returns (CreateVersionReply) {}
+  rpc RetrieveVersionInfos(RetrieveVersionInfosRequest) returns (RetrieveVersionInfosReply) {}
+  rpc RetrieveVersionData(RetrieveVersionDataRequest) returns (stream RetrieveVersionDataReplyChunk) {}
+}
+```
+
+#### `CreateOrUpdateModel()`
+
+Create or update a model in the registry having the given unique (within the registry) `model_id`.
+
+-   Metadata: None
+-   Request: [`CreateOrUpdateModelRequest`](#createorupdatemodelrequest)
+-   Reply: [`CreateOrUpdateModelReply`](#createorupdatemodelreply)
+
+#### `DeleteModel()`
+
+Delete a given model and all its versions from the registry.
+
+-   Metadata: None
+-   Request: [`DeleteModelRequest`](#deletemodelrequest)
+-   Reply: [`DeleteModelReply`](#deletemodelreply)
+
+#### `RetrieveModels()`
+
+Retrieve all or selected models. This procedure supports paginated requests.
+
+-   Metadata: None
+-   Request: [`RetrieveModelsRequest`](#retrievemodelsrequest)
+-   Reply: [`RetrieveModelsReply`](#retrievemodelsreply)
+
+#### `CreateVersion()`
+
+Create a new version of a given model. Because of their potential large size, model version data are uploaded as a stream.
+
+-   Metadata: None
+-   Request: Stream of [`CreateVersionRequestChunk`](#createversionrequestchunk)
+-   Reply: [`CreateVersionReply`](#createversionreply)
+
+#### `RetrieveVersionInfos()`
+
+Retrieve the information for all or selected versions of a given model.
+
+-   Metadata: None
+-   Request: [`RetrieveVersionInfosRequest`](#retrieveversioninfosrequest)
+-   Reply: [`RetrieveVersionInfosReply`](#retrieveversioninfosreply)
+
+#### `RetrieveVersionData()`
+
+Retrieve the data for a specific version of the model. Because of their potential large size, data are retrieved as a stream.
+
+-   Metadata: None
+-   Request: [`RetrieveVersionDataRequest`](#retrieveversiondatarequest)
+-   Reply: Stream of [`RetrieveVersionDataReplyChunk`](#retrieveversiondatareplychunk)
+
+### `CreateOrUpdateModelRequest`
+
+Request for [`ModelRegistrySP.CreateOrUpdateModel()`](#createorupdatemodel)
+
+```protobuf
+message CreateOrUpdateModelRequest {
+  ModelInfo model_info = 1;
+}
+```
+
+-   `model_info`: Defines the unique model identifier within the registry and the `user_data` to use to create or update the model.
+
+### `CreateOrUpdateModelReply`
+
+Reply for [`ModelRegistrySP.CreateOrUpdateModel()`](#createorupdatemodel)
+
+```protobuf
+message CreateOrUpdateModelReply {}
+```
+
+### `DeleteModelRequest`
+
+Request for [`ModelRegistrySP.DeleteModel()`](#deletemodel)
+
+```protobuf
+message DeleteModelRequest {
+  string model_id = 1;
+}
+```
+
+-   `model_ids`: Identifier of the model to be deleted.
+
+### `DeleteModelReply`
+
+Reply for [`ModelRegistrySP.DeleteModel()`](#deletemodel)
+
+```protobuf
+message DeleteModelReply {}
+```
+
+### `RetrieveModelsRequest`
+
+Request for [`ModelRegistrySP.RetrieveModel()`](#retrievemodel).
+
+```protobuf
+message RetrieveModelsRequest {
+  repeated string model_ids = 1;
+  uint32 models_count = 3;
+  string model_handle = 4;
+}
+```
+
+-   `model_ids`: List of the identifiers of the desired models, leave emtpy to retrieve all models.
+-   `models_count`: (optional) The desired number of models to be retrieved, leave empty (or set to 0) to retrieve all models matching the request.
+-   `model_handle`: (optional) Leave empty for the initial request, use previously provided `RetrieveModelsReply.next_model_handle` on the next calls to retrieve the next models.
+
+### `RetrieveModelsReply`
+
+Reply for [`ModelRegistrySP.RetrieveModel()`](#retrievemodel).
+
+```protobuf
+message RetrieveModelsReply {
+  repeated ModelInfo model_infos = 1;
+  string next_model_handle = 2;
+}
+```
+
+-   `model_infos`: At most `RetrieveModelsRequest.models_count` models.
+-   `next_model_handle`: Opaque handle to be used to retrieve the next models matching the request.
+
+### `CreateVersionRequestChunk`
+
+Part of the request stream for [`ModelRegistrySP.CreateVersion()`](#createversion).
+
+```protobuf
+message CreateVersionRequestChunk {
+  message Header {
+    ModelVersionInfo version_info = 1;
+  }
+  message Body {
+    bytes data_chunk = 1;
+  }
+  oneof msg {
+    Header header = 1;
+    Body body = 2;
+  }
+}
+```
+
+The first message in the stream should define `header`:
+
+-   `version_info`: Information regarding the model version to create, `version_number` will be ignored. `data_hash` and `data_size` should be computed from the total final data and will be used by the server to validate it.
+
+The following messages should define `body`:
+
+-   `data_chunk`: A chunk of the version data, all the chunks in the stream will be concatened.
+
+### `CreateVersionReply`
+
+Reply for [`ModelRegistrySP.CreateVersion()`](#createversion).
+
+```protobuf
+message CreateVersionReply {
+  ModelVersionInfo version_info = 1;
+}
+```
+
+-   `version_info`: The informations relative to the created model version, in particular the defined `version_number`.
+
+### `RetrieveVersionInfosRequest`
+
+Request for [`ModelRegistrySP.RetrieveVersionInfos()`](#retrieveversioninfos).
+
+```protobuf
+message RetrieveVersionInfosRequest {
+  string model_id = 1;
+  repeated int32 version_numbers = 2;
+  uint32 versions_count = 3;
+  string version_handle = 4;
+}
+```
+
+-   `model_id`: Identifier of the model we want to retrieve versions from.
+-   `version_numbers`: List of desired version number (or -1 to denote the latest version). Leave emtpy to retrieve all versions of the given model.
+-   `versions_count`: (optional) The desired number of versions to be retrieved, leave empty (or set to 0) to retrieve all the versions matching the request.
+-   `version_handle`: (optional) Leave empty for the initial request, use previously provided `RetrieveVersionInfosReply.next_version_handle` on the next calls to retrieve the next versions.
+
+### `RetrieveVersionInfosReply`
+
+Reply for [`ModelRegistrySP.RetrieveVersionInfos()`](#retrieveversioninfos).
+
+```protobuf
+message RetrieveVersionInfosReply {
+  repeated ModelVersionInfo version_infos = 1;
+  string next_version_handle = 2;
+}
+```
+
+-   `version_infos`: At most `RetrieveVersionInfosRequest.versions_count` versions.
+-   `next_version_handle`: Opaque handle to be used to retrieve the next versions matching the request.
+
+### `RetrieveVersionDataRequest`
+
+Request for [`ModelRegistrySP.RetrieveVersionData()`](#retrieveversiondata).
+
+```protobuf
+message RetrieveVersionDataRequest {
+  string model_id = 1;
+  int32 version_number = 2;
+}
+```
+
+-   `model_id`: Identifier of the model we want to retrieve version from.
+-   `version_numbers`: Number of the desired version.
+
+### `RetrieveVersionDataReplyChunk`
+
+Part of the reply stream of [`ModelRegistrySP.RetrieveVersionData()`](#retrieveversiondata).
+
+```protobuf
+message RetrieveVersionDataReplyChunk {
+  bytes data_chunk = 1;
+}
+```
+
+-   `data_chunk`: A chunk of the version data. All the chunks in the stream need to be concatened. The completeness and validity of the received data can be checked using the version's `data_size` and `data_hash` respectivelly.
+
+### `ModelInfo`
+
+Defines a model identifier and associated user data.
+
+```protobuf
+message ModelInfo {
+  string model_id = 1;
+  map<string, string> user_data = 2;
+}
+```
+
+-   `model_id`: Unique model identifier.
+-   `user_data`: Key/value user data associated with the model.
+
+### `ModelVersionInfo`
+
+Defines a model version and associated user data.
+
+```protobuf
+message ModelVersionInfo {
+  string model_id = 1;
+  uint32 version_number = 2;
+  fixed64 creation_timestamp = 3;
+  bool archived = 4;
+  string data_hash = 5;
+  fixed64 data_size = 6;
+  map<string, string> user_data = 7;
+}
+```
+
+-   `model_id`: Unique identifier, within the registry, of this version's model.
+-   `version_number`: Unique version number, assigned incrementally at creation by the model registry.
+-   `creation_timestamp`: When the model was created as nanosecond Unix epoch time.
+-   `archived`: If `true`, this version is archived and should be stored in a long-term storage. If `false`, this version is not archived and can be evicted after a while. Non-archived versions should be used to _broadcast_ an update of the model during training.
+-   `data_hash`: SHA 256 hash (encoded in base64 with standard 64 characters with padding) of this version's data, can be used to validate the data and for caching purposes.
+-   `data_size`: Size (in bytes) of this version's data.
+-   `user_data`: Key/value user data associated with the model, in particular it can be used to provide information required for the deserialization of the data.
+
+## Trial Datastore API
+
+This API is defined in `trial_datastore.proto`. It is implemented by [`cogment-trial-datastore`](../../cogment-components/trial-datastore/trial-datastore.md).
+
+### Service `TrialDatastoreSP`
+
+This gRPC API defines a service to manage and access data generated by trials.
+
+```protobuf
+service TrialDatastoreSP {
+  rpc RetrieveTrials(RetrieveTrialsRequest) returns (RetrieveTrialsReply) {}
+  rpc RetrieveSamples(RetrieveSamplesRequest) returns (stream RetrieveSampleReply) {}
+
+  rpc AddTrial(AddTrialRequest) returns (AddTrialReply) {}
+  rpc AddSample(stream AddSampleRequest) returns (AddSamplesReply) {}
+  rpc DeleteTrials(DeleteTrialsRequest) returns (DeleteTrialsReply) {}
+}
+```
+
+#### `RetrieveTrials()`
+
+Retrieve stored trials matching the given request.
+
+-   Metadata: None
+-   Request: [`RetrieveTrialsRequest`](#retrievetrialsrequest)
+-   Reply: [`RetrieveTrialsRequest`](#retrievetrialsrequest)
+
+#### `RetrieveSamples()`
+
+Retrieve samples from matching trials, trials can be ongoing.
+
+-   Metadata: None
+-   Request: [`RetrieveSamplesRequest`](#retrievesamplesrequest)
+-   Reply: Stream of [`RetrieveSampleReply`](#retrievesamplereply)
+
+#### `AddTrial()`
+
+Add a trial to the activity logger, as soon as a trial is added, samples can be retrieved using `RetrieveSamples()`.
+
+-   Metadata: None
+-   Request: [`AddTrialRequest`](#addtrialrequest)
+-   Reply: [`AddTrialReply`](#addtrialreply)
+
+#### `AddSample()`
+
+Add samples to a trial in the activity logger as a stream, as soon as a sample is added it is pushed to the matching ongoing `RetrieveSamples()` requests.
+
+-   Metadata:
+    -   `trial-id`: UUID of the trial to add to the activity logger.
+-   Request: Stream of [`AddSampleRequest`](#addsamplerequest)
+-   Reply: [`AddSamplesReply`](#addsamplesreply)
+
+#### `DeleteTrials()`
+
+Delete the trials matching the given request, on failure no trial is deleted.
+
+-   Metadata: None
+-   Request: [`DeleteTrialsRequest`](#deletetrialsrequest)
+-   Reply: [`DeleteTrialsReply`](#deletetrialsreply)
+
+### `StoredTrialInfo`
+
+Defines a information about a stored trial
+
+```protobuf
+message StoredTrialInfo {
+  string trial_id = 1;
+  TrialState last_state = 2;
+  string user_id = 3;
+  uint32 samples_count = 4;
+  TrialParams params = 5;
+}
+```
+
+-   `trial_id`: Unique identifier of the trial.
+-   `last_state`: Last known [trial state](#trialstate).
+-   `user_id`: The id of the user that has started the trial.
+-   `samples_count`: The number samples that are stored for this trial.
+-   `params`: [Parameters of the trial](#trialparams).
+
+### `StoredTrialSample`
+
+Represents a sample generated by a trial at a given tick.
+
+```protobuf
+message StoredTrialSample {
+  string user_id = 1;
+  string trial_id = 2;
+  uint64 tick_id = 3;
+  fixed64 timestamp = 4;
+  TrialState state = 5;
+  repeated StoredTrialActorSample actor_samples = 6;
+  repeated bytes payloads = 7;
+}
+```
+
+-   `user_id`: The identifier of the user that has started the trial.
+-   `trial_id`: Unique identifier of the trial.
+-   `tick_id`: Tick of this sample.
+-   `timestamp`: Time of the sample.
+-   `state`: [Trial state](#trialstate) of the sample.
+-   `actor_samples`: [Sample data related to each actor](#storedtrialactorsample).
+-   `payloads`: Serialized payload for the actors observations, actions, rewards and messages during this sample.
+
+### `StoredTrialActorSample`
+
+Represents a sample generated by an actor in a trial at a given tick, only makes sense as a part of a [`StoredTrialSample`](#storedtrialsample).
+
+Actors are referenced by their index in the [trial params](#trialparams) `TrialParams.actors` field. Where it make sense, the actor index can be set to -1 to reference the trial's environment.
+
+Payloads (ie observations data, actions data, reward user data and messages payloads) are grouped in the `payloads` field of [`StoredTrialSample`](#storedtrialsample) and referenced by their index in this field.
+
+```protobuf
+message StoredTrialActorSample {
+  uint32 actor = 1;
+  optional uint32 observation = 2;
+  optional uint32 action = 3;
+  optional float reward = 4;
+  repeated StoredTrialActorSampleReward received_rewards = 6;
+  repeated StoredTrialActorSampleReward sent_rewards = 7;
+  repeated StoredTrialActorSampleMessage received_messages = 8;
+  repeated StoredTrialActorSampleMessage sent_messages = 9;
+}
+```
+
+-   `actor`: The index of the actor.
+-   `observation`: Observation received by the actor at the current tick, as an index of the observation payload in the parent [`StoredTrialSample`](#storedtrialsample).
+-   `action`: Action performed by the actor at the current tick, as an index of the action payload in the parent [`StoredTrialSample`](#storedtrialsample)
+-   `reward`: Aggregated value of the rewards received by the actor for the current tick.
+-   `received_rewards`: List of the [rewards](#storedtrialactorsamplereward) received by the actor for the current tick.
+-   `sent_rewards`: List of the [rewards](#storedtrialactorsamplereward) sent by the actor for the current tick.
+-   `received_messages`: List of the [messages](#storedtrialactorsamplemessage) received by the actor between the current tick and the next.
+-   `sent_messages`: List of the [messages](#storedtrialactorsamplemessage) sent by the actor between the current tick and the next.
+
+### `StoredTrialActorSampleReward`
+
+Represents a reward sent or received by an actor, only makes sense as a part of a [`StoredTrialActorSample`](#storedtrialactorsample).
+
+```protobuf
+message StoredTrialActorSampleReward {
+  int32 sender = 1;
+  int32 receiver = 2;
+  float reward = 4;
+  float confidence = 5;
+  optional uint32 user_data = 6;
+}
+```
+
+-   `sender`: Index of the actor, -1 for the environment, ignored for sent rewards.
+-   `receiver`: Index of the actor, -1 for the environment, received for sent rewards.
+-   `reward`: The numerical value of the provided reward.
+-   `confidence`: The weight of this reward in computing the final (aggregated) reward.
+-   `user_data`: User data attached to the reward, as an index of the payload in the parent [`StoredTrialSample`](#storedtrialsample).
+
+### `StoredTrialActorSampleMessage`
+
+Represents a message sent or received by an actor, only makes sense as a part of a [`StoredTrialActorSample`](#storedtrialactorsample).
+
+```protobuf
+message StoredTrialActorSampleMessage {
+  int32 sender = 1;
+  int32 receiver = 2;
+  uint32 payload = 3;
+}
+```
+
+-   `sender`: Index of the actor, -1 for the environment, ignored for sent messages.
+-   `receiver`: Index of the actor, -1 for the environment, received for sent messages.
+-   `payload`: Payload of the message, as an index of the payload in the parent [`StoredTrialSample`](#storedtrialsample).
+
+### `StoredTrialSampleField`
+
+Enums representing the fields available in a [`StoredTrialSample`](#storedtrialsample). Used to filter desired fields.
+
+```protobuf
+enum StoredTrialSampleField {
+  STORED_TRIAL_SAMPLE_FIELD_UNKNOWN = 0;
+  STORED_TRIAL_SAMPLE_FIELD_OBSERVATION = 1;
+  STORED_TRIAL_SAMPLE_FIELD_ACTION = 2;
+  STORED_TRIAL_SAMPLE_FIELD_REWARD = 3;
+  STORED_TRIAL_SAMPLE_FIELD_RECEIVED_REWARDS = 4;
+  STORED_TRIAL_SAMPLE_FIELD_SENT_REWARDS = 5;
+  STORED_TRIAL_SAMPLE_FIELD_RECEIVED_MESSAGES = 6;
+  STORED_TRIAL_SAMPLE_FIELD_SENT_MESSAGES = 7;
+}
+```
+
+### `RetrieveTrialsRequest`
+
+Request for [`TrialDatastoreSP.RetrieveTrials()`](#retrievetrials).
+
+```protobuf
+message RetrieveTrialsRequest {
+  repeated string trial_ids = 1;
+  uint32 timeout = 2;
+  uint32 trials_count = 3;
+  string trial_handle = 4;
+}
+```
+
+-   `trial_ids`: List of desired trial identifiers, if empty all trials are returned.
+-   `timeout`: (optional - in ms) Wait for trials that might be created within this duration.
+-   `trials_count`: (optional) The desired number of trials to be retrieved, leave empty (or set to 0) for no limit.
+-   `trial_handle`: (optional) Leave empty for the initial request, use previously provided `RetrieveTrialsReply.next_trial_handle` on the next calls to retrieve the next versions.
+
+### `RetrieveTrialsReply`
+
+Reply for [`TrialDatastoreSP.RetrieveTrials()`](#retrievetrials).
+
+```protobuf
+message RetrieveTrialsReply {
+  repeated StoredTrialInfo trial_infos = 1;
+  string next_trial_handle = 2;
+}
+```
+
+-   `version_infos`: At most `RetrieveVersionInfosRequest.versions_count` versions.
+-   `next_version_handle`: Opaque handle to be used to retrieve the next versions matching the request.
+
+### `RetrieveSamplesRequest`
+
+Request for [`TrialDatastoreSP.RetrieveSamples()`](#retrievesamples).
+
+```protobuf
+message RetrieveSamplesRequest {
+  repeated string trial_ids = 1;
+  repeated string actor_names = 2;
+  repeated string actor_classes = 3;
+  repeated string actor_implementations = 4;
+  repeated StoredTrialSampleField selected_sample_fields = 5;
+}
+```
+
+-   `trial_ids`: List of desired trial ids, if empty no data will be returned.
+-   `actor_names`: List of desired actor names, if empty all actor samples will be returned.
+-   `actor_classes`: List of desired actor names, if empty all actor samples will be returned.
+-   `actor_implementations`: List of desired actor classes, if empty all actor samples will be returned.
+-   `selected_sample_fields`: (optional) Which fields of `StoredTrialSample.ActorSample` should be returned, if empty all fields are returned.
+
+### `RetrieveSampleReply`
+
+Part of the reply stream of [`TrialDatastoreSP.RetrieveSamples()`](#retrievesamples).
+
+```protobuf
+message RetrieveSampleReply {
+  StoredTrialSample trial_sample = 1;
+}
+```
+
+-   `trial_sample`: One [trial sample](#storedtrialsample) matching the requested `trial_ids` and filtered according to the desired actors and fields.
+
+### `AddTrialRequest`
+
+Request for [`TrialDatastoreSP.AddTrial()`](#addtrial).
+
+```protobuf
+message AddTrialRequest {
+  string user_id = 1;
+  TrialParams trial_params = 2;
+}
+```
+
+-   `user_id`: The ID of the user that is adding the trial.
+-   `trial_params`: [Parameters of the trial](#trialparams).
+
+### `AddTrialReply`
+
+Reply for [`TrialDatastoreSP.AddTrial()`](#addtrial).
+
+```protobuf
+message AddTrialReply {}
+```
+
+### `AddSampleRequest`
+
+Part of the request stream of [`TrialDatastoreSP.AddSample()`](#addsample).
+
+```protobuf
+message AddSampleRequest {
+  StoredTrialSample trial_sample = 1;
+}
+```
+
+-   `trial_sample`: One [trial sample](#storedtrialsample) that should match the parameters of the target trial.
+
+### `AddSamplesReply`
+
+Reply for [`TrialDatastoreSP.AddSample()`](#addsample).
+
+```protobuf
+message AddSamplesReply {}
+```
+
+### `DeleteTrialsRequest`
+
+Request for [`TrialDatastoreSP.DeleteTrials()`](#deletetrials).
+
+```protobuf
+message DeleteTrialsRequest {
+  repeated string trial_ids = 1;
+}
+```
+
+-   `trial_ids`: List of the trial ids to delete, if empty no trial is deleted.
+
+### `DeleteTrialsReply`
+
+Reply for [`TrialDatastoreSP.DeleteTrials()`](#deletetrials).
+
+```protobuf
+message DeleteTrialsReply {}
+```

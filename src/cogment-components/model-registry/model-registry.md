@@ -36,3 +36,9 @@ The following environment variables can be used to configure the server:
 -   `COGMENT_MODEL_REGISTRY_ARCHIVE_DIR`: The directory to store model archives. Docker images default to `/data`.
 -   `COGMENT_MODEL_REGISTRY_SENT_MODEL_VERSION_DATA_CHUNK_SIZE`: The size of the model version data chunk sent by the server. Defaults to 5*1024*1024 (5MB).
 -   `COGMENT_MODEL_REGISTRY_GRPC_REFLECTION`: Set to start a [gRPC reflection server](https://github.com/grpc/grpc/blob/master/doc/server-reflection.md). Defaults to `false`.
+
+### Low level gRPC API
+
+The Model Registry implements a gRPC endpoint that is specified as part of the Cogment API:
+
+-   [The Model registry API `ModelRegistry`](../../cogment/cogment-low-level-api-guide/grpc.md#model-registry-api) that defines how to create, retrieve, update and delete models and their version.

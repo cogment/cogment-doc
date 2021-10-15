@@ -19,3 +19,10 @@ Cogment Trial Datastore is an upcoming **out-of-the-box** component implementing
 <!-- prettier-ignore -->
 !!! warning
     🚧 under construction
+
+### Low level gRPC API
+
+The Trial Datastore implements two gRPC endpoints that is specified as part of the Cogment API:
+
+-   [The Data/Log API `LogExporter`](../../cogment/cogment-low-level-api-guide/grpc.md#datalog-api)
+-   [The Model Registry API `ModelRegistry`](../../cogment/cogment-low-level-api-guide/grpc.md#model-registry-api) that defines how to create, retrieve, update and delete models and their version.
