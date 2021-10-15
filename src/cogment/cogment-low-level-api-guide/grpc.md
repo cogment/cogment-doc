@@ -1,23 +1,23 @@
-# Cogment gRPC API
+# Cogment gRPC API v2
 
-The low-level cogment communication API is implemented using [gRPC](https://grpc.github.io/){target=\_blank} services.
+The low-level cogment communication API is implemented using [gRPC](https://grpc.github.io/) services.
 These services are collections of procedures to be called remotely (RPC).
 gRPC abstracts the network communication with familiar looking functions (representing the defined procedures), in any number of programming languages.
 How services are implemented or accessed is highly dependant on the programming language being interfaced, and is beyond the scope of this document (see gRPC API documentation).
 
-This reference requires a basic understanding of gRPC, and in particular the format of the `proto` files.
+This reference requires a basic understanding of gRPC, and in particular the format of the `*.proto` files.
 
 ## General
 
 In this API, the `bytes` data type is normally used to contain the serialized data of externally defined messages. These messages are well defined in the `cogment.yaml` file.
 
-On the other hand, the `google.protobuf.Any` data type is normally used to contain messages that are not pre-defined, and may be decided at runtime.
+On the other hand, the `google.protobuf.Any` data type is normally used to contain messages that are not pre-defined (thus unknown by the framework), and may be decided at runtime.  It is then the resposibility of the receiver to deserialize in the correct message type.
 
-Empty messages are normally used as a placeholder for easy future, backward compatible, extension of the API.
+Empty messages are normally used as a placeholder for easy future, backward compatible, extension to the API.
 
-In this API, [gRPC metadata](https://grpc.io/docs/what-is-grpc/core-concepts/#metadata){target=\_blank} is normally used only for service request (procedure calls) for identifying purposes. The details of the required metadata are described with the service calls. Service replies are not expected to provide metadata.
+In this API, [gRPC metadata](https://grpc.io/docs/what-is-grpc/core-concepts/#metadata){target=\_blank} is normally used only for service request (by the caller) for identifying purposes. The details of the required metadata are described with the service calls. Service replies (the callees) are not expected to provide metadata.
 
-In many places in the API, we use a list of actor data without information about which actor is where in the list.
+In some places in the API, we use a list of actor data without information about which actor is where in the list.
 These lists have a constant length and order throughout a trial (set in the trial parameters), and thus can/must be cross referenced with other such lists within the same trial (e.g. `actors_in_trial`, `actors_map`).
 The actor can be infered by the position in the list, and the index into the list can sometimes be used to identify an actor.
 
@@ -29,25 +29,23 @@ Due to normal network delays and unpredictability of the various components, the
 
 -   In the current version, to simplify the implementation, there is an expectation of "good behavior" from the various components:
     -   Actors are expected to respond with an action only after receiving an observation, and to send only one action per observation received.
-    -   The environment is expected to respond with an observation set only after receiving an action set, and to send only one observation set per action set received.
+    -   The environment is expected to respond with an observation set only after receiving an action set, and to send only one observation set per action set received (and one initial observation set).
     -   All components are expected to respond within a reasonable amount of time.
     -   Hooks do not assume to receive specific parameters, they reply only with well formed parameters, and they do not assume a specific order of hooks being called (when multiple hooks are defined).
-    -   A `TerminateTrial` (from the Control API) is called only a reasonable amount of time after a `StartTrial` (e.g. at least two ticks have executed).
+    -   A `TerminateTrial` (from the Control API) is called only a reasonable delay after a `StartTrial` (e.g. after at least two ticks have executed).
     -   Note that what constitutes a "reasonable" amount of time is dependent on many variables
--   It is generally understood that most actors do not know when a trial will end. Because of this, there may be unpredictable behavior at the end of a trial:
-    -   Rewards and messages sent after the last action may not reach their destination.
-    -   If a trial is terminated by the Control API, actions from some actors may not reach the environment before the end of the trial.
 
 ## Common types
 
-Most of the messages are defined in the `common.proto` file. `ObservationSet` is defined in `environment.proto`.
+Most of the messages are defined in the `common.proto` file. `ObservationSet` and `ActionSet` are defined in `environment.proto`.
 
 ### Common Values
 
 Some values (and their standardized names) are recurrent throughout the gRPC API.
 
--   tick_id: (uint64) The monotonic time, in number of steps, since the start of the trial. As an ID, it represents a discrete step in the processing of the trial. A step starts with observations representing a specific point in time, that are followed by actions, rewards and messages in relation to these observations. The first tick ID is 0.
+-   tick_id: (uint64/sint64) The monotonic time, in number of steps, since the start of the trial. As an ID, it represents a discrete step in the processing of the trial. A step starts with observations representing a specific point in time, that are followed by actions, rewards and messages in relation to these observations. The first tick ID is 0. Some of these values may accept -1 as meaning the latest step (e.g. when sending an action).
 -   timestamp: (fixed64) The wall-clock time in nanoseconds since 00:00:00UTC January 1, 1970 (Unix Epoch time).
+-   trial_id: (string) The identifier (name) of the trial.
 
 ### `VersionRequest`
 
@@ -93,11 +91,11 @@ message TrialParams {
 }
 ```
 
--   trial_config: (optional) The user config for the controller of the trial.
+-   trial_config: (optional) The user config for the controller of the trial. Will be sent to pre-trial hooks.
 -   environment: The parameters for the environment of the trial.
 -   actors: The parameters for all actors involved in the trial. This list's length and order define the length and order of the lists of actors provided in different places in the API (e.g. `actors_in_trial`) for the trial.
 -   max_steps: The maximum number of steps/ticks that the trial should run. After this number of steps/ticks, an end request will be sent to the environment.
--   max_inactivity: The maximum amount of time (in seconds) that the trial should be without activity before an end request is sent to the environment (or the trial is forcefully terminated). Activity is defined as a message received by the Orchestrator from a user component.
+-   max_inactivity: The maximum amount of time (in seconds) that the trial should be without activity before it is forcefully terminated. "Activity" is defined as a message received by the Orchestrator from a user component.
 
 ### `EnvironmentParams`
 
@@ -113,7 +111,7 @@ message EnvironmentParams {
 
 -   endpoint: The URL where the environment is being served. This is used by the Orchestrator to connect to the environment using the `EnvironmentSP` gRPC service.
 -   config: (optional) The user config for the environment.
--   implementation: (optional) The name of the implementation of the environment to run.
+-   implementation: (optional) The name of the implementation of the environment to run. If not provided, an arbitrary implementation will be chosen.
 
 ### `ActorParams`
 
@@ -132,7 +130,7 @@ message ActorParams {
 -   name: The name of the actor.
 -   actor_class: The name of the class of the actor. Actor classes are defined in the `cogment.yaml` file in the `actor_classes:id` sections.
 -   endpoint: The URL where the actor is being served, or "client". The URL is used by the Orchestrator to connect to the actor using the `ServiceActorSP` gRPC service. If set to "client", then the actor is a client and will connect to the Orchestrator instead, using the `ClientActorSP` gRPC service.
--   implementation: (optional) The name of the implementation of the actor class to run.
+-   implementation: (optional) The name of the implementation of the actor class to run. If not provided, an arbitrary implementation will be chosen.
 -   config: (optional) The user config for the actor.
 
 ### `TrialConfig`, `ActorConfig`, `EnvironmentConfig`
@@ -154,7 +152,7 @@ message TrialConfig {
 
 ```
 
--   content: The serialized protobuf message representing a config. The actual message type is defined in the `cogment.yaml` file in its respective section: `environment:config_type`, `actor_classes:config_type`, and `trial:config_type`. Environment config is for use by environments. Actor config is for use by actors (each actor class can have a different config type). Trial config is for use by controllers.
+-   content: The serialized protobuf message representing a config. The actual message type is defined in the `cogment.yaml` file in its respective section: `environment:config_type`, `actor_classes:config_type`, and `trial:config_type`. Environment config is for use by environments. Actor config is for use by actors (each actor class can have a different config type). Trial config is for use by pre-trial hooks.
 
 ### `TrialActor`
 
@@ -162,13 +160,13 @@ Details of an actor participating in a trial.
 
 ```protobuf
 message TrialActor {
-  string actor_class = 1;
-  string name = 2;
+  string name = 1;
+  string actor_class = 2;
 }
 ```
 
--   actor_class: The name of the class of actor. Actor classes are defined in the `cogment.yaml` file in the `actor_classes:id` sections.
 -   name: The name of the actor.
+-   actor_class: The name of the class of actor. Actor classes are defined in the `cogment.yaml` file in the `actor_classes:id` sections.
 
 ### `Observation`
 
@@ -178,27 +176,13 @@ A singular observation.
 message Observation {
   uint64 tick_id = 1;
   fixed64 timestamp = 2;
-  ObservationData data = 3;
+  bytes content = 3;
 }
 ```
 
 -   tick_id: Tick of this observation.
 -   timestamp: The time of the observation.
--   data: The observation data.
-
-### `ObservationData`
-
-The data payload of an observation.
-
-```protobuf
-message ObservationData {
-  bytes content = 1;
-  bool snapshot = 2;
-}
-```
-
--   content: The serialized protobuf message representing an observation for a specific actor. If the `snapshot` field value is true, the type of message is an observation _space_ (i.e. a full observation snapshot) defined in section `actor_classes:observation:space` of the `cogment.yaml` file. If the `snapshot` field value is false, the type is an observation _delta_ (i.e. a difference from a previous observation) defined in the section `actor_classes:observation:delta` of the `cogment.yaml` file. Note that the specific actor represented is defined by the enclosing message.
--   snapshot: Determines the type of the message in the `content` field.
+-   content: The serialized protobuf message representing an observation for a specific actor. The actual message type for the observation space is defined in the `cogment.yaml` file for each actor class in section `actor_classes:observation:space`. Note that the specific actor represented is defined by the enclosing message.
 
 ### `Action`
 
@@ -206,13 +190,15 @@ Data associated with an actor's action.
 
 ```protobuf
 message Action {
-  bytes content = 1;
-  uint64 tick_id = 2;
+  uint64 tick_id = 1;
+  fixed64 timestamp = 2;
+  bytes content = 3;
 }
 ```
 
--   content: The serialized protobuf message representing an action from a specific actor. The actual message type for the action space is defined in the `cogment.yaml` file for each actor class in section `actor_classes:action:space`. Note that the specific actor represented is defined by the enclosing message.
 -   tick_id: The tick of the observation on which the action is taken.
+-   timestamp: The time of the action.
+-   content: The serialized protobuf message representing an action from a specific actor. The actual message type for the action space is defined in the `cogment.yaml` file for each actor class in section `actor_classes:action:space`. Note that the specific actor represented is defined by the enclosing message.
 
 ### `Message`
 
@@ -257,15 +243,15 @@ This is an aggregate of possibly multiple `RewardSource` (but at least one).
 
 ```protobuf
 message Reward {
-  string receiver_name = 1;
-  sint64 tick_id = 2;
+  sint64 tick_id = 1;
+  string receiver_name = 2;
   float value = 3;
   repeated RewardSource sources = 4;
 }
 ```
 
--   receiver_name: Name of the receiving actor (the reward destination).
 -   tick_id: The tick associated with the reward. If set to `-1` when sending a reward, the orchestrator will automatically assign the latest tick. This will always be a valid tick (i.e. >= 0) when receiving a reward.
+-   receiver_name: Name of the receiving actor (the reward destination).
 -   value: The aggregated value (weighted sum) of the provided reward sources. May be ignored when sending a reward; The final value will be computed by the orchestrator.
 -   sources: The simple reward sources that form this aggregated reward. There must be at least one.
 
@@ -277,15 +263,86 @@ A set of environment observations for all actors in the trial.
 message ObservationSet {
   uint64 tick_id = 1;
   fixed64 timestamp = 2;
-  repeated ObservationData observations = 3;
+  repeated bytes observations = 3;
   repeated int32 actors_map = 4;
 }
 ```
 
 -   tick_id: The tick to which the observations relate to.
 -   timestamp: The time when the observation set was made.
--   observations: A list of observations. Indexed into by the `actors_map`.
+-   observations: A list of observations. Indexed into by the `actors_map`. Each `bytes` chunk is a serialized protobuf message representing an observation for a specific actor class. The actual message type for the observation space is defined in the `cogment.yaml` file for each actor class in section `actor_classes:observation:space`. Note that the specific actor represented is defined by the `actors_map`.
 -   actors_map: A list of indexes into the `observations` list above. This list of indexes has the same length and order as the list of actors provided in different places in the API (e.g. `actors_in_trial`), for the same trial.
+
+### `ActionSet`
+
+A set of actions from all actors in the trial.
+
+```protobuf
+message ActionSet {
+  uint64 tick_id = 1;
+  fixed64 timestamp = 2;
+  repeated bytes actions = 3;
+}
+```
+
+-   tick_id: The tick to which the actions relate to.
+-   timestamp: The time when the action set was made (usually after the last action arrived at the Orchestrator).
+-   actions: A list of actions. Each `bytes` chunk is a serialized protobuf message representing an action from a specific actor. The actual message type for the action space is defined in the `cogment.yaml` file for each actor class in section `actor_classes:action:space`. This list has the same length and order as the list of actors provided in different places in the API (e.g. `actors_in_trial`), for the same trial.
+
+### `TrialState`
+
+Enum representing the state of a trial.
+
+```protobuf
+enum TrialState {
+  UNKNOWN = 0;
+  INITIALIZING = 1;
+  PENDING = 2;
+  RUNNING = 3;
+  TERMINATING = 4;
+  ENDED = 5;
+}
+```
+
+-   UNKNOWN: Should not be used (it's a requirement of protobuf enums to have a 0 default value).
+-   INITIALIZING: The trial is in the process of starting.
+-   PENDING: The trial is waiting for its final parameters, before running.
+-   RUNNING: The trial is running.
+-   TERMINATING: The trial is in the process of terminating (either a request to terminate has been received or the last observation has been received).
+-   ENDED: The trial has ended. Only a set number of ended trials will be kept (configured in the Orchestrator).
+
+### `CommunicationState`
+
+Enum representing the state of communication with the actors and environment.
+
+```protobuf
+enum CommunicationState {
+  UNKNOWN_COM_STATE = 0;
+  NORMAL = 1;
+  HEARTBEAT = 2;
+  LAST = 3;
+  LAST_ACK = 4;
+  END = 5;
+}
+```
+
+-   UNKNOWN_COM_STATE: Should not be used (it's a requirement of protobuf enums to have a 0 default value).
+-   NORMAL: Normal communication message. Always contains data.
+-   HEARTBEAT: Heartbeat request/reply message.  Contains no data.  When received, must be responded in kind.
+-   LAST: Message indicating that the trial is ending, and ending data is following (as `NORMAL`). Contains no data.
+-   LAST_ACK: Message indicating that the last data has been sent (i.e. this is the last outgoing message).  Contains no data.
+-   END: Message indicating that the trial has ended (i.e. this is the final message).  Contains no data, except maybe for `details`.
+
+
+The normal (soft) end of a trial follows this sequence :
+
+1. Orchestrator or Environment sends `LAST`
+2. Exchange of `NORMAL` finalizing data
+3. Component sends `LAST_ACK` (component stops sending after this)
+4. Orchestrator sends `NORMAL` finalizing data
+5. Orchestrator terminates communication with `END`
+
+For a hard termination of a trial, the Orchestrator will send `END` to all components (with no `LAST`/`LAST_ACK` handshake).
 
 ## Control API
 
@@ -317,7 +374,7 @@ Request the environment to terminate an existing trial.
 
 Metadata:
 
--   `trial-id`: UUID of the trial to terminate.
+-   `trial-id`: Identifier of the trial to terminate.
 
 #### `GetTrialInfo()`
 
@@ -325,7 +382,7 @@ Get extra information about an existing trial.
 
 Metadata:
 
--   `trial-id`: (_optional_) UUID of the trial we are requesting information about. If not provided, the request is for information about all running trials.
+-   `trial-id`: (_optional_) Identifier of the trial we are requesting information about. If not provided, the request is for information about all running trials.
 
 #### `WatchTrials()`
 
@@ -355,7 +412,7 @@ message TrialStartRequest {
 -   user_id: The ID of the user that is starting the trial.
 -   trial_id_requested: The trial identifier requested for the new trial.  It must be unique.  If not empty, the Orchestrator will try to use this trial_id, otherwise, a UUID will be created.
 
-### TrialStartReply
+### `TrialStartReply`
 
 Reply message for the `StartTrial` procedure.
 
@@ -407,28 +464,6 @@ message TrialInfoReply {
 
 -   trial: List of information about the trials. Contains only the requested trial info if a trial ID was provided when the call was made (as metadata to the procedure). Otherwise contains information about all active trials.
 
-### `TrialState`
-
-Enum representing the state of a trial.
-
-```protobuf
-enum TrialState {
-  UNKNOWN = 0;
-  INITIALIZING = 1;
-  PENDING = 2;
-  RUNNING = 3;
-  TERMINATING = 4;
-  ENDED = 5;
-}
-```
-
--   UNKNOWN: Should not be used (it's a requirement of protobuf enums to have a 0 default value).
--   INITIALIZING: The trial is in the process of starting.
--   PENDING: The trial is waiting for its final parameters, before running.
--   RUNNING: The trial is running.
--   TERMINATING: The trial is in the process of terminating (either a request to terminate has been received or the last observation has been received).
--   ENDED: The trial has ended. Only a set number of ended trials will be kept (configured in the Orchestrator).
-
 ### `TrialInfo`
 
 Message containing information about a trial.
@@ -444,7 +479,7 @@ message TrialInfo {
 }
 ```
 
--   trial_id: The UUID of the trial.
+-   trial_id: The Identifier of the trial.
 -   state: The state of the trial.
 -   tick_id: The current tick of the trial.
 -   trial_duration: The duration of the trial so far, in nanoseconds. If the trial has ended, this is the duration from start to end of the trial. This is meant as an indicator; resolution may not be a nanosecond, and precision is not guaranteed.
@@ -475,437 +510,177 @@ message TrialListEntry {
 
 ```
 
--   trial_id: The UUID of the trial.
+-   trial_id: The Identifier of the trial.
 -   state: The state of the trial.
 
-## Client Actor API
+## Actor API
 
-This API is defined in `orchestrator.proto`. It is implemented by the cogment orchestrator, and client applications are expected to connect to the orchestrator using the gRPC client API.
+There are two kinds of actors: Service and Client.  They each have their own separate service (respectively `ServiceActorSP` and `ClientActorSP`). But the messages are identical and work almost the same way (except for the initial phase).
 
-This API is used by client actors participating in existing trials.
-Multiple simultaneous actors can connect using a single client application instance.
-The actors connecting this way must have an endpoint set to "client" in the [trial parameters](../cogment-api-reference/cogment-yaml.md#trial-params).
+### Service Actor API
 
-### Service `ClientActorSP`
+This API is defined in `agent.proto`. It is implemented by the service actor application using the gRPC server API, and the Orchestrator connects to the service actor application using the gRPC client API.
+
+This API is used by service actors that will be participating in new trials. They are connected at the start of a trial in which they participate.
+Multiple simultaneous service actors can be served from a single service application instance (i.e. same endpoint).
+An actor endpoint, for the Orchestrator to connect to, is defined in the [trial parameters](../cogment-api-reference/cogment-yaml.md#trial-params).
+
+#### Service `ServiceActorSP`
 
 ```protobuf
-service ClientActorSP {
-  rpc JoinTrial(TrialJoinRequest) returns (TrialJoinReply) {}
-  rpc ActionStream(stream TrialActionRequest) returns (stream TrialActionReply) {}
-  rpc Heartbeat(TrialHeartbeatRequest) returns (TrialHeartbeatReply) {}
-  rpc SendReward(TrialRewardRequest) returns (TrialRewardReply) {}
-  rpc SendMessage(TrialMessageRequest) returns (TrialMessageReply) {}
+service ServiceActorSP {
+  rpc RunTrial(stream ActorRunTrialInput) returns (stream ActorRunTrialOutput) {}
   rpc Version(VersionRequest) returns (VersionInfo) {}
 }
 ```
 
-#### `JoinTrial()`
+### Client Actor API
 
-Join an existing trial.
+This API is defined in `orchestrator.proto`. It is implemented by the Orchestrator using the gRPC server API, and client applications are expected to connect to the Orchestrator using the gRPC client API.
 
-Metadata: None
+This API is used by client actors participating in existing (initializing) trials. The trial expecting client actors will wait for all actors to be connected before starting the trial.
+The actors connecting this way must have an endpoint set to "client" in the [trial parameters](../cogment-api-reference/cogment-yaml.md#trial-params).
 
-#### `ActionStream()`
+Note the reversal of the input and output messages compared to the service actor `RunTrial` procedure.
 
-Main call to participate in the trial. It is typically active for the duration of the trial.
-Actor actions are provided to the orchestrator in the request stream, and trial data is provided by the orchestrator in the reply stream.
+#### Service `ClientActorSP`
 
-Metadata:
+```protobuf
+service ClientActorSP {
+  rpc RunTrial(stream ActorRunTrialOutput) returns (stream ActorRunTrialInput) {}
+  rpc Version(VersionRequest) returns (VersionInfo) {}
+}
+```
 
--   `trial-id`: UUID of the trial the current actor is participating in. This comes from the `JoinTrial` reply.
--   `actor-name`: The name of the current actor participating in the trial. This is supplied (or confirmed) in the `JoinTrial` reply.
+### `RunTrial()`
 
-#### `Heartbeat()`
-
-This should be called on a regular basis (at least every 30 seconds), if there are no actions sent in the `ActionStream`.
-Otherwise the actor will be considered terminated and be disconnected.
-
-Metadata:
-
--   `trial-id`: UUID of the trial the current actor is participating in. This comes from the `JoinTrial` reply.
--   `actor-name`: The name of the current actor participating in the trial. This is supplied (or confirmed) in the `JoinTrial` reply.
-
-#### `SendReward()`
-
-Used for the current actor to provide feedback to other actors in the same trial.
+Procedure call to participate in a trial. It is active for the duration of the trial.
+Actor actions and data are provided to the Orchestrator in the output message stream, and observations and data are provided by the Orchestrator in the input message stream.
 
 Metadata:
 
--   `trial-id`: UUID of the trial the current actor is participating in. This comes from the `JoinTrial` reply.
--   `actor-name`: The name of the current actor participating in the trial. This is supplied (or confirmed) in the `JoinTrial` reply.
+-   `trial-id`: Identifier of the trial the actor is participating in.  This is supplied to service actors, but must be supplied by client actors.
 
-#### `SendMessage()`
-
-Used for the current actor to asynchronously send data to other actors (or the environment) in the same trial.
-
-Metadata:
-
--   `trial-id`: UUID of the trial the current actor is participating in. This comes from the `JoinTrial` reply.
--   `actor-name`: The name of the current actor participating in the trial. This is supplied (or confirmed) in the `JoinTrial` reply.
-
-#### `Version()`
+### `Version()`
 
 Request version data.
 
 Metadata: None
 
-### `TrialJoinRequest`
+### `ActorRunTrialInput`
 
-Request message for the `JoinTrial` procedure.
+Message received by actors during the streaming `RunTrial` procedure. `data` should contain a message only when `state` is `NORMAL` (or in the case of a hard termination, `details` can be sent with state `END`).
+Defined in the `common.proto` file.
 
 ```protobuf
-message TrialJoinRequest {
-  string trial_id = 1;
-
-  oneof slot_selection {
-    string actor_class = 2;
-    string actor_name = 3;
+message ActorRunTrialInput {
+  CommunicationState state = 1;
+  oneof data {
+    ActorInitialInput init_input = 2;
+    Observation observation = 3;
+    Reward reward = 4;
+    Message message = 5;
+    string details = 6;
   }
 }
 ```
 
--   trial_id: The UUID of the trial the actor requests to join.
--   actor_class: The class the actor requests to join as. No actor name should be requested if this is used.
--   actor_name: The name the actor requests to join as. No actor class should be requested if this is used.
+-   state: The state of this communication message. Identifies this message as a data or a control message.
+-   init_input: The initial communication data at the start of a trial. It should always be the first `NORMAL` state message in the stream.  Used to report the details of the trial the actor is participating in.
+-   observation: An observation from the environment.
+-   reward: Rewards from other participants in the trial.
+-   message: A message from other participants in the trial.
+-   details: Explanation for special circumstances, for example when receiving a hard termination signal (a state of `END` without `LAST` or `LAST_ACK`).
 
-### `TrialJoinReply`
+### `ActorRunTrialOutput`
 
-Reply message for the `JoinTrial` procedure.
+Message sent by actors during the streaming `RunTrial` procedure. `data` should contain a message only when `state` is `NORMAL`.
+Defined in the `common.proto` file.
 
 ```protobuf
-message TrialJoinReply {
+message ActorRunTrialOutput {
+  CommunicationState state = 1;
+  oneof data {
+    ActorInitialOutput init_output = 2;
+    Action action = 3;
+    Reward reward = 4;
+    Message message = 5;
+    string details = 6;
+  }
+}
+```
+
+-   state: The state of this communication message. Identifies this message as a data or a control message.
+-   init_output: The initial communication data at the start of a trial. It should always be the first `NORMAL` state message in the stream.  Used to initiate or acknowledge connection to a trial.
+-   action: An action from the actor.
+-   reward: A reward for other participants in the trial.
+-   message: A message for other participants in the trial.
+-   details: *Reserved*.
+
+### `ActorInitialInput`
+
+The initial communication message at the start of a trial. Used to report the details of the trial the actor is participating in.
+For service actors, this message initiates the connection stream for a new trial.  The trial ID is provided in the metadata of the `RunTrial` procedure.
+For client actors, this message is a reply to a connection request to an existing trial.
+
+```protobuf
+message ActorInitialInput {
   string actor_name = 1;
-  string trial_id = 2;
-  ActorConfig config = 3;
-  repeated TrialActor actors_in_trial = 4;
+  string actor_class = 2;
+  string impl_name = 3;
+  ActorConfig config = 4;
 }
 ```
 
--   actor_name: The name assigned to the current actor joining the trial.
--   trial_id: The UUID of the trial joined.
--   config: The configuration to start the actor.
--   actors_in_trial: The list of all actors in the trial (including current actor). This list has the same length and order as the list of actors provided in different places in the API, for the same trial. The list can be empty (or not present) in some circumstances, even if there are actors (if necessary the list can be obtained in other ways).
-
-### `TrialHeartbeatRequest`
-
-Request message for the `Heartbeat` procedure.
-
-```protobuf
-message TrialHeartbeatRequest {}
-```
-
-### `TrialHeartbeatReply`
-
-Reply message for the `Heartbeat` procedure.
-
-```protobuf
-message TrialHeartbeatReply {}
-```
-
-### `TrialActionRequest`
-
-Stream request message for the `ActionStream` procedure.
-
-```protobuf
-message TrialActionRequest {
-  Action action = 1;
-}
-```
-
--   action: The action taken by the current actor. This is typically in response to an observation (from the reply message). The first action after joining a trial (before any observations have been received) should be empty.
-
-### `TrialActionReply`
-
-Stream reply message for the `ActionStream` procedure.
-
-```protobuf
-message TrialActionReply {
-  ActorPeriodData data = 1;
-  bool final_data = 2;
-}
-```
-
--   data: The trial data for the current actor. This data can span a period of time, but is typically for one time step (tick).
--   final_data: If this is true, the data provided is final and no more reply messages will be received after this one.
-
-### `TrialRewardRequest`
-
-Request message for the `SendReward` procedure.
-
-```protobuf
-message TrialRewardRequest {
-  repeated Reward rewards = 1;
-}
-```
-
--   rewards: The rewards to send to one or more actors.
-
-### `TrialRewardReply`
-
-Reply message for the `SendReward` procedure.
-
-```protobuf
-message TrialRewardReply {}
-```
-
-### `TrialMessageRequest`
-
-Request message for the `SendMessage` procedure.
-
-```protobuf
-message TrialMessageRequest {
-  repeated Message messages = 1;
-}
-```
-
--   messages: User data to send to other actors or the environment. The sender_name entry should not be set (it is part of the metadata of the procedure).
-
-### `TrialMessageReply`
-
-Reply message for the `SendMessage` procedure.
-
-```protobuf
-message TrialMessageReply {}
-```
-
-## Service Actor API
-
-This API is defined in `agent.proto`. It is implemented by the actor application using the gRPC server API, and the orchestrator connects to the actor application.
-
-This API is used by service actors that will be participating in new trials.
-Multiple simultaneous service actors can be served from a single actor application instance.
-An actor endpoint, for the orchestrator to connect to, is defined in the [trial parameters](../cogment-api-reference/cogment-yaml.md#trial-params).
-
-### Service `ServiceActorSP`
-
-```protobuf
-service ServiceActorSP {
-  rpc OnStart(AgentStartRequest) returns (AgentStartReply) {}
-  rpc OnObservation(stream AgentObservationRequest) returns (stream AgentActionReply) {}
-  rpc OnReward(AgentRewardRequest) returns (AgentRewardReply) {}
-  rpc OnMessage(AgentMessageRequest) returns (AgentMessageReply) {}
-  rpc OnEnd(AgentEndRequest) returns (AgentEndReply) {}
-  rpc Version(VersionRequest) returns (VersionInfo) {}
-}
-```
-
-#### `OnStart()`
-
-Called when a new trial is started.
-
-Metadata:
-
--   `trial-id`: UUID of the new trial the actor is participating in.
--   `actor-name`: The name the actor has been assigned in the new trial.
-
-#### `OnObservation()`
-
-Called when a new observation from the environment is available.
-
-Metadata:
-
--   `trial-id`: UUID of the trial that is the source of the data.
--   `actor-name`: The name of the actor for which the data is intended.
-
-#### `OnReward()`
-
-Called when a new reward is available.
-
-Metadata:
-
--   `trial-id`: UUID of the trial that is the source of the data.
--   `actor-name`: The name of the actor for which the data is intended.
-
-#### `OnMessage()`
-
-Called when new user data (messages) is available.
-
-Metadata:
-
--   `trial-id`: UUID of the trial that is the source of the data.
--   `actor-name`: The name of the actor for which the data is intended.
-
-#### `OnEnd()`
-
-Called at the end of the trial.
-No more calls will be done related to the trial after this call.
-
-Metadata:
-
--   `trial-id`: UUID of the trial that ended.
--   `actor-name`: The name of the actor for which the data is intended.
-
-#### `Version()`
-
-Called to request version data.
-
-Metadata: None
-
-### `AgentStartRequest`
-
-Request message for the `OnStart` procedure.
-
-```protobuf
-message AgentStartRequest {
-  string impl_name = 1;
-  ActorConfig config = 2;
-  repeated TrialActor actors_in_trial = 3;
-}
-```
-
+-   actor_name: The name of the actor participating in the trial.
+-   actor_class: The actor class of the actor participating in the trial.
 -   impl_name: (optional) Name of the implementation that should run the actor in this trial. If not provided, an arbitrary implementation will be used.
 -   config: The configuration to start the actor.
--   actors_in_trial: The list of all actors in the trial (including current actor). This list has the same length and order as the list of actors provided in different places in the API, for the same trial. The list can be empty (or not present) in some circumstances, even if there are actors (if necessary the list can be obtained in other ways).
 
-### `AgentStartReply`
+### `ActorInitialOutput`
 
-Reply message for the `OnStart` procedure.
-
-```protobuf
-message AgentStartReply {}
-```
-
-### `AgentObservationRequest`
-
-Request message for the `OnObservation` procedure.
+The initial communication message at the start of a trial. Used to initiate or acknowledge connection to a trial.
+For service actors, this message is empty and serves to acknowledge that the actor is ready to start the trial.
+For client actors, this message serves as a request to connect to an existing trial.  The trial ID is provided in the metadata of the `RunTrial` procedure.
 
 ```protobuf
-message AgentObservationRequest {
-  Observation observation = 1;
+message ActorInitialOutput {
+  oneof slot_selection {
+    string actor_class = 1;
+    string actor_name = 2;
+  }
 }
 ```
 
--   observation: An observation from the environment.
-
-### `AgentActionReply`
-
-Reply message for the `OnObservation` procedure.
-
-```protobuf
-message AgentActionReply {
-  Action action = 1;
-  repeated Reward rewards = 2;
-  repeated Message messages = 3;
-}
-```
-
--   action: An action for the environment.
--   rewards: Rewards for other actors.
--   messages: User data to send to other actors or the environment. The sender_name entry should not be set.
-
-### `AgentRewardRequest`
-
-Request message for the `OnReward` procedure.
-
-```protobuf
-message AgentRewardRequest {
-  Reward reward = 1;
-}
-```
-
--   reward: Reward received from aggregating various rewards from actors or the environment.
-
-### `AgentRewardReply`
-
-Reply message for the `OnReward` procedure.
-
-```protobuf
-message AgentRewardReply {}
-```
-
-### `AgentMessageRequest`
-
-Request message for the `OnMessage` procedure.
-
-```protobuf
-message AgentMessageRequest {
-  repeated Message messages = 1;
-}
-```
-
--   messages: List of messages from actors or the environment.
-
-### `AgentMessageReply`
-
-Reply message for the `OnMessage` procedure.
-
-```protobuf
-message AgentMessageReply {}
-```
-
-### `AgentEndRequest`
-
-Request message for the `OnEnd` procedure.
-
-```protobuf
-message AgentEndRequest {
-  ActorPeriodData final_data = 1;
-}
-```
-
--   final_data: The final (last) data for the trial.
-
-### `AgentEndReply`
-
-Reply message for the `OnEnd` procedure.
-
-```protobuf
-message AgentEndReply {}
-```
+-   actor_name: The name in the trial that the client actor wants to participate as.
+-   actor_class: The class in the trial that the client actor wants to participate as.  In this case, there may be many options, and the Orchestrator will decide precisely which name the client actor will receive.
 
 ## Environment API
 
-This API is defined in `environment.proto`. It is implemented by the environment application using the gRPC server API, and the orchestrator connects to the environment application.
+This API is defined in `environment.proto`. It is implemented by the environment application using the gRPC server API, and the Orchestrator connects to the environment application using the gRPC client API.
 
 This API is used by environments that will run trials.
 There is only one environment per trial.
-Multiple simultaneous environments can be served from a single environment application instance (for different trials).
-The environment endpoint, for the orchestrator to connect to, is defined in the [trial parameters](../cogment-api-reference/cogment-yaml.md#trial-params).
+Multiple simultaneous environments (for different trials) can be served from a single environment application instance (endpoint).
+The environment endpoint, for the Orchestrator to connect to, is defined in the [trial parameters](../cogment-api-reference/cogment-yaml.md#trial-params).
 
 ### Service `EnvironmentSP`
 
 ```protobuf
 service EnvironmentSP {
-  rpc OnStart(EnvStartRequest) returns (EnvStartReply) {}
-  rpc OnAction(stream EnvActionRequest) returns (stream EnvActionReply) {}
-  rpc OnMessage(EnvMessageRequest) returns (EnvMessageReply) {}
-  rpc OnEnd(EnvActionRequest) returns (EnvActionReply) {}
+  rpc RunTrial(stream EnvRunTrialInput) returns (stream EnvRunTrialOutput) {}
   rpc Version(VersionRequest) returns (VersionInfo) {}
 }
 ```
 
-#### `OnStart()`
+#### `RunTrial()`
 
-Called when a new trial is started.
-
-Metadata:
-
--   `trial-id`: UUID of the new trial the environment is running.
-
-#### `OnAction()`
-
-Called when a set of actions from actors is available.
+Procedure call to participate in a trial. It is active for the duration of the trial.
+Actor actions and data are provided by the Orchestrator in the input message stream, and observations and data are provided to the Orchestrator in the output message stream.
 
 Metadata:
 
--   `trial-id`: UUID of the trial that is the source of the data.
-
-#### `OnMessage()`
-
-Called when user data from actors is received.
-
-Metadata:
-
--   `trial-id`: UUID of the trial that is the source of the data.
-
-#### `OnEnd()`
-
-Called to request the end of the trial.
-If no reply is sent within a pre-determined time, the environment is considered stalled, and the trial will force terminate.
-
-Metadata:
-
--   `trial-id`: UUID of the trial to end.
+-   `trial-id`: Identifier of the trial the environment is participating in.
 
 #### `Version()`
 
@@ -913,94 +688,79 @@ Called to request version data.
 
 Metadata: None
 
-### `EnvStartRequest`
 
-Request message for the `OnStart` procedure.
+### `EnvrRunTrialInput`
+
+Message received by the environment during the streaming `RunTrial` procedure. `data` should contain a message only when `state` is `NORMAL` (or in the case of a hard termination, `details` can be sent with state `END`).
 
 ```protobuf
-message EnvStartRequest {
-  string impl_name = 1;
-  EnvironmentConfig config = 2;
-  repeated TrialActor actors_in_trial = 3;
-  uint64 tick_id = 4;
+message EnvRunTrialInput {
+  CommunicationState state = 1;
+  oneof data {
+    EnvInitialInput init_input = 2;
+    ActionSet action_set = 3;
+    Message message = 4;
+    string details = 5;
+  }
 }
 ```
 
--   impl_name: (optional) Name of the implementation that should run the environment for this trial. If not provided, an arbitrary implementation will be used.
+-   state: The state of this communication message. Identifies this message as a data or a control message.
+-   init_input: The initial communication data at the start of a trial. It should always be the first `NORMAL` state message in the stream.  Used to provide the details of the trial the environment will run.
+-   action_set: Actions from all actors in the trial.
+-   message: A message from other participants in the trial.
+-   details: Explanation for special circumstances, for example when receiving a hard termination signal (a state of `END` without `LAST` or `LAST_ACK`).
+
+### `EnvRunTrialOutput`
+
+Message sent by the environment during the streaming `RunTrial` procedure. `data` should contain a message only when `state` is `NORMAL`.
+
+```protobuf
+message EnvRunTrialOutput {
+  CommunicationState state = 1;
+  oneof data {
+    EnvInitialOutput init_output = 2;
+    ObservationSet observation_set = 3;
+    Reward reward = 4;
+    Message message = 5;
+    string details = 6;
+  }
+}
+```
+
+-   state: The state of this communication message. Identifies this message as a data or a control message.
+-   init_output: The initial communication data at the start of a trial. It should always be the first `NORMAL` state message in the stream.  Used to acknowledge that the environment is ready to run the trial. Note that the trial will only really start when the environment sends the first set of observations.
+-   observation_set: Observations for all actors in the trial.
+-   reward: A reward for other participants in the trial.
+-   message: A message for other participants in the trial.
+-   details: *Reserved*.
+
+### `EnvInitialInput`
+
+The initial communication message at the start of a trial. This message initiates the connection stream for a new trial.  The trial ID is provided in the metadata of the `RunTrial` procedure.
+
+```protobuf
+message EnvInitialInput {
+  string name = 1;
+  string impl_name = 2;
+  uint64 tick_id = 3;
+  repeated TrialActor actors_in_trial = 4;
+  EnvironmentConfig config = 5;
+}
+```
+
+-   name: The name of the environment participating in the trial.
+-   impl_name: (optional) Name of the implementation that should run the environment in this trial. If not provided, an arbitrary implementation will be used.
+-   tick_id: Initial tick id requested to start the environment.
+-   actors_in_trial: The list of all actors participating in the trial. This list has the same length and order as the list of actors provided in different places in the API, for the same trial.
 -   config: The configuration to start the environment.
--   actors_in_trial: The list of all actors in the trial. This list has the same length and order as the list of actors provided in different places in the API, for the same trial.
--   tick_id: The expected tick of the observation set returned in `EnvStartReply`.
 
-### `EnvStartReply`
+### `EnvInitialOutput`
 
-Reply message for the `OnStart` procedure.
+The initial communication message at the start of a trial. This message is empty and serves to acknowledge that the environment is ready to run the trial.
 
 ```protobuf
-message EnvStartReply {
-  ObservationSet observation_set = 1;
-}
-```
-
--   observation_set: A set of observations for all actors of the trial.
-
-### `EnvActionRequest`
-
-Request message for the `OnAction` and `OnEnd` procedures.
-
-```protobuf
-message ActionSet {
-  repeated bytes actions = 1;
-  uint64 tick_id = 2;
-}
-
-message EnvActionRequest {
-  ActionSet action_set = 1;
-  bool reply_with_snapshot = 2;
-}
-```
-
--   actions: A list of actions, one for each actor of the trial. This list has the same length and order as the list of actors provided in different places in the API (e.g. `actors_in_trial`), for the same trial. Each action is the serialization of the appropriate type for the actor (as defined in the `cogment.yaml` file).
--   tick_id: The tick of the observations on which the actions are taken.
--   action_set: The set of actions for all actors.
--   reply_with_snapshot: If true, then request that the observations for the actors (in the reply) be snapshots. If false, the observations can be snapshots or deltas (at the discretion of the environment). See [ObservationData](#observationdata).
-
-### `EnvActionReply`
-
-Reply message for the `OnAction` and `OnEnd` procedures.
-
-```protobuf
-message EnvActionReply {
-  ObservationSet observation_set = 1;
-  repeated Reward rewards = 2;
-  repeated Message messages = 3;
-  bool final_update = 4;
-}
-```
-
--   observation_set: A set of observations for all actors of the trial.
--   rewards: A list of rewards for actors.
--   messages: User data to send to actors. The sender_name entry should not be set.
--   messages: A list of messages for actors. The sender actor entry should not be filled.
--   final_update: If true, this will be the final update of the environment for this trial (i.e. end of the trial). This should always be true when replying to an `OnEnd` procedure call.
-
-### `EnvMessageRequest`
-
-Request message for the `OnMessage` procedure.
-
-```protobuf
-message EnvMessageRequest {
-  repeated Message messages = 1;
-}
-```
-
--   messages: List of messages from actors.
-
-### `EnvMessageReply`
-
-Reply message for the `OnMessage` procedure.
-
-```protobuf
-message EnvMessageReply {}
+message EnvInitialOutput {}
 ```
 
 ## Data/Log API
@@ -1027,7 +787,7 @@ The stream is maintained for the duration of the trial.
 
 Metadata:
 
--   `trial-id`: UUID of the trial that is the source of the data.
+-   `trial-id`: Identifier of the trial that is the source of the data.
 -   `user-id`: Identifier of the user that started the trial.
 
 #### `Version()`
@@ -1105,7 +865,7 @@ Called before a trial is started to set or modify the parameters for the trial.
 
 Metadata:
 
--   `trial-id`: UUID of the new trial that will be started.
+-   `trial-id`: Identifier of the new trial that will be started.
 -   `user-id`: Identifier of the user that started the trial.
 
 #### `Version()`

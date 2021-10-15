@@ -159,7 +159,7 @@ Method to start a new trial. The parameters of the trial will be set by the pre-
 Parameters:
 
 -   `trial_config`: _protobuf class instance_ - Configuration for the trial. The type is specified in file `cogment.yaml` under the section `trial:config_type`. Can be `None` if no configuration is provided.
--   `trial_id_requested`: _str_ - The trial identifier requested for the new trial.  It must be unique.  If provided, the Orchestrator will try to use this trial_id, otherwise, a UUID will be created.
+-   `trial_id_requested`: _str_ - The trial identifier requested for the new trial. It must be unique among all active trials and a limited set of the latest ended trials (this list of trials can be retrieved with `get_trial_info` or `watch_trial`). If provided, the Orchestrator will try to use this trial_id, otherwise, a UUID will be created.
 
 Return: _str_ - The newly started trial ID.
 
