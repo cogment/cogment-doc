@@ -234,7 +234,7 @@ Return: _bool_ - True if the trial has ended, false otherwise.
 
 ### `sending_done(self)`
 
-Method to notify the Orchestrator that all data for the trial, from this session, has been sent. This can be called only when the session is ending.  When starting the session, if the `auto_done_sending` parameter is True, this method should not be called, and if the parameter is False, it MUST be called to end the trial properly.
+Method to notify the Orchestrator that all data for the trial, from this session, has been sent. This can be called only when the session is ending.  When starting the session (see `EnvironmentSession` and `ActorSession`), if the `auto_done_sending` parameter is True, this method should not be called, and if the parameter is False, it MUST be called to end the trial properly.
 
 Parameters: None
 
@@ -261,7 +261,7 @@ Method to send a message related to the current time step (tick id).
 Parameters:
 
 -   `payload`: _protobuf class instance_ - The message data to be sent. The class can be any protobuf class. It is the responsibility of the receiving actor or environment to manage the class received (packed in a `google.protobuf.Any`).
--   `to`: _list[str]_ - Targets of feedback. A list value could be the name of an actor in the trial, or the environment name. Or it could represent a set of actors (with wildcards); A set of actors can be represented with the wildcard character "`*`" for all actors (of all classes), or "`actor_class.*`" for all actors of a specific class (the `actor_class` is the name of the class as specified in `cogment.yaml`).  Note that the wildcard does not include the environment.
+-   `to`: _list[str]_ - Targets of feedback. Each value could be the name of an actor in the trial, or the name of the environment. Or it could represent a set of actors (with wildcards); A set of actors can be represented with the wildcard character "`*`" for all actors (of all classes), or "`actor_class.*`" for all actors of a specific class (the `actor_class` is the name of the class as specified in `cogment.yaml`).  Note that the wildcard does not include the environment.
 
 Return: None
 

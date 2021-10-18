@@ -122,19 +122,15 @@ These parameters are:
 
 -   `max_steps`: The maximum number of time steps (ticks) that the trial will run before terminating.
 -   `max_inactivity`: The number of seconds of inactivity after which a trial will be terminated. If 0, the trial will not be terminated because of inactivity.
--   `trial`: Mapping of properties
-    -   `config`: Definition of properties to match the definition of `config_type` for the trial. A default config cannot be defined in this yaml file.
 -   `environment`: Mapping of properties
     -   `name`: The name of the environment (defaults to "env" if not provided)
     -   `endpoint`: The URL where the environment gRPC server resides
     -   `implementation`: The name of the implementation to be used for this instance of the environment. This must match an implementation that is defined at the endpoint. If not defined, an arbitraary implementation will be chosen at runtime
-    -   `config`: Definition of properties to match the definition of `config_type` for the environment. A default config cannot be defined in this yaml file.
 -   `actors`: List of actor properties
     -   `name`: The name of this actor (i.e. name of the specific instance of the actor class)
     -   `actor_class`: The name of the actor class. The actor class must be defined in the `actor_classes` section above
     -   `endpoint`: The URL where the actor gRPC server resides. If this is `client`, the actor will connect as a client (the orchestrator being the server in this case).
     -   `implementation`: The name of the implementation to be used for this actor instance. This must match an implementation that is defined at the endpoint. If not defined, an arbitraary implementation will be chosen at runtime.
-    -   `config`: Definition of properties to match the definition of `config_type` for this actor class. A default config cannot be defined in this yaml file.
 
 E.g.:
 
@@ -143,41 +139,32 @@ trial_params:
     max_steps: 1000
     max_inactivity: 5
 
-    trial:
-        config:
-
     environment:
         name: Arena
         endpoint: grpc://env:9000
         implementation: default
-        config:
 
     actors:
         - name: Alice
           actor_class: BigPlayer
           endpoint: grpc://bp1:9000
           implementation:
-          config:
         - name: Bob
           actor_class: BigPlayer
           endpoint: grpc://bp2:9000
           implementation: Test
-          config:
         - name: Carol
           actor_class: SmallPlayer
           endpoint: grpc://sp:9000
           implementation: DQN_Hotel3
-          config:
         - name: Dave
           actor_class: SmallPlayer
           endpoint: grpc://sp:9000
           implementation: DNN_Karma3.1.17
-          config:
         - name: Olivia
           actor_class: Referee
           endpoint: client
           implementation: Standard
-          config:
 ```
 
 ## Datalog
