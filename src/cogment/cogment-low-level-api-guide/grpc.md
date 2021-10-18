@@ -688,7 +688,6 @@ Called to request version data.
 
 Metadata: None
 
-
 ### `EnvrRunTrialInput`
 
 Message received by the environment during the streaming `RunTrial` procedure. `data` should contain a message only when `state` is `NORMAL` (or in the case of a hard termination, `details` can be sent with state `END`).

@@ -240,14 +240,6 @@ Parameters: None
 
 Return: None
 
-### `get_active_actors(self)`
-
-Method to get the list of active actors in the trial. This may be expensive to retrieve and thus should be stored if the list is not expected to change throughout the trial.
-
-Parameters: None
-
-Return: _list[ActorInfo instance]_ - List of active actors and classes involved in this trial.
-
 ### `add_reward(self, value, confidence, to, tick_id=-1, user_data=None)`
 
 Method to send a reward to one or more actors.
@@ -262,15 +254,14 @@ Parameters:
 
 Return: None
 
-### `send_message(self, payload, to, to_environment=False)`
+### `send_message(self, payload, to)`
 
 Method to send a message related to the current time step (tick id).
 
 Parameters:
 
 -   `payload`: _protobuf class instance_ - The message data to be sent. The class can be any protobuf class. It is the responsibility of the receiving actor or environment to manage the class received (packed in a `google.protobuf.Any`).
--   `to`: _list[str]_ - Targets of feedback. A list value could be the name of an actor in the trial. Or it could represent a set of actors; A set of actors can be represented with the wildcard character "`*`" for all actors (of all classes), or "`actor_class.*`" for all actors of a specific class (the `actor_class` is the name of the class as specified in `cogment.yaml`).
--   `to_environment`: _bool_ - If True, the message is also sent to the environment, otherwise the message is only sent to the specified actors.
+-   `to`: _list[str]_ - Targets of feedback. A list value could be the name of an actor in the trial, or the environment name. Or it could represent a set of actors (with wildcards); A set of actors can be represented with the wildcard character "`*`" for all actors (of all classes), or "`actor_class.*`" for all actors of a specific class (the `actor_class` is the name of the class as specified in `cogment.yaml`).  Note that the wildcard does not include the environment.
 
 Return: None
 
@@ -323,6 +314,14 @@ Parameters:
 
 Return: None
 
+### `get_active_actors(self)`
+
+Method to get the list of active actors in the trial.
+
+Parameters: None
+
+Return: _list[ActorInfo instance]_ - List of active actors and classes involved in this trial.
+
 ## class ActorSession(Session)
 
 Abstract class based on `Session`, containing session/trial data and methods necessary to run an actor for a trial. An instance of this class is passed as argument to the actor callback function registered with `cogment.Context.register_actor`.
@@ -367,7 +366,7 @@ Return: None
 
 ## class PrehookSession
 
-Abstract class containing trial configuration data to define the specifics of a trial. An instance of this class is passed as argument to the prehook callback function registered with `cogment.Context.register_pre_trial_hook`, and is part of the `DatalogSession`.
+Abstract class containing trial configuration data to define the specifics of a trial. An instance of this class is passed as argument to the prehook callback function registered with `cogment.Context.register_pre_trial_hook`.
 
 `trial_config`: _protobuf class instance_ - Configuration for the new trial. The type is specified in the file `cogment.yaml` under the section `trial:config_type`.
 
@@ -379,7 +378,7 @@ Abstract class containing trial configuration data to define the specifics of a 
 
 `environment_endpoint`: _str_ - The URL to connect to the environment. The protocol must be "grpc". E.g. "grpc://myenv:9000"
 
-`environment_implementation`: _str_ - The name of the implementation to run the environment.
+`environment_name`: _str_ - The name of the environment.
 
 `actors`: _list[dict]_ - Each item (dictionary) of the list represents an actor. Each actor dictionary contains these key-value pairs:
 
@@ -568,7 +567,7 @@ Class containing a message.
 
 `tick_id`: _int_ - The time step that the message relates to.
 
-`sender_name`: _str_ - Name of the sender of the message (the name of an actor, or "env" if the environment sent the message).
+`sender_name`: _str_ - Name of the sender of the message (the name of an actor, or the environment).
 
 `payload`: _google.protobuf.Any instance_ - Data for a received message. The class enclosed in `google.protobuf.Any` is of the type set by the sender; It is the responsibility of the receiver to manage the data received (i.e. determine the type and unpack the data).
 
@@ -604,7 +603,7 @@ Class containing the details of a received single source reward.
 
 `confidence`: _float_ - Confidence level of this reward value.
 
-`sender_name`: _str_ - Name of the sender of this reward (the name of an actor, or "env" if the environment sent the reward).
+`sender_name`: _str_ - Name of the sender of this reward (the name of an actor, or the environment).
 
 `user_data`: _google.protobuf.Any instance_ - Data for a user-specific reward format. Can be `None` if no specific data was provided. The class enclosed in `google.protobuf.Any` is of the type set by the sender; it is the responsibility of the receiver to manage the data received (i.e. determine the type and unpack the data).
 
