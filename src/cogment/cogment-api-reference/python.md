@@ -254,17 +254,6 @@ Parameters:
 
 Return: None
 
-### `send_message(self, payload, to)`
-
-Method to send a message related to the current time step (tick id).
-
-Parameters:
-
--   `payload`: _protobuf class instance_ - The message data to be sent. The class can be any protobuf class. It is the responsibility of the receiving actor or environment to manage the class received (packed in a `google.protobuf.Any`).
--   `to`: _list[str]_ - Targets of feedback. Each value could be the name of an actor in the trial, or the name of the environment. Or it could represent a set of actors (with wildcards); A set of actors can be represented with the wildcard character "`*`" for all actors (of all classes), or "`actor_class.*`" for all actors of a specific class (the `actor_class` is the name of the class as specified in `cogment.yaml`).  Note that the wildcard does not include the environment.
-
-Return: None
-
 ## class EnvironmentSession(Session)
 
 Abstract class based on `Session`, containing session data and methods necessary to run an environment for a trial. An instance of this class is passed as an argument to the environment callback function registered with `cogment.Context.register_environment`.
@@ -272,6 +261,8 @@ Abstract class based on `Session`, containing session data and methods necessary
 `impl_name`: _str_ - Name of the implementation running this environment.
 
 `config`: _protobuf class instance_ - User configuration received for this environment instance. Can be `None` if no configuration was provided. The type of the protobuf class is specified in `cogment.yaml` in the section `environment:config_type`.
+
+`name`: _str_ - Name of the environment this instance represents.
 
 ### `start(self, observations, auto_done_sending=True)`
 
@@ -322,6 +313,17 @@ Parameters: None
 
 Return: _list[ActorInfo instance]_ - List of active actors and classes involved in this trial.
 
+### `send_message(self, payload, to)`
+
+Method to send a message related to the current time step (tick id).
+
+Parameters:
+
+-   `payload`: _protobuf class instance_ - The message data to be sent. The class can be any protobuf class. It is the responsibility of the receiving environment to manage the class received (packed in a `google.protobuf.Any`).
+-   `to`: _list[str]_ - Targets of feedback. Each value could be the name of an actor in the trial. Or it could represent a set of actors (with wildcards); A set of actors can be represented with the wildcard character "`*`" for all actors (of all classes), or "`actor_class.*`" for all actors of a specific class (the `actor_class` is the name of the class as specified in `cogment.yaml`).  Note that the wildcard does not include the environment.
+
+Return: None
+
 ## class ActorSession(Session)
 
 Abstract class based on `Session`, containing session/trial data and methods necessary to run an actor for a trial. An instance of this class is passed as argument to the actor callback function registered with `cogment.Context.register_actor`.
@@ -333,6 +335,8 @@ Abstract class based on `Session`, containing session/trial data and methods nec
 `config`: _protobuf class instance_ - User configuration received for this actor instance. Can be `None` is no configuration was provided. The type of the protobuf class is specified in `cogment.yaml` in the section `actor_classes:config_type`.
 
 `name`: _str_ - Name of the actor this instance represents.
+
+`env_name`: _str_ - Name of the environment running the trial this actor is participating in (used to send messages to the environment).
 
 ### `start(self, auto_done_sending=True)`
 
@@ -361,6 +365,17 @@ Method to send actions to the environment.
 Parameters:
 
 -   `action`: _protobuf class instance_ - An instance of the action space class specified in the corresponding section `actor_classes:action:space` of the `cogment.yaml` file. If `None`, then no action space is sent (empty content) and the environment will receive a default initialized action space of the appropriate type.
+
+Return: None
+
+### `send_message(self, payload, to)`
+
+Method to send a message related to the current time step (tick id).
+
+Parameters:
+
+-   `payload`: _protobuf class instance_ - The message data to be sent. The class can be any protobuf class. It is the responsibility of the receiving actor to manage the class received (packed in a `google.protobuf.Any`).
+-   `to`: _list[str]_ - Targets of feedback. Each value could be the name of an actor in the trial, or the name of the environment (from `self.env_name`). Or it could represent a set of actors (with wildcards); A set of actors can be represented with the wildcard character "`*`" for all actors (of all classes), or "`actor_class.*`" for all actors of a specific class (the `actor_class` is the name of the class as specified in `cogment.yaml`).  Note that the wildcard does not include the environment.
 
 Return: None
 
@@ -500,6 +515,8 @@ Class enclosing the details of a trial.
 `trial_id`: _str_ - The trial ID to which the details pertain.
 
 `state`: _cogment.TrialState_ - The current state of the trial.
+
+`env_name`: _str_ - The name of the environment running the trial.
 
 `tick_id`: _int_ - The time step that the information relates to. Only provided from a call to `get_trial_info`.
 

@@ -214,8 +214,8 @@ message Message {
 ```
 
 -   tick_id: Tick associated with the message.
--   sender_name: The name of the sending actor. "env" for the environment. This is optional when sending messages (i.e. the sender is already known).
--   receiver_name: The name of the target/receiving actor. "env" for the environment.
+-   sender_name: The name of the sending actor/environment. This is optional when sending messages (i.e. the sender is already known).
+-   receiver_name: The name of the target/receiving actor/environment.
 -   payload: Data for the target actor/environment. It is the responsibility of the target to understand the type received.
 
 ### `RewardSource`
@@ -471,15 +471,17 @@ Message containing information about a trial.
 ```protobuf
 message TrialInfo {
   string trial_id = 1;
-  TrialState state = 2;
-  uint64 tick_id = 3;
-  fixed64 trial_duration = 4;
-  ObservationSet latest_observation = 3;
-  repeated TrialActor actors_in_trial = 6;
+  string env_name = 2;
+  TrialState state = 3;
+  uint64 tick_id = 4;
+  fixed64 trial_duration = 5;
+  ObservationSet latest_observation = 6;
+  repeated TrialActor actors_in_trial = 7;
 }
 ```
 
 -   trial_id: The Identifier of the trial.
+-   env_name: The name of the environment running the trial.
 -   state: The state of the trial.
 -   tick_id: The current tick of the trial.
 -   trial_duration: The duration of the trial so far, in nanoseconds. If the trial has ended, this is the duration from start to end of the trial. This is meant as an indicator; resolution may not be a nanosecond, and precision is not guaranteed.
@@ -628,13 +630,15 @@ message ActorInitialInput {
   string actor_name = 1;
   string actor_class = 2;
   string impl_name = 3;
-  ActorConfig config = 4;
+  string env_name = 4;
+  ActorConfig config = 5;
 }
 ```
 
 -   actor_name: The name of the actor participating in the trial.
 -   actor_class: The actor class of the actor participating in the trial.
 -   impl_name: (optional) Name of the implementation that should run the actor in this trial. If not provided, an arbitrary implementation will be used.
+-   env_name: The name of the environment running the trial the actor is participating in.
 -   config: The configuration to start the actor.
 
 ### `ActorInitialOutput`

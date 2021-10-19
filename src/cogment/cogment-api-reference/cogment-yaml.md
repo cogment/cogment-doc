@@ -174,6 +174,7 @@ This section defines the properties related to the logging of the data. It has t
 -   `fields`: (optional) Mapping of properties
     -   `exclude`: List of fields to exclude from the data to send for logging
 -   `type`: The type of data to send for logging. Can be `grpc` (i.e. protobuf messages) or `none`.
+-   `url`: *DEPRECATED*
 -   `endpoint`: The URL where the datalogger gRPC server resides
 
 ```yaml
