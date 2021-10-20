@@ -53,7 +53,7 @@ To run one of these commands, the Cogment CLI command `run` must be used, e.g.: 
 This section defines properties related to the trial and trial management. It has the properties:
 
 -   `config_type`: (optional) The protobuf message type (data structure) that will be passed on to the pre-trial hooks.
--   `pre_hooks`: (optional) List of endpoints for pre-trial hook processing services. The services will all be called, and their responses waited upon before the trial starts. The services are called by order of listing. The first service to be called will receive the default parameters (set in the `trial_params` section of `cogment.yaml`) and can change them. Each subsequent service will receive the parameters updated by the previous service, and can change them further. If no service is defined, the default parameters are used directly.
+-   `pre_hooks`: (optional) List of endpoints for pre-trial hook processing services. The services will all be called, and their responses waited upon before the trial starts. The services are called by order of listing. The first service to be called will receive the default parameters (set in the `trial_params` section of `cogment.yaml`, and the config given to the `start_trial` function) and can change them. Each subsequent service will receive the parameters updated by the previous service, and can change them further. If no service is defined, the default parameters are used directly.
 
 E.g.:
 

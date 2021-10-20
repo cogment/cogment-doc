@@ -382,12 +382,19 @@ Return: None
 ## class PrehookSession
 
 Abstract class containing trial configuration data to define the specifics of a trial. An instance of this class is passed as argument to the prehook callback function registered with `cogment.Context.register_pre_trial_hook`.
+If a "config" was not set, it will be `None` (i.e it will not be an empty/default "config").
 
-`trial_config`: _protobuf class instance_ - Configuration for the new trial. The type is specified in the file `cogment.yaml` under the section `trial:config_type`.
+`trial_config`: _protobuf class instance_ - Configuration for the new trial. The type is specified in the file `cogment.yaml` under the section `trial:config_type`. The first pre-trial hook receives the config that came from the `Controller.start_trial()` function.
 
 `trial_max_steps`: _int_ - The maximum number of time steps (ticks) that the trial will run before terminating.
 
 `trial_max_inactivity`: _int_ - The number of seconds of inactivity after which a trial will be terminated. If 0, the trial will not be terminated because of inactivity.
+
+`datalog_endpoint`: _str_ - The URL to connect to the data logger. The protocol must be "grpc". E.g. "grpc://mydb:9000"
+
+`datalog_type`: _str_ - The type of data to send for logging. Can be "grpc" (i.e. protobuf messages) or "none".
+
+`datalog_exclude`: _list[str]_ - List of fields to exclude from the data to send for logging.
 
 `environment_config`: _protobuf class instance_ - Configuration for the environment in the new trial. This configuration will be sent to the environment on start. The type is specified in the file `cogment.yaml` under the section `environment:config_type`.
 
@@ -401,15 +408,15 @@ Abstract class containing trial configuration data to define the specifics of a 
 -   `"actor_class"`: _str_ - The actor class for the actor
 -   `"endpoint"`: _str_ - The URL to connect to the actor. If, instead of a URL, the value is "client", then this actor will connect in (rather than be connected to), and the actor will need to provide the URL to connect to the orchestrator.
 -   `"implementation"`: _str_ - The name of the implementation to run this actor
--   `"config"`: _protobuf class instance_ - The configuration data for the actor.
+-   `"config"`: _protobuf class instance_ - The configuration data for the actor. The type is specified in the file `cogment.yaml` under the section `actor_classes:config_type` for the corresponding actor.
 
 ### `get_trial_id(self)`
 
-Method to retrieve the UUID of the trial.
+Method to retrieve the ID of the trial.
 
 Parameters: None
 
-Return: _str_ - UUID of the trial.
+Return: _str_ - ID of the trial.
 
 ### `get_user_id(self)`
 
