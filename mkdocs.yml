@@ -64,7 +64,9 @@ nav:
       - "API Guide": "cogment/cogment-api-guide.md"
       - "API Reference":
           - "cogment.yaml": "cogment/cogment-api-reference/cogment-yaml.md"
-          - "python": "cogment/cogment-api-reference/python.md"
+          - "Parameters": "cogment/cogment-api-reference/parameters.md"
+          - "Orchestrator": "cogment/cogment-api-reference/orchestrator.md"
+          - "python SDK": "cogment/cogment-api-reference/python.md"
           - "Javascript/Typescript SDK":
               - "Modules": "cogment/cogment-api-reference/javascript/modules.md"
               - "Class: ActorSession": "cogment/cogment-api-reference/javascript/classes/actorsession.md"

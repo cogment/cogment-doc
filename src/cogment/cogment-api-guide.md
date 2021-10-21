@@ -218,7 +218,7 @@ context.register_actor(
 await context.serve_all_registered(port=9000)
 ```
 
-Please note that it is also through this registrating that the implementation is associated with one or more [actor classes](../concepts/glossary.md#actor-class) it implements.
+Note that it is also through this registrating that the implementation is associated with one or more [actor classes](../concepts/glossary.md#actor-class) it implements.
 
 **Client actors**, contrary to Service actors, are not served to the [orchestrator](../concepts/glossary.md#orchestrator). They connect as clients of the orchestrator and join a [trial](../concepts/glossary.md#trial) that has started.
 
@@ -234,7 +234,7 @@ Please note that it is also through this registrating that the implementation is
     await context.join_trial(
     trial_id=trial_id,
     endpoint="orchestrator:9000",
-    impl_name="human")
+    name="Alice")
     ```
 
 === "Javascript"
@@ -259,7 +259,7 @@ Please note that it is also through this registrating that the implementation is
     trialController.joinTrial(trialId, actor);
     ```
 
-Please note that a trial including one or more client actors will wait for all of them to join before any actor can start processing events.
+Note that a trial including one or more client actors will wait for all of them to join before any actor can start processing events.
 
 Due to the different network requirements, client actors are a good fit when implementing a [frontend](../concepts/glossary.md#frontend) for human actors. In addition to the [python](./cogment-api-reference/python.md) SDK demonstrated above, client actors can be implemented in [javascript](./cogment-api-reference/javascript/modules.md) using the corresponding SDK.
 
@@ -503,41 +503,4 @@ async def my_pre_trial_hook(pre_hook_session):
     pre_hook_session.validate()
 
 context.register_pre_trial_hook(impl=my_pre_trial_hook)
-```
-
-Services exposing pretrial hooks need to be defined in the `cogment.yaml` file under `trial.pre_hooks`.
-
-The full documentation for the `PrehookSession` can be found [here](./cogment-api-reference/python.md#class-prehooksession).
-
-## Delta Encoding
-
-By default, [observations](../concepts/glossary.md#observation) are sent in their entirety from the [environment](../concepts/glossary.md#environment) to the [actors](../concepts/glossary.md#actors). However, it's fairly common to only have a small portion of an [observation](../concepts/glossary.md#observation) to change from one update to the next.
-
-Cogment allows you to specify a separate data structure to encode partial observation updates. However, if you do so, you must provide
-a method that can apply the deltas to previous observations.
-
-```python
-# delta.py
-
-def apply_delta(previous_observation, delta): # Return the updated observation, more often # than not, this should be the previous # observation that was modified in-place.
-previous_observation.car_position = delta.new_car_pos
-return previous_observation
-
-```
-
-```yaml
-# cogment.yaml
-import:
-    proto:
-        - city.proto
-    python:
-        - delta
-
-actors:
-    my_class:
-        observation:
-            space: city.Observation
-            delta: city.ObservationDelta
-            delta_apply_fn:
-                python: delta.apply_delta
 ```

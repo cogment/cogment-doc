@@ -9,7 +9,7 @@ This reference requires a basic understanding of gRPC, and in particular the for
 
 ## General
 
-In this API, the `bytes` data type is normally used to contain the serialized data of externally defined messages. These messages are well defined in the `cogment.yaml` file.
+In this API, the `bytes` data type is normally used to contain the serialized data of externally defined messages. These messages are well defined in the `cogment.yaml` file for any particular trial.
 
 On the other hand, the `google.protobuf.Any` data type is normally used to contain messages that are not pre-defined (thus unknown by the framework), and may be decided at runtime.  It is then the resposibility of the receiver to deserialize in the correct message type.
 
@@ -84,18 +84,36 @@ Global parameters for a trial.
 ```protobuf
 message TrialParams {
   TrialConfig trial_config = 1;
-  EnvironmentParams environment = 2;
-  repeated ActorParams actors = 3;
-  uint32 max_steps = 4;
-  uint32 max_inactivity = 5;
+  DatalogParams datalog = 2;
+  EnvironmentParams environment = 3;
+  repeated ActorParams actors = 4;
+  uint32 max_steps = 5;
+  uint32 max_inactivity = 6;
 }
 ```
 
 -   trial_config: (optional) The user config for the controller of the trial. Will be sent to pre-trial hooks.
+-   datalog: The parameters for the datalog of the trial.
 -   environment: The parameters for the environment of the trial.
 -   actors: The parameters for all actors involved in the trial. This list's length and order define the length and order of the lists of actors provided in different places in the API (e.g. `actors_in_trial`) for the trial.
 -   max_steps: The maximum number of steps/ticks that the trial should run. After this number of steps/ticks, an end request will be sent to the environment.
 -   max_inactivity: The maximum amount of time (in seconds) that the trial should be without activity before it is forcefully terminated. "Activity" is defined as a message received by the Orchestrator from a user component.
+
+### `DatalogParams`
+
+Parameters related to the data logger.
+
+```protobuf
+message DatalogParams {
+  string type = 1;
+  string endpoint = 2;
+  repeated string exclude_fields = 3;
+}
+```
+
+-   type: The type of data to send for logging. Can be `grpc` (i.e. protobuf messages) or `none`. If `none` data logging is disabled.
+-   endpoint: The URL where the data logger is being served. This is used by the Orchestrator to connect to the datalog using the `LogExporterSP` gRPC service.
+-   exclude_fields: A list of fields from `DatalogSample` to not send to the data logger.
 
 ### `EnvironmentParams`
 
@@ -128,7 +146,7 @@ message ActorParams {
 ```
 
 -   name: The name of the actor.
--   actor_class: The name of the class of the actor. Actor classes are defined in the `cogment.yaml` file in the `actor_classes:id` sections.
+-   actor_class: The name of the class of the actor. For a particular trial, the possible actor classes are defined in the `cogment.yaml` file in the `actor_classes:name` sections.
 -   endpoint: The URL where the actor is being served, or "client". The URL is used by the Orchestrator to connect to the actor using the `ServiceActorSP` gRPC service. If set to "client", then the actor is a client and will connect to the Orchestrator instead, using the `ClientActorSP` gRPC service.
 -   implementation: (optional) The name of the implementation of the actor class to run. If not provided, an arbitrary implementation will be chosen.
 -   config: (optional) The user config for the actor.
@@ -138,6 +156,10 @@ message ActorParams {
 These contain the config data for various user components.
 
 ```protobuf
+message TrialConfig {
+  bytes content = 1;
+}
+
 message EnvironmentConfig {
   bytes content = 1;
 }
@@ -145,14 +167,9 @@ message EnvironmentConfig {
 message ActorConfig {
   bytes content = 1;
 }
-
-message TrialConfig {
-  bytes content = 1;
-}
-
 ```
 
--   content: The serialized protobuf message representing a config. The actual message type is defined in the `cogment.yaml` file in its respective section: `environment:config_type`, `actor_classes:config_type`, and `trial:config_type`. Environment config is for use by environments. Actor config is for use by actors (each actor class can have a different config type). Trial config is for use by pre-trial hooks.
+-   content: The serialized protobuf message representing a config. For a particular trial, the actual message type is defined in the `cogment.yaml` file in its respective section: `trial:config_type`, `environment:config_type`, and `actor_classes:config_type`. The trial config is given when starting a trial, and is for use by pre-trial hooks. The environment config is set by pre-trial hooks, and is for use by the environment. The actors configs are set by the pre-trial hooks, and are for use by actors (each actor class can have a different config type).
 
 ### `TrialActor`
 
@@ -166,7 +183,7 @@ message TrialActor {
 ```
 
 -   name: The name of the actor.
--   actor_class: The name of the class of actor. Actor classes are defined in the `cogment.yaml` file in the `actor_classes:id` sections.
+-   actor_class: The name of the class of actor. For a particualr trial, the possible actor classes are defined in the `cogment.yaml` file in the `actor_classes:name` sections.
 
 ### `Observation`
 
@@ -182,7 +199,7 @@ message Observation {
 
 -   tick_id: Tick of this observation.
 -   timestamp: The time of the observation.
--   content: The serialized protobuf message representing an observation for a specific actor. The actual message type for the observation space is defined in the `cogment.yaml` file for each actor class in section `actor_classes:observation:space`. Note that the specific actor represented is defined by the enclosing message.
+-   content: The serialized protobuf message representing an observation for a specific actor. In a particualr trial, the actual message type for the observation space is defined in the `cogment.yaml` file for each actor class in section `actor_classes:observation:space`. Note that the specific actor represented is defined by the enclosing message.
 
 ### `Action`
 
@@ -198,7 +215,7 @@ message Action {
 
 -   tick_id: The tick of the observation on which the action is taken.
 -   timestamp: The time of the action.
--   content: The serialized protobuf message representing an action from a specific actor. The actual message type for the action space is defined in the `cogment.yaml` file for each actor class in section `actor_classes:action:space`. Note that the specific actor represented is defined by the enclosing message.
+-   content: The serialized protobuf message representing an action from a specific actor. In a particular trial, the actual message type for the action space is defined in the `cogment.yaml` file for each actor class in section `actor_classes:action:space`. Note that the specific actor represented is defined by the enclosing message.
 
 ### `Message`
 
@@ -270,7 +287,7 @@ message ObservationSet {
 
 -   tick_id: The tick to which the observations relate to.
 -   timestamp: The time when the observation set was made.
--   observations: A list of observations. Indexed into by the `actors_map`. Each `bytes` chunk is a serialized protobuf message representing an observation for a specific actor class. The actual message type for the observation space is defined in the `cogment.yaml` file for each actor class in section `actor_classes:observation:space`. Note that the specific actor represented is defined by the `actors_map`.
+-   observations: A list of observations. Indexed into by the `actors_map`. Each `bytes` chunk is a serialized protobuf message representing an observation for a specific actor class. For a particular trial, the actual message type for the observation space is defined in the `cogment.yaml` file for each actor class in section `actor_classes:observation:space`. Note that the specific actor represented is defined by the `actors_map`.
 -   actors_map: A list of indexes into the `observations` list above. This list of indexes has the same length and order as the list of actors provided in different places in the API (e.g. `actors_in_trial`), for the same trial.
 
 ### `ActionSet`
@@ -287,7 +304,7 @@ message ActionSet {
 
 -   tick_id: The tick to which the actions relate to.
 -   timestamp: The time when the action set was made (usually after the last action arrived at the Orchestrator).
--   actions: A list of actions. Each `bytes` chunk is a serialized protobuf message representing an action from a specific actor. The actual message type for the action space is defined in the `cogment.yaml` file for each actor class in section `actor_classes:action:space`. This list has the same length and order as the list of actors provided in different places in the API (e.g. `actors_in_trial`), for the same trial.
+-   actions: A list of actions. Each `bytes` chunk is a serialized protobuf message representing an action from a specific actor. For an particular trial, the actual message type for the action space is defined in the `cogment.yaml` file for each actor class in section `actor_classes:action:space`. This list has the same length and order as the list of actors provided in different places in the API (e.g. `actors_in_trial`), for the same trial.
 
 ### `TrialState`
 
@@ -770,7 +787,7 @@ message EnvInitialOutput {}
 
 This API is defined in `datalog.proto`. It is implemented by the data logger application using the gRPC server API, including the out-of-the-box component [`cogment-trial-datastore`](../../cogment-components/trial-datastore/trial-datastore.md).
 
-The orchestrator uses a data logger endpoint [defined in the `cogment.yaml` file](../cogment-api-reference/cogment-yaml.md#datalog).
+The data logger endpoint, for the orchestrator to connect to, is defined in the trial parameters.
 
 ### Service `LogExporterSP`
 
@@ -851,7 +868,7 @@ message LogExporterSampleReply {}
 
 This API is defined in `hooks.proto`. It is implemented by the pre-trial hook application using the gRPC server API, and the orchestrator connects to the application.
 
-The pre-trial hook endpoint, for the orchestrator to connect to, is defined in the `cogment.yaml` file.
+The pre-trial hook endpoint, for the orchestrator to connect to, are defined on the command line of the Orchestrator (or in environment variables).
 
 ### Service `TrialHooksSP`
 
@@ -887,7 +904,7 @@ message PreTrialParams {
 }
 ```
 
--   params: The trial parameters so far. The first hook to be called will receive the default parameters present in the `cogment.yaml` file, and subsequent hooks will receive the updated parameters from the previous hook. The last hook reply will be the final parameters to use for the new trial.
+-   params: The trial parameters so far. The first hook to be called will receive the default parameters from the Orchestrator, and subsequent hooks will receive the updated parameters from the previous hook. The last hook reply will be the final parameters to use for the new trial.
 
 ## Model Registry API
 
