@@ -793,12 +793,12 @@ The data logger endpoint, for the orchestrator to connect to, is defined in the 
 
 ```protobuf
 service LogExporterSP {
-  rpc OnLogSample(stream LogExporterSampleRequest) returns (LogExporterSampleReply) {}
+  rpc RunTrialDatalog(stream LogExporterSampleRequest) returns (LogExporterSampleReply) {}
   rpc Version(VersionRequest) returns (VersionInfo) {}
 }
 ```
 
-#### `OnLogSample()`
+#### `RunTrialDatalog()`
 
 Called for each trial, at the start of the trial.
 The first data received are the parameters.
@@ -818,7 +818,7 @@ Metadata: None
 
 ### `LogExporterSampleRequest`
 
-Stream request message for the `OnLogSample` procedure.
+Stream request message for the `RunTrialDatalog` procedure.
 
 ```protobuf
 message SampleInfo {
@@ -853,12 +853,12 @@ message LogExporterSampleRequest {
 -   actions: Actions from all actors. This list has the same length and order as the list of actors provided in `trial_params`.
 -   rewards: List of rewards sent to actors.
 -   messages: List of user data sent to actors or the environment.
--   trial_params: Trial parameters used for a trial. This is sent on start of a trial, as the first message in the `OnLogSample` stream.
+-   trial_params: Trial parameters used for a trial. This is sent on start of a trial, as the first message in the `RunTrialDatalog` stream.
 -   sample: A data sample to be logged.
 
 ### `LogExporterSampleReply`
 
-Reply message for the `OnLogSample` procedure.
+Reply message for the `RunTrialDatalog` procedure.
 
 ```protobuf
 message LogExporterSampleReply {}
