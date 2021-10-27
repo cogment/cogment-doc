@@ -440,14 +440,6 @@ Parameters: None
 
 Return: None
 
-## cogment.api.common_pb2.TrialParams
-
-[TrialParams](../cogment-low-level-api-guide/grpc.md#trialparams) is defined in the low level grpc api.
-
-## cogment.api.datalog_pb2.DatalogSample
-
-[DatalogSample](../cogment-low-level-api-guide/grpc.md#logexportersamplerequest) is defined in the low level grpc api.
-
 ## class DatalogSession
 
 Abstract class containing session data and methods necessary to manage the logging of trial run data. An instance of this class is passed as an argument to the datalog callback function registered with `cogment.Context.register_datalog`.
@@ -456,9 +448,7 @@ Abstract class containing session data and methods necessary to manage the loggi
 
 `user_id`: _str_ - Identifier of the user that started the trial.
 
-`trial_params`: _dictionary_ - Parameters of the trial. This parameter has been **deprecated**.
-
-`raw_trial_params`: _[cogment.api.common_pb2.TrialParams](#cogmentapicommon_pb2trialparams)_ - Parameters of the trial.
+`trial_params`: _cogment.LogParam instance_ - Parameters of the trial.
 
 ### `start(self)`
 
@@ -474,7 +464,7 @@ Generator method to iterate over all samples as they are received (waiting for e
 
 Parameters: None
 
-Return: _generator([cogment.api.datalog_pb2.DatalogSample](#cogmentapidatalogdatalogsample))_ - A generator for the samples received.
+Return: _generator(cogment.LogSample instance)_ - A generator for the samples received.
 
 ## class cogment.Endpoint
 
@@ -587,6 +577,8 @@ Class containing the details of an action from an actor.
 
 `tick_id`: _int_ - The time step that the action relates to.
 
+`timestamp`: _int_ - Unix style Epoch timestamp in nanoseconds (time since 00:00:00 UTC Jan 1, 1970).
+
 `actor_index`: _int_ - Index of the actor in the list of all trial actors (returned by `Session.get_active_actors`).
 
 `action`: _protobuf class instance_ - Action from the actor which has index `actor_index` in the trial. The class of the action is defined as action space for the specific actor in the section `actor_classes:action:space` in `cogment.yaml` .
@@ -597,6 +589,8 @@ Class containing a message.
 
 `tick_id`: _int_ - The time step that the message relates to.
 
+`receiver_name`: _str_ - Name of the receiver for the message (the name of an actor, or wildcard string).
+
 `sender_name`: _str_ - Name of the sender of the message (the name of an actor, or the environment).
 
 `payload`: _google.protobuf.Any instance_ - Data for a received message. The class enclosed in `google.protobuf.Any` is of the type set by the sender; It is the responsibility of the receiver to manage the data received (i.e. determine the type and unpack the data).
@@ -606,6 +600,8 @@ Class containing a message.
 Class containing the details of a received reward.
 
 `tick_id`: _int_ - The tick id (time step) for which the reward should be applied.
+
+`receiver_name`: _str_ - Name of the receiver for the reward (the name of an actor, or wildcard string).
 
 `value`: _float_ - Value of the reward (aggregated from the sources)
 
@@ -636,6 +632,201 @@ Class containing the details of a received single source reward.
 `sender_name`: _str_ - Name of the sender of this reward (the name of an actor, or the environment).
 
 `user_data`: _google.protobuf.Any instance_ - Data for a user-specific reward format. Can be `None` if no specific data was provided. The class enclosed in `google.protobuf.Any` is of the type set by the sender; it is the responsibility of the receiver to manage the data received (i.e. determine the type and unpack the data).
+
+## class cogment.LogParams
+
+Class containing the paramaters of the trial.
+
+`max_steps`: _int_ - The maximum number of steps/ticks that the trial should run. After this number of steps/ticks, an end request will be sent to the environment.
+
+`max_inactivity`: _int_ - The maximum amount of time (in seconds) that the trial should be without activity before it is forcefully terminated. "Activity" is defined as a message received by the Orchestrator from a user component.
+
+`nb_actors`: _int_ - The number of actors participating in the trial.
+
+`datalog`: _dict_ - The datalog related parameters.  The dictionary contains these key-value pairs:
+
+- `"type"`: _str_ - "grpc" or "none". If this is "none", then the data logging is disabled, and the datalog service will not be called.
+- `"endpoint"`: _str_ - The URL to connect to the datalog service.
+- `"exclude"`: _list(str)_ - Fields to exclude from the samples sent to the datalog service.
+
+`environment`: _dict_ - The environment related parameters.  The dictionary contains these key-value pairs:
+
+- `"name"`: _str_ - Name of the environment
+- `"endpoint"`: _str_ - The URL to connect to the environment.
+- `"implementation"`: _str_ - The name of the implementation to run the environment
+
+### `__init__(self, cog_settings)`
+
+Parameter:
+
+-   `cog_settings`: _module_ - Settings module associated with trials that will be run ([cog_settings](#cog_settings.py) namespace).
+
+### `get_serial_type(self)`
+
+Return the type of serial data produced by `serialize` and accepted by `deserialize`. The type represents an ID dependent on [TrialParams](../cogment-low-level-api-guide/grpc.md#trialparams) defined in the low level gRPC API.
+
+Parameters: None
+
+Return: _int_ - The type of the serialization string data. This is the type of string that is returned by `serialize`, and the only type accepted by `deserialize`; It is undefined behavior to try to deserialize the wrong type of data. This value is strictly larger than 1.
+
+### `serialize(self)`
+
+Return a binary string equivalent of the parameters.
+
+Parameters: None
+
+Return: _str_ - Serialized parameters.
+
+### `deserialize(self, raw_string)`
+
+Takes a serialized parameter string and sets the LogParams instance.
+
+Parameter:
+
+-   `raw_string`: _str_ - Binary string representing a serialized LogParam of the same type.
+
+### `get_trial_config(self)`
+
+Returns the trial config.
+
+Parameters: None
+
+Return: _protobuf class instance_ - Configuration for the trial. The type is specified in the file `cogment.yaml` under the section `trial:config_type`.
+
+### `get_environment_config(self)`
+
+Returns the environment config.
+
+Parameters: None
+
+Return: _protobuf class instance_ - Configuration for the environment. The type is specified in the file `cogment.yaml` under the section `environment:config_type`.
+
+### `get_actor_index(self, actor_name)`
+
+Returns the index of the given actor, or None if the actor is not in the trial.
+
+Parameters:
+
+-   `actor_name`: _str_ - Name of the actor to look for in the trial parameters.
+
+Return: _int_ - Index of actor is found.  `None` if not found. This index is constant in the trial and relates to all complete actors list provided by cogment (e.g. `Controller.get_actors()`).
+
+### `get_actor_name(self, actor_index)`
+
+Returns the name of an actor in the trial.
+
+Parameters:
+
+-   `actor_index`: _int_ - Index of the actor to retrieve. This number is constant in the trial and relates to all complete actors list provided by cogment (e.g. `Controller.get_actors()`). The value must be between 0 and `self.nb_actors` (exclusively).
+
+Return: _str_ - Name of the actor in the trial parameters.
+
+### `get_actor(self, actor_index)`
+
+Return information about a particular actor in the trial.
+
+Parameters:
+
+-   `actor_index`: _int_ - Index of the actor to retrieve. This number is constant in the trial and relates to all complete actors list provided by cogment (e.g. `Controller.get_actors()`). The value must be between 0 and `self.nb_actors` (exclusively).
+
+Return: _dict_ - Dictionary containing the details of the actor parameters. The dictionary contains these key-value pairs:
+
+-   `"name"`: _str_ - Name of the actor
+-   `"actor_class"`: _str_ - The actor class for the actor. This is specific to a type of trial and must match values in the corresponding `cogment.yaml` config file under section `actor_classes:name`.
+-   `"endpoint"`: _str_ - The URL to connect to the service actor, or "client" for client actors that will connect in.
+-   `"implementation"`: _str_ - The name of the implementation to run the actor
+-   `"config"`: _protobuf class instance_ - The configuration data for the actor. The type is specified in the file `cogment.yaml` under the section `actor_classes:config_type` for the specific actor class of the actor.
+
+## class cogment.LogSample
+
+Class containing a datalog sample.
+A sample starts and ends with the arrival of new observations from the environment. The last sample will end after all components have acknowledged the end of the trial (the state of that sample will then be `TrialState.ENDED`).
+
+Note that not some of the data may be not be available (`None`) if it was excluded from the sample (see datalog parameters).
+
+`tick_id`: _int_ - The time step that the sample data relates to.
+
+`state`: _cogment.TrialState_ - The state of the trial at the end of the sample period.
+
+`timestamp`: _int_ - Unix style Epoch timestamp in nanoseconds (time since 00:00:00 UTC Jan 1, 1970) at the beginning of the sample period.
+
+`events`: _str_ - Description of special events that happened during the timeframe of the sample.
+
+### `__init__(self, params)`
+
+Parameter:
+
+-   `params`: _LogParams instance_ - The parameters of the trial.
+
+### `get_serial_type(self)`
+
+Return the type of serial data produced by `serialize` and accepted by `deserialize`. The type represents an ID dependent on [DatalogSample](../cogment-low-level-api-guide/grpc.md#logexportersamplerequest) defined in the low level gRPC API.
+
+Parameters: None
+
+Return: _int_ - The type of the serialization string data. This is the type of string that is returned by `serialize`, and the only type accepted by `deserialize`; It is undefined behavior to try to deserialize the wrong type of data. This value is strictly larger than 1.
+
+### `serialize(self)`
+
+Return a binary string equivalent of the sample.
+
+Parameters: None
+
+Return: _str_ - Serialized sample.
+
+### `deserialize(self, raw_string)`
+
+Takes a serialized sample string and sets the LogSample instance.
+
+Parameter:
+
+-   `raw_string`: _str_ - Binary string representing a serialized LogSample of the same type.
+
+### `all_actor_names(self)`
+
+Generator method to iterate over all actors in the trial. This information can also be retrieved from the parameters of the trial.
+
+Parameters: None
+
+Return: _generator(str)_ - A generator for the names of the actors in the trial.
+
+### `get_action(self, actor)`
+
+Retrieve the action from the actor in the sample.
+
+Parameters:
+
+-   `actor`: _str_ or _int_ - The name or index of the actor for which to retrieve the action. The number, index and name of actors can be retrieved from the parameters of the trial.
+
+Return: _RecvAction instance_ - The action of the actor in the sample.
+
+### `get_observation(self, actor)`
+
+Retrieve the observation destined for the actor in the sample.
+
+Parameters:
+
+-   `actor`: _str_ or _int_ - The name or index of the actor for which to retrieve the observation. The number, index and name of actors can be retrieved from the parameters of the trial.
+
+Return: _RecvObservation instance_ - The observation of the actor in the sample.
+
+### `all_rewards(self)`
+
+Generator method to iterate over all the rewards in the sample.
+
+Parameters: None
+
+Return: _generator(RecvReward instance)_ - A generator for the rewards in the sample.
+
+### `all_messages(self)`
+
+Generator method to iterate over all the messages in the sample.
+
+Parameters: None
+
+Return: _generator(RecvMessage instance)_ - A generator for the messages in the sample.
+
+
 
 [1]: ./cogment-yaml.md
 [2]: ./parameters.md

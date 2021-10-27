@@ -1,6 +1,6 @@
 # Orchestrator
 
-The Orchestrator is the heart of Cogment. It is the back end of Cogment. It is a Linux based single executable configured through command line and some environment variables.
+The Orchestrator is the heart of Cogment. It ties all services together. It is a Linux based single executable configured through command line and some environment variables.
 
 ## Command line
 
@@ -18,7 +18,7 @@ All configuration is possible through the command line. The various command line
   
 - `actor_port`: The TCP port where to serve the client actor gRPC service (ClientActorSP). This is where client actors (as opposed to service actors) connect to. Default: 9000
 
-- `params`: The name of the YAML file containing the default parameters for new trials. Some of The parameters must match their corresponding values in the `cogment.yaml` file and may therefore lock an Orchestrator instance to specific types of trials. If pre-trial hooks are defined, these parameters are sent to the first hook.
+- `params`: The name of the YAML file containing the default parameters for new trials. Some of The parameters must match their corresponding values in the `cogment.yaml` file and may therefore lock an Orchestrator instance to specific types of trials. If pre-trial hooks are defined, these parameters are sent to the first hook before a trial starts.
 
 - `pre_trial_hooks`: gRPC endpoint definitions for pre-trial hooks, separated by commas. A gRPC endpoint is a URL that starts with "grpc://". Hooks are called before a new trial starts. They are called in order, in a pipeline fashion to set the parameters for new trials. The first hook will receive the default parameters, the last hook result will be used as the parameters for the new trial.
 
