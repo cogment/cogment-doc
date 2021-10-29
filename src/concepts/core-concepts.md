@@ -121,7 +121,7 @@ The following table summarizes how each component can either be implemented or u
 [10]: ../cogment/cogment-api-reference/python.md#get_controllerself-endpoint
 [11]: ../cogment/cogment-api-reference/python.md#register_datalogself-impl
 [12]: ../cogment/cogment-api-reference/python.md#register_pre_trial_hookself-impl
-[13]: ../cogment-components/orchestrator/orchestrator.md
+[13]: ../cogment/cogment-api-reference/orchestrator.md
 [14]: ../cogment-components/cli/cli.md
 [15]: ../cogment-components/dashboard/metrics-and-dashboard.md
 [16]: ../cogment-components/trial-datastore/trial-datastore.md

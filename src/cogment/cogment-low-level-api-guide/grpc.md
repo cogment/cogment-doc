@@ -387,11 +387,11 @@ Metadata: None
 
 #### `TerminateTrial()`
 
-Request the environment to terminate an existing trial.
+Request the environment to terminate existing trial(s).
 
 Metadata:
 
--   `trial-id`: Identifier of the trial to terminate.
+-   `trial-id`: (_one or more_) Identifier(s) of a trial(s) to terminate.
 
 #### `GetTrialInfo()`
 
@@ -399,7 +399,7 @@ Get extra information about an existing trial.
 
 Metadata:
 
--   `trial-id`: (_optional_) Identifier of the trial we are requesting information about. If not provided, the request is for information about all running trials.
+-   `trial-id`: (_zero or more_) Identifier(s) of the trial(s) we are requesting information about. If no trial id is provided, the request is for information about all active trials.
 
 #### `WatchTrials()`
 

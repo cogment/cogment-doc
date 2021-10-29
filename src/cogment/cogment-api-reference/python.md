@@ -169,24 +169,24 @@ Parameters:
 
 Return: _str_ - The newly started trial ID.
 
-### `terminate_trial(self, trial_id, hard=False)`
+### `terminate_trial(self, trial_ids, hard=False)`
 
 Method to request the end of a trial.
 
 Parameters:
 
--   `trial_id`: _str_ - The trial ID the request is to terminate.
+-   `trial_ids`: _list(str)_ - The trial ID(s) to request to terminate. There must be at least one ID.
 -   `hard`: _bool_ - If `True`, the termination will be forced and not wait for any action or observation.  If `False`, the trial will wait for the next tick, to end gracefully (i.e. wait for the next full set of actions and response observations).
 
 Return: None
 
-### `async get_trial_info(self, trial_id)`
+### `async get_trial_info(self, trial_ids)`
 
 Method to get information about a trial.
 
 Parameters:
 
--   `trial_id`: _str_ - The trial ID from which to request information. If `None`, returns information about all trials. Note that ended trials may only appear for a short time in this list after they have ended.
+-   `trial_ids`: _list(str)_ - The trial ID(s) from which to request information. If no ID is provided, returns information about all trials. Note that ended trials may only appear for a short time in this list after they have ended.
 
 Return: _list[TrialInfo instance]_ - List of trial information, one per trial. Can be empty if no trial matches.
 
@@ -568,8 +568,6 @@ Class containing the details of an observation for an actor.
 `timestamp`: _int_ - Unix style Epoch timestamp in nanoseconds (time since 00:00:00 UTC Jan 1, 1970).
 
 `observation`: _protobuf class instance_ - Observation received from the environment. The class of the observation is defined as observation space for the actor class. This is specified in section `actor_classes:observation:space` in `cogment.yaml` for the appropriate/receiving actor class.
-
-`snapshot`: **DEPRECATED**
 
 ## class RecvAction
 

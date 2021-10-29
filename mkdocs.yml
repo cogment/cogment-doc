@@ -91,7 +91,7 @@ nav:
       - "Implementation recipes": "cogment/implementation-recipes.md"
   - "Cogment Components":
       - "CLI": "cogment-components/cli/cli.md"
-      - "Orchestrator": "cogment-components/orchestrator/orchestrator.md"
+      - "Orchestrator": "cogment/cogment-api-reference/orchestrator.md"
       - "Model Registry": "cogment-components/model-registry/model-registry.md"
       - "Trial Datastore": "cogment-components/trial-datastore/trial-datastore.md"
       - "Metrics & Dashboard": "cogment-components/dashboard/metrics-and-dashboard.md"
