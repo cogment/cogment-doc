@@ -175,7 +175,7 @@ Method to request the end of a trial.
 
 Parameters:
 
--   `trial_ids`: _list(str)_ - The trial ID(s) to request to terminate. There must be at least one ID.
+-   `trial_ids`: _list[str]_ - The trial ID(s) to request to terminate. There must be at least one ID.
 -   `hard`: _bool_ - If `True`, the termination will be forced and not wait for any action or observation.  If `False`, the trial will wait for the next tick, to end gracefully (i.e. wait for the next full set of actions and response observations).
 
 Return: None
@@ -186,7 +186,7 @@ Method to get information about a trial.
 
 Parameters:
 
--   `trial_ids`: _list(str)_ - The trial ID(s) from which to request information. If no ID is provided, returns information about all trials. Note that ended trials may only appear for a short time in this list after they have ended.
+-   `trial_ids`: _list[str]_ - The trial ID(s) from which to request information. If no ID is provided, returns information about all trials. Note that ended trials may only appear for a short time in this list after they have ended.
 
 Return: _list[TrialInfo instance]_ - List of trial information, one per trial. Can be empty if no trial matches.
 
@@ -253,7 +253,7 @@ Method to send a reward to one or more actors.
 Parameters:
 
 -   `value`: _float_ - Value of the reward. This will be aggregated with other rewards for the same target actor.
--   `confidence`: _float_ - Weight of this reward value in determining the final aggregated reward.
+-   `confidence`: _float_ - Weight of this reward value in determining the final aggregated reward. Should be > 0.
 -   `to`: _list[str]_ - Target(s) of reward. A list value could be the name of an actor in the trial. Or it could represent a set of actors; A set of actors can be represented with the wildcard character "`*`" for all actors (of all classes), or "`actor_class.*`" for all actors of a specific class (the `actor_class` is the name of the class as specified in `cogment.yaml`).
 -   `tick_id`: _int_ - The tick id (time step) for which the reward should be applied. If "-1", then the reward applies to the current time step.
 -   `user_data`: _protobuf class instance_ - Extra user data to be sent with the reward. The class can be any protobuf class. It is the responsibility of the receiving actor to manage the class received (packed in a `google.protobuf.Any`).
@@ -397,8 +397,6 @@ If a "config" was not set, it will be `None` (i.e it will not be an empty/defaul
 `trial_max_inactivity`: _int_ - The number of seconds of inactivity after which a trial will be terminated. If 0, the trial will not be terminated because of inactivity.
 
 `datalog_endpoint`: _str_ - The URL to connect to the data logger. The protocol must be "grpc". E.g. "grpc://mydb:9000"
-
-`datalog_type`: _str_ - The type of data to send for logging. Can be "grpc" (i.e. protobuf messages) or "none".
 
 `datalog_exclude`: _list[str]_ - List of fields to exclude from the data to send for logging.
 
@@ -643,7 +641,6 @@ Class containing the paramaters of the trial.
 
 `datalog`: _dict_ - The datalog related parameters.  The dictionary contains these key-value pairs:
 
-- `"type"`: _str_ - "grpc" or "none". If this is "none", then the data logging is disabled, and the datalog service will not be called.
 - `"endpoint"`: _str_ - The URL to connect to the datalog service.
 - `"exclude"`: _list(str)_ - Fields to exclude from the samples sent to the datalog service.
 

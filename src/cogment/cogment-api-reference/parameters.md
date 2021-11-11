@@ -16,8 +16,7 @@ These parameters are:
 -   `max_steps`: The maximum number of time steps (ticks) that the trial will run before terminating. If 0, the trial will not be auto terminated (the environment and a Controller can still terminate the trial).
 -   `max_inactivity`: The number of seconds of inactivity after which a trial will be terminated. If 0, the trial will not be terminated because of inactivity.
 -   `datalog`: List of properties related to the data logger. If this section is not present, data logging is disabled.
-    -   `type`: The type of data to send for logging. Can be `grpc` (i.e. protobuf messages) or `none`. If `none` data logging is disabled.
-    -   `endpoint`: The URL where the datalogger gRPC server resides
+    -   `endpoint`: The URL where the datalogger gRPC server resides.
     -   `exclude_fields`: List of fields to exclude from the data to send for logging
 -   `environment`: List of properties for the environment
     -   `name`: The name of the environment (defaults to "env" if not provided)
@@ -37,7 +36,6 @@ trial_params:
     max_inactivity: 5  # seconds
 
     datalog:
-        type: grpc
         endpoint: grpc://logserver:9000
         exclude_fields: [messages, actions]
 
@@ -73,4 +71,6 @@ trial_params:
 
 Pre-trial hooks are gRPC services that will be called to set up the parameters for a new trial. Multiple hooks can be defined and they will all be called in order, in a pipeline fashion (i.e. the output of one becomes the input of the next). The first hook service to be called will receive the default parameters, in addition with the config given to the `start_trial` function call. The output of the last hook is used to start the new trial. The response of the last hook will be waited on before the trial starts.
 
-Hooks are defined on the command line (or an environment variable) when starting the Orchestrator.
+The hooks will be called to update or generate all the parameter data (presented here) in addition to the configurations for the environment and the actors (if needed).
+
+Pre-trial hooks are defined on the command line (or an environment variable) when starting the Orchestrator.
