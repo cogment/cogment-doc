@@ -12,6 +12,95 @@ Cogment Orchestrator is an **out-of-the-box** component. It is the central entit
 
 The Orchestrator is central to any Cogment usage, please refer to the [**API guide**](../../cogment/cogment-api-guide.md) to learn how to interact with it using the high level APIs provided by the Cogment SDKs.
 
+## Options
+
+Typically, the orchestrator would be configured via `Dockerfile`. For example:
+
+```
+FROM cogment/orchestrator:v1.0.3
+
+# Set environment variables
+ENV TRIAL_LIFECYCLE_PORT=9000
+ENV TRIAL_ACTOR_PORT=9001
+
+# The orchestrator itself is the entrypoint.
+# You can set command line options via the CMD
+CMD ["--config=/some/path/cogment.yaml", "--loglevel=debug"]
+```
+
+#### Config
+
+Path to the cogment.yaml file, relative to the current working directory.
+
+-   Default: 'cogment.yaml`
+-   Command line: `--config=#`
+
+### Logging
+
+#### Log Level
+
+The port to listen for trial lifecycle messages on
+
+-   Values: `off`, `error`, `warning`, `info`, `debug`, `trace`
+-   Default: `info`
+-   Command line: `--log_level=#`
+
+#### Daily Logger
+
+Base file for daily log output
+
+-   Default: N/A
+-   Command line: `--log_file=#`
+
+### Ports
+
+#### Prometheus Port
+
+The port to broadcast prometheus metrics on
+
+-   Default: N/A
+-   Environment Variable: `PROMETHEUS_PORT`
+-   Command line: `--prometheus_port=#`
+
+#### Actor Port
+
+The port for the `cogment.ActorEndpoint` service
+
+-   Default: `9000`
+-   Environment Variable: `TRIAL_ACTOR_PORT`
+-   Command line: `--lifecycle_port=#`
+
+#### lifecycle port
+
+The port for the `cogment.TrialLifecycle` service
+
+-   Default: `9000`
+-   Environment Variable: `TRIAL_LIFECYCLE_PORT`
+-   Command line: `--lifecycle_port=#`
+
+### SSL
+
+#### Private Key
+
+File containing PEM encoded private key.
+
+-   Default: N/A
+-   Command line: `--private_key=#`
+
+#### Root Cert
+
+File containing a PEM encoded trusted root certificate.
+
+-   Default: N/A
+-   Command line: `--root_cert=#`
+
+#### Trust Chain
+
+File containing a PEM encoded trust chain.
+
+-   Default: N/A
+-   Command line: `--trust_chain=#`
+
 ### Low level gRPC API
 
 The Orchestrator implements two gRPC endpoints that are specified as part of the Cogment API:
