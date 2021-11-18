@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Added
 
+-   Add orchestrator configuration documentation.
 -   Add documentation for `PrehookSession.environment_implementation` which give the ability to select which environment implementation to use within a trial.
 
 ## v1.5.0 - 2021-10-12
