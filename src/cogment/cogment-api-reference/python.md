@@ -365,6 +365,8 @@ Abstract class containing trial configuration data to define the specifics of a 
 
 `environment_endpoint`: _str_ - The URL to connect to the environment. The protocol must be "grpc". E.g. "grpc://myenv:9000"
 
+`environment_implementation`: _str_ - The name of the implementation to run the environment.
+
 `actors`: _list[dict]_ - Each item (dictionary) of the list represents an actor. Each actor dictionary contains these key-value pairs:
 
 -   `"name"`: _str_ - Name of the actor
