@@ -406,6 +406,8 @@ If a "config" was not set, it will be `None` (i.e it will not be an empty/defaul
 
 `environment_name`: _str_ - The name of the environment.
 
+`environment_implementation`: _str_ - The name of the implementation to run the environment.
+
 `actors`: _list[dict]_ - Each item (dictionary) of the list represents an actor. Each actor dictionary contains these key-value pairs:
 
 -   `"name"`: _str_ - Name of the actor

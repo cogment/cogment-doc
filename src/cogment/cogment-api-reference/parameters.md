@@ -4,7 +4,7 @@ The trial parameters are a set of parameters that define the details of a trial.
 
 ## Parameter file
 
-The parameter file serves to initialize the Orchestrator default parameters. It is able to set all parameters for trials except the config protobuf messages defined in `cogment.yaml`. The config messages can only be set by the hooks, but these messages are not necessary when not defining hooks (i.e. for simple projects).
+The parameter file serves to initialize the Orchestrator default parameters. It is able to set all parameters for trials except the config protobuf messages defined in `cogment.yaml`. The config messages can only be set by the pre-trial hooks, but these config are not relevant for simple projects without pre-trial hooks.
 
 These are the parameters that will be used if no pre-trial hooks are defined. And if hooks are defined, they will be sent to the first hook.
 

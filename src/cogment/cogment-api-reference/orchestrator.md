@@ -38,6 +38,8 @@ All configuration is possible through the command line. The various command line
 
 - `log_file`: Base file name for daily log output. The name will be suffixed with the date and a new file will be made every day. If not provided the logs go to stdout.
 
+- `gc_frequency`: Number of (started) trials between trial garbage collection. The Orchestrator periodically deletes ended and stale trials, this parameter controls how often this cleanup happens. The garbage collection may happen on the start of any trial.
+
 ## Environment variables
 
 Environment variables correspond to one of the command line parameters.  But if both are provided, the command line takes precedence.
@@ -49,3 +51,5 @@ Environment variables correspond to one of the command line parameters.  But if 
 - `COGMENT_PROMETHEUS_PORT`: This is the same as the `prometheus_port` command line parameter.
 
 - `COGMENT_PRE_TRIAL_HOOKS`: This is the same as the `pre_trial_hooks` command line parameter.
+
+- `COGMENT_DEFAULT_PARAMS_FILE`: This is the same as the `params` command line parameter.
