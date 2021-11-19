@@ -2438,6 +2438,7 @@ The generator will exit for various reasons indicating the end of the trial, a l
 <p><code>trial_max_inactivity</code>: <em>int</em> - The number of seconds of inactivity after which a trial will be terminated. If 0, the trial will not be terminated because of inactivity.</p>
 <p><code>environment_config</code>: <em>protobuf class instance</em> - Configuration for the environment in the new trial. This configuration will be sent to the environment on start. The type is specified in the file <code>cogment.yaml</code> under the section <code>environment:config_type</code>.</p>
 <p><code>environment_endpoint</code>: <em>str</em> - The URL to connect to the environment. The protocol must be "grpc". E.g. "grpc://myenv:9000"</p>
+<p><code>environment_implementation</code>: <em>str</em> - The name of the implementation to run the environment.</p>
 <p><code>actors</code>: <em>list[dict]</em> - Each item (dictionary) of the list represents an actor. Each actor dictionary contains these key-value pairs:</p>
 <ul>
 <li><code>"name"</code>: <em>str</em> - Name of the actor</li>
