@@ -50,14 +50,6 @@ shfmt:
   script:
     - shfmt -i 2 -ci -d ./scripts
 
-prettier:
-  image: node:16-alpine
-  stage: lint
-  before_script:
-    - npx prettier --version
-  script:
-    - npx prettier --check .
-
 build:
   extends: .base_poetry
   stage: build
