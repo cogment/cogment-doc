@@ -13,8 +13,8 @@ The file uses the YAML configuration language.  It consists of one YAML section 
 The section defines the default trial parameters. The final parameters are set by the pre-trial hooks (if any are defined).
 These parameters are:
 
--   `max_steps`: The maximum number of time steps (ticks) that the trial will run before terminating. If 0, the trial will not be auto terminated (the environment and a Controller can still terminate the trial).
--   `max_inactivity`: The number of seconds of inactivity after which a trial will be terminated. If 0, the trial will not be terminated because of inactivity.
+-   `max_steps`: The maximum number of time steps (ticks) that the trial will run before terminating. If 0, the trial will not be auto terminated (the environment and a Controller can still terminate the trial). If not provided, a default of 0 will be used.
+-   `max_inactivity`: The number of seconds of inactivity after which a trial will be terminated. If 0, the trial will not be terminated because of inactivity. If not provided, a default of 30 seconds will be used.
 -   `datalog`: List of properties related to the data logger. If this section is not present, data logging is disabled.
     -   `endpoint`: The URL where the datalogger gRPC server resides.
     -   `exclude_fields`: List of fields to exclude from the data to send for logging

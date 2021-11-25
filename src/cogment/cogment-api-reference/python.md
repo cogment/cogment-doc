@@ -210,6 +210,14 @@ Parameters:
 
 Return: _list[ActorInfo instance]_ - List of actors configured in this trial.
 
+### `async get_remote_versions(self)`
+
+Method to get the versions from the remote Orchestrator.
+
+Parameters: None
+
+Return: _dict_ - The key of the dictionary is the name of the component (_str_), and the value is the version (_str_).
+
 ## class Session
 
 Abstract class that manages aspects of a trial. Contains data and methods common to all sessions .
@@ -270,13 +278,13 @@ Abstract class based on `Session`, containing session data and methods necessary
 
 `name`: _str_ - Name of the environment this instance represents.
 
-### `start(self, observations, auto_done_sending=True)`
+### `start(self, observations = None, auto_done_sending=True)`
 
 Method to report that the environment is starting to run the trial. The method should be called before any other method in the session.
 
 Parameters:
 
--   `observations`: _list[tuple(str, protobuf class instance)]_ - The initial observations from which the environment is starting the trial. This is the same as the parameter for `self.produce_observations`.
+-   `observations`: _list[tuple(str, protobuf class instance)]_ - The initial observations from which the environment is starting the trial. This is the same as the parameter for `self.produce_observations`. If not provided, then the first observation sent with `produce_observation` will be used to initiate the trial (note that no actions will be received until the first observation is sent).
 
 -   `auto_done_sending`: _bool_ - Controls when to notify the Orchestrator that all data has been sent. If True, the session will automatically send the notification after `end` is called.  If False, the user MUST call `sending_done` (after `end`) to end the trial properly.
 Return: None
@@ -387,20 +395,19 @@ Return: None
 
 ## class PrehookSession
 
-Abstract class containing trial configuration data to define the specifics of a trial. An instance of this class is passed as argument to the prehook callback function registered with `cogment.Context.register_pre_trial_hook`.
-If a "config" was not set, it will be `None` (i.e it will not be an empty/default "config").
+Abstract class containing trial configuration data to define the specifics of a trial. An instance of this class is passed as argument to the pre-trial hook callback function registered with `cogment.Context.register_pre_trial_hook`. The first pre-trial hook to be called will receive the default parameters set in the Orchestrator, the following hooks will receive the parameters set by the preceding hooks.
 
-`trial_config`: _protobuf class instance_ - Configuration for the new trial. The type is specified in the file `cogment.yaml` under the section `trial:config_type`. The first pre-trial hook receives the config that came from the `Controller.start_trial()` function.
+`trial_config`: _protobuf class instance_ - Configuration for the new trial. The type is specified in the file `cogment.yaml` under the section `trial:config_type`. The first pre-trial hook receives the config that came from the `Controller.start_trial()` function. If `None`, no config will be sent to the next pre-trial hook.
 
-`trial_max_steps`: _int_ - The maximum number of time steps (ticks) that the trial will run before terminating.
+`trial_max_steps`: _int_ - The maximum number of time steps (ticks) that the trial will run before terminating. If 0 (or `None`), the trial will not be auto terminated (the environment and a Controller can still terminate the trial).
 
-`trial_max_inactivity`: _int_ - The number of seconds of inactivity after which a trial will be terminated. If 0, the trial will not be terminated because of inactivity.
+`trial_max_inactivity`: _int_ - The number of seconds of inactivity after which a trial will be terminated. If 0 (or `None`), the trial will not be terminated because of inactivity.
 
-`datalog_endpoint`: _str_ - The URL to connect to the data logger. The protocol must be "grpc". E.g. "grpc://mydb:9000"
+`datalog_endpoint`: _str_ - The URL to connect to the data logger. The protocol must be "grpc". E.g. "grpc://mydb:9000". If `None`, no datalog service will be connected.
 
 `datalog_exclude`: _list[str]_ - List of fields to exclude from the data to send for logging.
 
-`environment_config`: _protobuf class instance_ - Configuration for the environment in the new trial. This configuration will be sent to the environment on start. The type is specified in the file `cogment.yaml` under the section `environment:config_type`.
+`environment_config`: _protobuf class instance_ - Configuration for the environment in the new trial. This configuration will be sent to the environment on start. The type is specified in the file `cogment.yaml` under the section `environment:config_type`. If `None`, no config will be sent to the environment.
 
 `environment_endpoint`: _str_ - The URL to connect to the environment. The protocol must be "grpc". E.g. "grpc://myenv:9000"
 
@@ -414,7 +421,7 @@ If a "config" was not set, it will be `None` (i.e it will not be an empty/defaul
 -   `"actor_class"`: _str_ - The actor class for the actor. This is specific to a type of trial and must match values in the corresponding `cogment.yaml` config file under section `actor_classes:name`.
 -   `"endpoint"`: _str_ - The URL to connect to the actor. If, instead of a URL, the value is "client", then this actor will connect in (rather than be connected to), and the actor will need to provide the URL to connect to the orchestrator.
 -   `"implementation"`: _str_ - The name of the implementation to run this actor
--   `"config"`: _protobuf class instance_ - The configuration data for the actor. The type is specified in the file `cogment.yaml` under the section `actor_classes:config_type` for the corresponding actor.
+-   `"config"`: _protobuf class instance_ - The configuration data for the actor. The type is specified in the file `cogment.yaml` under the section `actor_classes:config_type` for the corresponding actor. If `None`, no config will be sent to the actor.
 
 ### `get_trial_id(self)`
 
