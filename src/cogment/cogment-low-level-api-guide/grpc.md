@@ -11,7 +11,7 @@ This reference requires a basic understanding of gRPC, and in particular the for
 
 In this API, the `bytes` data type is normally used to contain the serialized data of externally defined messages. These messages are well defined in the `cogment.yaml` file for any particular trial.
 
-On the other hand, the `google.protobuf.Any` data type is normally used to contain messages that are not pre-defined (thus unknown by the framework), and may be decided at runtime.  It is then the resposibility of the receiver to deserialize in the correct message type.
+On the other hand, the `google.protobuf.Any` data type is normally used to contain messages that are not pre-defined (thus unknown by the framework), and may be decided at runtime. It is then the resposibility of the receiver to deserialize in the correct message type.
 
 Empty messages are normally used as a placeholder for easy future, backward compatible, extension to the API.
 
@@ -345,11 +345,10 @@ enum CommunicationState {
 
 -   UNKNOWN_COM_STATE: Should not be used (it's a requirement of protobuf enums to have a 0 default value).
 -   NORMAL: Normal communication message. Always contains data.
--   HEARTBEAT: Heartbeat request/reply message.  Contains no data.  When received, must be responded in kind.
+-   HEARTBEAT: Heartbeat request/reply message. Contains no data. When received, must be responded in kind.
 -   LAST: Message indicating that the trial is ending, and ending data is following (as `NORMAL`). Contains no data.
--   LAST_ACK: Message indicating that the last data has been sent (i.e. this is the last outgoing message).  Contains no data.
--   END: Message indicating that the trial has ended (i.e. this is the final message).  Contains no data, except maybe for `details`.
-
+-   LAST_ACK: Message indicating that the last data has been sent (i.e. this is the last outgoing message). Contains no data.
+-   END: Message indicating that the trial has ended (i.e. this is the final message). Contains no data, except maybe for `details`.
 
 The normal (soft) end of a trial follows this sequence :
 
@@ -427,7 +426,7 @@ message TrialStartRequest {
 
 -   config: The trial config data. This data can be used by the pre-trial hooks to determine the config for the rest of the componenents.
 -   user_id: The ID of the user that is starting the trial.
--   trial_id_requested: The trial identifier requested for the new trial.  It must be unique.  If not empty, the Orchestrator will try to use this trial_id, otherwise, a UUID will be created.
+-   trial_id_requested: The trial identifier requested for the new trial. It must be unique. If not empty, the Orchestrator will try to use this trial_id, otherwise, a UUID will be created.
 
 ### `TrialStartReply`
 
@@ -439,7 +438,7 @@ message TrialStartReply {
 }
 ```
 
--   trial_id: ID of the newly started trial.  Empty if the requested trial ID could not be used.
+-   trial_id: ID of the newly started trial. Empty if the requested trial ID could not be used.
 
 ### `TerminateTrialRequest`
 
@@ -534,7 +533,7 @@ message TrialListEntry {
 
 ## Actor API
 
-There are two kinds of actors: Service and Client.  They each have their own separate service (respectively `ServiceActorSP` and `ClientActorSP`). But the messages are identical and work almost the same way (except for the initial phase).
+There are two kinds of actors: Service and Client. They each have their own separate service (respectively `ServiceActorSP` and `ClientActorSP`). But the messages are identical and work almost the same way (except for the initial phase).
 
 ### Service Actor API
 
@@ -578,7 +577,7 @@ Actor actions and data are provided to the Orchestrator in the output message st
 
 Metadata:
 
--   `trial-id`: Identifier of the trial the actor is participating in.  This is supplied to service actors, but must be supplied by client actors.
+-   `trial-id`: Identifier of the trial the actor is participating in. This is supplied to service actors, but must be supplied by client actors.
 
 ### `Version()`
 
@@ -605,7 +604,7 @@ message ActorRunTrialInput {
 ```
 
 -   state: The state of this communication message. Identifies this message as a data or a control message.
--   init_input: The initial communication data at the start of a trial. It should always be the first `NORMAL` state message in the stream.  Used to report the details of the trial the actor is participating in.
+-   init_input: The initial communication data at the start of a trial. It should always be the first `NORMAL` state message in the stream. Used to report the details of the trial the actor is participating in.
 -   observation: An observation from the environment.
 -   reward: Rewards from other participants in the trial.
 -   message: A message from other participants in the trial.
@@ -630,16 +629,16 @@ message ActorRunTrialOutput {
 ```
 
 -   state: The state of this communication message. Identifies this message as a data or a control message.
--   init_output: The initial communication data at the start of a trial. It should always be the first `NORMAL` state message in the stream.  Used to initiate or acknowledge connection to a trial.
+-   init_output: The initial communication data at the start of a trial. It should always be the first `NORMAL` state message in the stream. Used to initiate or acknowledge connection to a trial.
 -   action: An action from the actor.
 -   reward: A reward for other participants in the trial.
 -   message: A message for other participants in the trial.
--   details: *Reserved*.
+-   details: _Reserved_.
 
 ### `ActorInitialInput`
 
 The initial communication message at the start of a trial. Used to report the details of the trial the actor is participating in.
-For service actors, this message initiates the connection stream for a new trial.  The trial ID is provided in the metadata of the `RunTrial` procedure.
+For service actors, this message initiates the connection stream for a new trial. The trial ID is provided in the metadata of the `RunTrial` procedure.
 For client actors, this message is a reply to a connection request to an existing trial.
 
 ```protobuf
@@ -662,7 +661,7 @@ message ActorInitialInput {
 
 The initial communication message at the start of a trial. Used to initiate or acknowledge connection to a trial.
 For service actors, this message is empty and serves to acknowledge that the actor is ready to start the trial.
-For client actors, this message serves as a request to connect to an existing trial.  The trial ID is provided in the metadata of the `RunTrial` procedure.
+For client actors, this message serves as a request to connect to an existing trial. The trial ID is provided in the metadata of the `RunTrial` procedure.
 
 ```protobuf
 message ActorInitialOutput {
@@ -674,7 +673,7 @@ message ActorInitialOutput {
 ```
 
 -   actor_name: The name in the trial that the client actor wants to participate as.
--   actor_class: The class in the trial that the client actor wants to participate as.  In this case, there may be many options, and the Orchestrator will decide precisely which name the client actor will receive.
+-   actor_class: The class in the trial that the client actor wants to participate as. In this case, there may be many options, and the Orchestrator will decide precisely which name the client actor will receive.
 
 ## Environment API
 
@@ -726,7 +725,7 @@ message EnvRunTrialInput {
 ```
 
 -   state: The state of this communication message. Identifies this message as a data or a control message.
--   init_input: The initial communication data at the start of a trial. It should always be the first `NORMAL` state message in the stream.  Used to provide the details of the trial the environment will run.
+-   init_input: The initial communication data at the start of a trial. It should always be the first `NORMAL` state message in the stream. Used to provide the details of the trial the environment will run.
 -   action_set: Actions from all actors in the trial.
 -   message: A message from other participants in the trial.
 -   details: Explanation for special circumstances, for example when receiving a hard termination signal (a state of `END` without `LAST` or `LAST_ACK`).
@@ -749,15 +748,15 @@ message EnvRunTrialOutput {
 ```
 
 -   state: The state of this communication message. Identifies this message as a data or a control message.
--   init_output: The initial communication data at the start of a trial. It should always be the first `NORMAL` state message in the stream.  Used to acknowledge that the environment is ready to run the trial. Note that the trial will only really start when the environment sends the first set of observations.
+-   init_output: The initial communication data at the start of a trial. It should always be the first `NORMAL` state message in the stream. Used to acknowledge that the environment is ready to run the trial. Note that the trial will only really start when the environment sends the first set of observations.
 -   observation_set: Observations for all actors in the trial.
 -   reward: A reward for other participants in the trial.
 -   message: A message for other participants in the trial.
--   details: *Reserved*.
+-   details: _Reserved_.
 
 ### `EnvInitialInput`
 
-The initial communication message at the start of a trial. This message initiates the connection stream for a new trial.  The trial ID is provided in the metadata of the `RunTrial` procedure.
+The initial communication message at the start of a trial. This message initiates the connection stream for a new trial. The trial ID is provided in the metadata of the `RunTrial` procedure.
 
 ```protobuf
 message EnvInitialInput {
@@ -1491,4 +1490,3 @@ Reply for [`TrialDatastoreSP.DeleteTrials()`](#deletetrials).
 ```protobuf
 message DeleteTrialsReply {}
 ```
-
