@@ -65,7 +65,7 @@ nav:
       - "API Reference":
           - "cogment.yaml": "cogment/cogment-api-reference/cogment-yaml.md"
           - "Parameters": "cogment/cogment-api-reference/parameters.md"
-          - "Orchestrator": "cogment/cogment-api-reference/orchestrator.md"
+          - "Orchestrator": "cogment/orchestrator.md"
           - "python SDK": "cogment/cogment-api-reference/python.md"
           - "Javascript/Typescript SDK":
               - "Modules": "cogment/cogment-api-reference/javascript/modules.md"
@@ -91,7 +91,7 @@ nav:
       - "Implementation recipes": "cogment/implementation-recipes.md"
   - "Cogment Components":
       - "CLI": "cogment-components/cli/cli.md"
-      - "Orchestrator": "cogment/cogment-api-reference/orchestrator.md"
+      - "Orchestrator": "cogment/orchestrator.md"
       - "Model Registry": "cogment-components/model-registry/model-registry.md"
       - "Trial Datastore": "cogment-components/trial-datastore/trial-datastore.md"
       - "Metrics & Dashboard": "cogment-components/dashboard/metrics-and-dashboard.md"
