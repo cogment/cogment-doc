@@ -72,9 +72,9 @@ Class to setup and run all the different aspects of trials.
 
 Parameters:
 
--   `user_id`: _str_ - Identifier for the user of this context.
--   `cog_settings`: _module_ - Settings module associated with trials that will be run ([cog_settings](#cog_settings.py) namespace).
--   `prometheus_registry`: _prometheus_client.core.CollectorRegistry instance_ - Prometheus registry that'll be used by the Cogment metrics in this context. Can be set to `None` to completely deactivate them. The default value is Prometheus' default global registry.
+- `user_id`: _str_ - Identifier for the user of this context.
+- `cog_settings`: _module_ - Settings module associated with trials that will be run ([cog_settings](#cog_settings.py) namespace).
+- `prometheus_registry`: _prometheus_client.core.CollectorRegistry instance_ - Prometheus registry that'll be used by the Cogment metrics in this context. Can be set to `None` to completely deactivate them. The default value is Prometheus' default global registry.
 
 ### `async serve_all_registered(self, served_endpoint, prometheus_port = 8000)`
 
@@ -82,8 +82,8 @@ Method to start and run the communication server for the registered components (
 
 Parameters:
 
--   `served_endpoint`: _ServedEndpoint instance_ - Details of the connection for the served components.
--   `prometheus_port`: _int_ - TCP/IP port number for Prometheus. Can be set to None to deactivate the Prometheus metrics server.
+- `served_endpoint`: _ServedEndpoint instance_ - Details of the connection for the served components.
+- `prometheus_port`: _int_ - TCP/IP port number for Prometheus. Can be set to None to deactivate the Prometheus metrics server.
 
 Return: None
 
@@ -93,7 +93,7 @@ Method to get a controller instance to manage trials (start, stop, inquire, etc)
 
 Parameters:
 
--   `endpoint`: _Endpoint instance_ - Details of the connection to the Orchestrator.
+- `endpoint`: _Endpoint instance_ - Details of the connection to the Orchestrator.
 
 Return: _Controller instance_ - An instance of the Controller class used to manage trials.
 
@@ -103,11 +103,11 @@ Method for an actor to asynchronously join an existing trial. This task will nor
 
 Parameters:
 
--   `trial_id`: _str_ - The UUID of the trial to join.
--   `endpoint`: _Endpoint instance_ - Details of the connection to the Orchestrator.
--   `impl_name`: _str_ - **deprecated**
--   `actor_name`: _str_ - Name of the actor joining the trial. If `None`, `actor_class` will be used to find the actor to join. The name must match an active actor in the trial as found in the trial parameters in the sections `trial_params:actors:name` with `trial_params:actors:endpoint` set to "client".
--   `actor_class`: _str_ - The class of actor to join the trial. If `None`, `actor_name` will be used to find the actor to join.  The class must match an active actor in the trial as found in the trial parameters in the sections `trial_params:actors:actor_class` with `trial_params:actors:endpoint` set to "client".
+- `trial_id`: _str_ - The UUID of the trial to join.
+- `endpoint`: _Endpoint instance_ - Details of the connection to the Orchestrator.
+- `impl_name`: _str_ - **deprecated**
+- `actor_name`: _str_ - Name of the actor joining the trial. If `None`, `actor_class` will be used to find the actor to join. The name must match an active actor in the trial as found in the trial parameters in the sections `trial_params:actors:name` with `trial_params:actors:endpoint` set to "client".
+- `actor_class`: _str_ - The class of actor to join the trial. If `None`, `actor_name` will be used to find the actor to join. The class must match an active actor in the trial as found in the trial parameters in the sections `trial_params:actors:actor_class` with `trial_params:actors:endpoint` set to "client".
 
 Return: None
 
@@ -117,8 +117,8 @@ Method to register the asynchronous callback function that will run an environme
 
 Parameters:
 
--   `impl`: _async function(EnvironmentSession instance)_ - Callback function to be registered.
--   `impl_name`: _str_ - Name for the environment being run by the given callback function.
+- `impl`: _async function(EnvironmentSession instance)_ - Callback function to be registered.
+- `impl_name`: _str_ - Name for the environment being run by the given callback function.
 
 Return: None
 
@@ -128,9 +128,9 @@ Method to register the asynchronous callback function that will run an actor for
 
 Parameters:
 
--   `impl`: _async func(ActorSession instance)_ - Callback function to be registered.
--   `impl_name`: _str_ - Name for the actor implementation being run by the given callback function.
--   `actor_classes`: _list[str]_ - The actor class name(s) that can be run by the given callback function. The possible names are specified in file `cogment.yaml` under section `actor_classes:name`. If the list is empty, this implementation can run any actor class.
+- `impl`: _async func(ActorSession instance)_ - Callback function to be registered.
+- `impl_name`: _str_ - Name for the actor implementation being run by the given callback function.
+- `actor_classes`: _list[str]_ - The actor class name(s) that can be run by the given callback function. The possible names are specified in file `cogment.yaml` under section `actor_classes:name`. If the list is empty, this implementation can run any actor class.
 
 Return: None
 
@@ -140,7 +140,7 @@ Method to register an asynchronous callback function that will be called before 
 
 Parameters:
 
--   `impl`: _async func(PrehookSession instance)_ - Callback function to be registered. The `PrehookSession` instance member data should be changed as needed for the new trial before returning from this function.
+- `impl`: _async func(PrehookSession instance)_ - Callback function to be registered. The `PrehookSession` instance member data should be changed as needed for the new trial before returning from this function.
 
 Return: None
 
@@ -150,7 +150,7 @@ Method to register an asynchronous callback function that will be called for eac
 
 Parameters:
 
--   `impl`: _async func(DatalogSession instance)_ - Callback function to be registered
+- `impl`: _async func(DatalogSession instance)_ - Callback function to be registered
 
 Return: None
 
@@ -164,8 +164,8 @@ Method to start a new trial. The parameters of the trial will be set by the pre-
 
 Parameters:
 
--   `trial_config`: _protobuf class instance_ - Configuration for the trial. The type is specified in file `cogment.yaml` under the section `trial:config_type`. Can be `None` if no configuration is provided. This is provided to the first pre-trial hook.
--   `trial_id_requested`: _str_ - The trial identifier requested for the new trial. It must be unique among all active trials and a limited set of the latest ended trials (this list of trials can be retrieved with `get_trial_info` or `watch_trial`). If provided, the Orchestrator will try to use this trial_id, otherwise, a UUID will be created.
+- `trial_config`: _protobuf class instance_ - Configuration for the trial. The type is specified in file `cogment.yaml` under the section `trial:config_type`. Can be `None` if no configuration is provided. This is provided to the first pre-trial hook.
+- `trial_id_requested`: _str_ - The trial identifier requested for the new trial. It must be unique among all active trials and a limited set of the latest ended trials (this list of trials can be retrieved with `get_trial_info` or `watch_trial`). If provided, the Orchestrator will try to use this trial_id, otherwise, a UUID will be created.
 
 Return: _str_ - The newly started trial ID.
 
@@ -175,8 +175,8 @@ Method to request the end of a trial.
 
 Parameters:
 
--   `trial_ids`: _list[str]_ - The trial ID(s) to request to terminate. There must be at least one ID.
--   `hard`: _bool_ - If `True`, the termination will be forced and not wait for any action or observation.  If `False`, the trial will wait for the next tick, to end gracefully (i.e. wait for the next full set of actions and response observations).
+- `trial_ids`: _list[str]_ - The trial ID(s) to request to terminate. There must be at least one ID.
+- `hard`: _bool_ - If `True`, the termination will be forced and not wait for any action or observation. If `False`, the trial will wait for the next tick, to end gracefully (i.e. wait for the next full set of actions and response observations).
 
 Return: None
 
@@ -186,7 +186,7 @@ Method to get information about a trial.
 
 Parameters:
 
--   `trial_ids`: _list[str]_ - The trial ID(s) from which to request information. If no ID is provided, returns information about all trials. Note that ended trials may only appear for a short time in this list after they have ended.
+- `trial_ids`: _list[str]_ - The trial ID(s) from which to request information. If no ID is provided, returns information about all trials. Note that ended trials may only appear for a short time in this list after they have ended.
 
 Return: _list[TrialInfo instance]_ - List of trial information, one per trial. Can be empty if no trial matches.
 
@@ -196,7 +196,7 @@ Generator method to iterate, in real-time, through all trial states matching the
 
 Parameters:
 
--   `trial_state_filters`: _list[cogment.TrialState]_ - List of enum values from `cogment.TrialState` for which we are interested in receiving state changes.
+- `trial_state_filters`: _list[cogment.TrialState]_ - List of enum values from `cogment.TrialState` for which we are interested in receiving state changes.
 
 Return: _generator(TrialInfo instance)_ - A generator for the state changes that arrive. The `TrialInfo` received here only contains the trial ID and the state.
 
@@ -206,7 +206,7 @@ Method to get the list of configured actors in a trial.
 
 Parameters:
 
--   `trial_id`: _str_ - The trial ID from which to request the list of actors.
+- `trial_id`: _str_ - The trial ID from which to request the list of actors.
 
 Return: _list[ActorInfo instance]_ - List of actors configured in this trial.
 
@@ -248,7 +248,7 @@ Return: _bool_ - True if the trial has ended, false otherwise.
 
 ### `sending_done(self)`
 
-Method to notify the Orchestrator that all data for the trial, from this session, has been sent. This can be called only when the session is ending.  When starting the session (see `EnvironmentSession` and `ActorSession`), if the `auto_done_sending` parameter is True, this method should not be called, and if the parameter is False, it MUST be called to end the trial properly.
+Method to notify the Orchestrator that all data for the trial, from this session, has been sent. This can be called only when the session is ending. When starting the session (see `EnvironmentSession` and `ActorSession`), if the `auto_done_sending` parameter is True, this method should not be called, and if the parameter is False, it MUST be called to end the trial properly.
 
 Parameters: None
 
@@ -260,11 +260,11 @@ Method to send a reward to one or more actors.
 
 Parameters:
 
--   `value`: _float_ - Value of the reward. This will be aggregated with other rewards for the same target actor.
--   `confidence`: _float_ - Weight of this reward value in determining the final aggregated reward. Should be > 0.
--   `to`: _list[str]_ - Target(s) of reward. A list value could be the name of an actor in the trial. Or it could represent a set of actors; A set of actors can be represented with the wildcard character "`*`" for all actors (of all classes), or "`actor_class.*`" for all actors of a specific class (the `actor_class` is the name of the class as specified in `cogment.yaml`).
--   `tick_id`: _int_ - The tick id (time step) for which the reward should be applied. If "-1", then the reward applies to the current time step.
--   `user_data`: _protobuf class instance_ - Extra user data to be sent with the reward. The class can be any protobuf class. It is the responsibility of the receiving actor to manage the class received (packed in a `google.protobuf.Any`).
+- `value`: _float_ - Value of the reward. This will be aggregated with other rewards for the same target actor.
+- `confidence`: _float_ - Weight of this reward value in determining the final aggregated reward. Should be > 0.
+- `to`: _list[str]_ - Target(s) of reward. A list value could be the name of an actor in the trial. Or it could represent a set of actors; A set of actors can be represented with the wildcard character "`*`" for all actors (of all classes), or "`actor_class.*`" for all actors of a specific class (the `actor_class` is the name of the class as specified in `cogment.yaml`).
+- `tick_id`: _int_ - The tick id (time step) for which the reward should be applied. If "-1", then the reward applies to the current time step.
+- `user_data`: _protobuf class instance_ - Extra user data to be sent with the reward. The class can be any protobuf class. It is the responsibility of the receiving actor to manage the class received (packed in a `google.protobuf.Any`).
 
 Return: None
 
@@ -284,10 +284,10 @@ Method to report that the environment is starting to run the trial. The method s
 
 Parameters:
 
--   `observations`: _list[tuple(str, protobuf class instance)]_ - The initial observations from which the environment is starting the trial. This is the same as the parameter for `self.produce_observations`. If not provided, then the first observation sent with `produce_observation` will be used to initiate the trial (note that no actions will be received until the first observation is sent).
+- `observations`: _list[tuple(str, protobuf class instance)]_ - The initial observations from which the environment is starting the trial. This is the same as the parameter for `self.produce_observations`. If not provided, then the first observation sent with `produce_observation` will be used to initiate the trial (note that no actions will be received until the first observation is sent).
 
--   `auto_done_sending`: _bool_ - Controls when to notify the Orchestrator that all data has been sent. If True, the session will automatically send the notification after `end` is called.  If False, the user MUST call `sending_done` (after `end`) to end the trial properly.
-Return: None
+- `auto_done_sending`: _bool_ - Controls when to notify the Orchestrator that all data has been sent. If True, the session will automatically send the notification after `end` is called. If False, the user MUST call `sending_done` (after `end`) to end the trial properly.
+  Return: None
 
 ### `async event_loop(self)`
 
@@ -305,7 +305,7 @@ Method to send observations to actors. If called after receiving an event of typ
 
 Parameters:
 
--   `observations`: _list[tuple(str, protobuf class instance)]_ - The observations to send to actors. The string in the tuple is the name of the destination actor (or "\*" for all actors). The name of the actors can be found in trial parameters under `trial_params:actors:name`. The protobuf class is the Observation Space for that actor, found in `cogment.yaml` in the corresponding section `actor_classes:observation:space`.
+- `observations`: _list[tuple(str, protobuf class instance)]_ - The observations to send to actors. The string in the tuple is the name of the destination actor (or "\*" for all actors). The name of the actors can be found in trial parameters under `trial_params:actors:name`. The protobuf class is the Observation Space for that actor, found in `cogment.yaml` in the corresponding section `actor_classes:observation:space`.
 
 Return: None
 
@@ -315,7 +315,7 @@ Method to report the end of the environment. This will effectively end the trial
 
 Parameters:
 
--   `final_observations`: _list[tuple(str, protobuf class instance)]_ - The final observations to send to the actors. This is the same as the parameter for `self.produce_observations`.
+- `final_observations`: _list[tuple(str, protobuf class instance)]_ - The final observations to send to the actors. This is the same as the parameter for `self.produce_observations`.
 
 Return: None
 
@@ -333,8 +333,8 @@ Method to send a message related to the current time step (tick id).
 
 Parameters:
 
--   `payload`: _protobuf class instance_ - The message data to be sent. The class can be any protobuf class. It is the responsibility of the receiving environment to manage the class received (packed in a `google.protobuf.Any`).
--   `to`: _list[str]_ - Targets of feedback. Each value could be the name of an actor in the trial. Or it could represent a set of actors (with wildcards); A set of actors can be represented with the wildcard character "`*`" for all actors (of all classes), or "`actor_class.*`" for all actors of a specific class (the `actor_class` must match one of the classes listed in the trial parameters).  Note that the wildcard does not include the environment.
+- `payload`: _protobuf class instance_ - The message data to be sent. The class can be any protobuf class. It is the responsibility of the receiving environment to manage the class received (packed in a `google.protobuf.Any`).
+- `to`: _list[str]_ - Targets of feedback. Each value could be the name of an actor in the trial. Or it could represent a set of actors (with wildcards); A set of actors can be represented with the wildcard character "`*`" for all actors (of all classes), or "`actor_class.*`" for all actors of a specific class (the `actor_class` must match one of the classes listed in the trial parameters). Note that the wildcard does not include the environment.
 
 Return: None
 
@@ -358,7 +358,7 @@ Method to start the actor. This method should be called before any other method 
 
 Parameters:
 
--   `auto_done_sending`: _bool_ - Controls when to notify the Orchestrator that all data has been sent. If True, the session will automatically send the notification after receiving the last observation.  If False, the user MUST call `sending_done` to end the trial properly.
+- `auto_done_sending`: _bool_ - Controls when to notify the Orchestrator that all data has been sent. If True, the session will automatically send the notification after receiving the last observation. If False, the user MUST call `sending_done` to end the trial properly.
 
 Return: None
 
@@ -378,7 +378,7 @@ Method to send actions to the environment.
 
 Parameters:
 
--   `action`: _protobuf class instance_ - An instance of the action space class specified in the corresponding section `actor_classes:action:space` of the `cogment.yaml` file. If `None`, then no action space is sent (empty content) and the environment will receive a default initialized action space of the appropriate type.
+- `action`: _protobuf class instance_ - An instance of the action space class specified in the corresponding section `actor_classes:action:space` of the `cogment.yaml` file. If `None`, then no action space is sent (empty content) and the environment will receive a default initialized action space of the appropriate type.
 
 Return: None
 
@@ -388,8 +388,8 @@ Method to send a message related to the current time step (tick id).
 
 Parameters:
 
--   `payload`: _protobuf class instance_ - The message data to be sent. The class can be any protobuf class. It is the responsibility of the receiving actor to manage the class received (packed in a `google.protobuf.Any`).
--   `to`: _list[str]_ - Targets of feedback. Each value could be the name of an actor in the trial, or the name of the environment (from `self.env_name`). Or it could represent a set of actors (with wildcards); A set of actors can be represented with the wildcard character "`*`" for all actors (of all classes), or "`actor_class.*`" for all actors of a specific class (the `actor_class` must match one of the classes listed in the trial parameters).  Note that the wildcard does not include the environment.
+- `payload`: _protobuf class instance_ - The message data to be sent. The class can be any protobuf class. It is the responsibility of the receiving actor to manage the class received (packed in a `google.protobuf.Any`).
+- `to`: _list[str]_ - Targets of feedback. Each value could be the name of an actor in the trial, or the name of the environment (from `self.env_name`). Or it could represent a set of actors (with wildcards); A set of actors can be represented with the wildcard character "`*`" for all actors (of all classes), or "`actor_class.*`" for all actors of a specific class (the `actor_class` must match one of the classes listed in the trial parameters). Note that the wildcard does not include the environment.
 
 Return: None
 
@@ -417,11 +417,11 @@ Abstract class containing trial configuration data to define the specifics of a 
 
 `actors`: _list[dict]_ - Each item (dictionary) of the list represents an actor. Each actor dictionary contains these key-value pairs:
 
--   `"name"`: _str_ - Name of the actor
--   `"actor_class"`: _str_ - The actor class for the actor. This is specific to a type of trial and must match values in the corresponding `cogment.yaml` config file under section `actor_classes:name`.
--   `"endpoint"`: _str_ - The URL to connect to the actor. If, instead of a URL, the value is "client", then this actor will connect in (rather than be connected to), and the actor will need to provide the URL to connect to the orchestrator.
--   `"implementation"`: _str_ - The name of the implementation to run this actor
--   `"config"`: _protobuf class instance_ - The configuration data for the actor. The type is specified in the file `cogment.yaml` under the section `actor_classes:config_type` for the corresponding actor. If `None`, no config will be sent to the actor.
+- `"name"`: _str_ - Name of the actor
+- `"actor_class"`: _str_ - The actor class for the actor. This is specific to a type of trial and must match values in the corresponding `cogment.yaml` config file under section `actor_classes:name`.
+- `"endpoint"`: _str_ - The URL to connect to the actor. If, instead of a URL, the value is "client", then this actor will connect in (rather than be connected to), and the actor will need to provide the URL to connect to the orchestrator.
+- `"implementation"`: _str_ - The name of the implementation to run this actor
+- `"config"`: _protobuf class instance_ - The configuration data for the actor. The type is specified in the file `cogment.yaml` under the section `actor_classes:config_type` for the corresponding actor. If `None`, no config will be sent to the actor.
 
 ### `get_trial_id(self)`
 
@@ -489,7 +489,7 @@ Class enclosing the details for connecting to an Orchestrator.
 
 Parameters:
 
--   `url`: _str_ - The URL where to connect to the Orchestrator.
+- `url`: _str_ - The URL where to connect to the Orchestrator.
 
 ## class cogment.ServedEndpoint
 
@@ -505,18 +505,18 @@ Class enclosing the details for connection from an Orchestrator.
 
 Parameters:
 
--   `port`: _int_ - The TCP/IP port where the service will be awaiting the Orchestrator connection.
+- `port`: _int_ - The TCP/IP port where the service will be awaiting the Orchestrator connection.
 
 ## class cogment.TrialState(enum.Enum)
 
 Enum representing the various states of trials.
 
--   UNKNOWN: Should not be used.
--   INITIALIZING: The trial is in the process of starting.
--   PENDING: The trial is waiting for its final parameters, before running.
--   RUNNING: The trial is running.
--   TERMINATING: The trial is in the process of terminating (either a request to terminate has been received or the last observation has been received).
--   ENDED: The trial has ended. Only a set number of ended trials will be kept (configured in the Orchestrator).
+- UNKNOWN: Should not be used.
+- INITIALIZING: The trial is in the process of starting.
+- PENDING: The trial is waiting for its final parameters, before running.
+- RUNNING: The trial is running.
+- TERMINATING: The trial is in the process of terminating (either a request to terminate has been received or the last observation has been received).
+- ENDED: The trial has ended. Only a set number of ended trials will be kept (configured in the Orchestrator).
 
 ## class TrialInfo
 
@@ -558,13 +558,13 @@ Class representing a received event (for environments and actors). It can contai
 
 Enum representing the type of an event.
 
--   `EventType.NONE`: Empty event. This kind of event should never be received.
+- `EventType.NONE`: Empty event. This kind of event should never be received.
 
--   `EventType.ACTIVE`: Normal event from an active trial. Most events will be of this type.
+- `EventType.ACTIVE`: Normal event from an active trial. Most events will be of this type.
 
--   `EventType.ENDING`: Events from a trial in the process of ending. For the environment, this means that these events contain the last actions from the actors, and the trial is awaiting a final observation. For the actors, this means that the trial is ending and no action can/need to be sent in response. Note that because of network timing, there may be `ACTIVE` events (e.g. rewards or messages) arriving after some `ENDING` events, but the trial is ending regardless.
+- `EventType.ENDING`: Events from a trial in the process of ending. For the environment, this means that these events contain the last actions from the actors, and the trial is awaiting a final observation. For the actors, this means that the trial is ending and no action can/need to be sent in response. Note that because of network timing, there may be `ACTIVE` events (e.g. rewards or messages) arriving after some `ENDING` events, but the trial is ending regardless.
 
--   `EventType.FINAL`: Final event for the trial. This does not contain data. The event loop will exit after this event is delivered. This event can be ignored if nothing needs to be done before exiting the loop.
+- `EventType.FINAL`: Final event for the trial. This does not contain data. The event loop will exit after this event is delivered. This event can be ignored if nothing needs to be done before exiting the loop.
 
 ## class RecvObservation
 
@@ -648,12 +648,12 @@ Class containing the paramaters of the trial.
 
 `nb_actors`: _int_ - The number of actors participating in the trial.
 
-`datalog`: _dict_ - The datalog related parameters.  The dictionary contains these key-value pairs:
+`datalog`: _dict_ - The datalog related parameters. The dictionary contains these key-value pairs:
 
 - `"endpoint"`: _str_ - The URL to connect to the datalog service.
 - `"exclude"`: _list(str)_ - Fields to exclude from the samples sent to the datalog service.
 
-`environment`: _dict_ - The environment related parameters.  The dictionary contains these key-value pairs:
+`environment`: _dict_ - The environment related parameters. The dictionary contains these key-value pairs:
 
 - `"name"`: _str_ - Name of the environment
 - `"endpoint"`: _str_ - The URL to connect to the environment.
@@ -663,7 +663,7 @@ Class containing the paramaters of the trial.
 
 Parameter:
 
--   `cog_settings`: _module_ - Settings module associated with trials that will be run ([cog_settings](#cog_settings.py) namespace).
+- `cog_settings`: _module_ - Settings module associated with trials that will be run ([cog_settings](#cog_settings.py) namespace).
 
 ### `get_serial_type(self)`
 
@@ -687,7 +687,7 @@ Takes a serialized parameter string and sets the LogParams instance.
 
 Parameter:
 
--   `raw_string`: _str_ - Binary string representing a serialized LogParam of the same type.
+- `raw_string`: _str_ - Binary string representing a serialized LogParam of the same type.
 
 ### `get_trial_config(self)`
 
@@ -711,9 +711,9 @@ Returns the index of the given actor, or None if the actor is not in the trial.
 
 Parameters:
 
--   `actor_name`: _str_ - Name of the actor to look for in the trial parameters.
+- `actor_name`: _str_ - Name of the actor to look for in the trial parameters.
 
-Return: _int_ - Index of actor is found.  `None` if not found. This index is constant in the trial and relates to all complete actors list provided by cogment (e.g. `Controller.get_actors()`).
+Return: _int_ - Index of actor is found. `None` if not found. This index is constant in the trial and relates to all complete actors list provided by cogment (e.g. `Controller.get_actors()`).
 
 ### `get_actor_name(self, actor_index)`
 
@@ -721,7 +721,7 @@ Returns the name of an actor in the trial.
 
 Parameters:
 
--   `actor_index`: _int_ - Index of the actor to retrieve. This number is constant in the trial and relates to all complete actors list provided by cogment (e.g. `Controller.get_actors()`). The value must be between 0 and `self.nb_actors` (exclusively).
+- `actor_index`: _int_ - Index of the actor to retrieve. This number is constant in the trial and relates to all complete actors list provided by cogment (e.g. `Controller.get_actors()`). The value must be between 0 and `self.nb_actors` (exclusively).
 
 Return: _str_ - Name of the actor in the trial parameters.
 
@@ -731,15 +731,15 @@ Return information about a particular actor in the trial.
 
 Parameters:
 
--   `actor_index`: _int_ - Index of the actor to retrieve. This number is constant in the trial and relates to all complete actors list provided by cogment (e.g. `Controller.get_actors()`). The value must be between 0 and `self.nb_actors` (exclusively).
+- `actor_index`: _int_ - Index of the actor to retrieve. This number is constant in the trial and relates to all complete actors list provided by cogment (e.g. `Controller.get_actors()`). The value must be between 0 and `self.nb_actors` (exclusively).
 
 Return: _dict_ - Dictionary containing the details of the actor parameters. The dictionary contains these key-value pairs:
 
--   `"name"`: _str_ - Name of the actor
--   `"actor_class"`: _str_ - The actor class for the actor. This is specific to a type of trial and must match values in the corresponding `cogment.yaml` config file under section `actor_classes:name`.
--   `"endpoint"`: _str_ - The URL to connect to the service actor, or "client" for client actors that will connect in.
--   `"implementation"`: _str_ - The name of the implementation to run the actor
--   `"config"`: _protobuf class instance_ - The configuration data for the actor. The type is specified in the file `cogment.yaml` under the section `actor_classes:config_type` for the specific actor class of the actor.
+- `"name"`: _str_ - Name of the actor
+- `"actor_class"`: _str_ - The actor class for the actor. This is specific to a type of trial and must match values in the corresponding `cogment.yaml` config file under section `actor_classes:name`.
+- `"endpoint"`: _str_ - The URL to connect to the service actor, or "client" for client actors that will connect in.
+- `"implementation"`: _str_ - The name of the implementation to run the actor
+- `"config"`: _protobuf class instance_ - The configuration data for the actor. The type is specified in the file `cogment.yaml` under the section `actor_classes:config_type` for the specific actor class of the actor.
 
 ## class cogment.LogSample
 
@@ -760,7 +760,7 @@ Note that not some of the data may be not be available (`None`) if it was exclud
 
 Parameter:
 
--   `params`: _LogParams instance_ - The parameters of the trial.
+- `params`: _LogParams instance_ - The parameters of the trial.
 
 ### `get_serial_type(self)`
 
@@ -784,7 +784,7 @@ Takes a serialized sample string and sets the LogSample instance.
 
 Parameter:
 
--   `raw_string`: _str_ - Binary string representing a serialized LogSample of the same type.
+- `raw_string`: _str_ - Binary string representing a serialized LogSample of the same type.
 
 ### `all_actor_names(self)`
 
@@ -800,7 +800,7 @@ Retrieve the action from the actor in the sample.
 
 Parameters:
 
--   `actor`: _str_ or _int_ - The name or index of the actor for which to retrieve the action. The number, index and name of actors can be retrieved from the parameters of the trial.
+- `actor`: _str_ or _int_ - The name or index of the actor for which to retrieve the action. The number, index and name of actors can be retrieved from the parameters of the trial.
 
 Return: _RecvAction instance_ - The action of the actor in the sample.
 
@@ -810,7 +810,7 @@ Retrieve the observation destined for the actor in the sample.
 
 Parameters:
 
--   `actor`: _str_ or _int_ - The name or index of the actor for which to retrieve the observation. The number, index and name of actors can be retrieved from the parameters of the trial.
+- `actor`: _str_ or _int_ - The name or index of the actor for which to retrieve the observation. The number, index and name of actors can be retrieved from the parameters of the trial.
 
 Return: _RecvObservation instance_ - The observation of the actor in the sample.
 
@@ -829,8 +829,6 @@ Generator method to iterate over all the messages in the sample.
 Parameters: None
 
 Return: _generator(RecvMessage instance)_ - A generator for the messages in the sample.
-
-
 
 [1]: ./cogment-yaml.md
 [2]: ./parameters.md

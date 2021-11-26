@@ -13,9 +13,7 @@ $ orchestrator --lifecycle_port=9001 --actor_port=9001 --params=params.yaml --pr
 All configuration is possible through the command line. The various command line options are described here:
 
 - `help`: The list of command line parameters with short description. Also shows the envrionment variables recognized.
-  
 - `lifecycle_port`: The TCP port where to serve the trial lifecycle gRPC service (TrialLifecycleSP). This is where the Controller connects to. Default: 9000.
-  
 - `actor_port`: The TCP port where to serve the client actor gRPC service (ClientActorSP). This is where client actors (as opposed to service actors) connect to. Default: 9000
 
 - `params`: The name of the YAML file containing the default parameters for new trials. Some of The parameters must match their corresponding values in the `cogment.yaml` file and may therefore lock an Orchestrator instance to specific types of trials. If pre-trial hooks are defined, these parameters are sent to the first hook before a trial starts.
@@ -34,7 +32,7 @@ All configuration is possible through the command line. The various command line
 
 - `trust_chain`: File name containing a PEM encoded trust chain.
 
-- `log_level`: Set to define the minimum level for logging.  Possible values are: `off`, `error`, `warning`, `info`, `debug`, `trace`. Note however that all trace and most debug level logs will only output if running the debug compiled version of the Orchestrator. Default: `info`.
+- `log_level`: Set to define the minimum level for logging. Possible values are: `off`, `error`, `warning`, `info`, `debug`, `trace`. Note however that all trace and most debug level logs will only output if running the debug compiled version of the Orchestrator. Default: `info`.
 
 - `log_file`: Base file name for daily log output. The name will be suffixed with the date and a new file will be made every day. If not provided the logs go to stdout.
 
@@ -42,7 +40,7 @@ All configuration is possible through the command line. The various command line
 
 ## Environment variables
 
-Environment variables correspond to one of the command line parameters.  But if both are provided, the command line takes precedence.
+Environment variables correspond to one of the command line parameters. But if both are provided, the command line takes precedence.
 
 - `COGMENT_LIFECYCLE_PORT`: This is the same as the `lifecycle_port` command line parameter.
 
