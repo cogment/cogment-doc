@@ -8,63 +8,63 @@ The parameter file serves to initialize the Orchestrator default parameters. It 
 
 These are the parameters that will be used if no pre-trial hooks are defined. And if hooks are defined, they will be sent to the first hook.
 
-The file uses the YAML configuration language. It consists of one YAML section called [trial_params](#trial-params). Any other section will be ignored.
+The file uses the YAML configuration language.  It consists of one YAML section called [trial_params](#trial-params). Any other section will be ignored.
 
 The section defines the default trial parameters. The final parameters are set by the pre-trial hooks (if any are defined).
 These parameters are:
 
-- `max_steps`: The maximum number of time steps (ticks) that the trial will run before terminating. If 0, the trial will not be auto terminated (the environment and a Controller can still terminate the trial). If not provided, a default of 0 will be used.
-- `max_inactivity`: The number of seconds of inactivity after which a trial will be terminated. If 0, the trial will not be terminated because of inactivity. If not provided, a default of 30 seconds will be used.
-- `datalog`: List of properties related to the data logger. If this section is not present, data logging is disabled.
-  - `endpoint`: The URL where the datalogger gRPC server resides.
-  - `exclude_fields`: List of fields to exclude from the data to send for logging
-- `environment`: List of properties for the environment
-  - `name`: The name of the environment (defaults to "env" if not provided)
-  - `endpoint`: The URL where the environment gRPC server resides
-  - `implementation`: The name of the implementation to be used for this instance of the environment. This must match an implementation that is defined at the endpoint. If not defined, an arbitraary implementation will be chosen at runtime
-- `actors`: List of actor properties. The number of actors may not be suited for all trials.
-  - `name`: The name of this actor (i.e. name of the specific instance of the actor class)
-  - `actor_class`: The name of the actor class. This is specific to a type of trial and must match values in the corresponding `cogment.yaml` config file.
-  - `endpoint`: The URL where the actor gRPC server resides. If this is `client`, the actor will connect as a client (the Orchestrator being the server in this case).
-  - `implementation`: The name of the implementation to be used for this actor instance. This must match an implementation that is defined at the endpoint. If not defined, an arbitraary implementation will be chosen at runtime.
+-   `max_steps`: The maximum number of time steps (ticks) that the trial will run before terminating. If 0, the trial will not be auto terminated (the environment and a Controller can still terminate the trial). If not provided, a default of 0 will be used.
+-   `max_inactivity`: The number of seconds of inactivity after which a trial will be terminated. If 0, the trial will not be terminated because of inactivity. If not provided, a default of 30 seconds will be used.
+-   `datalog`: List of properties related to the data logger. If this section is not present, data logging is disabled.
+    -   `endpoint`: The URL where the datalogger gRPC server resides.
+    -   `exclude_fields`: List of fields to exclude from the data to send for logging
+-   `environment`: List of properties for the environment
+    -   `name`: The name of the environment (defaults to "env" if not provided)
+    -   `endpoint`: The URL where the environment gRPC server resides
+    -   `implementation`: The name of the implementation to be used for this instance of the environment. This must match an implementation that is defined at the endpoint. If not defined, an arbitraary implementation will be chosen at runtime
+-   `actors`: List of actor properties. The number of actors may not be suited for all trials.
+    -   `name`: The name of this actor (i.e. name of the specific instance of the actor class)
+    -   `actor_class`: The name of the actor class. This is specific to a type of trial and must match values in the corresponding `cogment.yaml` config file.
+    -   `endpoint`: The URL where the actor gRPC server resides. If this is `client`, the actor will connect as a client (the Orchestrator being the server in this case).
+    -   `implementation`: The name of the implementation to be used for this actor instance. This must match an implementation that is defined at the endpoint. If not defined, an arbitraary implementation will be chosen at runtime.
 
 E.g.:
 
 ```yaml
 trial_params:
-  max_steps: 1000
-  max_inactivity: 5 # seconds
+    max_steps: 1000
+    max_inactivity: 5  # seconds
 
-  datalog:
-    endpoint: grpc://logserver:9000
-    exclude_fields: [messages, actions]
+    datalog:
+        endpoint: grpc://logserver:9000
+        exclude_fields: [messages, actions]
 
-  environment:
-    name: Arena
-    endpoint: grpc://env:9000
-    implementation: default
+    environment:
+        name: Arena
+        endpoint: grpc://env:9000
+        implementation: default
 
-  actors:
-    - name: Alice
-      actor_class: BigPlayer
-      endpoint: grpc://bp1:9000
-      implementation:
-    - name: Bob
-      actor_class: BigPlayer
-      endpoint: grpc://bp2:9000
-      implementation: Test
-    - name: Carol
-      actor_class: SmallPlayer
-      endpoint: grpc://sp:9000
-      implementation: DQN_Hotel3
-    - name: Dave
-      actor_class: SmallPlayer
-      endpoint: grpc://sp:9000
-      implementation: DNN_Karma3.1.17
-    - name: Olivia
-      actor_class: Referee
-      endpoint: client
-      implementation: Standard
+    actors:
+        - name: Alice
+          actor_class: BigPlayer
+          endpoint: grpc://bp1:9000
+          implementation:
+        - name: Bob
+          actor_class: BigPlayer
+          endpoint: grpc://bp2:9000
+          implementation: Test
+        - name: Carol
+          actor_class: SmallPlayer
+          endpoint: grpc://sp:9000
+          implementation: DQN_Hotel3
+        - name: Dave
+          actor_class: SmallPlayer
+          endpoint: grpc://sp:9000
+          implementation: DNN_Karma3.1.17
+        - name: Olivia
+          actor_class: Referee
+          endpoint: client
+          implementation: Standard
 ```
 
 ## Parameters and pre-trial hooks
