@@ -7,10 +7,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## Unreleased
 
+### Changes
+
+-   Updates for API 2.0 changes
+
 ### Added
 
 -   Introduce documentation for the `ModelRegistry` grpc service.
 -   Introduce documentation for the `TrialDatastore` grpc service.
+-   Documentation on the new parameter file used by the Orchestrator
 
 ## v1.6.0 - 2021-11-19
 
