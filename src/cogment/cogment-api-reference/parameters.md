@@ -8,7 +8,7 @@ The parameter file serves to initialize the Orchestrator default parameters. It 
 
 These are the parameters that will be used if no pre-trial hooks are defined. And if hooks are defined, they will be sent to the first hook.
 
-The file uses the YAML configuration language. It consists of one YAML section called [trial_params](#trial-params). Any other section will be ignored.
+The file uses the YAML configuration language.  It consists of one YAML section called [trial_params](#trial-params). Any other section will be ignored.
 
 The section defines the default trial parameters. The final parameters are set by the pre-trial hooks (if any are defined).
 These parameters are:
@@ -33,7 +33,7 @@ E.g.:
 ```yaml
 trial_params:
     max_steps: 1000
-    max_inactivity: 5 # seconds
+    max_inactivity: 5  # seconds
 
     datalog:
         endpoint: grpc://logserver:9000
