@@ -665,7 +665,7 @@ Parameter:
 
 -   `cog_settings`: _module_ - Settings module associated with trials that will be run ([cog_settings](#cog_settings.py) namespace).
 
-### `get_serial_type(self)`
+### `get_serialization_type(self)`
 
 Return the type of serial data produced by `serialize` and accepted by `deserialize`. The type represents an ID dependent on [TrialParams](../cogment-low-level-api-guide/grpc.md#trialparams) defined in the low level gRPC API.
 
@@ -762,7 +762,7 @@ Parameter:
 
 -   `params`: _LogParams instance_ - The parameters of the trial.
 
-### `get_serial_type(self)`
+### `get_serialization_type(self)`
 
 Return the type of serial data produced by `serialize` and accepted by `deserialize`. The type represents an ID dependent on [DatalogSample](../cogment-low-level-api-guide/grpc.md#logexportersamplerequest) defined in the low level gRPC API.
 
