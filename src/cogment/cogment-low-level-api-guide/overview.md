@@ -32,7 +32,7 @@ The low-level API is fully described within the gRPC service definitions found i
 
 ### Controller API
 
-`api/cogment/orchestrator.proto` describes the service the orchestrator exposes that frontend applications use to create and manipulate trials. It is usually refered to as the COntroller functionality because in the SDK you get a controller object that exposes these functionalities.
+`api/cogment/orchestrator.proto` describes the service the orchestrator exposes that frontend applications use to create and manipulate trials. It is usually refered to as the Controller functionality because in the SDK you get a controller object that exposes these functionalities.
 
 -   `StartTrial()` to request the start of a new trial.
 -   `TerminateTrial()` to request the end of the trial.

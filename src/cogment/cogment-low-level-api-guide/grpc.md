@@ -11,7 +11,7 @@ This reference requires a basic understanding of gRPC, and in particular the for
 
 In this API, the `bytes` data type is normally used to contain the serialized data of externally defined messages. These messages are well defined in the `cogment.yaml` file for any particular trial.
 
-On the other hand, the `google.protobuf.Any` data type is normally used to contain messages that are not pre-defined (thus unknown by the framework), and may be decided at runtime.  It is then the resposibility of the receiver to deserialize in the correct message type.
+On the other hand, the `google.protobuf.Any` data type is normally used to contain messages that are not pre-defined (thus unknown by the framework), and may be decided at runtime.  It is then the responsibility of the receiver to deserialize in the correct message type.
 
 Empty messages are normally used as a placeholder for easy future, backward compatible, extension to the API.
 
@@ -33,7 +33,7 @@ Due to normal network delays and unpredictability of the various components, the
     -   All components are expected to respond within a reasonable amount of time.
     -   Hooks do not assume to receive specific parameters, they reply only with well formed parameters, and they do not assume a specific order of hooks being called (when multiple hooks are defined).
     -   A `TerminateTrial` (from the Control API) is called only a reasonable delay after a `StartTrial` (e.g. after at least two ticks have executed).
-    -   Note that what constitutes a "reasonable" amount of time is dependent on many variables
+    -   Note that what constitutes a "reasonable" amount of time is dependent on many variables.
 
 ## Common types
 
@@ -43,7 +43,7 @@ Most of the messages are defined in the `common.proto` file. `ObservationSet` an
 
 Some values (and their standardized names) are recurrent throughout the gRPC API.
 
--   tick_id: (uint64/sint64) The monotonic time, in number of steps, since the start of the trial. As an ID, it represents a discrete step in the processing of the trial. A step starts with observations representing a specific point in time, that are followed by actions, rewards and messages in relation to these observations. The first tick ID is 0. Some of these values may accept -1 as meaning the latest step (e.g. when sending an action).
+-   tick_id: (uint64/sint64) The monotonic time, in number of steps, since the start of the trial. As an ID, it represents a discrete step in the processing of the trial. A step starts with observations representing a specific point in time, that are followed by actions, rewards and messages in relation to these observations. The first tick ID is 0. Some of these values may accept -1, meaning the latest step (e.g. when sending an action).
 -   timestamp: (fixed64) The wall-clock time in nanoseconds since 00:00:00UTC January 1, 1970 (Unix Epoch time).
 -   trial_id: (string) The identifier (name) of the trial.
 
@@ -93,7 +93,7 @@ message TrialParams {
 ```
 
 -   trial_config: (optional) The user config for the controller of the trial. Will be sent to pre-trial hooks.
--   datalog: The parameters for the datalog of the trial.
+-   datalog: (optional) The parameters for the datalog of the trial. If not present, data logging is disabled.
 -   environment: The parameters for the environment of the trial.
 -   actors: The parameters for all actors involved in the trial. This list's length and order define the length and order of the lists of actors provided in different places in the API (e.g. `actors_in_trial`) for the trial.
 -   max_steps: The maximum number of steps/ticks that the trial should run. After this number of steps/ticks, an end request will be sent to the environment.
@@ -105,13 +105,11 @@ Parameters related to the data logger.
 
 ```protobuf
 message DatalogParams {
-  string type = 1;
-  string endpoint = 2;
-  repeated string exclude_fields = 3;
+  string endpoint = 1;
+  repeated string exclude_fields = 2;
 }
 ```
 
--   type: The type of data to send for logging. Can be `grpc` (i.e. protobuf messages) or `none`. If `none` data logging is disabled.
 -   endpoint: The URL where the data logger is being served. This is used by the Orchestrator to connect to the datalog using the `LogExporterSP` gRPC service.
 -   exclude_fields: A list of fields from `DatalogSample` to not send to the data logger.
 
@@ -183,7 +181,7 @@ message TrialActor {
 ```
 
 -   name: The name of the actor.
--   actor_class: The name of the class of actor. For a particualr trial, the possible actor classes are defined in the `cogment.yaml` file in the `actor_classes:name` sections.
+-   actor_class: The name of the class of actor. For a particular trial, the possible actor classes are defined in the `cogment.yaml` file in the `actor_classes:name` sections.
 
 ### `Observation`
 
@@ -391,7 +389,7 @@ Request the environment to terminate existing trial(s).
 
 Metadata:
 
--   `trial-id`: (_one or more_) Identifier(s) of a trial(s) to terminate.
+-   `trial-id`: (_one or more_) Identifier(s) of the trial(s) to terminate.
 
 #### `GetTrialInfo()`
 
@@ -662,7 +660,7 @@ message ActorInitialInput {
 
 The initial communication message at the start of a trial. Used to initiate or acknowledge connection to a trial.
 For service actors, this message is empty and serves to acknowledge that the actor is ready to start the trial.
-For client actors, this message serves as a request to connect to an existing trial.  The trial ID is provided in the metadata of the `RunTrial` procedure.
+For client actors, this message serves as a request to connect to an existing trial. The trial ID is provided in the metadata of the `RunTrial` procedure.
 
 ```protobuf
 message ActorInitialOutput {
@@ -674,7 +672,7 @@ message ActorInitialOutput {
 ```
 
 -   actor_name: The name in the trial that the client actor wants to participate as.
--   actor_class: The class in the trial that the client actor wants to participate as.  In this case, there may be many options, and the Orchestrator will decide precisely which name the client actor will receive.
+-   actor_class: The class in the trial that the client actor wants to participate as. In this case, there may be many options, and the Orchestrator will decide precisely which name the client actor will receive.
 
 ## Environment API
 
@@ -726,7 +724,7 @@ message EnvRunTrialInput {
 ```
 
 -   state: The state of this communication message. Identifies this message as a data or a control message.
--   init_input: The initial communication data at the start of a trial. It should always be the first `NORMAL` state message in the stream.  Used to provide the details of the trial the environment will run.
+-   init_input: The initial communication data at the start of a trial. It should always be the first `NORMAL` state message in the stream. Used to provide the details of the trial the environment will run.
 -   action_set: Actions from all actors in the trial.
 -   message: A message from other participants in the trial.
 -   details: Explanation for special circumstances, for example when receiving a hard termination signal (a state of `END` without `LAST` or `LAST_ACK`).
@@ -749,7 +747,7 @@ message EnvRunTrialOutput {
 ```
 
 -   state: The state of this communication message. Identifies this message as a data or a control message.
--   init_output: The initial communication data at the start of a trial. It should always be the first `NORMAL` state message in the stream.  Used to acknowledge that the environment is ready to run the trial. Note that the trial will only really start when the environment sends the first set of observations.
+-   init_output: The initial communication data at the start of a trial. It should always be the first `NORMAL` state message in the stream. Used to acknowledge that the environment is ready to run the trial. Note that the trial will only really start when the environment sends the first set of observations.
 -   observation_set: Observations for all actors in the trial.
 -   reward: A reward for other participants in the trial.
 -   message: A message for other participants in the trial.
@@ -757,7 +755,7 @@ message EnvRunTrialOutput {
 
 ### `EnvInitialInput`
 
-The initial communication message at the start of a trial. This message initiates the connection stream for a new trial.  The trial ID is provided in the metadata of the `RunTrial` procedure.
+The initial communication message at the start of a trial. This message initiates the connection stream for a new trial. The trial ID is provided in the metadata of the `RunTrial` procedure.
 
 ```protobuf
 message EnvInitialInput {

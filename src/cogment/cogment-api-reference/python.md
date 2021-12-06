@@ -176,7 +176,7 @@ Method to request the end of a trial.
 Parameters:
 
 -   `trial_ids`: _list[str]_ - The trial ID(s) to request to terminate. There must be at least one ID.
--   `hard`: _bool_ - If `True`, the termination will be forced and not wait for any action or observation.  If `False`, the trial will wait for the next tick, to end gracefully (i.e. wait for the next full set of actions and response observations).
+-   `hard`: _bool_ - If `True`, the termination will be forced and not wait for any action or observation. If `False`, the trial will wait for the next tick, to end gracefully (i.e. wait for the next full set of actions and response observations).
 
 Return: None
 
@@ -334,7 +334,7 @@ Method to send a message related to the current time step (tick id).
 Parameters:
 
 -   `payload`: _protobuf class instance_ - The message data to be sent. The class can be any protobuf class. It is the responsibility of the receiving environment to manage the class received (packed in a `google.protobuf.Any`).
--   `to`: _list[str]_ - Targets of feedback. Each value could be the name of an actor in the trial. Or it could represent a set of actors (with wildcards); A set of actors can be represented with the wildcard character "`*`" for all actors (of all classes), or "`actor_class.*`" for all actors of a specific class (the `actor_class` must match one of the classes listed in the trial parameters).  Note that the wildcard does not include the environment.
+-   `to`: _list[str]_ - Targets of feedback. Each value could be the name of an actor in the trial. Or it could represent a set of actors (with wildcards); A set of actors can be represented with the wildcard character "`*`" for all actors (of all classes), or "`actor_class.*`" for all actors of a specific class (the `actor_class` must match one of the classes listed in the trial parameters). Note that the wildcard does not include the environment.
 
 Return: None
 
@@ -358,7 +358,7 @@ Method to start the actor. This method should be called before any other method 
 
 Parameters:
 
--   `auto_done_sending`: _bool_ - Controls when to notify the Orchestrator that all data has been sent. If True, the session will automatically send the notification after receiving the last observation.  If False, the user MUST call `sending_done` to end the trial properly.
+-   `auto_done_sending`: _bool_ - Controls when to notify the Orchestrator that all data has been sent. If True, the session will automatically send the notification after receiving the last observation. If False, the user MUST call `sending_done` to end the trial properly.
 
 Return: None
 
@@ -648,12 +648,12 @@ Class containing the paramaters of the trial.
 
 `nb_actors`: _int_ - The number of actors participating in the trial.
 
-`datalog`: _dict_ - The datalog related parameters.  The dictionary contains these key-value pairs:
+`datalog`: _dict_ - The datalog related parameters. The dictionary contains these key-value pairs:
 
 - `"endpoint"`: _str_ - The URL to connect to the datalog service.
 - `"exclude"`: _list(str)_ - Fields to exclude from the samples sent to the datalog service.
 
-`environment`: _dict_ - The environment related parameters.  The dictionary contains these key-value pairs:
+`environment`: _dict_ - The environment related parameters. The dictionary contains these key-value pairs:
 
 - `"name"`: _str_ - Name of the environment
 - `"endpoint"`: _str_ - The URL to connect to the environment.
@@ -671,7 +671,7 @@ Return the type of serial data produced by `serialize` and accepted by `deserial
 
 Parameters: None
 
-Return: _int_ - The type of the serialization string data. This is the type of string that is returned by `serialize`, and the only type accepted by `deserialize`; It is undefined behavior to try to deserialize the wrong type of data. This value is strictly larger than 1.
+Return: _int_ - The type of the serialization string data. This is the type of string that is returned by `serialize`, and the only type accepted by `deserialize`; it is undefined behavior to try to deserialize the wrong type of data. This value is strictly larger than 1.
 
 ### `serialize(self)`
 
@@ -713,7 +713,7 @@ Parameters:
 
 -   `actor_name`: _str_ - Name of the actor to look for in the trial parameters.
 
-Return: _int_ - Index of actor is found.  `None` if not found. This index is constant in the trial and relates to all complete actors list provided by cogment (e.g. `Controller.get_actors()`).
+Return: _int_ - Index of actor if found.  `None` if not found. This number is constant in the trial and relates to the complete list of actors provided by cogment (e.g. `Controller.get_actors()`).
 
 ### `get_actor_name(self, actor_index)`
 
@@ -721,24 +721,24 @@ Returns the name of an actor in the trial.
 
 Parameters:
 
--   `actor_index`: _int_ - Index of the actor to retrieve. This number is constant in the trial and relates to all complete actors list provided by cogment (e.g. `Controller.get_actors()`). The value must be between 0 and `self.nb_actors` (exclusively).
+-   `actor_index`: _int_ - Index of the actor to retrieve. This number is constant in the trial and relates to the complete list of actors provided by cogment (e.g. `Controller.get_actors()`). The value must be between 0 and `self.nb_actors` (exclusively).
 
 Return: _str_ - Name of the actor in the trial parameters.
 
 ### `get_actor(self, actor_index)`
 
-Return information about a particular actor in the trial.
+Returns information about a particular actor in the trial.
 
 Parameters:
 
--   `actor_index`: _int_ - Index of the actor to retrieve. This number is constant in the trial and relates to all complete actors list provided by cogment (e.g. `Controller.get_actors()`). The value must be between 0 and `self.nb_actors` (exclusively).
+-   `actor_index`: _int_ - Index of the actor to retrieve. This number is constant in the trial and relates to the complete list of actors provided by cogment (e.g. `Controller.get_actors()`). The value must be between 0 and `self.nb_actors` (exclusively).
 
 Return: _dict_ - Dictionary containing the details of the actor parameters. The dictionary contains these key-value pairs:
 
--   `"name"`: _str_ - Name of the actor
+-   `"name"`: _str_ - Name of the actor.
 -   `"actor_class"`: _str_ - The actor class for the actor. This is specific to a type of trial and must match values in the corresponding `cogment.yaml` config file under section `actor_classes:name`.
 -   `"endpoint"`: _str_ - The URL to connect to the service actor, or "client" for client actors that will connect in.
--   `"implementation"`: _str_ - The name of the implementation to run the actor
+-   `"implementation"`: _str_ - The name of the implementation to run the actor.
 -   `"config"`: _protobuf class instance_ - The configuration data for the actor. The type is specified in the file `cogment.yaml` under the section `actor_classes:config_type` for the specific actor class of the actor.
 
 ## class cogment.LogSample
@@ -746,7 +746,7 @@ Return: _dict_ - Dictionary containing the details of the actor parameters. The 
 Class containing a datalog sample.
 A sample starts and ends with the arrival of new observations from the environment. The last sample will end after all components have acknowledged the end of the trial (the state of that sample will then be `TrialState.ENDED`).
 
-Note that not some of the data may be not be available (`None`) if it was excluded from the sample (see datalog parameters).
+Note that some of the data may not be available (`None`) if it was excluded from the sample (see datalog parameters `LogParams.datalog["exclude"]`).
 
 `tick_id`: _int_ - The time step that the sample data relates to.
 
@@ -764,15 +764,15 @@ Parameter:
 
 ### `get_serialization_type(self)`
 
-Return the type of serial data produced by `serialize` and accepted by `deserialize`. The type represents an ID dependent on [DatalogSample](../cogment-low-level-api-guide/grpc.md#logexportersamplerequest) defined in the low level gRPC API.
+Returns the type of serial data produced by `serialize` and accepted by `deserialize`. The type represents an ID dependent on [DatalogSample](../cogment-low-level-api-guide/grpc.md#logexportersamplerequest) defined in the low level gRPC API.
 
 Parameters: None
 
-Return: _int_ - The type of the serialization string data. This is the type of string that is returned by `serialize`, and the only type accepted by `deserialize`; It is undefined behavior to try to deserialize the wrong type of data. This value is strictly larger than 1.
+Return: _int_ - The type of the serialization string data. This is the type of string that is returned by `serialize`, and the only type accepted by `deserialize`; it is undefined behavior to try to deserialize the wrong type of data. This value is strictly larger than 1.
 
 ### `serialize(self)`
 
-Return a binary string equivalent of the sample.
+Returns a binary string equivalent of the sample.
 
 Parameters: None
 
@@ -796,7 +796,7 @@ Return: _generator(str)_ - A generator for the names of the actors in the trial.
 
 ### `get_action(self, actor)`
 
-Retrieve the action from the actor in the sample.
+Retrieves the action from the actor in the sample.
 
 Parameters:
 
