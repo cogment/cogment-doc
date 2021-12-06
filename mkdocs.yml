@@ -24,7 +24,8 @@ theme:
 markdown_extensions:
   - admonition
   - attr_list
-  - pymdownx.highlight
+  - pymdownx.highlight:
+      use_pygments: false
   - pymdownx.superfences
   - pymdownx.tabbed
   - toc:
@@ -39,8 +40,13 @@ extra:
     - icon: fontawesome/brands/linkedin
       link: https://www.linkedin.com/company/ai-r
 
+extra_javascript:
+  - https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/highlight.min.js
+  - javascripts/highlight.js
 extra_css:
   - style/theme.css
+  # Defines the highlight.js theme used (cf. https://highlightjs.org/static/demo/)
+  - https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/styles/github.min.css
 
 nav:
   - "Introduction":
