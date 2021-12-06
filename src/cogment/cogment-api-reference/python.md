@@ -56,6 +56,8 @@ This will create a `cog_settings.py` module in the current directory. It will al
 
 The `cog_settings.py` Python module is required by all API entry points.
 
+This step is usually done inside of a docker container, and is included in the generated files upon running [cogment init](../../cogment-components/cli/cli.md#init)
+
 ### Top-level import
 
 Whether a script implements an actor or environment, it should import both the `cogment` module (generic Python SDK for Cogment) and the `cog_settings` module (project specific definitions created from the spec file).
@@ -249,7 +251,7 @@ Return: _bool_ - True if the trial has ended, false otherwise.
 
 ### `sending_done(self)`
 
-Method to notify the Orchestrator that all data for the trial, from this session, has been sent. This can be called only when the session is ending.  When starting the session (see `EnvironmentSession` and `ActorSession`), if the `auto_done_sending` parameter is True, this method should not be called, and if the parameter is False, it MUST be called to end the trial properly.
+Method to notify the Orchestrator that all data for the trial, from this session, has been sent. This can be called only when the session is ending. When starting the session (see `EnvironmentSession` and `ActorSession`), if the `auto_done_sending` parameter is True, this method should not be called, and if the parameter is False, it MUST be called to end the trial properly.
 
 Parameters: None
 
@@ -287,8 +289,8 @@ Parameters:
 
 -   `observations`: _list[tuple(str, protobuf class instance)]_ - The initial observations from which the environment is starting the trial. This is the same as the parameter for `self.produce_observations`. If not provided, then the first observation sent with `produce_observation` will be used to initiate the trial (note that no actions will be received until the first observation is sent).
 
--   `auto_done_sending`: _bool_ - Controls when to notify the Orchestrator that all data has been sent. If True, the session will automatically send the notification after `end` is called.  If False, the user MUST call `sending_done` (after `end`) to end the trial properly.
-Return: None
+-   `auto_done_sending`: _bool_ - Controls when to notify the Orchestrator that all data has been sent. If True, the session will automatically send the notification after `end` is called. If False, the user MUST call `sending_done` (after `end`) to end the trial properly.
+    Return: None
 
 ### `async event_loop(self)`
 
@@ -390,7 +392,7 @@ Method to send a message related to the current time step (tick id).
 Parameters:
 
 -   `payload`: _protobuf class instance_ - The message data to be sent. The class can be any protobuf class. It is the responsibility of the receiving actor to manage the class received (packed in a `google.protobuf.Any`).
--   `to`: _list[str]_ - Targets of feedback. Each value could be the name of an actor in the trial, or the name of the environment (from `self.env_name`). Or it could represent a set of actors (with wildcards); A set of actors can be represented with the wildcard character "`*`" for all actors (of all classes), or "`actor_class.*`" for all actors of a specific class (the `actor_class` must match one of the classes listed in the trial parameters).  Note that the wildcard does not include the environment.
+-   `to`: _list[str]_ - Targets of feedback. Each value could be the name of an actor in the trial, or the name of the environment (from `self.env_name`). Or it could represent a set of actors (with wildcards); A set of actors can be represented with the wildcard character "`*`" for all actors (of all classes), or "`actor_class.*`" for all actors of a specific class (the `actor_class` must match one of the classes listed in the trial parameters). Note that the wildcard does not include the environment.
 
 Return: None
 
@@ -651,14 +653,14 @@ Class containing the paramaters of the trial.
 
 `datalog`: _dict_ - The datalog related parameters. The dictionary contains these key-value pairs:
 
-- `"endpoint"`: _str_ - The URL to connect to the datalog service.
-- `"exclude"`: _list(str)_ - Fields to exclude from the samples sent to the datalog service.
+-   `"endpoint"`: _str_ - The URL to connect to the datalog service.
+-   `"exclude"`: _list(str)_ - Fields to exclude from the samples sent to the datalog service.
 
 `environment`: _dict_ - The environment related parameters. The dictionary contains these key-value pairs:
 
-- `"name"`: _str_ - Name of the environment
-- `"endpoint"`: _str_ - The URL to connect to the environment.
-- `"implementation"`: _str_ - The name of the implementation to run the environment
+-   `"name"`: _str_ - Name of the environment
+-   `"endpoint"`: _str_ - The URL to connect to the environment.
+-   `"implementation"`: _str_ - The name of the implementation to run the environment
 
 ### `__init__(self, cog_settings)`
 
@@ -714,7 +716,7 @@ Parameters:
 
 -   `actor_name`: _str_ - Name of the actor to look for in the trial parameters.
 
-Return: _int_ - Index of actor if found.  `None` if not found. This number is constant in the trial and relates to the complete list of actors provided by cogment (e.g. `Controller.get_actors()`).
+Return: _int_ - Index of actor is found. `None` if not found. This index is constant in the trial and relates to all complete actors list provided by cogment (e.g. `Controller.get_actors()`).
 
 ### `get_actor_name(self, actor_index)`
 
@@ -830,8 +832,6 @@ Generator method to iterate over all the messages in the sample.
 Parameters: None
 
 Return: _generator(RecvMessage instance)_ - A generator for the messages in the sample.
-
-
 
 [1]: ./cogment-yaml.md
 [2]: ./parameters.md

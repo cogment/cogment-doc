@@ -70,12 +70,12 @@ Once it is done, run the following in the directory you retrieved:
 
 ```console
 $ cd 5-human-player
-$ cogment run generate
+$ cogment run sync
 $ cogment run build
 $ cogment run start
 ```
 
-The first `cogment` command will run the code generation phase for this project. If everything runs fine it means `cogment` and Protobuf's `protoc` are installed correctly.
+The first `cogment` command will run a simple copy that copies the cogment.yaml, and every referenced proto file, to each build directory. This is so they are made available to docker's build system in each respective build context
 
 The second will build docker images for the services of this Cogment app. If everything runs fine it means the `docker` and `docker-compose` installations are functional.
 

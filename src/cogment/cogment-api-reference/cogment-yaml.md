@@ -39,12 +39,14 @@ E.g.:
 
 ```yaml
 commands:
-    generate: cogment generate --python_dir=.
+    sync: cogment sync client environment
     start: docker-compose up orchestrator agent env
     play: cogment run start && docker-compose run launcher
 ```
 
-To run one of these commands, the Cogment CLI command `run` must be used, e.g.: `cogment run start`. And as such there is no problem differentiating between `cogment run generate` and `cogment generate` (the latter is the built-in CLI command, and the former is the command defined in the spec file).
+To run one of these commands, the Cogment CLI command `run` must be used, e.g.: `cogment run start`. And as such there is no problem differentiating between `cogment run sync` and `cogment sync` (the latter is the builtin CLI command, and the former is the command defined in the `cogment.yaml` file).
+
+The cogment command section exists so that commands can be executed in a platform independant manner.
 
 ## Trial
 

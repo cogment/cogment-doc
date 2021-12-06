@@ -38,10 +38,10 @@ To summarize, for this 2 players game, we created:
 
 We can now check that everything works as expected.
 
-First, we will need to run the code generation phase and the build phase.
+First, we will need to run the build phase. The docker files rely on cogment.yaml, and data.proto to be in the respective build directories, the shortcut for copying these files to the build directories is `cogment run sync`
 
 ```console
-$ cogment run generate
+$ cogment run sync
 $ cogment run build
 ```
 

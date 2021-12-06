@@ -4,12 +4,44 @@
 
 Cogment CLI is the **out-of-the-box** entry point to use Cogment. It provides a set of tools to initialize a Cogment project and run the code generations phase.
 
-## Usage
+# Commands
 
-<!-- prettier-ignore -->
-!!! warning
-    🚧 under construction
+## sync
 
-## Setup
+---
 
-Installation steps are covered in the general [Cogment installation instructions](../../introduction/installation.md)
+Copy cogment.yaml, and all referenced proto files to the folders listed, this is a handy shortcut to allow the various sdk's code generation modules to function
+
+Example:
+
+```bash
+cogment sync environment agent web-client
+```
+
+## init
+
+---
+
+Initializes a cogment project, this will ask you a few questions about what should be included in the generated project
+
+Example:
+
+```bash
+cogment init my_new_project
+```
+
+A full tutorial on how to bootstrap a project can be found [here](../../cogment/tutorial/1-bootstrap-and-data-structures.md)
+
+## run
+
+---
+
+Runs a command from the `commands:` section of the cogment.yaml file in the current directory.
+
+Example:
+
+```bash
+cogment run generate
+```
+
+An explanation of the cogment.yaml file can be found [here](../../cogment/cogment-api-reference/cogment-yaml.md)

@@ -103,8 +103,18 @@ The second one will be `js_service.dockerfile`, with the following content:
 FROM node:14 as dev
 
 # set working directory
+
 WORKDIR /app
 EXPOSE 3000
+
+# generate protos
+COPY package.json package-lock.json ./
+COPY cogment.yaml ./
+COPY *.proto ./
+
+RUN mkdir src
+RUN npm i
+RUN npx cogment-js-sdk-generate
 
 # copy generated app
 COPY . ./
@@ -139,10 +149,17 @@ The easiest way to add Cogment to any web client is to start with a React app, t
 
 3.  Navigate one folder up to your project directory (where you have your cogment.yaml) then run the following command to generate Javascript files from your defined protobufs:
     ```console
-    $ cogment generate --js_dir=./web-client
+    $ cogment sync web-client
     ```
 
 > NOTE: Had we chosen `Y` at the beginning of this tutorial when asked by the CLI if we wanted a web client, the React hooks used in this section would normally have been generated with the command `cogment init`."
+
+4.  (optional) You can run the following commands outside of docker to generate your protobuf files if you need or want the typings at develop time
+    ```
+    $ cd web-client
+    $ npm install
+    $ npx cogment-js-sdk-generate
+    ```
 
 Now that all that's done, we can finally start coding our web client!
 
@@ -227,11 +244,11 @@ import {
 import { useActions } from "./hooks/useActions";
 
 //Second, our 'cogSettings'. This is a file that was generated when we ran
-//`cogment generate --js_dir=./webclient`
+//`npx cogment-js-sdk-generate`
 //This file tells our web client relevant information about our trials, environments, and actor classes.
 import { cogSettings } from "./CogSettings";
 
-//These are messages which were defined in data.proto. These imports will need to change whenever their corresponding messages in data.proto are changed and `cogment generate` is run.
+//These are messages which were defined in data.proto. These imports will need to change whenever their corresponding messages in data.proto are changed and `npx cogment-js-sdk-generate` is run.
 import { PlayerAction } from "./data_pb";
 ```
 
@@ -368,6 +385,8 @@ export const App = () => {
 ```
 
 ## hooks/useActions.js
+
+> NOTE: This section needs to be updated for Cogment 2.0, and will only work with Cogment versions 1.x
 
 This hook does multiple things. It starts a trial, joins a trial, sends actions, and receives information from the orchestrator. The following is its annotated code:
 
