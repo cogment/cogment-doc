@@ -25,7 +25,7 @@ These parameters are:
 -   `actors`: List of actor properties. The number of actors may not be suited for all trials.
     -   `name`: The name of this actor (i.e. name of the specific instance of the actor class)
     -   `actor_class`: The name of the actor class. This is specific to a type of trial and must match values in the corresponding spec file.
-    -   `endpoint`: The URL where the actor gRPC server resides. If this is `client`, the actor will connect as a client (the Orchestrator being the server in this case).
+    -   `endpoint`: The URL where the actor gRPC server resides. If this is `cogment://client`, the actor will connect as a client (the Orchestrator being the server in this case).
     -   `implementation`: The name of the implementation to be used for this actor instance. This must match an implementation that is defined at the endpoint. If not defined, an arbitraary implementation will be chosen at runtime.
 
 E.g.:
@@ -63,7 +63,7 @@ trial_params:
           implementation: DNN_Karma3.1.17
         - name: Olivia
           actor_class: Referee
-          endpoint: client
+          endpoint: cogment://client
           implementation: Standard
 ```
 

@@ -145,7 +145,7 @@ message ActorParams {
 
 -   name: The name of the actor.
 -   actor_class: The name of the class of the actor. For a particular trial, the possible actor classes are defined in the spec file in the `actor_classes:name` sections.
--   endpoint: The URL where the actor is being served, or "client". The URL is used by the Orchestrator to connect to the actor using the `ServiceActorSP` gRPC service. If set to "client", then the actor is a client and will connect to the Orchestrator instead, using the `ClientActorSP` gRPC service.
+-   endpoint: The URL where the actor is being served, or "cogment://client". The URL is used by the Orchestrator to connect to the actor using the `ServiceActorSP` gRPC service. If set to "cogment://client", then the actor is a client and will connect to the Orchestrator instead, using the `ClientActorSP` gRPC service.
 -   implementation: (optional) The name of the implementation of the actor class to run. If not provided, an arbitrary implementation will be chosen.
 -   config: (optional) The user config for the actor.
 
@@ -556,7 +556,7 @@ service ServiceActorSP {
 This API is defined in `orchestrator.proto`. It is implemented by the Orchestrator using the gRPC server API, and client applications are expected to connect to the Orchestrator using the gRPC client API.
 
 This API is used by client actors participating in existing (initializing) trials. The trial expecting client actors will wait for all actors to be connected before starting the trial.
-The actors connecting this way must have an endpoint set to "client" in the [trial parameters](../cogment-api-reference/cogment-yaml.md#trial-params).
+The actors connecting this way must have an endpoint set to "cogment://client" in the [trial parameters](../cogment-api-reference/cogment-yaml.md#trial-params).
 
 Note the reversal of the input and output messages compared to the service actor `RunTrial` procedure.
 

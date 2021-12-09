@@ -480,7 +480,7 @@ async def my_pre_trial_hook(pre_hook_session):
         {
             "name": "my_second_actor_name",
             "actor_class": "predestrian",
-            "endpoint": "client",
+            "endpoint": "cogment://client",
             "config": # [...],
         },
     ]

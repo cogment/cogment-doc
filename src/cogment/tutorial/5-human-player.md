@@ -134,13 +134,13 @@ print(f"Trial '{trial_id}' ended")
 
 Modify the `client/main.py` file with these updates.
 
-We then need to modify the `cogment.yaml` to let the orchestrator know that `player_1` now uses a client-side implementation. To do so we use a _special_ endpoint, `"client"`, and we don't need to specify an implementation name.
+We then need to modify the `cogment.yaml` to let the orchestrator know that `player_1` now uses a client-side implementation. To do so we use a _special_ endpoint, `"cogment://client"`, and we don't need to specify an implementation name.
 
 ```yaml
 actors:
     - name: player_1
       actor_class: player
-      endpoint: client
+      endpoint: cogment://client
       # implementation: random_agent
       # endpoint: grpc://random-agent:9000
 ```
