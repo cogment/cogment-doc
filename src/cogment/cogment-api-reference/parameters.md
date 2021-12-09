@@ -4,9 +4,9 @@ The trial parameters are a set of parameters that define the details of a trial.
 
 ## Parameter file
 
-The parameter file serves to initialize the Orchestrator default parameters. It is able to set all parameters for trials except the config protobuf messages defined in `cogment.yaml`. The config messages can only be set by the pre-trial hooks, but these config are not relevant for simple projects without pre-trial hooks.
+The parameter file serves to initialize the Orchestrator default parameters. It is able to set all parameters for trials except the config protobuf messages (defined in the spec file). The config messages can only be set by the pre-trial hooks, but these configs are not relevant for simple projects without pre-trial hooks.
 
-These are the parameters that will be used if no pre-trial hooks are defined. And if hooks are defined, they will be sent to the first hook.
+The parameters in this file be used if no pre-trial hooks are defined. And if hooks are defined, they will be sent to the first hook as initial parameters to be updated by the hooks.
 
 The file uses the YAML configuration language.  It consists of one YAML section called [trial_params](#trial-params). Any other section will be ignored.
 
@@ -24,7 +24,7 @@ These parameters are:
     -   `implementation`: The name of the implementation to be used for this instance of the environment. This must match an implementation that is defined at the endpoint. If not defined, an arbitraary implementation will be chosen at runtime
 -   `actors`: List of actor properties. The number of actors may not be suited for all trials.
     -   `name`: The name of this actor (i.e. name of the specific instance of the actor class)
-    -   `actor_class`: The name of the actor class. This is specific to a type of trial and must match values in the corresponding `cogment.yaml` config file.
+    -   `actor_class`: The name of the actor class. This is specific to a type of trial and must match values in the corresponding spec file.
     -   `endpoint`: The URL where the actor gRPC server resides. If this is `client`, the actor will connect as a client (the Orchestrator being the server in this case).
     -   `implementation`: The name of the implementation to be used for this actor instance. This must match an implementation that is defined at the endpoint. If not defined, an arbitraary implementation will be chosen at runtime.
 
@@ -42,7 +42,7 @@ trial_params:
     environment:
         name: Arena
         endpoint: grpc://env:9000
-        implementation: default
+        implementation: simple
 
     actors:
         - name: Alice

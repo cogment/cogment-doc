@@ -1,6 +1,6 @@
-# Cogment.yaml
+# Spec File
 
-The `cogment.yaml` file is central to every Cogment project. We use the name `cogment.yaml` because this is the default name, but it can be anything on the file system. The generic name is the "config file". This file is used to define the specifics of the trials.  It also contains data used by the Cogment CLI tool. The Cogment CLI takes this file as its main input to, among other things, configure the language specific SDKs.
+The spec file (typically named `cogment.yaml`) is central to every Cogment project. This file is used to define the specifics of a type of trials.  It also contains data used by the Cogment CLI tool. The Cogment CLI takes this file as its main input to, among other things, configure the language specific SDKs.
 
 The top level sections in the file are:
 
@@ -14,7 +14,7 @@ In this document, "section" refers to YAML mappings.
 
 ## Import
 
-The import section is used to specify external data structures, and optionally code, that is referenced in other parts of the file. The referenced files must be in the same folder as the `cogment.yaml` file. The import sections are:
+The import section is used to specify external data structures, and optionally code, that is referenced in other parts of the file. The referenced files must be in the same folder as the spec file. The import sections are:
 
 -   `proto`: List of protobuf definition files. Message types defined in these files are used to communicate between the various components
 
@@ -44,7 +44,7 @@ commands:
     play: cogment run start && docker-compose run launcher
 ```
 
-To run one of these commands, the Cogment CLI command `run` must be used, e.g.: `cogment run start`. And as such there is no problem differentiating between `cogment run generate` and `cogment generate` (the latter is the builtin CLI command, and the former is the command defined in the `cogment.yaml` file).
+To run one of these commands, the Cogment CLI command `run` must be used, e.g.: `cogment run start`. And as such there is no problem differentiating between `cogment run generate` and `cogment generate` (the latter is the built-in CLI command, and the former is the command defined in the spec file).
 
 ## Trial
 
@@ -72,7 +72,7 @@ environment:
 
 ## Actor Classes
 
-Arguably the most important section of the `cogment.yaml` file, the actor classes section describes the actor types that can be present in the project's trials.
+Arguably the most important section of the spec file, the actor classes section describes the actor types that can be present in the project's trials.
 
 The content of this section is a list of actor classes, each containing the necessary properties to define an actor class. These properties are:
 

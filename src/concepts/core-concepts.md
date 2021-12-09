@@ -13,14 +13,14 @@ Cogment is built around concepts adapted from multi-agent systems (agents, envir
 During the trial:
 
 -   The [Environment](./glossary.md#environment) generates [**observations**](./glossary.md#observation) of its internal state and sends them to the [actors](./glossary.md#actor).
--   Given these [observations](./glossary.md#observation), each [actor](./glossary.md#actor) might choose and take an [**action**](./glossary.md#action).
+-   Given these [observations](./glossary.md#observation), each [actor](./glossary.md#actor) chooses and sends an [**action**](./glossary.md#action).
 -   The [Environment](./glossary.md#environment) receives the [actions](./glossary.md#action) and updates its state.
 -   [**Rewards**](./glossary.md#reward) can be sent to the [actors](./glossary.md#actor) from either the environment or other actors.
 -   [Actors](./glossary.md#actor) receive [**rewards**](./glossary.md#reward).
 -   The [actors](./glossary.md#actor) or the [environment](./glossary.md#environment) can send [**messages**](./glossary.md#message) to actors or the environment.
 -   A log of the activity during the trial (observations, actions, rewards & messages) is produced and can be stored.
 
-A trial is defined by the participating [Actors](./glossary.md#actor) and the host [Environment](./glossary.md#environment). As a concept, Trials are quite close to Reinforcement Learning (RL)'s **Episodes**, i.e. all the states that come between an initial state and a terminal state. However, because Cogment can be used outside of an RL context, we prefer using the more generic term of Trial.
+A trial is defined by the participating [Actors](./glossary.md#actor) and the host [Environment](./glossary.md#environment). As a concept, Trials are quite close to Reinforcement Learning's **Episodes**, i.e. all the states that come between an initial state and a terminal state. However, because Cogment can be used outside of an RL context, we prefer using the more generic term of Trial.
 
 ### Actors
 
@@ -30,19 +30,21 @@ In Cogment, the observation and action space are defined as typed data structure
 
 An [Actor](./glossary.md#actor) might be controlled either by a software [Agent](./glossary.md#agent), or by a Human. Whichever the case, the process of generating [actions](./glossary.md#action) based on [observations](./glossary.md#observation) remains the same, and the [Environment](./glossary.md#environment) treats them the same.
 
+Some actors connect to the trial (we call them "client" actors) and others will wait for the trial to connect to them (we call these "service" actors).
+
 ### Environment
 
 The [Environment](./glossary.md#environment) is the context within which the [Trial](./glossary.md#trial) takes place. The Environment receives the [actions](./glossary.md#actions) done by the actors, usually updates an internal state, and generates an [observation](./glossary.md#observation) for each [Actor](./glossary.md#actor).
 
 The Environment is the main integration point between Cogment and an external system, either a **simulation** or a **real world system**.
 
-## The cogment.yaml
+## The specifications file
 
-At the heart of every Cogment project is a [YAML](https://yaml.org){target=\_blank} file typically called `cogment.yaml`. Its primary role is to define the [actor classes](./glossary.md#actor-class) present within the project, including their [action](./glossary.md#action-space) & [observation spaces](./glossary.md#observation-space), as well as a default configuration for trials, including the number of actor participating in each [trial](./glossary.md#trial) and their class and implementation.
+At the heart of every Cogment project is a [YAML](https://yaml.org){target=\_blank} file typically called `cogment.yaml`. Its primary role is to define the [actor classes](./glossary.md#actor-class) present within the project, including their [action](./glossary.md#action-space) & [observation spaces](./glossary.md#observation-space).
 
 ## Architecture
 
-Running trials with Cogment usually involves the deployment of a cluster of services and its clients. These components are either provided by the Cogment framework, depicted below in blue, or implemented for a particular project, depicted below in orange.
+Running trials with Cogment usually involves the deployment of a cluster of services and clients. These components are either provided by the Cogment framework, depicted below in blue, or implemented for a particular project, depicted below in orange.
 
 ![Cogment Architecture - Simple](./cogment_architecture_simple.png)
 
@@ -87,8 +89,8 @@ On top of the core components described above, a Cogment deployment can include 
 
 -   [**CLI**](../cogment-components/cli/cli.md) is the command line tool used to bootstrap and build Cogment projects.
 -   **Datalog** services can be used to listen to the activity during a trial (actions, observations, rewards, messages) in order to, for example, store these data for the offline training of AI agents. [**Trial Datastore**](../cogment-components/trial-datastore/trial-datastore.md) is an out-of-the-box implementation of this.
--   [**Model Registry**](../cogment-components/model-registry/model-registry.md) handles the storage and dispatch of AI models train with Cogment and used by the actor.
--   **Pre Trial Hooks** can be used to dynamically setup Trials from a given configuration, for example changing the number of Actors or pointing to other Environment or Actor implementations.
+-   [**Model Registry**](../cogment-components/model-registry/model-registry.md) handles the storage and dispatch of AI models trained with Cogment and used by the actors.
+-   **Pre-Trial Hooks** can be used to dynamically setup Trials from a given configuration, for example changing the number of Actors or pointing to other Environment or Actor implementations.
 -   [**Metrics & Dasboard**](../cogment-components/dashboard/metrics-and-dashboard.md) provides a solution to monitor and visualize various metrics from the services.
 
 ## Components availability summary

@@ -8,7 +8,7 @@ This document assumes the reader is familiar with the [Cogment Fundamentals](../
 
 The High-level Cogment API expects users to use [protocol buffers](https://developers.google.com/protocol-buffers/){target=\_blank} to declare a project's data structures. The intricacies of protobufs are beyond the scope of this document. Basic knowledge of the technology and its usage is assumed.
 
-## The cogment.yaml file
+## The spec file
 
 An [actor class](../concepts/glossary.md#actor-class) is primarily defined by its [observation space](../concepts/glossary#observation-space) and [action space](../concepts/glossary#action-space).
 
@@ -37,11 +37,11 @@ actors:
             space: city.PedestrianAction
 ```
 
-> ⚠️ This shows only the relevant part of the full `cogment.yaml`, you can find the full list of configurable options [in the reference page](./cogment-api-reference/cogment-yaml.md).
+> ⚠️ This shows only the relevant part of the full spec file, you can find the full list of configurable options [in the reference page](./cogment-api-reference/cogment-yaml.md).
 
-### Compiling the cogment.yaml
+### Compiling the spec file
 
-In order to use the `cogment.yaml` file within python scripts, it needs to be interpreted into a python module. This is done by the **cogment cli** (Command Line Interface) that can be installed following [those directions](../introduction/installation.md#install-the-latest-cogment-cli).
+In order to use the spec file (typically named `cogment.yaml`) within python scripts, it needs to be interpreted into a python module. This is done by the **Cogment CLI** (Command Line Interface) that can be installed following [those directions](../introduction/installation.md#install-the-latest-cogment-cli).
 
 ```console
 $ cogment run --file /path/to/cogment.yaml --python_dir=./
@@ -49,7 +49,7 @@ $ cogment run --file /path/to/cogment.yaml --python_dir=./
 
 This will create a `cog_settings.py` module in the current directory.
 
-The cogment cli will also compile the imported [`.proto`](../concepts/glossary.md#protocol-buffer) files in python modules living in the same location.
+The Cogment CLI will also compile the imported [`.proto`](../concepts/glossary.md#protocol-buffer) files in python modules living in the same location.
 
 ## Environment
 
@@ -70,13 +70,13 @@ async def environment(environment_session):
     # Retrieve the actors participating in the trial
     actors = environment_session.get_active_actors()
 
-    # Start the trial and send a default observation to all actors
+    # Start the trial and send a starting observation to all actors
     environment_session.start([("*", Observation())])
 
     # -- Event loop --
     async for event in environment_session.event_loop():
         if event.actions:
-            # `event.actions` is a list of the actions done by the actors (with a 1-1 matching)
+            # `event.actions` is a list of the actions done by the actors
             actions = event.actions
             if event.type == cogment.EventType.ACTIVE:
               # The trial is active, produce an observation in response to the actions
@@ -99,11 +99,11 @@ async def environment(environment_session):
 This environment implementation needs to be registered and served so that the [orchestrator](../concepts/glossary.md#orchestrator) can reach it. This can be done through a [`Context`](./cogment-api-reference/python.md#class-cogmentcontext) instance.
 
 ```python
-context = cogment.Context(cog_settings=cog_settings, user_id="my_user_id")
+context = cogment.Context(user_id="my_user_id", cog_settings=cog_settings)
 
 context.register_environment(impl=environment)
 
-await context.serve_all_registered(port=9000)
+await context.serve_all_registered(cogment.ServedEndpoint(port=9000))
 ```
 
 ### Sending observations
@@ -209,13 +209,10 @@ A Cogment app can use two types of actors, they are identical in terms of implem
 
 ```python
 context = cogment.Context(cog_settings=cog_settings, user_id="rps")
-context.register_actor(
-    impl=actor,
-    impl_name="driver_actor",
-    actor_classes=["driver"])
+context.register_actor(impl=actor, impl_name="driver_actor", actor_classes=["driver"])
+context.register_actor(impl=actor_slow, impl_name="driver_actor_slow", actor_classes=["driver"])
 
-
-await context.serve_all_registered(port=9000)
+await context.serve_all_registered(cogment.ServedEndpoint(port=9000))
 ```
 
 Note that it is also through this registrating that the implementation is associated with one or more [actor classes](../concepts/glossary.md#actor-class) it implements.
@@ -226,15 +223,9 @@ Note that it is also through this registrating that the implementation is associ
 
     ```python
     context = cogment.Context(cog_settings=cog_settings, user_id="rps")
-    context.register_actor(
-        impl=actor,
-        impl_name="driver_actor",
-        actor_classes=["driver"])
+    context.register_actor(impl=actor, impl_name="driver_actor", actor_classes=["driver"])
 
-    await context.join_trial(
-    trial_id=trial_id,
-    endpoint="orchestrator:9000",
-    name="Alice")
+    await context.join_trial(trial_id=trial_id, cogment.Endpoint(url="grpc://orchestrator:9000"), actor_name="Alice")
     ```
 
 === "Javascript"
@@ -270,9 +261,7 @@ Due to the different network requirements, client actors are a good fit when imp
 === "Python"
 
     ```python
-    controller = context.get_controller(
-    endpoint=cogment.Endpoint("orchestrator:9000")
-    )
+    controller = context.get_controller(endpoint=cogment.Endpoint(url="grpc://orchestrator:9000"))
     ```
 
 === "Javascript"
@@ -281,7 +270,7 @@ Due to the different network requirements, client actors are a good fit when imp
 
     const service = cogment.createService({
         cogSettings,
-        "orchestrator:9000",
+        "grpc://orchestrator:9000",
     });
 
     const trialController = service.createTrialController();
@@ -337,11 +326,7 @@ The full documentation for the controller can be found [here](./cogment-api-refe
 [Rewards](../concepts/glossary.md#reward) are sent to [actors](../concepts/glossary.md#actor) from another actor or the [environment](../concepts/glossary.md#environment). The `session` instance passed to their implementation can be used for this purpose.
 
 ```python
-session.add_reward(
-  value=-1,
-  confidence=1,
-  tick_id=-1,
-  to=['an_actor_name'])
+session.add_reward(value=-1, confidence=1, tick_id=-1, to=['an_actor_name'])
 ```
 
 Rewards consist of an arbitrary numerical **value** describing how the reward "sender" _believes_ the actor performed. It is _weighted_ by a value between 0 and 1 qualifying the **confidence** of the "sender" in its reward, from a very low confidence just above 0 to a very high confidence approaching 1. The confidence value is used to collate all the rewards sent to an actor at the same time. Optionally, a reward can be provided with arbitrary user data.
@@ -407,7 +392,7 @@ The [actor](../concepts/glossary.md#actor) can take into account the reward dire
     session.send_message(
         user_data=MyProtobufDataStructure(...), # any protobuf data structure can be used here.
         to=['pedestrian:*'], # send the message to all the actors of the "pedestrian" class
-        to_environment=False)
+    )
     ```
 
 === "Javascript"
@@ -471,11 +456,11 @@ Actors or the environment can use the message directly, live, as the [trial](../
     }
     ```
 
-## Pre trial hook
+## Pre-trial hook
 
-When starting a trial from a controller an instance of the message type defined in [`trial.config_type`](./cogment-api-reference/cogment-yaml.md#trial) can be provided. This instance is then passed to the registered **Pre trial hooks** defined in `trial.pre_hooks`. The role of these hooks is to fully parametrize the trial based on the provided config. To achieve that, they can modify the default trial params defined in the [`cogment.yaml`](./cogment-api-reference/cogment-yaml.md#trial-params) file to set the parameters of the environment (i.e. its endpoint, implementation name & configuration), the number and parameters of the participant actors (i.e. their name, class, endpoint, implementation name & configuration) as well as additional parameters for the trial. The pre trial hook can therefore be used to dynamically configure trials, to act as a service endpoint registry, or a load balancer.
+When starting a trial from a controller an instance of the message type defined in [`trial:config_type`](./cogment-api-reference/cogment-yaml.md#trial) can be provided. This instance is then passed to the registered **Pre trial hooks** when the Orcehstrator was started. The role of these hooks is to fully parametrize the trial based on the provided config. To achieve that, they can modify the default trial params defined in the [parameters](./cogment-api-reference/parameters.md) to specify the environment (i.e. its endpoint, implementation name & configuration), the number and parameters of the participant actors (i.e. their name, class, endpoint, implementation name & configuration) as well as additional parameters for the trial. The pre-trial hook can therefore be used to dynamically configure trials, to act as a service endpoint registry, or a load balancer.
 
-Pre trial hook implementations are registered in the same way the environment or actor implementation are and follow the same _session_ pattern.
+Pre-trial hook implementations are registered in the same way the environment or actor implementation are and follow the same _session_ pattern.
 
 ```python
 async def my_pre_trial_hook(pre_hook_session):

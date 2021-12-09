@@ -23,6 +23,12 @@ Each [Actor](#actor) always belongs to a single Actor Class. An Actor Class is p
 
 We usually call agent any non-human [Actor](#actor). Agents can use any sort of decision-making underlying system, able to learn or not.
 
+## C
+
+### Configurations
+
+The configurations (or "configs") are defined, set and referenced by users for user components and do not affect the rest of Cogment. They refer to the protobuf messages defined in the trial specifications in the `config` sections. A "trial config" may be given at the start of a new trial. Ultimately, the configurations and parameters for a trial are managed by the pre-trial hooks.
+
 ## E
 
 ### Environment
@@ -93,6 +99,10 @@ The Orchestrator is the central piece of our [framework](#framework); it’s an 
 
 ## P
 
+### Parameters
+
+The parameters (or "params") define everything that is specific to a trial, and control aspects of Cogment for that trial. Default parameters can be given at the start of the Orchestrator. Ultimately, the configurations and parameters for a trial are managed by the pre-trial hooks.
+
 ### Plugin/extension
 
 A plugin or extension adds functionality to our core [framework](#framework).
@@ -117,6 +127,12 @@ A reward function describes how an [agent](#agent) "ought" to behave; what behav
 ### Reinforcement Learning (RL)
 
 RL is a specific method to train [agents](#agent), using [reward functions](#reward-function).
+
+## S
+
+## Specifications
+
+The specifications (or “specs”) are the operational aspects of a type of trial (typically found in a file named "cogment.yaml"). The file is fed to the Cogment CLI to generate helpful SDK modules (e.g. "cog_settings.py" and various "xxx_pb2.py" for the Python SDK). These modules are required by the Cogment SDKs. The Orchestrator is independent of the specifications, but some of the trial parameters may be dependent on these specifications (e.g. class name of actors).
 
 ## T
 

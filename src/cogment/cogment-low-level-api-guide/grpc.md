@@ -9,7 +9,7 @@ This reference requires a basic understanding of gRPC, and in particular the for
 
 ## General
 
-In this API, the `bytes` data type is normally used to contain the serialized data of externally defined messages. These messages are well defined in the `cogment.yaml` file for any particular trial.
+In this API, the `bytes` data type is normally used to contain the serialized data of externally defined messages. These messages are well defined in the trial specifications file.
 
 On the other hand, the `google.protobuf.Any` data type is normally used to contain messages that are not pre-defined (thus unknown by the framework), and may be decided at runtime.  It is then the responsibility of the receiver to deserialize in the correct message type.
 
@@ -144,7 +144,7 @@ message ActorParams {
 ```
 
 -   name: The name of the actor.
--   actor_class: The name of the class of the actor. For a particular trial, the possible actor classes are defined in the `cogment.yaml` file in the `actor_classes:name` sections.
+-   actor_class: The name of the class of the actor. For a particular trial, the possible actor classes are defined in the spec file in the `actor_classes:name` sections.
 -   endpoint: The URL where the actor is being served, or "client". The URL is used by the Orchestrator to connect to the actor using the `ServiceActorSP` gRPC service. If set to "client", then the actor is a client and will connect to the Orchestrator instead, using the `ClientActorSP` gRPC service.
 -   implementation: (optional) The name of the implementation of the actor class to run. If not provided, an arbitrary implementation will be chosen.
 -   config: (optional) The user config for the actor.
@@ -167,7 +167,7 @@ message ActorConfig {
 }
 ```
 
--   content: The serialized protobuf message representing a config. For a particular trial, the actual message type is defined in the `cogment.yaml` file in its respective section: `trial:config_type`, `environment:config_type`, and `actor_classes:config_type`. The trial config is given when starting a trial, and is for use by pre-trial hooks. The environment config is set by pre-trial hooks, and is for use by the environment. The actors configs are set by the pre-trial hooks, and are for use by actors (each actor class can have a different config type).
+-   content: The serialized protobuf message representing a config. For a particular trial, the actual message type is defined in the spec file in its respective section: `trial:config_type`, `environment:config_type`, and `actor_classes:config_type`. The trial config is given when starting a trial, and is for use by pre-trial hooks. The environment config is set by pre-trial hooks, and is for use by the environment. The actors configs are set by the pre-trial hooks, and are for use by actors (each actor class can have a different config type).
 
 ### `TrialActor`
 
@@ -181,7 +181,7 @@ message TrialActor {
 ```
 
 -   name: The name of the actor.
--   actor_class: The name of the class of actor. For a particular trial, the possible actor classes are defined in the `cogment.yaml` file in the `actor_classes:name` sections.
+-   actor_class: The name of the class of actor. For a particular trial, the possible actor classes are defined in the the spec file in the `actor_classes:name` sections.
 
 ### `Observation`
 
@@ -197,7 +197,7 @@ message Observation {
 
 -   tick_id: Tick of this observation.
 -   timestamp: The time of the observation.
--   content: The serialized protobuf message representing an observation for a specific actor. In a particualr trial, the actual message type for the observation space is defined in the `cogment.yaml` file for each actor class in section `actor_classes:observation:space`. Note that the specific actor represented is defined by the enclosing message.
+-   content: The serialized protobuf message representing an observation for a specific actor. In a particualr trial, the actual message type for the observation space is defined in the spec file for each actor class in section `actor_classes:observation:space`. Note that the specific actor represented is defined by the enclosing message.
 
 ### `Action`
 
@@ -213,7 +213,7 @@ message Action {
 
 -   tick_id: The tick of the observation on which the action is taken.
 -   timestamp: The time of the action.
--   content: The serialized protobuf message representing an action from a specific actor. In a particular trial, the actual message type for the action space is defined in the `cogment.yaml` file for each actor class in section `actor_classes:action:space`. Note that the specific actor represented is defined by the enclosing message.
+-   content: The serialized protobuf message representing an action from a specific actor. In a particular trial, the actual message type for the action space is defined in the spec file for each actor class in section `actor_classes:action:space`. Note that the specific actor represented is defined by the enclosing message.
 
 ### `Message`
 
@@ -285,7 +285,7 @@ message ObservationSet {
 
 -   tick_id: The tick to which the observations relate to.
 -   timestamp: The time when the observation set was made.
--   observations: A list of observations. Indexed into by the `actors_map`. Each `bytes` chunk is a serialized protobuf message representing an observation for a specific actor class. For a particular trial, the actual message type for the observation space is defined in the `cogment.yaml` file for each actor class in section `actor_classes:observation:space`. Note that the specific actor represented is defined by the `actors_map`.
+-   observations: A list of observations. Indexed into by the `actors_map`. Each `bytes` chunk is a serialized protobuf message representing an observation for a specific actor class. For a particular trial, the actual message type for the observation space is defined in the spec file for each actor class in section `actor_classes:observation:space`. Note that the specific actor represented is defined by the `actors_map`.
 -   actors_map: A list of indexes into the `observations` list above. This list of indexes has the same length and order as the list of actors provided in different places in the API (e.g. `actors_in_trial`), for the same trial.
 
 ### `ActionSet`
@@ -302,7 +302,7 @@ message ActionSet {
 
 -   tick_id: The tick to which the actions relate to.
 -   timestamp: The time when the action set was made (usually after the last action arrived at the Orchestrator).
--   actions: A list of actions. Each `bytes` chunk is a serialized protobuf message representing an action from a specific actor. For an particular trial, the actual message type for the action space is defined in the `cogment.yaml` file for each actor class in section `actor_classes:action:space`. This list has the same length and order as the list of actors provided in different places in the API (e.g. `actors_in_trial`), for the same trial.
+-   actions: A list of actions. Each `bytes` chunk is a serialized protobuf message representing an action from a specific actor. For an particular trial, the actual message type for the action space is defined in the spec file for each actor class in section `actor_classes:action:space`. This list has the same length and order as the list of actors provided in different places in the API (e.g. `actors_in_trial`), for the same trial.
 
 ### `TrialState`
 
