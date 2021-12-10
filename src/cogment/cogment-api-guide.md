@@ -41,7 +41,7 @@ actors:
 
 ### Compiling the spec file
 
-In order to use the spec file (typically named `cogment.yaml`) within the various supported languages, it needs to be compiled. This is done by the code generation modules of the specific language's SDK you are using. Please refer to the language specific documentation for instructions
+In order to use the spec file (typically named `cogment.yaml`) within the various supported languages, it needs to be compiled. This is done by the code generation modules of the specific language's SDK you are using. Refer to the language specific documentation for instructions
 
 ## Environment
 

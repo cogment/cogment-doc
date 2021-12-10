@@ -30,9 +30,11 @@ Messages and feedback user data don't have a set type, they can be any type as l
 
 The trial [parameters][2] either come from the default parameters provided to the Orchestrator on startup, or they are dynamically generated/updated by the pre-trial hooks (which are provided to the Orchestrator on startup). Or both, since any default parameters are initially provided to the first pre-trial hook.
 
-The parameters are mostly indepedent of the spec file (cogment.yaml), except that the active actors listed in the parameters must have their actor class match an actor class defined in the spec file (cogment.yaml).
+The parameters are mostly indepedent of the spec file (cogment.yaml), except that the active actors listed in the parameters must have their actor class match an actor class defined in the spec file.
 
 Below, when we refer to the trial parameters, we mean the final parameters after any pre-trial hooks.
+
+Note that environment config and actor config can only be provided by pre-trial hooks.
 
 #### Compiling the spec file
 
@@ -50,7 +52,7 @@ Then it can be run (assuming you've placed the spec file and your proto files in
 python -m cogment.generate --config config.yaml
 ```
 
-This will create a `cog_settings.py` module in the `--python-dir` directory. The cogment cli will also compile the imported `*.proto` files in python modules living in the same location (e.g. `data_pb2.py` in this case). There is no need to invoke `protoc` yourself for the imported files.
+This will create a `cog_settings.py` module in the current directory. It will also convert the imported proto files to python compatible files used in `cog_settings.py`
 
 ### Top-level import
 
