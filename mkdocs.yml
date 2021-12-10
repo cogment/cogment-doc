@@ -69,7 +69,7 @@ nav:
           - "Step 7: Add a player trained with Reinforcement Learning using DQN": "cogment/tutorial/7-dqn-player.md"
       - "API Guide": "cogment/cogment-api-guide.md"
       - "API Reference":
-          - "cogment.yaml": "cogment/cogment-api-reference/cogment-yaml.md"
+          - "Spec file (cogment.yaml)": "cogment/cogment-api-reference/cogment-yaml.md"
           - "Parameters": "cogment/cogment-api-reference/parameters.md"
           - "Orchestrator": "cogment/orchestrator.md"
           - "python SDK": "cogment/cogment-api-reference/python.md"

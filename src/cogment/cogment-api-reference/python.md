@@ -30,35 +30,31 @@ Messages and feedback user data don't have a set type, they can be any type as l
 
 The trial [parameters][2] either come from the default parameters provided to the Orchestrator on startup, or they are dynamically generated/updated by the pre-trial hooks (which are provided to the Orchestrator on startup). Or both, since any default parameters are initially provided to the first pre-trial hook.
 
-The parameters are mostly indepedent of the specifications, except that the active actors listed in the parameters must have their actor class match an actor class defined in the specifications.
+The parameters are mostly indepedent of the spec file (cogment.yaml), except that the active actors listed in the parameters must have their actor class match an actor class defined in the spec file (cogment.yaml).
 
 Below, when we refer to the trial parameters, we mean the final parameters after any pre-trial hooks.
 
-Note that environment config and actor config can only be provided by pre-trial hooks.
+#### Compiling the spec file
 
-### Trial spec file and cog_settings.py
+In order to use the configuration found in the spec file within python scripts, it needs to be compiled into python modules. This is done by a tool `cogment.generate`.
 
-In order to use the specifications within python scripts, the spec file needs to be compiled into python modules. This is done by a tool called the “Cogment CLI” (Command Line Interface).
+This can be installed along-side the python SDK by doing
 
-The Cogment CLI requires `protoc` (the Protobuf compiler).
-
-```bash
-$ cogment generate --file=cogment.yaml --python_dir=.
+```
+pip install cogment[generate]
 ```
 
-As a convenience, the `cogment/cli` docker image can be used to run it (it has all the required dependencies correctly setup already):
+Then it can be run (assuming you've placed the spec file and your proto files in the same directory) using
 
-```bash
-$ docker run -v $(pwd):/data --rm cogment/cli --file=/data/cogment.yaml --python_dir=/data
+```
+python -m cogment.generate --config config.yaml
 ```
 
-This will create a `cog_settings.py` module in the `--python-dir` directory. The Cogment CLI will also compile the imported `*.proto` files in python modules living in the same location (e.g. `XXXX_pb2.py`). There is no need to invoke `protoc` yourself for the imported files.
-
-The `cog_settings.py` Python module is required by all API entry points.
+This will create a `cog_settings.py` module in the `--python-dir` directory. The cogment cli will also compile the imported `*.proto` files in python modules living in the same location (e.g. `data_pb2.py` in this case). There is no need to invoke `protoc` yourself for the imported files.
 
 ### Top-level import
 
-Whether a script implements an actor or environment, it should import both the `cogment` module (generic Python SDK for Cogment) and the `cog_settings` module (project specific definitions created from the spec file).
+Whether a script implements an actor or environment, it should import both the `cogment` module (generic python SDK for Cogment) and the `cog_settings` module (project specific definitions created from the spec file).
 
 ```python
 import cog_settings
@@ -131,7 +127,7 @@ Parameters:
 
 -   `impl`: _async func(ActorSession instance)_ - Callback function to be registered.
 -   `impl_name`: _str_ - Name for the actor implementation being run by the given callback function.
--   `actor_classes`: _list[str]_ - The actor class name(s) that can be run by the given callback function. The possible names are specified in spec file under section `actor_classes:name`. If the list is empty, this implementation can run any actor class.
+-   `actor_classes`: _list[str]_ - The actor class name(s) that can be run by the given callback function. The possible names are specified in the spec file under section `actor_classes:name`. If the list is empty, this implementation can run any actor class.
 
 Return: None
 

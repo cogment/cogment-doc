@@ -4,7 +4,7 @@ The spec file (typically named `cogment.yaml`) is central to every Cogment proje
 
 The top level sections in the file are:
 
--   [import](#import): Used to import other files into the definition of the project
+-   [import](#import): Used to import other proto files into the definition of the project
 -   [commands](#commands): Defines commands that can be run by the Cogment CLI
 -   [trial](#trial): Define trial speficic properties
 -   [environment](#environment): Define environment specific properties

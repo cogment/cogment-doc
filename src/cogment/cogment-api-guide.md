@@ -41,15 +41,7 @@ actors:
 
 ### Compiling the spec file
 
-In order to use the spec file (typically named `cogment.yaml`) within python scripts, it needs to be interpreted into a python module. This is done by the **Cogment CLI** (Command Line Interface) that can be installed following [those directions](../introduction/installation.md#install-the-latest-cogment-cli).
-
-```console
-$ cogment run --file /path/to/cogment.yaml --python_dir=./
-```
-
-This will create a `cog_settings.py` module in the current directory.
-
-The Cogment CLI will also compile the imported [`.proto`](../concepts/glossary.md#protocol-buffer) files in python modules living in the same location.
+In order to use the spec file (typically named `cogment.yaml`) within the various supported languages, it needs to be compiled. This is done by the code generation modules of the specific language's SDK you are using. Please refer to the language specific documentation for instructions
 
 ## Environment
 
