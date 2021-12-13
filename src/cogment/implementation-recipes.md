@@ -49,7 +49,7 @@ trial_id = await controller.start_trial(trial_config=TrialConfig(
 ))
 ```
 
-Finally a _pass-through_ pretrial hook needs to be implemented, registered and served. Its endpoint must be specified in the `cogment.yaml` file under `trial.pre_hooks`.
+Finally a _pass-through_ pre-trial hook needs to be implemented, registered and served. Its endpoint must be specified in to the Orchestrator on startup.
 
 ```python
 async def passthrough_pre_trial_hook(pre_trial_hook_session):
