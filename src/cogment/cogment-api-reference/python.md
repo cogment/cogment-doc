@@ -36,7 +36,7 @@ Below, when we refer to the trial parameters, we mean the final parameters after
 
 Note that environment config and actor config can only be provided by pre-trial hooks.
 
-#### Compiling the spec file
+#### Compiling the spec file into cog_settings.py
 
 In order to use the configuration found in the spec file within python scripts, it needs to be compiled into python modules. This is done by a tool `cogment.generate`.
 
@@ -49,14 +49,16 @@ pip install cogment[generate]
 Then it can be run (assuming you've placed the spec file and your proto files in the same directory) using
 
 ```
-python -m cogment.generate --config config.yaml
+python -m cogment.generate --spec spec.yaml --output cog_settings.py
 ```
 
-This will create a `cog_settings.py` module in the current directory. It will also convert the imported proto files to python compatible files used in `cog_settings.py`
+This will create a `cog_settings.py` module in the current directory. It will also compile the imported `*.proto` files into python modules which will end up in the same location as the specified output file, and be named `{proto_name}_pb2.py`.
+
+The `cog_settings.py` Python module is required by all API entry points.
 
 ### Top-level import
 
-Whether a script implements an actor or environment, it should import both the `cogment` module (generic python SDK for Cogment) and the `cog_settings` module (project specific definitions created from the spec file).
+Whether a script implements an actor or environment, it should import both the `cogment` module (generic Python SDK for Cogment) and the `cog_settings` module (project specific definitions created from the spec file).
 
 ```python
 import cog_settings

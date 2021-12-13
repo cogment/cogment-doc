@@ -9,7 +9,7 @@ The simplest way to install the Javascript SDK is to just install it using npm:
 
 ### The spec file
 
-The config [cogment.yaml][1] file (including imported files) defines the high level API implemented in the SDK.
+The spec [cogment.yaml][1] file (including imported files) defines the message types of each component of Cogment.
 
 For example, an [actor class][4] is defined by its required [observation space][5] and [action space][6].
 
@@ -29,11 +29,11 @@ Below, when we refer to the trial parameters, we mean the final parameters after
 
 #### Compiling the spec file
 
-In order to use the configuration found in the spec file within Javascript scripts, it needs to be compiled into Javascript modules. This is done by a tool called "cogment-js-sdk-generate".
+In order to use the specification found in the spec file within Javascript scripts, it needs to be compiled into Javascript modules. This is done by a tool called "cogment-js-sdk-generate".
 
 ### CogSettings.js
 
-All API entry points require a cogment configuration object. This configuration object can be determined
+All API entry points require a cogment specification object. This specification object can be determined
 from the content of a project's spec file. As such, it should be generated using the `cogment-js-sdk-generate` tool
 
 ```
