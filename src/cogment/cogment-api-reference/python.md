@@ -38,7 +38,7 @@ Note that environment config and actor config can only be provided by pre-trial 
 
 #### Compiling the spec file into cog_settings.py
 
-In order to use the configuration found in the spec file within python scripts, it needs to be compiled into python modules. This is done by a tool `cogment.generate`.
+In order to use the specification found in the spec file within python scripts, it needs to be compiled into python modules. This is done by a tool `cogment.generate`.
 
 This can be installed along-side the python SDK by doing
 
