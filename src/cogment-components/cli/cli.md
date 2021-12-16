@@ -10,12 +10,12 @@ Cogment CLI is the **out-of-the-box** entry point to use Cogment. It provides a 
 
 ---
 
-Copy cogment.yaml, and all referenced proto files to the folders listed, this is a handy shortcut to allow the various sdk's code generation modules to function
+Copy all files in a list into all folders in that list, supports glob
 
 Example:
 
 ```bash
-cogment sync environment agent web-client
+cogment sync spec.yaml *.proto environment agent web-client
 ```
 
 ## init
