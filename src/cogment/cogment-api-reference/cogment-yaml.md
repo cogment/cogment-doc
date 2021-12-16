@@ -42,7 +42,7 @@ commands:
     generate: |
         cd client && python -m cogment-generate --spec spec.yaml && cd ..
         cd environment && python -m cogment-generate --spec spec.yaml && cd ..
-    copy: cogment copy client environment
+    copy: cogment copy spec.yaml *.proto client environment
     start: docker-compose up orchestrator agent env
     play: cogment run start && docker-compose run launcher
 ```
