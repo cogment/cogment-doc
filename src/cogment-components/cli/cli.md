@@ -6,7 +6,7 @@ Cogment CLI is the **out-of-the-box** entry point to use Cogment. It provides a 
 
 # Commands
 
-## sync
+## copy
 
 ---
 
@@ -15,7 +15,7 @@ Copy all files in a list into all folders in that list, supports glob
 Example:
 
 ```bash
-cogment sync spec.yaml *.proto environment agent web-client
+cogment copy spec.yaml *.proto environment agent web-client
 ```
 
 ## init

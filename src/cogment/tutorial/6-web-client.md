@@ -149,7 +149,7 @@ The easiest way to add Cogment to any web client is to start with a React app, t
 
 3.  Navigate one folder up to your project directory (where you have your cogment.yaml) then run the following command to generate Javascript files from your defined protobufs:
     ```console
-    $ cogment sync web-client
+    $ cogment copy cogment.yaml *.proto web-client
     ```
 
 > NOTE: Had we chosen `Y` at the beginning of this tutorial when asked by the CLI if we wanted a web client, the React hooks used in this section would normally have been generated with the command `cogment init`."

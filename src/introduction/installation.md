@@ -70,7 +70,7 @@ Once it is done, run the following in the directory you retrieved:
 
 ```console
 $ cd 5-human-player
-$ cogment run sync
+$ cogment run copy
 $ cogment run build
 $ cogment run start
 ```

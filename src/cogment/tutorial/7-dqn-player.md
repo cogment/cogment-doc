@@ -52,13 +52,13 @@ dqn-agent:
         dockerfile: ../py_service.dockerfile
 ```
 
-Then we will need to edit `cogment.yaml` to make `cogment run sync` copy files to the new service's directory and have `cogment run build` and `cogment run start` respectively trigger its build and its start. We will change the `build` and `start` keys under `commands`.
+Then we will need to edit `cogment.yaml` to make `cogment run copy` copy files to the new service's directory and have `cogment run build` and `cogment run start` respectively trigger its build and its start. We will change the `build` and `start` keys under `commands`.
 
 Note: the generate command is only needed if you are running things outside of docker, otherwise the code generation is done in the build step
 
 ```yaml
 commands:
-    sync: cogment sync client environment random_agent dqn_agent
+    copy: cogment copy cogment.yaml *.proto client environment random_agent dqn_agent
     # ...
     build: docker-compose build client dashboard metrics orchestrator environment random-agent dqn-agent
     # ...
