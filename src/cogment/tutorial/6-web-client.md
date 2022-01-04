@@ -114,7 +114,7 @@ COPY *.proto ./
 
 RUN mkdir src
 RUN npm i
-RUN npx cogment-js-sdk-generate
+RUN npx cogment-js-sdk-generate cogment.yaml
 
 # copy generated app
 COPY . ./
@@ -158,7 +158,7 @@ The easiest way to add Cogment to any web client is to start with a React app, t
     ```
     $ cd web-client
     $ npm install
-    $ npx cogment-js-sdk-generate
+    $ npx cogment-js-sdk-generate cogment.yaml
     ```
 
 Now that all that's done, we can finally start coding our web client!
@@ -244,11 +244,11 @@ import {
 import { useActions } from "./hooks/useActions";
 
 //Second, our 'cogSettings'. This is a file that was generated when we ran
-//`npx cogment-js-sdk-generate`
+//`npx cogment-js-sdk-generate cogment.yaml`
 //This file tells our web client relevant information about our trials, environments, and actor classes.
 import { cogSettings } from "./CogSettings";
 
-//These are messages which were defined in data.proto. These imports will need to change whenever their corresponding messages in data.proto are changed and `npx cogment-js-sdk-generate` is run.
+//These are messages which were defined in data.proto. These imports will need to change whenever their corresponding messages in data.proto are changed and `npx cogment-js-sdk-generate cogment.yaml` is run.
 import { PlayerAction } from "./data_pb";
 ```
 
@@ -391,87 +391,58 @@ export const App = () => {
 This hook does multiple things. It starts a trial, joins a trial, sends actions, and receives information from the orchestrator. The following is its annotated code:
 
 ```jsx
+import { Context } from "@cogment/cogment-js-sdk";
 import { useEffect, useState } from "react";
-import * as cogment from "@cogment/cogment-js-sdk";
 
 export const useActions = (cogSettings, actorName, actorClass) => {
-    //Events are composed of a possible observation, message, and reward
-    const [event, setEvent] = useState({
-        observation: null,
-        message: null,
-        reward: null,
+  const [event, setEvent] = useState({
+    observation: null,
+    actions: null,
+    messages: null,
+    rewards: null,
+    type: null,
+    last: false
+  });
+
+  const [startTrial, setStartTrial] = useState(null);
+  const [sendAction, setSendAction] = useState(null);
+
+  //Set up the connection and register the actor only once, regardless of re-rendering
+  useEffect(() => {
+    const context = new Context(
+      cogSettings,
+      actorName,
+    );
+
+    context.registerActor(async (actorSession) => {
+      actorSession.start();
+
+      //Double arrow function here beause react will turn a single one into a lazy loaded function
+      setSendAction(() => (action) => {
+        actorSession.doAction(action);
+      });
+
+      for await (const event of actorSession.eventLoop()) {
+        const eventUseActions = event;
+
+        eventUseActions.last = event.type === 3;
+
+        setEvent(eventUseActions);
+      }
+    }, actorName, actorClass)
+
+    const endpoint = window.location.protocol + "//" + window.location.hostname + ":8080"
+    const controller = context.getController(endpoint);
+
+    //Need to output a function so that the user can start the trial when all actors are connected
+    //Again, double arrow function cause react will turn a single one into a lazy loaded function
+    setStartTrial(() => async () => {
+      const trialId = await controller.startTrial();
+      await context.joinTrial(trialId, endpoint, actorName);
     });
+  }, [cogSettings, actorName, actorClass]);
 
-    //startTrial and sendAction will be set after the connected agent joins the trial
-    const [startTrial, setStartTrial] = useState(null);
-    const [sendAction, setSendAction] = useState(null);
-
-    //Set up the connection and register the actor only once
-
-    //In this hook, the connected agent is immediatly registered to any existing trial sitting at port 8080 (more accurately any grpcwebproxy pointing to a trial). Most of the time, this is the desired behaviour, but it could be changed in different circumstances by replacing this with something like setState(joinTrial), similar to setStartTrial further down this code
-    useEffect(() => {
-        //First we create our service, which will be our primary point of contact to the orchestrator
-        const service = cogment.createService({
-            cogSettings,
-            //grpcURL is an optional argument that in fact defaults to the following value. Here we're just showing that it can be set explicitly
-            grpcURL:
-                window.location.protocol +
-                "//" +
-                window.location.hostname +
-                ":8080",
-        });
-
-        //Set up the actor object. An actorName and an actorClass is enough to define a unique actor to be added to a trial
-        const actor = { name: actorName, actorClass: actorClass };
-
-        //Use the service to register an actor. registerActor takes two arguments, the second of which is a callback function which is given the actorSession of the registered actor as its only argument. With the provided actorSession, we can send actions, and receive events.
-        service.registerActor(actor, async (actorSession) => {
-            //Start the session
-            actorSession.start();
-
-            //Double arrow function here because React will turn a single one into a lazy loaded function
-            setSendAction(() => (action) => {
-                actorSession.sendAction(action);
-            });
-
-            /*actorSession.eventLoop is an async generator function, meaning we can use the syntax
-        for await(const foo of generator()){
-          do stuff
-        }
-        to run some code every time there's new data provided by the function.
-
-        This is massively useful for network streams.
-      */
-            for await (const event of actorSession.eventLoop()) {
-                //Convert observations to a regular JS object.
-                let observationOBJ =
-                    event.observation && event.observation.toObject();
-                event.observation = observationOBJ;
-
-                //If the type of the event is 3 (Ending), store that in event.last so we can use it later
-                event.last = event.type === 3;
-
-                //Set the event state to the received event, causing a hook update
-                setEvent(event);
-            }
-        });
-
-        //Creating the trial controller must happen after actors are registered
-        const trialController = service.createTrialController();
-
-        //Need to output a function so that the user can start the trial when all actors are connected
-        //Again, double arrow function cause React will turn a single one into a lazy loaded function
-        setStartTrial(() => async () => {
-            //Start and join the trial. When we start a trial, we receive an object containing the trialID that can then be used to join it.
-            //We will almost always want to do both these actions in sequence, since trials do not proceed without the connected agent if cogment.yaml specifies that a connected agent exists
-            const { trialId } = await trialController.startTrial(
-                actor.actorClass
-            );
-            await trialController.joinTrial(trialId, actor);
-        });
-    }, [cogSettings, actorName, actorClass]);
-
-    return [event, startTrial, sendAction];
+  return [event, startTrial, sendAction];
 };
 ```
 
