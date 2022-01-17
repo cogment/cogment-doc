@@ -1,5 +1,5 @@
 [![Cogment Homepage](https://img.shields.io/badge/-Homepage-ffbb00?style=flat)](https://cogment.ai/){target=\_blank}
-[![Cogment sources @ Github](https://img.shields.io/badge/Github-Cogment%20Sources-lightgrey?style=flat&logo=github)](https://github.com/cogment){target=\_blank} [![Join us on the official Cogment discord](https://img.shields.io/discord/739822842450935963?style=flat&color=6f84d4&label=Cogment%27s%20Discord&logo=discord&logoColor=white)](https://discord.gg/55h7fnqdSJ){target=\_blank}
+[![Cogment sources @ Github](https://img.shields.io/badge/Github-Cogment%20Sources-lightgrey?style=flat&logo=github)](https://github.com/cogment){target=\_blank} [![Join us on the official Cogment discord](https://img.shields.io/discord/739822842450935963?style=flat&color=6f84d4&label=Cogment%27s%20Discord&logo=discord&logoColor=white)](https://discord.gg/QDxb9Fweqr){target=\_blank}
 
 # Cogment Framework Overview
 
