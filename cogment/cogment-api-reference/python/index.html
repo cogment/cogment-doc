@@ -20,7 +20,7 @@
     
     
       
-        <title>python - Cogment User Documentation</title>
+        <title>python SDK - Cogment User Documentation</title>
       
     
     
@@ -43,6 +43,8 @@
     
     
       <link rel="stylesheet" href="../../../style/theme.css">
+    
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/styles/github.min.css">
     
     
       
@@ -111,7 +113,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              python
+              python SDK
             
           </span>
         </div>
@@ -619,7 +621,35 @@
   
     <li class="md-nav__item">
       <a href="../cogment-yaml/" class="md-nav__link">
-        cogment.yaml
+        Spec file (cogment.yaml)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../parameters/" class="md-nav__link">
+        Parameters
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../orchestrator/" class="md-nav__link">
+        Orchestrator
       </a>
     </li>
   
@@ -642,12 +672,12 @@
       
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
-          python
+          python SDK
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <a href="./" class="md-nav__link md-nav__link--active">
-        python
+        python SDK
       </a>
       
         
@@ -680,29 +710,29 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#cogmentyaml" class="md-nav__link">
-    cogment.yaml
+  <a href="#trial-specifications" class="md-nav__link">
+    Trial Specifications
   </a>
   
-    <nav class="md-nav" aria-label="cogment.yaml">
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#trial-parameters" class="md-nav__link">
+    Trial Parameters
+  </a>
+  
+    <nav class="md-nav" aria-label="Trial Parameters">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#compiling-the-cogmentyaml" class="md-nav__link">
-    Compiling the cogment.yaml
+  <a href="#compiling-the-spec-file-into-cog_settingspy" class="md-nav__link">
+    Compiling the spec file into cog_settings.py
   </a>
   
 </li>
         
       </ul>
     </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#cog_settingspy" class="md-nav__link">
-    cog_settings.py
-  </a>
   
 </li>
         
@@ -748,8 +778,8 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#async-join_trialself-trial_id-endpoint-impl_name-actor_namenone" class="md-nav__link">
-    async join_trial(self, trial_id, endpoint, impl_name, actor_name=None)
+  <a href="#async-join_trialself-trial_id-endpoint-impl_namenone-actor_namenone-actor_classnone" class="md-nav__link">
+    async join_trial(self, trial_id, endpoint, impl_name=None, actor_name=None, actor_class=None)
   </a>
   
 </li>
@@ -796,22 +826,22 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#async-start_trialself-trial_confignone" class="md-nav__link">
-    async start_trial(self, trial_config=None)
+  <a href="#async-start_trialself-trial_confignone-trial_id_requestednone" class="md-nav__link">
+    async start_trial(self, trial_config=None, trial_id_requested=None)
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#terminate_trialself-trial_id" class="md-nav__link">
-    terminate_trial(self, trial_id)
+  <a href="#terminate_trialself-trial_ids-hardfalse" class="md-nav__link">
+    terminate_trial(self, trial_ids, hard=False)
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#async-get_trial_infoself-trial_id" class="md-nav__link">
-    async get_trial_info(self, trial_id)
+  <a href="#async-get_trial_infoself-trial_ids" class="md-nav__link">
+    async get_trial_info(self, trial_ids)
   </a>
   
 </li>
@@ -826,6 +856,13 @@
           <li class="md-nav__item">
   <a href="#async-get_actorsself-trial_id" class="md-nav__link">
     async get_actors(self, trial_id)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#async-get_remote_versionsself" class="md-nav__link">
+    async get_remote_versions(self)
   </a>
   
 </li>
@@ -865,8 +902,8 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#get_active_actorsself" class="md-nav__link">
-    get_active_actors(self)
+  <a href="#sending_doneself" class="md-nav__link">
+    sending_done(self)
   </a>
   
 </li>
@@ -874,13 +911,6 @@
           <li class="md-nav__item">
   <a href="#add_rewardself-value-confidence-to-tick_id-1-user_datanone" class="md-nav__link">
     add_reward(self, value, confidence, to, tick_id=-1, user_data=None)
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#send_messageself-payload-to-to_environmentfalse" class="md-nav__link">
-    send_message(self, payload, to, to_environment=False)
   </a>
   
 </li>
@@ -899,8 +929,8 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#startself-observations" class="md-nav__link">
-    start(self, observations)
+  <a href="#startself-observations-none-auto_done_sendingtrue" class="md-nav__link">
+    start(self, observations = None, auto_done_sending=True)
   </a>
   
 </li>
@@ -926,6 +956,20 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#get_active_actorsself" class="md-nav__link">
+    get_active_actors(self)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#send_messageself-payload-to" class="md-nav__link">
+    send_message(self, payload, to)
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -940,8 +984,8 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#startself" class="md-nav__link">
-    start(self)
+  <a href="#startself-auto_done_sendingtrue" class="md-nav__link">
+    start(self, auto_done_sending=True)
   </a>
   
 </li>
@@ -956,6 +1000,13 @@
           <li class="md-nav__item">
   <a href="#do_actionself-action" class="md-nav__link">
     do_action(self, action)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#send_messageself-payload-to_1" class="md-nav__link">
+    send_message(self, payload, to)
   </a>
   
 </li>
@@ -981,6 +1032,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#get_user_idself" class="md-nav__link">
+    get_user_id(self)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#validateself" class="md-nav__link">
     validate(self)
   </a>
@@ -993,20 +1051,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#cogmentapicommon_pb2trialparams" class="md-nav__link">
-    cogment.api.common_pb2.TrialParams
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#cogmentapidatalog_pb2datalogsample" class="md-nav__link">
-    cogment.api.datalog_pb2.DatalogSample
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#class-datalogsession" class="md-nav__link">
     class DatalogSession
   </a>
@@ -1015,7 +1059,7 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#startself_1" class="md-nav__link">
+  <a href="#startself" class="md-nav__link">
     start(self)
   </a>
   
@@ -1169,6 +1213,158 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#class-cogmentlogparams" class="md-nav__link">
+    class cogment.LogParams
+  </a>
+  
+    <nav class="md-nav" aria-label="class cogment.LogParams">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#__init__self-cog_settings" class="md-nav__link">
+    __init__(self, cog_settings)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get_serialization_typeself" class="md-nav__link">
+    get_serialization_type(self)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#serializeself" class="md-nav__link">
+    serialize(self)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deserializeself-raw_string" class="md-nav__link">
+    deserialize(self, raw_string)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get_trial_configself" class="md-nav__link">
+    get_trial_config(self)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get_environment_configself" class="md-nav__link">
+    get_environment_config(self)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get_actor_indexself-actor_name" class="md-nav__link">
+    get_actor_index(self, actor_name)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get_actor_nameself-actor_index" class="md-nav__link">
+    get_actor_name(self, actor_index)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get_actorself-actor_index" class="md-nav__link">
+    get_actor(self, actor_index)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#class-cogmentlogsample" class="md-nav__link">
+    class cogment.LogSample
+  </a>
+  
+    <nav class="md-nav" aria-label="class cogment.LogSample">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#__init__self-params" class="md-nav__link">
+    __init__(self, params)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get_serialization_typeself_1" class="md-nav__link">
+    get_serialization_type(self)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#serializeself_1" class="md-nav__link">
+    serialize(self)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deserializeself-raw_string_1" class="md-nav__link">
+    deserialize(self, raw_string)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#all_actor_namesself" class="md-nav__link">
+    all_actor_names(self)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get_actionself-actor" class="md-nav__link">
+    get_action(self, actor)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get_observationself-actor" class="md-nav__link">
+    get_observation(self, actor)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#all_rewardsself" class="md-nav__link">
+    all_rewards(self)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#all_messagesself" class="md-nav__link">
+    all_messages(self)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1187,18 +1383,18 @@
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_3_3" type="checkbox" id="__nav_4_3_3" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_3_5" type="checkbox" id="__nav_4_3_5" >
       
       
       
       
-        <label class="md-nav__link" for="__nav_4_3_3">
+        <label class="md-nav__link" for="__nav_4_3_5">
           Javascript/Typescript SDK
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <nav class="md-nav" aria-label="Javascript/Typescript SDK" data-md-level="3">
-        <label class="md-nav__title" for="__nav_4_3_3">
+        <label class="md-nav__title" for="__nav_4_3_5">
           <span class="md-nav__icon md-icon"></span>
           Javascript/Typescript SDK
         </label>
@@ -1210,7 +1406,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../javascript/modules/" class="md-nav__link">
+      <a href="../javascript/modules.md" class="md-nav__link">
         Modules
       </a>
     </li>
@@ -1224,7 +1420,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../javascript/classes/actorsession/" class="md-nav__link">
+      <a href="../javascript/classes/actorsession.md" class="md-nav__link">
         Class: ActorSession
       </a>
     </li>
@@ -1238,7 +1434,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../javascript/classes/cogmentservice/" class="md-nav__link">
+      <a href="../javascript/classes/cogmentservice.md" class="md-nav__link">
         Class: CogmentService
       </a>
     </li>
@@ -1252,7 +1448,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../javascript/classes/trialcontroller/" class="md-nav__link">
+      <a href="../javascript/classes/trialcontroller.md" class="md-nav__link">
         Class: TrialController
       </a>
     </li>
@@ -1266,7 +1462,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../javascript/enums/eventtype/" class="md-nav__link">
+      <a href="../javascript/enums/eventtype.md" class="md-nav__link">
         Enum: EventType
       </a>
     </li>
@@ -1280,7 +1476,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../javascript/interfaces/cogmentyaml/" class="md-nav__link">
+      <a href="../javascript/interfaces/cogmentyaml.md" class="md-nav__link">
         Interface: CogmentYaml
       </a>
     </li>
@@ -1294,7 +1490,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../javascript/interfaces/cogmentyamlactor/" class="md-nav__link">
+      <a href="../javascript/interfaces/cogmentyamlactor.md" class="md-nav__link">
         Interface: CogmentYamlActor
       </a>
     </li>
@@ -1308,7 +1504,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../javascript/interfaces/cogmentyamlactorclass/" class="md-nav__link">
+      <a href="../javascript/interfaces/cogmentyamlactorclass.md" class="md-nav__link">
         Interface: CogmentYamlActorClass
       </a>
     </li>
@@ -1322,7 +1518,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../javascript/interfaces/cogmentyamldatalog/" class="md-nav__link">
+      <a href="../javascript/interfaces/cogmentyamldatalog.md" class="md-nav__link">
         Interface: CogmentYamlDatalog
       </a>
     </li>
@@ -1336,7 +1532,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../javascript/interfaces/cogmentyamltrialparameters/" class="md-nav__link">
+      <a href="../javascript/interfaces/cogmentyamltrialparameters.md" class="md-nav__link">
         Interface: CogmentYamlTrialParameters
       </a>
     </li>
@@ -1350,7 +1546,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../javascript/interfaces/cogsettings/" class="md-nav__link">
+      <a href="../javascript/interfaces/cogsettings.md" class="md-nav__link">
         Interface: CogSettings
       </a>
     </li>
@@ -1364,7 +1560,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../javascript/interfaces/cogsettingsactorclass/" class="md-nav__link">
+      <a href="../javascript/interfaces/cogsettingsactorclass.md" class="md-nav__link">
         Interface: CogSettingsActorClass
       </a>
     </li>
@@ -1378,7 +1574,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../javascript/interfaces/createserviceoptions/" class="md-nav__link">
+      <a href="../javascript/interfaces/createserviceoptions.md" class="md-nav__link">
         Interface: CreateServiceOptions
       </a>
     </li>
@@ -1392,7 +1588,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../javascript/interfaces/event/" class="md-nav__link">
+      <a href="../javascript/interfaces/event.md" class="md-nav__link">
         Interface: Event
       </a>
     </li>
@@ -1406,7 +1602,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../javascript/interfaces/reward/" class="md-nav__link">
+      <a href="../javascript/interfaces/reward.md" class="md-nav__link">
         Interface: Reward
       </a>
     </li>
@@ -1420,7 +1616,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../javascript/interfaces/sendmessageoptions/" class="md-nav__link">
+      <a href="../javascript/interfaces/sendmessageoptions.md" class="md-nav__link">
         Interface: SendMessageOptions
       </a>
     </li>
@@ -1434,7 +1630,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../javascript/interfaces/trialactor/" class="md-nav__link">
+      <a href="../javascript/interfaces/trialactor.md" class="md-nav__link">
         Interface: TrialActor
       </a>
     </li>
@@ -1587,7 +1783,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../cogment-components/orchestrator/orchestrator/" class="md-nav__link">
+      <a href="../../orchestrator/" class="md-nav__link">
         Orchestrator
       </a>
     </li>
@@ -1699,29 +1895,29 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#cogmentyaml" class="md-nav__link">
-    cogment.yaml
+  <a href="#trial-specifications" class="md-nav__link">
+    Trial Specifications
   </a>
   
-    <nav class="md-nav" aria-label="cogment.yaml">
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#trial-parameters" class="md-nav__link">
+    Trial Parameters
+  </a>
+  
+    <nav class="md-nav" aria-label="Trial Parameters">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#compiling-the-cogmentyaml" class="md-nav__link">
-    Compiling the cogment.yaml
+  <a href="#compiling-the-spec-file-into-cog_settingspy" class="md-nav__link">
+    Compiling the spec file into cog_settings.py
   </a>
   
 </li>
         
       </ul>
     </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#cog_settingspy" class="md-nav__link">
-    cog_settings.py
-  </a>
   
 </li>
         
@@ -1767,8 +1963,8 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#async-join_trialself-trial_id-endpoint-impl_name-actor_namenone" class="md-nav__link">
-    async join_trial(self, trial_id, endpoint, impl_name, actor_name=None)
+  <a href="#async-join_trialself-trial_id-endpoint-impl_namenone-actor_namenone-actor_classnone" class="md-nav__link">
+    async join_trial(self, trial_id, endpoint, impl_name=None, actor_name=None, actor_class=None)
   </a>
   
 </li>
@@ -1815,22 +2011,22 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#async-start_trialself-trial_confignone" class="md-nav__link">
-    async start_trial(self, trial_config=None)
+  <a href="#async-start_trialself-trial_confignone-trial_id_requestednone" class="md-nav__link">
+    async start_trial(self, trial_config=None, trial_id_requested=None)
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#terminate_trialself-trial_id" class="md-nav__link">
-    terminate_trial(self, trial_id)
+  <a href="#terminate_trialself-trial_ids-hardfalse" class="md-nav__link">
+    terminate_trial(self, trial_ids, hard=False)
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#async-get_trial_infoself-trial_id" class="md-nav__link">
-    async get_trial_info(self, trial_id)
+  <a href="#async-get_trial_infoself-trial_ids" class="md-nav__link">
+    async get_trial_info(self, trial_ids)
   </a>
   
 </li>
@@ -1845,6 +2041,13 @@
           <li class="md-nav__item">
   <a href="#async-get_actorsself-trial_id" class="md-nav__link">
     async get_actors(self, trial_id)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#async-get_remote_versionsself" class="md-nav__link">
+    async get_remote_versions(self)
   </a>
   
 </li>
@@ -1884,8 +2087,8 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#get_active_actorsself" class="md-nav__link">
-    get_active_actors(self)
+  <a href="#sending_doneself" class="md-nav__link">
+    sending_done(self)
   </a>
   
 </li>
@@ -1893,13 +2096,6 @@
           <li class="md-nav__item">
   <a href="#add_rewardself-value-confidence-to-tick_id-1-user_datanone" class="md-nav__link">
     add_reward(self, value, confidence, to, tick_id=-1, user_data=None)
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#send_messageself-payload-to-to_environmentfalse" class="md-nav__link">
-    send_message(self, payload, to, to_environment=False)
   </a>
   
 </li>
@@ -1918,8 +2114,8 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#startself-observations" class="md-nav__link">
-    start(self, observations)
+  <a href="#startself-observations-none-auto_done_sendingtrue" class="md-nav__link">
+    start(self, observations = None, auto_done_sending=True)
   </a>
   
 </li>
@@ -1945,6 +2141,20 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#get_active_actorsself" class="md-nav__link">
+    get_active_actors(self)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#send_messageself-payload-to" class="md-nav__link">
+    send_message(self, payload, to)
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -1959,8 +2169,8 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#startself" class="md-nav__link">
-    start(self)
+  <a href="#startself-auto_done_sendingtrue" class="md-nav__link">
+    start(self, auto_done_sending=True)
   </a>
   
 </li>
@@ -1975,6 +2185,13 @@
           <li class="md-nav__item">
   <a href="#do_actionself-action" class="md-nav__link">
     do_action(self, action)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#send_messageself-payload-to_1" class="md-nav__link">
+    send_message(self, payload, to)
   </a>
   
 </li>
@@ -2000,6 +2217,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#get_user_idself" class="md-nav__link">
+    get_user_id(self)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#validateself" class="md-nav__link">
     validate(self)
   </a>
@@ -2012,20 +2236,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#cogmentapicommon_pb2trialparams" class="md-nav__link">
-    cogment.api.common_pb2.TrialParams
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#cogmentapidatalog_pb2datalogsample" class="md-nav__link">
-    cogment.api.datalog_pb2.DatalogSample
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#class-datalogsession" class="md-nav__link">
     class DatalogSession
   </a>
@@ -2034,7 +2244,7 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#startself_1" class="md-nav__link">
+  <a href="#startself" class="md-nav__link">
     start(self)
   </a>
   
@@ -2188,6 +2398,158 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#class-cogmentlogparams" class="md-nav__link">
+    class cogment.LogParams
+  </a>
+  
+    <nav class="md-nav" aria-label="class cogment.LogParams">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#__init__self-cog_settings" class="md-nav__link">
+    __init__(self, cog_settings)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get_serialization_typeself" class="md-nav__link">
+    get_serialization_type(self)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#serializeself" class="md-nav__link">
+    serialize(self)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deserializeself-raw_string" class="md-nav__link">
+    deserialize(self, raw_string)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get_trial_configself" class="md-nav__link">
+    get_trial_config(self)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get_environment_configself" class="md-nav__link">
+    get_environment_config(self)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get_actor_indexself-actor_name" class="md-nav__link">
+    get_actor_index(self, actor_name)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get_actor_nameself-actor_index" class="md-nav__link">
+    get_actor_name(self, actor_index)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get_actorself-actor_index" class="md-nav__link">
+    get_actor(self, actor_index)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#class-cogmentlogsample" class="md-nav__link">
+    class cogment.LogSample
+  </a>
+  
+    <nav class="md-nav" aria-label="class cogment.LogSample">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#__init__self-params" class="md-nav__link">
+    __init__(self, params)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get_serialization_typeself_1" class="md-nav__link">
+    get_serialization_type(self)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#serializeself_1" class="md-nav__link">
+    serialize(self)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deserializeself-raw_string_1" class="md-nav__link">
+    deserialize(self, raw_string)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#all_actor_namesself" class="md-nav__link">
+    all_actor_names(self)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get_actionself-actor" class="md-nav__link">
+    get_action(self, actor)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get_observationself-actor" class="md-nav__link">
+    get_observation(self, actor)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#all_rewardsself" class="md-nav__link">
+    all_rewards(self)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#all_messagesself" class="md-nav__link">
+    all_messages(self)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -2207,36 +2569,36 @@
                 
                 <h1 id="python-sdk">Python SDK<a class="headerlink" href="#python-sdk" title="Permanent link">&para;</a></h1>
 <p>The Python SDK is designed to run concurently and asynchronously using the Python <code>asyncio</code> library. As such, it should be run in an <code>asyncio.Task</code>.</p>
+<p>E.g.
+<pre class="highlight"><code class="language-python">asyncio.run(MyMainFunction())</code></pre></p>
 <h2 id="installation">Installation<a class="headerlink" href="#installation" title="Permanent link">&para;</a></h2>
 <p>The simplest way to install the python SDK is to just install it using pip:
 <code>pip install cogment</code></p>
 <p>The basic requirement is Python 3.7.</p>
 <h2 id="general-usage">General usage<a class="headerlink" href="#general-usage" title="Permanent link">&para;</a></h2>
-<h3 id="cogmentyaml">cogment.yaml<a class="headerlink" href="#cogmentyaml" title="Permanent link">&para;</a></h3>
-<p>The <a href="../cogment-yaml/">cogment.yaml</a> file (including imported files) defines the high level API.</p>
+<h3 id="trial-specifications">Trial Specifications<a class="headerlink" href="#trial-specifications" title="Permanent link">&para;</a></h3>
+<p>The specifications of a trial type are contained in a <a href="../cogment-yaml/">spec file</a> and the imported files defined in the spec. This file is typically named <code>cogment.yaml</code>.</p>
 <p>For example, an <a href="../../../concepts/glossary/#actor-class">actor class</a> is defined by its required <a href="../../../concepts/glossary/#observation-space">observation space</a> and <a href="../../../concepts/glossary/#action-space">action space</a>.</p>
 <p>These "spaces" are defined by using protobuf message types (from the imported files). <a href="../../../concepts/glossary/#observation">Observations</a> and <a href="../../../concepts/glossary/#action">actions</a> will simply be instances of the appropriate type.</p>
 <p>Messages and feedback user data don't have a set type, they can be any type as long as the receiver can manage that type (i.e. the object received is an instance of <code>google.protobuf.Any</code> and the contained type should be checked against known types before handling). The type is determined by the provided message from the originator.</p>
-<p>The <code>trial_params</code> section represents default values that can be dynamically changed for each trial with pre-trial hooks. Therefore, below, when this section of the <code>cogment.yaml</code> file is refered, we mean the final parameters after any pre-trial hooks.</p>
-<h4 id="compiling-the-cogmentyaml">Compiling the cogment.yaml<a class="headerlink" href="#compiling-the-cogmentyaml" title="Permanent link">&para;</a></h4>
-<p>In order to use the configuration found in the <code>cogment.yaml</code> file within python scripts, it needs to be compiled into python modules. This is done by a tool called the “cogment cli” (Command Line Interface).</p>
-<p>The cogment cli requires <code>protoc</code> (the Protobuf compiler).</p>
-<p>As a convenience, the <code>cogment/cli</code> docker image can be used to run it, as it has all the required dependencies correctly setup already:</p>
-<div class="highlight"><pre><span></span><code>$ docker run -v $(pwd):/data --rm cogment/cli --file /data/cogment.yaml --python_dir=/data
-</code></pre></div>
-<p>This will create a <code>cog_settings.py</code> module in the <code>--python-dir</code> directory. The cogment cli will also compile the imported <code>*.proto</code> files in python modules living in the same location (e.g. <code>data_pb2.py</code> in this case). There is no need to invoke <code>protoc</code> yourself for the imported files.</p>
-<h3 id="cog_settingspy">cog_settings.py<a class="headerlink" href="#cog_settingspy" title="Permanent link">&para;</a></h3>
-<p>All API entrypoints require a cogment configuration object. This configuration object can be determined
-from the content of a project's <code>cogment.yaml</code>. As such, it should be generated using the <code>cogment</code> tool.</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># From the directory containing cogment.yaml</span>
-$ cogment generate --python_dir<span class="o">=</span>path/to/project
-</code></pre></div>
-<p>This will generate both a <code>cog_settings.py</code> file, as well as any required compiled protocol buffer files.</p>
+<h3 id="trial-parameters">Trial Parameters<a class="headerlink" href="#trial-parameters" title="Permanent link">&para;</a></h3>
+<p>The trial <a href="../parameters/">parameters</a> either come from the default parameters provided to the Orchestrator on startup, or they are dynamically generated/updated by the pre-trial hooks (which are provided to the Orchestrator on startup). Or both, since any default parameters are initially provided to the first pre-trial hook.</p>
+<p>The parameters are mostly indepedent of the spec file (cogment.yaml), except that the active actors listed in the parameters must have their actor class match an actor class defined in the spec file.</p>
+<p>Below, when we refer to the trial parameters, we mean the final parameters after any pre-trial hooks.</p>
+<p>Note that environment config and actor config can only be provided by pre-trial hooks.</p>
+<h4 id="compiling-the-spec-file-into-cog_settingspy">Compiling the spec file into cog_settings.py<a class="headerlink" href="#compiling-the-spec-file-into-cog_settingspy" title="Permanent link">&para;</a></h4>
+<p>In order to use the specification found in the spec file within python scripts, it needs to be compiled into python modules. This is done by a tool <code>cogment.generate</code>.</p>
+<p>This can be installed along-side the python SDK by doing</p>
+<pre class="highlight"><code>pip install cogment[generate]</code></pre>
+<p>Then it can be run (assuming you've placed the spec file and your proto files in the same directory) using</p>
+<pre class="highlight"><code>python -m cogment.generate --spec spec.yaml --output cog_settings.py</code></pre>
+<p>This will create a <code>cog_settings.py</code> module in the current directory. It will also compile the imported <code>*.proto</code> files into python modules which will end up in the same location as the specified output file, and be named <code>{proto_name}_pb2.py</code>.</p>
+<p>The <code>cog_settings.py</code> Python module is required by all API entry points.</p>
+<p>This step is usually done inside of a docker container, and is included in the generated files upon running <a href="../../../cogment-components/cli/cli/#init">cogment init</a></p>
 <h3 id="top-level-import">Top-level import<a class="headerlink" href="#top-level-import" title="Permanent link">&para;</a></h3>
-<p>Whether a script implements an actor or environment, it should import both the <code>cogment</code> module (generic python SDK for Cogment) and the <code>cog_settings</code> module (project specific definitions created from <code>cogment.yaml</code>).</p>
-<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">cog_settings</span>
-<span class="kn">import</span> <span class="nn">cogment</span>
-</code></pre></div>
+<p>Whether a script implements an actor or environment, it should import both the <code>cogment</code> module (generic Python SDK for Cogment) and the <code>cog_settings</code> module (project specific definitions created from the spec file).</p>
+<pre class="highlight"><code class="language-python">import cog_settings
+import cogment</code></pre>
 <h2 id="class-cogmentcontext">class cogment.Context<a class="headerlink" href="#class-cogmentcontext" title="Permanent link">&para;</a></h2>
 <p>Class to setup and run all the different aspects of trials.</p>
 <h3 id="__init__self-user_id-cog_settings-prometheus_registryprometheus_clientcoreregistry"><code>__init__(self, user_id, cog_settings, prometheus_registry=prometheus_client.core.REGISTRY)</code><a class="headerlink" href="#__init__self-user_id-cog_settings-prometheus_registryprometheus_clientcoreregistry" title="Permanent link">&para;</a></h3>
@@ -2261,14 +2623,15 @@ $ cogment generate --python_dir<span class="o">=</span>path/to/project
 <li><code>endpoint</code>: <em>Endpoint instance</em> - Details of the connection to the Orchestrator.</li>
 </ul>
 <p>Return: <em>Controller instance</em> - An instance of the Controller class used to manage trials.</p>
-<h3 id="async-join_trialself-trial_id-endpoint-impl_name-actor_namenone"><code>async join_trial(self, trial_id, endpoint, impl_name, actor_name=None)</code><a class="headerlink" href="#async-join_trialself-trial_id-endpoint-impl_name-actor_namenone" title="Permanent link">&para;</a></h3>
+<h3 id="async-join_trialself-trial_id-endpoint-impl_namenone-actor_namenone-actor_classnone"><code>async join_trial(self, trial_id, endpoint, impl_name=None, actor_name=None, actor_class=None)</code><a class="headerlink" href="#async-join_trialself-trial_id-endpoint-impl_namenone-actor_namenone-actor_classnone" title="Permanent link">&para;</a></h3>
 <p>Method for an actor to asynchronously join an existing trial. This task will normally end after the user implementation has exited.</p>
 <p>Parameters:</p>
 <ul>
 <li><code>trial_id</code>: <em>str</em> - The UUID of the trial to join.</li>
 <li><code>endpoint</code>: <em>Endpoint instance</em> - Details of the connection to the Orchestrator.</li>
-<li><code>impl_name</code>: <em>str</em> - The implementation name of the actor to join the trial. The implementation must have previously been registered with the <code>register_actor</code> method.</li>
-<li><code>actor_name</code>: <em>str</em> - Name of the actor joining the trial. If <code>None</code>, the actor will join as any of the configured (free) actors of the actor class registered for <code>impl_name</code>. Otherwise, the name must match an actor with an actor_class compatible with <code>impl_name</code> as defined in <code>cogment.yaml</code> in the sections <code>trial_params:actors:actor_class</code> and <code>trial_params:actors:name</code>.</li>
+<li><code>impl_name</code>: <em>str</em> - <strong>deprecated</strong></li>
+<li><code>actor_name</code>: <em>str</em> - Name of the actor joining the trial. If <code>None</code>, <code>actor_class</code> will be used to find the actor to join. The name must match an active actor in the trial as found in the trial parameters in the sections <code>trial_params:actors:name</code> with <code>trial_params:actors:endpoint</code> set to "cogment://client".</li>
+<li><code>actor_class</code>: <em>str</em> - The class of actor to join the trial. If <code>None</code>, <code>actor_name</code> will be used to find the actor to join.  The class must match an active actor in the trial as found in the trial parameters in the sections <code>trial_params:actors:actor_class</code> with <code>trial_params:actors:endpoint</code> set to "cogment://client".</li>
 </ul>
 <p>Return: None</p>
 <h3 id="register_environmentself-impl-impl_name-default"><code>register_environment(self, impl, impl_name = "default")</code><a class="headerlink" href="#register_environmentself-impl-impl_name-default" title="Permanent link">&para;</a></h3>
@@ -2285,18 +2648,18 @@ $ cogment generate --python_dir<span class="o">=</span>path/to/project
 <ul>
 <li><code>impl</code>: <em>async func(ActorSession instance)</em> - Callback function to be registered.</li>
 <li><code>impl_name</code>: <em>str</em> - Name for the actor implementation being run by the given callback function.</li>
-<li><code>actor_classes</code>: <em>list[str]</em> - The actor class name(s) that can be run by the given callback function. The possible names are specified in file <code>cogment.yaml</code> under section <code>actor_classes:name</code>. If the list is empty, this implementation can run any actor class.</li>
+<li><code>actor_classes</code>: <em>list[str]</em> - The actor class name(s) that can be run by the given callback function. The possible names are specified in the spec file under section <code>actor_classes:name</code>. If the list is empty, this implementation can run any actor class.</li>
 </ul>
 <p>Return: None</p>
 <h3 id="register_pre_trial_hookself-impl"><code>register_pre_trial_hook(self, impl)</code><a class="headerlink" href="#register_pre_trial_hookself-impl" title="Permanent link">&para;</a></h3>
-<p>Method to register an asynchronous callback function that will be called before a trial is started.</p>
+<p>Method to register an asynchronous callback function that will be called before a trial is started. Only one such function can be registered. But there may be multiple hook services for an Orchestrator. They are provided to the Orchestrator at startup. All hooks registered with the Orchestrator will be called in a pipeline fashion before each new trial.</p>
 <p>Parameters:</p>
 <ul>
 <li><code>impl</code>: <em>async func(PrehookSession instance)</em> - Callback function to be registered. The <code>PrehookSession</code> instance member data should be changed as needed for the new trial before returning from this function.</li>
 </ul>
 <p>Return: None</p>
 <h3 id="register_datalogself-impl"><code>register_datalog(self, impl)</code><a class="headerlink" href="#register_datalogself-impl" title="Permanent link">&para;</a></h3>
-<p>Method to register an asynchronous callback function that will be called for each log request (for any trial). Only one such function can be registered.</p>
+<p>Method to register an asynchronous callback function that will be called for each trial to serve log requests. Only one such function can be registered. This service is addressed in the trial parameters in the <code>datalog</code> section.</p>
 <p>Parameters:</p>
 <ul>
 <li><code>impl</code>: <em>async func(DatalogSession instance)</em> - Callback function to be registered</li>
@@ -2304,25 +2667,27 @@ $ cogment generate --python_dir<span class="o">=</span>path/to/project
 <p>Return: None</p>
 <h2 id="class-controller">class Controller<a class="headerlink" href="#class-controller" title="Permanent link">&para;</a></h2>
 <p>Class containing data and methods to control and manage trials.</p>
-<h3 id="async-start_trialself-trial_confignone"><code>async start_trial(self, trial_config=None)</code><a class="headerlink" href="#async-start_trialself-trial_confignone" title="Permanent link">&para;</a></h3>
+<h3 id="async-start_trialself-trial_confignone-trial_id_requestednone"><code>async start_trial(self, trial_config=None, trial_id_requested=None)</code><a class="headerlink" href="#async-start_trialself-trial_confignone-trial_id_requestednone" title="Permanent link">&para;</a></h3>
 <p>Method to start a new trial. The parameters of the trial will be set by the pre-trial hooks (registered in <code>cogment.Context</code>), and the hooks will receive the provided trial config.</p>
 <p>Parameters:</p>
 <ul>
-<li><code>trial_config</code>: <em>protobuf class instance</em> - Configuration for the trial. The type is specified in file <code>cogment.yaml</code> under the section <code>trial:config_type</code>. Can be <code>None</code> if no configuration is provided.</li>
+<li><code>trial_config</code>: <em>protobuf class instance</em> - Configuration for the trial. The type is specified in the spec file under the section <code>trial:config_type</code>. Can be <code>None</code> if no configuration is provided. This is provided to the first pre-trial hook.</li>
+<li><code>trial_id_requested</code>: <em>str</em> - The trial identifier requested for the new trial. It must be unique among all active trials and a limited set of the latest ended trials (this list of trials can be retrieved with <code>get_trial_info</code> or <code>watch_trial</code>). If provided, the Orchestrator will try to use this trial_id, otherwise, a UUID will be created.</li>
 </ul>
 <p>Return: <em>str</em> - The newly started trial ID.</p>
-<h3 id="terminate_trialself-trial_id"><code>terminate_trial(self, trial_id)</code><a class="headerlink" href="#terminate_trialself-trial_id" title="Permanent link">&para;</a></h3>
+<h3 id="terminate_trialself-trial_ids-hardfalse"><code>terminate_trial(self, trial_ids, hard=False)</code><a class="headerlink" href="#terminate_trialself-trial_ids-hardfalse" title="Permanent link">&para;</a></h3>
 <p>Method to request the end of a trial.</p>
 <p>Parameters:</p>
 <ul>
-<li><code>trial_id</code>: <em>str</em> - The trial ID the request is to terminate.</li>
+<li><code>trial_ids</code>: <em>list[str]</em> - The trial ID(s) to request to terminate. There must be at least one ID.</li>
+<li><code>hard</code>: <em>bool</em> - If <code>True</code>, the termination will be forced and not wait for any action or observation. If <code>False</code>, the trial will wait for the next tick, to end gracefully (i.e. wait for the next full set of actions and response observations).</li>
 </ul>
 <p>Return: None</p>
-<h3 id="async-get_trial_infoself-trial_id"><code>async get_trial_info(self, trial_id)</code><a class="headerlink" href="#async-get_trial_infoself-trial_id" title="Permanent link">&para;</a></h3>
+<h3 id="async-get_trial_infoself-trial_ids"><code>async get_trial_info(self, trial_ids)</code><a class="headerlink" href="#async-get_trial_infoself-trial_ids" title="Permanent link">&para;</a></h3>
 <p>Method to get information about a trial.</p>
 <p>Parameters:</p>
 <ul>
-<li><code>trial_id</code>: <em>str</em> - The trial ID from which to request information. If <code>None</code>, returns information about all trials. Note that ended trials may only appear for a short time in this list after they have ended.</li>
+<li><code>trial_ids</code>: <em>list[str]</em> - The trial ID(s) from which to request information. If no ID is provided, returns information about all trials. Note that ended trials may only appear for a short time in this list after they have ended.</li>
 </ul>
 <p>Return: <em>list[TrialInfo instance]</em> - List of trial information, one per trial. Can be empty if no trial matches.</p>
 <h3 id="async-watch_trialsself-trial_state_filters"><code>async watch_trials(self, trial_state_filters=[])</code><a class="headerlink" href="#async-watch_trialsself-trial_state_filters" title="Permanent link">&para;</a></h3>
@@ -2339,6 +2704,10 @@ $ cogment generate --python_dir<span class="o">=</span>path/to/project
 <li><code>trial_id</code>: <em>str</em> - The trial ID from which to request the list of actors.</li>
 </ul>
 <p>Return: <em>list[ActorInfo instance]</em> - List of actors configured in this trial.</p>
+<h3 id="async-get_remote_versionsself"><code>async get_remote_versions(self)</code><a class="headerlink" href="#async-get_remote_versionsself" title="Permanent link">&para;</a></h3>
+<p>Method to get the versions from the remote Orchestrator.</p>
+<p>Parameters: None</p>
+<p>Return: <em>dict</em> - The key of the dictionary is the name of the component (<em>str</em>), and the value is the version (<em>str</em>).</p>
 <h2 id="class-session">class Session<a class="headerlink" href="#class-session" title="Permanent link">&para;</a></h2>
 <p>Abstract class that manages aspects of a trial. Contains data and methods common to all sessions .</p>
 <h3 id="get_trial_idself"><code>get_trial_id(self)</code><a class="headerlink" href="#get_trial_idself" title="Permanent link">&para;</a></h3>
@@ -2353,41 +2722,38 @@ $ cogment generate --python_dir<span class="o">=</span>path/to/project
 <p>Method to inquire if the current trial has ended.</p>
 <p>Parameters: None</p>
 <p>Return: <em>bool</em> - True if the trial has ended, false otherwise.</p>
-<h3 id="get_active_actorsself"><code>get_active_actors(self)</code><a class="headerlink" href="#get_active_actorsself" title="Permanent link">&para;</a></h3>
-<p>Method to get the list of active actors in the trial. This may be expensive to retrieve and thus should be stored if the list is not expected to change throughout the trial.</p>
+<h3 id="sending_doneself"><code>sending_done(self)</code><a class="headerlink" href="#sending_doneself" title="Permanent link">&para;</a></h3>
+<p>Method to notify the Orchestrator that all data for the trial, from this session, has been sent. This can be called only when the session is ending. When starting the session (see <code>EnvironmentSession</code> and <code>ActorSession</code>), if the <code>auto_done_sending</code> parameter is True, this method should not be called, and if the parameter is False, it MUST be called to end the trial properly.</p>
 <p>Parameters: None</p>
-<p>Return: <em>list[ActorInfo instance]</em> - List of active actors and classes involved in this trial.</p>
+<p>Return: None</p>
 <h3 id="add_rewardself-value-confidence-to-tick_id-1-user_datanone"><code>add_reward(self, value, confidence, to, tick_id=-1, user_data=None)</code><a class="headerlink" href="#add_rewardself-value-confidence-to-tick_id-1-user_datanone" title="Permanent link">&para;</a></h3>
 <p>Method to send a reward to one or more actors.</p>
 <p>Parameters:</p>
 <ul>
 <li><code>value</code>: <em>float</em> - Value of the reward. This will be aggregated with other rewards for the same target actor.</li>
-<li><code>confidence</code>: <em>float</em> - Weight of this reward value in determining the final aggregated reward.</li>
-<li><code>to</code>: <em>list[str]</em> - Target(s) of reward. A list value could be the name of an actor in the trial. Or it could represent a set of actors; A set of actors can be represented with the wildcard character "<code>*</code>" for all actors (of all classes), or "<code>actor_class.*</code>" for all actors of a specific class (the <code>actor_class</code> is the name of the class as specified in <code>cogment.yaml</code>).</li>
+<li><code>confidence</code>: <em>float</em> - Weight of this reward value in determining the final aggregated reward. Should be &gt; 0.</li>
+<li><code>to</code>: <em>list[str]</em> - Target(s) of reward. A list value could be the name of an actor in the trial. Or it could represent a set of actors; A set of actors can be represented with the wildcard character "<code>*</code>" for all actors (of all classes), or "<code>actor_class.*</code>" for all actors of a specific class (the <code>actor_class</code> is the name of the class as specified in the spec file).</li>
 <li><code>tick_id</code>: <em>int</em> - The tick id (time step) for which the reward should be applied. If "-1", then the reward applies to the current time step.</li>
 <li><code>user_data</code>: <em>protobuf class instance</em> - Extra user data to be sent with the reward. The class can be any protobuf class. It is the responsibility of the receiving actor to manage the class received (packed in a <code>google.protobuf.Any</code>).</li>
-</ul>
-<p>Return: None</p>
-<h3 id="send_messageself-payload-to-to_environmentfalse"><code>send_message(self, payload, to, to_environment=False)</code><a class="headerlink" href="#send_messageself-payload-to-to_environmentfalse" title="Permanent link">&para;</a></h3>
-<p>Method to send a message related to the current time step (tick id).</p>
-<p>Parameters:</p>
-<ul>
-<li><code>payload</code>: <em>protobuf class instance</em> - The message data to be sent. The class can be any protobuf class. It is the responsibility of the receiving actor or environment to manage the class received (packed in a <code>google.protobuf.Any</code>).</li>
-<li><code>to</code>: <em>list[str]</em> - Targets of feedback. A list value could be the name of an actor in the trial. Or it could represent a set of actors; A set of actors can be represented with the wildcard character "<code>*</code>" for all actors (of all classes), or "<code>actor_class.*</code>" for all actors of a specific class (the <code>actor_class</code> is the name of the class as specified in <code>cogment.yaml</code>).</li>
-<li><code>to_environment</code>: <em>bool</em> - If True, the message is also sent to the environment, otherwise the message is only sent to the specified actors.</li>
 </ul>
 <p>Return: None</p>
 <h2 id="class-environmentsessionsession">class EnvironmentSession(Session)<a class="headerlink" href="#class-environmentsessionsession" title="Permanent link">&para;</a></h2>
 <p>Abstract class based on <code>Session</code>, containing session data and methods necessary to run an environment for a trial. An instance of this class is passed as an argument to the environment callback function registered with <code>cogment.Context.register_environment</code>.</p>
 <p><code>impl_name</code>: <em>str</em> - Name of the implementation running this environment.</p>
-<p><code>config</code>: <em>protobuf class instance</em> - User configuration received for this environment instance. Can be <code>None</code> if no configuration was provided. The type of the protobuf class is specified in <code>cogment.yaml</code> in the section <code>environment:config_type</code>.</p>
-<h3 id="startself-observations"><code>start(self, observations)</code><a class="headerlink" href="#startself-observations" title="Permanent link">&para;</a></h3>
+<p><code>config</code>: <em>protobuf class instance</em> - User configuration received for this environment instance. Can be <code>None</code> if no configuration was provided. The type of the protobuf class is specified in the spec file in the section <code>environment:config_type</code>.</p>
+<p><code>name</code>: <em>str</em> - Name of the environment this instance represents.</p>
+<h3 id="startself-observations-none-auto_done_sendingtrue"><code>start(self, observations = None, auto_done_sending=True)</code><a class="headerlink" href="#startself-observations-none-auto_done_sendingtrue" title="Permanent link">&para;</a></h3>
 <p>Method to report that the environment is starting to run the trial. The method should be called before any other method in the session.</p>
 <p>Parameters:</p>
 <ul>
-<li><code>observations</code>: <em>list[tuple(str, protobuf class instance)]</em> - The initial observations from which the environment is starting the trial. This is the same as the parameter for <code>self.produce_observations</code>.</li>
+<li>
+<p><code>observations</code>: <em>list[tuple(str, protobuf class instance)]</em> - The initial observations from which the environment is starting the trial. This is the same as the parameter for <code>self.produce_observations</code>. If not provided, then the first observation sent with <code>produce_observation</code> will be used to initiate the trial (note that no actions will be received until the first observation is sent).</p>
+</li>
+<li>
+<p><code>auto_done_sending</code>: <em>bool</em> - Controls when to notify the Orchestrator that all data has been sent. If True, the session will automatically send the notification after <code>end</code> is called. If False, the user MUST call <code>sending_done</code> (after <code>end</code>) to end the trial properly.
+    Return: None</p>
+</li>
 </ul>
-<p>Return: None</p>
 <h3 id="async-event_loopself"><code>async event_loop(self)</code><a class="headerlink" href="#async-event_loopself" title="Permanent link">&para;</a></h3>
 <p>Generator method to iterate over all events (actions, messages) as they are received. This will block and wait for an event.
 When this generator exits, the callback function (registered with <code>register_environment</code>) should return to end the trial cleanly.
@@ -2398,25 +2764,41 @@ The generator will exit for various reasons indicating the termination of the tr
 <p>Method to send observations to actors. If called after receiving an event of type <code>EventType.ENDING</code>, the observation will be consired the final observation (equivalent to calling <code>end()</code>).</p>
 <p>Parameters:</p>
 <ul>
-<li><code>observations</code>: <em>list[tuple(str, protobuf class instance)]</em> - The observations to send to actors. The string in the tuple is the name of the destination actor (or "*" for all actors). The name of the actors can be found in <code>cogment.yaml</code> under <code>trial_params:actors:name</code>. The protobuf class is the Observation Space for that actor, found in <code>cogment.yaml</code> in the corresponding section <code>actor_classes:observation:space</code>.</li>
+<li><code>observations</code>: <em>list[tuple(str, protobuf class instance)]</em> - The observations to send to actors. The string in the tuple is the name of the destination actor (or "*" for all actors). The name of the actors can be found in trial parameters under <code>trial_params:actors:name</code>. The protobuf class is the Observation Space for that actor, found in the spec file in the corresponding section <code>actor_classes:observation:space</code>.</li>
 </ul>
 <p>Return: None</p>
 <h3 id="endself-final_observations"><code>end(self, final_observations)</code><a class="headerlink" href="#endself-final_observations" title="Permanent link">&para;</a></h3>
-<p>Method to report the end of the environment. This will effectively end the trial.</p>
+<p>Method to report the end of the environment. This will effectively end the trial. Message events can still arrive after this call.</p>
 <p>Parameters:</p>
 <ul>
 <li><code>final_observations</code>: <em>list[tuple(str, protobuf class instance)]</em> - The final observations to send to the actors. This is the same as the parameter for <code>self.produce_observations</code>.</li>
 </ul>
 <p>Return: None</p>
+<h3 id="get_active_actorsself"><code>get_active_actors(self)</code><a class="headerlink" href="#get_active_actorsself" title="Permanent link">&para;</a></h3>
+<p>Method to get the list of active actors in the trial.</p>
+<p>Parameters: None</p>
+<p>Return: <em>list[ActorInfo instance]</em> - List of active actors and classes involved in this trial.</p>
+<h3 id="send_messageself-payload-to"><code>send_message(self, payload, to)</code><a class="headerlink" href="#send_messageself-payload-to" title="Permanent link">&para;</a></h3>
+<p>Method to send a message related to the current time step (tick id).</p>
+<p>Parameters:</p>
+<ul>
+<li><code>payload</code>: <em>protobuf class instance</em> - The message data to be sent. The class can be any protobuf class. It is the responsibility of the receiving environment to manage the class received (packed in a <code>google.protobuf.Any</code>).</li>
+<li><code>to</code>: <em>list[str]</em> - Targets of feedback. Each value could be the name of an actor in the trial. Or it could represent a set of actors (with wildcards); A set of actors can be represented with the wildcard character "<code>*</code>" for all actors (of all classes), or "<code>actor_class.*</code>" for all actors of a specific class (the <code>actor_class</code> must match one of the classes listed in the trial parameters). Note that the wildcard does not include the environment.</li>
+</ul>
+<p>Return: None</p>
 <h2 id="class-actorsessionsession">class ActorSession(Session)<a class="headerlink" href="#class-actorsessionsession" title="Permanent link">&para;</a></h2>
 <p>Abstract class based on <code>Session</code>, containing session/trial data and methods necessary to run an actor for a trial. An instance of this class is passed as argument to the actor callback function registered with <code>cogment.Context.register_actor</code>.</p>
-<p><code>class_name</code>: <em>str</em> - Name of the class of actor this instance represents. Specified in <code>cogment.yaml</code> as <code>actor_classes:name</code>.</p>
+<p><code>class_name</code>: <em>str</em> - Name of the class of actor this instance represents. Specified in the spec file as <code>actor_classes:name</code>.</p>
 <p><code>impl_name</code>: <em>str</em> - Name of the implementation of the actor represented by this instance.</p>
-<p><code>config</code>: <em>protobuf class instance</em> - User configuration received for this actor instance. Can be <code>None</code> is no configuration was provided. The type of the protobuf class is specified in <code>cogment.yaml</code> in the section <code>actor_classes:config_type</code>.</p>
+<p><code>config</code>: <em>protobuf class instance</em> - User configuration received for this actor instance. Can be <code>None</code> is no configuration was provided. The type of the protobuf class is specified in the spec file in the section <code>actor_classes:config_type</code>.</p>
 <p><code>name</code>: <em>str</em> - Name of the actor this instance represents.</p>
-<h3 id="startself"><code>start(self)</code><a class="headerlink" href="#startself" title="Permanent link">&para;</a></h3>
+<p><code>env_name</code>: <em>str</em> - Name of the environment running the trial this actor is participating in (used to send messages to the environment).</p>
+<h3 id="startself-auto_done_sendingtrue"><code>start(self, auto_done_sending=True)</code><a class="headerlink" href="#startself-auto_done_sendingtrue" title="Permanent link">&para;</a></h3>
 <p>Method to start the actor. This method should be called before any other method in the session.</p>
-<p>Parameters: None</p>
+<p>Parameters:</p>
+<ul>
+<li><code>auto_done_sending</code>: <em>bool</em> - Controls when to notify the Orchestrator that all data has been sent. If True, the session will automatically send the notification after receiving the last observation. If False, the user MUST call <code>sending_done</code> to end the trial properly.</li>
+</ul>
 <p>Return: None</p>
 <h3 id="async-event_loopself_1"><code>async event_loop(self)</code><a class="headerlink" href="#async-event_loopself_1" title="Permanent link">&para;</a></h3>
 <p>Generator method to iterate over all events (observations, rewards, messages) as they are received. This will block and wait for an event.
@@ -2428,50 +2810,61 @@ The generator will exit for various reasons indicating the end of the trial, a l
 <p>Method to send actions to the environment.</p>
 <p>Parameters:</p>
 <ul>
-<li><code>action</code>: <em>protobuf class instance</em> - An instance of the action space class specified in the corresponding section <code>actor_classes:action:space</code> of the <code>cogment.yaml</code> file. If <code>None</code>, then no action space is sent (empty content) and the environment will receive a default initialized action space of the appropriate type.</li>
+<li><code>action</code>: <em>protobuf class instance</em> - An instance of the action space class specified in the corresponding section <code>actor_classes:action:space</code> of the spec file. If <code>None</code>, then no action space is sent (empty content) and the environment will receive a default initialized action space of the appropriate type.</li>
+</ul>
+<p>Return: None</p>
+<h3 id="send_messageself-payload-to_1"><code>send_message(self, payload, to)</code><a class="headerlink" href="#send_messageself-payload-to_1" title="Permanent link">&para;</a></h3>
+<p>Method to send a message related to the current time step (tick id).</p>
+<p>Parameters:</p>
+<ul>
+<li><code>payload</code>: <em>protobuf class instance</em> - The message data to be sent. The class can be any protobuf class. It is the responsibility of the receiving actor to manage the class received (packed in a <code>google.protobuf.Any</code>).</li>
+<li><code>to</code>: <em>list[str]</em> - Targets of feedback. Each value could be the name of an actor in the trial, or the name of the environment (from <code>self.env_name</code>). Or it could represent a set of actors (with wildcards); A set of actors can be represented with the wildcard character "<code>*</code>" for all actors (of all classes), or "<code>actor_class.*</code>" for all actors of a specific class (the <code>actor_class</code> must match one of the classes listed in the trial parameters). Note that the wildcard does not include the environment.</li>
 </ul>
 <p>Return: None</p>
 <h2 id="class-prehooksession">class PrehookSession<a class="headerlink" href="#class-prehooksession" title="Permanent link">&para;</a></h2>
-<p>Abstract class containing trial configuration data to define the specifics of a trial. An instance of this class is passed as argument to the prehook callback function registered with <code>cogment.Context.register_pre_trial_hook</code>, and is part of the <code>DatalogSession</code>.</p>
-<p><code>trial_config</code>: <em>protobuf class instance</em> - Configuration for the new trial. The type is specified in the file <code>cogment.yaml</code> under the section <code>trial:config_type</code>.</p>
-<p><code>trial_max_steps</code>: <em>int</em> - The maximum number of time steps (ticks) that the trial will run before terminating.</p>
-<p><code>trial_max_inactivity</code>: <em>int</em> - The number of seconds of inactivity after which a trial will be terminated. If 0, the trial will not be terminated because of inactivity.</p>
-<p><code>environment_config</code>: <em>protobuf class instance</em> - Configuration for the environment in the new trial. This configuration will be sent to the environment on start. The type is specified in the file <code>cogment.yaml</code> under the section <code>environment:config_type</code>.</p>
+<p>Abstract class containing trial configuration data to define the specifics of a trial. An instance of this class is passed as argument to the pre-trial hook callback function registered with <code>cogment.Context.register_pre_trial_hook</code>. The first pre-trial hook to be called will receive the default parameters set in the Orchestrator, the following hooks will receive the parameters set by the preceding hooks.</p>
+<p><code>trial_config</code>: <em>protobuf class instance</em> - Configuration for the new trial. The type is specified in the spec file under the section <code>trial:config_type</code>. The first pre-trial hook receives the config that came from the <code>Controller.start_trial()</code> function. If <code>None</code>, no config will be sent to the next pre-trial hook.</p>
+<p><code>trial_max_steps</code>: <em>int</em> - The maximum number of time steps (ticks) that the trial will run before terminating. If 0 (or <code>None</code>), the trial will not be auto terminated (the environment and a Controller can still terminate the trial).</p>
+<p><code>trial_max_inactivity</code>: <em>int</em> - The number of seconds of inactivity after which a trial will be terminated. If 0 (or <code>None</code>), the trial will not be terminated because of inactivity.</p>
+<p><code>datalog_endpoint</code>: <em>str</em> - The URL to connect to the data logger. The protocol must be "grpc". E.g. "grpc://mydb:9000". If <code>None</code>, no datalog service will be connected.</p>
+<p><code>datalog_exclude</code>: <em>list[str]</em> - List of fields to exclude from the data to send for logging.</p>
+<p><code>environment_config</code>: <em>protobuf class instance</em> - Configuration for the environment in the new trial. This configuration will be sent to the environment on start. The type is specified in the spec file under the section <code>environment:config_type</code>. If <code>None</code>, no config will be sent to the environment.</p>
 <p><code>environment_endpoint</code>: <em>str</em> - The URL to connect to the environment. The protocol must be "grpc". E.g. "grpc://myenv:9000"</p>
+<p><code>environment_name</code>: <em>str</em> - The name of the environment.</p>
 <p><code>environment_implementation</code>: <em>str</em> - The name of the implementation to run the environment.</p>
 <p><code>actors</code>: <em>list[dict]</em> - Each item (dictionary) of the list represents an actor. Each actor dictionary contains these key-value pairs:</p>
 <ul>
 <li><code>"name"</code>: <em>str</em> - Name of the actor</li>
-<li><code>"actor_class"</code>: <em>str</em> - The actor class for the actor</li>
-<li><code>"endpoint"</code>: <em>str</em> - The URL to connect to the actor. If, instead of a URL, the value is "client", then this actor will connect in (rather than be connected to), and the actor will need to provide the URL to connect to the orchestrator.</li>
+<li><code>"actor_class"</code>: <em>str</em> - The actor class for the actor. This is specific to a type of trial and must match values in the spec file under section <code>actor_classes:name</code>.</li>
+<li><code>"endpoint"</code>: <em>str</em> - The URL to connect to the actor. If, instead of a grpc URL, the value is "cogment://client", then this actor will connect in (rather than be connected to), and the actor will need to provide the grpc URL to connect to the orchestrator.</li>
 <li><code>"implementation"</code>: <em>str</em> - The name of the implementation to run this actor</li>
-<li><code>"config"</code>: <em>protobuf class instance</em> - The configuration data for the actor.</li>
+<li><code>"config"</code>: <em>protobuf class instance</em> - The configuration data for the actor. The type is specified in the spec file under the section <code>actor_classes:config_type</code> for the corresponding actor. If <code>None</code>, no config will be sent to the actor.</li>
 </ul>
 <h3 id="get_trial_idself_1"><code>get_trial_id(self)</code><a class="headerlink" href="#get_trial_idself_1" title="Permanent link">&para;</a></h3>
-<p>Method to retrieve the UUID of the trial.</p>
+<p>Method to retrieve the ID of the trial.</p>
 <p>Parameters: None</p>
-<p>Return: <em>str</em> - UUID of the trial.</p>
+<p>Return: <em>str</em> - ID of the trial.</p>
+<h3 id="get_user_idself"><code>get_user_id(self)</code><a class="headerlink" href="#get_user_idself" title="Permanent link">&para;</a></h3>
+<p>Method to retrieve the identifier of the user that started the trial.</p>
+<p>Parameters: None</p>
+<p>Return: <em>str</em> - Identifier of the user that started the trial.</p>
 <h3 id="validateself"><code>validate(self)</code><a class="headerlink" href="#validateself" title="Permanent link">&para;</a></h3>
 <p>Method to validate that the data is valid. This is a superficial check; even if the data validates successfully, there can still be problems with the data. This method should be called if changes have been made to the data members of the class. Exceptions are raised on error.</p>
 <p>Parameters: None</p>
 <p>Return: None</p>
-<h2 id="cogmentapicommon_pb2trialparams">cogment.api.common_pb2.TrialParams<a class="headerlink" href="#cogmentapicommon_pb2trialparams" title="Permanent link">&para;</a></h2>
-<p><a href="../../cogment-low-level-api-guide/grpc/#trialparams">TrialParams</a> is defined in the low level grpc api.</p>
-<h2 id="cogmentapidatalog_pb2datalogsample">cogment.api.datalog_pb2.DatalogSample<a class="headerlink" href="#cogmentapidatalog_pb2datalogsample" title="Permanent link">&para;</a></h2>
-<p><a href="../../cogment-low-level-api-guide/grpc/#logexportersamplerequest">DatalogSample</a> is defined in the low level grpc api.</p>
 <h2 id="class-datalogsession">class DatalogSession<a class="headerlink" href="#class-datalogsession" title="Permanent link">&para;</a></h2>
 <p>Abstract class containing session data and methods necessary to manage the logging of trial run data. An instance of this class is passed as an argument to the datalog callback function registered with <code>cogment.Context.register_datalog</code>.</p>
 <p><code>trial_id</code>: <em>str</em> - UUID of the trial managed by this instance.</p>
-<p><code>trial_params</code>: <em>dictionary</em> - Parameters of the trial. This parameter has been <strong>deprecated</strong>.</p>
-<p><code>raw_trial_params</code>: <em><a href="#cogmentapicommon_pb2trialparams">cogment.api.common_pb2.TrialParams</a></em> - Parameters of the trial.</p>
-<h3 id="startself_1"><code>start(self)</code><a class="headerlink" href="#startself_1" title="Permanent link">&para;</a></h3>
+<p><code>user_id</code>: <em>str</em> - Identifier of the user that started the trial.</p>
+<p><code>trial_params</code>: <em>cogment.LogParam instance</em> - Parameters of the trial.</p>
+<h3 id="startself"><code>start(self)</code><a class="headerlink" href="#startself" title="Permanent link">&para;</a></h3>
 <p>Method to start receiving samples.</p>
 <p>Parameters: None</p>
 <p>Return: None</p>
 <h3 id="get_all_samplesself"><code>get_all_samples(self)</code><a class="headerlink" href="#get_all_samplesself" title="Permanent link">&para;</a></h3>
 <p>Generator method to iterate over all samples as they are received (waiting for each in turn).</p>
 <p>Parameters: None</p>
-<p>Return: <em>generator(<a href="#cogmentapidatalogdatalogsample">cogment.api.datalog_pb2.DatalogSample</a>)</em> - A generator for the samples received.</p>
+<p>Return: <em>generator(cogment.LogSample instance)</em> - A generator for the samples received.</p>
 <h2 id="class-cogmentendpoint">class cogment.Endpoint<a class="headerlink" href="#class-cogmentendpoint" title="Permanent link">&para;</a></h2>
 <p>Class enclosing the details for connecting to an Orchestrator.</p>
 <p><code>url</code>: <em>str</em> - The URL where to connect to the Orchestrator.</p>
@@ -2507,12 +2900,13 @@ The generator will exit for various reasons indicating the end of the trial, a l
 <p>Class enclosing the details of a trial.</p>
 <p><code>trial_id</code>: <em>str</em> - The trial ID to which the details pertain.</p>
 <p><code>state</code>: <em>cogment.TrialState</em> - The current state of the trial.</p>
+<p><code>env_name</code>: <em>str</em> - The name of the environment running the trial.</p>
 <p><code>tick_id</code>: <em>int</em> - The time step that the information relates to. Only provided from a call to <code>get_trial_info</code>.</p>
 <p><code>duration</code>: <em>int</em> - The time (in nanoseconds) that the trial has run. Only provided from a call to <code>get_trial_info</code>.</p>
 <h2 id="class-actorinfo">class ActorInfo<a class="headerlink" href="#class-actorinfo" title="Permanent link">&para;</a></h2>
 <p>Class enclosing the details of an actor.</p>
 <p><code>actor_name</code>: <em>str</em> - The name of the actor.</p>
-<p><code>actor_class_name</code>: <em>str</em> - The name of the actor's class (as defined in <code>cogment.yaml</code>).</p>
+<p><code>actor_class_name</code>: <em>str</em> - The name of the actor's class (as defined in the spec file).</p>
 <h2 id="class-recvevent">class RecvEvent<a class="headerlink" href="#class-recvevent" title="Permanent link">&para;</a></h2>
 <p>Class representing a received event (for environments and actors). It can contain any combination of data according to the receiver needs, or even be empty, but it will always have a type.</p>
 <p><code>type</code>: <em>Enum EventType</em> - Type of event the enclosed data represents.</p>
@@ -2540,19 +2934,23 @@ The generator will exit for various reasons indicating the end of the trial, a l
 <p>Class containing the details of an observation for an actor.</p>
 <p><code>tick_id</code>: <em>int</em> - The time step that the observation relates to.</p>
 <p><code>timestamp</code>: <em>int</em> - Unix style Epoch timestamp in nanoseconds (time since 00:00:00 UTC Jan 1, 1970).</p>
-<p><code>snapshot</code>: <em>protobuf class instance</em> - Snaphot Observation (as opposed to a delta observation) received from the environment. The class of the snapshot observation is defined as observation space for the actor class. This is specified in section <code>actor_classes:observation:space</code> in <code>cogment.yaml</code> for the appropriate/receiving actor class.</p>
+<p><code>observation</code>: <em>protobuf class instance</em> - Observation received from the environment. The class of the observation is defined as observation space for the actor class. This is specified in section <code>actor_classes:observation:space</code> in the spec file for the appropriate/receiving actor class.</p>
 <h2 id="class-recvaction">class RecvAction<a class="headerlink" href="#class-recvaction" title="Permanent link">&para;</a></h2>
 <p>Class containing the details of an action from an actor.</p>
+<p><code>tick_id</code>: <em>int</em> - The time step that the action relates to.</p>
+<p><code>timestamp</code>: <em>int</em> - Unix style Epoch timestamp in nanoseconds (time since 00:00:00 UTC Jan 1, 1970).</p>
 <p><code>actor_index</code>: <em>int</em> - Index of the actor in the list of all trial actors (returned by <code>Session.get_active_actors</code>).</p>
-<p><code>action</code>: <em>protobuf class instance</em> - Action from the actor which has index <code>actor_index</code> in the trial. The class of the action is defined as action space for the specific actor in the section <code>actor_classes:action:space</code> in <code>cogment.yaml</code> .</p>
+<p><code>action</code>: <em>protobuf class instance</em> - Action from the actor which has index <code>actor_index</code> in the trial. The class of the action is defined as action space for the specific actor in the section <code>actor_classes:action:space</code> in the spec file.</p>
 <h2 id="class-recvmessage">class RecvMessage<a class="headerlink" href="#class-recvmessage" title="Permanent link">&para;</a></h2>
 <p>Class containing a message.</p>
 <p><code>tick_id</code>: <em>int</em> - The time step that the message relates to.</p>
-<p><code>sender_name</code>: <em>str</em> - Name of the sender of the message (the name of an actor, or "env" if the environment sent the message).</p>
+<p><code>receiver_name</code>: <em>str</em> - Name of the receiver for the message (the name of an actor, or wildcard string).</p>
+<p><code>sender_name</code>: <em>str</em> - Name of the sender of the message (the name of an actor, or the environment).</p>
 <p><code>payload</code>: <em>google.protobuf.Any instance</em> - Data for a received message. The class enclosed in <code>google.protobuf.Any</code> is of the type set by the sender; It is the responsibility of the receiver to manage the data received (i.e. determine the type and unpack the data).</p>
 <h2 id="class-recvreward">class RecvReward<a class="headerlink" href="#class-recvreward" title="Permanent link">&para;</a></h2>
 <p>Class containing the details of a received reward.</p>
 <p><code>tick_id</code>: <em>int</em> - The tick id (time step) for which the reward should be applied.</p>
+<p><code>receiver_name</code>: <em>str</em> - Name of the receiver for the reward (the name of an actor, or wildcard string).</p>
 <p><code>value</code>: <em>float</em> - Value of the reward (aggregated from the sources)</p>
 <h3 id="get_nb_sourcesself"><code>get_nb_sources(self)</code><a class="headerlink" href="#get_nb_sourcesself" title="Permanent link">&para;</a></h3>
 <p>Return the number of source rewards this reward is based upon.</p>
@@ -2566,8 +2964,132 @@ The generator will exit for various reasons indicating the end of the trial, a l
 <p>Class containing the details of a received single source reward.</p>
 <p><code>value</code>: <em>float</em> - Value of the reward from the sender.</p>
 <p><code>confidence</code>: <em>float</em> - Confidence level of this reward value.</p>
-<p><code>sender_name</code>: <em>str</em> - Name of the sender of this reward (the name of an actor, or "env" if the environment sent the reward).</p>
+<p><code>sender_name</code>: <em>str</em> - Name of the sender of this reward (the name of an actor, or the environment).</p>
 <p><code>user_data</code>: <em>google.protobuf.Any instance</em> - Data for a user-specific reward format. Can be <code>None</code> if no specific data was provided. The class enclosed in <code>google.protobuf.Any</code> is of the type set by the sender; it is the responsibility of the receiver to manage the data received (i.e. determine the type and unpack the data).</p>
+<h2 id="class-cogmentlogparams">class cogment.LogParams<a class="headerlink" href="#class-cogmentlogparams" title="Permanent link">&para;</a></h2>
+<p>Class containing the paramaters of the trial.</p>
+<p><code>max_steps</code>: <em>int</em> - The maximum number of steps/ticks that the trial should run. After this number of steps/ticks, an end request will be sent to the environment.</p>
+<p><code>max_inactivity</code>: <em>int</em> - The maximum amount of time (in seconds) that the trial should be without activity before it is forcefully terminated. "Activity" is defined as a message received by the Orchestrator from a user component.</p>
+<p><code>nb_actors</code>: <em>int</em> - The number of actors participating in the trial.</p>
+<p><code>datalog</code>: <em>dict</em> - The datalog related parameters. The dictionary contains these key-value pairs:</p>
+<ul>
+<li><code>"endpoint"</code>: <em>str</em> - The URL to connect to the datalog service.</li>
+<li><code>"exclude"</code>: <em>list(str)</em> - Fields to exclude from the samples sent to the datalog service.</li>
+</ul>
+<p><code>environment</code>: <em>dict</em> - The environment related parameters. The dictionary contains these key-value pairs:</p>
+<ul>
+<li><code>"name"</code>: <em>str</em> - Name of the environment</li>
+<li><code>"endpoint"</code>: <em>str</em> - The URL to connect to the environment.</li>
+<li><code>"implementation"</code>: <em>str</em> - The name of the implementation to run the environment</li>
+</ul>
+<h3 id="__init__self-cog_settings"><code>__init__(self, cog_settings)</code><a class="headerlink" href="#__init__self-cog_settings" title="Permanent link">&para;</a></h3>
+<p>Parameter:</p>
+<ul>
+<li><code>cog_settings</code>: <em>module</em> - Settings module associated with trials that will be run (<a href="#cog_settings.py">cog_settings</a> namespace).</li>
+</ul>
+<h3 id="get_serialization_typeself"><code>get_serialization_type(self)</code><a class="headerlink" href="#get_serialization_typeself" title="Permanent link">&para;</a></h3>
+<p>Return the type of serial data produced by <code>serialize</code> and accepted by <code>deserialize</code>. The type represents an ID dependent on <a href="../../cogment-low-level-api-guide/grpc/#trialparams">TrialParams</a> defined in the low level gRPC API.</p>
+<p>Parameters: None</p>
+<p>Return: <em>int</em> - The type of the serialization string data. This is the type of string that is returned by <code>serialize</code>, and the only type accepted by <code>deserialize</code>; it is undefined behavior to try to deserialize the wrong type of data. This value is strictly larger than 1.</p>
+<h3 id="serializeself"><code>serialize(self)</code><a class="headerlink" href="#serializeself" title="Permanent link">&para;</a></h3>
+<p>Return a binary string equivalent of the parameters.</p>
+<p>Parameters: None</p>
+<p>Return: <em>str</em> - Serialized parameters.</p>
+<h3 id="deserializeself-raw_string"><code>deserialize(self, raw_string)</code><a class="headerlink" href="#deserializeself-raw_string" title="Permanent link">&para;</a></h3>
+<p>Takes a serialized parameter string and sets the LogParams instance.</p>
+<p>Parameter:</p>
+<ul>
+<li><code>raw_string</code>: <em>str</em> - Binary string representing a serialized LogParam of the same type.</li>
+</ul>
+<h3 id="get_trial_configself"><code>get_trial_config(self)</code><a class="headerlink" href="#get_trial_configself" title="Permanent link">&para;</a></h3>
+<p>Returns the trial config.</p>
+<p>Parameters: None</p>
+<p>Return: <em>protobuf class instance</em> - Configuration for the trial. The type is specified in the spec file under the section <code>trial:config_type</code>.</p>
+<h3 id="get_environment_configself"><code>get_environment_config(self)</code><a class="headerlink" href="#get_environment_configself" title="Permanent link">&para;</a></h3>
+<p>Returns the environment config.</p>
+<p>Parameters: None</p>
+<p>Return: <em>protobuf class instance</em> - Configuration for the environment. The type is specified in the spec file under the section <code>environment:config_type</code>.</p>
+<h3 id="get_actor_indexself-actor_name"><code>get_actor_index(self, actor_name)</code><a class="headerlink" href="#get_actor_indexself-actor_name" title="Permanent link">&para;</a></h3>
+<p>Returns the index of the given actor, or None if the actor is not in the trial.</p>
+<p>Parameters:</p>
+<ul>
+<li><code>actor_name</code>: <em>str</em> - Name of the actor to look for in the trial parameters.</li>
+</ul>
+<p>Return: <em>int</em> - Index of actor is found. <code>None</code> if not found. This index is constant in the trial and relates to all complete actors list provided by cogment (e.g. <code>Controller.get_actors()</code>).</p>
+<h3 id="get_actor_nameself-actor_index"><code>get_actor_name(self, actor_index)</code><a class="headerlink" href="#get_actor_nameself-actor_index" title="Permanent link">&para;</a></h3>
+<p>Returns the name of an actor in the trial.</p>
+<p>Parameters:</p>
+<ul>
+<li><code>actor_index</code>: <em>int</em> - Index of the actor to retrieve. This number is constant in the trial and relates to the complete list of actors provided by cogment (e.g. <code>Controller.get_actors()</code>). The value must be between 0 and <code>self.nb_actors</code> (exclusively).</li>
+</ul>
+<p>Return: <em>str</em> - Name of the actor in the trial parameters.</p>
+<h3 id="get_actorself-actor_index"><code>get_actor(self, actor_index)</code><a class="headerlink" href="#get_actorself-actor_index" title="Permanent link">&para;</a></h3>
+<p>Returns information about a particular actor in the trial.</p>
+<p>Parameters:</p>
+<ul>
+<li><code>actor_index</code>: <em>int</em> - Index of the actor to retrieve. This number is constant in the trial and relates to the complete list of actors provided by cogment (e.g. <code>Controller.get_actors()</code>). The value must be between 0 and <code>self.nb_actors</code> (exclusively).</li>
+</ul>
+<p>Return: <em>dict</em> - Dictionary containing the details of the actor parameters. The dictionary contains these key-value pairs:</p>
+<ul>
+<li><code>"name"</code>: <em>str</em> - Name of the actor.</li>
+<li><code>"actor_class"</code>: <em>str</em> - The actor class for the actor. This is specific to a type of trial and must match values in the spec file under section <code>actor_classes:name</code>.</li>
+<li><code>"endpoint"</code>: <em>str</em> - The URL to connect to the service actor, or "cogment://client" for client actors that will connect in.</li>
+<li><code>"implementation"</code>: <em>str</em> - The name of the implementation to run the actor.</li>
+<li><code>"config"</code>: <em>protobuf class instance</em> - The configuration data for the actor. The type is specified in the spec file under the section <code>actor_classes:config_type</code> for the specific actor class of the actor.</li>
+</ul>
+<h2 id="class-cogmentlogsample">class cogment.LogSample<a class="headerlink" href="#class-cogmentlogsample" title="Permanent link">&para;</a></h2>
+<p>Class containing a datalog sample.
+A sample starts and ends with the arrival of new observations from the environment. The last sample will end after all components have acknowledged the end of the trial (the state of that sample will then be <code>TrialState.ENDED</code>).</p>
+<p>Note that some of the data may not be available (<code>None</code>) if it was excluded from the sample (see datalog parameters <code>LogParams.datalog["exclude"]</code>).</p>
+<p><code>tick_id</code>: <em>int</em> - The time step that the sample data relates to.</p>
+<p><code>state</code>: <em>cogment.TrialState</em> - The state of the trial at the end of the sample period.</p>
+<p><code>timestamp</code>: <em>int</em> - Unix style Epoch timestamp in nanoseconds (time since 00:00:00 UTC Jan 1, 1970) at the beginning of the sample period.</p>
+<p><code>events</code>: <em>str</em> - Description of special events that happened during the timeframe of the sample.</p>
+<h3 id="__init__self-params"><code>__init__(self, params)</code><a class="headerlink" href="#__init__self-params" title="Permanent link">&para;</a></h3>
+<p>Parameter:</p>
+<ul>
+<li><code>params</code>: <em>LogParams instance</em> - The parameters of the trial.</li>
+</ul>
+<h3 id="get_serialization_typeself_1"><code>get_serialization_type(self)</code><a class="headerlink" href="#get_serialization_typeself_1" title="Permanent link">&para;</a></h3>
+<p>Returns the type of serial data produced by <code>serialize</code> and accepted by <code>deserialize</code>. The type represents an ID dependent on <a href="../../cogment-low-level-api-guide/grpc/#logexportersamplerequest">DatalogSample</a> defined in the low level gRPC API.</p>
+<p>Parameters: None</p>
+<p>Return: <em>int</em> - The type of the serialization string data. This is the type of string that is returned by <code>serialize</code>, and the only type accepted by <code>deserialize</code>; it is undefined behavior to try to deserialize the wrong type of data. This value is strictly larger than 1.</p>
+<h3 id="serializeself_1"><code>serialize(self)</code><a class="headerlink" href="#serializeself_1" title="Permanent link">&para;</a></h3>
+<p>Returns a binary string equivalent of the sample.</p>
+<p>Parameters: None</p>
+<p>Return: <em>str</em> - Serialized sample.</p>
+<h3 id="deserializeself-raw_string_1"><code>deserialize(self, raw_string)</code><a class="headerlink" href="#deserializeself-raw_string_1" title="Permanent link">&para;</a></h3>
+<p>Takes a serialized sample string and sets the LogSample instance.</p>
+<p>Parameter:</p>
+<ul>
+<li><code>raw_string</code>: <em>str</em> - Binary string representing a serialized LogSample of the same type.</li>
+</ul>
+<h3 id="all_actor_namesself"><code>all_actor_names(self)</code><a class="headerlink" href="#all_actor_namesself" title="Permanent link">&para;</a></h3>
+<p>Generator method to iterate over all actors in the trial. This information can also be retrieved from the parameters of the trial.</p>
+<p>Parameters: None</p>
+<p>Return: <em>generator(str)</em> - A generator for the names of the actors in the trial.</p>
+<h3 id="get_actionself-actor"><code>get_action(self, actor)</code><a class="headerlink" href="#get_actionself-actor" title="Permanent link">&para;</a></h3>
+<p>Retrieves the action from the actor in the sample.</p>
+<p>Parameters:</p>
+<ul>
+<li><code>actor</code>: <em>str</em> or <em>int</em> - The name or index of the actor for which to retrieve the action. The number, index and name of actors can be retrieved from the parameters of the trial.</li>
+</ul>
+<p>Return: <em>RecvAction instance</em> - The action of the actor in the sample.</p>
+<h3 id="get_observationself-actor"><code>get_observation(self, actor)</code><a class="headerlink" href="#get_observationself-actor" title="Permanent link">&para;</a></h3>
+<p>Retrieve the observation destined for the actor in the sample.</p>
+<p>Parameters:</p>
+<ul>
+<li><code>actor</code>: <em>str</em> or <em>int</em> - The name or index of the actor for which to retrieve the observation. The number, index and name of actors can be retrieved from the parameters of the trial.</li>
+</ul>
+<p>Return: <em>RecvObservation instance</em> - The observation of the actor in the sample.</p>
+<h3 id="all_rewardsself"><code>all_rewards(self)</code><a class="headerlink" href="#all_rewardsself" title="Permanent link">&para;</a></h3>
+<p>Generator method to iterate over all the rewards in the sample.</p>
+<p>Parameters: None</p>
+<p>Return: <em>generator(RecvReward instance)</em> - A generator for the rewards in the sample.</p>
+<h3 id="all_messagesself"><code>all_messages(self)</code><a class="headerlink" href="#all_messagesself" title="Permanent link">&para;</a></h3>
+<p>Generator method to iterate over all the messages in the sample.</p>
+<p>Parameters: None</p>
+<p>Return: <em>generator(RecvMessage instance)</em> - A generator for the messages in the sample.</p>
                 
               
               
@@ -2587,7 +3109,7 @@ The generator will exit for various reasons indicating the end of the trial, a l
     <nav class="md-footer__inner md-grid" aria-label="Footer">
       
         
-        <a href="../cogment-yaml/" class="md-footer__link md-footer__link--prev" aria-label="Previous: cogment.yaml" rel="prev">
+        <a href="../../orchestrator/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Orchestrator" rel="prev">
           <div class="md-footer__button md-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
           </div>
@@ -2596,20 +3118,20 @@ The generator will exit for various reasons indicating the end of the trial, a l
               <span class="md-footer__direction">
                 Previous
               </span>
-              cogment.yaml
+              Orchestrator
             </div>
           </div>
         </a>
       
       
         
-        <a href="../javascript/modules/" class="md-footer__link md-footer__link--next" aria-label="Next: Modules" rel="next">
+        <a href="../../cogment-low-level-api-guide/overview/" class="md-footer__link md-footer__link--next" aria-label="Next: Overview" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
                 Next
               </span>
-              Modules
+              Overview
             </div>
           </div>
           <div class="md-footer__button md-icon">
@@ -2679,6 +3201,10 @@ The generator will exit for various reasons indicating the end of the trial, a l
     
     
       <script src="../../../assets/javascripts/bundle.bc35569b.min.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/highlight.min.js"></script>
+      
+        <script src="../../../javascripts/highlight.js"></script>
       
     
   </body>

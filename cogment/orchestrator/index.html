@@ -13,21 +13,21 @@
         <meta name="author" content="AI Redefined">
       
       
-        <link rel="canonical" href="https://docs.cogment.ai/cogment/cogment-api-reference/javascript/interfaces/cogmentyamlactorclass/">
+        <link rel="canonical" href="https://docs.cogment.ai/cogment/orchestrator/">
       
-      <link rel="icon" href="../../../../../images/cogment_favicon.png">
+      <link rel="icon" href="../../images/cogment_favicon.png">
       <meta name="generator" content="mkdocs-1.2.2, mkdocs-material-7.3.2">
     
     
       
-        <title>Interface: CogmentYamlActorClass - Cogment User Documentation</title>
+        <title>Orchestrator - Cogment User Documentation</title>
       
     
     
-      <link rel="stylesheet" href="../../../../../assets/stylesheets/main.24c991ad.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.24c991ad.min.css">
       
         
-        <link rel="stylesheet" href="../../../../../assets/stylesheets/palette.3f5d1f46.min.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.3f5d1f46.min.css">
         
       
     
@@ -42,7 +42,9 @@
     
     
     
-      <link rel="stylesheet" href="../../../../../style/theme.css">
+      <link rel="stylesheet" href="../../style/theme.css">
+    
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/styles/github.min.css">
     
     
       
@@ -72,7 +74,7 @@
     <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
   
     
-    <script>function __prefix(e){return new URL("../../../../..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
+    <script>function __prefix(e){return new URL("../..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
@@ -80,7 +82,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#properties" class="md-skip">
+        <a href="#orchestrator" class="md-skip">
           Skip to content
         </a>
       
@@ -93,9 +95,9 @@
 
 <header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="../../../../.." title="Cogment User Documentation" class="md-header__button md-logo" aria-label="Cogment User Documentation" data-md-component="logo">
+    <a href="../.." title="Cogment User Documentation" class="md-header__button md-logo" aria-label="Cogment User Documentation" data-md-component="logo">
       
-  <img src="../../../../../images/cogment_logo.png" alt="logo">
+  <img src="../../images/cogment_logo.png" alt="logo">
 
     </a>
     <label class="md-header__button md-icon" for="__drawer">
@@ -111,7 +113,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Interface: CogmentYamlActorClass
+              Orchestrator
             
           </span>
         </div>
@@ -192,9 +194,9 @@
 
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../../../../.." title="Cogment User Documentation" class="md-nav__button md-logo" aria-label="Cogment User Documentation" data-md-component="logo">
+    <a href="../.." title="Cogment User Documentation" class="md-nav__button md-logo" aria-label="Cogment User Documentation" data-md-component="logo">
       
-  <img src="../../../../../images/cogment_logo.png" alt="logo">
+  <img src="../../images/cogment_logo.png" alt="logo">
 
     </a>
     Cogment User Documentation
@@ -251,7 +253,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../.." class="md-nav__link">
+      <a href="../.." class="md-nav__link">
         Overview
       </a>
     </li>
@@ -265,7 +267,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../../introduction/installation/" class="md-nav__link">
+      <a href="../../introduction/installation/" class="md-nav__link">
         Installation & Setup
       </a>
     </li>
@@ -315,7 +317,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../../support/community-channels/" class="md-nav__link">
+      <a href="../../support/community-channels/" class="md-nav__link">
         Community channels
       </a>
     </li>
@@ -365,7 +367,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../../concepts/core-concepts/" class="md-nav__link">
+      <a href="../../concepts/core-concepts/" class="md-nav__link">
         Core Concepts
       </a>
     </li>
@@ -379,7 +381,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../../concepts/glossary/" class="md-nav__link">
+      <a href="../../concepts/glossary/" class="md-nav__link">
         Glossary
       </a>
     </li>
@@ -399,16 +401,14 @@
 
   
   
-    
-  
   
     
       
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" checked>
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" >
       
       
       
@@ -457,7 +457,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../tutorial/introduction/" class="md-nav__link">
+      <a href="../tutorial/introduction/" class="md-nav__link">
         Introduction
       </a>
     </li>
@@ -471,7 +471,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../tutorial/1-bootstrap-and-data-structures/" class="md-nav__link">
+      <a href="../tutorial/1-bootstrap-and-data-structures/" class="md-nav__link">
         Step 1: Bootstrap a Cogment app
       </a>
     </li>
@@ -485,7 +485,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../tutorial/2-random-player/" class="md-nav__link">
+      <a href="../tutorial/2-random-player/" class="md-nav__link">
         Step 2: Implement actor and environment
       </a>
     </li>
@@ -499,7 +499,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../tutorial/3-rewards/" class="md-nav__link">
+      <a href="../tutorial/3-rewards/" class="md-nav__link">
         Step 3: Introduce rewards
       </a>
     </li>
@@ -513,7 +513,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../tutorial/4-heuristic-player/" class="md-nav__link">
+      <a href="../tutorial/4-heuristic-player/" class="md-nav__link">
         Step 4: Create a heuristic player
       </a>
     </li>
@@ -527,7 +527,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../tutorial/5-human-player/" class="md-nav__link">
+      <a href="../tutorial/5-human-player/" class="md-nav__link">
         Step 5: Add a human player in the loop
       </a>
     </li>
@@ -541,7 +541,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../tutorial/6-web-client/" class="md-nav__link">
+      <a href="../tutorial/6-web-client/" class="md-nav__link">
         Step 6: Implement a web client for the human player
       </a>
     </li>
@@ -555,7 +555,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../tutorial/7-dqn-player/" class="md-nav__link">
+      <a href="../tutorial/7-dqn-player/" class="md-nav__link">
         Step 7: Add a player trained with Reinforcement Learning using DQN
       </a>
     </li>
@@ -576,7 +576,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../cogment-api-guide/" class="md-nav__link">
+      <a href="../cogment-api-guide/" class="md-nav__link">
         API Guide
       </a>
     </li>
@@ -588,14 +588,12 @@
               
   
   
-    
-  
   
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_3" type="checkbox" id="__nav_4_3" checked>
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_3" type="checkbox" id="__nav_4_3" >
       
       
       
@@ -618,8 +616,8 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../cogment-yaml/" class="md-nav__link">
-        cogment.yaml
+      <a href="../cogment-api-reference/cogment-yaml/" class="md-nav__link">
+        Spec file (cogment.yaml)
       </a>
     </li>
   
@@ -632,50 +630,8 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../python/" class="md-nav__link">
-        python
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-    
-  
-  
-    
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
-      
-      
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_3_3" type="checkbox" id="__nav_4_3_3" checked>
-      
-      
-      
-      
-        <label class="md-nav__link" for="__nav_4_3_3">
-          Javascript/Typescript SDK
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <nav class="md-nav" aria-label="Javascript/Typescript SDK" data-md-level="3">
-        <label class="md-nav__title" for="__nav_4_3_3">
-          <span class="md-nav__icon md-icon"></span>
-          Javascript/Typescript SDK
-        </label>
-        <ul class="md-nav__list" data-md-scrollfix>
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../modules/" class="md-nav__link">
-        Modules
+      <a href="../cogment-api-reference/parameters/" class="md-nav__link">
+        Parameters
       </a>
     </li>
   
@@ -688,110 +644,28 @@
   
   
     <li class="md-nav__item">
-      <a href="../../classes/actorsession/" class="md-nav__link">
-        Class: ActorSession
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../classes/cogmentservice/" class="md-nav__link">
-        Class: CogmentService
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../classes/trialcontroller/" class="md-nav__link">
-        Class: TrialController
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../enums/eventtype/" class="md-nav__link">
-        Enum: EventType
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../cogmentyaml/" class="md-nav__link">
-        Interface: CogmentYaml
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../cogmentyamlactor/" class="md-nav__link">
-        Interface: CogmentYamlActor
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-    
-  
-  
-    <li class="md-nav__item md-nav__item--active">
       
       <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
       
       
+        
+      
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
-          Interface: CogmentYamlActorClass
+          Orchestrator
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <a href="./" class="md-nav__link md-nav__link--active">
-        Interface: CogmentYamlActorClass
+        Orchestrator
       </a>
       
         
 <nav class="md-nav md-nav--secondary" aria-label="Table of contents">
   
   
+  
+    
   
   
     <label class="md-nav__title" for="__toc">
@@ -801,69 +675,16 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#properties" class="md-nav__link">
-    Properties
-  </a>
-  
-    <nav class="md-nav" aria-label="Properties">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#action" class="md-nav__link">
-    action
-  </a>
-  
-    <nav class="md-nav" aria-label="action">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#type-declaration" class="md-nav__link">
-    Type declaration:
+  <a href="#command-line" class="md-nav__link">
+    Command line
   </a>
   
 </li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#config_type" class="md-nav__link">
-    config_type
+      
+        <li class="md-nav__item">
+  <a href="#environment-variables" class="md-nav__link">
+    Environment variables
   </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#name" class="md-nav__link">
-    name
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#observation" class="md-nav__link">
-    observation
-  </a>
-  
-    <nav class="md-nav" aria-label="observation">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#type-declaration_1" class="md-nav__link">
-    Type declaration:
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -882,7 +703,159 @@
   
   
     <li class="md-nav__item">
-      <a href="../cogmentyamldatalog/" class="md-nav__link">
+      <a href="../cogment-api-reference/python/" class="md-nav__link">
+        python SDK
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_3_5" type="checkbox" id="__nav_4_3_5" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_3_5">
+          Javascript/Typescript SDK
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Javascript/Typescript SDK" data-md-level="3">
+        <label class="md-nav__title" for="__nav_4_3_5">
+          <span class="md-nav__icon md-icon"></span>
+          Javascript/Typescript SDK
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cogment-api-reference/javascript/modules.md" class="md-nav__link">
+        Modules
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cogment-api-reference/javascript/classes/actorsession.md" class="md-nav__link">
+        Class: ActorSession
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cogment-api-reference/javascript/classes/cogmentservice.md" class="md-nav__link">
+        Class: CogmentService
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cogment-api-reference/javascript/classes/trialcontroller.md" class="md-nav__link">
+        Class: TrialController
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cogment-api-reference/javascript/enums/eventtype.md" class="md-nav__link">
+        Enum: EventType
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cogment-api-reference/javascript/interfaces/cogmentyaml.md" class="md-nav__link">
+        Interface: CogmentYaml
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cogment-api-reference/javascript/interfaces/cogmentyamlactor.md" class="md-nav__link">
+        Interface: CogmentYamlActor
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cogment-api-reference/javascript/interfaces/cogmentyamlactorclass.md" class="md-nav__link">
+        Interface: CogmentYamlActorClass
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cogment-api-reference/javascript/interfaces/cogmentyamldatalog.md" class="md-nav__link">
         Interface: CogmentYamlDatalog
       </a>
     </li>
@@ -896,7 +869,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../cogmentyamltrialparameters/" class="md-nav__link">
+      <a href="../cogment-api-reference/javascript/interfaces/cogmentyamltrialparameters.md" class="md-nav__link">
         Interface: CogmentYamlTrialParameters
       </a>
     </li>
@@ -910,7 +883,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../cogsettings/" class="md-nav__link">
+      <a href="../cogment-api-reference/javascript/interfaces/cogsettings.md" class="md-nav__link">
         Interface: CogSettings
       </a>
     </li>
@@ -924,7 +897,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../cogsettingsactorclass/" class="md-nav__link">
+      <a href="../cogment-api-reference/javascript/interfaces/cogsettingsactorclass.md" class="md-nav__link">
         Interface: CogSettingsActorClass
       </a>
     </li>
@@ -938,7 +911,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../createserviceoptions/" class="md-nav__link">
+      <a href="../cogment-api-reference/javascript/interfaces/createserviceoptions.md" class="md-nav__link">
         Interface: CreateServiceOptions
       </a>
     </li>
@@ -952,7 +925,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../event/" class="md-nav__link">
+      <a href="../cogment-api-reference/javascript/interfaces/event.md" class="md-nav__link">
         Interface: Event
       </a>
     </li>
@@ -966,7 +939,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../reward/" class="md-nav__link">
+      <a href="../cogment-api-reference/javascript/interfaces/reward.md" class="md-nav__link">
         Interface: Reward
       </a>
     </li>
@@ -980,7 +953,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../sendmessageoptions/" class="md-nav__link">
+      <a href="../cogment-api-reference/javascript/interfaces/sendmessageoptions.md" class="md-nav__link">
         Interface: SendMessageOptions
       </a>
     </li>
@@ -994,7 +967,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../trialactor/" class="md-nav__link">
+      <a href="../cogment-api-reference/javascript/interfaces/trialactor.md" class="md-nav__link">
         Interface: TrialActor
       </a>
     </li>
@@ -1048,7 +1021,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../cogment-low-level-api-guide/overview/" class="md-nav__link">
+      <a href="../cogment-low-level-api-guide/overview/" class="md-nav__link">
         Overview
       </a>
     </li>
@@ -1062,7 +1035,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../cogment-low-level-api-guide/grpc/" class="md-nav__link">
+      <a href="../cogment-low-level-api-guide/grpc/" class="md-nav__link">
         gRPC API Reference
       </a>
     </li>
@@ -1083,7 +1056,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../implementation-recipes/" class="md-nav__link">
+      <a href="../implementation-recipes/" class="md-nav__link">
         Implementation recipes
       </a>
     </li>
@@ -1103,14 +1076,16 @@
 
   
   
+    
+  
   
     
       
     
-    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" type="checkbox" id="__nav_5" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" type="checkbox" id="__nav_5" checked>
       
       
       
@@ -1133,7 +1108,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../../cogment-components/cli/cli/" class="md-nav__link">
+      <a href="../../cogment-components/cli/cli/" class="md-nav__link">
         CLI
       </a>
     </li>
@@ -1145,11 +1120,58 @@
               
   
   
+    
   
-    <li class="md-nav__item">
-      <a href="../../../../../cogment-components/orchestrator/orchestrator/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Orchestrator
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         Orchestrator
       </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#command-line" class="md-nav__link">
+    Command line
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#environment-variables" class="md-nav__link">
+    Environment variables
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -1161,7 +1183,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../../cogment-components/model-registry/model-registry/" class="md-nav__link">
+      <a href="../../cogment-components/model-registry/model-registry/" class="md-nav__link">
         Model Registry
       </a>
     </li>
@@ -1175,7 +1197,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../../cogment-components/trial-datastore/trial-datastore/" class="md-nav__link">
+      <a href="../../cogment-components/trial-datastore/trial-datastore/" class="md-nav__link">
         Trial Datastore
       </a>
     </li>
@@ -1189,7 +1211,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../../cogment-components/dashboard/metrics-and-dashboard/" class="md-nav__link">
+      <a href="../../cogment-components/dashboard/metrics-and-dashboard/" class="md-nav__link">
         Metrics & Dashboard
       </a>
     </li>
@@ -1211,7 +1233,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../../license/" class="md-nav__link">
+      <a href="../../license/" class="md-nav__link">
         License
       </a>
     </li>
@@ -1234,6 +1256,8 @@
   
   
   
+    
+  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
@@ -1242,69 +1266,16 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#properties" class="md-nav__link">
-    Properties
-  </a>
-  
-    <nav class="md-nav" aria-label="Properties">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#action" class="md-nav__link">
-    action
-  </a>
-  
-    <nav class="md-nav" aria-label="action">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#type-declaration" class="md-nav__link">
-    Type declaration:
+  <a href="#command-line" class="md-nav__link">
+    Command line
   </a>
   
 </li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#config_type" class="md-nav__link">
-    config_type
+      
+        <li class="md-nav__item">
+  <a href="#environment-variables" class="md-nav__link">
+    Environment variables
   </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#name" class="md-nav__link">
-    name
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#observation" class="md-nav__link">
-    observation
-  </a>
-  
-    <nav class="md-nav" aria-label="observation">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#type-declaration_1" class="md-nav__link">
-    Type declaration:
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -1320,69 +1291,80 @@
             <article class="md-content__inner md-typeset">
               
                 
-                  <a href="https://github.com/cogment/cogment-doc/edit/main/src/cogment/cogment-api-reference/javascript/interfaces/cogmentyamlactorclass.md" title="Edit this page" class="md-content__button md-icon">
+                  <a href="https://github.com/cogment/cogment-doc/edit/main/src/cogment/orchestrator.md" title="Edit this page" class="md-content__button md-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
                   </a>
                 
                 
-                  <h1>Interface: CogmentYamlActorClass</h1>
-                
-                <p>Static configuration for an actor class.</p>
-<h2 id="properties">Properties<a class="headerlink" href="#properties" title="Permanent link">&para;</a></h2>
-<h3 id="action">action<a class="headerlink" href="#action" title="Permanent link">&para;</a></h3>
-<p>• <strong>action</strong>: <em>object</em></p>
-<p>Action space static configuration.</p>
-<h4 id="type-declaration">Type declaration:<a class="headerlink" href="#type-declaration" title="Permanent link">&para;</a></h4>
-<table>
-<thead>
-<tr>
-<th align="left">Name</th>
-<th align="left">Type</th>
-<th align="left">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td align="left"><code>space</code></td>
-<td align="left"><em>string</em></td>
-<td align="left">Full protobuf message type representing the action space of this actor.</td>
-</tr>
-</tbody>
-</table>
-<p>Defined in: <a href="https://github.com/cogment/cogment-js-sdk/blob/main/src/cogment/types/CogmentYaml.ts#L25">cogment/types/CogmentYaml.ts:25</a></p>
-<hr />
-<h3 id="config_type">config_type<a class="headerlink" href="#config_type" title="Permanent link">&para;</a></h3>
-<p>• <code>Optional</code> <strong>config_type</strong>: <em>string</em></p>
-<p>Full protobuf message type representing the configuration of this actor.</p>
-<p>Defined in: <a href="https://github.com/cogment/cogment-js-sdk/blob/main/src/cogment/types/CogmentYaml.ts#L34">cogment/types/CogmentYaml.ts:34</a></p>
-<hr />
-<h3 id="name">name<a class="headerlink" href="#name" title="Permanent link">&para;</a></h3>
-<p>• <strong>name</strong>: <em>string</em></p>
-<p>Unique identifier for this actor. This identifier corresponds to <a href="../trialactor/#actorclass">TrialActor.actorClass</a> and is used to
-register actor implementations with <a href="../../classes/cogmentservice/#registeractor">CogmentService.registerActor</a>.</p>
-<p>Defined in: <a href="https://github.com/cogment/cogment-js-sdk/blob/main/src/cogment/types/CogmentYaml.ts#L39">cogment/types/CogmentYaml.ts:39</a></p>
-<hr />
-<h3 id="observation">observation<a class="headerlink" href="#observation" title="Permanent link">&para;</a></h3>
-<p>• <strong>observation</strong>: <em>object</em></p>
-<p>Observation space static configuration.</p>
-<h4 id="type-declaration_1">Type declaration:<a class="headerlink" href="#type-declaration_1" title="Permanent link">&para;</a></h4>
-<table>
-<thead>
-<tr>
-<th align="left">Name</th>
-<th align="left">Type</th>
-<th align="left">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td align="left"><code>space</code></td>
-<td align="left"><em>string</em></td>
-<td align="left">Full protobuf message type representing the observation space of this actor.</td>
-</tr>
-</tbody>
-</table>
-<p>Defined in: <a href="https://github.com/cogment/cogment-js-sdk/blob/main/src/cogment/types/CogmentYaml.ts#L43">cogment/types/CogmentYaml.ts:43</a></p>
+                <h1 id="orchestrator">Orchestrator<a class="headerlink" href="#orchestrator" title="Permanent link">&para;</a></h1>
+<p>The Orchestrator is the heart of Cogment. It ties all services together. It is a Linux based single executable configured through command line and some environment variables.</p>
+<h2 id="command-line">Command line<a class="headerlink" href="#command-line" title="Permanent link">&para;</a></h2>
+<p>The Orchestrator is simply called this way</p>
+<pre class="highlight"><code class="language-bash">$ orchestrator --lifecycle_port=9001 --actor_port=9001 --params=params.yaml --pre_trial_hooks=grpc://config:9001</code></pre>
+<p>All configuration is possible through the command line. The various command line options are described here:</p>
+<ul>
+<li>
+<p><code>help</code>: The list of command line parameters with short description. Also shows the envrionment variables recognized.</p>
+</li>
+<li>
+<p><code>lifecycle_port</code>: The TCP port where to serve the trial lifecycle gRPC service (TrialLifecycleSP). This is where the Controller connects to. Default: 9000.</p>
+</li>
+<li>
+<p><code>actor_port</code>: The TCP port where to serve the client actor gRPC service (ClientActorSP). This is where client actors (as opposed to service actors) connect to. Default: 9000</p>
+</li>
+<li>
+<p><code>params</code>: The name of the YAML file containing the default parameters for new trials. Some of The parameters must match their corresponding values in the spec file (typically <code>cogment.yaml</code>) and may therefore lock an Orchestrator instance to specific types of trials. If pre-trial hooks are defined, these parameters are sent to the first hook before a trial starts.</p>
+</li>
+<li>
+<p><code>pre_trial_hooks</code>: gRPC endpoint definitions for pre-trial hooks, separated by commas. A gRPC endpoint is a URL that starts with "grpc://". Hooks are called before a new trial starts. They are called in order, in a pipeline fashion to set the parameters for new trials. The first hook will receive the default parameters, the last hook result will be used as the parameters for the new trial.</p>
+</li>
+<li>
+<p><code>prometheus_port</code>: The TCP port where to serve Prometheus metrics.</p>
+</li>
+<li>
+<p><code>version</code>: Output the version of the Orchestrator to stdout.</p>
+</li>
+<li>
+<p><code>status_file</code>: File containing simple status for the Orchestrator. This is useful when running the Orchestrator inside containers or synchronizing with external components. The file is open and stays open while the Orchestrator runs. The file will contain one to three letters: I, R, T. "I" indicates that the Orchestrator is initializing. When the Orchestrator starts, the file only contains this letter. "R" indicates that the Orchestrator is ready. This letter is added to the file (thus the file will normally contain "IR" at this point). "T" indicates that the Orchestrator has terminated (crashes will not set this file to "T"). Thus after a normal end, the file will contain "IRT".</p>
+</li>
+<li>
+<p><code>private_key</code>: File name containg a PEM encoded private key for encrypted communication.</p>
+</li>
+<li>
+<p><code>root_cert</code>: File name containing a PEM encoded trusted root certificate.</p>
+</li>
+<li>
+<p><code>trust_chain</code>: File name containing a PEM encoded trust chain.</p>
+</li>
+<li>
+<p><code>log_level</code>: Set to define the minimum level for logging.  Possible values are: <code>off</code>, <code>error</code>, <code>warning</code>, <code>info</code>, <code>debug</code>, <code>trace</code>. Note however that all trace and most debug level logs will only output if running the debug compiled version of the Orchestrator. Default: <code>info</code>.</p>
+</li>
+<li>
+<p><code>log_file</code>: Base file name for daily log output. The name will be suffixed with the date and a new file will be made every day. If not provided the logs go to stdout.</p>
+</li>
+<li>
+<p><code>gc_frequency</code>: Number of (started) trials between trial garbage collection. The Orchestrator periodically deletes ended and stale trials, this parameter controls how often this cleanup happens. The garbage collection may happen on the start of any trial.</p>
+</li>
+</ul>
+<h2 id="environment-variables">Environment variables<a class="headerlink" href="#environment-variables" title="Permanent link">&para;</a></h2>
+<p>Environment variables correspond to one of the command line parameters.  But if both are provided, the command line takes precedence.</p>
+<ul>
+<li>
+<p><code>COGMENT_LIFECYCLE_PORT</code>: This is the same as the <code>lifecycle_port</code> command line parameter.</p>
+</li>
+<li>
+<p><code>COGMENT_ACTOR_PORT</code>: This is the same as the <code>actor_port</code> command line parameter.</p>
+</li>
+<li>
+<p><code>COGMENT_PROMETHEUS_PORT</code>: This is the same as the <code>prometheus_port</code> command line parameter.</p>
+</li>
+<li>
+<p><code>COGMENT_PRE_TRIAL_HOOKS</code>: This is the same as the <code>pre_trial_hooks</code> command line parameter.</p>
+</li>
+<li>
+<p><code>COGMENT_DEFAULT_PARAMS_FILE</code>: This is the same as the <code>params</code> command line parameter.</p>
+</li>
+</ul>
                 
               
               
@@ -1402,7 +1384,7 @@ register actor implementations with <a href="../../classes/cogmentservice/#regis
     <nav class="md-footer__inner md-grid" aria-label="Footer">
       
         
-        <a href="../cogmentyamlactor/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Interface: CogmentYamlActor" rel="prev">
+        <a href="../../cogment-components/cli/cli/" class="md-footer__link md-footer__link--prev" aria-label="Previous: CLI" rel="prev">
           <div class="md-footer__button md-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
           </div>
@@ -1411,20 +1393,20 @@ register actor implementations with <a href="../../classes/cogmentservice/#regis
               <span class="md-footer__direction">
                 Previous
               </span>
-              Interface: CogmentYamlActor
+              CLI
             </div>
           </div>
         </a>
       
       
         
-        <a href="../cogmentyamldatalog/" class="md-footer__link md-footer__link--next" aria-label="Next: Interface: CogmentYamlDatalog" rel="next">
+        <a href="../../cogment-components/model-registry/model-registry/" class="md-footer__link md-footer__link--next" aria-label="Next: Model Registry" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
                 Next
               </span>
-              Interface: CogmentYamlDatalog
+              Model Registry
             </div>
           </div>
           <div class="md-footer__button md-icon">
@@ -1490,10 +1472,14 @@ register actor implementations with <a href="../../classes/cogmentservice/#regis
     <div class="md-dialog" data-md-component="dialog">
       <div class="md-dialog__inner md-typeset"></div>
     </div>
-    <script id="__config" type="application/json">{"base": "../../../../..", "features": ["navigation.sections"], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../../../../assets/javascripts/workers/search.e99e714c.min.js", "version": null}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.sections"], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../assets/javascripts/workers/search.e99e714c.min.js", "version": null}</script>
     
     
-      <script src="../../../../../assets/javascripts/bundle.bc35569b.min.js"></script>
+      <script src="../../assets/javascripts/bundle.bc35569b.min.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/highlight.min.js"></script>
+      
+        <script src="../../javascripts/highlight.js"></script>
       
     
   </body>

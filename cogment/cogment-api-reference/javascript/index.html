@@ -13,14 +13,14 @@
         <meta name="author" content="AI Redefined">
       
       
-        <link rel="canonical" href="https://docs.cogment.ai/cogment-components/orchestrator/orchestrator/">
+        <link rel="canonical" href="https://docs.cogment.ai/cogment/cogment-api-reference/javascript/">
       
       <link rel="icon" href="../../../images/cogment_favicon.png">
       <meta name="generator" content="mkdocs-1.2.2, mkdocs-material-7.3.2">
     
     
       
-        <title>Orchestrator - Cogment User Documentation</title>
+        <title>Javascript SDK - Cogment User Documentation</title>
       
     
     
@@ -43,6 +43,8 @@
     
     
       <link rel="stylesheet" href="../../../style/theme.css">
+    
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/styles/github.min.css">
     
     
       
@@ -80,7 +82,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#orchestrator" class="md-skip">
+        <a href="#javascript-sdk" class="md-skip">
           Skip to content
         </a>
       
@@ -111,7 +113,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Orchestrator
+              Javascript SDK
             
           </span>
         </div>
@@ -455,7 +457,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../cogment/tutorial/introduction/" class="md-nav__link">
+      <a href="../../tutorial/introduction/" class="md-nav__link">
         Introduction
       </a>
     </li>
@@ -469,7 +471,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../cogment/tutorial/1-bootstrap-and-data-structures/" class="md-nav__link">
+      <a href="../../tutorial/1-bootstrap-and-data-structures/" class="md-nav__link">
         Step 1: Bootstrap a Cogment app
       </a>
     </li>
@@ -483,7 +485,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../cogment/tutorial/2-random-player/" class="md-nav__link">
+      <a href="../../tutorial/2-random-player/" class="md-nav__link">
         Step 2: Implement actor and environment
       </a>
     </li>
@@ -497,7 +499,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../cogment/tutorial/3-rewards/" class="md-nav__link">
+      <a href="../../tutorial/3-rewards/" class="md-nav__link">
         Step 3: Introduce rewards
       </a>
     </li>
@@ -511,7 +513,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../cogment/tutorial/4-heuristic-player/" class="md-nav__link">
+      <a href="../../tutorial/4-heuristic-player/" class="md-nav__link">
         Step 4: Create a heuristic player
       </a>
     </li>
@@ -525,7 +527,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../cogment/tutorial/5-human-player/" class="md-nav__link">
+      <a href="../../tutorial/5-human-player/" class="md-nav__link">
         Step 5: Add a human player in the loop
       </a>
     </li>
@@ -539,7 +541,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../cogment/tutorial/6-web-client/" class="md-nav__link">
+      <a href="../../tutorial/6-web-client/" class="md-nav__link">
         Step 6: Implement a web client for the human player
       </a>
     </li>
@@ -553,7 +555,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../cogment/tutorial/7-dqn-player/" class="md-nav__link">
+      <a href="../../tutorial/7-dqn-player/" class="md-nav__link">
         Step 7: Add a player trained with Reinforcement Learning using DQN
       </a>
     </li>
@@ -574,7 +576,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../cogment/cogment-api-guide/" class="md-nav__link">
+      <a href="../../cogment-api-guide/" class="md-nav__link">
         API Guide
       </a>
     </li>
@@ -614,8 +616,8 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../cogment/cogment-api-reference/cogment-yaml/" class="md-nav__link">
-        cogment.yaml
+      <a href="../cogment-yaml/" class="md-nav__link">
+        Spec file (cogment.yaml)
       </a>
     </li>
   
@@ -628,8 +630,36 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../cogment/cogment-api-reference/python/" class="md-nav__link">
-        python
+      <a href="../parameters/" class="md-nav__link">
+        Parameters
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../orchestrator/" class="md-nav__link">
+        Orchestrator
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../python/" class="md-nav__link">
+        python SDK
       </a>
     </li>
   
@@ -645,18 +675,18 @@
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_3_3" type="checkbox" id="__nav_4_3_3" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_3_5" type="checkbox" id="__nav_4_3_5" >
       
       
       
       
-        <label class="md-nav__link" for="__nav_4_3_3">
+        <label class="md-nav__link" for="__nav_4_3_5">
           Javascript/Typescript SDK
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <nav class="md-nav" aria-label="Javascript/Typescript SDK" data-md-level="3">
-        <label class="md-nav__title" for="__nav_4_3_3">
+        <label class="md-nav__title" for="__nav_4_3_5">
           <span class="md-nav__icon md-icon"></span>
           Javascript/Typescript SDK
         </label>
@@ -668,7 +698,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../cogment/cogment-api-reference/javascript/modules/" class="md-nav__link">
+      <a href="modules.md" class="md-nav__link">
         Modules
       </a>
     </li>
@@ -682,7 +712,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../cogment/cogment-api-reference/javascript/classes/actorsession/" class="md-nav__link">
+      <a href="classes/actorsession.md" class="md-nav__link">
         Class: ActorSession
       </a>
     </li>
@@ -696,7 +726,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../cogment/cogment-api-reference/javascript/classes/cogmentservice/" class="md-nav__link">
+      <a href="classes/cogmentservice.md" class="md-nav__link">
         Class: CogmentService
       </a>
     </li>
@@ -710,7 +740,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../cogment/cogment-api-reference/javascript/classes/trialcontroller/" class="md-nav__link">
+      <a href="classes/trialcontroller.md" class="md-nav__link">
         Class: TrialController
       </a>
     </li>
@@ -724,7 +754,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../cogment/cogment-api-reference/javascript/enums/eventtype/" class="md-nav__link">
+      <a href="enums/eventtype.md" class="md-nav__link">
         Enum: EventType
       </a>
     </li>
@@ -738,7 +768,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../cogment/cogment-api-reference/javascript/interfaces/cogmentyaml/" class="md-nav__link">
+      <a href="interfaces/cogmentyaml.md" class="md-nav__link">
         Interface: CogmentYaml
       </a>
     </li>
@@ -752,7 +782,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../cogment/cogment-api-reference/javascript/interfaces/cogmentyamlactor/" class="md-nav__link">
+      <a href="interfaces/cogmentyamlactor.md" class="md-nav__link">
         Interface: CogmentYamlActor
       </a>
     </li>
@@ -766,7 +796,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../cogment/cogment-api-reference/javascript/interfaces/cogmentyamlactorclass/" class="md-nav__link">
+      <a href="interfaces/cogmentyamlactorclass.md" class="md-nav__link">
         Interface: CogmentYamlActorClass
       </a>
     </li>
@@ -780,7 +810,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../cogment/cogment-api-reference/javascript/interfaces/cogmentyamldatalog/" class="md-nav__link">
+      <a href="interfaces/cogmentyamldatalog.md" class="md-nav__link">
         Interface: CogmentYamlDatalog
       </a>
     </li>
@@ -794,7 +824,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../cogment/cogment-api-reference/javascript/interfaces/cogmentyamltrialparameters/" class="md-nav__link">
+      <a href="interfaces/cogmentyamltrialparameters.md" class="md-nav__link">
         Interface: CogmentYamlTrialParameters
       </a>
     </li>
@@ -808,7 +838,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../cogment/cogment-api-reference/javascript/interfaces/cogsettings/" class="md-nav__link">
+      <a href="interfaces/cogsettings.md" class="md-nav__link">
         Interface: CogSettings
       </a>
     </li>
@@ -822,7 +852,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../cogment/cogment-api-reference/javascript/interfaces/cogsettingsactorclass/" class="md-nav__link">
+      <a href="interfaces/cogsettingsactorclass.md" class="md-nav__link">
         Interface: CogSettingsActorClass
       </a>
     </li>
@@ -836,7 +866,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../cogment/cogment-api-reference/javascript/interfaces/createserviceoptions/" class="md-nav__link">
+      <a href="interfaces/createserviceoptions.md" class="md-nav__link">
         Interface: CreateServiceOptions
       </a>
     </li>
@@ -850,7 +880,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../cogment/cogment-api-reference/javascript/interfaces/event/" class="md-nav__link">
+      <a href="interfaces/event.md" class="md-nav__link">
         Interface: Event
       </a>
     </li>
@@ -864,7 +894,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../cogment/cogment-api-reference/javascript/interfaces/reward/" class="md-nav__link">
+      <a href="interfaces/reward.md" class="md-nav__link">
         Interface: Reward
       </a>
     </li>
@@ -878,7 +908,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../cogment/cogment-api-reference/javascript/interfaces/sendmessageoptions/" class="md-nav__link">
+      <a href="interfaces/sendmessageoptions.md" class="md-nav__link">
         Interface: SendMessageOptions
       </a>
     </li>
@@ -892,7 +922,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../cogment/cogment-api-reference/javascript/interfaces/trialactor/" class="md-nav__link">
+      <a href="interfaces/trialactor.md" class="md-nav__link">
         Interface: TrialActor
       </a>
     </li>
@@ -946,7 +976,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../cogment/cogment-low-level-api-guide/overview/" class="md-nav__link">
+      <a href="../../cogment-low-level-api-guide/overview/" class="md-nav__link">
         Overview
       </a>
     </li>
@@ -960,7 +990,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../cogment/cogment-low-level-api-guide/grpc/" class="md-nav__link">
+      <a href="../../cogment-low-level-api-guide/grpc/" class="md-nav__link">
         gRPC API Reference
       </a>
     </li>
@@ -981,7 +1011,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../cogment/implementation-recipes/" class="md-nav__link">
+      <a href="../../implementation-recipes/" class="md-nav__link">
         Implementation recipes
       </a>
     </li>
@@ -1001,16 +1031,14 @@
 
   
   
-    
-  
   
     
       
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" type="checkbox" id="__nav_5" checked>
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" type="checkbox" id="__nav_5" >
       
       
       
@@ -1033,7 +1061,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../cli/cli/" class="md-nav__link">
+      <a href="../../../cogment-components/cli/cli/" class="md-nav__link">
         CLI
       </a>
     </li>
@@ -1045,180 +1073,11 @@
               
   
   
-    
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          Orchestrator
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../orchestrator/" class="md-nav__link">
         Orchestrator
       </a>
-      
-        
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#usage" class="md-nav__link">
-    Usage
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#options" class="md-nav__link">
-    Options
-  </a>
-  
-    <nav class="md-nav" aria-label="Options">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#config" class="md-nav__link">
-    Config
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#logging" class="md-nav__link">
-    Logging
-  </a>
-  
-    <nav class="md-nav" aria-label="Logging">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#log-level" class="md-nav__link">
-    Log Level
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#daily-logger" class="md-nav__link">
-    Daily Logger
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#ports" class="md-nav__link">
-    Ports
-  </a>
-  
-    <nav class="md-nav" aria-label="Ports">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#prometheus-port" class="md-nav__link">
-    Prometheus Port
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#actor-port" class="md-nav__link">
-    Actor Port
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#lifecycle-port" class="md-nav__link">
-    lifecycle port
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#ssl" class="md-nav__link">
-    SSL
-  </a>
-  
-    <nav class="md-nav" aria-label="SSL">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#private-key" class="md-nav__link">
-    Private Key
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#root-cert" class="md-nav__link">
-    Root Cert
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#trust-chain" class="md-nav__link">
-    Trust Chain
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#low-level-grpc-api" class="md-nav__link">
-    Low level gRPC API
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#setup" class="md-nav__link">
-    Setup
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -1230,7 +1089,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../model-registry/model-registry/" class="md-nav__link">
+      <a href="../../../cogment-components/model-registry/model-registry/" class="md-nav__link">
         Model Registry
       </a>
     </li>
@@ -1244,7 +1103,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../trial-datastore/trial-datastore/" class="md-nav__link">
+      <a href="../../../cogment-components/trial-datastore/trial-datastore/" class="md-nav__link">
         Trial Datastore
       </a>
     </li>
@@ -1258,7 +1117,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../dashboard/metrics-and-dashboard/" class="md-nav__link">
+      <a href="../../../cogment-components/dashboard/metrics-and-dashboard/" class="md-nav__link">
         Metrics & Dashboard
       </a>
     </li>
@@ -1313,45 +1172,38 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#usage" class="md-nav__link">
-    Usage
+  <a href="#installation" class="md-nav__link">
+    Installation
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#options" class="md-nav__link">
-    Options
+  <a href="#general-usage" class="md-nav__link">
+    General usage
   </a>
   
-    <nav class="md-nav" aria-label="Options">
+    <nav class="md-nav" aria-label="General usage">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#config" class="md-nav__link">
-    Config
+  <a href="#the-spec-file" class="md-nav__link">
+    The spec file
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#logging" class="md-nav__link">
-    Logging
+  <a href="#trial-parameters" class="md-nav__link">
+    Trial Parameters
   </a>
   
-    <nav class="md-nav" aria-label="Logging">
+    <nav class="md-nav" aria-label="Trial Parameters">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#log-level" class="md-nav__link">
-    Log Level
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#daily-logger" class="md-nav__link">
-    Daily Logger
+  <a href="#compiling-the-spec-file" class="md-nav__link">
+    Compiling the spec file
   </a>
   
 </li>
@@ -1362,76 +1214,15 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#ports" class="md-nav__link">
-    Ports
-  </a>
-  
-    <nav class="md-nav" aria-label="Ports">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#prometheus-port" class="md-nav__link">
-    Prometheus Port
+  <a href="#cogsettingsjs" class="md-nav__link">
+    CogSettings.js
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#actor-port" class="md-nav__link">
-    Actor Port
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#lifecycle-port" class="md-nav__link">
-    lifecycle port
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#ssl" class="md-nav__link">
-    SSL
-  </a>
-  
-    <nav class="md-nav" aria-label="SSL">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#private-key" class="md-nav__link">
-    Private Key
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#root-cert" class="md-nav__link">
-    Root Cert
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#trust-chain" class="md-nav__link">
-    Trust Chain
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#low-level-grpc-api" class="md-nav__link">
-    Low level gRPC API
+  <a href="#imports" class="md-nav__link">
+    Imports
   </a>
   
 </li>
@@ -1442,8 +1233,248 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#setup" class="md-nav__link">
-    Setup
+  <a href="#class-cogmentcontext" class="md-nav__link">
+    class cogment.Context
+  </a>
+  
+    <nav class="md-nav" aria-label="class cogment.Context">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#constructoruserid-cogsettings" class="md-nav__link">
+    constructor(userId, cogSettings)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#getcontrollerendpoint" class="md-nav__link">
+    getController(endpoint)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#async-jointrialtrialid-endpoint-actorname" class="md-nav__link">
+    async joinTrial(trialId, endpoint, actorName)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#registeractorimpl-actorname-actorclass" class="md-nav__link">
+    registerActor(impl, actorName, actorClass)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#class-controller" class="md-nav__link">
+    class Controller
+  </a>
+  
+    <nav class="md-nav" aria-label="class Controller">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#async-starttrialtrialconfig-undefined-trialidrequested-undefined" class="md-nav__link">
+    async startTrial(trialConfig = undefined, trialIdRequested = undefined)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#terminate_trialtrialids-hard-false" class="md-nav__link">
+    terminate_trial(trialIds, hard = false)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#async-gettrialinfotrialids" class="md-nav__link">
+    async getTrialInfo(trialIds)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#async-watchtrialstrialstatefilters" class="md-nav__link">
+    async watchTrials(trialStateFilters=[])
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#async-getactorstrialid" class="md-nav__link">
+    async getActors(trialId)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#async-getremoteversions" class="md-nav__link">
+    async getRemoteVersions()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#class-session" class="md-nav__link">
+    class Session
+  </a>
+  
+    <nav class="md-nav" aria-label="class Session">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#gettrialid" class="md-nav__link">
+    getTrialId()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gettickid" class="md-nav__link">
+    getTickId()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#istrialover" class="md-nav__link">
+    isTrialOver()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sendingdone" class="md-nav__link">
+    sendingDone()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#class-actorsession-extends-session" class="md-nav__link">
+    class ActorSession extends Session
+  </a>
+  
+    <nav class="md-nav" aria-label="class ActorSession extends Session">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#startautodonesendingtrue" class="md-nav__link">
+    start(autoDoneSending=True)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#async-eventloop" class="md-nav__link">
+    async *eventLoop()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#doactionaction" class="md-nav__link">
+    doAction(action)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sendmessagepayload-to" class="md-nav__link">
+    sendMessage(payload, to)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#enum-cogmenttrialstate" class="md-nav__link">
+    enum cogment.TrialState
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#class-trialinfo" class="md-nav__link">
+    class TrialInfo
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#class-recvevent" class="md-nav__link">
+    class RecvEvent
+  </a>
+  
+    <nav class="md-nav" aria-label="class RecvEvent">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#enum-cogmenteventtype" class="md-nav__link">
+    enum cogment.EventType
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#type-observationt" class="md-nav__link">
+    type ObservationT
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#type-actiont" class="md-nav__link">
+    type ActionT
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#class-messagebase" class="md-nav__link">
+    class MessageBase
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#type-reward" class="md-nav__link">
+    type Reward
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#interface-irewardsource" class="md-nav__link">
+    interface IRewardSource
   </a>
   
 </li>
@@ -1460,106 +1491,217 @@
             <article class="md-content__inner md-typeset">
               
                 
-                  <a href="https://github.com/cogment/cogment-doc/edit/main/src/cogment-components/orchestrator/orchestrator.md" title="Edit this page" class="md-content__button md-icon">
+                  <a href="https://github.com/cogment/cogment-doc/edit/main/src/cogment/cogment-api-reference/javascript.md" title="Edit this page" class="md-content__button md-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
                   </a>
                 
                 
-                <h1 id="orchestrator">Orchestrator<a class="headerlink" href="#orchestrator" title="Permanent link">&para;</a></h1>
-<p><a href="https://github.com/cogment/cogment-orchestrator"><img alt="Repository" src="https://img.shields.io/badge/repository-cogment%2Fcogment--orchestrator-%23ffb400?style=flat-square&amp;logo=github" /></a> <a href="https://hub.docker.com/r/cogment/orchestrator"><img alt="Latest Release" src="https://img.shields.io/docker/v/cogment/orchestrator?label=docker%20release&amp;sort=semver&amp;style=flat-square" /></a></p>
-<p>Cogment Orchestrator is an <strong>out-of-the-box</strong> component. It is the central entity in the framework that ties all the services together. From the perspective of a Cogment user, it can be considered as the live interpreter of the <a href="../../../cogment/cogment-api-guide/#the-cogmentyaml-file"><code>cogment.yaml</code> configuration file</a>. It is the service that client applications will connect to in order to start and run trials.</p>
-<h2 id="usage">Usage<a class="headerlink" href="#usage" title="Permanent link">&para;</a></h2>
-<!-- prettier-ignore -->
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>After initializing your project using <a href="../../../cogment/tutorial/1-bootstrap-and-data-structures/"><code>cogment init</code></a>, you should already have everything setup for a standard usage. For a fully manual setup refer to the dedicated <a href="#setup">section</a>.</p>
-</div>
-<p>The Orchestrator is central to any Cogment usage, please refer to the <a href="../../../cogment/cogment-api-guide/"><strong>API guide</strong></a> to learn how to interact with it using the high level APIs provided by the Cogment SDKs.</p>
-<h2 id="options">Options<a class="headerlink" href="#options" title="Permanent link">&para;</a></h2>
-<p>Typically, the orchestrator would be configured via <code>Dockerfile</code>. For example:</p>
-<div class="highlight"><pre><span></span><code>FROM cogment/orchestrator:v1.0.3
-
-# Set environment variables
-ENV TRIAL_LIFECYCLE_PORT=9000
-ENV TRIAL_ACTOR_PORT=9001
-
-# The orchestrator itself is the entrypoint.
-# You can set command line options via the CMD
-CMD [&quot;--config=/some/path/cogment.yaml&quot;, &quot;--loglevel=debug&quot;]
-</code></pre></div>
-<h4 id="config">Config<a class="headerlink" href="#config" title="Permanent link">&para;</a></h4>
-<p>Path to the cogment.yaml file, relative to the current working directory.</p>
+                <h1 id="javascript-sdk">Javascript SDK<a class="headerlink" href="#javascript-sdk" title="Permanent link">&para;</a></h1>
+<h2 id="installation">Installation<a class="headerlink" href="#installation" title="Permanent link">&para;</a></h2>
+<p>The simplest way to install the Javascript SDK is to just install it using npm:
+<code>npm install @cogment/cogment-js-sdk</code></p>
+<h2 id="general-usage">General usage<a class="headerlink" href="#general-usage" title="Permanent link">&para;</a></h2>
+<h3 id="the-spec-file">The spec file<a class="headerlink" href="#the-spec-file" title="Permanent link">&para;</a></h3>
+<p>The spec <a href="../cogment-yaml/">cogment.yaml</a> file (including imported files) defines the message types of each component of Cogment.</p>
+<p>For example, an <a href="../../../concepts/glossary/#actor-class">actor class</a> is defined by its required <a href="../../../concepts/glossary/#observation-space">observation space</a> and <a href="../../../concepts/glossary/#action-space">action space</a>.</p>
+<p>These "spaces" are defined by using protobuf message types (from the imported files). <a href="../../../concepts/glossary/#observation">Observations</a> and <a href="../../../concepts/glossary/#action">actions</a> will simply be instances of the appropriate type.</p>
+<p>Messages and feedback user data don't have a set type, they can be any type as long as the receiver can manage that type. The type is determined by the provided message from the originator.</p>
+<p>They will mostly arrive as an instance of <code>cogment.MessageBase</code> and have fields according to their definition in your proto files.</p>
+<h3 id="trial-parameters">Trial Parameters<a class="headerlink" href="#trial-parameters" title="Permanent link">&para;</a></h3>
+<p>The trial <a href="../parameters/">parameters</a> either come from the default parameters provided to the Orchestrator on startup, or they are dynamically generated by the pre-trial hooks (themselves provided to the Orchestrator on startup). Or both, since the default parameters are initially provided to the pre-trial hooks.</p>
+<p>The parameters are mostly indepedent of the spec file, except that the active actors listed in the parameters must have their actor class match an actor class defined in the spec file.</p>
+<p>Below, when we refer to the trial parameters, we mean the final parameters after any pre-trial hooks.</p>
+<h4 id="compiling-the-spec-file">Compiling the spec file<a class="headerlink" href="#compiling-the-spec-file" title="Permanent link">&para;</a></h4>
+<p>In order to use the specification found in the spec file within Javascript scripts, it needs to be compiled into Javascript modules. This is done by a tool called "cogment-js-sdk-generate".</p>
+<h3 id="cogsettingsjs">CogSettings.js<a class="headerlink" href="#cogsettingsjs" title="Permanent link">&para;</a></h3>
+<p>All API entry points require a cogment specification object. This specification object can be determined
+from the content of a project's spec file. As such, it should be generated using the <code>cogment-js-sdk-generate</code> tool</p>
+<pre class="highlight"><code>npx cogment-js-sdk-generate config.yaml</code></pre>
+<p>This will generate both a <code>CogSettings.js</code> file, as well as any required compiled protocol buffer files.</p>
+<h3 id="imports">Imports<a class="headerlink" href="#imports" title="Permanent link">&para;</a></h3>
+<p>Whether a script implements an actor or environment, it should import both the <code>cogment</code> module (generic Javascript SDK for Cogment) and the <code>cogSettings</code> module (project specific definitions created from the spec file).</p>
+<pre class="highlight"><code class="language-Javascript">import { cogSettings } from './CogSettings';
+import * as cogment from '@cogment/cogment-js-sdk'</code></pre>
+<h2 id="class-cogmentcontext">class cogment.Context<a class="headerlink" href="#class-cogmentcontext" title="Permanent link">&para;</a></h2>
+<p>Class to setup and run all the different aspects of trials.</p>
+<h3 id="constructoruserid-cogsettings"><code>constructor(userId, cogSettings)</code><a class="headerlink" href="#constructoruserid-cogsettings" title="Permanent link">&para;</a></h3>
+<p>Parameters:</p>
 <ul>
-<li>Default: 'cogment.yaml`</li>
-<li>Command line: <code>--config=#</code></li>
+<li><code>userId</code>: <em>string</em> - Identifier for the user of this context.</li>
+<li><code>cogSettings</code>: <em>cogment.CogSettings</em> - Settings module associated with trials that will be run (<a href="#cog_settings.py">cogSettings</a> namespace).</li>
 </ul>
-<h3 id="logging">Logging<a class="headerlink" href="#logging" title="Permanent link">&para;</a></h3>
-<h4 id="log-level">Log Level<a class="headerlink" href="#log-level" title="Permanent link">&para;</a></h4>
-<p>The port to listen for trial lifecycle messages on</p>
+<h3 id="getcontrollerendpoint"><code>getController(endpoint)</code><a class="headerlink" href="#getcontrollerendpoint" title="Permanent link">&para;</a></h3>
+<p>Method to get a controller instance to manage trials (start, stop, inquire, etc).</p>
+<p>Parameters:</p>
 <ul>
-<li>Values: <code>off</code>, <code>error</code>, <code>warning</code>, <code>info</code>, <code>debug</code>, <code>trace</code></li>
-<li>Default: <code>info</code></li>
-<li>Command line: <code>--log_level=#</code></li>
+<li><code>endpoint</code>: <em>string</em> - URL of the connection to the Orchestrator.</li>
 </ul>
-<h4 id="daily-logger">Daily Logger<a class="headerlink" href="#daily-logger" title="Permanent link">&para;</a></h4>
-<p>Base file for daily log output</p>
+<p>Return: <em>Controller</em> - An instance of the Controller class used to manage trials.</p>
+<h3 id="async-jointrialtrialid-endpoint-actorname"><code>async joinTrial(trialId, endpoint, actorName)</code><a class="headerlink" href="#async-jointrialtrialid-endpoint-actorname" title="Permanent link">&para;</a></h3>
+<p>Method for an actor to asynchronously join an existing trial. This task will normally end after the user implementation has exited.</p>
+<p>Parameters:</p>
 <ul>
-<li>Default: N/A</li>
-<li>Command line: <code>--log_file=#</code></li>
+<li><code>trialId</code>: <em>string</em> - The UUID of the trial to join.</li>
+<li><code>endpoint</code>: <em>string</em> - URL of the connection to the Orchestrator.</li>
+<li><code>actorName</code>: <em>string</em> - Name of the actor joining the trial.</li>
 </ul>
-<h3 id="ports">Ports<a class="headerlink" href="#ports" title="Permanent link">&para;</a></h3>
-<h4 id="prometheus-port">Prometheus Port<a class="headerlink" href="#prometheus-port" title="Permanent link">&para;</a></h4>
-<p>The port to broadcast prometheus metrics on</p>
+<p>Return: void</p>
+<h3 id="registeractorimpl-actorname-actorclass"><code>registerActor(impl, actorName, actorClass)</code><a class="headerlink" href="#registeractorimpl-actorname-actorclass" title="Permanent link">&para;</a></h3>
+<p>Method to register the asynchronous callback function that will run an actor for a trial.</p>
+<p>Parameters:</p>
 <ul>
-<li>Default: N/A</li>
-<li>Environment Variable: <code>PROMETHEUS_PORT</code></li>
-<li>Command line: <code>--prometheus_port=#</code></li>
+<li><code>impl</code>: <em>async function(ActorSession instance)</em> - Callback function to be registered.</li>
+<li><code>actorName</code>: <em>string</em> - Name for the actor implementation being run by the given callback function.</li>
+<li><code>actorClass</code>: <em>string</em> - The actor class name  that can be run by the given callback function. The possible names are specified in spec file under section <code>actorClasses:name</code>. If the list is empty, this implementation can run any actor class.</li>
 </ul>
-<h4 id="actor-port">Actor Port<a class="headerlink" href="#actor-port" title="Permanent link">&para;</a></h4>
-<p>The port for the <code>cogment.ActorEndpoint</code> service</p>
+<p>Return: void</p>
+<h2 id="class-controller">class Controller<a class="headerlink" href="#class-controller" title="Permanent link">&para;</a></h2>
+<p>Class containing data and methods to control and manage trials.</p>
+<h3 id="async-starttrialtrialconfig-undefined-trialidrequested-undefined"><code>async startTrial(trialConfig = undefined, trialIdRequested = undefined)</code><a class="headerlink" href="#async-starttrialtrialconfig-undefined-trialidrequested-undefined" title="Permanent link">&para;</a></h3>
+<p>Method to start a new trial. The parameters of the trial will be set by the pre-trial hooks (registered in <code>cogment.Context</code>), and the hooks will receive the provided trial config.</p>
+<p>Parameters:</p>
 <ul>
-<li>Default: <code>9000</code></li>
-<li>Environment Variable: <code>TRIAL_ACTOR_PORT</code></li>
-<li>Command line: <code>--lifecycle_port=#</code></li>
+<li><code>trialConfig</code>: <em>cogment.MessageBase</em> - Configuration for the trial. The type is specified in the spec file under the section <code>trial:config_type</code>. Can be <code>undefined</code> if no configuration is provided. This is provided to the first pre-trial hook.</li>
+<li><code>trialIdRequested</code>: <em>string</em> - The trial identifier requested for the new trial. It must be unique among all active trials and a limited set of the latest ended trials (this list of trials can be retrieved with <code>getTrialInfo</code> or <code>watchTrial</code>). If provided, the Orchestrator will try to use this trialId, otherwise, a UUID will be created.</li>
 </ul>
-<h4 id="lifecycle-port">lifecycle port<a class="headerlink" href="#lifecycle-port" title="Permanent link">&para;</a></h4>
-<p>The port for the <code>cogment.TrialLifecycle</code> service</p>
+<p>Return: <em>string</em> - The newly started trial ID.</p>
+<h3 id="terminate_trialtrialids-hard-false"><code>terminate_trial(trialIds, hard = false)</code><a class="headerlink" href="#terminate_trialtrialids-hard-false" title="Permanent link">&para;</a></h3>
+<p>Method to request the end of a trial.</p>
+<p>Parameters:</p>
 <ul>
-<li>Default: <code>9000</code></li>
-<li>Environment Variable: <code>TRIAL_LIFECYCLE_PORT</code></li>
-<li>Command line: <code>--lifecycle_port=#</code></li>
+<li><code>trialIds</code>: <em>string[]</em> - The trial ID(s) to request to terminate. There must be at least one ID.</li>
+<li><code>hard</code>: <em>boolean</em> - If <code>true</code>, the termination will be forced and not wait for any action or observation. If <code>false</code>, the trial will wait for the next tick, to end gracefully (i.e. wait for the next full set of actions and response observations).</li>
 </ul>
-<h3 id="ssl">SSL<a class="headerlink" href="#ssl" title="Permanent link">&para;</a></h3>
-<h4 id="private-key">Private Key<a class="headerlink" href="#private-key" title="Permanent link">&para;</a></h4>
-<p>File containing PEM encoded private key.</p>
+<p>Return: void</p>
+<h3 id="async-gettrialinfotrialids"><code>async getTrialInfo(trialIds)</code><a class="headerlink" href="#async-gettrialinfotrialids" title="Permanent link">&para;</a></h3>
+<p>Method to get information about a trial.</p>
+<p>Parameters:</p>
 <ul>
-<li>Default: N/A</li>
-<li>Command line: <code>--private_key=#</code></li>
+<li><code>trialIds</code>: <em>string[]</em> - The trial ID(s) from which to request information. If no ID is provided, returns information about all trials. Note that ended trials may only appear for a short time in this list after they have ended.</li>
 </ul>
-<h4 id="root-cert">Root Cert<a class="headerlink" href="#root-cert" title="Permanent link">&para;</a></h4>
-<p>File containing a PEM encoded trusted root certificate.</p>
+<p>Return: <em>TrialInfo[]</em> - List of trial information, one per trial. Can be empty if no trial matches.</p>
+<h3 id="async-watchtrialstrialstatefilters"><code>async watchTrials(trialStateFilters=[])</code><a class="headerlink" href="#async-watchtrialstrialstatefilters" title="Permanent link">&para;</a></h3>
+<p>Generator method to iterate, in real-time, through all trial states matching the filters. When called, it will first iterate over the current states matching the filters, for all trials. Afterwards, it will iterate in real-time over the matching states as they change.</p>
+<p>Parameters:</p>
 <ul>
-<li>Default: N/A</li>
-<li>Command line: <code>--root_cert=#</code></li>
+<li><code>trialStateFilters</code>: <em>cogment.TrialState[]</em> - List of enum values from <code>cogment.TrialState</code> for which we are interested in receiving state changes.</li>
 </ul>
-<h4 id="trust-chain">Trust Chain<a class="headerlink" href="#trust-chain" title="Permanent link">&para;</a></h4>
-<p>File containing a PEM encoded trust chain.</p>
+<p>Return: <em>generator(TrialInfo instance)</em> - A generator for the state changes that arrive. The <code>TrialInfo</code> received here only contains the trial ID and the state.</p>
+<h3 id="async-getactorstrialid"><code>async getActors(trialId)</code><a class="headerlink" href="#async-getactorstrialid" title="Permanent link">&para;</a></h3>
+<p>Method to get the list of configured actors in a trial.</p>
+<p>Parameters:</p>
 <ul>
-<li>Default: N/A</li>
-<li>Command line: <code>--trust_chain=#</code></li>
+<li><code>trialId</code>: <em>string</em> - The trial ID from which to request the list of actors.</li>
 </ul>
-<h3 id="low-level-grpc-api">Low level gRPC API<a class="headerlink" href="#low-level-grpc-api" title="Permanent link">&para;</a></h3>
-<p>The Orchestrator implements two gRPC endpoints that are specified as part of the Cogment API:</p>
+<p>Return: ActorInfo[] - List of actors configured in this trial.</p>
+<h3 id="async-getremoteversions"><code>async getRemoteVersions()</code><a class="headerlink" href="#async-getremoteversions" title="Permanent link">&para;</a></h3>
+<p>Method to get the versions from the remote Orchestrator.</p>
+<p>Parameters: None</p>
+<p>Return: <em>{[key: string]: string}</em> - The key of the object is the name of the component (<em>string</em>), and the value is the version (<em>string</em>).</p>
+<h2 id="class-session">class Session<a class="headerlink" href="#class-session" title="Permanent link">&para;</a></h2>
+<p>Abstract class that manages aspects of a trial. Contains data and methods common to all sessions .</p>
+<h3 id="gettrialid"><code>getTrialId()</code><a class="headerlink" href="#gettrialid" title="Permanent link">&para;</a></h3>
+<p>Method to get the UUID of the trial managed by this session.</p>
+<p>Parameters: None</p>
+<p>Return: <em>string</em> - UUID of the trial.</p>
+<h3 id="gettickid"><code>getTickId()</code><a class="headerlink" href="#gettickid" title="Permanent link">&para;</a></h3>
+<p>Method to get the current tick id of the trial (i.e. time step).</p>
+<p>Parameters: None</p>
+<p>Return: <em>number</em> - The current tick id.</p>
+<h3 id="istrialover"><code>isTrialOver()</code><a class="headerlink" href="#istrialover" title="Permanent link">&para;</a></h3>
+<p>Method to inquire if the current trial has ended.</p>
+<p>Parameters: None</p>
+<p>Return: <em>boolean</em> - True if the trial has ended, false otherwise.</p>
+<h3 id="sendingdone"><code>sendingDone()</code><a class="headerlink" href="#sendingdone" title="Permanent link">&para;</a></h3>
+<p>Method to notify the Orchestrator that all data for the trial, from this session, has been sent. This can be called only when the session is ending.  When starting the session (see <code>ActorSession</code>), if the <code>autoDoneSending</code> parameter is True, this method should not be called, and if the parameter is False, it MUST be called to end the trial properly.</p>
+<p>Parameters: None</p>
+<p>Return: void</p>
+<h2 id="class-actorsession-extends-session">class ActorSession extends Session<a class="headerlink" href="#class-actorsession-extends-session" title="Permanent link">&para;</a></h2>
+<h3 id="startautodonesendingtrue"><code>start(autoDoneSending=True)</code><a class="headerlink" href="#startautodonesendingtrue" title="Permanent link">&para;</a></h3>
+<p>Method to start the actor. This method should be called before any other method in the session.</p>
+<p>Parameters:</p>
 <ul>
-<li><a href="../../../cogment/cogment-low-level-api-guide/grpc/#control-api">The Control API <code>TrialLifeCycle</code></a> that defines how to manage trial execution.</li>
-<li><a href="../../../cogment/cogment-low-level-api-guide/grpc/#client-actor-api">The Client Actor API <code>ClientActor</code></a> that enables <a href="../../../cogment/cogment-api-guide/#service-actor-client-actor">client actors</a> to join trials.</li>
+<li><code>autoDoneSending</code>: <em>boolean</em> - Controls when to notify the Orchestrator that all data has been sent. If True, the session will automatically send the notification after receiving the last observation. If False, the user MUST call <code>sendingDone</code> to end the trial properly.</li>
 </ul>
-<h2 id="setup">Setup<a class="headerlink" href="#setup" title="Permanent link">&para;</a></h2>
-<!-- prettier-ignore -->
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>🚧 under construction</p>
-</div>
+<p>Return: void</p>
+<h3 id="async-eventloop"><code>async *eventLoop()</code><a class="headerlink" href="#async-eventloop" title="Permanent link">&para;</a></h3>
+<p>Generator method to iterate over all events (observations, rewards, messages) as they are received. This will block and wait for an event.
+When this generator exits, the callback function (registered with <code>registerActor</code>) should return to end the trial cleanly.
+The generator will exit for various reasons indicating the end of the trial, a loss of communication with the orchestrator, or if the generator is sent "False".</p>
+<p>Parameters: None</p>
+<p>Return: <em>AsyncGenerator<RecvEvent></em> - A generator for the events that arrive. The <code>RecvEvent</code> instances received from this generator will not contain actions. When receiving an observation in the event, the <code>this.doAction</code> method is normally used to "reply" (if the event type is <code>EventType.ACTIVE</code>).</p>
+<h3 id="doactionaction"><code>doAction(action)</code><a class="headerlink" href="#doactionaction" title="Permanent link">&para;</a></h3>
+<p>Method to send actions to the environment.</p>
+<p>Parameters:</p>
+<ul>
+<li><code>action</code>: <em>ActionT</em> - An instance of the action space class specified in the corresponding section <code>actorClasses:action:space</code> of the spec file. If <code>undefined</code>, then no action space is sent (empty content) and the environment will receive a default initialized action space of the appropriate type.</li>
+</ul>
+<p>Return: void</p>
+<h3 id="sendmessagepayload-to"><code>sendMessage(payload, to)</code><a class="headerlink" href="#sendmessagepayload-to" title="Permanent link">&para;</a></h3>
+<p>Method to send a message related to the current time step (tick id).</p>
+<p>Parameters:</p>
+<ul>
+<li><code>payload</code>: <em>cogment.MessageBase</em> - The message data to be sent. The class can be any protobuf class. It is the responsibility of the receiving actor to manage the class received.</li>
+<li><code>to</code>: <em>string[]</em> - Targets of feedback. Each value could be the name of an actor in the trial, or the name of the environment (from <code>this.envName</code>). Or it could represent a set of actors (with wildcards); A set of actors can be represented with the wildcard character "<code>*</code>" for all actors (of all classes), or "<code>actorClass.*</code>" for all actors of a specific class (the <code>actorClass</code> must match one of the classes listed in the trial parameters).  Note that the wildcard does not include the environment.</li>
+</ul>
+<p>Return: void</p>
+<h2 id="enum-cogmenttrialstate">enum cogment.TrialState<a class="headerlink" href="#enum-cogmenttrialstate" title="Permanent link">&para;</a></h2>
+<p>Enum representing the various states of trials.</p>
+<ul>
+<li>UNKNOWN: Should not be used.</li>
+<li>INITIALIZING: The trial is in the process of starting.</li>
+<li>PENDING: The trial is waiting for its final parameters, before running.</li>
+<li>RUNNING: The trial is running.</li>
+<li>TERMINATING: The trial is in the process of terminating (either a request to terminate has been received or the last observation has been received).</li>
+<li>ENDED: The trial has ended. Only a set number of ended trials will be kept (configured in the Orchestrator).</li>
+</ul>
+<h2 id="class-trialinfo">class TrialInfo<a class="headerlink" href="#class-trialinfo" title="Permanent link">&para;</a></h2>
+<p>Class enclosing the details of a trial.</p>
+<p><code>trialId</code>: <em>string</em> - The trial ID to which the details pertain.</p>
+<p><code>state</code>: <em>cogment.TrialState</em> - The current state of the trial.</p>
+<p><code>envName</code>: <em>string</em> - The name of the environment running the trial.</p>
+<p><code>tickId</code>: <em>number</em> - The time step that the information relates to. Only provided from a call to <code>getTrialInfo</code>.</p>
+<p><code>duration</code>: <em>number</em> - The time (in nanoseconds) that the trial has run. Only provided from a call to <code>getTrialInfo</code>.</p>
+<h2 id="class-recvevent">class RecvEvent<a class="headerlink" href="#class-recvevent" title="Permanent link">&para;</a></h2>
+<p>Class representing a received event (for environments and actors). It can contain any combination of data according to the receiver needs, or even be empty, but it will always have a type.</p>
+<p><code>type</code>: <em>EventType</em> - Type of event the enclosed data represents.</p>
+<p><code>observation</code>: <em>ObservationT</em> - Observation data. This can only be received by actors. <code>undefined</code> if not present.</p>
+<p><code>actions</code>: <em>ActionT</em> - Action data from actors. This can only be received by the environment. The list is empty if not present.</p>
+<p><code>rewards</code>: <em>Reward[]</em> - Reward values and data. This can only be received by actors. The list is empty if not present.</p>
+<p><code>messages</code>: <em>MessageBase[]</em> - Message data. The list is empty if not present.</p>
+<h3 id="enum-cogmenteventtype">enum cogment.EventType<a class="headerlink" href="#enum-cogmenteventtype" title="Permanent link">&para;</a></h3>
+<p>Enum representing the type of an event.</p>
+<ul>
+<li>
+<p><code>EventType.NONE</code>: Empty event. This kind of event should never be received.</p>
+</li>
+<li>
+<p><code>EventType.ACTIVE</code>: Normal event from an active trial. Most events will be of this type.</p>
+</li>
+<li>
+<p><code>EventType.ENDING</code>: Events from a trial in the process of ending. For the environment, this means that these events contain the last actions from the actors, and the trial is awaiting a final observation. For the actors, this means that the trial is ending and no action can/need to be sent in response. Note that because of network timing, there may be <code>ACTIVE</code> events (e.g. rewards or messages) arriving after some <code>ENDING</code> events, but the trial is ending regardless.</p>
+</li>
+<li>
+<p><code>EventType.FINAL</code>: Final event for the trial. This does not contain data. The event loop will exit after this event is delivered. This event can be ignored if nothing needs to be done before exiting the loop.</p>
+</li>
+</ul>
+<h2 id="type-observationt">type ObservationT<a class="headerlink" href="#type-observationt" title="Permanent link">&para;</a></h2>
+<p>Type containing the details of an actor's observation. This will be different depending on what the ActionSpace defined in your spec file contains</p>
+<h2 id="type-actiont">type ActionT<a class="headerlink" href="#type-actiont" title="Permanent link">&para;</a></h2>
+<p>Type containing the details of an action from an actor. This will be different depending on what the ActionSpace defined in your spec file contains</p>
+<h2 id="class-messagebase">class MessageBase<a class="headerlink" href="#class-messagebase" title="Permanent link">&para;</a></h2>
+<p>Base Class of all messages, this will contain different fields depending on what fields are in the specific message you are receiving (defined in proto files)</p>
+<h2 id="type-reward">type Reward<a class="headerlink" href="#type-reward" title="Permanent link">&para;</a></h2>
+<p>type containing the details of a received reward.</p>
+<p><code>tickId</code>: <em>number</em> - The tick id (time step) for which the reward should be applied.</p>
+<p><code>receiverName</code>: <em>string</em> - Name of the receiver for the reward (the name of an actor, or wildcard string).</p>
+<p><code>value</code>: <em>float</em> - Value of the reward (aggregated from the sources)</p>
+<p><code>sources</code>: <em>IRewardSource[]</em> - List of sources that gave this reward</p>
+<h2 id="interface-irewardsource">interface IRewardSource<a class="headerlink" href="#interface-irewardsource" title="Permanent link">&para;</a></h2>
+<p><code>senderName</code>: <em>string</em> - Name of the reward sender;</p>
+<p><code>value</code>: <em>number</em> - Value of the reward;</p>
+<p><code>confidence</code>: <em>number</em> - Confidence of this reward;</p>
+<p><code>userData</code>: <em>google.protobuf.IAny</em> - Extra data;</p>
                 
               
               
@@ -1575,41 +1717,6 @@ CMD [&quot;--config=/some/path/cogment.yaml&quot;, &quot;--loglevel=debug&quot;]
       
         
 <footer class="md-footer">
-  
-    <nav class="md-footer__inner md-grid" aria-label="Footer">
-      
-        
-        <a href="../../cli/cli/" class="md-footer__link md-footer__link--prev" aria-label="Previous: CLI" rel="prev">
-          <div class="md-footer__button md-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
-          </div>
-          <div class="md-footer__title">
-            <div class="md-ellipsis">
-              <span class="md-footer__direction">
-                Previous
-              </span>
-              CLI
-            </div>
-          </div>
-        </a>
-      
-      
-        
-        <a href="../../model-registry/model-registry/" class="md-footer__link md-footer__link--next" aria-label="Next: Model Registry" rel="next">
-          <div class="md-footer__title">
-            <div class="md-ellipsis">
-              <span class="md-footer__direction">
-                Next
-              </span>
-              Model Registry
-            </div>
-          </div>
-          <div class="md-footer__button md-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
-          </div>
-        </a>
-      
-    </nav>
   
   <div class="md-footer-meta md-typeset">
     <div class="md-footer-meta__inner md-grid">
@@ -1671,6 +1778,10 @@ CMD [&quot;--config=/some/path/cogment.yaml&quot;, &quot;--loglevel=debug&quot;]
     
     
       <script src="../../../assets/javascripts/bundle.bc35569b.min.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/highlight.min.js"></script>
+      
+        <script src="../../../javascripts/highlight.js"></script>
       
     
   </body>
