@@ -7,11 +7,23 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## Unreleased
 
--   Added Migration guide
+### Added
+
+-   Add v1 to v2 migration guide
+
+### Changed
+
+-   Update the citation file to the new spec
+
+### Fixed
+
+-   Fix internal links pointing at the js sdk docs
+-   Fix invitation link to Discord
+-   Fix installation instruction for the python sdk generator
 
 ## v2.0.0 - 2022-01-17
 
-### Changes
+### Changed
 
 -   Updates for API 2.0 changes
 
