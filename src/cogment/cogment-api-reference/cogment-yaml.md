@@ -1,11 +1,11 @@
 # Spec File
 
-The spec file (typically named `cogment.yaml`) is central to every Cogment project. This file is used to define the specifics of a type of trials.  It also contains data used by the Cogment CLI tool. The Cogment CLI takes this file as its main input to, among other things, configure the language specific SDKs.
+The spec file (typically named `cogment.yaml`) is central to every Cogment project that use a Cogment SDK. This file is used to define the specifics of a type of trials.  It can also contain data (the `commands` section) used by the Cogment CLI tool. A generator tool specific to each SDK takes this file as its main input to, among other things, configure the SDK.
 
 The top level sections in the file are:
 
 -   [import](#import): Used to import other proto files into the definition of the project
--   [commands](#commands): Defines commands that can be run by the Cogment CLI
+-   [commands](#commands): Optional. Defines commands that can be run by the Cogment CLI
 -   [trial](#trial): Define trial speficic properties
 -   [environment](#environment): Define environment specific properties
 -   [actor_classes](#actor-classes): Define actor specific properties (for each actor class)
@@ -42,7 +42,7 @@ commands:
     generate: |
         cd client && python -m cogment.generate --spec cogment.yaml && cd ..
         cd environment && python -m cogment.generate --spec cogment.yaml && cd ..
-    copy: cogment copy cogment.yaml *.proto client environment
+    copy: cogment copy cogment.yaml *.proto params.yaml client environment
     start: docker-compose up orchestrator agent env
     play: cogment run start && docker-compose run launcher
 ```

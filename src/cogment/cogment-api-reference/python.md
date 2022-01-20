@@ -9,8 +9,9 @@ asyncio.run(MyMainFunction())
 
 ## Installation
 
-The simplest way to install the python SDK is to just install it using pip:
-`pip install cogment`
+The simplest way to install the python SDK is to just install it using pip: `pip install cogment`.
+
+And to install the generator (for `cog_settings.py`) it is done similarly with pip: `pip install cogment[generate]`. Note that the generator is not installed by default when installing the Cogment SDK, it must be explcitly installed.
 
 The basic requirement is Python 3.7.
 
@@ -24,7 +25,7 @@ For example, an [actor class][4] is defined by its required [observation space][
 
 These "spaces" are defined by using protobuf message types (from the imported files). [Observations][7] and [actions][8] will simply be instances of the appropriate type.
 
-Messages and feedback user data don't have a set type, they can be any type as long as the receiver can manage that type (i.e. the object received is an instance of `google.protobuf.Any` and the contained type should be checked against known types before handling). The type is determined by the provided message from the originator.
+Messages and feedback user data don't have a set type, they can be any type of protobuf message as long as the receiver can manage that type (i.e. the object received is an instance of `google.protobuf.Any` and the contained type should be checked against known types before handling). The type is determined by the provided message from the originator.
 
 ### Trial Parameters
 
@@ -36,31 +37,25 @@ Below, when we refer to the trial parameters, we mean the final parameters after
 
 Note that environment config and actor config can only be provided by pre-trial hooks.
 
-#### Compiling the spec file into cog_settings.py
+### Compiling the spec file into cog_settings.py
 
-In order to use the specification found in the spec file within python scripts, it needs to be compiled into python modules. This is done by a tool `cogment.generate`.
+In order to use the specifications within python scripts, the spec file needs to be compiled into python modules. This is done by the Python SDK generator (see [#installation]). 
 
-This can be installed along-side the python SDK by doing
+The generator is used this way:
 
-```
-pip install cogment[generate]
-```
-
-Then it can be run (assuming you've placed the spec file and your proto files in the same directory) using
-
-```
-python -m cogment.generate --spec spec.yaml --output cog_settings.py
+```bash
+$ python3 -m cogment.generate --spec cogment.yaml --output ./cog_settings.py
 ```
 
-This will create a `cog_settings.py` module in the current directory. It will also compile the imported `*.proto` files into python modules which will end up in the same location as the specified output file, and be named `{proto_name}_pb2.py`.
+This will create a `cog_settings.py` module in the current directory (`--output ./`). The generator will also compile the imported `*.proto` files into python modules that will be saved in the same location as the specified output file (`cog_settings.py`) and they will be named according to their proto names (`*_pb2.py`).
 
 The `cog_settings.py` Python module is required by all API entry points.
 
-This step is usually done inside of a docker container, and is included in the generated files upon running [cogment init](../../cogment-components/cli/cli.md#init)
-
 ### Top-level import
 
-Whether a script implements an actor or environment, it should import both the `cogment` module (generic Python SDK for Cogment) and the `cog_settings` module (project specific definitions created from the spec file).
+The main module of the Cogment SDK is `cogment`. But all cogment scripts need to start with a `cogment.Context`, which also requires the generated module `cog_settings` (project specific definitions created from the spec file).
+
+If one needs to create a `cogment.LogParams` from scratch, the `cog_settings` module is also required.
 
 ```python
 import cog_settings
@@ -170,7 +165,7 @@ Parameters:
 -   `trial_config`: _protobuf class instance_ - Configuration for the trial. The type is specified in the spec file under the section `trial:config_type`. Can be `None` if no configuration is provided. This is provided to the first pre-trial hook.
 -   `trial_id_requested`: _str_ - The trial identifier requested for the new trial. It must be unique among all active trials and a limited set of the latest ended trials (this list of trials can be retrieved with `get_trial_info` or `watch_trial`). If provided, the Orchestrator will try to use this trial_id, otherwise, a UUID will be created.
 
-Return: _str_ - The newly started trial ID.
+Return: _str_ - The newly started trial ID. An empty string if the trial was not started due to a non-unique ID.
 
 ### `terminate_trial(self, trial_ids, hard=False)`
 
@@ -290,7 +285,8 @@ Parameters:
 -   `observations`: _list[tuple(str, protobuf class instance)]_ - The initial observations from which the environment is starting the trial. This is the same as the parameter for `self.produce_observations`. If not provided, then the first observation sent with `produce_observation` will be used to initiate the trial (note that no actions will be received until the first observation is sent).
 
 -   `auto_done_sending`: _bool_ - Controls when to notify the Orchestrator that all data has been sent. If True, the session will automatically send the notification after `end` is called. If False, the user MUST call `sending_done` (after `end`) to end the trial properly.
-    Return: None
+
+Return: None
 
 ### `async event_loop(self)`
 
@@ -716,7 +712,7 @@ Parameters:
 
 -   `actor_name`: _str_ - Name of the actor to look for in the trial parameters.
 
-Return: _int_ - Index of actor is found. `None` if not found. This index is constant in the trial and relates to all complete actors list provided by cogment (e.g. `Controller.get_actors()`).
+Return: _int_ - Index of actor if found. `None` if not found. This index is constant in the trial and relates to the complete list of actors provided by cogment (e.g. `Controller.get_actors()`).
 
 ### `get_actor_name(self, actor_index)`
 
