@@ -20,7 +20,7 @@
     
     
       
-        <title>Javascript SDK - Cogment User Documentation</title>
+        <title>Javascript/Typescript SDK - Cogment User Documentation</title>
       
     
     
@@ -113,7 +113,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Javascript SDK
+              Javascript/Typescript SDK
             
           </span>
         </div>
@@ -401,14 +401,16 @@
 
   
   
+    
+  
   
     
       
     
-    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" checked>
       
       
       
@@ -588,12 +590,14 @@
               
   
   
+    
+  
   
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_3" type="checkbox" id="__nav_4_3" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_3" type="checkbox" id="__nav_4_3" checked>
       
       
       
@@ -644,22 +648,8 @@
   
   
     <li class="md-nav__item">
-      <a href="../../orchestrator/" class="md-nav__link">
-        Orchestrator
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../python/" class="md-nav__link">
-        python SDK
+        Python SDK
       </a>
     </li>
   
@@ -668,270 +658,354 @@
           
             
               
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Javascript/Typescript SDK
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Javascript/Typescript SDK
+      </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
   
   
   
     
-    <li class="md-nav__item md-nav__item--nested">
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
+        <li class="md-nav__item">
+  <a href="#installation" class="md-nav__link">
+    Installation
+  </a>
+  
+</li>
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_3_5" type="checkbox" id="__nav_4_3_5" >
+        <li class="md-nav__item">
+  <a href="#general-usage" class="md-nav__link">
+    General usage
+  </a>
+  
+    <nav class="md-nav" aria-label="General usage">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-spec-file" class="md-nav__link">
+    The spec file
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#trial-parameters" class="md-nav__link">
+    Trial Parameters
+  </a>
+  
+    <nav class="md-nav" aria-label="Trial Parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#compiling-the-spec-file" class="md-nav__link">
+    Compiling the spec file
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cogsettingsjs" class="md-nav__link">
+    CogSettings.js
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#imports" class="md-nav__link">
+    Imports
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
       
+        <li class="md-nav__item">
+  <a href="#class-cogmentcontext" class="md-nav__link">
+    class cogment.Context
+  </a>
+  
+    <nav class="md-nav" aria-label="class cogment.Context">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#constructoruserid-cogsettings" class="md-nav__link">
+    constructor(userId, cogSettings)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#getcontrollerendpoint" class="md-nav__link">
+    getController(endpoint)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#async-jointrialtrialid-endpoint-actorname" class="md-nav__link">
+    async joinTrial(trialId, endpoint, actorName)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#registeractorimpl-actorname-actorclass" class="md-nav__link">
+    registerActor(impl, actorName, actorClass)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
       
+        <li class="md-nav__item">
+  <a href="#class-controller" class="md-nav__link">
+    class Controller
+  </a>
+  
+    <nav class="md-nav" aria-label="class Controller">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#async-starttrialtrialconfig-undefined-trialidrequested-undefined" class="md-nav__link">
+    async startTrial(trialConfig = undefined, trialIdRequested = undefined)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#terminate_trialtrialids-hard-false" class="md-nav__link">
+    terminate_trial(trialIds, hard = false)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#async-gettrialinfotrialids" class="md-nav__link">
+    async getTrialInfo(trialIds)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#async-watchtrialstrialstatefilters" class="md-nav__link">
+    async watchTrials(trialStateFilters=[])
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#async-getactorstrialid" class="md-nav__link">
+    async getActors(trialId)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#async-getremoteversions" class="md-nav__link">
+    async getRemoteVersions()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
       
+        <li class="md-nav__item">
+  <a href="#class-session" class="md-nav__link">
+    class Session
+  </a>
+  
+    <nav class="md-nav" aria-label="class Session">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#gettrialid" class="md-nav__link">
+    getTrialId()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gettickid" class="md-nav__link">
+    getTickId()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#istrialover" class="md-nav__link">
+    isTrialOver()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sendingdone" class="md-nav__link">
+    sendingDone()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
       
-        <label class="md-nav__link" for="__nav_4_3_5">
-          Javascript/Typescript SDK
-          <span class="md-nav__icon md-icon"></span>
-        </label>
+        <li class="md-nav__item">
+  <a href="#class-actorsession-extends-session" class="md-nav__link">
+    class ActorSession extends Session
+  </a>
+  
+    <nav class="md-nav" aria-label="class ActorSession extends Session">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#startautodonesendingtrue" class="md-nav__link">
+    start(autoDoneSending=True)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#async-eventloop" class="md-nav__link">
+    async *eventLoop()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#doactionaction" class="md-nav__link">
+    doAction(action)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sendmessagepayload-to" class="md-nav__link">
+    sendMessage(payload, to)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
       
-      <nav class="md-nav" aria-label="Javascript/Typescript SDK" data-md-level="3">
-        <label class="md-nav__title" for="__nav_4_3_5">
-          <span class="md-nav__icon md-icon"></span>
-          Javascript/Typescript SDK
-        </label>
-        <ul class="md-nav__list" data-md-scrollfix>
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="modules.md" class="md-nav__link">
-        Modules
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="classes/actorsession.md" class="md-nav__link">
-        Class: ActorSession
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="classes/cogmentservice.md" class="md-nav__link">
-        Class: CogmentService
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="classes/trialcontroller.md" class="md-nav__link">
-        Class: TrialController
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="enums/eventtype.md" class="md-nav__link">
-        Enum: EventType
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="interfaces/cogmentyaml.md" class="md-nav__link">
-        Interface: CogmentYaml
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="interfaces/cogmentyamlactor.md" class="md-nav__link">
-        Interface: CogmentYamlActor
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="interfaces/cogmentyamlactorclass.md" class="md-nav__link">
-        Interface: CogmentYamlActorClass
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="interfaces/cogmentyamldatalog.md" class="md-nav__link">
-        Interface: CogmentYamlDatalog
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="interfaces/cogmentyamltrialparameters.md" class="md-nav__link">
-        Interface: CogmentYamlTrialParameters
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="interfaces/cogsettings.md" class="md-nav__link">
-        Interface: CogSettings
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="interfaces/cogsettingsactorclass.md" class="md-nav__link">
-        Interface: CogSettingsActorClass
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="interfaces/createserviceoptions.md" class="md-nav__link">
-        Interface: CreateServiceOptions
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="interfaces/event.md" class="md-nav__link">
-        Interface: Event
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="interfaces/reward.md" class="md-nav__link">
-        Interface: Reward
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="interfaces/sendmessageoptions.md" class="md-nav__link">
-        Interface: SendMessageOptions
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="interfaces/trialactor.md" class="md-nav__link">
-        Interface: TrialActor
-      </a>
-    </li>
-  
-
-            
-          
-        </ul>
-      </nav>
+        <li class="md-nav__item">
+  <a href="#enum-cogmenttrialstate" class="md-nav__link">
+    enum cogment.TrialState
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#class-trialinfo" class="md-nav__link">
+    class TrialInfo
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#class-recvevent" class="md-nav__link">
+    class RecvEvent
+  </a>
+  
+    <nav class="md-nav" aria-label="class RecvEvent">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#enum-cogmenteventtype" class="md-nav__link">
+    enum cogment.EventType
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#type-observationt" class="md-nav__link">
+    type ObservationT
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#type-actiont" class="md-nav__link">
+    type ActionT
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#class-messagebase" class="md-nav__link">
+    class MessageBase
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#type-reward" class="md-nav__link">
+    type Reward
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#interface-irewardsource" class="md-nav__link">
+    interface IRewardSource
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -1011,7 +1085,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../implementation-recipes/" class="md-nav__link">
+      <a href="../../implementation-recipes/implementation-recipes/" class="md-nav__link">
         Implementation recipes
       </a>
     </li>
@@ -1075,7 +1149,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../orchestrator/" class="md-nav__link">
+      <a href="../../../cogment-components/orchestrator/orchestrator/" class="md-nav__link">
         Orchestrator
       </a>
     </li>
@@ -1717,6 +1791,41 @@ The generator will exit for various reasons indicating the end of the trial, a l
       
         
 <footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        
+        <a href="../python/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Python SDK" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Python SDK
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../../cogment-low-level-api-guide/overview/" class="md-footer__link md-footer__link--next" aria-label="Next: Overview" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              Overview
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
   
   <div class="md-footer-meta md-typeset">
     <div class="md-footer-meta__inner md-grid">
