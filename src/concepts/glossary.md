@@ -75,10 +75,6 @@ A model is a representation, usually a mathematical one in our context, of a con
 
 An observation is the subset of the [environment state](#environment-state) that an [Actor](#actor) based its choice of [Action](#action) (or lack thereof) on.
 
-### Observation delta
-
-An observation delta is the difference between two [observations](#observation). Usually, we encode deltas from the past to the future.
-
 ### Observation transition
 
 An observation transition is an observation delta between two consecutive [observations](#observation).

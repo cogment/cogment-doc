@@ -3,6 +3,7 @@
 The Python SDK is designed to run concurently and asynchronously using the Python `asyncio` library. As such, it should be run in an `asyncio.Task`.
 
 E.g.
+
 ```python
 asyncio.run(MyMainFunction())
 ```
@@ -105,7 +106,7 @@ Parameters:
 -   `endpoint`: _Endpoint instance_ - Details of the connection to the Orchestrator.
 -   `impl_name`: _str_ - **deprecated**
 -   `actor_name`: _str_ - Name of the actor joining the trial. If `None`, `actor_class` will be used to find the actor to join. The name must match an active actor in the trial as found in the trial parameters in the sections `trial_params:actors:name` with `trial_params:actors:endpoint` set to "cogment://client".
--   `actor_class`: _str_ - The class of actor to join the trial. If `None`, `actor_name` will be used to find the actor to join.  The class must match an active actor in the trial as found in the trial parameters in the sections `trial_params:actors:actor_class` with `trial_params:actors:endpoint` set to "cogment://client".
+-   `actor_class`: _str_ - The class of actor to join the trial. If `None`, `actor_name` will be used to find the actor to join. The class must match an active actor in the trial as found in the trial parameters in the sections `trial_params:actors:actor_class` with `trial_params:actors:endpoint` set to "cogment://client".
 
 Return: None
 
@@ -418,7 +419,7 @@ Abstract class containing trial configuration data to define the specifics of a 
 
 -   `"name"`: _str_ - Name of the actor
 -   `"actor_class"`: _str_ - The actor class for the actor. This is specific to a type of trial and must match values in the spec file under section `actor_classes:name`.
--   `"endpoint"`: _str_ - The URL to connect to the actor. If, instead of a grpc URL, the value is "cogment://client", then this actor will connect in (rather than be connected to), and the actor will need to provide the grpc URL to connect to the orchestrator.
+-   `"endpoint"`: _str_ - The URL to connect to the actor. If, instead of a gRPC URL, the value is "cogment://client", then this actor will connect in (rather than be connected to), and the actor will need to provide the gRPC URL to connect to the orchestrator.
 -   `"implementation"`: _str_ - The name of the implementation to run this actor
 -   `"config"`: _protobuf class instance_ - The configuration data for the actor. The type is specified in the spec file under the section `actor_classes:config_type` for the corresponding actor. If `None`, no config will be sent to the actor.
 

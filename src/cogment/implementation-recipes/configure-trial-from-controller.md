@@ -1,12 +1,6 @@
-# Implementation recipes
+## Fully configure a trial from a [**Controller**](../../concepts/core-concepts.md#controller)
 
-This page gathers implementation guides, or recipes, concerning specific topics not covered elsewhere. Beginners should start learning about using Cogment through the [tutorial](../cogment/tutorial/introduction.md) and general information are located in the [api guide](../cogment/cogment-api-guide.md).
-
-If you feel a specific topic is not adressed, please [fill an issue](https://github.com/cogment/cogment-doc/issues/new/choose) or [get in touch](../support/community-channels.md).
-
-## Fully configure a trial from a [**Controller**](../concepts/core-concepts.md#controller)
-
-When starting a trial, the controller can only provide an instance of the **trial configuration** message and from this instance the pre trial hook can fill the **trial parameters**, including a full configuring of the environment and actors involved in the trial. More details can be found [here](./cogment-api-guide.md#pre-trial-hook). In some cases, you might want to fully configure a trial from the controller. This recipe is dedicated to this use case.
+When starting a trial, the controller can only provide an instance of the **trial configuration** message and from this instance the pre trial hook can fill the **trial parameters**, including a full configuring of the environment and actors involved in the trial. More details can be found [here](../cogment-api-guide.md#pre-trial-hook). In some cases, you might want to fully configure a trial from the controller. This recipe is dedicated to this use case.
 
 <!-- prettier-ignore -->
 !!! warning

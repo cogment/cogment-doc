@@ -1,6 +1,10 @@
 [![Cogment Homepage](https://img.shields.io/badge/-Homepage-ffbb00?style=flat)](https://cogment.ai/){target=\_blank}
 [![Cogment sources @ Github](https://img.shields.io/badge/Github-Cogment%20Sources-lightgrey?style=flat&logo=github)](https://github.com/cogment){target=\_blank} [![Join us on the official Cogment discord](https://img.shields.io/discord/739822842450935963?style=flat&color=6f84d4&label=Cogment%27s%20Discord&logo=discord&logoColor=white)](https://discord.gg/QDxb9Fweqr){target=\_blank}
 
+<!-- prettier-ignore -->
+!!! note
+    We recently introduced cogment v2 which a massive internal change to Cogment to learn more about the change and how to migrate please check the dedicated [documentation](./cogment/implementation-recipes/v2-migration-guide.md).
+
 # Cogment Framework Overview
 
 ## What is Cogment?
