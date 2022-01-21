@@ -224,6 +224,10 @@ Just like the actors, the environment in a trial can now be named, this name def
 !!! warning "Required update"
     Remove all usage of `EnvironmentSession.send_message()` using the `to_environment` argument.
 
+<!-- prettier-ignore -->
+!!! warning "Required update"
+    Rename the parameter `observations` in `EnvironmentSession.end(observations=observations)` to `final_observations`.
+
 Further details can be found in the [python SDK documentation](../cogment-api-reference/python.md).
 
 ## Javascript SDK
