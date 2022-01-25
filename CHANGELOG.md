@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## Unreleased
 
+## v2.1.1 - 2022-01-25
+
 ### Fixed
 
 -   Add missing `EnvironmentSession.end` documentation to Migration Guide
