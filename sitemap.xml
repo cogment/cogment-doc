@@ -2,152 +2,152 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://docs.cogment.ai/</loc>
-         <lastmod>2022-01-20</lastmod>
+         <lastmod>2022-01-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.cogment.ai/license/</loc>
-         <lastmod>2022-01-20</lastmod>
+         <lastmod>2022-01-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.cogment.ai/cogment/cogment-api-guide/</loc>
-         <lastmod>2022-01-20</lastmod>
+         <lastmod>2022-01-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.cogment.ai/cogment/cogment-api-reference/cogment-v2-changes/</loc>
-         <lastmod>2022-01-20</lastmod>
+         <lastmod>2022-01-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.cogment.ai/cogment/cogment-api-reference/cogment-yaml/</loc>
-         <lastmod>2022-01-20</lastmod>
+         <lastmod>2022-01-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.cogment.ai/cogment/cogment-api-reference/javascript/</loc>
-         <lastmod>2022-01-20</lastmod>
+         <lastmod>2022-01-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.cogment.ai/cogment/cogment-api-reference/parameters/</loc>
-         <lastmod>2022-01-20</lastmod>
+         <lastmod>2022-01-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.cogment.ai/cogment/cogment-api-reference/python/</loc>
-         <lastmod>2022-01-20</lastmod>
+         <lastmod>2022-01-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.cogment.ai/cogment/cogment-low-level-api-guide/grpc/</loc>
-         <lastmod>2022-01-20</lastmod>
+         <lastmod>2022-01-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.cogment.ai/cogment/cogment-low-level-api-guide/overview/</loc>
-         <lastmod>2022-01-20</lastmod>
+         <lastmod>2022-01-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.cogment.ai/cogment/implementation-recipes/configure-trial-from-controller/</loc>
-         <lastmod>2022-01-20</lastmod>
+         <lastmod>2022-01-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.cogment.ai/cogment/implementation-recipes/implementation-recipes/</loc>
-         <lastmod>2022-01-20</lastmod>
+         <lastmod>2022-01-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.cogment.ai/cogment/implementation-recipes/v2-migration-guide/</loc>
-         <lastmod>2022-01-20</lastmod>
+         <lastmod>2022-01-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.cogment.ai/cogment/tutorial/1-bootstrap-and-data-structures/</loc>
-         <lastmod>2022-01-20</lastmod>
+         <lastmod>2022-01-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.cogment.ai/cogment/tutorial/2-random-player/</loc>
-         <lastmod>2022-01-20</lastmod>
+         <lastmod>2022-01-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.cogment.ai/cogment/tutorial/3-rewards/</loc>
-         <lastmod>2022-01-20</lastmod>
+         <lastmod>2022-01-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.cogment.ai/cogment/tutorial/4-heuristic-player/</loc>
-         <lastmod>2022-01-20</lastmod>
+         <lastmod>2022-01-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.cogment.ai/cogment/tutorial/5-human-player/</loc>
-         <lastmod>2022-01-20</lastmod>
+         <lastmod>2022-01-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.cogment.ai/cogment/tutorial/6-web-client/</loc>
-         <lastmod>2022-01-20</lastmod>
+         <lastmod>2022-01-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.cogment.ai/cogment/tutorial/7-dqn-player/</loc>
-         <lastmod>2022-01-20</lastmod>
+         <lastmod>2022-01-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.cogment.ai/cogment/tutorial/introduction/</loc>
-         <lastmod>2022-01-20</lastmod>
+         <lastmod>2022-01-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.cogment.ai/cogment-components/cli/cli/</loc>
-         <lastmod>2022-01-20</lastmod>
+         <lastmod>2022-01-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.cogment.ai/cogment-components/dashboard/metrics-and-dashboard/</loc>
-         <lastmod>2022-01-20</lastmod>
+         <lastmod>2022-01-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.cogment.ai/cogment-components/model-registry/model-registry/</loc>
-         <lastmod>2022-01-20</lastmod>
+         <lastmod>2022-01-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.cogment.ai/cogment-components/orchestrator/orchestrator/</loc>
-         <lastmod>2022-01-20</lastmod>
+         <lastmod>2022-01-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.cogment.ai/cogment-components/trial-datastore/trial-datastore/</loc>
-         <lastmod>2022-01-20</lastmod>
+         <lastmod>2022-01-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.cogment.ai/concepts/core-concepts/</loc>
-         <lastmod>2022-01-20</lastmod>
+         <lastmod>2022-01-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.cogment.ai/concepts/glossary/</loc>
-         <lastmod>2022-01-20</lastmod>
+         <lastmod>2022-01-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.cogment.ai/introduction/installation/</loc>
-         <lastmod>2022-01-20</lastmod>
+         <lastmod>2022-01-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.cogment.ai/support/community-channels/</loc>
-         <lastmod>2022-01-20</lastmod>
+         <lastmod>2022-01-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
 </urlset>

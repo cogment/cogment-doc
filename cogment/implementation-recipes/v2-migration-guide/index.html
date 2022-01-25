@@ -1212,6 +1212,11 @@ my_controller.get_trial_infol(["my_trial_id"])</code></pre>
 <p class="admonition-title">Required update</p>
 <p>Remove all usage of <code>EnvironmentSession.send_message()</code> using the <code>to_environment</code> argument.</p>
 </div>
+<!-- prettier-ignore -->
+<div class="admonition warning">
+<p class="admonition-title">Required update</p>
+<p>Rename the parameter <code>observations</code> in <code>EnvironmentSession.end(observations=observations)</code> to <code>final_observations</code>.</p>
+</div>
 <p>Further details can be found in the <a href="../../cogment-api-reference/python/">python SDK documentation</a>.</p>
 <h2 id="javascript-sdk">Javascript SDK<a class="headerlink" href="#javascript-sdk" title="Permanent link">&para;</a></h2>
 <p>There has been a complete rework of the JS SDK we therefore recommend you to take a look at the dedicated <a href="../../cogment-api-reference/javascript/">javascript SDK documentation</a>. In more details:</p>
