@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## Unreleased
 
+### Fixed
+
+-   Fix typo in `get_trial_info` function name
+-   Clarify what happens when not providing `--params` to the orchestrator
+
 ## v2.1.1 - 2022-01-25
 
 ### Fixed

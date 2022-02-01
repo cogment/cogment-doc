@@ -58,8 +58,6 @@ pre-trial hooks are no longer defined in the `cogment.yaml` file, but instead ar
 
 Further details can be found in the [orchestrator documentation](../../cogment-components/orchestrator/orchestrator.md).
 
-
-
 ## Datalog definition now part of each trial's parameters
 
 The datalog definition is no longer a project-wide configuration but can be specified for each trial in its parameters.
@@ -89,7 +87,6 @@ For more information, please see the following sections of the Python SDK Docume
 
 -   [LogSample](../cogment-api-reference/python.md#class-cogment.LogSample)
 -   [DatalogSession](../cogment-api-reference/python.md#class-DatalogSession)
-
 
 ## Default trial parameters no longer support definition user configuration for trials, environments and actors
 
@@ -192,7 +189,7 @@ Just like the actors, the environment in a trial can now be named, this name def
 
 <!-- prettier-ignore -->
 !!! warning "Required update"
-    `Controller.terminate_trial()` and `Controller.get_trial_infol()` no longer supports providing a single trial identifier as a string.
+    `Controller.terminate_trial()` and `Controller.get_trial_info()` no longer supports providing a single trial identifier as a string.
 
     Their usage need to change from
 
@@ -200,14 +197,14 @@ Just like the actors, the environment in a trial can now be named, this name def
     # Using named argument
     my_controller.terminate_trial(trial_id="my_trial_id")
     # Using positional argument
-    my_controller.get_trial_infol("my_trial_id")
+    my_controller.get_trial_info("my_trial_id")
     ```
 
     to
 
     ```python
     my_controller.terminate_trial(trial_ids=["my_trial_id"])
-    my_controller.get_trial_infol(["my_trial_id"])
+    my_controller.get_trial_info(["my_trial_id"])
     ```
 
 <!-- prettier-ignore -->

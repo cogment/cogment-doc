@@ -28,7 +28,7 @@ These are changes that, if the related features were used, will prevent Cogment 
     -   Send the information in a message.
 -   The `EnvironmentSession.send_message()` method will not accept a `to_environment` parameter anymore (since it does not make sense anyway).
 -   The `Controller.terminate_trial()` method parameter `trial_id` has been renamed `trial_ids`.
--   The `Controller.get_trial_infol()` method parameter `trial_id` has been renamed `trial_ids`.
+-   The `Controller.get_trial_info()` method parameter `trial_id` has been renamed `trial_ids`.
 
 ### Javascript SDK
 
@@ -106,7 +106,7 @@ The Orchestrator needs a parameters file or pre-trial hooks (or both). Thus with
 -   The joining of a trial by a client actor ([`Context.join_trial()`](./python.md#async-join_trialself-trial_id-endpoint-impl_namenone-actor_namenone-actor_classnone)) should now be made by providing an actor name or class (unlike previously where an implementation name was provided). This is to allow the pre-trial hooks to decide on the details of the actor (including implementation) that should be used, the same way as for service actors.
 -   In [`RecvObservation`](./python.md#class-recvobservation), the `snapshot` attribute is deprecated. A new attribute `observation` takes its place.
 -   The [`Controller.terminate_trial()`](./python.md#terminate_trialself-trial_ids-hardfalse) method parameter `trial_ids` now takes a list of IDs (instead of a single string for one ID).
--   The [`Controller.get_trial_infol()`](./python.md#async-get_trial_infoself-trial_ids) method parameter `trial_ids` now takes a list of IDs (instead of a single string for one ID or `None`).
+-   The [`Controller.get_trial_info()`](./python.md#async-get_trial_infoself-trial_ids) method parameter `trial_ids` now takes a list of IDs (instead of a single string for one ID or `None`).
 -   The `url` attribute of [`cogment.Endpoint`](./python.md#class-cogmentendpoint) must now be a gRPC type URL (i.e. start with `grpc://`). `Endpoint` is used to join a trial and to get a Controller.
 
 ## New Functionalities
