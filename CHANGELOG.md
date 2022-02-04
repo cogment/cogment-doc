@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## Unreleased
 
+## v2.1.2 - 2022-02-04
+
 ### Fixed
 
 -   Fix typo in `get_trial_info` function name
