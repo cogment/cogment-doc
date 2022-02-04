@@ -1187,15 +1187,15 @@ It can also be defined when configuring the trial in the pre-trial hook.</p>
 <!-- prettier-ignore -->
 <div class="admonition warning">
 <p class="admonition-title">Required update</p>
-<p><code>Controller.terminate_trial()</code> and <code>Controller.get_trial_infol()</code> no longer supports providing a single trial identifier as a string.</p>
+<p><code>Controller.terminate_trial()</code> and <code>Controller.get_trial_info()</code> no longer supports providing a single trial identifier as a string.</p>
 <p>Their usage need to change from</p>
 <pre class="highlight"><code class="language-python"># Using named argument
 my_controller.terminate_trial(trial_id="my_trial_id")
 # Using positional argument
-my_controller.get_trial_infol("my_trial_id")</code></pre>
+my_controller.get_trial_info("my_trial_id")</code></pre>
 <p>to</p>
 <pre class="highlight"><code class="language-python">my_controller.terminate_trial(trial_ids=["my_trial_id"])
-my_controller.get_trial_infol(["my_trial_id"])</code></pre>
+my_controller.get_trial_info(["my_trial_id"])</code></pre>
 </div>
 <!-- prettier-ignore -->
 <div class="admonition warning">

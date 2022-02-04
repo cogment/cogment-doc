@@ -1057,7 +1057,7 @@
 </li>
 <li>The <code>EnvironmentSession.send_message()</code> method will not accept a <code>to_environment</code> parameter anymore (since it does not make sense anyway).</li>
 <li>The <code>Controller.terminate_trial()</code> method parameter <code>trial_id</code> has been renamed <code>trial_ids</code>.</li>
-<li>The <code>Controller.get_trial_infol()</code> method parameter <code>trial_id</code> has been renamed <code>trial_ids</code>.</li>
+<li>The <code>Controller.get_trial_info()</code> method parameter <code>trial_id</code> has been renamed <code>trial_ids</code>.</li>
 </ul>
 <h3 id="javascript-sdk">Javascript SDK<a class="headerlink" href="#javascript-sdk" title="Permanent link">&para;</a></h3>
 <p>Except for the following, everything has been subject to breaking changes:</p>
@@ -1122,7 +1122,7 @@
 <li>The joining of a trial by a client actor (<a href="../python/#async-join_trialself-trial_id-endpoint-impl_namenone-actor_namenone-actor_classnone"><code>Context.join_trial()</code></a>) should now be made by providing an actor name or class (unlike previously where an implementation name was provided). This is to allow the pre-trial hooks to decide on the details of the actor (including implementation) that should be used, the same way as for service actors.</li>
 <li>In <a href="../python/#class-recvobservation"><code>RecvObservation</code></a>, the <code>snapshot</code> attribute is deprecated. A new attribute <code>observation</code> takes its place.</li>
 <li>The <a href="../python/#terminate_trialself-trial_ids-hardfalse"><code>Controller.terminate_trial()</code></a> method parameter <code>trial_ids</code> now takes a list of IDs (instead of a single string for one ID).</li>
-<li>The <a href="../python/#async-get_trial_infoself-trial_ids"><code>Controller.get_trial_infol()</code></a> method parameter <code>trial_ids</code> now takes a list of IDs (instead of a single string for one ID or <code>None</code>).</li>
+<li>The <a href="../python/#async-get_trial_infoself-trial_ids"><code>Controller.get_trial_info()</code></a> method parameter <code>trial_ids</code> now takes a list of IDs (instead of a single string for one ID or <code>None</code>).</li>
 <li>The <code>url</code> attribute of <a href="../python/#class-cogmentendpoint"><code>cogment.Endpoint</code></a> must now be a gRPC type URL (i.e. start with <code>grpc://</code>). <code>Endpoint</code> is used to join a trial and to get a Controller.</li>
 </ul>
 <h2 id="new-functionalities">New Functionalities<a class="headerlink" href="#new-functionalities" title="Permanent link">&para;</a></h2>

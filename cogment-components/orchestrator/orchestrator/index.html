@@ -988,63 +988,29 @@
 <pre class="highlight"><code class="language-bash">$ orchestrator --lifecycle_port=9001 --actor_port=9001 --params=params.yaml --pre_trial_hooks=grpc://config:9001</code></pre>
 <p>All configuration is possible through the command line. The various command line options are described here:</p>
 <ul>
-<li><code>help</code>: The list of command line parameters with short description. Also shows the envrionment variables recognized.</li>
-<li><code>lifecycle_port</code>: The TCP port where to serve the trial lifecycle gRPC service (TrialLifecycleSP). This is where the Controller connects to. Default: 9000.</li>
-<li>
-<p><code>actor_port</code>: The TCP port where to serve the client actor gRPC service (ClientActorSP). This is where client actors (as opposed to service actors) connect to. Default: 9000</p>
-</li>
-<li>
-<p><code>params</code>: The name of the YAML file containing the default parameters for new trials. Some of The parameters must match their corresponding values in the spec file (typically <code>cogment.yaml</code>) and may therefore lock an Orchestrator instance to specific types of trials. If pre-trial hooks are defined, these parameters are sent to the first hook before a trial starts.</p>
-</li>
-<li>
-<p><code>pre_trial_hooks</code>: gRPC endpoint definitions for pre-trial hooks, separated by commas. A gRPC endpoint is a URL that starts with "grpc://". Hooks are called before a new trial starts. They are called in order, in a pipeline fashion to set the parameters for new trials. The first hook will receive the default parameters, the last hook result will be used as the parameters for the new trial.</p>
-</li>
-<li>
-<p><code>prometheus_port</code>: The TCP port where to serve Prometheus metrics.</p>
-</li>
-<li>
-<p><code>version</code>: Output the version of the Orchestrator to stdout.</p>
-</li>
-<li>
-<p><code>status_file</code>: File containing simple status for the Orchestrator. This is useful when running the Orchestrator inside containers or synchronizing with external components. The file is open and stays open while the Orchestrator runs. The file will contain one to three letters: I, R, T. "I" indicates that the Orchestrator is initializing. When the Orchestrator starts, the file only contains this letter. "R" indicates that the Orchestrator is ready. This letter is added to the file (thus the file will normally contain "IR" at this point). "T" indicates that the Orchestrator has terminated (crashes will not set this file to "T"). Thus after a normal end, the file will contain "IRT".</p>
-</li>
-<li>
-<p><code>private_key</code>: File name containg a PEM encoded private key for encrypted communication.</p>
-</li>
-<li>
-<p><code>root_cert</code>: File name containing a PEM encoded trusted root certificate.</p>
-</li>
-<li>
-<p><code>trust_chain</code>: File name containing a PEM encoded trust chain.</p>
-</li>
-<li>
-<p><code>log_level</code>: Set to define the minimum level for logging. Possible values are: <code>off</code>, <code>error</code>, <code>warning</code>, <code>info</code>, <code>debug</code>, <code>trace</code>. Note however that all trace and most debug level logs will only output if running the debug compiled version of the Orchestrator. Default: <code>info</code>.</p>
-</li>
-<li>
-<p><code>log_file</code>: Base file name for daily log output. The name will be suffixed with the date and a new file will be made every day. If not provided the logs go to stdout.</p>
-</li>
-<li>
-<p><code>gc_frequency</code>: Number of (started) trials between trial garbage collection. The Orchestrator periodically deletes ended and stale trials, this parameter controls how often this cleanup happens. The garbage collection may happen on the start of any trial.</p>
-</li>
+<li><code>help</code>: Outputs the list of command line arguments with a short description. Also shows the recognized <a href="#environment-variables">environment variables</a>.</li>
+<li><code>version</code>: Outputs the version of the Orchestrator to stdout.</li>
+<li><code>lifecycle_port</code>: The TCP port where to serve the <a href="../../../cogment/cogment-low-level-api-guide/grpc/#service-triallifecyclesp">trial lifecycle gRPC service</a>. This is where the <a href="../../../cogment/cogment-api-guide/#controller">Controller</a> connects to. Default: 9000.</li>
+<li><code>actor_port</code>: The TCP port where to serve the <a href="../../../cogment/cogment-low-level-api-guide/grpc/#service-clientactorsp">client actor gRPC service</a>. This is where <a href="../../../cogment/cogment-api-guide/#service-actor-client-actor">Client Actors</a> connect to. Default: 9000</li>
+<li><code>params</code>: The name of the YAML file containing the <a href="../../../cogment/cogment-api-reference/parameters/">default parameters for new trials</a>. If defined, these parameters will be sent to the first pre-trial hooks before trial starts.</li>
+<li><code>pre_trial_hooks</code>: gRPC endpoint definitions for <a href="../../../cogment/cogment-api-guide/#pre-trial-hook">pre-trial hooks</a>, separated by commas. A gRPC endpoint is a URL that starts with "grpc://". Hooks are called before a new trial starts. They are called in order, in a pipeline fashion to set the parameters for new trials. The first hook will receive the default parameters, the last hook result will be used as the parameters for the new trial.</li>
+<li><code>prometheus_port</code>: The TCP port where to serve Prometheus metrics. If not defined, Prometheus metrics are not served.</li>
+<li><code>status_file</code>: File containing simple status for the Orchestrator. This is useful when running the Orchestrator inside containers or synchronizing with external components. The file is open and stays open while the Orchestrator runs. The file will contain one to three letters: I, R, T. "I" indicates that the Orchestrator is initializing. When the Orchestrator starts, the file only contains this letter. "R" indicates that the Orchestrator is ready. This letter is added to the file (thus the file will normally contain "IR" at this point). "T" indicates that the Orchestrator has terminated (crashes will not set this file to "T"). Thus after a normal end, the file will contain "IRT".</li>
+<li><code>private_key</code>: File name containg a PEM encoded private key for encrypted communication.</li>
+<li><code>root_cert</code>: File name containing a PEM encoded trusted root certificate.</li>
+<li><code>trust_chain</code>: File name containing a PEM encoded trust chain.</li>
+<li><code>log_level</code>: Set to define the minimum level for logging. Possible values are: <code>off</code>, <code>error</code>, <code>warning</code>, <code>info</code>, <code>debug</code>, <code>trace</code>. Note however that all trace and most debug level logs will only output if running the debug compiled version of the Orchestrator. Default: <code>info</code>.</li>
+<li><code>log_file</code>: Base file name for daily log output. The name will be suffixed with the date and a new file will be made every day. If not provided the logs go to stdout.</li>
+<li><code>gc_frequency</code>: Number of (started) trials between trial garbage collection. The Orchestrator periodically deletes ended and stale trials, this parameter controls how often this cleanup happens. The garbage collection may happen on the start of any trial.</li>
 </ul>
 <h2 id="environment-variables">Environment variables<a class="headerlink" href="#environment-variables" title="Permanent link">&para;</a></h2>
 <p>Environment variables correspond to one of the command line parameters. But if both are provided, the command line takes precedence.</p>
 <ul>
-<li>
-<p><code>COGMENT_LIFECYCLE_PORT</code>: This is the same as the <code>lifecycle_port</code> command line parameter.</p>
-</li>
-<li>
-<p><code>COGMENT_ACTOR_PORT</code>: This is the same as the <code>actor_port</code> command line parameter.</p>
-</li>
-<li>
-<p><code>COGMENT_ORCHESTRATOR_PROMETHEUS_PORT</code>: This is the same as the <code>prometheus_port</code> command line parameter.</p>
-</li>
-<li>
-<p><code>COGMENT_PRE_TRIAL_HOOKS</code>: This is the same as the <code>pre_trial_hooks</code> command line parameter.</p>
-</li>
-<li>
-<p><code>COGMENT_DEFAULT_PARAMS_FILE</code>: This is the same as the <code>params</code> command line parameter.</p>
-</li>
+<li><code>COGMENT_LIFECYCLE_PORT</code>: This is the same as the <code>lifecycle_port</code> command line parameter.</li>
+<li><code>COGMENT_ACTOR_PORT</code>: This is the same as the <code>actor_port</code> command line parameter.</li>
+<li><code>COGMENT_ORCHESTRATOR_PROMETHEUS_PORT</code>: This is the same as the <code>prometheus_port</code> command line parameter.</li>
+<li><code>COGMENT_PRE_TRIAL_HOOKS</code>: This is the same as the <code>pre_trial_hooks</code> command line parameter.</li>
+<li><code>COGMENT_DEFAULT_PARAMS_FILE</code>: This is the same as the <code>params</code> command line parameter.</li>
 </ul>
                 
               
