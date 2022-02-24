@@ -26,22 +26,12 @@ apache_licenses_check:
   script:
     - apache-license-checker
 
-# Bash scripts formatting
-shellcheck:
-  image: koalaman/shellcheck-alpine:v0.7.1
+lint:
+  image: node:14
   stage: lint
-  before_script:
-    - shellcheck --version
   script:
-    - shellcheck ./scripts/*.sh
-
-shfmt:
-  image: mvdan/shfmt:v3.1.0-alpine
-  stage: lint
-  before_script:
-    - shfmt -version
-  script:
-    - shfmt -i 2 -ci -d ./scripts
+    - npm install
+    - npm run lint
 
 build:
   image: node:14
@@ -49,28 +39,16 @@ build:
   script:
     - npm install
     - npm run build
-  artifacts:
-    paths:
-      - build
 
-pages:
-  stage: publish
-  script:
-    - echo "Using build artifacts from previous stage"
-  artifacts:
-    paths:
-      - build
-  only:
-    - develop
-
-publish-public-version:
+publish:
+  image: node:14
   extends: .base_gh_ssh_agent
   stage: publish
+  variables:
+    USE_SSH: true
   script:
-    - ./scripts/publish.sh
-  artifacts:
-    paths:
-      - public
+    - npm install
+    - npm run deploy
   only:
     - main
 

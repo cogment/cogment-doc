@@ -31,6 +31,7 @@ const config = {
   // Used for github pages deployment
   organizationName: "cogment",
   projectName: "cogment-doc",
+  deploymentBranch: "gh-pages",
 
   presets: [
     [
