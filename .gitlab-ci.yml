@@ -20,6 +20,19 @@ stages:
     - echo "$SSH_KNOWN_HOSTS" >> ~/.ssh/known_hosts
     - chmod 644 ~/.ssh/known_hosts
 
+image: node:14
+
+# Cache modules in between jobs
+cache:
+  key:
+    files:
+      - package-lock.json
+  paths:
+    - .npm/
+
+before_script:
+  - npm ci --cache .npm --prefer-offline
+
 apache_licenses_check:
   stage: lint
   image: registry.gitlab.com/ai-r/apache-license-checker:latest
@@ -27,28 +40,22 @@ apache_licenses_check:
     - apache-license-checker
 
 lint:
-  image: node:14
   stage: lint
   script:
-    - npm install
     - npm run lint
 
 build:
-  image: node:14
   stage: build
   script:
-    - npm install
     - npm run build
 
 publish:
-  image: node:14
   extends: .base_gh_ssh_agent
   stage: publish
-  variables:
-    USE_SSH: "1"
   script:
-    - npm install
-    - npm run deploy
+    # Repeat the install part to avoid it being overriden by `.base_gh_ssh_agent`
+    - npm ci --cache .npm --prefer-offline
+    - USE_SSH=true npm run deploy
   only:
     - main
 
