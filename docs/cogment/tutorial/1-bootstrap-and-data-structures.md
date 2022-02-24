@@ -2,7 +2,7 @@
 
 ## Install Cogment
 
-To follow this tutorial you'll need a working installation of **Cogment**. If you haven't done so already, follow our [installation instructions](../../introduction/installation.md).
+To follow this tutorial you'll need a working installation of **Cogment**. If you haven't done so already, follow our [installation instructions](../../installation.md).
 
 ## Bootstrap the app
 

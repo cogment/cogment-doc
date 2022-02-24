@@ -1,3 +1,7 @@
+---
+sidebar_position: 3
+---
+
 # Community
 
 The best way to interact with the Cogment community is to use Discord and join our server. If you're unfamiliar with [Discord](https://discord.com/), it's a community tool allowing people to regroup, chat via text and voice and interact, that can be used either through any web browser, or through its [dedicated client applications for computers and mobile devices](https://discord.com/download).

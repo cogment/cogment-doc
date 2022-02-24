@@ -21,7 +21,7 @@ const darkCodeTheme = require("prism-react-renderer/themes/dracula");
 const config = {
   title: "Cogment",
   tagline:
-    "Cogment is an innovative open source AI platform developed by AI Redefined, designed to leverage the advent of AI to benefit humankind through human-AI collaboration.",
+    "Innovative open source AI platform developed by AI Redefined, designed to leverage the advent of AI to benefit humankind through human-AI collaboration.",
   url: "https://cogment.ai",
   baseUrl: "/",
   trailingSlash: false,
@@ -84,7 +84,7 @@ const config = {
         items: [
           {
             type: "doc",
-            docId: "introduction/overview",
+            docId: "index",
             position: "right",
             label: "Documentation",
           },
@@ -95,7 +95,7 @@ const config = {
           },
           {
             type: "doc",
-            docId: "support/community-channels",
+            docId: "community-channels",
             label: "Community",
             position: "right",
           },
@@ -108,7 +108,7 @@ const config = {
             items: [
               {
                 label: "Overview",
-                to: "/docs/introduction/overview",
+                to: "/docs",
               },
               {
                 label: "API guide",

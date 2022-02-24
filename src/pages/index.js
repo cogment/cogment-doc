@@ -39,7 +39,7 @@ config.autoAddCss = false;
 export default function Home() {
   const { siteConfig } = useDocusaurusContext();
   return (
-    <Layout title={`${siteConfig.title}`}>
+    <Layout title={siteConfig.title} description={siteConfig.tagline}>
       <div className={clsx("hero", "shadow--md", styles.hero)}>
         <div className="container">
           <h1 className="hero__title">

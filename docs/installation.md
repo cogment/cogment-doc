@@ -43,7 +43,7 @@ For windows user (and also if you prefer to do a manual install) you can go thro
 
 ### Unsupported platform
 
-If your platform is not supported, especially if you are using an `arm64` architecture, add an [issue](https://github.com/cogment/cogment-cli/issues) listing your platform details and do not hesitate to [contact us](../support/community-channels.md).
+If your platform is not supported, especially if you are using an `arm64` architecture, add an [issue](https://github.com/cogment/cogment-cli/issues) listing your platform details and do not hesitate to [contact us](./community-channels.md).
 
 ### Check that Cogment CLI is accessible.
 
@@ -90,4 +90,4 @@ Finally, the third command will start the Cogment app. In another terminal you c
 $ cogment run client
 ```
 
-Congratulations, you have a working installation of Cogment! We recommend you head to the [Cogment tutorial](../cogment/tutorial/index.md) to learn how to implement this _RPS_ app from scratch.
+Congratulations, you have a working installation of Cogment! We recommend you head to the [Cogment tutorial](./cogment/tutorial/index.md) to learn how to implement this _RPS_ app from scratch.
