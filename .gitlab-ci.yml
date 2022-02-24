@@ -47,6 +47,9 @@ build:
   script:
     - npm ci --cache .npm --prefer-offline
     - npm run build
+  except:
+    # build is included in the npm run deploy executed on main
+    - main
 
 publish:
   extends: .base_gh_ssh_agent
