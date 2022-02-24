@@ -53,6 +53,8 @@ publish:
   stage: publish
   script:
     - npm ci --cache .npm --prefer-offline
+    - git config --global user.email "dev+cogment@ai-r.com"
+    - git config --global user.name "AI Redefined Inc."
     - USE_SSH=true npm run deploy
   only:
     - main
