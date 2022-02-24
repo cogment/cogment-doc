@@ -22,7 +22,7 @@ const config = {
   title: "Cogment",
   tagline:
     "Cogment is an innovative open source AI platform developed by AI Redefined, designed to leverage the advent of AI to benefit humankind through human-AI collaboration.",
-  url: "https://docs.cogment.ai",
+  url: "https://cogment.ai",
   baseUrl: "/",
   trailingSlash: false,
   onBrokenLinks: "throw",
