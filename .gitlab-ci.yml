@@ -45,7 +45,7 @@ publish:
   extends: .base_gh_ssh_agent
   stage: publish
   variables:
-    USE_SSH: true
+    USE_SSH: "1"
   script:
     - npm install
     - npm run deploy
