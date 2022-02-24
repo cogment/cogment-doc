@@ -8,31 +8,31 @@ This is the documentation for the Cogment framework. For further Cogment informa
 
 ## Documentation architecture
 
--   `mkdocs.yml` is the main configuration file for the documentation.
--   `./src` contains the source for the documentation, mostly markdown file and images.
+This website is built using [Docusaurus 2](https://docusaurus.io/), the styling framework is [infima](https://infima.dev):
+
+-   `docusaurus.config.js` is the main configuration file for the documentation.
+-   `./docs` contains the source for the documentation, mostly markdown file and images.
+-   `./src` contains the source for the other pages.
 
 ## Developers
 
 ### Prerequisites
 
-The documentation is built using [**MkDocs**](https://www.mkdocs.org/) and [**Material for MkDocs**](https://squidfunk.github.io/mkdocs-material/). Its dependencies and build are managed using [**poetry**](https://python-poetry.org). To build and test locally follow these instructions.
-
-1. Have a working setup for Python 3.7 or above.
-2. Install poetry following the [official guidelines](https://python-poetry.org/docs/#installation)
-3. In this directory, run `poetry install` to install what's needed to build the doc (including `mkdocs`).
+1. Have a working setup for Node 14 or above.
+2. In this directory, run `npm install` to install what's needed to build the doc.
 
 ### Running a self reloading server
 
 ```console
-poetry run task dev
+npm run start
 ```
 
-open <http://127.0.0.1:8000>
+This command starts a local development server and opens up a browser window. Most changes are reflected live without having to restart the server.
 
 ### Build
 
 ```console
-poetry run task build
+npm run build
 ```
 
 ### Formatting
@@ -42,13 +42,13 @@ This project is formatted using prettier. Most editors have support for it. The 
 To run a check manually:
 
 ```console
-poetry run task lint
+npm run lint
 ```
 
 To fix all the files automatically
 
 ```console
-poetry run task lint_fix
+npm run task lint_fix
 ```
 
 ### Release process

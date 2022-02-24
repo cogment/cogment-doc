@@ -3,4 +3,4 @@
 # - indent_style
 # - indent_size/tab_width
 # - max_line_length
-# Keeping this file around as it signal configured editor to use prettier for formatting.
+# Keeping this file around as it signals configured editors to use prettier for formatting.

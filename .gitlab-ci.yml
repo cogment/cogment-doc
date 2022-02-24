@@ -20,13 +20,6 @@ stages:
     - echo "$SSH_KNOWN_HOSTS" >> ~/.ssh/known_hosts
     - chmod 644 ~/.ssh/known_hosts
 
-.base_poetry:
-  image: python:3.7
-  before_script:
-    - curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python -
-    - source $HOME/.poetry/env
-    - poetry install
-
 apache_licenses_check:
   stage: lint
   image: registry.gitlab.com/ai-r/apache-license-checker:latest
@@ -51,13 +44,14 @@ shfmt:
     - shfmt -i 2 -ci -d ./scripts
 
 build:
-  extends: .base_poetry
+  image: node:14
   stage: build
   script:
-    - poetry run task build
+    - npm install
+    - npm run build
   artifacts:
     paths:
-      - public
+      - build
 
 pages:
   stage: publish
@@ -65,7 +59,7 @@ pages:
     - echo "Using build artifacts from previous stage"
   artifacts:
     paths:
-      - public
+      - build
   only:
     - develop
 

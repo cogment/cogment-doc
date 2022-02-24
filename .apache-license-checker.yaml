@@ -2,5 +2,6 @@ license:
   CopyrightYear: 2021
   Author: "AI Redefined Inc. <dev+cogment@ai-r.com>"
 ignore:
-  - "public"
-  - "publish"
+  - "build"
+  - "node_modules"
+  - ".docusaurus"

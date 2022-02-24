@@ -1,0 +1,71 @@
+/**
+ * Any CSS included here will be global. The classic template
+ * bundles Infima by default. Infima is a CSS framework designed to
+ * work well for content-centric websites.
+ */
+
+@import "~@fortawesome/fontawesome-svg-core/styles.css";
+
+@font-face {
+  font-family: "Object Sans Regular";
+  src: url("/fonts/ObjectSans-Regular.woff2") format("woff2"),
+    url("/fonts/ObjectSans-Regular.woff") format("woff");
+}
+
+:root {
+  --ifm-font-family-base: "Object Sans Regular";
+}
+
+/* Color shades generator -> https://docusaurus.io/docs/styling-layout#styling-your-site-with-infima */
+:root {
+  --ifm-color-primary: #5217b8;
+  --ifm-color-primary-dark: #46149c;
+  --ifm-color-primary-darker: #391081;
+  --ifm-color-primary-darkest: #290b5c;
+  --ifm-color-primary-light: #621cdd;
+  --ifm-color-primary-lighter: #6e29e4;
+  --ifm-color-primary-lightest: #874ee9;
+
+  --ifm-color-secondary: #ffb300;
+  --ifm-color-secondary-dark: #e6a100;
+  --ifm-color-secondary-darker: #d99800;
+  --ifm-color-secondary-darkest: #b37d00;
+  --ifm-color-secondary-light: #ffbb1a;
+  --ifm-color-secondary-lighter: #ffbe26;
+  --ifm-color-secondary-lightest: #ffca4d;
+
+  --ifm-navbar-background-color: #5217b8;
+  --ifm-hero-background-color-bottom: #290c5c;
+
+  --ifm-navbar-link-color: var(--ifm-font-color-base-inverse);
+  --ifm-navbar-link-hover-color: var(--ifm-color-secondary);
+  --ifm-navbar-link-active-color: var(--ifm-color-gray-400);
+}
+
+.button--primary:not(.button--outline):hover {
+  --ifm-button-background-color: var(--ifm-color-primary-darkest);
+  --ifm-button-border-color: var(--ifm-color-primary-darkest);
+}
+
+.navbar {
+  text-transform: uppercase;
+}
+
+.navbar__link--active {
+  color: var(--ifm-navbar-link-active-color);
+}
+
+.navbar__toggle {
+  color: var(--ifm-font-color-base-inverse);
+}
+
+.docusaurus-highlight-code-line {
+  background-color: rgba(0, 0, 0, 0.1);
+  display: block;
+  margin: 0 calc(-1 * var(--ifm-pre-padding));
+  padding: 0 var(--ifm-pre-padding);
+}
+
+html[data-theme="dark"] .docusaurus-highlight-code-line {
+  background-color: rgba(0, 0, 0, 0.3);
+}

@@ -1,0 +1,12 @@
+.screenshots {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  gap: 2rem;
+  padding: 2rem;
+}
+
+.screenshots > img {
+  flex: 0 0 auto;
+  height: 128px;
+}

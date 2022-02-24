@@ -1,0 +1,3 @@
+-   Start experimenting with Human-in-the-Loop-Learning in minutes, with a collection of environments based on OpenAI Gym, Petting Zoo, MinAtar and more, and with out-of-the-box agent and training regimen implementations using popular deep learning. frameworks (TensorFlow, PyTorch, JAX/FLAX).
+-   Compare your work against reproducible benchmarks
+-   Contribute your own environment, agents, and training regimen

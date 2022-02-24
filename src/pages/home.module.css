@@ -1,0 +1,42 @@
+.hero {
+  background-color: var(--ifm-navbar-background-color);
+  background-image: linear-gradient(
+    var(--ifm-navbar-background-color),
+    var(--ifm-hero-background-color-bottom)
+  );
+  color: var(--ifm-font-color-base-inverse);
+}
+
+.hero strong {
+  font-weight: bolder;
+}
+
+.hero :global(.button--primary) {
+  --ifm-button-background-color: var(--ifm-color-content-inverse);
+  --ifm-button-border-color: var(--ifm-color-content-inverse);
+  --ifm-button-color: var(--ifm-font-color-base);
+}
+
+.hero :global(.button--primary):hover {
+  --ifm-button-background-color: var(--ifm-color-gray-300);
+  --ifm-button-border-color: var(--ifm-color-gray-300);
+}
+
+.section h3 {
+  text-transform: uppercase;
+  color: var(--ifm-color-primary);
+  text-align: center;
+}
+
+.cta {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.verticallyJustifiedCol {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}

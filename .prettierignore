@@ -1,6 +1,3 @@
-# Output directories
-publish
-public
-
-# Generated files
-src/cogment/cogment-api-reference/javascript
+# outputs
+.docusaurus
+build

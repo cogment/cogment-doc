@@ -11,7 +11,7 @@ GH_BRANCH="gh-pages"
 PUBLISH_AUTHOR_NAME="Artificial Intelligence Redefined"
 PUBLISH_AUTHOR_EMAIL="dev+cogment@ai-r.com"
 PUB_DIR="publish"
-OUT_DIR="public"
+OUT_DIR="build"
 
 # Utility functions
 ## join_by

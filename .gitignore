@@ -1,6 +1,9 @@
+# JS Stuffs
+/node_modules
+
 # outputs
-/public
-/publish
+/.docusaurus
+/build/
 
 # Backup of "sed-ed" files
 *.bak
