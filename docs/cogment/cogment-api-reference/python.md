@@ -12,11 +12,20 @@ asyncio.run(MyMainFunction())
 
 The simplest way to install the python SDK is to just install it using pip: `pip install cogment`.
 
-And to install the generator (for `cog_settings.py`) it is done similarly with pip: `pip install cogment[generate]`. Note that the generator is not installed by default when installing the Cogment SDK, it must be explcitly installed.
+To install the generator (for `cog_settings.py`) it is done similarly with pip: `pip install cogment[generate]`. If both are needed, installing the genertor will install the Python SDK.
 
 The basic requirement is Python 3.7.
 
 ## General usage
+
+### Logging
+
+The Python SDK uses the `ai-r.cogment` logger, and the default log level is `INFO`. E.g. to change the log level to `WARNING`:
+
+```python
+import logging
+logging.getLogger("ai-r.cogment").setLevel(logging.WARNING)
+```
 
 ### Trial Specifications
 
@@ -562,7 +571,7 @@ Enum representing the type of an event.
 
 -   `EventType.ACTIVE`: Normal event from an active trial. Most events will be of this type.
 
--   `EventType.ENDING`: Events from a trial in the process of ending. For the environment, this means that these events contain the last actions from the actors, and the trial is awaiting a final observation. For the actors, this means that the trial is ending and no action can/need to be sent in response. Note that because of network timing, there may be `ACTIVE` events (e.g. rewards or messages) arriving after some `ENDING` events, but the trial is ending regardless.
+-   `EventType.ENDING`: Events from a trial in the process of ending. For the environment, this means that these events contain the last actions from the actors, and the trial is awaiting a final observation. For the actors, this means that the trial is ending and no action can/need to be sent in response.
 
 -   `EventType.FINAL`: Final event for the trial. This does not contain data. The event loop will exit after this event is delivered. This event can be ignored if nothing needs to be done before exiting the loop.
 

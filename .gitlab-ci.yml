@@ -36,12 +36,6 @@ apache_licenses_check:
   script:
     - apache-license-checker
 
-lint:
-  stage: lint
-  script:
-    - npm ci --cache .npm --prefer-offline
-    - npm run lint
-
 build:
   stage: build
   script:

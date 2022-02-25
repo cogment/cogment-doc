@@ -19,13 +19,13 @@ $ orchestrator --lifecycle_port=9001 --actor_port=9001 --params=params.yaml --pr
 
 All configuration is possible through the command line. The various command line options are described here:
 
--   `help`: Outputs the list of command line arguments with a short description. Also shows the recognized [environment variables](#environment-variables).
--   `version`: Outputs the version of the Orchestrator to stdout.
--   `lifecycle_port`: The TCP port where to serve the [trial lifecycle gRPC service](../cogment/cogment-low-level-api-guide/grpc.md#service-triallifecyclesp). This is where the [Controller](../cogment/cogment-api-guide.mdx#controller) connects to. Default: 9000.
--   `actor_port`: The TCP port where to serve the [client actor gRPC service](../cogment/cogment-low-level-api-guide/grpc.md#service-clientactorsp). This is where [Client Actors](../cogment/cogment-api-guide.mdx#service-actor-client-actor) connect to. Default: 9000
--   `params`: The name of the YAML file containing the [default parameters for new trials](../cogment/cogment-api-reference/parameters.md). If defined, these parameters will be sent to the first pre-trial hooks before trial starts.
--   `pre_trial_hooks`: gRPC endpoint definitions for [pre-trial hooks](../cogment/cogment-api-guide.mdx#pre-trial-hook), separated by commas. A gRPC endpoint is a URL that starts with "grpc://". Hooks are called before a new trial starts. They are called in order, in a pipeline fashion to set the parameters for new trials. The first hook will receive the default parameters, the last hook result will be used as the parameters for the new trial.
--   `prometheus_port`: The TCP port where to serve Prometheus metrics. If not defined, Prometheus metrics are not served.
+-   `version`: Output the version of the Orchestrator to stdout.
+-   `lifecycle_port`: The TCP port where to serve the [trial lifecycle gRPC service](../cogment/cogment-low-level-api-guide/grpc.md#service-triallifecyclesp). This is where the [Controller](../cogment/cogment-api-guide.mdx#controller) connects to. It can be the same as the `actor_port`. Default: 9000.
+-   `actor_port`: The TCP port where to serve the [client actor gRPC service](../cogment/cogment-low-level-api-guide/grpc.md#service-clientactorsp). This is where [Client Actors](../cogment/cogment-api-guide.mdx#service-actor-client-actor) (as opposed to service actors) connect to. It can be the same as the `lifecycle_port`. Default: 9000.
+-   `params`: The name of the YAML file containing the [default parameters for new trials](../cogment/cogment-api-reference/parameters.md). Some of The parameters must match their corresponding values in the spec file (typically `cogment.yaml`) and may therefore lock an Orchestrator instance to specific types of trials. If pre-trial hooks are defined, these parameters are sent to the first hook before a trial starts.
+-   `pre_trial_hooks`: [Cogment endpoint](../cogment/cogment-api-reference/parameters.md#cogment-endpoints) definitions for [pre-trial hooks](../cogment/cogment-api-guide.mdx#pre-trial-hook), separated by commas. Hooks are called before a new trial starts. They are called in order, in a pipeline fashion to set the parameters for new trials. The first hook will receive the default parameters, the last hook result will be used as the parameters for the new trial.
+-   `directory_services`: Cogment endpoint of the directory service (only one directory is accepted). It must be a [gRPC endpoint](../cogment/cogment-api-reference/parameters.md#grpc-scheme). The directory service is used to inquire about the location of services before a new trial starts.
+-   `prometheus_port`: The TCP port where to serve Prometheus metrics. Must be different than `lifecycle_port` and `actor_port`. If not specified, the Prometheus server is disabled.
 -   `status_file`: File containing simple status for the Orchestrator. This is useful when running the Orchestrator inside containers or synchronizing with external components. The file is open and stays open while the Orchestrator runs. The file will contain one to three letters: I, R, T. "I" indicates that the Orchestrator is initializing. When the Orchestrator starts, the file only contains this letter. "R" indicates that the Orchestrator is ready. This letter is added to the file (thus the file will normally contain "IR" at this point). "T" indicates that the Orchestrator has terminated (crashes will not set this file to "T"). Thus after a normal end, the file will contain "IRT".
 -   `private_key`: File name containg a PEM encoded private key for encrypted communication.
 -   `root_cert`: File name containing a PEM encoded trusted root certificate.
@@ -42,4 +42,12 @@ Environment variables correspond to one of the command line parameters. But if b
 -   `COGMENT_ACTOR_PORT`: This is the same as the `actor_port` command line parameter.
 -   `COGMENT_ORCHESTRATOR_PROMETHEUS_PORT`: This is the same as the `prometheus_port` command line parameter.
 -   `COGMENT_PRE_TRIAL_HOOKS`: This is the same as the `pre_trial_hooks` command line parameter.
+-   `COGMENT_DIRECTORY_SERVICES`: This is the same as the `directory_services` command line parameter.
 -   `COGMENT_DEFAULT_PARAMS_FILE`: This is the same as the `params` command line parameter.
+-   `COGMENT_STATUS_FILE`: This is the same as the `status_file` command line parameter.
+-   `COGMENT_PRIVATE_KEY_FILE`: This is the same as the `private_key` command line parameter.
+-   `COGMENT_ROOT_CERT_FILE`: This is the same as the `root_cert` command line parameter.
+-   `COGMENT_TRUST_CHAIN_FILE`: This is the same as the `trust_chain` command line parameter.
+-   `COGMENT_LOG_LEVEL`: This is the same as the `log_level` command line parameter.
+-   `COGMENT_LOG_FILE`: This is the same as the `log_file` command line parameter.
+-   `COGMENT_GC_FREQUENCY`: This is the same as the `gc_frequency` command line parameter.

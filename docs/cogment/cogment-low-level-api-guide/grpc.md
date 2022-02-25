@@ -416,13 +416,18 @@ Request message for the `StartTrial` procedure.
 
 ```protobuf
 message TrialStartRequest {
-  TrialConfig config = 1;
+  oneof start_data {
+    TrialConfig config = 1;
+    TrialParams params = 4;
+  }
   string user_id = 2;
   string trial_id_requested = 3;
 }
 ```
 
 -   config: The trial config data. This data can be used by the pre-trial hooks to determine the config for the rest of the componenents.
+-   params: The fully defined parameters for the new trial. When this is given to start the trial, the default parameters are ignored, and the pre-trial hooks will not be called.
+-   user_id: The ID of the user that is starting the trial.
 -   user_id: The ID of the user that is starting the trial.
 -   trial_id_requested: The trial identifier requested for the new trial. It must be unique. If not empty, the Orchestrator will try to use this trial_id, otherwise, a UUID will be created.
 
