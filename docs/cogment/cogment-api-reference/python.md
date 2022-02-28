@@ -20,11 +20,11 @@ The basic requirement is Python 3.7.
 
 ### Logging
 
-The Python SDK uses the `ai-r.cogment` logger, and the default log level is `INFO`. E.g. to change the log level to `WARNING`:
+The Python SDK uses the `cogment.sdk` logger, and the default log level is `INFO`. E.g. to change the log level to `WARNING`:
 
 ```python
 import logging
-logging.getLogger("ai-r.cogment").setLevel(logging.WARNING)
+logging.getLogger("cogment.sdk").setLevel(logging.WARNING)
 ```
 
 ### Trial Specifications
