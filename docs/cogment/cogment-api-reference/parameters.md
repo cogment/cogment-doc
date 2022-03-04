@@ -1,17 +1,26 @@
 # Trial Parameters
 
-The trial parameters are a set of parameters that define the details of a trial. They are generated from the pre-trial hooks and/or from the default parameters provided to the Orchestrator.
+The trial parameters are a set of parameters that define the details of a trial.
+They may be generated from the default parameters provided to the Orchestrator, and updated by the pre-trial hooks.
+Or they can be provided whole to the trial start call, in which case the default parameters are ignored and the pre-trial hooks are not used.
+
+In the parameters, are optional config messages for the trial, environment and actors.
+The trial config is only used by the pre-trial hooks, whereas the other configs are sent to their respective destination at the start of the trial.
+The config protobuf messages are defined in the spec file.
+
+The pre-trial hooks exist to allow dynamic parameter setting at the start of a trial, with the use of the trial config.
+Another way to set the parameters dynamically is by providing them to the start trial call.
+The parameters of the trial start call take priority over all others, and thus when provided, the default parameters will be ignored and the pre-trial hooks will not be called.
 
 ## Parameter file
 
-The parameter file serves to initialize the Orchestrator default parameters. It is able to set all parameters for trials except the config protobuf messages (defined in the spec file). The config messages can only be set by the pre-trial hooks, but these configs are not relevant for simple projects without pre-trial hooks.
+The parameter file serves to initialize the Orchestrator default parameters.
+It is able to set all parameters except for the configs.
 
-The parameters in this file be used if no pre-trial hooks are defined. And if hooks are defined, they will be sent to the first hook as initial parameters to be updated by the hooks.
+The file uses the YAML configuration language. It consists of one top level YAML section called [trial_params](#trial-params).
+Any other top level section will be ignored.
 
-The file uses the YAML configuration language. It consists of one YAML section called [trial_params](#trial-params). Any other section will be ignored.
-
-The section defines the default trial parameters. The final parameters are set by the pre-trial hooks (if any are defined).
-These parameters are:
+Parameters:
 
 -   `max_steps`: The maximum number of time steps (ticks) that the trial will run before terminating. If 0, the trial will not be auto terminated (the environment and a Controller can still terminate the trial). If not provided, a default of 0 will be used.
 -   `max_inactivity`: The number of seconds of inactivity after which a trial will be terminated. If 0, the trial will not be terminated because of inactivity. If not provided, a default of 30 seconds will be used.
@@ -25,7 +34,7 @@ These parameters are:
 -   `actors`: List of actor properties. The number of actors may not be suited for all trials.
     -   `name`: The name of this actor (i.e. name of the specific instance of the actor class)
     -   `actor_class`: The name of the actor class. This is specific to a type of trial and must match values in the corresponding spec file.
-    -   `endpoint`: Endpoint of the actor. 
+    -   `endpoint`: Endpoint of the actor.
     -   `implementation`: The name of the implementation to be used for this actor instance. This must match an implementation that is defined at the endpoint. If not defined, an arbitraary implementation will be chosen at runtime.
 
 E.g.:
@@ -69,7 +78,10 @@ trial_params:
 
 ## Parameters and pre-trial hooks
 
-Pre-trial hooks are gRPC services that will be called to set up the parameters for a new trial. Multiple hooks can be defined and they will all be called in order, in a pipeline fashion (i.e. the output of one becomes the input of the next). The first hook service to be called will receive the default parameters, in addition with the config given to the `start_trial` function call. The output of the last hook is used to start the new trial. The response of the last hook will be waited on before the trial starts.
+If no parameters were given to the trial start call, the default parameters and pre-trial hooks are used.
+And if no pre-trial hooks are defined, the default parameters will be used directly to start the trial.
+
+Pre-trial hooks are gRPC services that may be called to set up the parameters for a new trial. Multiple hooks can be defined and they will all be called in order, in a pipeline fashion (i.e. the output of one becomes the input of the next). The first hook service to be called will receive the default parameters (augmented by the trial config that may be given to the trial start call). The output of the last hook is used as final parameters to start the new trial. The response of the last hook will be waited on before the trial starts.
 
 The hooks will be called to update or generate all the parameter data (presented here) in addition to the configurations for the environment and the actors (if needed).
 

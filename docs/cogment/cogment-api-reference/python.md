@@ -65,7 +65,7 @@ The `cog_settings.py` Python module is required by all API entry points.
 
 The main module of the Cogment SDK is `cogment`. But all cogment scripts need to start with a `cogment.Context`, which also requires the generated module `cog_settings` (project specific definitions created from the spec file).
 
-If one needs to create a `cogment.LogParams` from scratch, the `cog_settings` module is also required.
+If one needs to create a `cogment.TrialParameters` or `cogment.ActorParameters` from scratch, the `cog_settings` module is also required.
 
 ```python
 import cog_settings
@@ -166,16 +166,18 @@ Return: None
 
 Class containing data and methods to control and manage trials.
 
-### `async start_trial(self, trial_config=None, trial_id_requested=None)`
+### `async start_trial(self, trial_config=None, trial_id_requested=None, trial_params=None)`
 
-Method to start a new trial. The parameters of the trial will be set by the pre-trial hooks (registered in `cogment.Context`), and the hooks will receive the provided trial config.
+Method to start a new trial.
+The config and parameter options are mutually exclusive.
 
 Parameters:
 
--   `trial_config`: _protobuf class instance_ - Configuration for the trial. The type is specified in the spec file under the section `trial:config_type`. Can be `None` if no configuration is provided. This is provided to the first pre-trial hook.
+-   `trial_config`: _protobuf class instance_ - Configuration for the trial. The type is specified in the spec file under the section `trial:config_type`. The config will be added to the default parameters (in the Orchestrator) and sent to the pre-trial hooks (if any). The pre-trial hooks will set the trial parameters according to the config. If there is no pre-trial hooks, the config is ignored and the default parameters are used. This cannot be provided with the `trial_params`.
 -   `trial_id_requested`: _str_ - The trial identifier requested for the new trial. It must be unique among all active trials and a limited set of the latest ended trials (this list of trials can be retrieved with `get_trial_info` or `watch_trial`). If provided, the Orchestrator will try to use this trial_id, otherwise, a UUID will be created.
+-   `trial_params`: _TrialParameters instance_ - Fully defined parameters to start the new trial. This will be used as the trial parameters (I.e. the default parameters and pre-trial hooks are ignored). This cannot be provided with the `trial_config`.
 
-Return: _str_ - The newly started trial ID. An empty string if the trial was not started due to a non-unique ID.
+Return: _str_ - The newly started trial ID. An empty string if the trial was not started due to a non-unique requested ID.
 
 ### `terminate_trial(self, trial_ids, hard=False)`
 
@@ -278,7 +280,7 @@ Return: None
 
 ## class EnvironmentSession(Session)
 
-Abstract class based on `Session`, containing session data and methods necessary to run an environment for a trial. An instance of this class is passed as an argument to the environment callback function registered with `cogment.Context.register_environment`.
+Class based on `Session`, containing session data and methods necessary to run an environment for a trial. An instance of this class is passed as an argument to the environment callback function registered with `cogment.Context.register_environment`.
 
 `impl_name`: _str_ - Name of the implementation running this environment.
 
@@ -349,7 +351,7 @@ Return: None
 
 ## class ActorSession(Session)
 
-Abstract class based on `Session`, containing session/trial data and methods necessary to run an actor for a trial. An instance of this class is passed as argument to the actor callback function registered with `cogment.Context.register_actor`.
+Class based on `Session`, containing session/trial data and methods necessary to run an actor for a trial. An instance of this class is passed as argument to the actor callback function registered with `cogment.Context.register_actor`.
 
 `class_name`: _str_ - Name of the class of actor this instance represents. Specified in the spec file as `actor_classes:name`.
 
@@ -404,33 +406,9 @@ Return: None
 
 ## class PrehookSession
 
-Abstract class containing trial configuration data to define the specifics of a trial. An instance of this class is passed as argument to the pre-trial hook callback function registered with `cogment.Context.register_pre_trial_hook`. The first pre-trial hook to be called will receive the default parameters set in the Orchestrator, the following hooks will receive the parameters set by the preceding hooks.
+Class containing trial parameters to define the specifics of a trial. An instance of this class is passed as argument to the pre-trial hook callback function registered with `cogment.Context.register_pre_trial_hook`. The first pre-trial hook to be called will receive the default parameters set in the Orchestrator, the following hooks will receive the parameters set by the preceding hooks.
 
-`trial_config`: _protobuf class instance_ - Configuration for the new trial. The type is specified in the spec file under the section `trial:config_type`. The first pre-trial hook receives the config that came from the `Controller.start_trial()` function. If `None`, no config will be sent to the next pre-trial hook.
-
-`trial_max_steps`: _int_ - The maximum number of time steps (ticks) that the trial will run before terminating. If 0 (or `None`), the trial will not be auto terminated (the environment and a Controller can still terminate the trial).
-
-`trial_max_inactivity`: _int_ - The number of seconds of inactivity after which a trial will be terminated. If 0 (or `None`), the trial will not be terminated because of inactivity.
-
-`datalog_endpoint`: _str_ - The URL to connect to the data logger. The protocol must be "grpc". E.g. "grpc://mydb:9000". If `None`, no datalog service will be connected.
-
-`datalog_exclude`: _list[str]_ - List of fields to exclude from the data to send for logging.
-
-`environment_config`: _protobuf class instance_ - Configuration for the environment in the new trial. This configuration will be sent to the environment on start. The type is specified in the spec file under the section `environment:config_type`. If `None`, no config will be sent to the environment.
-
-`environment_endpoint`: _str_ - The URL to connect to the environment. The protocol must be "grpc". E.g. "grpc://myenv:9000"
-
-`environment_name`: _str_ - The name of the environment.
-
-`environment_implementation`: _str_ - The name of the implementation to run the environment.
-
-`actors`: _list[dict]_ - Each item (dictionary) of the list represents an actor. Each actor dictionary contains these key-value pairs:
-
--   `"name"`: _str_ - Name of the actor
--   `"actor_class"`: _str_ - The actor class for the actor. This is specific to a type of trial and must match values in the spec file under section `actor_classes:name`.
--   `"endpoint"`: _str_ - The URL to connect to the actor. If, instead of a gRPC URL, the value is "cogment://client", then this actor will connect in (rather than be connected to), and the actor will need to provide the gRPC URL to connect to the orchestrator.
--   `"implementation"`: _str_ - The name of the implementation to run this actor
--   `"config"`: _protobuf class instance_ - The configuration data for the actor. The type is specified in the spec file under the section `actor_classes:config_type` for the corresponding actor. If `None`, no config will be sent to the actor.
+`trial_parameters`: _TrialParameters instance_ - Parameters for the trial.
 
 ### `get_trial_id(self)`
 
@@ -448,23 +426,15 @@ Parameters: None
 
 Return: _str_ - Identifier of the user that started the trial.
 
-### `validate(self)`
-
-Method to validate that the data is valid. This is a superficial check; even if the data validates successfully, there can still be problems with the data. This method should be called if changes have been made to the data members of the class. Exceptions are raised on error.
-
-Parameters: None
-
-Return: None
-
 ## class DatalogSession
 
-Abstract class containing session data and methods necessary to manage the logging of trial run data. An instance of this class is passed as an argument to the datalog callback function registered with `cogment.Context.register_datalog`.
+Class containing session data and methods necessary to manage the logging of trial run data. An instance of this class is passed as an argument to the datalog callback function registered with `cogment.Context.register_datalog`.
 
 `trial_id`: _str_ - UUID of the trial managed by this instance.
 
 `user_id`: _str_ - Identifier of the user that started the trial.
 
-`trial_params`: _cogment.LogParam instance_ - Parameters of the trial.
+`trial_parameters`: _cogment.TrialParameters instance_ - Parameters of the trial.
 
 ### `start(self)`
 
@@ -647,32 +617,37 @@ Class containing the details of a received single source reward.
 
 `user_data`: _google.protobuf.Any instance_ - Data for a user-specific reward format. Can be `None` if no specific data was provided. The class enclosed in `google.protobuf.Any` is of the type set by the sender; it is the responsibility of the receiver to manage the data received (i.e. determine the type and unpack the data).
 
-## class cogment.LogParams
+## class cogment.TrialParameters
 
 Class containing the paramaters of the trial.
+Any attribute can be set to `None` to reset it to its default.
+
+`config`: _protobuf class instance_ - Immutable configuration for the trial (i.e. changes to the configuration will not be reflected in `TrialParameters`; `config` must be set with a new instance to make changes). The type is specified in the spec file under the section `trial:config_type`. Can be `None` if there is no config (default).
 
 `max_steps`: _int_ - The maximum number of steps/ticks that the trial should run. After this number of steps/ticks, an end request will be sent to the environment.
 
 `max_inactivity`: _int_ - The maximum amount of time (in seconds) that the trial should be without activity before it is forcefully terminated. "Activity" is defined as a message received by the Orchestrator from a user component.
 
-`nb_actors`: _int_ - The number of actors participating in the trial.
+`datalog_endpoint`: _str_ - The endpoint to connect to the datalog service.
 
-`datalog`: _dict_ - The datalog related parameters. The dictionary contains these key-value pairs:
+`datalog_exclude_fields`: _tuple(str)_ - Fields to exclude from the samples sent to the datalog service.
 
--   `"endpoint"`: _str_ - The URL to connect to the datalog service.
--   `"exclude"`: _list(str)_ - Fields to exclude from the samples sent to the datalog service.
+`environment_config`: _protobuf class instance_ - Immutable configuration for the environment (i.e. changes to the configuration will not be reflected in `TrialParameters`; `environment_config` must be set with a new instance to make changes). The type is specified in the spec file under the section `environment:config_type`. Can be `None` if there is no config (default).
 
-`environment`: _dict_ - The environment related parameters. The dictionary contains these key-value pairs:
+`environemnt_name`: _str_ - Name of the environment.
 
--   `"name"`: _str_ - Name of the environment
--   `"endpoint"`: _str_ - The URL to connect to the environment.
--   `"implementation"`: _str_ - The name of the implementation to run the environment
+`environment_endpoint`: _str_ - The endpoint to connect to the environment service.
 
-### `__init__(self, cog_settings)`
+`environment_implementation`: _str_ - The name of the implementation to run the environment.
+
+`actors`: _list(cogment.ActorParameters)_ - The parameters for the actors. This is a list style object that implements the basic Python `list` functionality.
+
+### `__init__(self, cog_settings, **kwargs)`
 
 Parameter:
 
 -   `cog_settings`: _module_ - Settings module associated with trials that will be run ([cog_settings](#cog_settings.py) namespace).
+-   `**kwargs`: Accepts any of the attributes as keyword to set their value on construction. E.g. `TrialParameters(settings, max_steps=1000, environment_name="level")`
 
 ### `get_serialization_type(self)`
 
@@ -690,72 +665,44 @@ Parameters: None
 
 Return: _str_ - Serialized parameters.
 
-### `deserialize(self, raw_string)`
+### `deserialize(self, raw_string, type=None)`
 
-Takes a serialized parameter string and sets the LogParams instance.
+Takes a serialized parameter string and sets the `TrialParameters` instance.
 
 Parameter:
 
--   `raw_string`: _str_ - Binary string representing a serialized LogParam of the same type.
+-   `raw_string`: _str_ - Binary string representing a serialized `TrialParameters` of type `type`.
+-   `type`: _int_ - Type of serial data in `raw_string` (from `get_serialization` of the source). If `None`, the current type is assumed (i.e. this instance type matches the source type).
 
-### `get_trial_config(self)`
+## class cogment.ActorParameters
 
-Returns the trial config.
+Class representing the parameters for a particular actor.
+Any attribute can be set to `None` to reset it to its default.
 
-Parameters: None
+`config`: _protobuf class instance_ - Immutable configuration for the actor (i.e. changes to the configuration will not be reflected in `ActorParameters`; `config` must be set with a new instance to make changes). The type is specified in the spec file under the section `actor_classes:config_type` for the specific actor class of the actor. Can be `None` if there is no config (default).
 
-Return: _protobuf class instance_ - Configuration for the trial. The type is specified in the spec file under the section `trial:config_type`.
+`class_name`: _str_ - The name of the actor class for the actor. This cannot be changed (it is a parameter of the constructor).
 
-### `get_environment_config(self)`
+`name`: _str_ - Name of the actor.
 
-Returns the environment config.
+`endpoint`: _str_ - The endpoint to connect to the actor service, or "cogment://client" for client actors that don't provide a service and will connect in.
 
-Parameters: None
+`implementation`: _str_ - The name of the implementation to run the actor.
 
-Return: _protobuf class instance_ - Configuration for the environment. The type is specified in the spec file under the section `environment:config_type`.
+### `__init__(self, cog_settings, class_name, **kwargs)`
 
-### `get_actor_index(self, actor_name)`
+Parameter:
 
-Returns the index of the given actor, or None if the actor is not in the trial.
-
-Parameters:
-
--   `actor_name`: _str_ - Name of the actor to look for in the trial parameters.
-
-Return: _int_ - Index of actor if found. `None` if not found. This index is constant in the trial and relates to the complete list of actors provided by cogment (e.g. `Controller.get_actors()`).
-
-### `get_actor_name(self, actor_index)`
-
-Returns the name of an actor in the trial.
-
-Parameters:
-
--   `actor_index`: _int_ - Index of the actor to retrieve. This number is constant in the trial and relates to the complete list of actors provided by cogment (e.g. `Controller.get_actors()`). The value must be between 0 and `self.nb_actors` (exclusively).
-
-Return: _str_ - Name of the actor in the trial parameters.
-
-### `get_actor(self, actor_index)`
-
-Returns information about a particular actor in the trial.
-
-Parameters:
-
--   `actor_index`: _int_ - Index of the actor to retrieve. This number is constant in the trial and relates to the complete list of actors provided by cogment (e.g. `Controller.get_actors()`). The value must be between 0 and `self.nb_actors` (exclusively).
-
-Return: _dict_ - Dictionary containing the details of the actor parameters. The dictionary contains these key-value pairs:
-
--   `"name"`: _str_ - Name of the actor.
--   `"actor_class"`: _str_ - The actor class for the actor. This is specific to a type of trial and must match values in the spec file under section `actor_classes:name`.
--   `"endpoint"`: _str_ - The URL to connect to the service actor, or "cogment://client" for client actors that will connect in.
--   `"implementation"`: _str_ - The name of the implementation to run the actor.
--   `"config"`: _protobuf class instance_ - The configuration data for the actor. The type is specified in the spec file under the section `actor_classes:config_type` for the specific actor class of the actor.
+-   `cog_settings`: _module_ - Settings module associated with trials that will be run ([cog_settings](#cog_settings.py) namespace).
+-   `class_name`: _str_ - The name of the actor class for the actor. This is specific to a type of trial and must match values in the spec file under section `actor_classes:name`.
+-   `**kwargs`: Accepts any of the attributes (except `class_name`) as keyword to set their value on construction. E.g. `ActorParameters(settings, class_name="some_class", name="act_name")`
 
 ## class cogment.LogSample
 
 Class containing a datalog sample.
 A sample starts and ends with the arrival of new observations from the environment. The last sample will end after all components have acknowledged the end of the trial (the state of that sample will then be `TrialState.ENDED`).
 
-Note that some of the data may not be available (`None`) if it was excluded from the sample (see datalog parameters `LogParams.datalog["exclude"]`).
+Note that some of the data may not be available (`None`) if it was excluded from the sample (see datalog parameters `TrialParameters.datalog_exclude_fields`).
 
 `tick_id`: _int_ - The time step that the sample data relates to.
 
