@@ -105,6 +105,16 @@ Parameters:
 
 Return: _Controller instance_ - An instance of the Controller class used to manage trials.
 
+### `get_datastore(self, endpoint)`
+
+Method to get a class instance to retrieve and manage data in a Datastore.
+
+Parameters:
+
+-   `endpoint`: _Endpoint instance_ - Details of the connection to the Datastore.
+
+Return: _Datastore instance_ - An instance of the Datastore class.
+
 ### `async join_trial(self, trial_id, endpoint, impl_name=None, actor_name=None, actor_class=None)`
 
 Method for an actor to asynchronously join an existing trial. This task will normally end after the user implementation has exited.
@@ -228,6 +238,61 @@ Parameters: None
 
 Return: _dict_ - The key of the dictionary is the name of the component (_str_), and the value is the version (_str_).
 
+## class Datastore
+
+Class containing data and methods to retrieve historical (or real-time) trial samples from a Datastore.
+This class can also be used to delete trials from a Datastore.
+
+### `async get_trials(self, ids)`
+
+Method to get information about historical (or ongoing) trials in the Datastore.
+This method is more efficient than `all_trials()`, but can be problematic if too many trials are to be returned.
+
+Parameters:
+
+-   `ids`: _list[str]_ - The trial IDs for which to request information. If no ID is provided (empty list), returns information about all trials in the Datastore.
+
+Return: _list[DatastoreTrialInfo instance]_ - List of trial information, one per trial. Can be empty if no trial matches any of the provided trial IDs.
+
+### `async all_trials(self, bundle_size=1)`
+
+Generator method to iterate through all the trials in the Datastore.
+
+Parameters:
+
+-   `bundle_size`: _int_ - Number of trials to retrieve at a time from the Datastore. This may be increased to more efficiently inquire the Datastore at the price of increased memory use.
+
+Return: _generator(DatastoreTrialInfo instance)_ - A generator for the trials in the Datastore.
+
+### `async delete_trials(self, ids)`
+
+Method to delete historical trials recorded in the Datastore.
+
+Parameters:
+
+-   `ids`: _list[str]_ - The trial IDs to remove from the Datastore.
+
+Return: None
+
+### `async all_samples(self, trial_infos, actor_names=[], actor_classes=[], actor_implementations=[], fields=[])`
+
+Generator method to iterate through the samples from trials in the Datastore.
+The samples can be historical (if the trial has ended) or real-time (if a trial is ongoing).
+
+Parameters:
+
+-   `trial_infos`: _list[DatastoreTrialInfo]_ - Trials to request samples from. These should be the info instances received from `get_trials`.
+
+-   `actor_names`: _list[str]_ - Names of actors to consider including in the samples. If empty, all actors will be considered.
+
+-   `actor_classes`: _list[str]_ - Actor classes to match for an actor to be included in the samples. If empty, actors in any class will be considered.
+
+-   `actor_implementations`: _list[str]_ - Actor implementations to match for an actor to be included in the samples. If empty, actors with any implementation will be considered.
+
+-   `fields`: _list[cogment.DatastoreFields]_ - Data fields to be filled in `DatastoreActorData` (otherwise left empty). If the list is empty, all data will be filled in.
+
+Return: _generator(DatastoreSample instance)_ - A generator for the samples from the Datastore.
+
 ## class Session
 
 Abstract class that manages aspects of a trial. Contains data and methods common to all sessions .
@@ -300,7 +365,7 @@ Parameters:
 
 Return: None
 
-### `async event_loop(self)`
+### `async all_events(self)`
 
 Generator method to iterate over all events (actions, messages) as they are received. This will block and wait for an event.
 When this generator exits, the callback function (registered with `register_environment`) should return to end the trial cleanly.
@@ -373,7 +438,7 @@ Parameters:
 
 Return: None
 
-### `async event_loop(self)`
+### `async all_events(self)`
 
 Generator method to iterate over all events (observations, rewards, messages) as they are received. This will block and wait for an event.
 When this generator exits, the callback function (registered with `register_actor`) should return to end the trial cleanly.
@@ -444,7 +509,7 @@ Parameters: None
 
 Return: None
 
-### `get_all_samples(self)`
+### `all_samples(self)`
 
 Generator method to iterate over all samples as they are received (waiting for each in turn).
 
@@ -565,7 +630,7 @@ Class containing the details of an action from an actor.
 
 `actor_index`: _int_ - Index of the actor in the list of all trial actors (returned by `Session.get_active_actors`).
 
-`action`: _protobuf class instance_ - Action from the actor which has index `actor_index` in the trial. The class of the action is defined as action space for the specific actor in the section `actor_classes:action:space` in the spec file.
+`action`: _protobuf class instance_ - Action from the actor which has index `actor_index` in the trial. The class of the action is defined as action space for the specific actor in the section `actor_classes:action:space` in the spec file for the appropriate actor class.
 
 ## class RecvMessage
 
@@ -785,6 +850,116 @@ Generator method to iterate over all the messages in the sample.
 Parameters: None
 
 Return: _generator(RecvMessage instance)_ - A generator for the messages in the sample.
+
+## class cogment.DatastoreFields(enum.Enum)
+
+Enum representing the various data in a `DatastoreActorData` instance
+
+-   UNKNOWN: Should not be used.
+-   OBSERVATION: The observation.
+-   ACTION: The action.
+-   REWARD: The aggregated reward.
+-   RECEIVED_REWARDS: All the individual rewards received by the actor (`all_received_rewards` method)
+-   SENT_REWARDS: All the individual rewards sent by the actor (`all_sent_rewards` method)
+-   RECEIVED_MESSAGES: All the messages received by the actor (`all_received_messages` method)
+-   SENT_MESSAGES: All the messages sent by the actor (`all_received_messages` method)
+
+## class DatastoreTrialInfo
+
+Class containing the information of a trial stored in the Datastore.
+
+`trial_id`: _str_ - The trial id for this trial.
+
+`user_id`: _str_ - The user ID for the trial (provided on trial start).
+
+`trial_state`: _cogment.TrialState instance_ - The last (or current) state of the trial. This will change over time if not `TrialState.ENDED`.
+
+`sample_count`: _int_ - The number of samples currently stored for this trial. This will change over time if the trial state is not `TrialState.ENDED`.
+
+`parameters`: _cogment.TrialParameters instance_ - The parameters for the trial.
+
+## class DatastoreSample
+
+Class containing the data of a trial sample (typically representing all the data during a trial tick).
+
+`trial_id`: _str_ - The id of the trial the data in the sample relates to.
+
+`trial_state`: _cogment.TrialState instance_ - The state of the trial at the end of the sample period.
+
+`tick_id`: _int_ - The step/tick at which the data in the sample was obtained.
+
+`timestamp`: _int_ - Unix style Epoch timestamp of the start of the step/tick (in nanoseconds since 00:00:00 UTC Jan 1, 1970).
+
+`actors_data`: _dict(str:DatastoreActorData instance)_ - Dictionary of all actors data included in the sample, indexed by actor name.
+
+## class DatastoreActorData
+
+Class containing the data related to an actor in a sample.
+
+`name`: _str_ - Name of the actor.
+
+`observation`: _protobuf class instance_ - Observation received by the actor. The class of the observation is defined as observation space for the actor class. This is specified in section `actor_classes:observation:space` in the spec file for the appropriate actor class.
+
+`action`: _protobuf class instance_ - Action from the actor. The class of the action is defined as action space for the specific actor in the section `actor_classes:action:space` in the spec file for the appropriate actor class.
+
+`reward`: _float_ - The aggregated reward received by the actor in the sample.
+
+### `all_received_rewards(self)`
+
+Generator method to iterate over all the individual rewards received by the actor in the sample.
+The aggregated reward is calculated from these.
+
+Parameters: None
+
+Return: _generator(DatastoreReward instance)_ - A generator for the individual actor rewards received.
+
+### `all_sent_rewards(self)`
+
+Generator method to iterate over all the individual rewards sent by the actor in the sample.
+
+Parameters: None
+
+Return: _generator(DatastoreReward instance)_ - A generator for the individual actor rewards sent.
+
+### `all_received_messages(self)`
+
+Generator method to iterate over all the messages received by the actor in the sample.
+
+Parameters: None
+
+Return: _generator(DatastoreMessage instance)_ - A generator for the messages received.
+
+### `all_sent_messages(self)`
+
+Generator method to iterate over all the messages sent by the actor in the sample.
+
+Parameters: None
+
+Return: _generator(DatastoreMessage instance)_ - A generator for the messages sent.
+
+## class DatastoreReward
+
+Class containing the data for an individual reward in the Datastore.
+
+`value`: _float_ - Value of the reward.
+
+`confidence`: _float_ - Confidence level of the reward value.
+
+`sender`: _str_ - Name of the sender of the reward.
+
+`receiver`: _str_ - Name of the receiver of the reward. The string could contain wildcard characters to represent multiple receivers intended by the sender.
+
+`user_data`: _google.protobuf.Any instance_ - Data for a user-specific reward format. Can be `None` if no specific data was provided. The class enclosed in `google.protobuf.Any` is of the type set by the sender; it is the responsibility of the receiver to manage the data received (i.e. determine the type and unpack the data).
+
+## class DatastoreMessage
+
+Class containing the data of a message in the Datastore.
+
+`sender`: _str_ - Name of the sender of the message.
+
+`receiver`: _str_ - Name of the receiver of the message. The string could contain wildcard characters to represent multiple receivers intended by the sender.
+
+`payload`: _google.protobuf.Any instance_ - Data for a received message. The class enclosed in `google.protobuf.Any` is of the type set by the sender; It is the responsibility of the receiver to manage the data received (i.e. determine the type and unpack the data).
 
 [1]: ./cogment-yaml.md
 [2]: ./parameters.md
