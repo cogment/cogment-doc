@@ -85,7 +85,7 @@ An Observation space is the set of all possible [observations](#observation) an 
 
 ### Orchestrator
 
-The Orchestrator is the central piece of our [framework](#framework); it’s an executable that handles several things:
+The Orchestrator is the central piece of our [framework](#framework); it’s part of the main [Cogment executable](../cogment/orchestrator.md) and handles several things:
 
 -   It circulates data flows between [Actors](#actor) and [Environments](#environment).
 -   It dumps datasets in the chosen storage location.

@@ -1,14 +1,12 @@
 cff-version: "1.2.0"
 message: "If you use Cogment in your research, please cite the article from `preferred-citation`."
 title: "Cogment User Documentation"
-date-released: 2022-01-17
-version: v2
 authors:
   - family-names: AI Redefined
     website: https://ai-r.com
 license: Apache-2.0
 url: https://cogment.ai
-repository: https://github.com/cogment/cogment-verse
+repository: https://github.com/cogment/cogment-doc
 preferred-citation:
   type: "article"
   title: "Cogment: Open Source Framework For Distributed Multi-actor Training, Deployment & Operations"

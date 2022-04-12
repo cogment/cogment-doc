@@ -5,7 +5,7 @@ sidebar_position: 1
 
 # Cogment Core Concepts Guide
 
-Welcome to the Cogment core concepts guide. It contains information that is pertinent to both the [high-level SDK](../cogment/cogment-api-guide.mdx) and the [low-level API](../cogment/cogment-low-level-api-guide/overview.md).
+Welcome to the Cogment core concepts guide. It contains information that is pertinent to both the [high-level SDK](../guide/development-guide.mdx) and the [low-level API](../reference/cogment-low-level-api-guide/overview.md).
 
 ## Core Concepts
 
@@ -53,7 +53,7 @@ Running trials with Cogment usually involves the deployment of a cluster of serv
 
 ![Cogment Architecture - Simple](./cogment_architecture_simple.png)
 
-User implemented components use one of the [Cogment SDKs](../cogment/cogment-api-guide.mdx) or directly implement the [underlying protocol](../cogment/cogment-low-level-api-guide/overview.md). Components communicate using [gRPC](https://grpc.io), clients can also communicate in a web-friendly way using [gRPC-Web](https://grpc.io/docs/platforms/web/) and [grpcwebproxy](https://github.com/improbable-eng/grpc-web/tree/master/go/grpcwebproxy).
+User implemented components use one of the [Cogment SDKs](../guide/development-guide.mdx) or directly implement the [underlying protocol](../reference/cogment-low-level-api-guide/overview.md). Components communicate using [gRPC](https://grpc.io), clients can also communicate in a web-friendly way using [gRPC-Web](https://grpc.io/docs/platforms/web/) and [grpcwebproxy](https://github.com/improbable-eng/grpc-web/tree/master/go/grpcwebproxy).
 
 ### Orchestrator
 
@@ -69,7 +69,7 @@ The Controller is a key part of using Cogment, it initiates communication with t
 
 The Environment implementation is accessed by the [Orchestrator](./glossary.md#orchestrator) to run the [Environment](./glossary.md#environment) during [Trials](./glossary.md#trial).
 
-Using one of [Cogment's SDKs](../cogment/cogment-api-guide.mdx), the Environment can be implemented as a function integrating a _"state of the world"_ with the [Trial](./glossary.md#trial). This function performs the following tasks during the Trial:
+Using one of [Cogment's SDKs](../guide/development-guide.mdx), the Environment can be implemented as a function integrating a _"state of the world"_ with the [Trial](./glossary.md#trial). This function performs the following tasks during the Trial:
 
 -   Generate [Observations](./glossary.md#observation) from the current _state of the world_, for example retrieving the visible objects from a 3D simulation.
 -   Apply the [Actions](./glossary.md#action), thus updating the _state of the world_, for example changing the velocity of a moving vehicle in a race simulation.
@@ -80,7 +80,7 @@ Using one of [Cogment's SDKs](../cogment/cogment-api-guide.mdx), the Environment
 
 Actors can be implemented in two different ways, either as a service or as a client. **Service Actor** implementations are accessed by the [Orchestrator](./glossary.md#orchestrator) during [Trials](./glossary.md#trial), while **Client Actor** implementations join a Trial by initiating the communication with the Orchestrator. Client Actors implementations can _reach_ a Cogment deployment through [NAT traversal](https://en.wikipedia.org/wiki/NAT_traversal). This makes them particularly well-suited to implement human-driven Actors, in web-browsers for example.
 
-Using one of [Cogment's SDKs](../cogment/cogment-api-guide.mdx) Actors can be implemented as functions handling the integration between a decision-making Actor ([software agent](./glossary.md#agent) or Human) and the [Trial](./glossary.md#trial). This function performs the following tasks during the Trial:
+Using one of [Cogment's SDKs](../guide/development-guide.mdx) Actors can be implemented as functions handling the integration between a decision-making Actor ([software agent](./glossary.md#agent) or Human) and the [Trial](./glossary.md#trial). This function performs the following tasks during the Trial:
 
 -   Receive [Observations](./glossary.md#observation) and do [Actions](./glossary.md#action) in response, for example vectorizing the retrieved observation, feeding it to a neural network and converting its output to an Action.
 -   Receive [Rewards](./glossary.md#reward), for example using them to update a neural network.
@@ -92,47 +92,45 @@ Please note that rewards can also be retrieved after the fact using an [activity
 
 On top of the core components described above, a Cogment deployment can include these additional ones:
 
--   [**CLI**](../cogment-components/cli.md) is the command line tool used to bootstrap and build Cogment projects.
--   **Datalog** services can be used to listen to the activity during a trial (actions, observations, rewards, messages) in order to, for example, store these data for the offline training of AI agents. [**Trial Datastore**](../cogment-components/trial-datastore.md) is an out-of-the-box implementation of this.
--   [**Model Registry**](../cogment-components/model-registry.md) handles the storage and dispatch of AI models trained with Cogment and used by the actors.
+-   **Datalog** services can be used to listen to the activity during a trial (actions, observations, rewards, messages) in order to, for example, store these data for the offline training of AI agents. [**Trial Datastore**](../cogment/trial-datastore.md) is an out-of-the-box implementation of this.
+-   [**Model Registry**](../cogment/model-registry.md) handles the storage and dispatch of AI models trained with Cogment and used by the actors.
 -   **Pre-Trial Hooks** can be used to dynamically setup Trials from a given configuration, for example changing the number of Actors or pointing to other Environment or Actor implementations.
--   [**Metrics & Dasboard**](../cogment-components/dashboard.md) provides a solution to monitor and visualize various metrics from the services.
 
 ## Components availability summary
 
 The following table summarizes how each component can either be implemented or used out of the box.
 
-| Component       | Out-of-the-box                     | Python SDK                                         | Javascript SDK                                  | gRPC API                                                 |
-| --------------- | ---------------------------------- | -------------------------------------------------- | ----------------------------------------------- | -------------------------------------------------------- |
-| Orchestrator    | ✅ [`cogment-orchestrator`][13]    |                                                    |                                                 | ✅ implement [Control API][4] & [Client Actor API][2]    |
-| Controller      |                                    | ✅ [get controller][10]                            | ✅ [get controller][18]                         | ✅ use [Control API][4]                                  |
-| Environment     |                                    | ✅ [register environment impl][9] & [serve][8]     |                                                 | ✅ implement [Environment API][3]                        |
-| Actor (Service) |                                    | ✅ [register actor impl][7] & [serve][8]           |                                                 | ✅ implement [Service Actor API][1]                      |
-| Actor (Client)  |                                    | ✅ [register actor impl][7] & join trial           | ✅ [register actor impl][19] & [join trial][20] | ✅ use [Client Actor API][2]                             |
-| CLI             | ✅ [`cogment-cli`][15]             |                                                    |                                                 |                                                          |
-| Trial Datastore | ✅ [`cogment-trial-datastore`][16] | ✅ [register datalog impl][11] & [serve][8]        |                                                 | ✅ implement [Datalog API][5] & Trial Datastore API (🚧) |
-| Model Registry  | ✅ [`cogment-model-registry`][17]  |                                                    |                                                 | ✅ implement Model Registry API (🚧)                     |
-| Pre Trial Hook  |                                    | ✅ [register pre trial hook impl][11] & [serve][8] |                                                 | ✅ implement [Pre Trial Hook API][6]                     |
-| Metrics         | ✅ [`cogment-metrics`][15]         |                                                    |                                                 |                                                          |
-| Dashboard       | ✅ [`cogment-dashboard`][15]       |                                                    |                                                 |                                                          |
+| Component              | Cogment                                     | Python SDK                                                  | Javascript SDK                             | gRPC API                                                  |
+| ---------------------- | ------------------------------------------- | ----------------------------------------------------------- | ------------------------------------------ | --------------------------------------------------------- |
+| Orchestrator           | ✅ [`cogment services orchestrator`][13]    |                                                             |                                            | ✅ implement [Control API][4] & [Client Actor API][2]     |
+| Controller             |                                             | ✅ [get controller][10]                                     | ✅ [get controller][18]                    | ✅ use [Control API][4]                                   |
+| Environment            |                                             | ✅ [register environment][9] & [serve][8]                   |                                            | ✅ implement [Environment API][3]                         |
+| Actor (Service)        |                                             | ✅ [register actor][7] & [serve][8]                         |                                            | ✅ implement [Service Actor API][1]                       |
+| Actor (Client)         |                                             | ✅ [register actor][7] & join trial                         | ✅ [register actor][19] & [join trial][20] | ✅ use [Client Actor API][2]                              |
+| Trial Datastore        | ✅ [`cogment services trial_datastore`][16] | ✅ [register datalog][11], [serve][8] & [get datastore][23] |                                            | ✅ implement [Datalog API][5] & [Trial Datastore API][22] |
+| Trial Datastore Client |                                             | ✅ [get datastore][23]                                      |                                            | ✅ use [Trial Datastore API][22]                          |
+| Model Registry         | ✅ [`cogment services model_registry`][17]  |                                                             |                                            | ✅ implement [Model Registry API][21]                     |
+| Model Registry Client  |                                             |                                                             |                                            | ✅ use [Model Registry API][21]                           |
+| Pre Trial Hook         |                                             | ✅ [register pre trial hook][11] & [serve][8]               |                                            | ✅ implement [Pre Trial Hook API][6]                      |
 
-[1]: ../cogment/cogment-low-level-api-guide/grpc.md#service-actor-api
-[2]: ../cogment/cogment-low-level-api-guide/grpc.md#client-actor-api
-[3]: ../cogment/cogment-low-level-api-guide/grpc.md#environment-api
-[4]: ../cogment/cogment-low-level-api-guide/grpc.md#control-api
-[5]: ../cogment/cogment-low-level-api-guide/grpc.md#datalog-api
-[6]: ../cogment/cogment-low-level-api-guide/grpc.md#hook-api
-[7]: ../cogment/cogment-api-reference/python.md#register_actorself-impl-impl_name-actor_classes
-[8]: ../cogment/cogment-api-reference/python.md#async-serve_all_registeredself-served_endpoint-prometheus_port-8000
-[9]: ../cogment/cogment-api-reference/python.md#register_environmentself-impl-impl_name-default
-[10]: ../cogment/cogment-api-reference/python.md#get_controllerself-endpoint
-[11]: ../cogment/cogment-api-reference/python.md#register_datalogself-impl
-[12]: ../cogment/cogment-api-reference/python.md#register_pre_trial_hookself-impl
-[13]: ../cogment-components/orchestrator.md
-[14]: ../cogment-components/cli.md
-[15]: ../cogment-components/dashboard.md
-[16]: ../cogment-components/trial-datastore.md
-[17]: ../cogment-components/model-registry.md
-[18]: ../cogment/cogment-api-reference/javascript.md/#getcontrollerendpoint
-[19]: ../cogment/cogment-api-reference/javascript.md#registeractorimpl-actorname-actorclass
-[20]: ../cogment/cogment-api-reference/javascript.md#async-jointrialtrialid-endpoint-actorname
+[1]: ../reference/cogment-low-level-api-guide/grpc.md#service-actor-api
+[2]: ../reference/cogment-low-level-api-guide/grpc.md#client-actor-api
+[3]: ../reference/cogment-low-level-api-guide/grpc.md#environment-api
+[4]: ../reference/cogment-low-level-api-guide/grpc.md#control-api
+[5]: ../reference/cogment-low-level-api-guide/grpc.md#datalog-api
+[6]: ../reference/cogment-low-level-api-guide/grpc.md#hook-api
+[7]: ../reference/python.md#register_actorself-impl-impl_name-actor_classes
+[8]: ../reference/python.md#async-serve_all_registeredself-served_endpoint-prometheus_port--8000
+[9]: ../reference/python.md#register_environmentself-impl-impl_name-default
+[10]: ../reference/python.md#get_controllerself-endpoint
+[11]: ../reference/python.md#register_datalogself-impl
+[12]: ../reference/python.md#register_pre_trial_hookself-impl
+[13]: ../cogment/orchestrator.md
+[16]: ../cogment/trial-datastore.md
+[17]: ../cogment/model-registry.md
+[18]: ../reference/javascript.md/#getcontrollerendpoint
+[19]: ../reference/javascript.md#registeractorimpl-actorname-actorclass
+[20]: ../reference/javascript.md#async-jointrialtrialid-endpoint-actorname
+[21]: ../reference/cogment-low-level-api-guide/grpc.md#model-registry-api
+[22]: ../reference/cogment-low-level-api-guide/grpc.md#trial-datastore-api
+[23]: ../reference/python.md#get_datastoreself-endpoint

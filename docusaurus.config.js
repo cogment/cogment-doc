@@ -111,16 +111,24 @@ const config = {
                 to: "/docs",
               },
               {
-                label: "API guide",
-                to: "/docs/cogment/cogment-api-guide",
+                label: "Core concepts",
+                to: "/docs/concepts/core-concepts",
+              },
+              {
+                label: "Cogment installation & usage",
+                to: "/docs/cogment/installation",
+              },
+              {
+                label: "Development guide",
+                to: "/docs/guide/development-guide",
               },
               {
                 label: "Python SDK reference",
-                to: "/docs/cogment/cogment-api-reference/python",
+                to: "/docs/reference/python",
               },
               {
                 label: "Javascript SDK reference",
-                to: "/docs/cogment/cogment-api-reference/javascript",
+                to: "/docs/reference/javascript",
               },
             ],
           },
