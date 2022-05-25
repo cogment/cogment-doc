@@ -39,13 +39,13 @@ Can be specified as:
 -   an environment variable, e.g. `COGMENT_ACTOR_PORT=12000`,
 -   its default value is 9000.
 
-### `actor_http_port`
+### `actor_web_port`
 
-The TCP port used to serve the [client actor gRPC service](../reference/cogment-low-level-api-guide/grpc.md#service-clientactorsp) for consumption over HTTP. This is required for [Client Actors](../guide/development-guide.mdx#service-actor-client-actor) running in a web browser. If `lifecycle_port` and `actor_port` are the same, both will be available in http.
+The TCP port used to serve the [client actor gRPC service](../reference/cogment-low-level-api-guide/grpc.md#service-clientactorsp) for consumption over websocket. This is required for [Client Actors](../guide/development-guide.mdx#service-actor-client-actor) running in a web browser.
 
 Can be specified as:
 
--   a command line option, e.g. `--actor_http_port=8080`,
+-   a command line option, e.g. `--actor_web_port=8080`,
 -   an environment variable, e.g. `COGMENT_WEB_PROXY_PORT=12000`,
 -   its default value is 0, which means the http port is disabled.
 
@@ -146,7 +146,7 @@ Set to define the minimum level for logging. Possible values are: `off`, `error`
 Can be specified as:
 
 -   a command line option, e.g. `--log_level=debug`,
--   an environment variable, e.g. `COGMENT_LOG_LEVEL=5`,
+-   an environment variable, e.g. `COGMENT_LOG_LEVEL=debug`,
 -   default value is info.
 
 ### `log_file`

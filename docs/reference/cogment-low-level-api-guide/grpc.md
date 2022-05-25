@@ -87,7 +87,7 @@ Global parameters for a trial.
 
 ```protobuf
 message TrialParams {
-  TrialConfig trial_config = 1;
+  SerializedMessage trial_config = 1;
   DatalogParams datalog = 2;
   EnvironmentParams environment = 3;
   repeated ActorParams actors = 4;
@@ -124,7 +124,7 @@ Parameters related to an environment.
 ```protobuf
 message EnvironmentParams {
   string endpoint = 1;
-  EnvironmentConfig config = 2;
+  SerializedMessage config = 2;
   string implementation = 3;
 }
 ```
@@ -143,7 +143,7 @@ message ActorParams {
   string actor_class = 2;
   string endpoint = 3;
   string implementation = 4;
-  ActorConfig config = 5;
+  SerializedMessage config = 5;
 }
 ```
 
@@ -153,25 +153,17 @@ message ActorParams {
 -   implementation: (optional) The name of the implementation of the actor class to run. If not provided, an arbitrary implementation will be chosen.
 -   config: (optional) The user config for the actor.
 
-### `TrialConfig`, `ActorConfig`, `EnvironmentConfig`
+### `SerializedMessage`
 
-These contain the config data for various user components.
+This contains an optional serialized protobuf message (e.g. config) defined by the user in the spec file. The bytes content is wrapped in a message to be able to differenciate between a default content (i.e. length 0) and the absence of content. This is easily done by testing for the presence of the message.
 
 ```protobuf
-message TrialConfig {
-  bytes content = 1;
-}
-
-message EnvironmentConfig {
-  bytes content = 1;
-}
-
-message ActorConfig {
+message SerializedMessage {
   bytes content = 1;
 }
 ```
 
--   content: The serialized protobuf message representing a config. For a particular trial, the actual message type is defined in the spec file in its respective section: `trial:config_type`, `environment:config_type`, and `actor_classes:config_type`. The trial config is given when starting a trial, and is for use by pre-trial hooks. The environment config is set by pre-trial hooks, and is for use by the environment. The actors configs are set by the pre-trial hooks, and are for use by actors (each actor class can have a different config type).
+-   content: A serialized protobuf message. E.g. for configs of a particular trial, the actual message type is defined in the spec file in its respective section: `trial:config_type`, `environment:config_type`, and `actor_classes:config_type`.
 
 ### `TrialActor`
 
@@ -421,7 +413,7 @@ Request message for the `StartTrial` procedure.
 ```protobuf
 message TrialStartRequest {
   oneof start_data {
-    TrialConfig config = 1;
+    SerializedMessage config = 1;
     TrialParams params = 4;
   }
   string user_id = 2;
@@ -654,7 +646,7 @@ message ActorInitialInput {
   string actor_class = 2;
   string impl_name = 3;
   string env_name = 4;
-  ActorConfig config = 5;
+  SerializedMessage config = 5;
 }
 ```
 
@@ -771,7 +763,7 @@ message EnvInitialInput {
   string impl_name = 2;
   uint64 tick_id = 3;
   repeated TrialActor actors_in_trial = 4;
-  EnvironmentConfig config = 5;
+  SerializedMessage config = 5;
 }
 ```
 

@@ -614,7 +614,7 @@ Enum representing the type of an event.
 
 -   `EventType.ACTIVE`: Normal event from an active trial. Most events will be of this type.
 
--   `EventType.ENDING`: Events from a trial in the process of ending. For the environment, this means that these events contain the last actions from the actors, and the trial is awaiting a final observation. For the actors, this means that the trial is ending and no action can/need to be sent in response.
+-   `EventType.ENDING`: Events from a trial in the process of ending. Events of this type can contain the same data as `ACTIVE` events.  For the environment, the actions received in `ENDING` events are the last actions from the actors, and the trial is awaiting a final observation. For the actors, the observations received in `ENDING` events are the final observations, and no action can/need to be sent in response.
 
 -   `EventType.FINAL`: Final event for the trial. This does not contain data. The event loop will exit after this event is delivered. This event can be ignored if nothing needs to be done before exiting the loop.
 
