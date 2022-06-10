@@ -40,8 +40,8 @@ Parameters:
     -   `actor_class`: The name of the actor class. This is specific to a type of trial and must match values in the corresponding spec file.
     -   `endpoint`: Endpoint of the actor.
     -   `implementation`: The name of the implementation to be used for this actor instance. This must match an implementation that is defined at the endpoint. If not defined, an arbitraary implementation will be chosen at runtime.
-    -   `initial_connection_timeout`: The minimum amount of time given to an actor to connect to a new trial, in seconds (>= 0.0).  If 0.0, then the actor is needed to start the trial (if the wait is too long, the trial may become stale and be removed). The trial can stop waiting for the actor (time out) any time after this delay. Default is 0.0 (no timeout; infite wait).
-    -   `optional`: `True` if the actor is optional, i.e. the trial could continue (dependent on the environment) in the event the actor times out or is disconnected. `False` if an actor is required, in which case the trial will be forcefully terminated if the actor times out or is disconnected. Default is `False`.
+    -   `initial_connection_timeout`: Maximum amount of time (in seconds) to wait for an actor to connect to a new trial.  If not provided or set to 0.0, then the trial will wait indefinitely (if the wait is too long, the trial may become stale and be removed). The trial may wait longer. Default is 0.0 (no timeout; indefinite wait).
+    -   `optional`: `True` if the actor is optional. An optional actor is not necessary for a trial to continue. If an actor is required (i.e optional = `False`), the trial will be terminated if the actor is not available. Default is `False`.
 
 E.g.:
 

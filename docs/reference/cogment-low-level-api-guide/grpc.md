@@ -2,7 +2,7 @@
 sidebar_position: 2
 ---
 
-# gRPC API v2 Reference
+# gRPC API Reference
 
 The low-level cogment communication API is implemented using [gRPC](https://grpc.github.io/) services.
 These services are collections of procedures to be called remotely (RPC).
@@ -144,6 +144,10 @@ message ActorParams {
   string endpoint = 3;
   string implementation = 4;
   SerializedMessage config = 5;
+  float initial_connection_timeout = 6;
+  reserved 7;
+  bool optional = 8;
+  SerializedMessage default_action = 9;
 }
 ```
 
@@ -152,6 +156,9 @@ message ActorParams {
 -   endpoint: The URL where the actor is being served, or "cogment://client". The URL is used by the Orchestrator to connect to the actor using the `ServiceActorSP` gRPC service. If set to "cogment://client", then the actor is a client and will connect to the Orchestrator instead, using the `ClientActorSP` gRPC service.
 -   implementation: (optional) The name of the implementation of the actor class to run. If not provided, an arbitrary implementation will be chosen.
 -   config: (optional) The user config for the actor.
+-   initial_connection_timeout: (optional) Maximum amount of time (in seconds) to wait for an actor to connect to a new trial. If not provided (or set to 0), the trial will wait indefinitely.
+-   optional: (optional) True if the actor is optional. An optional actor is not necessary for a trial to continue. If an actor is required (i.e not optional), the trial will be terminated if the actor is not available. If not provided, the actor is required.
+-   default_action: (optional) This is only relevant for optional actors. If set, and the actor is not available, this action will be sent to the environment. If not provided, the environment will be informed that the actor is unavailable, but will not receive an action.
 
 ### `SerializedMessage`
 
@@ -293,12 +300,14 @@ message ActionSet {
   uint64 tick_id = 1;
   fixed64 timestamp = 2;
   repeated bytes actions = 3;
+  repeated uint32 unavailable_actors = 4;
 }
 ```
 
 -   tick_id: The tick to which the actions relate to.
 -   timestamp: The time when the action set was made (usually after the last action arrived at the Orchestrator).
 -   actions: A list of actions. Each `bytes` chunk is a serialized protobuf message representing an action from a specific actor. For an particular trial, the actual message type for the action space is defined in the spec file for each actor class in section `actor_classes:action:space`. This list has the same length and order as the list of actors provided in different places in the API (e.g. `actors_in_trial`), for the same trial.
+-   unavailable_actors: List of actors (index of actors) that were not available. Actors in this list have invalid data in the `actions` list.
 
 ### `TrialState`
 
@@ -833,6 +842,8 @@ message DatalogSample {
   repeated Action actions = 3;
   repeated Reward rewards = 4;
   repeated Message messages = 5;
+  repeated uint32 default_actors = 6;
+  repeated uint32 unavailable_actors = 7;
 }
 
 message LogExporterSampleRequest {
@@ -851,6 +862,8 @@ message LogExporterSampleRequest {
 -   actions: Actions from all actors. This list has the same length and order as the list of actors provided in `trial_params`.
 -   rewards: List of rewards sent to actors.
 -   messages: List of user data sent to actors or the environment.
+-   default_actors: List of actors (index of actors) that were not available but had a default action. Actors in this list have invalid data in the `actions` list.
+-   unavailable_actors: List of actors (index of actors) that were not available and did not have a default action. Actors in this list have invalid data in the `actions` list.
 -   trial_params: Trial parameters used for a trial. This is sent on start of a trial, as the first message in the `RunTrialDatalog` stream.
 -   sample: A data sample to be logged.
 

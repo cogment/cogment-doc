@@ -624,9 +624,18 @@ Class containing the details of an observation for an actor.
 
 `tick_id`: _int_ - The time step that the observation relates to.
 
-`timestamp`: _int_ - Unix style Epoch timestamp in nanoseconds (time since 00:00:00 UTC Jan 1, 1970).
+`timestamp`: _int_ - Unix style Epoch timestamp in nanoseconds (time since 00:00:00 UTC Jan 1, 1970). Undefined if actor status is `ActorStatus.UNAVAILABLE`.
 
-`observation`: _protobuf class instance_ - Observation received from the environment. The class of the observation is defined as observation space for the actor class. This is specified in section `actor_classes:observation:space` in the spec file for the appropriate/receiving actor class.
+`observation`: _protobuf class instance_ - Observation received from the environment. The class of the observation is defined as observation space for the actor class. This is specified in section `actor_classes:observation:space` in the spec file for the appropriate/receiving actor class. Undefined if actor status is `ActorStatus.UNAVAILABLE`.
+
+## class cogment.ActorStatus(enum.Enum)
+
+Enum representing the status of actors.
+
+-   UNKNOWN: Should not be used.
+-   ACTIVE: The actor is active and responding to observations normally.
+-   UNAVAILABLE: The actor is unavailable.
+-   DEFAULT: The actor is acting by default (responding with default action defined in parameters). The environment will not see this kind of actor because a "default" actor looks active to the environment.
 
 ## class RecvAction
 
@@ -634,11 +643,13 @@ Class containing the details of an action from an actor.
 
 `tick_id`: _int_ - The time step that the action relates to.
 
-`timestamp`: _int_ - Unix style Epoch timestamp in nanoseconds (time since 00:00:00 UTC Jan 1, 1970).
-
 `actor_index`: _int_ - Index of the actor in the list of all trial actors (returned by `Session.get_active_actors`).
 
-`action`: _protobuf class instance_ - Action from the actor which has index `actor_index` in the trial. The class of the action is defined as action space for the specific actor in the section `actor_classes:action:space` in the spec file for the appropriate actor class.
+`status`: _ActorStatus instance_ - Indicate the status of the actor.
+
+`timestamp`: _int_ - Unix style Epoch timestamp in nanoseconds (time since 00:00:00 UTC Jan 1, 1970) for the action. Undefined if `status` is not `ActorStatus.ACTIVE`.
+
+`action`: _protobuf class instance_ - Action from the actor which has index `actor_index` in the trial. The class of the action is defined as action space for the specific actor in the section `actor_classes:action:space` in the spec file for the appropriate actor class. Undefined if `status` is not `ActorStatus.ACTIVE`.
 
 ## class RecvMessage
 
@@ -752,15 +763,22 @@ Parameter:
 Class representing the parameters for a particular actor.
 Any attribute can be set to `None` to reset it to its default.
 
-`config`: _protobuf class instance_ - Immutable configuration for the actor (i.e. changes to the configuration will not be reflected in `ActorParameters`; `config` must be set with a new instance to make changes). The type is specified in the spec file under the section `actor_classes:config_type` for the specific actor class of the actor. Can be `None` if there is no config (default).
+`config`: _protobuf class instance_ - Immutable configuration for the actor (i.e. changes to the configuration will not be reflected in `ActorParameters`; `config` must be set with a new instance to make changes). The type is specified in the spec file under the section `actor_classes:config_type` for the specific actor class of the actor. Defaults to no config.
 
-`class_name`: _str_ - The name of the actor class for the actor. This cannot be changed (it is a parameter of the constructor).
+`class_name`: _str_ - The name of the actor class for the actor. This cannot be changed (it is a parameter of the constructor). Required.
 
-`name`: _str_ - Name of the actor.
+`name`: _str_ - Name of the actor. Required.
 
-`endpoint`: _str_ - The endpoint to connect to the actor service, or "cogment://client" for client actors that don't provide a service and will connect in.
+`endpoint`: _str_ - The endpoint to connect to the actor service, or "cogment://client" for client actors that don't provide a service and will connect in. Required.
 
-`implementation`: _str_ - The name of the implementation to run the actor.
+`implementation`: _str_ - The name of the implementation to run the actor. Default will see the implementation assigned arbitrarily.
+
+`initial_connection_timeout`: Maximum amount of time (in seconds) to wait for an actor to connect to a new trial. Default (or 0.0) will wait indefinitely.
+
+`optional`: True to signify that the actor is optional. An optional actor is not necessary for a trial to continue. If an actor is required (i.e. not optional), the trial will be terminated if the actor is not available. Default is False.
+
+`default_action`: This is only relevant for _optional actors_. If set, and the actor is not available, this action will be sent to the environment. If not provided, the environment will be informed that the actor is unavailable, but will not receive an action. The type of the action must match the actor class (in the section `actor_classes:action:space` of the spec file for the appropriate actor class). Defaults to no action.
+
 
 ### `__init__(self, cog_settings, class_name, **kwargs)`
 
