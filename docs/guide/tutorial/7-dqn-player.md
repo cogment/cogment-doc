@@ -86,13 +86,13 @@ function services_start() {
 
 We will train our new player against the [heuristic player](./4-heuristic-player.md) we previously developed. We first need to update the trial config in `client/main.py`: `player_1` will be our new actor implementation while `player_2` will be the heuristic implementation. We also need to update `client/main.py` to run a bunch of trials sequentially as one game won't be enough to learn anything.
 
-We need to defined the grpc endpoint for this new service
+We need to define the grpc endpoint for this new service
 
 ```python
 DQN_AGENT_ENDPOINT = f"grpc://{os.getenv('DQN_AGENT_HOST')}:{os.getenv('DQN_AGENT_PORT')}"
 ```
 
-Then let's update `actor_1_params`
+Then let's update the `actor_1_params`
 
 ```python
 actor_1_params = cogment.ActorParameters(
@@ -192,7 +192,7 @@ def create_model():
 _model = create_model()
 ```
 
-The other piece of the puzzle is implementing a small function that will convert our observations into inputs for the model we just created. As most of the encoding is handled by the model itself it's fairly straightforward.
+The other piece of the puzzle is implementing a small function that will convert our observations into inputs for the model we just created. As most of the encoding is handled by the model itself, it's fairly straightforward.
 
 ```python
 def model_ins_from_observations(observations):
