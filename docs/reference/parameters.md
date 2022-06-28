@@ -40,7 +40,8 @@ Parameters:
     -   `actor_class`: The name of the actor class. This is specific to a type of trial and must match values in the corresponding spec file.
     -   `endpoint`: Endpoint of the actor.
     -   `implementation`: The name of the implementation to be used for this actor instance. This must match an implementation that is defined at the endpoint. If not defined, an arbitraary implementation will be chosen at runtime.
-    -   `initial_connection_timeout`: Maximum amount of time (in seconds) to wait for an actor to connect to a new trial.  If not provided or set to 0.0, then the trial will wait indefinitely (if the wait is too long, the trial may become stale and be removed). The trial may wait longer. Default is 0.0 (no timeout; indefinite wait).
+    -   `initial_connection_timeout`: Maximum amount of time (in seconds) to wait for an actor to connect to a new trial, after which it is considered unavailable for the trial duration.  If the wait is too long, the trial may become stale and be removed. The trial may wait longer than the requested timeout. Default is 0.0 (no timeout; indefinite wait).
+    -   `response_timeout`: Maximum amount of time (in seconds) to wait for an actor to respond with an action after an observation is sent, after which it is considered unavailable.  If the wait is too long, the trial may become stale and be removed. The trial may wait longer than the requested timeout. Default is 0.0 (no timeout; indefinite wait).
     -   `optional`: `True` if the actor is optional. An optional actor is not necessary for a trial to continue. If an actor is required (i.e optional = `False`), the trial will be terminated if the actor is not available. Default is `False`.
 
 E.g.:
@@ -68,7 +69,7 @@ trial_params:
           actor_class: BigPlayer
           endpoint: grpc://bp2:9000
           implementation: Test
-          initial_connection_timeout: 30.0
+          initial_connection_timeout: 10.0
         - name: Carol
           actor_class: SmallPlayer
           endpoint: grpc://sp:9000
@@ -85,6 +86,7 @@ trial_params:
           actor_class: Referee
           endpoint: cogment://client
           implementation: Standard
+          response_timeout: 30.0
 ```
 
 ## Parameters and pre-trial hooks

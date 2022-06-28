@@ -145,7 +145,7 @@ message ActorParams {
   string implementation = 4;
   SerializedMessage config = 5;
   float initial_connection_timeout = 6;
-  reserved 7;
+  float response_timeout = 7;
   bool optional = 8;
   SerializedMessage default_action = 9;
 }
@@ -156,7 +156,8 @@ message ActorParams {
 -   endpoint: The URL where the actor is being served, or "cogment://client". The URL is used by the Orchestrator to connect to the actor using the `ServiceActorSP` gRPC service. If set to "cogment://client", then the actor is a client and will connect to the Orchestrator instead, using the `ClientActorSP` gRPC service.
 -   implementation: (optional) The name of the implementation of the actor class to run. If not provided, an arbitrary implementation will be chosen.
 -   config: (optional) The user config for the actor.
--   initial_connection_timeout: (optional) Maximum amount of time (in seconds) to wait for an actor to connect to a new trial. If not provided (or set to 0), the trial will wait indefinitely.
+-   initial_connection_timeout: (optional) Maximum amount of time (in seconds) to wait for an actor to connect to a new trial before the actor becomes unavailable. If not provided (or set to 0), the trial will wait indefinitely.
+-   response_timeout: (optional) Maximum amount of time (in seconds) to wait for an actor to respond with an action after an observation is sent before the actor becomes unavailable. If not provided (or set to 0), the trial will wait indefinitely.
 -   optional: (optional) True if the actor is optional. An optional actor is not necessary for a trial to continue. If an actor is required (i.e not optional), the trial will be terminated if the actor is not available. If not provided, the actor is required.
 -   default_action: (optional) This is only relevant for optional actors. If set, and the actor is not available, this action will be sent to the environment. If not provided, the environment will be informed that the actor is unavailable, but will not receive an action.
 

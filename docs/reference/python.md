@@ -481,7 +481,7 @@ Return: None
 
 Class containing trial parameters to define the specifics of a trial. An instance of this class is passed as argument to the pre-trial hook callback function registered with `cogment.Context.register_pre_trial_hook`. The first pre-trial hook to be called will receive the default parameters set in the Orchestrator, the following hooks will receive the parameters set by the preceding hooks.
 
-`trial_parameters`: _TrialParameters instance_ - Parameters for the trial.
+`trial_parameters`: _TrialParameters instance_ - Parameters for the trial. Initially received with parameters from the previous hook, or default parameters from the Orchestrator if it is the first hook. Changes to this instance will be forwarded to the next hook, or to the Orchestrator if it is the last hook.
 
 ### `get_trial_id(self)`
 
@@ -604,7 +604,7 @@ Class representing a received event (for environments and actors). It can contai
 
 `rewards`: _list[RecvReward instance]_ - Reward values and data. This can only be received by actors. The list is empty if not present.
 
-`messages`: \*list[RecvMessage instance] - Message data. The list is empty if not present.
+`messages`: _list[RecvMessage instance]_ - Message data. The list is empty if not present.
 
 ### class cogment.EventType(enum.Enum)
 
@@ -614,7 +614,7 @@ Enum representing the type of an event.
 
 -   `EventType.ACTIVE`: Normal event from an active trial. Most events will be of this type.
 
--   `EventType.ENDING`: Events from a trial in the process of ending. Events of this type can contain the same data as `ACTIVE` events.  For the environment, the actions received in `ENDING` events are the last actions from the actors, and the trial is awaiting a final observation. For the actors, the observations received in `ENDING` events are the final observations, and no action can/need to be sent in response.
+-   `EventType.ENDING`: Events from a trial in the process of ending. Events of this type can contain the same data as `ACTIVE` events.  For the environment, the data received in `ENDING` events are the last actions/messages, and the trial is awaiting a final observation. For the actors, the data received in `ENDING` events are the final observations/rewards/messages, and no action can/need to be sent in response.
 
 -   `EventType.FINAL`: Final event for the trial. This does not contain data. The event loop will exit after this event is delivered. This event can be ignored if nothing needs to be done before exiting the loop.
 
@@ -632,10 +632,13 @@ Class containing the details of an observation for an actor.
 
 Enum representing the status of actors.
 
--   UNKNOWN: Should not be used.
--   ACTIVE: The actor is active and responding to observations normally.
--   UNAVAILABLE: The actor is unavailable.
--   DEFAULT: The actor is acting by default (responding with default action defined in parameters). The environment will not see this kind of actor because a "default" actor looks active to the environment.
+-   `ActorStatus.UNKNOWN`: This status should never be received.
+
+-   `ActorStatus.ACTIVE`: The actor is active and responding to observations normally.
+
+-   `ActorStatus.UNAVAILABLE`: The (optional) actor is unavailable (typically because of a time out).
+
+-   `ActorStatus.DEFAULT`: The (optional) actor is acting by default (responding with the default action defined in the actor parameters). The environment will not see this kind of actor because a "default" actor looks active to the environment.
 
 ## class RecvAction
 
@@ -761,9 +764,12 @@ Parameter:
 ## class cogment.ActorParameters
 
 Class representing the parameters for a particular actor.
+
 Any attribute can be set to `None` to reset it to its default.
 
-`config`: _protobuf class instance_ - Immutable configuration for the actor (i.e. changes to the configuration will not be reflected in `ActorParameters`; `config` must be set with a new instance to make changes). The type is specified in the spec file under the section `actor_classes:config_type` for the specific actor class of the actor. Defaults to no config.
+Some attributes (`config`, `default_action`) are immutable in `ActorParameters`: changes to the instance received will not be reflected in `ActorParameters`, the attribute must be set with a new instance to make changes. These attributes can also return `None` if not set.
+
+`config`: _protobuf class instance_ - Immutable attribute. Configuration sent to the actor at the start of the trial. The type is specified in the spec file under the section `actor_classes:config_type` for the specific actor class of the actor. Defaults to `None`.
 
 `class_name`: _str_ - The name of the actor class for the actor. This cannot be changed (it is a parameter of the constructor). Required.
 
@@ -771,13 +777,15 @@ Any attribute can be set to `None` to reset it to its default.
 
 `endpoint`: _str_ - The endpoint to connect to the actor service, or "cogment://client" for client actors that don't provide a service and will connect in. Required.
 
-`implementation`: _str_ - The name of the implementation to run the actor. Default will see the implementation assigned arbitrarily.
+`implementation`: _str_ - The name of the implementation to run the actor. Default (no string) will see the implementation assigned arbitrarily.
 
-`initial_connection_timeout`: Maximum amount of time (in seconds) to wait for an actor to connect to a new trial. Default (or 0.0) will wait indefinitely.
+`initial_connection_timeout`: _float_ - Maximum amount of time (in seconds) to wait for an actor to connect to a new trial, after which it is considered unavailable for the trial duration. Default (0.0) will wait indefinitely.
 
-`optional`: True to signify that the actor is optional. An optional actor is not necessary for a trial to continue. If an actor is required (i.e. not optional), the trial will be terminated if the actor is not available. Default is False.
+`response_timeout`: _float_ - Maximum amount of time (in seconds) to wait for an actor to respond with an action after an observation is sent, after which it is considered unavailable. Default (0.0) will wait indefinitely.
 
-`default_action`: This is only relevant for _optional actors_. If set, and the actor is not available, this action will be sent to the environment. If not provided, the environment will be informed that the actor is unavailable, but will not receive an action. The type of the action must match the actor class (in the section `actor_classes:action:space` of the spec file for the appropriate actor class). Defaults to no action.
+`optional`: _bool_ - True to signify that the actor is optional. An optional actor is not necessary for a trial to continue. If an actor is required (i.e. not optional), the trial will be terminated if the actor becomes unavailable. Default is False.
+
+`default_action`: _protobuf class instance_ - Immutable attribute. This is only relevant for _optional actors_. If provided, and the actor is not available, the environment will receive this action (the environment will not be informed that the actor is unavailable). If not provided, the environment will be informed that the actor is unavailable (the environment will not receive an action). The type is specified in the spec file under the section `actor_classes:action:space` for the specific actor class of the actor. Defaults to `None`.
 
 
 ### `__init__(self, cog_settings, class_name, **kwargs)`
