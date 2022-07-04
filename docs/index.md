@@ -8,7 +8,7 @@ sidebar_position: 1
 
 ## What is Cogment?
 
-[Cogment](https://cogment.ai) is the first open source platform designed to address the challenges of continuously training humans and AI together. It is developed by [AI Redefined](https://ai-r.com), to enable AI practioners to build, train and operate AI agents in simulated or real environments shared with humans.
+[Cogment](https://cogment.ai) is the first open source platform designed to address the challenges of continuously training humans and AI together. It is developed by [AI Redefined](https://ai-r.com), to enable AI practitioners to build, train and operate AI agents in simulated or real environments shared with humans.
 
 ### When to use Cogment?
 
