@@ -83,7 +83,7 @@ message VersionInfo {
 
 ### `TrialParams`
 
-Global parameters for a trial.
+Global parameters for a trial (see [Trial Parameters](../parameters.md#trial-parameters)).
 
 ```protobuf
 message TrialParams {
@@ -96,16 +96,16 @@ message TrialParams {
 }
 ```
 
--   trial_config: (optional) The user config for the controller of the trial. Will be sent to pre-trial hooks.
+-   trial_config
 -   datalog: (optional) The parameters for the datalog of the trial. If not present, data logging is disabled.
 -   environment: The parameters for the environment of the trial.
 -   actors: The parameters for all actors involved in the trial. This list's length and order define the length and order of the lists of actors provided in different places in the API (e.g. `actors_in_trial`) for the trial.
--   max_steps: The maximum number of steps/ticks that the trial should run. After this number of steps/ticks, an end request will be sent to the environment.
--   max_inactivity: The maximum amount of time (in seconds) that the trial should be without activity before it is forcefully terminated. "Activity" is defined as a message received by the Orchestrator from a user component.
+-   max_steps
+-   max_inactivity
 
 ### `DatalogParams`
 
-Parameters related to the data logger.
+Parameters related to the data logger (see [Trial Parameters](../parameters.md#trial-parameters)).
 
 ```protobuf
 message DatalogParams {
@@ -114,12 +114,12 @@ message DatalogParams {
 }
 ```
 
--   endpoint: The URL where the data logger is being served. This is used by the Orchestrator to connect to the datalog using the `LogExporterSP` gRPC service.
--   exclude_fields: A list of fields from `DatalogSample` to not send to the data logger.
+-   endpoint: This is used by the Orchestrator to connect to the datalog using the `LogExporterSP` gRPC service.
+-   exclude_fields
 
 ### `EnvironmentParams`
 
-Parameters related to an environment.
+Parameters related to an environment (see [Trial Parameters](../parameters.md#trial-parameters)).
 
 ```protobuf
 message EnvironmentParams {
@@ -129,13 +129,13 @@ message EnvironmentParams {
 }
 ```
 
--   endpoint: The URL where the environment is being served. This is used by the Orchestrator to connect to the environment using the `EnvironmentSP` gRPC service.
--   config: (optional) The user config for the environment.
--   implementation: (optional) The name of the implementation of the environment to run. If not provided, an arbitrary implementation will be chosen.
+-   endpoint: This is used by the Orchestrator to connect to the environment using the `EnvironmentSP` gRPC service.
+-   config
+-   implementation
 
 ### `ActorParams`
 
-Parameters related to an actor.
+Parameters related to an actor (see [Trial Parameters](../parameters.md#trial-parameters)).
 
 ```protobuf
 message ActorParams {
@@ -151,15 +151,15 @@ message ActorParams {
 }
 ```
 
--   name: The name of the actor.
--   actor_class: The name of the class of the actor. For a particular trial, the possible actor classes are defined in the spec file in the `actor_classes:name` sections.
--   endpoint: The URL where the actor is being served, or "cogment://client". The URL is used by the Orchestrator to connect to the actor using the `ServiceActorSP` gRPC service. If set to "cogment://client", then the actor is a client and will connect to the Orchestrator instead, using the `ClientActorSP` gRPC service.
--   implementation: (optional) The name of the implementation of the actor class to run. If not provided, an arbitrary implementation will be chosen.
--   config: (optional) The user config for the actor.
--   initial_connection_timeout: (optional) Maximum amount of time (in seconds) to wait for an actor to connect to a new trial before the actor becomes unavailable. If not provided (or set to 0), the trial will wait indefinitely.
--   response_timeout: (optional) Maximum amount of time (in seconds) to wait for an actor to respond with an action after an observation is sent before the actor becomes unavailable. If not provided (or set to 0), the trial will wait indefinitely.
--   optional: (optional) True if the actor is optional. An optional actor is not necessary for a trial to continue. If an actor is required (i.e not optional), the trial will be terminated if the actor is not available. If not provided, the actor is required.
--   default_action: (optional) This is only relevant for optional actors. If set, and the actor is not available, this action will be sent to the environment. If not provided, the environment will be informed that the actor is unavailable, but will not receive an action.
+-   name
+-   actor_class
+-   endpoint: The endpoint is used by the Orchestrator to connect to the actor using the `ServiceActorSP` gRPC service. If set to "cogment://client", then the actor is a client and will connect to the Orchestrator instead, using the `ClientActorSP` gRPC service.
+-   implementation
+-   config
+-   initial_connection_timeout
+-   response_timeout
+-   optional
+-   default_action
 
 ### `SerializedMessage`
 

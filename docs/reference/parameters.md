@@ -5,8 +5,8 @@ sidebar_position: 2
 # Trial Parameters
 
 The trial parameters are a set of parameters that define the details of a trial.
-They may be generated from the default parameters provided to the Orchestrator, and updated by the pre-trial hooks.
-Or they can be provided whole to the trial start call, in which case the default parameters are ignored and the pre-trial hooks are not used.
+They may be generated from the default parameters provided to the Orchestrator (see [Parameter File](#parameter-file)), and updated by the pre-trial hooks (see [TrialParameters](./python.md#class-cogmenttrialparameters) and [register_pre_trial_hook](./python.md#registerpretrialhookself-impl)).
+Or they can be provided whole to the trial start call (see [start_trial](./python.md#async-starttrialself-trialconfignone-trialidrequestednone-trialparamsnone)), in which case the default parameters are ignored and the pre-trial hooks are not used.
 
 In the parameters, are optional config messages for the trial, environment and actors.
 The trial config is only used by the pre-trial hooks, whereas the other configs are sent to their respective destination at the start of the trial.
@@ -16,40 +16,62 @@ The pre-trial hooks exist to allow dynamic parameter setting at the start of a t
 Another way to set the parameters dynamically is by providing them to the start trial call.
 The parameters of the trial start call take priority over all others, and thus when provided, the default parameters will be ignored and the pre-trial hooks will not be called.
 
+Parameters:
+
+-   `config`: User defined configuration sent to the first trial pre-hook before the start of the trial. The type is defined in spec file under section `trial:config_type`. DEFAULT: not set.
+-   `max_steps`: The maximum number of time steps (ticks) that the trial will run before requesting an end at the next step. DEFAULT: 0 (infinite nb steps).
+-   `max_inactivity`: The number of seconds of inactivity after which a trial will be terminated. "Activity" is defined as a message received by the Orchestrator from a user component. If 0, the trial will not be terminated because of inactivity. DEFAULT: 30 seconds.
+-   `datalog_endpoint`: Endpoint of the datalog service. DEFAULT: logging is disabled.
+-   `datalog_exclude_fields`: List of fields to exclude from the data samples sent to the datalog service.
+-   `environment_config`: User defined configuration sent to the environment at the start of the trial. The type is defined in spec file under section `environment:config_type`. DEFAULT: not set.
+-   `environment_name`: The name of the environment. DEFAULT: "env".
+-   `environment_endpoint`: Endpoint of the environment service. DEFAULT: none (required parameter).
+-   `environment_implementation`: The name of the implementation to run the environment. This must match an implementation that is defined at the endpoint. DEFAULT: an arbitraary implementation will be chosen at runtime.
+-   Actors
+    -   `config`: User defined configuration sent to the actor at the start of the trial. The type is defined in the spec file under section `actor_classes:config_type` for the appropriate actor class. DEFAULT: not set.
+    -   `name`: The name of the actor (must be unique in the trial). DEFAULT: none (required parameter).
+    -   `class_name`: The name of the actor class. This must match a value in the spec file under section `actor_classes:name`. DEFAULT: none (required parameter).
+    -   `endpoint`: Endpoint of the actor. This can be "cogment://client", which defines a client service. DEFAULT: none (require parameter).
+    -   `implementation`: The name of the implementation to run this actor. This must match an implementation that is defined at the endpoint. DEFAULT: an arbitraary implementation will be chosen at runtime.
+    -   `initial_connection_timeout`: Maximum amount of time (in seconds) to wait for an actor to connect to a new trial, after which it is considered unavailable for the trial duration. If the wait is too long (see `max_inactivity`), the trial may be terminated. The trial may wait longer than the requested timeout. DEFAULT: 0.0 (no timeout; indefinite wait).
+    -   `response_timeout`: Maximum amount of time (in seconds) to wait for an actor to respond with an action after an observation is sent, after which it is considered unavailable.  If the wait is too long, the trial may be terminated (see `max_inactivity`). The trial may wait longer than the requested timeout. DEFAULT: 0.0 (no timeout; indefinite wait).
+    -   `optional`: If set (true), the actor is optional. An optional actor is not necessary for a trial to continue. If an actor is required (i.e not optional), the trial will be terminated if the actor is not available. DEFAULT: false.
+    -   `default_action`: This is only relevant for optional actors (see `optional`). If set, and the actor is not available, the environment will receive this action (the environment will not be informed that the actor is unavailable). If not set, the environment will be informed that the actor is unavailable (the environment will not receive an action). The type is defined in the spec file under section `actor_classes:action:space` for the appropriate actor class. DEFAULT: not set.
+
 ## Parameter file
 
 The parameter file serves to initialize the Orchestrator default parameters.
-It is able to set all parameters except for the configs.
+It is able to set all parameters except for the configs and actor default actions.
 
-The file uses the YAML configuration language. It consists of one top level YAML section called [trial_params](#trial-params).
+The file uses the YAML configuration language. It consists of one top level YAML section called `trial_params`.
 Any other top level section will be ignored.
 
-Parameters:
+The layout is hierarchical, so the name of the parameters may be different than the parameter description above:
 
--   `max_steps`: The maximum number of time steps (ticks) that the trial will run before terminating. If 0, the trial will not be auto terminated (the environment and a Controller can still terminate the trial). If not provided, a default of 0 will be used.
--   `max_inactivity`: The number of seconds of inactivity after which a trial will be terminated. If 0, the trial will not be terminated because of inactivity. If not provided, a default of 30 seconds will be used.
--   `datalog`: List of properties related to the data logger. If this section is not present, data logging is disabled.
-    -   `endpoint`: Endpoint of the datalogger
-    -   `exclude_fields`: List of fields to exclude from the data to send for logging
--   `environment`: List of properties for the environment
-    -   `name`: The name of the environment (defaults to "env" if not provided)
-    -   `endpoint`: Endpoint of the environment
-    -   `implementation`: The name of the implementation to be used for this instance of the environment. This must match an implementation that is defined at the endpoint. If not defined, an arbitraary implementation will be chosen at runtime
--   `actors`: List of actor properties. The number of actors may not be suited for all trials.
-    -   `name`: The name of this actor (i.e. name of the specific instance of the actor class)
-    -   `actor_class`: The name of the actor class. This is specific to a type of trial and must match values in the corresponding spec file.
-    -   `endpoint`: Endpoint of the actor.
-    -   `implementation`: The name of the implementation to be used for this actor instance. This must match an implementation that is defined at the endpoint. If not defined, an arbitraary implementation will be chosen at runtime.
-    -   `initial_connection_timeout`: Maximum amount of time (in seconds) to wait for an actor to connect to a new trial, after which it is considered unavailable for the trial duration.  If the wait is too long, the trial may become stale and be removed. The trial may wait longer than the requested timeout. Default is 0.0 (no timeout; indefinite wait).
-    -   `response_timeout`: Maximum amount of time (in seconds) to wait for an actor to respond with an action after an observation is sent, after which it is considered unavailable.  If the wait is too long, the trial may become stale and be removed. The trial may wait longer than the requested timeout. Default is 0.0 (no timeout; indefinite wait).
-    -   `optional`: `True` if the actor is optional. An optional actor is not necessary for a trial to continue. If an actor is required (i.e optional = `False`), the trial will be terminated if the actor is not available. Default is `False`.
+-   `max_steps`
+-   `max_inactivity`
+-   `datalog`: List of parameters related to the data logger. If this section is not present, data logging is disabled.
+    -   `endpoint`
+    -   `exclude_fields`
+-   `environment`: List of parameters for the environment
+    -   `name`
+    -   `endpoint`
+    -   `implementation`
+-   `actors`: List of actor parameter sets. Note that as defaults, the number of actors may not be suited for all trials.
+    -   `name`
+    -   `actor_class`
+    -   `endpoint`
+    -   `implementation`
+    -   `initial_connection_timeout`
+    -   `response_timeout`
+    -   `optional`
 
 E.g.:
 
 ```yaml
 trial_params:
     max_steps: 1000
-    max_inactivity: 5 # seconds
+    max_inactivity: 30
 
     datalog:
         endpoint: grpc://logserver:9000
@@ -86,7 +108,7 @@ trial_params:
           actor_class: Referee
           endpoint: cogment://client
           implementation: Standard
-          response_timeout: 30.0
+          response_timeout: 20.0
 ```
 
 ## Parameters and pre-trial hooks
@@ -165,6 +187,7 @@ For each type of endpoint, the context provides the path and these properties (i
 -   environment: `implementation`
 -   datalog: **nothing**
 -   pre-trial hook: **nothing**
+-   orchestrator: **nothing**
 
 A **full discovery endpoint** (i.e. with a path) will provide all the necessary information to the directory and **the context of the endpoint will be ignored**. In other words, no property will be implicitly added to the query sent to the directory, the user is fully responsible to match the URL (and query) to the need.
 
@@ -188,10 +211,12 @@ The specific paths are used to find a specific type of service:
 -   `prehook`: To find a pre-trial hook service
 -   `lifecycle`: To find a service offering trial life scycle management
 -   `actservice`: To find a service offering client actor connection
+-   `datastore`: To find a data store service
+-   `modelregistry`: To find a model registry service
 
-The `prehook`, `lifecycle` and `actservice` paths are not for use in the parameters.
-The `prehook` path is for use by the Orchestrator on the command line.
-`lifecyle` and `actservice` are for use by services themselves, usually to find an Orchestrator to connect to.
+The `prehook`, `lifecycle`, `actservice`, `datastore` and `modelregistry` paths are not for use in the trial parameters.
+The `prehook` path is for use on the command line of the Orchestrator.
+The others are for use by services themselves, e.g. to find an Orchestrator to connect to.
 
 ##### Discovery query
 
@@ -204,7 +229,7 @@ The query in the discovery endpoint must follow these guidelines:
 -   Entries are separated by the ampersand (&)
 -   Property name and associated value are separated by an equal sign (=)
 -   Property names and values must be composed of only these characters: A-Z, a-z, 0-9, underscore (\_), dash (-)
--   Property names starting with a double underscore (**) are reserved. E.g `**authentication-token`
+-   Property names starting with a double underscore (\_\_) are reserved. E.g `__authentication-token`
 
 E.g.:
 

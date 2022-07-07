@@ -706,26 +706,28 @@ Class containing the details of a received single source reward.
 
 ## class cogment.TrialParameters
 
-Class containing the paramaters of the trial.
+Class containing the paramaters of the trial (see [Trial Parameters](./parameters.md#trial-parameters)).
+
 Any attribute can be set to `None` to reset it to its default.
+Some attributes (`config` and `environment_config`) are immutable: changes to the instance received will not be reflected in `TrialParameters`, the attribute must be set with a new instance to make changes. These attributes can also return `None` if not set.
 
-`config`: _protobuf class instance_ - Immutable configuration for the trial (i.e. changes to the configuration will not be reflected in `TrialParameters`; `config` must be set with a new instance to make changes). The type is specified in the spec file under the section `trial:config_type`. Can be `None` if there is no config (default).
+`config`: _protobuf class instance_ - The type is specified in the spec file under the section `trial:config_type`.
 
-`max_steps`: _int_ - The maximum number of steps/ticks that the trial should run. After this number of steps/ticks, an end request will be sent to the environment.
+`max_steps`: _int_
 
-`max_inactivity`: _int_ - The maximum amount of time (in seconds) that the trial should be without activity before it is forcefully terminated. "Activity" is defined as a message received by the Orchestrator from a user component.
+`max_inactivity`: _int_
 
-`datalog_endpoint`: _str_ - The endpoint to connect to the datalog service.
+`datalog_endpoint`: _str_
 
-`datalog_exclude_fields`: _tuple(str)_ - Fields to exclude from the samples sent to the datalog service.
+`datalog_exclude_fields`: _tuple(str)_
 
-`environment_config`: _protobuf class instance_ - Immutable configuration for the environment (i.e. changes to the configuration will not be reflected in `TrialParameters`; `environment_config` must be set with a new instance to make changes). The type is specified in the spec file under the section `environment:config_type`. Can be `None` if there is no config (default).
+`environment_config`: _protobuf class instance_ - The type is specified in the spec file under the section `environment:config_type`.
 
-`environment_name`: _str_ - Name of the environment.
+`environment_name`: _str_
 
-`environment_endpoint`: _str_ - The endpoint to connect to the environment service.
+`environment_endpoint`: _str_
 
-`environment_implementation`: _str_ - The name of the implementation to run the environment.
+`environment_implementation`: _str_
 
 `actors`: _list(cogment.ActorParameters)_ - The parameters for the actors. This is a list style object that implements the basic Python `list` functionality.
 
@@ -763,29 +765,28 @@ Parameter:
 
 ## class cogment.ActorParameters
 
-Class representing the parameters for a particular actor.
+Class containing the paramaters for a particula actor (see [Trial Parameters](./parameters.md#trial-parameters)).
 
 Any attribute can be set to `None` to reset it to its default.
+Some attributes (`config`, `default_action`) are immutable: changes to the instance received will not be reflected in `ActorParameters`, the attribute must be set with a new instance to make changes. These attributes can also return `None` if not set.
 
-Some attributes (`config`, `default_action`) are immutable in `ActorParameters`: changes to the instance received will not be reflected in `ActorParameters`, the attribute must be set with a new instance to make changes. These attributes can also return `None` if not set.
+`config`: _protobuf class instance_ - The type is specified in the spec file under the section `actor_classes:config_type` for the specific actor class of the actor.
 
-`config`: _protobuf class instance_ - Immutable attribute. Configuration sent to the actor at the start of the trial. The type is specified in the spec file under the section `actor_classes:config_type` for the specific actor class of the actor. Defaults to `None`.
+`class_name`: _str_ - This cannot be changed (it is a parameter of the constructor).
 
-`class_name`: _str_ - The name of the actor class for the actor. This cannot be changed (it is a parameter of the constructor). Required.
+`name`: _str_
 
-`name`: _str_ - Name of the actor. Required.
+`endpoint`: _str_
 
-`endpoint`: _str_ - The endpoint to connect to the actor service, or "cogment://client" for client actors that don't provide a service and will connect in. Required.
+`implementation`: _str_
 
-`implementation`: _str_ - The name of the implementation to run the actor. Default (no string) will see the implementation assigned arbitrarily.
+`initial_connection_timeout`: _float_
 
-`initial_connection_timeout`: _float_ - Maximum amount of time (in seconds) to wait for an actor to connect to a new trial, after which it is considered unavailable for the trial duration. Default (0.0) will wait indefinitely.
+`response_timeout`: _float_
 
-`response_timeout`: _float_ - Maximum amount of time (in seconds) to wait for an actor to respond with an action after an observation is sent, after which it is considered unavailable. Default (0.0) will wait indefinitely.
+`optional`: _bool_
 
-`optional`: _bool_ - True to signify that the actor is optional. An optional actor is not necessary for a trial to continue. If an actor is required (i.e. not optional), the trial will be terminated if the actor becomes unavailable. Default is False.
-
-`default_action`: _protobuf class instance_ - Immutable attribute. This is only relevant for _optional actors_. If provided, and the actor is not available, the environment will receive this action (the environment will not be informed that the actor is unavailable). If not provided, the environment will be informed that the actor is unavailable (the environment will not receive an action). The type is specified in the spec file under the section `actor_classes:action:space` for the specific actor class of the actor. Defaults to `None`.
+`default_action`: _protobuf class instance_ - The type is specified in the spec file under the section `actor_classes:action:space` for the specific class of the actor.
 
 
 ### `__init__(self, cog_settings, class_name, **kwargs)`
