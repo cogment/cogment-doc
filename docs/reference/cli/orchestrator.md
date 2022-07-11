@@ -21,7 +21,7 @@ The orchestrator configuration can be specified either through the command line 
 
 ### `lifecycle_port`
 
-The TCP port where to serve the [trial lifecycle gRPC service](../reference/cogment-low-level-api-guide/grpc.md#service-triallifecyclesp). This is where the [Controller](../guide/development-guide.mdx#controller) connects to. It can be the same as the `actor_port`.
+The TCP port where to serve the [trial lifecycle gRPC service](../grpc.md#service-triallifecyclesp). This is where the [Controller](../../guide/development-guide.mdx#controller) connects to. It can be the same as the `actor_port`.
 
 Can be specified as:
 
@@ -31,7 +31,7 @@ Can be specified as:
 
 ### `actor_port`
 
-The TCP port where to serve the [client actor gRPC service](../reference/cogment-low-level-api-guide/grpc.md#service-clientactorsp). This is where [Client Actors](../guide/development-guide.mdx#service-actor-client-actor) (as opposed to service actors) connect to. It can be the same as the `lifecycle_port`.
+The TCP port where to serve the [client actor gRPC service](../grpc.md#service-clientactorsp). This is where [Client Actors](../../guide/development-guide.mdx#service-actor-client-actor) (as opposed to service actors) connect to. It can be the same as the `lifecycle_port`.
 
 Can be specified as:
 
@@ -41,7 +41,7 @@ Can be specified as:
 
 ### `actor_web_port`
 
-The TCP port used to serve the [client actor gRPC service](../reference/cogment-low-level-api-guide/grpc.md#service-clientactorsp) for consumption over websocket. This is required for [Client Actors](../guide/development-guide.mdx#service-actor-client-actor) running in a web browser.
+The TCP port used to serve the [client actor gRPC service](../grpc.md#service-clientactorsp) for consumption over websocket. This is required for [Client Actors](../../guide/development-guide.mdx#service-actor-client-actor) running in a web browser.
 
 Can be specified as:
 
@@ -51,7 +51,7 @@ Can be specified as:
 
 ### `params`
 
-The name of the YAML file containing the [default parameters for new trials](../reference/parameters.md). Some of the parameters must match their corresponding values in the spec file (typically `cogment.yaml`) and may therefore lock an Orchestrator instance to specific types of trials. If pre-trial hooks are defined, these parameters are sent to the first hook before a trial starts.
+The name of the YAML file containing the [default parameters for new trials](../parameters.md). Some of the parameters must match their corresponding values in the spec file (typically `cogment.yaml`) and may therefore lock an Orchestrator instance to specific types of trials. If pre-trial hooks are defined, these parameters are sent to the first hook before a trial starts.
 
 Can be specified as:
 
@@ -61,7 +61,7 @@ Can be specified as:
 
 ### `directory_services`
 
-Cogment endpoint of the directory service (only one directory is accepted at the moment). It must be a [gRPC endpoint](../reference/parameters.md#grpc-scheme). The directory service is used to inquire about the location of services before a new trial starts.
+Cogment endpoint of the directory service (only one directory is accepted at the moment). It must be a [gRPC endpoint](../parameters.md#grpc-scheme). The directory service is used to inquire about the location of services before a new trial starts.
 
 Can be specified as:
 
@@ -71,7 +71,7 @@ Can be specified as:
 
 ### `pre_trial_hooks`
 
-[Cogment endpoint](../reference/parameters.md#cogment-endpoints) definitions for [pre-trial hooks](../guide/development-guide.mdx#pre-trial-hook). Hooks are called before a new trial starts. They are called in order, in a pipeline fashion, to set the parameters for new trials. The first hook will receive the default parameters, the last hook result will be used as the parameters for the new trial.
+[Cogment endpoint](../parameters.md#cogment-endpoints) definitions for [pre-trial hooks](../../guide/development-guide.mdx#pre-trial-hook). Hooks are called before a new trial starts. They are called in order, in a pipeline fashion, to set the parameters for new trials. The first hook will receive the default parameters, the last hook result will be used as the parameters for the new trial.
 
 Can be specified as:
 

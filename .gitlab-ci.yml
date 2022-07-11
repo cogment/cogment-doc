@@ -20,7 +20,7 @@ stages:
     - echo "$SSH_KNOWN_HOSTS" >> ~/.ssh/known_hosts
     - chmod 644 ~/.ssh/known_hosts
 
-image: node:14
+image: node:16
 
 # Cache modules in between jobs
 cache:

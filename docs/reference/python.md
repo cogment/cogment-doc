@@ -1,5 +1,5 @@
 ---
-sidebar_position: 3
+sidebar_position: 4
 ---
 
 # Python SDK
@@ -37,23 +37,21 @@ logging.getLogger("cogment.sdk").setLevel(logging.WARNING)
 
 ### Trial Specifications
 
-The specifications of a trial type are contained in a [spec file][1] and the imported files defined in the spec. This file is typically named `cogment.yaml`.
+The specifications of a trial type are contained in a [spec file](./cogment-yaml.md) and the imported files defined in the spec. This file is typically named `cogment.yaml`.
 
-For example, an [actor class][4] is defined by its required [observation space][5] and [action space][6].
+For example, an [actor](../guide/core-concepts.md#actors) class is defined by its required observation space and action space.
 
-These "spaces" are defined by using protobuf message types (from the imported files). [Observations][7] and [actions][8] will simply be instances of the appropriate type.
+These "spaces" are defined by using protobuf message types (from the imported files). [Observations and actions](../guide/core-concepts.md#observations--actions) will simply be instances of the appropriate type.
 
 Messages and feedback user data don't have a set type, they can be any type of protobuf message as long as the receiver can manage that type (i.e. the object received is an instance of `google.protobuf.Any` and the contained type should be checked against known types before handling). The type is determined by the provided message from the originator.
 
 ### Trial Parameters
 
-The trial [parameters][2] either come from the default parameters provided to the Orchestrator on startup, or they are dynamically generated/updated by the pre-trial hooks (which are provided to the Orchestrator on startup). Or both, since any default parameters are initially provided to the first pre-trial hook.
+The trial [parameters](./parameters.md) can come from the Controller `start_trial` command, from the default parameters provided to the Orchestrator on startup, or from the pre-trial hooks (themselves provided to the Orchestrator on startup).
 
 The parameters are mostly indepedent of the spec file (cogment.yaml), except that the active actors listed in the parameters must have their actor class match an actor class defined in the spec file.
 
 Below, when we refer to the trial parameters, we mean the final parameters after any pre-trial hooks.
-
-Note that environment config and actor config can only be provided by pre-trial hooks.
 
 ### Compiling the spec file into cog_settings.py
 
@@ -614,7 +612,7 @@ Enum representing the type of an event.
 
 -   `EventType.ACTIVE`: Normal event from an active trial. Most events will be of this type.
 
--   `EventType.ENDING`: Events from a trial in the process of ending. Events of this type can contain the same data as `ACTIVE` events.  For the environment, the data received in `ENDING` events are the last actions/messages, and the trial is awaiting a final observation. For the actors, the data received in `ENDING` events are the final observations/rewards/messages, and no action can/need to be sent in response.
+-   `EventType.ENDING`: Events from a trial in the process of ending. Events of this type can contain the same data as `ACTIVE` events. For the environment, the data received in `ENDING` events are the last actions/messages, and the trial is awaiting a final observation. For the actors, the data received in `ENDING` events are the final observations/rewards/messages, and no action can/need to be sent in response.
 
 -   `EventType.FINAL`: Final event for the trial. This does not contain data. The event loop will exit after this event is delivered. This event can be ignored if nothing needs to be done before exiting the loop.
 
@@ -740,7 +738,7 @@ Parameter:
 
 ### `get_serialization_type(self)`
 
-Return the type of serial data produced by `serialize` and accepted by `deserialize`. The type represents an ID dependent on [TrialParams](./cogment-low-level-api-guide/grpc.md#trialparams) defined in the low level gRPC API.
+Return the type of serial data produced by `serialize` and accepted by `deserialize`. The type represents an ID dependent on [TrialParams](./grpc.md#trialparams) defined in the low level gRPC API.
 
 Parameters: None
 
@@ -788,7 +786,6 @@ Some attributes (`config`, `default_action`) are immutable: changes to the insta
 
 `default_action`: _protobuf class instance_ - The type is specified in the spec file under the section `actor_classes:action:space` for the specific class of the actor.
 
-
 ### `__init__(self, cog_settings, class_name, **kwargs)`
 
 Parameter:
@@ -820,7 +817,7 @@ Parameter:
 
 ### `get_serialization_type(self)`
 
-Returns the type of serial data produced by `serialize` and accepted by `deserialize`. The type represents an ID dependent on [DatalogSample](./cogment-low-level-api-guide/grpc.md#logexportersamplerequest) defined in the low level gRPC API.
+Returns the type of serial data produced by `serialize` and accepted by `deserialize`. The type represents an ID dependent on [DatalogSample](./grpc.md#logexportersamplerequest) defined in the low level gRPC API.
 
 Parameters: None
 
@@ -995,11 +992,3 @@ Class containing the data of a message in the Datastore.
 `receiver`: _str_ - Name of the receiver of the message. The string could contain wildcard characters to represent multiple receivers intended by the sender.
 
 `payload`: _google.protobuf.Any instance_ - Data for a received message. The class enclosed in `google.protobuf.Any` is of the type set by the sender; It is the responsibility of the receiver to manage the data received (i.e. determine the type and unpack the data).
-
-[1]: ./cogment-yaml.md
-[2]: ./parameters.md
-[4]: ../concepts/glossary.md#actor-class
-[5]: ../concepts/glossary.md#observation-space
-[6]: ../concepts/glossary.md#action-space
-[7]: ../concepts/glossary.md#observation
-[8]: ../concepts/glossary.md#action

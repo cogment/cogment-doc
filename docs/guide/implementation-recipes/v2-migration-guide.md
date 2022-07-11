@@ -56,7 +56,7 @@ pre-trial hooks are no longer defined in the `cogment.yaml` file, but instead ar
 Remove the `trial:pre-hooks` section from the spec file. Instead specify the hook addresses as gRPC URLs, e.g. `grpc://1.1.1.1:9000`, using the orchestrator cli option `--pre_trial_hooks`, separating potential multiple hooks with comas.
 :::
 
-Further details can be found in the [orchestrator documentation](../../cogment/orchestrator.md).
+Further details can be found in the [orchestrator documentation](../../reference/cli/orchestrator.md).
 
 ## Datalog definition now part of each trial's parameters
 
@@ -234,7 +234,7 @@ Further details can be found in the [python SDK documentation](../../reference/p
 There has been a complete rework of the JS SDK we therefore recommend you to take a look at the dedicated [javascript SDK documentation](../../reference/javascript.md). In more details:
 
 -   You can keep your actor function, as well as any logic dealing with the observation object, as its shape has remained the same,
--   If you are using the `useActions` React hook, there is a new version of that hook, which can be retrieved by running `cogment init` with an updated version of the [Cogment CLI](../../cogment/installation.md), and choosing `yes` when prompted if you want a web client.
+-   If you are using the `useActions` React hook, there is a new version of that hook, which can be retrieved by running `cogment init` with an updated version of the [Cogment CLI](../../reference/cli/index.md), and choosing `yes` when prompted if you want a web client.
 
 ## Troubleshooting
 

@@ -34,7 +34,7 @@ Parameters:
     -   `endpoint`: Endpoint of the actor. This can be "cogment://client", which defines a client service. DEFAULT: none (require parameter).
     -   `implementation`: The name of the implementation to run this actor. This must match an implementation that is defined at the endpoint. DEFAULT: an arbitraary implementation will be chosen at runtime.
     -   `initial_connection_timeout`: Maximum amount of time (in seconds) to wait for an actor to connect to a new trial, after which it is considered unavailable for the trial duration. If the wait is too long (see `max_inactivity`), the trial may be terminated. The trial may wait longer than the requested timeout. DEFAULT: 0.0 (no timeout; indefinite wait).
-    -   `response_timeout`: Maximum amount of time (in seconds) to wait for an actor to respond with an action after an observation is sent, after which it is considered unavailable.  If the wait is too long, the trial may be terminated (see `max_inactivity`). The trial may wait longer than the requested timeout. DEFAULT: 0.0 (no timeout; indefinite wait).
+    -   `response_timeout`: Maximum amount of time (in seconds) to wait for an actor to respond with an action after an observation is sent, after which it is considered unavailable. If the wait is too long, the trial may be terminated (see `max_inactivity`). The trial may wait longer than the requested timeout. DEFAULT: 0.0 (no timeout; indefinite wait).
     -   `optional`: If set (true), the actor is optional. An optional actor is not necessary for a trial to continue. If an actor is required (i.e not optional), the trial will be terminated if the actor is not available. DEFAULT: false.
     -   `default_action`: This is only relevant for optional actors (see `optional`). If set, and the actor is not available, the environment will receive this action (the environment will not be informed that the actor is unavailable). If not set, the environment will be informed that the actor is unavailable (the environment will not receive an action). The type is defined in the spec file under section `actor_classes:action:space` for the appropriate actor class. DEFAULT: not set.
 
@@ -150,7 +150,7 @@ The `cogment` scheme is specific to Cogment and has two possible hosts: `client`
 The `client` host is used in the very specific case of an _actor_ being "client actor".
 Only actors can use this URL.
 In this case, the actor with such an endpoint (i.e. `cogment://client`) will connect as a client, the Orchestrator being the server.
-The client will connect to the actor port of the [Orchestrator][../cogment/orchestrator.md].
+The client will connect to the actor port of the [Orchestrator][../reference/cli/orchestrator.md].
 
 #### `discover` host
 

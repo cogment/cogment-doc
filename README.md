@@ -18,7 +18,7 @@ This website is built using [Docusaurus 2](https://docusaurus.io/), the styling 
 
 ### Prerequisites
 
-1. Have a working setup for Node 14 or above.
+1. Have a working setup for Node 16 or above.
 2. In this directory, run `npm install` to install what's needed to build the doc.
 
 ### Running a self reloading server

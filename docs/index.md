@@ -36,15 +36,15 @@ Cogment can be used in many other contexts it wasn't specifically designed for. 
 
 The Cogment platform consists of multiple components:
 
--   The main Cogment executable includes the main components in a cross platform easilty distributable package,
-    -   The [**Orchestrator**](./cogment/orchestrator.md), the _heart_ of a Cogment app, is in charge of running the components,
-    -   The [**Trial Datastore**](./cogment/trial-datastore.md), which stores and make available data generated while running Cogment,
-    -   The [**Model Registry**](./cogment/model-registry.md), which versions and stores trained AI models to be used by Cogment agents,
+-   The main [**Cogment CLI**](./reference/cli/index.md) includes the main components in a cross platform easilty distributable package,
+    -   The [**Orchestrator**](./reference/cli/orchestrator.md), the _heart_ of a Cogment app, is in charge of running the components,
+    -   The [**Trial Datastore**](./reference/cli/trial-datastore.md), which stores and make available data generated while running Cogment,
+    -   The [**Model Registry**](./reference/cli/model-registry.md), which versions and stores trained AI models to be used by Cogment agents,
 -   The **SDKs** are used to build your Cogment app services and clients, SDKs are available in [Python](./reference/python.md) and [Javascript](./reference/javascript.md).
 
 ## First steps
 
-Before diving right in, we recommend taking the time to read the [Core concepts](./concepts/core-concepts.md) section which details the terminology we use for several critical concepts of Cogment. You can then proceed to read on how to [install](./cogment/installation.md) the platform.
+Before diving right in, we recommend taking the time to read the [Core concepts](./guide/core-concepts.md) section which details the terminology we use for several critical concepts of Cogment. You can then proceed to read on how to [install](./reference/cli/index.md) the platform.
 
 To get your hands dirty, proceed to the [tutorial](./guide/tutorial/index.md) for an introduction to all things Cogment.
 

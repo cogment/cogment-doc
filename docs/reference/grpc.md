@@ -1,8 +1,8 @@
 ---
-sidebar_position: 2
+sidebar_position: 6
 ---
 
-# gRPC API Reference
+# gRPC API
 
 The low-level cogment communication API is implemented using [gRPC](https://grpc.github.io/) services.
 These services are collections of procedures to be called remotely (RPC).
@@ -10,6 +10,10 @@ gRPC abstracts the network communication with familiar looking functions (repres
 How services are implemented or accessed is highly dependant on the programming language being interfaced, and is beyond the scope of this document (see gRPC API documentation).
 
 This reference requires a basic understanding of gRPC, and in particular the format of the `*.proto` files.
+
+:::info
+Cogment's gRPC API is defined and released alongside the [Cogment CLI](./cli/index.md), the latest version can be accessed at <https://github.com/cogment/cogment/tree/main/packages/grpc_api>.
+:::
 
 ## General
 
@@ -83,7 +87,7 @@ message VersionInfo {
 
 ### `TrialParams`
 
-Global parameters for a trial (see [Trial Parameters](../parameters.md#trial-parameters)).
+Global parameters for a trial (see [Trial Parameters](./parameters.md#trial-parameters)).
 
 ```protobuf
 message TrialParams {
@@ -105,7 +109,7 @@ message TrialParams {
 
 ### `DatalogParams`
 
-Parameters related to the data logger (see [Trial Parameters](../parameters.md#trial-parameters)).
+Parameters related to the data logger (see [Trial Parameters](./parameters.md#trial-parameters)).
 
 ```protobuf
 message DatalogParams {
@@ -119,7 +123,7 @@ message DatalogParams {
 
 ### `EnvironmentParams`
 
-Parameters related to an environment (see [Trial Parameters](../parameters.md#trial-parameters)).
+Parameters related to an environment (see [Trial Parameters](./parameters.md#trial-parameters)).
 
 ```protobuf
 message EnvironmentParams {
@@ -135,7 +139,7 @@ message EnvironmentParams {
 
 ### `ActorParams`
 
-Parameters related to an actor (see [Trial Parameters](../parameters.md#trial-parameters)).
+Parameters related to an actor (see [Trial Parameters](./parameters.md#trial-parameters)).
 
 ```protobuf
 message ActorParams {
@@ -550,7 +554,7 @@ This API is defined in `agent.proto`. It is implemented by the service actor app
 
 This API is used by service actors that will be participating in new trials. They are connected at the start of a trial in which they participate.
 Multiple simultaneous service actors can be served from a single service application instance (i.e. same endpoint).
-An actor endpoint, for the Orchestrator to connect to, is defined in the [trial parameters](../cogment-yaml.md#trial-params).
+An actor endpoint, for the Orchestrator to connect to, is defined in the [trial parameters](./cogment-yaml.md#trial-params).
 
 #### Service `ServiceActorSP`
 
@@ -566,7 +570,7 @@ service ServiceActorSP {
 This API is defined in `orchestrator.proto`. It is implemented by the Orchestrator using the gRPC server API, and client applications are expected to connect to the Orchestrator using the gRPC client API.
 
 This API is used by client actors participating in existing (initializing) trials. The trial expecting client actors will wait for all actors to be connected before starting the trial.
-The actors connecting this way must have an endpoint set to "cogment://client" in the [trial parameters](../cogment-yaml.md#trial-params).
+The actors connecting this way must have an endpoint set to "cogment://client" in the [trial parameters](./cogment-yaml.md#trial-params).
 
 Note the reversal of the input and output messages compared to the service actor `RunTrial` procedure.
 
@@ -691,7 +695,7 @@ This API is defined in `environment.proto`. It is implemented by the environment
 This API is used by environments that will run trials.
 There is only one environment per trial.
 Multiple simultaneous environments (for different trials) can be served from a single environment application instance (endpoint).
-The environment endpoint, for the Orchestrator to connect to, is defined in the [trial parameters](../cogment-yaml.md#trial-params).
+The environment endpoint, for the Orchestrator to connect to, is defined in the [trial parameters](./cogment-yaml.md#trial-params).
 
 ### Service `EnvironmentSP`
 
@@ -793,7 +797,7 @@ message EnvInitialOutput {}
 
 ## Data/Log API
 
-This API is defined in `datalog.proto`. It is implemented by the data logger application using the gRPC server API, including the out-of-the-box component [`cogment-trial-datastore`](../../cogment/trial-datastore.md).
+This API is defined in `datalog.proto`. It is implemented by the data logger application using the gRPC server API, including the out-of-the-box component [`cogment-trial-datastore`](./cli/trial-datastore.md).
 
 The data logger endpoint, for the orchestrator to connect to, is defined in the trial parameters.
 
@@ -920,7 +924,7 @@ message PreTrialParams {
 
 ## Model Registry API
 
-This API is defined in `model_registry.proto`. It is implemented by [`cogment-model-registry`](../../cogment/model-registry.md).
+This API is defined in `model_registry.proto`. It is implemented by [`cogment-model-registry`](./cli/model-registry.md).
 
 ### Service `ModelRegistrySP`
 
@@ -1193,7 +1197,7 @@ message ModelVersionInfo {
 
 ## Trial Datastore API
 
-This API is defined in `trial_datastore.proto`. It is implemented by [`cogment-trial-datastore`](../../cogment/trial-datastore.md).
+This API is defined in `trial_datastore.proto`. It is implemented by [`cogment-trial-datastore`](./cli/trial-datastore.md).
 
 ### Service `TrialDatastoreSP`
 

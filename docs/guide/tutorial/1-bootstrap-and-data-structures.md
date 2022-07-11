@@ -2,7 +2,7 @@
 
 ## Prerequisites
 
-To follow this tutorial you'll need a working installation of **Cogment**. If you haven't done so already, follow our [installation instructions](../../cogment/installation.md).
+To follow this tutorial you'll need a working installation of **Cogment**. If you haven't done so already, follow our [installation instructions](../../reference/cli/index.md).
 
 Additionaly, you'll need:
 

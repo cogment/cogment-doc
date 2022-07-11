@@ -30,7 +30,7 @@ The Model Registry configuration can be specified either through the command lin
 
 ### `port`
 
-The TCP port where to serve the [The Model Registry API](../reference/cogment-low-level-api-guide/grpc.md#model-registry-api).
+The TCP port where to serve the [The Model Registry API](../grpc.md#model-registry-api).
 
 Can be specified as:
 

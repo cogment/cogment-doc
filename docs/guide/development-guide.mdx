@@ -1,5 +1,5 @@
 ---
-sidebar_position: 1
+sidebar_position: 2
 ---
 
 import Tabs from "@theme/Tabs";
@@ -7,7 +7,7 @@ import TabItem from "@theme/TabItem";
 
 # Development guide
 
-This document gives a high level view of what it is to develop a Cogment based application using Cogment SDKs. It assumes the reader is familiar with the [Cogment core concepts](../concepts/core-concepts.md).
+This document gives a high level view of what it is to develop a Cogment based application using Cogment SDKs. It assumes the reader is familiar with the [Cogment core concepts](../guide/core-concepts.md).
 
 :::note
 Some features aren't available in Javascript, if there's only Python examples under a certain section, that feature is python only.
@@ -19,9 +19,9 @@ The High-level Cogment API expects users to use [protocol buffers](https://devel
 
 The spec file, usully named `cogment.yaml`, defines the specifics of a type of trials for a Cogment app: actor classes as well as environment & trial configuration types. It is the starting point for a project.
 
-An [actor class](../concepts/glossary.md#actor-class) is primarily defined by its [observation space](../concepts/glossary#observation-space) and [action space](../concepts/glossary#action-space).
+An actor class is primarily defined by its observation space and action space.
 
-The data structures describing these spaces are declared by using a protocol buffer message type. [Observations](../concepts/glossary.md#observation) and [actions](../concepts/glossary.md#action) will simply be instances of the matching type.
+The data structures describing these spaces are declared by using a protocol buffer message type. [Observations and actions](../guide/core-concepts.md#observations--actions) will simply be instances of the matching type.
 
 For example, in the following, `driver` and `pedestrian` share a common view of the environment, hence use the same observation space, but have different actions available to them.
 
@@ -93,12 +93,12 @@ This will create several files in the `src` folder: `CogSettings.js`, `CogSettin
 
 ## Environment
 
-[Environments](../concepts/glossary.md#environment) are implemented by functions that take a _environment session_ instance.
+[Environments](../guide/core-concepts.md#environment) are implemented by functions that take a _environment session_ instance.
 
-This function will be called once for each [trial](../concepts/glossary.md#trial). This function usually consists of three sections.
+This function will be called once for each [trial](../guide/core-concepts.md#trial). This function usually consists of three sections.
 
 - The environment's **initialization**, where its internal state can be initialized and processes started. It ends with the sending of the initial observations to the actors participating in the trial.
-- Its **event loop**, where the environment iterates through the events occurring during the trial and produces [observations](../concepts/glossary.md#observation) as well as receives [messages](../concepts/glossary.md#message). In this loop the environment can end the trial on its own or the end can be requested by a [controller](#controller).
+- Its **event loop**, where the environment iterates through the events occurring during the trial and produces [observations](../guide/core-concepts.md#observations--actions) as well as receives messages. In this loop the environment can end the trial on its own or the end can be requested by a [controller](#controller).
 - Its **termination**, where cleanup occurs.
 
 In the common case where all actors within a trial share the same observation, a bare-minimum environment service would look like this:
@@ -139,7 +139,7 @@ async def environment(environment_session):
 
 For further details, take a look at the [`cogment.EnvironmentSession`](../reference/python.md#class-environmentsessionsession) class reference.
 
-This environment implementation needs to be registered and served so that the [orchestrator](../concepts/glossary.md#orchestrator) can reach it. This can be done through a `Context` instance.
+This environment implementation needs to be registered and served so that the [orchestrator](../guide/core-concepts.md#orchestrator) can reach it. This can be done through a `Context` instance.
 
 ```python
 context = cogment.Context(user_id="my_user_id", cog_settings=cog_settings)
@@ -174,7 +174,7 @@ Please note that the environment should always send observations such as each ac
 
 ## Actor
 
-[Actors](../concepts/glossary.md#actor) implementations look a lot like the [environment's](#environment). They take _actor session_ instance and have the same three sections: **initialization**, **event loop** and **termination**.
+[Actors](../guide/core-concepts.md#actors) implementations look a lot like the [environment's](#environment). They take _actor session_ instance and have the same three sections: **initialization**, **event loop** and **termination**.
 
 The event loops in Actors' implementations handle three basic types of events:
 
@@ -259,7 +259,7 @@ For further details, take a look at the [`ActorSession`](../reference/javascript
 
 ### Service actor / Client actor
 
-A Cogment app can use two types of actors, they are identical in terms of implementation but differ in how they interact with the app's [Orchestrator](../concepts/glossary.md#orchestrator).
+A Cogment app can use two types of actors, they are identical in terms of implementation but differ in how they interact with the app's [Orchestrator](../guide/core-concepts.md#orchestrator).
 
 **Service actors** are accessible in the same way the environment is, through a [`Context`](../reference/python.md#class-cogmentcontext) instance.
 
@@ -271,9 +271,9 @@ context.register_actor(impl=actor_slow, impl_name="driver_actor_slow", actor_cla
 await context.serve_all_registered(cogment.ServedEndpoint(port=9000))
 ```
 
-Note that it is also through this registrating that the implementation is associated with one or more [actor classes](../concepts/glossary.md#actor-class) it implements.
+Note that it is also through this registrating that the implementation is associated with one or more actor classes it implements.
 
-**Client actors**, contrary to Service actors, are not served to the [orchestrator](../concepts/glossary.md#orchestrator). They connect as clients of the orchestrator and join a [trial](../concepts/glossary.md#trial) that has started.
+**Client actors**, contrary to Service actors, are not served to the [orchestrator](../guide/core-concepts.md#orchestrator). They connect as clients of the orchestrator and join a [trial](../guide/core-concepts.md#trial) that has started.
 
 <Tabs>
   <TabItem value="python" label="Python" default>
@@ -309,11 +309,11 @@ await context.joinTrial(trialId, "grpc://orchestrator:9000", "Alice");
 
 Note that a trial including one or more client actors will wait for all of them to join before any actor can start processing events.
 
-Due to the different network requirements, client actors are a good fit when implementing a [frontend](../concepts/glossary.md#frontend) for human actors.
+Due to the different network requirements, client actors are a good fit when implementing a frontend for human actors.
 
 ## Controller
 
-[Trials](../concepts/glossary.md#trial) are started by clients of the [Orchestrator](../concepts/glossary.md#orchestrator) using a Controller. Instances of a controller are built from the context instance and connect to an Orchestrator endpoint.
+[Trials](../guide/core-concepts.md#trial) are started by clients of the [Orchestrator](../guide/core-concepts.md#orchestrator) using a Controller. Instances of a controller are built from the context instance and connect to an Orchestrator endpoint.
 
 <Tabs>
   <TabItem value="python" label="Python" default>
@@ -437,7 +437,7 @@ for await (const trialListEntry of controller.watchTrials([
 
 ### Creating
 
-[Rewards](../concepts/glossary.md#reward) are sent to [actors](../concepts/glossary.md#actor) from another actor or the [environment](../concepts/glossary.md#environment). The `session` instance passed to their implementation can be used for this purpose.
+Rewards are sent to [Actors](../guide/core-concepts.md#actors) from another actor or the [Environment](../guide/core-concepts.md#environment). The `session` instance passed to their implementation can be used for this purpose.
 
 ```python
 session.add_reward(value=-1, confidence=1, tick_id=-1, to=['an_actor_name'])
@@ -445,15 +445,15 @@ session.add_reward(value=-1, confidence=1, tick_id=-1, to=['an_actor_name'])
 
 Rewards consist of an arbitrary numerical **value** describing how the reward "sender" _believes_ the actor performed. It is _weighted_ by a value between 0 and 1 qualifying the **confidence** of the "sender" in its reward, from a very low confidence just above 0 to a very high confidence approaching 1. The confidence value is used to collate all the rewards sent to an actor at the same time. Optionally, a reward can be provided with arbitrary user data.
 
-Each reward applies to a list of recipients (either all the actors, all the actors of a given class or a specific actor) at a specific point in time, during the trial, defined as a [**tick**](../concepts/glossary.md#tick).
+Each reward applies to a list of recipients (either all the actors, all the actors of a given class or a specific actor) at a specific point in time, during the trial, defined as a **tick**.
 
 The full documentation for `session.add_reward` can be found [here](../reference/python.md#add_rewardself-value-confidence-to-tick_id-1-user_datanone).
 
 ### Consuming
 
-All the [rewards](../concepts/glossary.md#reward) that are sent and destined to each specific [actor](../concepts/glossary.md#actor) for a given point in time are collated together by the framework.
+All the Rewards that are sent and destined to each specific [actor](../guide/core-concepts.md#actors) for a given point in time are collated together by the framework.
 
-The [actor](../concepts/glossary.md#actor) can take into account the reward directly as the [trial](../concepts/glossary.md#trial) is running by consuming the `"reward"` event in their event loop.
+The [actor](../guide/core-concepts.md#actors) can take into account the reward directly as the [trial](../guide/core-concepts.md#trial) is running by consuming the `"reward"` event in their event loop.
 
 <Tabs>
   <TabItem value="python" label="Python" default>
@@ -503,7 +503,7 @@ for await (const event of actorSession.eventLoop()) {
 
 ### Creating
 
-[Messages](../concepts/glossary.md#message) can be created and sent between [actors](../concepts/glossary.md#actor) or the [environment](../concepts/glossary.md#environment) within a trial using their `session` instance.
+Messages can be created and sent between [actors](../guide/core-concepts.md#actors) or the [environment](../guide/core-concepts.md#environment) within a trial using their `session` instance.
 
 <Tabs>
   <TabItem value="python" label="Python" default>
@@ -547,9 +547,9 @@ A message can be sent to one, many or all actors in a trial and / or to the envi
 
 ### Consuming
 
-All the [messages](../concepts/glossary.md#message) that are sent and intended for each specific actor or environment will be received by the target actor or environment.
+All the messages that are sent and intended for each specific actor or environment will be received by the target actor or environment.
 
-Actors or the environment can use the message directly, live, as the [trial](../concepts/glossary.md#message) is running, by consuming message event in their event loop.
+Actors or the environment can use the message directly, live, as the [trial](../guide/core-concepts.md#trial) is running, by consuming message event in their event loop.
 
 <Tabs>
   <TabItem value="python" label="Python" default>

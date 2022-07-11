@@ -112,15 +112,15 @@ const config = {
               },
               {
                 label: "Core concepts",
-                to: "/docs/concepts/core-concepts",
-              },
-              {
-                label: "Cogment installation & usage",
-                to: "/docs/cogment/installation",
+                to: "/docs/guide/core-concepts",
               },
               {
                 label: "Development guide",
                 to: "/docs/guide/development-guide",
+              },
+              {
+                label: "CLI reference",
+                to: "/docs/reference/cli",
               },
               {
                 label: "Python SDK reference",

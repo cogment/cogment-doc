@@ -1,5 +1,5 @@
 ---
-sidebar_position: 6
+sidebar_position: 7
 ---
 
 # Cogment 2.0
@@ -49,7 +49,7 @@ Since the Datalog samples, unlike everything else in the SDK, used the raw API p
 
 If people still have serialized v1 data stored (e.g. in a database), v1 versions of the sample protobuf messages (`DatalogSample_v1`) are provided in the API for convenience, so users can deserialize the data into v1 samples and extract the information.
 
-For more info, visit the [gRPC api](./cogment-low-level-api-guide/grpc.md#LogExporterSampleRequest) documentation
+For more info, visit the [gRPC api](./grpc.md#LogExporterSampleRequest) documentation
 
 ### Orchestrator
 
@@ -58,7 +58,7 @@ For more info, visit the [gRPC api](./cogment-low-level-api-guide/grpc.md#LogExp
     -   `TRIAL_ACTOR_PORT` becomes `COGMENT_ACTOR_PORT`
     -   `PROMETHEUS_PORT` becomes `COGMENT_ORCHESTRATOR_PROMETHEUS_PORT`
 -   The Orchestrator does not search for the file named `cogment.yaml` as the default spec file anymore. The spec file name must be explicit on the command line using `--config=cogment.yaml`.
--   For further information, refer to the [Orchestrator documentation](../cogment/orchestrator.md).
+-   For further information, refer to the [Orchestrator documentation](../reference/cli/orchestrator.md).
 
 ## Deprecated Behaviors
 
