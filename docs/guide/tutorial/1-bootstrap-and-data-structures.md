@@ -20,7 +20,7 @@ You can then get a clean starting point using
 ```console
 mkdir rps
 cd rps
-cp -r /path/to/cogment-tutorial-rps/1-bootstrap-and-data-structures/* .
+cp -r /path/to/cogment-tutorial-rps/1-bootstrap-and-data-structures/. .
 ```
 
 This will get you started for an app with 2 AIs able to play games of RPS.
