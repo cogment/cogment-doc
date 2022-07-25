@@ -117,7 +117,7 @@ Parameters:
 
 Return: _string_ - The newly started trial ID.
 
-### `terminate_trial(trialIds, hard = false)`
+### `terminateTrial(trialIds, hard = false)`
 
 Method to request the end of a trial.
 
@@ -256,6 +256,8 @@ Enum representing the various states of trials.
 -   TERMINATING: The trial is in the process of terminating (either a request to terminate has been received or the last observation has been received).
 -   ENDED: The trial has ended. Only a set number of ended trials will be kept (configured in the Orchestrator).
 
+For further information on trial lifetime, check the [dedicated section](../guide/development-guide.mdx#trial-lifetime).
+
 ## class TrialInfo
 
 Class enclosing the details of a trial.
@@ -295,6 +297,8 @@ Enum representing the type of an event.
 -   `EventType.ENDING`: Events from a trial in the process of ending. For the environment, this means that these events contain the last actions from the actors, and the trial is awaiting a final observation. For the actors, this means that the trial is ending and no action can/need to be sent in response. Note that because of network timing, there may be `ACTIVE` events (e.g. rewards or messages) arriving after some `ENDING` events, but the trial is ending regardless.
 
 -   `EventType.FINAL`: Final event for the trial. This does not contain data. The event loop will exit after this event is delivered. This event can be ignored if nothing needs to be done before exiting the loop.
+
+For further information on trial lifetime, check the [dedicated section](../guide/development-guide.mdx#trial-lifetime).
 
 ## type ObservationT
 

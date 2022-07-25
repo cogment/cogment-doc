@@ -16,11 +16,11 @@ The pre-trial hooks exist to allow dynamic parameter setting at the start of a t
 Another way to set the parameters dynamically is by providing them to the start trial call.
 The parameters of the trial start call take priority over all others, and thus when provided, the default parameters will be ignored and the pre-trial hooks will not be called.
 
-Parameters:
+## Parameters reference
 
 -   `config`: User defined configuration sent to the first trial pre-hook before the start of the trial. The type is defined in spec file under section `trial:config_type`. DEFAULT: not set.
--   `max_steps`: The maximum number of time steps (ticks) that the trial will run before requesting an end at the next step. DEFAULT: 0 (infinite nb steps).
--   `max_inactivity`: The number of seconds of inactivity after which a trial will be terminated. "Activity" is defined as a message received by the Orchestrator from a user component. If 0, the trial will not be terminated because of inactivity. DEFAULT: 30 seconds.
+-   `max_steps`: The maximum number of time steps (ticks) that the trial will run before requesting a [_soft_ termination](../guide/development-guide.mdx#soft-termination) at the next step. DEFAULT: 0 (infinite nb steps).
+-   `max_inactivity`: The number of seconds of inactivity after which a trial will be [_hard_ terminated](../guide/development-guide.mdx#hard-termination). "Activity" is defined as a message received by the Orchestrator from a user component. If 0, the trial will not be terminated because of inactivity. DEFAULT: 30 seconds.
 -   `datalog_endpoint`: Endpoint of the datalog service. DEFAULT: logging is disabled.
 -   `datalog_exclude_fields`: List of fields to exclude from the data samples sent to the datalog service.
 -   `environment_config`: User defined configuration sent to the environment at the start of the trial. The type is defined in spec file under section `environment:config_type`. DEFAULT: not set.

@@ -568,6 +568,8 @@ Enum representing the various states of trials.
 -   TERMINATING: The trial is in the process of terminating (either a request to terminate has been received or the last observation has been received).
 -   ENDED: The trial has ended. Only a set number of ended trials will be kept (configured in the Orchestrator).
 
+For further information on trial lifetime, check the [dedicated section](../guide/development-guide.mdx#trial-lifetime).
+
 ## class TrialInfo
 
 Class enclosing the details of a trial.
@@ -615,6 +617,8 @@ Enum representing the type of an event.
 -   `EventType.ENDING`: Events from a trial in the process of ending. Events of this type can contain the same data as `ACTIVE` events. For the environment, the data received in `ENDING` events are the last actions/messages, and the trial is awaiting a final observation. For the actors, the data received in `ENDING` events are the final observations/rewards/messages, and no action can/need to be sent in response.
 
 -   `EventType.FINAL`: Final event for the trial. This does not contain data. The event loop will exit after this event is delivered. This event can be ignored if nothing needs to be done before exiting the loop.
+
+For further information on trial lifetime, check the [dedicated section](../guide/development-guide.mdx#trial-lifetime).
 
 ## class RecvObservation
 

@@ -98,7 +98,7 @@ This will create several files in the `src` folder: `CogSettings.js`, `CogSettin
 This function will be called once for each [trial](../guide/core-concepts.md#trial). This function usually consists of three sections.
 
 - The environment's **initialization**, where its internal state can be initialized and processes started. It ends with the sending of the initial observations to the actors participating in the trial.
-- Its **event loop**, where the environment iterates through the events occurring during the trial and produces [observations](../guide/core-concepts.md#observations--actions) as well as receives messages. In this loop the environment can end the trial on its own or the end can be requested by a [controller](#controller).
+- Its **event loop**, where the environment iterates through the events occurring during the trial and produces [observations](../guide/core-concepts.md#observations--actions) as well as receives messages. In this loop the environment can end the trial on its own or the end can be requested, see the [Trial lifetime](#trial-lifetime) section for further information.
 - Its **termination**, where cleanup occurs.
 
 In the common case where all actors within a trial share the same observation, a bare-minimum environment service would look like this:
@@ -124,7 +124,7 @@ async def environment(environment_session):
         # Alternatively the environment can decide to **end** the trial with the following
         # environment_session.end([("*", Observation())])
       else:
-        # The trial termination has been requested by an external controller
+        # The trial termination has been requested
         # Produce a final observation
         environment_session.end([("*", Observation())])
 
@@ -139,7 +139,7 @@ async def environment(environment_session):
 
 For further details, take a look at the [`cogment.EnvironmentSession`](../reference/python.md#class-environmentsessionsession) class reference.
 
-This environment implementation needs to be registered and served so that the [orchestrator](../guide/core-concepts.md#orchestrator) can reach it. This can be done through a `Context` instance.
+This environment implementation needs to be registered and served so that the [Orchestrator](../guide/core-concepts.md#orchestrator) can reach it. This can be done through a `Context` instance.
 
 ```python
 context = cogment.Context(user_id="my_user_id", cog_settings=cog_settings)
@@ -174,7 +174,7 @@ Please note that the environment should always send observations such as each ac
 
 ## Actor
 
-[Actors](../guide/core-concepts.md#actors) implementations look a lot like the [environment's](#environment). They take _actor session_ instance and have the same three sections: **initialization**, **event loop** and **termination**.
+[Actors](../guide/core-concepts.md#actor) implementations look a lot like the [environment's](#environment). They take _actor session_ instance and have the same three sections: **initialization**, **event loop** and **termination**.
 
 The event loops in Actors' implementations handle three basic types of events:
 
@@ -273,7 +273,7 @@ await context.serve_all_registered(cogment.ServedEndpoint(port=9000))
 
 Note that it is also through this registrating that the implementation is associated with one or more actor classes it implements.
 
-**Client actors**, contrary to Service actors, are not served to the [orchestrator](../guide/core-concepts.md#orchestrator). They connect as clients of the orchestrator and join a [trial](../guide/core-concepts.md#trial) that has started.
+**Client actors**, contrary to Service actors, are not served to the [Orchestrator](../guide/core-concepts.md#orchestrator). They connect as clients of the Orchestrator and join a [trial](../guide/core-concepts.md#trial) that has started.
 
 <Tabs>
   <TabItem value="python" label="Python" default>
@@ -310,6 +310,17 @@ await context.joinTrial(trialId, "grpc://orchestrator:9000", "Alice");
 Note that a trial including one or more client actors will wait for all of them to join before any actor can start processing events.
 
 Due to the different network requirements, client actors are a good fit when implementing a frontend for human actors.
+
+### Actor Availability
+
+There are four actor parameters (see [Trial Parameters](../reference/parameters.md#parameters-reference)) to manage actor responses for a trial: `initial_connection_timeout`, `response_timeout`, `optional` and `default_action`.
+The timeouts control when an actor becomes unavailable, and the other two control what happens when it becomes unavailable.
+
+The trial will be [_hard_ terminated](#hard-termination) by the Orchestrator if a required (non-optional) actor becomes unavailable, whereas it can continue if an optional actor becomes unavailable.
+
+The `default_action` is for optional actors; when the actor is unavailable, the default action will be sent to the environment. If there is no default action defined, the environment is informed that the actor is unavailable, but no action is provided.
+
+E.g. If a required actor (with `optional` set to False) has a `response_timeout` set to 5.0 seconds, but takes more than 5 seconds to respond to a new observation (e.g. due to excessive computation, or a crash), then the trial will be terminated.
 
 ## Controller
 
@@ -366,6 +377,12 @@ await controller.terminateTrial([trialId]);
 
   </TabItem>
 </Tabs>
+
+:::tip
+
+The default behavior of the Controller's _terminate trial_ function is to trigger a [soft termination](#soft-termination), an optional `hard` parameters can be set to `True` to trigger a [hard termination](#hard-termination).
+
+:::
 
 #### Start trial from trial parameters
 
@@ -437,7 +454,7 @@ for await (const trialListEntry of controller.watchTrials([
 
 ### Creating
 
-Rewards are sent to [Actors](../guide/core-concepts.md#actors) from another actor or the [Environment](../guide/core-concepts.md#environment). The `session` instance passed to their implementation can be used for this purpose.
+Rewards are sent to [Actors](../guide/core-concepts.md#actor) from another actor or the [Environment](../guide/core-concepts.md#environment). The `session` instance passed to their implementation can be used for this purpose.
 
 ```python
 session.add_reward(value=-1, confidence=1, tick_id=-1, to=['an_actor_name'])
@@ -451,9 +468,9 @@ The full documentation for `session.add_reward` can be found [here](../reference
 
 ### Consuming
 
-All the Rewards that are sent and destined to each specific [actor](../guide/core-concepts.md#actors) for a given point in time are collated together by the framework.
+All the Rewards that are sent and destined to each specific [actor](../guide/core-concepts.md#actor) for a given point in time are collated together by the framework.
 
-The [actor](../guide/core-concepts.md#actors) can take into account the reward directly as the [trial](../guide/core-concepts.md#trial) is running by consuming the `"reward"` event in their event loop.
+The [actor](../guide/core-concepts.md#actor) can take into account the reward directly as the [trial](../guide/core-concepts.md#trial) is running by consuming the `"reward"` event in their event loop.
 
 <Tabs>
   <TabItem value="python" label="Python" default>
@@ -503,7 +520,7 @@ for await (const event of actorSession.eventLoop()) {
 
 ### Creating
 
-Messages can be created and sent between [actors](../guide/core-concepts.md#actors) or the [environment](../guide/core-concepts.md#environment) within a trial using their `session` instance.
+Messages can be created and sent between [actors](../guide/core-concepts.md#actor) or the [environment](../guide/core-concepts.md#environment) within a trial using their `session` instance.
 
 <Tabs>
   <TabItem value="python" label="Python" default>
@@ -620,3 +637,72 @@ async def my_pre_trial_hook(pre_hook_session):
 
 context.register_pre_trial_hook(impl=my_pre_trial_hook)
 ```
+
+## Trial lifetime
+
+Over their lifetime trials can be in different states managed by the Orchestrator. The current state of the trial can be accessed by a [Controler](#controler).
+
+Possible Trial States are defined as:
+
+- [`cogment.TrialState`](../reference/python.md#class-cogmenttrialstateenumenum) in the Python SDK.
+- [`cogment.TrialState`](../reference/javascript.md#enum-cogmenttrialstate) in the Javascript SDK.
+- [`cogmentAPI.TrialState`](../reference/grpc.md#trialstate) in the gRPC API.
+
+### Trial start
+
+The trial starts with a request from a [**Controller**](#controller) to the Orchestrator. At creation the trial is in the `INITIALIZING` state.
+
+If no trial params are provided at this stage, registered [**Pre-trial hooks**](#pre-trial-hook) are called in sequence. The trial is now fully initialized and becomes `PENDING` as it wait for all the components, actors and environment to be available.
+
+Once all the non-optional actors are available and the environment sends the initial observation set, the trial becomes `RUNNING`. If at least one non-optional actor is unavailable, it terminates right away and becomes `ENDED`.
+
+### Trial run
+
+As long as the trial is `RUNNING`, the Orchestrator executes **steps**:
+
+- To each [actor](#actor), the Orchestrator sends an event, having the `ACTIVE` type, containing its observation,
+- The Orchestrator then waits to receive one action per actor,
+- To the [environment](#environment), the Orchestrator sends an event, having the `ACTIVE` type, containing the set of actions,
+- The Orchestrator then waits to receive the set of observations from the environment.
+
+### Trial end
+
+#### Trial ended by the environment
+
+This is the normal way for a trial to end.
+
+1. The [environment](#environment) sends the final observation set, using the [session's `end` method](../reference/python.md#endself-final_observations).
+2. The trial state is set to `TERMINATING`.
+3. Observations are sent to the [actors](#actor) with the event type `ENDING`. [Rewards](#rewards) and [messages](#messages) sent before that point will sent to their destination; later ones will not.
+4. Once all the last events are received, the Orchestrator sends a event of type `FINAL` to all the components.
+5. The trial becomes `ENDED`.
+
+#### Soft termination
+
+Soft termination can be triggered either **by the user**, using the [Controller](#start-and-terminate-trials) or **after a maximum number of steps**, if the trial Parameter [`max_steps`](../reference/parameters.md#parameters-reference) is set.
+
+1. The Orchestrator waits until it receives the next action set from the [actors](#actor).
+2. The trial state is set to `TERMINATING`.
+3. Actions are sent to the [environment](#environment) with the event type `ENDING`.
+4. From this point on the flow is the same as when the trial is [ended by the environment](#trial-ended-by-the-environment).
+
+:::note
+
+After a soft termination is initiated (i.e. after receiving an event of type `ENDING`), the next set of observations sent by the environment will always be the last one (i.e. using [`end`](../reference/python.md#endself-final_observations) or [`produce_observation`](../reference/python.md#produce_observationsself-observations) will have the same behavior).
+
+:::
+
+#### Hard termination
+
+Hard termination can be triggered in multiple ways:
+
+- **By the user**, using the [Controller](#start-and-terminate-trials).
+- **Because of unavailable actors**. If a required (non-optional) actor becomes unavailable (for any reason), the trial will be terminated (see [Actor Availability](#actor-availability)).
+- **Because of inactivity**. If a component (actor, environment, pre-trial hook, etc) does not respond, the trial will be waiting and be inactive. If the trial is inactive for too long (see [Parameter `max_inactivity`](../reference/parameters.md#parameters-reference)), it will be terminated. With actor components this may happen when the timeout is too long (or indefinite) then the actor never becomes unavailable (see [Actor Availability](#actor-availability)) and the trial will keep waiting for it.
+- **Because of a critical error**.
+
+In all this cases:
+
+1. The trial becomes `TERMINATING`.
+2. The Orchestrator sends a event of type `FINAL` to all the components.
+3. The trial becomes `ENDED`.
