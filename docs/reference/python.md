@@ -80,19 +80,21 @@ import cogment
 
 ## class cogment.Context
 
-Class to setup and run all the different aspects of trials.
+Class to setup and run all the different aspects of Cogment trials.
 
-### `__init__(self, user_id, cog_settings, prometheus_registry=prometheus_client.core.REGISTRY)`
+### `__init__(self, user_id, cog_settings, prometheus_registry=prometheus_client.core.REGISTRY, directory_endpoint=None, directory_auth_token=None)`
 
 Parameters:
 
 -   `user_id`: _str_ - Identifier for the user of this context.
 -   `cog_settings`: _module_ - Settings module associated with trials that will be run ([cog_settings](#cog_settings.py) namespace).
 -   `prometheus_registry`: _prometheus_client.core.CollectorRegistry instance_ - Prometheus registry that'll be used by the Cogment metrics in this context. Can be set to `None` to completely deactivate them. The default value is Prometheus' default global registry.
+-   `directory_endpoint`: _Endpoint instance_ - Grpc endpoint (i.e. starting with "grpc://") to access the directory. The directory will be used to inquire discovery endpoints, and to register the services for discovery.
+-   `directory_auth_token`: _str_ - Authentication token for access to the directory. This token will be registered with the services, and must match registered tokens when inquiring the directory.
 
 ### `async serve_all_registered(self, served_endpoint, prometheus_port = 8000)`
 
-Method to start and run the communication server for the registered components (environment, actor, prehook, datalog). This coroutine will end when all activity has stopped.
+Method to start and run the communication server for the registered components (environment, actor, prehook, datalog). This coroutine will end when all activity has stopped. If a directory is defined in the Context, then this method will also register the services in the defined directory.
 
 Parameters:
 
@@ -101,23 +103,23 @@ Parameters:
 
 Return: None
 
-### `get_controller(self, endpoint)`
+### `async get_controller(self, endpoint)`
 
 Method to get a controller instance to manage trials (start, stop, inquire, etc).
 
 Parameters:
 
--   `endpoint`: _Endpoint instance_ - Details of the connection to the Orchestrator.
+-   `endpoint`: _Endpoint instance_ - Details of the connection to the Orchestrator. If a directory is defined in the Context, this can be a discovery endpoint.
 
 Return: _Controller instance_ - An instance of the Controller class used to manage trials.
 
-### `get_datastore(self, endpoint)`
+### `async get_datastore(self, endpoint)`
 
 Method to get a class instance to retrieve and manage data in a Datastore.
 
 Parameters:
 
--   `endpoint`: _Endpoint instance_ - Details of the connection to the Datastore.
+-   `endpoint`: _Endpoint instance_ - Details of the connection to the Datastore. If a directory is defined in the Context, this can be a discovery endpoint.
 
 Return: _Datastore instance_ - An instance of the Datastore class.
 
@@ -135,7 +137,7 @@ Parameters:
 
 Return: None
 
-### `register_environment(self, impl, impl_name = "default")`
+### `register_environment(self, impl, impl_name, properties={})`
 
 Method to register the asynchronous callback function that will run an environment for a trial.
 
@@ -143,10 +145,11 @@ Parameters:
 
 -   `impl`: _async function(EnvironmentSession instance)_ - Callback function to be registered.
 -   `impl_name`: _str_ - Name for the environment being run by the given callback function.
+-   `properties`: _dict{str:str}_ : Properties associated with the environment to be registered in the directory. These properties may be used for inquiries into the directory to find this environment.
 
 Return: None
 
-### `register_actor(self, impl, impl_name, actor_classes=[])`
+### `register_actor(self, impl, impl_name, actor_classes=[], properties={})`
 
 Method to register the asynchronous callback function that will run an actor for a trial.
 
@@ -154,27 +157,30 @@ Parameters:
 
 -   `impl`: _async func(ActorSession instance)_ - Callback function to be registered.
 -   `impl_name`: _str_ - Name for the actor implementation being run by the given callback function.
--   `actor_classes`: _list[str]_ - The actor class name(s) that can be run by the given callback function. The possible names are specified in the spec file under section `actor_classes:name`. If the list is empty, this implementation can run any actor class.
+-   `actor_classes`: _list[str]_ - The actor class name(s) that can be run by the given callback function. The possible names are specified in the spec file under section `actor_classes:name`.
+-   `properties`: _dict{str:str}_ : Properties associated with the actor to be registered in the directory. These properties may be used for inquiries into the directory to find this actor.
 
 Return: None
 
-### `register_pre_trial_hook(self, impl)`
+### `register_pre_trial_hook(self, impl, properties={})`
 
 Method to register an asynchronous callback function that will be called before a trial is started. Only one such function can be registered. But there may be multiple hook services for an Orchestrator. They are provided to the Orchestrator at startup. All hooks registered with the Orchestrator will be called in a pipeline fashion before each new trial.
 
 Parameters:
 
 -   `impl`: _async func(PrehookSession instance)_ - Callback function to be registered. The `PrehookSession` instance member data should be changed as needed for the new trial before returning from this function.
+-   `properties`: _dict{str:str}_ : Properties associated with the hook to be registered in the directory. These properties may be used for inquiries into the directory to find this hook.
 
 Return: None
 
-### `register_datalog(self, impl)`
+### `register_datalog(self, impl, properties={})`
 
 Method to register an asynchronous callback function that will be called for each trial to serve log requests. Only one such function can be registered. This service is addressed in the trial parameters in the `datalog` section.
 
 Parameters:
 
 -   `impl`: _async func(DatalogSession instance)_ - Callback function to be registered
+-   `properties`: _dict{str:str}_ : Properties associated with the datalog to be registered in the directory. These properties may be used for inquiries into the directory to find this datalog.
 
 Return: None
 
@@ -202,7 +208,7 @@ Method to request the end of a trial.
 Parameters:
 
 -   `trial_ids`: _list[str]_ - The trial ID(s) to request to terminate. There must be at least one ID.
--   `hard`: _bool_ - If `True`, the termination will be forced and not wait for any action or observation. If `False`, the trial will wait for the next tick, to end gracefully (i.e. wait for the next full set of actions and response observations).
+-   `hard`: _bool_ - If `True`, the termination will be forced and immediate, it will not wait for any action or observation. If `False`, the trial will wait for the end of the next step, to end gracefully (i.e. wait for the next full set of actions and response observations), and the environment will have a chance to respond to an end request (an event of type ENDING).
 
 Return: None
 
@@ -563,9 +569,9 @@ Enum representing the various states of trials.
 
 -   UNKNOWN: Should not be used.
 -   INITIALIZING: The trial is in the process of starting.
--   PENDING: The trial is waiting for its final parameters, before running.
--   RUNNING: The trial is running.
--   TERMINATING: The trial is in the process of terminating (either a request to terminate has been received or the last observation has been received).
+-   PENDING: The trial is waiting for its final parameters, all the components to be ready, and the first observation.
+-   RUNNING: The trial is running. 
+-   TERMINATING: The trial is in the process of ending (either a request to end has been received or the last observation has been received).
 -   ENDED: The trial has ended. Only a set number of ended trials will be kept (configured in the Orchestrator).
 
 For further information on trial lifetime, check the [dedicated section](../guide/development-guide.mdx#trial-lifetime).
@@ -926,7 +932,7 @@ Class containing the data of a trial sample (typically representing all the data
 
 `timestamp`: _int_ - Unix style Epoch timestamp of the start of the step/tick (in nanoseconds since 00:00:00 UTC Jan 1, 1970).
 
-`actors_data`: _dict(str:DatastoreActorData instance)_ - Dictionary of all actors data included in the sample, indexed by actor name.
+`actors_data`: _dict{str:DatastoreActorData instance}_ - Dictionary of all actors data included in the sample, indexed by actor name.
 
 ## class DatastoreActorData
 

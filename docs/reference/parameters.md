@@ -6,7 +6,7 @@ sidebar_position: 2
 
 The trial parameters are a set of parameters that define the details of a trial.
 They may be generated from the default parameters provided to the Orchestrator (see [Parameter File](#parameter-file)), and updated by the pre-trial hooks (see [TrialParameters](./python.md#class-cogmenttrialparameters) and [register_pre_trial_hook](./python.md#registerpretrialhookself-impl)).
-Or they can be provided whole to the trial start call (see [start_trial](./python.md#async-starttrialself-trialconfignone-trialidrequestednone-trialparamsnone)), in which case the default parameters are ignored and the pre-trial hooks are not used.
+Or they can be provided whole to the trial start call (see [start_trial](./python.md#async-starttrialself-trialconfignone-trialidrequestednone-trialparamsnone)).
 
 In the parameters, are optional config messages for the trial, environment and actors.
 The trial config is only used by the pre-trial hooks, whereas the other configs are sent to their respective destination at the start of the trial.
@@ -18,21 +18,21 @@ The parameters of the trial start call take priority over all others, and thus w
 
 ## Parameters reference
 
--   `config`: User defined configuration sent to the first trial pre-hook before the start of the trial. The type is defined in spec file under section `trial:config_type`. DEFAULT: not set.
+-   `config`: User defined configuration sent to the first trial pre-hook before the start of the trial. The type is defined in the spec file under section `trial:config_type`. DEFAULT: not set.
 -   `max_steps`: The maximum number of time steps (ticks) that the trial will run before requesting a [_soft_ termination](../guide/development-guide.mdx#soft-termination) at the next step. DEFAULT: 0 (infinite nb steps).
 -   `max_inactivity`: The number of seconds of inactivity after which a trial will be [_hard_ terminated](../guide/development-guide.mdx#hard-termination). "Activity" is defined as a message received by the Orchestrator from a user component. If 0, the trial will not be terminated because of inactivity. DEFAULT: 30 seconds.
--   `datalog_endpoint`: Endpoint of the datalog service. DEFAULT: logging is disabled.
+-   `datalog_endpoint`: Endpoint of the datalog service. DEFAULT: not set (data logging is disabled).
 -   `datalog_exclude_fields`: List of fields to exclude from the data samples sent to the datalog service.
 -   `environment_config`: User defined configuration sent to the environment at the start of the trial. The type is defined in spec file under section `environment:config_type`. DEFAULT: not set.
 -   `environment_name`: The name of the environment. DEFAULT: "env".
--   `environment_endpoint`: Endpoint of the environment service. DEFAULT: none (required parameter).
--   `environment_implementation`: The name of the implementation to run the environment. This must match an implementation that is defined at the endpoint. DEFAULT: an arbitraary implementation will be chosen at runtime.
+-   `environment_endpoint`: Endpoint of the environment service. DEFAULT: context discovery endpoint (the Directory will be inquired).
+-   `environment_implementation`: The name of the implementation to run the environment. This must match an implementation that is defined at the endpoint. DEFAULT: not set (an arbitrary implementation will be chosen at runtime).
 -   Actors
     -   `config`: User defined configuration sent to the actor at the start of the trial. The type is defined in the spec file under section `actor_classes:config_type` for the appropriate actor class. DEFAULT: not set.
     -   `name`: The name of the actor (must be unique in the trial). DEFAULT: none (required parameter).
     -   `class_name`: The name of the actor class. This must match a value in the spec file under section `actor_classes:name`. DEFAULT: none (required parameter).
-    -   `endpoint`: Endpoint of the actor. This can be "cogment://client", which defines a client service. DEFAULT: none (require parameter).
-    -   `implementation`: The name of the implementation to run this actor. This must match an implementation that is defined at the endpoint. DEFAULT: an arbitraary implementation will be chosen at runtime.
+    -   `endpoint`: Endpoint of the actor. This can be "cogment://client", which indicates a client actor. DEFAULT: context discovery endpoint (the Directory will be inquired).
+    -   `implementation`: The name of the implementation to run this actor. This must match an implementation that is defined at the endpoint. DEFAULT: not set (an arbitrary implementation will be chosen at runtime).
     -   `initial_connection_timeout`: Maximum amount of time (in seconds) to wait for an actor to connect to a new trial, after which it is considered unavailable for the trial duration. If the wait is too long (see `max_inactivity`), the trial may be terminated. The trial may wait longer than the requested timeout. DEFAULT: 0.0 (no timeout; indefinite wait).
     -   `response_timeout`: Maximum amount of time (in seconds) to wait for an actor to respond with an action after an observation is sent, after which it is considered unavailable. If the wait is too long, the trial may be terminated (see `max_inactivity`). The trial may wait longer than the requested timeout. DEFAULT: 0.0 (no timeout; indefinite wait).
     -   `optional`: If set (true), the actor is optional. An optional actor is not necessary for a trial to continue. If an actor is required (i.e not optional), the trial will be terminated if the actor is not available. DEFAULT: false.
@@ -131,8 +131,8 @@ The context is used to determine what API service will be used to connect to the
 
 ### `grpc` scheme
 
-The `grpc` scheme is used to access a network resource using one of the Cogment gRPC API.
-This is also called a gRPC endpoint.
+The `grpc` scheme is used to access a network resource using one of the Cogment gRPC API directly, without the need of a Directory.
+An endpoint with this scheme is also called a **grpc endpoint**.
 The rest of the URL is a standard HTTP address (with port) and points to the gRPC server waiting for connection. E.g.:
 
 ```
@@ -147,23 +147,24 @@ The `cogment` scheme is specific to Cogment and has two possible hosts: `client`
 
 #### `client` host
 
-The `client` host is used in the very specific case of an _actor_ being "client actor".
-Only actors can use this URL.
-In this case, the actor with such an endpoint (i.e. `cogment://client`) will connect as a client, the Orchestrator being the server.
+The `client` host is used in the very specific case of an _actor_ being a "client actor".
+This endpoint (i.e. exactly "cogment://client") is a **special endpoint**.
+Only actors can use this endpoint.
+In this case, the actor with such an endpoint will connect as a client, the Orchestrator being the server.
 The client will connect to the actor port of the [Orchestrator][../reference/cli/orchestrator.md].
 
 #### `discover` host
 
 The `discover` host is to indicate that a directory needs to be inquired.
-This is also called a discovery endpoint.
+An endpoint with this host (i.e. starting with "cogment://discover") is also called a **discovery endpoint**.
 
-The directory returns an actual endpoint where to reach the service; either a gRPC endpoint (e.g. `grpc://10.5.134.2:9000`), or for an actor, it can also be a client host URL (`cogment://client`).
-The result cannot be another discovery endpoint.
+The directory returns an actual endpoint where to reach the service; either a grpc endpoint (e.g. `grpc://10.5.134.2:9000`), or for an actor, it can also be a special endpoint (e.g. `cogment://client`).
+The result should be another discovery endpoint.
 
-The endpoint for the directory is provided to the Orchestrator as a command line option, and is a gRPC endpoint.
+The endpoint for the directory must be a grpc endpoint and is provided beforehand (e.g. for the [Orchestrator][../reference/cli/orchestrator.md], it is an option on start).
 
 With a **context discovery endpoint** there is no path in the URL, and some of the details of the service will be obtained from the context of the endpoint (i.e. where the endpoint was provided and for what).
-E.g. for an actor endpoint, the context path is "actor" and the context query adds "actor_class" and "implementation" properties.
+This type of endpoint is the simplest form of discovery endpoint and is the default when no endpoint is provided (where discovery endpoints are valid).
 
 E.g.:
 
@@ -173,34 +174,32 @@ cogment://discover?tag=blue
 cogment://discover?tag=red&zone=1
 ```
 
-for an actor, these would be equivalent to:
+If these endpoints were provided for actors, they would be equivalent these explicit discovery endpoints:
 
 ```
-cogment://discover/actor?actor_class=xxx&implementation=xxx
-cogment://discover/actor?actor_class=xxx&implementation=xxx&?tag=blue
-cogment://discover/actor?actor_class=xxx&implementation=xxx&?tag=red&zone=1
+cogment://discover/actor?__actor_class=xxx&__implementation=yyy
+cogment://discover/actor?__actor_class=xxx&__implementation=yyy&?tag=blue
+cogment://discover/actor?__actor_class=xxx&__implementation=yyy&?tag=red&zone=1
 ```
 
-For each type of endpoint, the context provides the path and these properties (if available):
+Where "xxx" and "yyy" are values taken from the context. For each type of endpoint, the context provides the path and these properties (if available):
 
--   actor: `actor_class`, `implementation`
--   environment: `implementation`
--   datalog: **nothing**
--   pre-trial hook: **nothing**
--   orchestrator: **nothing**
+-   For actors: path is `actor`, properties are `__actor_class` and `__implementation`
+-   For environment: path is `environment` and property is `__implementation`
+-   For all other types, no properties are provided and the path is as described below
 
-A **full discovery endpoint** (i.e. with a path) will provide all the necessary information to the directory and **the context of the endpoint will be ignored**. In other words, no property will be implicitly added to the query sent to the directory, the user is fully responsible to match the URL (and query) to the need.
+An **explicit discovery endpoint** is a discovery endpoint with a path, and needs to explicitly provide all the necessary information in the URL to the directory (the context of the endpoint will be ignored). In other words, no context property will be implicitly added to the query sent to the directory, the user is fully responsible to match the URL (and query) to the need.
 
 ##### Discovery path
 
 There are two categories of path for discovery endpoints, one for generic service types and the other for specific service types.
 
 The generic path `service` is used to find services of any type.
-In this case, the query is `id=XXX` where XXX is a 64 bit unsigned integer representing the unique ID of a service registered in the directory, e.g.:
+In this case, the query is `__id=XXX` where XXX is a 64 bit unsigned integer representing the ID of a service registered in the directory, e.g.:
 
 ```
-cogment://discover/service?id=67834892
-cogment://discover/service?id=42
+cogment://discover/service?__id=67834892
+cogment://discover/service?__id=42
 ```
 
 The specific paths are used to find a specific type of service:
@@ -221,7 +220,7 @@ The others are for use by services themselves, e.g. to find an Orchestrator to c
 ##### Discovery query
 
 Following the path in the discovery endpoint, is the optional query; properties to find a suitable service.
-All the properties provided in the query must match.
+All the properties provided in the query must match properties registered in the directory (with some exceptions, see [below](#reserved-query-properties)).
 Which properties are acceptable depends on the directory (and how the services are registered in the directory).
 
 The query in the discovery endpoint must follow these guidelines:
@@ -229,20 +228,24 @@ The query in the discovery endpoint must follow these guidelines:
 -   Entries are separated by the ampersand (&)
 -   Property name and associated value are separated by an equal sign (=)
 -   Property names and values must be composed of only these characters: A-Z, a-z, 0-9, underscore (\_), dash (-)
+-   Property values are optional
 -   Property names starting with a double underscore (\_\_) are reserved. E.g `__authentication-token`
 
 E.g.:
 
 ```
-cogment://discover/actor?implementation=d3qn
-cogment://discover/environment?implementation=fqdn3&type=fast-2x&ping=low
-cogment://discover/datalog?name=high&color=green_blue
+cogment://discover/actor?__implementation=d3qn
+cogment://discover/environment?__implementation=fqdn3&type=fast-2x&ping=low
+cogment://discover/datalog?name=high&open&color=green_blue
 ```
 
 ##### Reserved query properties
 
-Some property names are reserved for use by other services than the directory.
-These names cannot be used as properties to inquire from (or register in) the directory.
-They are used for special purposes that differ for each name.
+Some endpoint query properties are reserved for Cogment use. They may be interpreted by other services than the directory, and thus may not correspond to directory properties that participate in service discovery.
+Some of these names may not be used as properties to inquire from (or register in) the directory.
+They may be used for special purposes that differ for each name.
 
--   `__authentication-token`: This query property is used to provide authentication to the directory for an inquiry. The value (and need) depends on the directory implementation and/or how the registration of the service is made in the directory.
+-   `__actor_class`: This is a property name implicitly used by Cogment. It is registered in the Directory for services that were implicitly registered by Cogment or a Cogment SDK. It is also used by Cogment to inquire for context discovery endpoints.
+-   `__authentication-token`: This query property is _not_ a directory property. It is used to provide authentication to the directory. The value (and need) depends on the directory implementation and/or how the registration of the service is made in the directory. This is not registered as a property in the Directory.
+-   `__id`: This query property is not a directory property. It is used to provide a service ID for inquiry to the directory for a specific service. This is not registered as a property in the Directory.
+-   `__implementation`: This is a property name implicitly used by Cogment. It is registered in the Directory for services that were implicitly registered by Cogment or a Cogment SDK. It is also used by Cogment to inquire for context discovery endpoints.

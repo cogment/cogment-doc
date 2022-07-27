@@ -51,7 +51,7 @@ Can be specified as:
 
 ### `params`
 
-The name of the YAML file containing the [default parameters for new trials](../parameters.md). Some of the parameters must match their corresponding values in the spec file (typically `cogment.yaml`) and may therefore lock an Orchestrator instance to specific types of trials. If pre-trial hooks are defined, these parameters are sent to the first hook before a trial starts.
+The name of the YAML file containing the [default parameters](../parameters.md) for new trials. Some of the parameters must match their corresponding values in the spec file (typically `cogment.yaml`) and may therefore lock an Orchestrator instance to specific types of trials. If pre-trial hooks are defined, these parameters are sent to the first hook before a trial starts. These parameters are ignored if the parameters are provided on trial start (see [TrialStartRequest](../grpc.md#trialstartrequest)).
 
 Can be specified as:
 
@@ -61,7 +61,7 @@ Can be specified as:
 
 ### `directory_services`
 
-Cogment endpoint of the directory service (only one directory is accepted at the moment). It must be a [gRPC endpoint](../parameters.md#grpc-scheme). The directory service is used to inquire about the location of services before a new trial starts.
+Cogment endpoint of the directory service (only one directory is accepted). It must be a [gRPC endpoint](../parameters.md#grpc-scheme). The directory service may be used to inquire about the location of services before a new trial starts, and to register the Orchestrator services. If not provided, the endpoints provided to the Orchestrator or in the parameters must not be discovery endpoints (i.e. must not require a directory).
 
 Can be specified as:
 
@@ -69,9 +69,51 @@ Can be specified as:
 -   an environment variable, e.g. `COGMENT_DIRECTORY_SERVICES=grpc://foo:9000`,
 -   it has no default value.
 
+### `directory_authentication_token`
+
+Authentication token for Directory communication. This token must match the token in the Directory when doing an inquiry or deregistering a service. It is recorded in the Directory when registering a service. An empty token is the same as no token.
+
+Can be specified as:
+
+-   a command line option, e.g. `--directory_authentication_token=GH670ploT`,
+-   an environment variable, e.g. `COGMENT_DIRECTORY_AUTHENTICATION_TOKEN=GH670ploT`,
+-   it has no default value.
+
+### `directory_auto_register`
+
+if 0, then the Orchestrator will not register its services to the Directory; The services must be externally registered, or [gRPC endpoints](../parameters.md#grpc-scheme) used to reach the services. If 1, then the Orchestrator will register its services to the [directory service](#directoryservices) if possible. Other values are reserved.
+
+Can be specified as:
+
+-   a command line option, e.g. `--directory_auto_register=0`,
+-   an environment variable, e.g. `COGMENT_ORCHESTRATOR_DIRECTORY_AUTO_REGISTER=0`,
+-   its default value is 1.
+
+### `directory_registration_host`
+
+This is the host that will be registered to the Directory for the Orchestrator services. If not provided, the Orchestrator will determine its own IP address and use that as the registration host.
+
+In some circumstances, the IP address determined by Cogment may be wrong (e.g. multiple interfaces, load balancing, firewall), thus a host (hostname or IP address) must be explicitly provided.
+
+Can be specified as:
+
+-   a command line option, e.g. `--directory_registration_host=foo.bar`,
+-   an environment variable, e.g. `COGMENT_ORCHESTRATOR_DIRECTORY_REGISTRATION_HOST=foo.bar`,
+-   it has no default value (self determined IP address is used).
+
+### `directory_registration_properties`
+
+These are the properties that will be registered to the Directory for the Orchestrator services. When inquiring the Directory, the properties inquired must match the properties registered. This is a string representing multiple properties in the form "name=value,name=value,name=value" where the values are optional.
+
+Can be specified as:
+
+-   a command line option, e.g. `--directory_registration_properties="Sim=20,hpp,mem=HIGH"`,
+-   an environment variable, e.g. `COGMENT_ORCHESTRATOR_DIRECTORY_REGISTRATION_PROPERTIES="Sim=20,hpp,mem=HIGH"`,
+-   it has no default value.
+
 ### `pre_trial_hooks`
 
-[Cogment endpoint](../parameters.md#cogment-endpoints) definitions for [pre-trial hooks](../../guide/development-guide.mdx#pre-trial-hook). Hooks are called before a new trial starts. They are called in order, in a pipeline fashion, to set the parameters for new trials. The first hook will receive the default parameters, the last hook result will be used as the parameters for the new trial.
+[Cogment endpoint](../parameters.md#cogment-endpoints) definitions for [pre-trial hooks](../../guide/development-guide.mdx#pre-trial-hook). Hooks may be called before a new trial starts; They are then called in order, in a pipeline fashion, to set the parameters for a new trial. The first hook will receive the default parameters, and the result of the last hook will be used as the parameters for the new trial.
 
 Can be specified as:
 

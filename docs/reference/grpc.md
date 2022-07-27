@@ -331,10 +331,10 @@ enum TrialState {
 
 -   UNKNOWN: Should not be used (it's a requirement of protobuf enums to have a 0 default value).
 -   INITIALIZING: The trial is in the process of starting.
--   PENDING: The trial is waiting for its final parameters, before running.
+-   PENDING: The trial is waiting for its final parameters, all its components to be ready, and the first observation.
 -   RUNNING: The trial is running.
--   TERMINATING: The trial is in the process of terminating (either a request to terminate has been received or the last observation has been received).
--   ENDED: The trial has ended. Only a set number of ended trials will be kept (configured in the Orchestrator).
+-   TERMINATING: The trial is in the process of ending (either a request to end has been received or the last observation has been received).
+-   ENDED: The trial has ended. Only a set number of ended trials will be kept in memory (configured in the Orchestrator).
 
 ### `CommunicationState`
 
@@ -910,17 +910,237 @@ Called to request version data.
 
 Metadata: None
 
-### `PreTrialParams`
+## Directory API
 
-Request and reply message for the `OnPreTrial` procedure.
+This API is defined in `directory.proto`. It is implemented by the Directory application using the gRPC server API.
+
+### Service `DirectorySP`
 
 ```protobuf
-message PreTrialParams {
-  TrialParams params = 1;
+service DirectorySP {
+  rpc Register(stream RegisterRequest) returns (stream RegisterReply) {}
+  rpc Deregister(stream DeregisterRequest) returns (stream DeregisterReply) {}
+  rpc Inquire(InquireRequest) returns (stream InquireReply) {}
+  rpc Version(VersionRequest) returns (VersionInfo) {}
 }
 ```
 
--   params: The trial parameters so far. The first hook to be called will receive the default parameters from the Orchestrator, and subsequent hooks will receive the updated parameters from the previous hook. The last hook reply will be the final parameters to use for the new trial.
+#### `Register()`
+
+Called to register services to the directory.
+
+Metadata:
+
+-   `authentication_token`: (Optional) Token of the services being registered. This will be registered with the services and must match when inquiring or deregistering a service.
+
+#### `Deregister()`
+
+Called to deregister (remove) previously registered services to the directory.
+
+Metadata:
+
+-   `authentication_token`: (Optional) Token to authenticate services. This must match the token of the registered services.
+
+#### `Inquire()`
+
+Called to inquire (search) the directory for registered services.
+
+Metadata:
+
+-   `authentication_token`: (Optional) Token to identify the services. This must match the token of the inquired services.
+
+#### `Version()`
+
+Called to request version data.
+
+Metadata: None
+
+### `ServiceType`
+
+Type of service registered. This serves to know how to test for health.
+
+```protobuf
+enum ServiceType {
+  UNKNOWN_SERVICE = 0;
+  TRIAL_LIFE_CYCLE_SERVICE = 1;
+  CLIENT_ACTOR_CONNECTION_SERVICE = 2;
+  ACTOR_SERVICE = 3;
+  ENVIRONMENT_SERVICE = 4;
+  PRE_HOOK_SERVICE = 5;
+  DATALOG_SERVICE = 6;
+  DATASTORE_SERVICE = 7;
+  MODEL_REGISTRY_SERVICE = 8;
+  OTHER_SERVICE = 100;
+}
+```
+
+-   UNKNOWN_SERVICE: Should not be used (it's a requirement of protobuf enums to have a 0 default value).
+-   TRIAL_LIFE_CYCLE_SERVICE: Cogment service accessed with gRPC service `TrialLifecycleSP`.
+-   CLIENT_ACTOR_CONNECTION_SERVICE: Cogment service accessed with gRPC service `ClientActorSP`.
+-   ACTOR_SERVICE: Cogment service accessed with gRPC service `ServiceActorSP`.
+-   ENVIRONMENT_SERVICE: Cogment service accessed with gRPC service `EnvironmentSP`.
+-   PRE_HOOK_SERVICE: Cogment service accessed with gRPC service `TrialHooksSP`.
+-   DATALOG_SERVICE: Cogment service accessed with gRPC service `DatalogSP`.
+-   DATASTORE_SERVICE: Cogment service accessed with gRPC service `TrialDatastoreSP`.
+-   MODEL_REGISTRY_SERVICE: Cogment service accessed with gRPC service `ModelRegistrySP`.
+-   OTHER_SERVICE: This is for services not provided by Cogment or that do not have a dedicated service type. The propeties registered in the directory should provide the necessary information, but this is left to the users to manage, and no health checking is performed.
+
+### `ServiceDetails`
+
+Message containing registration details of a service.
+
+```protobuf
+message ServiceDetails {
+  ServiceType type = 1;
+  map<string, string> properties = 2;
+}
+```
+
+-   type: The type of service.
+-   properties: Properties associated with the service, in a map (property name : property value).
+
+### `ServiceEndpoint`
+
+Message containing endpoint (connection) details for a service.
+
+```protobuf
+message ServiceEndpoint {
+  enum Protocol {
+    UNKNOWN = 0;
+    GRPC = 1;
+    GRPC_SSL = 2;
+    COGMENT = 3;
+  }
+
+  Protocol protocol = 1;
+  string host = 2;
+  uint32 port = 3;
+}
+```
+
+-   Protocol: The communication protocol for the service.
+    -   UNKNOWN: Should not be used (it's a requirement of protobuf enums to have a 0 default value).
+    -   GRPC: The service connection is using gRPC and does not require encryption (SSL).
+    -   GRPC_SSL: The service connection is using gRPC and is expecting encryption (SSL).
+    -   COGMENT: This is a protocol specific to Cogment. The host will provide more details.
+-   host: For gRPC, this is a network accessible hostname or IP address. For Cogment, this can only be `client`, which indicates that the service is not really a service, but a client, and will connect and not be connected to.
+-   port: For gRPC, this is the TCP port to connect to. For Cogment, this is not used.
+
+### `RegisterRequest`
+
+Request message for the `Register` procedure.
+
+```protobuf
+message RegisterRequest {
+  // URL where to connect to the service.
+  ServiceEndpoint endpoint = 1;
+  ServiceDetails details = 2;
+}
+```
+
+-   endpoint: The connection endpoint of the service to be registered.
+-   details: The service details to be registered for the service.
+
+### `RegisterReply`
+
+Reply message for the `Register` procedure.
+
+```protobuf
+message RegisterReply {
+  enum Status {
+    UNKNOWN = 0;
+    OK = 1;
+    FAILED = 2;
+  }
+  Status status = 1;
+  string error_msg = 2;
+  uint64 service_id = 3;
+  string secret = 4;
+}
+```
+
+-   Status: The result status.
+    -   UNKNOWN: Should not be used (it's a requirement of protobuf enums to have a 0 default value).
+    -   OK: Registration succeeded and the data is valid.
+    -   FAILED: Registration failed, the data is invalid (more details may be available in the error message).
+-   status: The status of the corresponding registration request.
+-   error_msg: Any extra details about the failure of the registration (if `status` == `FAILED`).
+-   service_id: The ID that the service was given when it was registered in the Directory.
+-   secret: This is a string that must be provided to deregister the service, and cannot be inquired.
+
+### `DeregisterRequest`
+
+Request message for the `Deregister` procedure.
+
+```protobuf
+message DeregisterRequest {
+  uint64 service_id = 1;
+  string secret = 2;
+}
+```
+
+-   service_id: The ID of the service.
+-   secret: The string that was given when the service was registered.
+
+### `DeregisterReply`
+
+Reply message for the `Deregister` procedure.
+
+```protobuf
+message DeregisterReply {
+  enum Status {
+    UNKNOWN = 0;
+    OK = 1;
+    FAILED = 2;
+  }
+  Status status = 1;
+  string error_msg = 2;
+}
+```
+
+-   Status: The result status.
+    -   UNKNOWN: Should not be used (it's a requirement of protobuf enums to have a 0 default value).
+    -   OK: Deregistration succeeded.
+    -   FAILED: Deregistration failed (more details may be available in the error message).
+-   status: The status of the corresponding deregistration request.
+-   error_msg: Any extra details about the failure to deregister the service (if `status` == `FAILED`).
+
+
+### `InquireRequest`
+
+Request message for the `Inquire` procedure. Requires either a service ID, or details of services to find.
+
+```protobuf
+message InquireRequest {
+  oneof inquiry {
+    uint64 service_id = 1;
+    ServiceDetails details = 2;
+  }
+}
+```
+
+-   service_id: The ID of the service.
+-   details: The details of services to find.
+
+### `InquireReply`
+
+Reply message for the `Inquire` procedure.
+
+```protobuf
+message FullServiceData {
+  ServiceEndpoint endpoint = 1;
+  uint64 service_id = 2;
+  ServiceDetails details = 3;
+}
+
+message InquireReply {
+  FullServiceData data = 1;
+}
+```
+
+-   endpoint: The connection endpoint of the service.
+-   service_id: The ID of the service.
+-   details: The details of the service.
 
 ## Model Registry API
 
@@ -939,6 +1159,8 @@ service ModelRegistrySP {
   rpc CreateVersion(stream CreateVersionRequestChunk) returns (CreateVersionReply) {}
   rpc RetrieveVersionInfos(RetrieveVersionInfosRequest) returns (RetrieveVersionInfosReply) {}
   rpc RetrieveVersionData(RetrieveVersionDataRequest) returns (stream RetrieveVersionDataReplyChunk) {}
+
+  rpc Version(VersionRequest) returns (VersionInfo) {}
 }
 ```
 
@@ -1195,6 +1417,12 @@ message ModelVersionInfo {
 -   `data_size`: Size (in bytes) of this version's data.
 -   `user_data`: Key/value user data associated with the model, in particular it can be used to provide information required for the deserialization of the data.
 
+#### `Version()`
+
+Called to request version data.
+
+Metadata: None
+
 ## Trial Datastore API
 
 This API is defined in `trial_datastore.proto`. It is implemented by [`cogment-trial-datastore`](./cli/trial-datastore.md).
@@ -1211,6 +1439,8 @@ service TrialDatastoreSP {
   rpc AddTrial(AddTrialRequest) returns (AddTrialReply) {}
   rpc AddSample(stream AddSampleRequest) returns (AddSamplesReply) {}
   rpc DeleteTrials(DeleteTrialsRequest) returns (DeleteTrialsReply) {}
+
+  rpc Version(VersionRequest) returns (VersionInfo) {}
 }
 ```
 
@@ -1507,3 +1737,9 @@ Reply for [`TrialDatastoreSP.DeleteTrials()`](#deletetrials).
 ```protobuf
 message DeleteTrialsReply {}
 ```
+
+#### `Version()`
+
+Called to request version data.
+
+Metadata: None
