@@ -176,3 +176,19 @@ The second will start Cogment and the different services for this app. In anothe
 ```
 
 Congratulations, you have a working installation of Cogment! We recommend you head to the [Cogment tutorial](../../guide/tutorial/index.md) to learn how to implement this _RPS_ app from scratch.
+
+## Troubleshooting
+
+### `pipe creation failed (24): Too many open files` error on macOS
+
+On macOS, it is possible that Cogment tries to open too many file handles. In this case, you'll get an error similar to `pipe creation failed (24): Too many open files`.
+
+You can access the current limit and update it using `ulimit -n`. The default version should be someting like 256, in most cases we found that Cogment requires 2048. You can set the limit with the following command:
+
+```console
+$ ulimit -n 2048
+```
+
+This command changes the limit in the current shell session. This [stackexchange question](https://unix.stackexchange.com/q/176671) discusses different ways to make the change persist.
+
+For debugging purposes, you can inspect the open file handles using `lsof`. E.g. `lsof -c cogment | wc -l` will count the number of open file handles by Cogment processes.
