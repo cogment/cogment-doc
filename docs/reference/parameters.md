@@ -21,6 +21,7 @@ The parameters of the trial start call take priority over all others, and thus w
 -   `config`: User defined configuration sent to the first trial pre-hook before the start of the trial. The type is defined in the spec file under section `trial:config_type`. DEFAULT: not set.
 -   `max_steps`: The maximum number of time steps (ticks) that the trial will run before requesting a [_soft_ termination](../guide/development-guide.mdx#soft-termination) at the next step. DEFAULT: 0 (infinite nb steps).
 -   `max_inactivity`: The number of seconds of inactivity after which a trial will be [_hard_ terminated](../guide/development-guide.mdx#hard-termination). "Activity" is defined as a message received by the Orchestrator from a user component. If 0, the trial will not be terminated because of inactivity. DEFAULT: 30 seconds.
+-   `nb_buffered_ticks`: The number of ticks (steps) to buffer in the Orchestrator before sending the data to the datalog. In effect, this is the delay available for past data (e.g. rewards) to still make it in the correct normal sample of the datalog (as opposed to be sent to the datalog as an out-of-sync sample). This must be larger than 1. DEFAULT: 2.
 -   `datalog_endpoint`: Endpoint of the datalog service. DEFAULT: not set (data logging is disabled).
 -   `datalog_exclude_fields`: List of fields to exclude from the data samples sent to the datalog service.
 -   `environment_config`: User defined configuration sent to the environment at the start of the trial. The type is defined in spec file under section `environment:config_type`. DEFAULT: not set.
@@ -50,6 +51,7 @@ The layout is hierarchical, so the name of the parameters may be different than 
 
 -   `max_steps`
 -   `max_inactivity`
+-   `nb_buffered_ticks`
 -   `datalog`: List of parameters related to the data logger. If this section is not present, data logging is disabled.
     -   `endpoint`
     -   `exclude_fields`
@@ -72,6 +74,7 @@ E.g.:
 trial_params:
     max_steps: 1000
     max_inactivity: 30
+    nb_buffered_ticks: 5
 
     datalog:
         endpoint: grpc://logserver:9000

@@ -725,6 +725,8 @@ Some attributes (`config` and `environment_config`) are immutable: changes to th
 
 `max_inactivity`: _int_
 
+`nb_buffered_ticks`: _int_
+
 `datalog_endpoint`: _str_
 
 `datalog_exclude_fields`: _tuple(str)_
@@ -811,13 +813,15 @@ A sample starts and ends with the arrival of new observations from the environme
 
 Note that some of the data may not be available (`None`) if it was excluded from the sample (see datalog parameters `TrialParameters.datalog_exclude_fields`).
 
+`out_of_sync`: _bool_ - False if it is a normal/full sample. True if it is an out-of-sync/partial sample. Out-of-sync samples do not follow the normal time step progression of the trial, they represent isolated data (typically a reward) for steps that have already past.
+
 `tick_id`: _int_ - The time step that the sample data relates to.
 
-`state`: _cogment.TrialState_ - The state of the trial at the end of the sample period.
+`state`: _cogment.TrialState_ - The state of the trial at the end of the sample period. Undefined for out-of-sync samples.
 
-`timestamp`: _int_ - Unix style Epoch timestamp in nanoseconds (time since 00:00:00 UTC Jan 1, 1970) at the beginning of the sample period.
+`timestamp`: _int_ - Unix style Epoch timestamp in nanoseconds (time since 00:00:00 UTC Jan 1, 1970) at the beginning of the sample period. For out-of-sync samples, this is the time the data in the sample was received.
 
-`events`: _str_ - Description of special events that happened during the timeframe of the sample.
+`events`: _str_ - Description of special events that happened during the timeframe of the sample. For out-of-sync samples, it may contain an explanation of the data.
 
 ### `__init__(self, params)`
 
@@ -869,13 +873,13 @@ Return: _RecvAction instance_ - The action of the actor in the sample.
 
 ### `get_observation(self, actor)`
 
-Retrieve the observation destined for the actor in the sample.
+Retrieve the observation destined for the actor in the sample. Can be `None` (specifically for out-of-sync samples).
 
 Parameters:
 
 -   `actor`: _str_ or _int_ - The name or index of the actor for which to retrieve the observation. The number, index and name of actors can be retrieved from the parameters of the trial.
 
-Return: _RecvObservation instance_ - The observation of the actor in the sample.
+Return: _RecvObservation instance_ - The observation of the actor in the sample. Can be `None` (specifically for out-of-sync samples).
 
 ### `all_rewards(self)`
 

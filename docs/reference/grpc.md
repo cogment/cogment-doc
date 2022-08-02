@@ -834,6 +834,7 @@ Stream request message for the `RunTrialDatalog` procedure.
 
 ```protobuf
 message SampleInfo {
+  bool out_of_sync = 5;
   uint64 tick_id = 1;
   fixed64 timestamp = 2;
   TrialState state = 3;
@@ -859,18 +860,19 @@ message LogExporterSampleRequest {
 }
 ```
 
--   tick_id: The current tick of the trial.
--   timestamp: The time at the beginning of the tick.
--   state: The state of the trial at the end of the tick.
--   special_events: Events not visible from the rest of the data may appear in here.
--   observations: Observations from the environment.
--   actions: Actions from all actors. This list has the same length and order as the list of actors provided in `trial_params`.
+-   out_of_sync: If false, this sample is a normal and full sample. If true, it is an out-of-sync sample that is partially filled, and some of the other value may have a slightly different meaning than for a normal sample.
+-   tick_id: The tick the data relates to.
+-   timestamp: The time the data was received. For a full sample, this is the time the observation set was received by the Orchestrator.
+-   state: The state of the trial at the end of the tick. For out-of-sync samples, the state is undefined.
+-   special_events: Events not visible from the rest of the data may appear in here. Out-of-sync samples will usually have an explanation of data in the special events list.
+-   observations: Observations from the environment. Out-of-sync samples may not have observations.
+-   actions: Actions from all actors. This list has the same length and order as the list of actors provided in `trial_params`. This list may be empty for out-of-sync samples.
 -   rewards: List of rewards sent to actors.
 -   messages: List of user data sent to actors or the environment.
 -   default_actors: List of actors (index of actors) that were not available but had a default action. Actors in this list have invalid data in the `actions` list.
 -   unavailable_actors: List of actors (index of actors) that were not available and did not have a default action. Actors in this list have invalid data in the `actions` list.
 -   trial_params: Trial parameters used for a trial. This is sent on start of a trial, as the first message in the `RunTrialDatalog` stream.
--   sample: A data sample to be logged.
+-   sample: A data sample to be logged. It can be an out-of-sync sample which contains only partial data.
 
 ### `LogExporterSampleReply`
 
