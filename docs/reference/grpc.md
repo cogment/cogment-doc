@@ -1107,7 +1107,6 @@ message DeregisterReply {
 -   status: The status of the corresponding deregistration request.
 -   error_msg: Any extra details about the failure to deregister the service (if `status` == `FAILED`).
 
-
 ### `InquireRequest`
 
 Request message for the `Inquire` procedure. Requires either a service ID, or details of services to find.
@@ -1739,6 +1738,22 @@ Reply for [`TrialDatastoreSP.DeleteTrials()`](#deletetrials).
 ```protobuf
 message DeleteTrialsReply {}
 ```
+
+### `TrialSamplesFileHeader`
+
+Header for the trial samples file that can be exported using [`cogment client export`](./cli/trial-datastore.md#export-command).
+
+```protobuf
+message TrialSamplesFileHeader {
+  VersionInfo version_info = 1;
+  fixed64 export_timestamp = 2;
+  map<string, TrialParams> trial_params = 3;
+}
+```
+
+-   `version_info`: ([`cogmentAPI.VersionInfo`](#versioninfo)) Version information for the used Cogment CLI.
+-   `export_timestamp`: (fixed64) The wall-clock time in nanoseconds since 00:00:00UTC January 1, 1970 (Unix Epoch time) at export.
+-   `trial_params`: ([`map<string, cogmentAPI.TrialParams>`](#trialparams)) Parameters of the trials exported in the file referenced by their ID.
 
 #### `Version()`
 

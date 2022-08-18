@@ -113,7 +113,7 @@ The following table summarizes how each component can either be implemented or u
 | Actor (Service)        |                                             | ✅ [register actor][7] & [serve][8]                         |                                            | ✅ implement [Service Actor API][1]                       |
 | Actor (Client)         |                                             | ✅ [register actor][7] & join trial                         | ✅ [register actor][19] & [join trial][20] | ✅ use [Client Actor API][2]                              |
 | Trial Datastore        | ✅ [`cogment services trial_datastore`][16] | ✅ [register datalog][11], [serve][8] & [get datastore][23] |                                            | ✅ implement [Datalog API][5] & [Trial Datastore API][22] |
-| Trial Datastore Client |                                             | ✅ [get datastore][23]                                      |                                            | ✅ use [Trial Datastore API][22]                          |
+| Trial Datastore Client | ✅ [`cogment client trial_datastore`][24]   | ✅ [get datastore][23]                                      |                                            | ✅ use [Trial Datastore API][22]                          |
 | Model Registry         | ✅ [`cogment services model_registry`][17]  |                                                             |                                            | ✅ implement [Model Registry API][21]                     |
 | Model Registry Client  |                                             |                                                             |                                            | ✅ use [Model Registry API][21]                           |
 | Pre Trial Hook         |                                             | ✅ [register pre trial hook][11] & [serve][8]               |                                            | ✅ implement [Pre Trial Hook API][6]                      |
@@ -131,7 +131,7 @@ The following table summarizes how each component can either be implemented or u
 [11]: ../reference/python.md#register_datalogself-impl
 [12]: ../reference/python.md#register_pre_trial_hookself-impl
 [13]: ../reference/cli/orchestrator.md
-[16]: ../reference/cli/trial-datastore.md
+[16]: ../reference/cli/trial-datastore.md#service
 [17]: ../reference/cli/model-registry.md
 [18]: ../reference/javascript.md/#getcontrollerendpoint
 [19]: ../reference/javascript.md#registeractorimpl-actorname-actorclass
@@ -139,3 +139,4 @@ The following table summarizes how each component can either be implemented or u
 [21]: ../reference/grpc.md#model-registry-api
 [22]: ../reference/grpc.md#trial-datastore-api
 [23]: ../reference/python.md#get_datastoreself-endpoint
+[24]: ../reference/cli/trial-datastore.md#client
