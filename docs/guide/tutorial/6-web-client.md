@@ -40,9 +40,15 @@ We will be using Material UI for this web client. This will provide us with a ni
 Install Material UI by running the following commands from inside of the web_client folder:
 
 ```console
-npm install @material-ui/core
-npm install @material-ui/icons
+npm install @mui/material @emotion/react @emotion/styled
+npm install @mui/icons-material
 ```
+
+:::note
+
+Due to the nature of create-react-app when installed using the ```npm``` command, the resulting installation will always utilize the latest version of React. This may cause dependecy issues when installing Material UI. As such, whenever such issues are encountered, please refer to the [Material UI documentation](https://mui.com/material-ui/getting-started/installation/) to confirm the correct required version of React.
+
+:::
 
 ## Update the run script
 
@@ -177,16 +183,16 @@ index.js
 
 ```jsx
 import React from "react";
-import ReactDOM from "react-dom";
+import ReactDOM from "react-dom/client";
 import "./index.css";
 import { App } from "./App";
 import {
-    createMuiTheme,
+    createTheme,
     responsiveFontSizes,
     ThemeProvider,
-} from "@material-ui/core/styles";
+} from "@mui/material/styles";
 
-let theme = createMuiTheme({
+let theme = createTheme({
     palette: {
         primary: {
             light: "#c5cce8",
@@ -200,13 +206,13 @@ let theme = createMuiTheme({
 
 theme = responsiveFontSizes(theme);
 
-ReactDOM.render(
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
     <React.StrictMode>
         <ThemeProvider theme={theme}>
             <App />
         </ThemeProvider>
-    </React.StrictMode>,
-    document.getElementById("root")
+    </React.StrictMode>
 );
 ```
 
@@ -224,10 +230,9 @@ import React, { useEffect } from "react";
 import {
     Box,
     Button,
-    makeStyles,
     Typography,
-    useTheme,
-} from "@material-ui/core";
+} from "@mui/material";
+import { useTheme } from "@mui/material/styles";
 
 //And here's the important part: we're importing the two things that will allow us to use Cogment.
 
@@ -240,7 +245,7 @@ import { useActions } from "./hooks/useActions";
 import { cogSettings } from "./CogSettings";
 
 //These are messages which were defined in data.proto. These imports will need to change whenever their corresponding messages in data.proto are changed and `npx cogment-js-sdk-generate cogment.yaml` is run.
-import { PlayerAction } from "./data_pb";
+import { rps as PB } from "./data_pb";
 ```
 
 Then we add a function that will convert the play, encoded as the same "move" enum that we defined in our data.proto, to a string we can use in our application:
@@ -290,8 +295,9 @@ export const App = () => {
 
     //Function to construct the Action which the player will send when they click either rock, paper, or scissors
     const choose = (move) => {
-        const action = new PlayerAction();
-        action.setMove(move);
+        const action = new PB.PlayerAction({
+            move,
+        });
         sendAction(action);
     };
 
