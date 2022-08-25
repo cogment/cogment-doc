@@ -46,7 +46,7 @@ npm install @mui/icons-material
 
 :::note
 
-Due to the nature of create-react-app when installed using the ```npm``` command, the resulting installation will always utilize the latest version of React. This may cause dependecy issues when installing Material UI. As such, whenever such issues are encountered, please refer to the [Material UI documentation](https://mui.com/material-ui/getting-started/installation/) to confirm the correct required version of React.
+Due to the nature of create-react-app when installed using the ```npx``` command, the resulting installation will always utilize the latest version of React. This may cause dependecy issues when installing Material UI. As such, whenever such issues are encountered, please refer to the [Material UI documentation](https://mui.com/material-ui/getting-started/installation/) to confirm the correct required version of React.
 
 :::
 
@@ -103,7 +103,7 @@ function orchestrator_start() {
   cogment services orchestrator \
     --actor_port="${ORCHESTRATOR_PORT}" \
     --lifecycle_port="${ORCHESTRATOR_PORT}" \
-    --actor_http_port="${ORCHESTRATOR_HTTP_PORT}" \
+    --actor_web_port="${ORCHESTRATOR_HTTP_PORT}" \
     --params="./params.yaml"
 }
 ```
@@ -427,11 +427,7 @@ export const useActions = (cogSettings, actorName, actorClass) => {
             actorClass
         );
 
-        const endpoint =
-            window.location.protocol +
-            "//" +
-            window.location.hostname +
-            ":8080";
+        const endpoint = process.env.REACT_APP_ORCHESTRATOR_HTTP_ENDPOINT;
         const controller = context.getController(endpoint);
 
         //Need to output a function so that the user can start the trial when all actors are connected
