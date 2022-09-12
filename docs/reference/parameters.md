@@ -158,7 +158,7 @@ The client will connect to the actor port of the [Orchestrator][../reference/cli
 
 #### `discover` host
 
-The `discover` host is to indicate that a directory needs to be inquired.
+The `discover` host is to indicate that a [Directory](./cli/directory.md#directory) needs to be inquired.
 An endpoint with this host (i.e. starting with "cogment://discover") is also called a **discovery endpoint**.
 
 The directory returns an actual endpoint where to reach the service; either a grpc endpoint (e.g. `grpc://10.5.134.2:9000`), or for an actor, it can also be a special endpoint (e.g. `cogment://client`).

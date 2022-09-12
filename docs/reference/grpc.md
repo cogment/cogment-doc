@@ -929,7 +929,7 @@ service DirectorySP {
 
 #### `Register()`
 
-Called to register services to the directory.
+Called to register (add) services to the directory.
 
 Metadata:
 

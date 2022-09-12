@@ -89,8 +89,8 @@ Parameters:
 -   `user_id`: _str_ - Identifier for the user of this context.
 -   `cog_settings`: _module_ - Settings module associated with trials that will be run ([cog_settings](#cog_settings.py) namespace).
 -   `prometheus_registry`: _prometheus_client.core.CollectorRegistry instance_ - Prometheus registry that'll be used by the Cogment metrics in this context. Can be set to `None` to completely deactivate them. The default value is Prometheus' default global registry.
--   `directory_endpoint`: _Endpoint instance_ - Grpc endpoint (i.e. starting with "grpc://") to access the directory. The directory will be used to inquire discovery endpoints, and to register the services for discovery.
--   `directory_auth_token`: _str_ - Authentication token for access to the directory. This token will be registered with the services, and must match registered tokens when inquiring the directory.
+-   `directory_endpoint`: _Endpoint instance_ - Grpc endpoint (i.e. starting with "grpc://") to access the directory. The directory will be used to inquire discovery endpoints, and to register the services for discovery. If no endpoint is provided, a check for the environment variable `COGMENT_DIRECTORY_ENDPOINT` will be made and if it exists, it will be used as the URL of a basic endpoint.
+-   `directory_auth_token`: _str_ - Authentication token for access to the directory. This token will be registered with the services, and must match registered tokens when inquiring the directory. If no token is provided, a check for the environment variable `COGMENT_DIRECTORY_AUTHENTICATION_TOKEN` will be made and if it exists, it will be used as the token.
 
 ### `async serve_all_registered(self, served_endpoint, prometheus_port = 8000)`
 
