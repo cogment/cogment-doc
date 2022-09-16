@@ -44,7 +44,7 @@ Service ID [7722934920723]  Secret [ZGi6GLe]
 ```
 ### Output
 
-    If successful, the output is a service ID and secret string.
+    If successful, the output is the service ID of the newly registered service, and its secret string. The secret string is necessary to deregister the service.
 
 ### Command line
 
@@ -68,6 +68,10 @@ A boolean value (`true`/`false`) to indicate if SSL (encryption) is required to 
 
 The service type. Can be `actor`, `environment`, `prehook`, `datalog`, `lifecycle`, `actservice`, `datastore`, `modelregistry` or `other`.
 These are the same keywords used as `paths` in Cogment [discovery endpoints](../parameters.md#discovery-path).
+
+#### `permanent`
+
+A boolean value (`true`/`false`) to indicate if the service is to stay permanently in the directory (until explicitly deregistered). Permanent services are not checked for health or lifetime limits. Permanent services also get updated instead of being duplicated. Default: `false`.
 
 #### `properties`
 
