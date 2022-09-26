@@ -31,8 +31,23 @@ asyncio.run(MyMainFunction())
 The Python SDK uses the `cogment.sdk` logger, and the default log level is `INFO`. E.g. to change the log level to `WARNING`:
 
 ```python
+import cogment
 import logging
+
 logging.getLogger("cogment.sdk").setLevel(logging.WARNING)
+```
+Or set the environment variable `COGMENT_LOG_LEVEL` to one of the values: `off`, `error`, `warning`, `info`, `debug`, `trace` (which match the respective Python levels `logging.CRITICAL`, `logging.ERROR`, `logging.WARNING`, `logging.INFO`, `logging.DEBUG`).
+Since the Cogment Python SDK does not output any critical logs, the `logging.CRITICAL` level effectively turns logging off.
+The `trace` level does not match a standard Python logging level and is mostly for internal use with a level lower than `logging.DEBUG`.
+
+In all cases, the Cogment logger has a null handler, and the handler management is left to the application (as is standard in Python).
+The application can enable logging as required, e.g.:
+
+```python
+import cogment
+import logging
+
+logging.basicConfig()
 ```
 
 ### Trial Specifications
