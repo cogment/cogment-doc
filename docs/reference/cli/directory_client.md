@@ -109,7 +109,7 @@ The inquiry client is used to inquire (find) services in the Directory. Note tha
 E.g.:
 
 ```bash
-$ cogment client directory inquire --endpoint="grpc://dir:9005" --type="actor" --properties="intensity=5,high_profile"
+$ cogment client directory inquire --type="actor" --properties="intensity=5,high_profile"
 
 [11] Services found
 Service ID [7722934920723]

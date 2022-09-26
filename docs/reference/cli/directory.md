@@ -45,6 +45,26 @@ Can be specified as:
 -   an environment variable, e.g. `COGMENT_DIRECTORY_GRPC_REFLECTION=1`,
 -   by default, it is disabled.
 
+### `log_level`
+
+Set to define the minimum level for logging. Possible values are: `off`, `error`, `warning`, `info`, `debug`, `trace`.
+
+Can be specified as:
+
+-   a command line option, e.g. `--log_level=debug`,
+-   an environment variable, e.g. `COGMENT_LOG_LEVEL=info`,
+-   default value is info.
+
+### `log_file`
+
+Base file name for daily log output. The name will be suffixed with the date and a new file will be made every day. If not provided, the logs go to stdout.
+
+Can be specified as:
+
+-   a command line option, e.g. `--log_file=./path/to/cogment.log`,
+-   an environment variable, e.g. `COGMENT_LOG_FILE=./path/to/cogment.log`,
+-   default value is info.
+
 ## Operation
 
 At its most basic, the Directory contains services searchable by type and property, and returns endpoints where to reach the matched services.
