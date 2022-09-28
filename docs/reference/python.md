@@ -813,7 +813,7 @@ A sample starts and ends with the arrival of new observations from the environme
 
 Note that some of the data may not be available (`None`) if it was excluded from the sample (see datalog parameters `TrialParameters.datalog_exclude_fields`).
 
-`out_of_sync`: _bool_ - False if it is a normal/full sample. True if it is an out-of-sync/partial sample. Out-of-sync samples do not follow the normal time step progression of the trial, they represent isolated data (typically a reward) for steps that have already past.
+`out_of_sync`: _bool_ - False if it is a normal/full sample. True if it is an out-of-sync/partial sample. Out-of-sync samples do not follow the normal time step progression of the trial, they represent isolated data (typically a reward) for steps that have already past. Out-of-sync samples will be produced according to the trial parameter [nb_buffered_ticks](./parameters.md#nb_buffered_ticks).
 
 `tick_id`: _int_ - The time step that the sample data relates to.
 

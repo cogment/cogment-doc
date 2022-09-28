@@ -460,9 +460,14 @@ Rewards are sent to [Actors](../guide/core-concepts.md#actor) from another actor
 session.add_reward(value=-1, confidence=1, tick_id=-1, to=['an_actor_name'])
 ```
 
-Rewards consist of an arbitrary numerical **value** describing how the reward "sender" _believes_ the actor performed. It is _weighted_ by a value between 0 and 1 qualifying the **confidence** of the "sender" in its reward, from a very low confidence just above 0 to a very high confidence approaching 1. The confidence value is used to collate all the rewards sent to an actor at the same time. Optionally, a reward can be provided with arbitrary user data.
+Rewards consist of an arbitrary numerical **value** describing how the reward "sender" _believes_ the actor performed.
+It is _weighted_ by a value between 0 and 1 qualifying the **confidence** of the "sender" in its reward, from a very low confidence just above 0 to a very high confidence approaching 1.
+The confidence value is used to collate all the rewards sent to an actor at the same time.
+Optionally, a reward can be provided with arbitrary user data.
 
 Each reward applies to a list of recipients (either all the actors, all the actors of a given class or a specific actor) at a specific point in time, during the trial, defined as a **tick**.
+The tick ID can represent a past action if the value is smaller than the current tick ID ("future" actions are not allowed).
+Past actions, like sending a reward related to a past tick ID, are handled in accordance with the [nb_buffered_ticks](../reference/parameters.md#nb_buffered_ticks) trial parameter.
 
 The full documentation for `session.add_reward` can be found [here](../reference/python.md#add_rewardself-value-confidence-to-tick_id-1-user_datanone).
 
