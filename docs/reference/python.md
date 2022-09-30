@@ -566,7 +566,7 @@ Parameters:
 
 Class enclosing the details for connection from an Orchestrator.
 
-`port`: _str_ - The TCP/IP port where the service will be awaiting the Orchestrator connection.
+`port`: _int_ - The TCP/IP port where the service will be awaiting the Orchestrator connection.
 
 `private_key_certificate_chain_pairs`: _list[tupple(str, str)]_ - To use TLS for incoming connections, this must be set to a list of tuples of the form (PEM-encoded private key, PEM-encoded certificate chain).
 
