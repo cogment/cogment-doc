@@ -33,7 +33,7 @@ Can be specified as:
 
 -   a command line option, e.g. `--port`,
 -   an environment variable, e.g. `COGMENT_DIRECTORY_PORT`,
--   its default value is 9005.
+-   default value is 9005.
 
 ### `grpc_reflection`
 
@@ -64,6 +64,16 @@ Can be specified as:
 -   a command line option, e.g. `--log_file=./path/to/cogment.log`,
 -   an environment variable, e.g. `COGMENT_LOG_FILE=./path/to/cogment.log`,
 -   default value is info.
+
+### `registration_lag`
+
+The maximum number of seconds to wait before responding with no result. This can be used when components may start at slightly different time, and some components may inquire about a component that did not have time to register yet.
+
+Can be specified as:
+
+-   a command line option, e.g. `--registration_lag`,
+-   an environment variable, e.g. `COGMENT_DIRECTORY_REGISTRATION_LAG`,
+-   default value is 0.
 
 ## Operation
 
