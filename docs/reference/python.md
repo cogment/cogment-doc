@@ -10,7 +10,7 @@ sidebar_position: 4
 
 The simplest way to install the python SDK is to just install it using pip: `pip install cogment`.
 
-To install the generator (for `cog_settings.py`) it is done similarly with pip: `pip install cogment[generate]`. If both are needed, installing the genertor will install the Python SDK.
+To install the generator (for `cog_settings.py`) it is done similarly with pip: `pip install cogment[generate]`. If both are needed, installing the generator will install the Python SDK.
 
 The basic requirement is Python 3.7.
 
@@ -18,7 +18,7 @@ The basic requirement is Python 3.7.
 
 ### `asyncio`
 
-The Python SDK is designed to run concurently and asynchronously using the Python `asyncio` library. As such, it should be run in an `asyncio.Task`.
+The Python SDK is designed to run concurrently and asynchronously using the Python `asyncio` library. As such, it should be run in an `asyncio.Task`.
 
 E.g.
 
@@ -404,7 +404,7 @@ Return: _generator(RecvEvent instance)_ - A generator for the events that arrive
 
 ### `produce_observations(self, observations)`
 
-Method to send observations to actors. If called after receiving an event of type `EventType.ENDING`, the observation will be consired the final observation (equivalent to calling `end()`).
+Method to send observations to actors. If called after receiving an event of type `EventType.ENDING`, the observation will be considered the final observation (equivalent to calling `end()`).
 
 Parameters:
 
@@ -729,7 +729,7 @@ Class containing the details of a received single source reward.
 
 ## class cogment.TrialParameters
 
-Class containing the paramaters of the trial (see [Trial Parameters](./parameters.md#trial-parameters)).
+Class containing the parameters of the trial (see [Trial Parameters](./parameters.md#trial-parameters)).
 
 Any attribute can be set to `None` to reset it to its default.
 Some attributes (`config` and `environment_config`) are immutable: changes to the instance received will not be reflected in `TrialParameters`, the attribute must be set with a new instance to make changes. These attributes can also return `None` if not set.
@@ -790,7 +790,7 @@ Parameter:
 
 ## class cogment.ActorParameters
 
-Class containing the paramaters for a particula actor (see [Trial Parameters](./parameters.md#trial-parameters)).
+Class containing the parameters for a particular actor (see [Trial Parameters](./parameters.md#trial-parameters)).
 
 Any attribute can be set to `None` to reset it to its default.
 Some attributes (`config`, `default_action`) are immutable: changes to the instance received will not be reflected in `ActorParameters`, the attribute must be set with a new instance to make changes. These attributes can also return `None` if not set.
@@ -836,7 +836,7 @@ Note that some of the data may not be available (`None`) if it was excluded from
 
 `timestamp`: _int_ - Unix style Epoch timestamp in nanoseconds (time since 00:00:00 UTC Jan 1, 1970) at the beginning of the sample period. For out-of-sync samples, this is the time the data in the sample was received.
 
-`events`: _str_ - Description of special events that happened during the timeframe of the sample. For out-of-sync samples, it may contain an explanation of the data.
+`events`: _str_ - Description of special events that happened during the time frame of the sample. For out-of-sync samples, it may contain an explanation of the data.
 
 ### `__init__(self, params)`
 

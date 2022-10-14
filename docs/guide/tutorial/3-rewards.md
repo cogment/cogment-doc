@@ -194,7 +194,7 @@ print(f"Trial '{trial_id}' ended")
 
 :::tip
 
-Because of the asynchronous nature of what's happenning here, we need to start listening for the trial to end before starting it.
+Because of the asynchronous nature of what's happening here, we need to start listening for the trial to end before starting it.
 
 :::
 

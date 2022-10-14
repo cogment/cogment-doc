@@ -56,7 +56,7 @@ Other installation methods are available, for example:
     ```console
     sudo ./install-cogment.sh --version 2.2.0
     ```
--   Install preleased version 2.3.1-beta3, usefull because prereleases are not considered by default
+-   Install prereleased version 2.3.1-beta3, useful because prereleases are not considered by default
     ```console
     sudo ./install-cogment.sh --version 2.2.0
     ```
@@ -184,7 +184,7 @@ Congratulations, you have a working installation of Cogment! We recommend you he
 
 On macOS, it is possible that Cogment tries to open too many file handles. In this case, you'll get an error similar to `pipe creation failed (24): Too many open files`.
 
-You can access the current limit and update it using `ulimit -n`. The default version should be someting like 256, in most cases we found that Cogment requires 2048. You can set the limit with the following command:
+You can access the current limit and update it using `ulimit -n`. The default version should be something like 256, in most cases we found that Cogment requires 2048. You can set the limit with the following command:
 
 ```console
 $ ulimit -n 2048

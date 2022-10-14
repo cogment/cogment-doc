@@ -27,13 +27,13 @@ In this API, [gRPC metadata](https://grpc.io/docs/what-is-grpc/core-concepts/#me
 
 In some places in the API, we use a list of actor data without information about which actor is where in the list.
 These lists have a constant length and order throughout a trial (set in the trial parameters), and thus can/must be cross referenced with other such lists within the same trial (e.g. `actors_in_trial`, `actors_map`).
-The actor can be infered by the position in the list, and the index into the list can sometimes be used to identify an actor.
+The actor can be inferred by the position in the list, and the index into the list can sometimes be used to identify an actor.
 
 gRPC service names in Cogment are suffixed with "SP" (Service Point).
 
 ### Limitations
 
-Due to normal network delays and unpredictability of the various components, there are limitations related to the communication with the Ochestrator that translate in issues that can arise.
+Due to normal network delays and unpredictability of the various components, there are limitations related to the communication with the Orchestrator that translate in issues that can arise.
 
 -   In the current version, to simplify the implementation, there is an expectation of "good behavior" from the various components:
     -   Actors are expected to respond with an action only after receiving an observation, and to send only one action per observation received.
@@ -167,7 +167,7 @@ message ActorParams {
 
 ### `SerializedMessage`
 
-This contains an optional serialized protobuf message (e.g. config) defined by the user in the spec file. The bytes content is wrapped in a message to be able to differenciate between a default content (i.e. length 0) and the absence of content. This is easily done by testing for the presence of the message.
+This contains an optional serialized protobuf message (e.g. config) defined by the user in the spec file. The bytes content is wrapped in a message to be able to differentiate between a default content (i.e. length 0) and the absence of content. This is easily done by testing for the presence of the message.
 
 ```protobuf
 message SerializedMessage {
@@ -205,7 +205,7 @@ message Observation {
 
 -   tick_id: Tick of this observation.
 -   timestamp: The time of the observation.
--   content: The serialized protobuf message representing an observation for a specific actor. In a particualr trial, the actual message type for the observation space is defined in the spec file for each actor class in section `actor_classes:observation:space`. Note that the specific actor represented is defined by the enclosing message.
+-   content: The serialized protobuf message representing an observation for a specific actor. In a particular trial, the actual message type for the observation space is defined in the spec file for each actor class in section `actor_classes:observation:space`. Note that the specific actor represented is defined by the enclosing message.
 
 ### `Action`
 
@@ -435,7 +435,7 @@ message TrialStartRequest {
 }
 ```
 
--   config: The trial config data. This data can be used by the pre-trial hooks to determine the config for the rest of the componenents.
+-   config: The trial config data. This data can be used by the pre-trial hooks to determine the config for the rest of the components.
 -   params: The fully defined parameters for the new trial. When this is given to start the trial, the default parameters are ignored, and the pre-trial hooks will not be called.
 -   user_id: The ID of the user that is starting the trial.
 -   user_id: The ID of the user that is starting the trial.
@@ -985,7 +985,7 @@ enum ServiceType {
 -   DATALOG_SERVICE: Cogment service accessed with gRPC service `DatalogSP`.
 -   DATASTORE_SERVICE: Cogment service accessed with gRPC service `TrialDatastoreSP`.
 -   MODEL_REGISTRY_SERVICE: Cogment service accessed with gRPC service `ModelRegistrySP`.
--   OTHER_SERVICE: This is for services not provided by Cogment or that do not have a dedicated service type. The propeties registered in the directory should provide the necessary information, but this is left to the users to manage, and no health checking is performed.
+-   OTHER_SERVICE: This is for services not provided by Cogment or that do not have a dedicated service type. The properties registered in the directory should provide the necessary information, but this is left to the users to manage, and no health checking is performed.
 
 ### `ServiceDetails`
 
@@ -1265,7 +1265,7 @@ message RetrieveModelsRequest {
 }
 ```
 
--   `model_ids`: List of the identifiers of the desired models, leave emtpy to retrieve all models.
+-   `model_ids`: List of the identifiers of the desired models, leave empty to retrieve all models.
 -   `models_count`: (optional) The desired number of models to be retrieved, leave empty (or set to 0) to retrieve all models matching the request.
 -   `model_handle`: (optional) Leave empty for the initial request, use previously provided `RetrieveModelsReply.next_model_handle` on the next calls to retrieve the next models.
 
@@ -1308,7 +1308,7 @@ The first message in the stream should define `header`:
 
 The following messages should define `body`:
 
--   `data_chunk`: A chunk of the version data, all the chunks in the stream will be concatened.
+-   `data_chunk`: A chunk of the version data, all the chunks in the stream will be concatenated.
 
 ### `CreateVersionReply`
 
@@ -1320,7 +1320,7 @@ message CreateVersionReply {
 }
 ```
 
--   `version_info`: The informations relative to the created model version, in particular the defined `version_number`.
+-   `version_info`: The information relative to the created model version, in particular the defined `version_number`.
 
 ### `RetrieveVersionInfosRequest`
 
@@ -1336,7 +1336,7 @@ message RetrieveVersionInfosRequest {
 ```
 
 -   `model_id`: Identifier of the model we want to retrieve versions from.
--   `version_numbers`: List of desired version number (or -1 to denote the latest version). Leave emtpy to retrieve all versions of the given model.
+-   `version_numbers`: List of desired version number (or -1 to denote the latest version). Leave empty to retrieve all versions of the given model.
 -   `versions_count`: (optional) The desired number of versions to be retrieved, leave empty (or set to 0) to retrieve all the versions matching the request.
 -   `version_handle`: (optional) Leave empty for the initial request, use previously provided `RetrieveVersionInfosReply.next_version_handle` on the next calls to retrieve the next versions.
 
@@ -1378,7 +1378,7 @@ message RetrieveVersionDataReplyChunk {
 }
 ```
 
--   `data_chunk`: A chunk of the version data. All the chunks in the stream need to be concatened. The completeness and validity of the received data can be checked using the version's `data_size` and `data_hash` respectivelly.
+-   `data_chunk`: A chunk of the version data. All the chunks in the stream need to be concatenated. The completeness and validity of the received data can be checked using the version's `data_size` and `data_hash` respectively.
 
 ### `ModelInfo`
 

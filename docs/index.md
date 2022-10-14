@@ -12,7 +12,7 @@ sidebar_position: 1
 
 ### When to use Cogment?
 
-Cogment borrows a lot of its formalism from [Reinforcement Learning (RL)](https://en.wikipedia.org/wiki/Reinforcement_learning), in particular [Markov Decision Processes (MDPs)](https://en.wikipedia.org/wiki/Markov_decision_process), and to [Multi-Agent Systems (MAS)](https://en.wikipedia.org/wiki/Multi-agent_system). This makes Cogment particularly well suited to implement Reinformcent Learning and Multi-Agent Reinforcement Learning (MARL) agents and training processes.
+Cogment borrows a lot of its formalism from [Reinforcement Learning (RL)](https://en.wikipedia.org/wiki/Reinforcement_learning), in particular [Markov Decision Processes (MDPs)](https://en.wikipedia.org/wiki/Markov_decision_process), and to [Multi-Agent Systems (MAS)](https://en.wikipedia.org/wiki/Multi-agent_system). This makes Cogment particularly well suited to implement Reinforcement Learning and Multi-Agent Reinforcement Learning (MARL) agents and training processes.
 
 Cogment is designed to enable Humans and AIs to operate in shared environments, as such it is very adapted to any kind of Human-In-the-Loop Learning (HILL) process such as Imitation Learning (IL) / Behavior Cloning (BC), RL from human feedback or even Active Learning.
 
@@ -36,9 +36,9 @@ Cogment can be used in many other contexts it wasn't specifically designed for. 
 
 The Cogment platform consists of multiple components:
 
--   The main [**Cogment CLI**](./reference/cli/index.md) includes the main components in a cross platform easilty distributable package,
+-   The main [**Cogment CLI**](./reference/cli/index.md) includes the main components in a cross platform easily distributable package,
     -   The [**Orchestrator**](./reference/cli/orchestrator.md), the _heart_ of a Cogment app, is in charge of running the components,
-    -   The [**Directoryr**](./reference/cli/directory.md) is the "directory" where Cogment services are registered and can be found by clients and other services.
+    -   The [**Directory**](./reference/cli/directory.md) is the "directory" where Cogment services are registered and can be found by clients and other services.
     -   The [**Trial Datastore**](./reference/cli/trial-datastore.md), which stores and make available data generated while running Cogment,
     -   The [**Model Registry**](./reference/cli/model-registry.md), which versions and stores trained AI models to be used by Cogment agents,
 -   The **SDKs** are used to build your Cogment app services and clients, SDKs are available in [Python](./reference/python.md) and [Javascript](./reference/javascript.md).
