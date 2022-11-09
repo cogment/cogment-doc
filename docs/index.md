@@ -38,8 +38,8 @@ The Cogment platform consists of multiple components:
 
 -   The main [**Cogment CLI**](./reference/cli/index.md) includes the main components in a cross platform easily distributable package,
     -   The [**Orchestrator**](./reference/cli/orchestrator.md), the _heart_ of a Cogment app, is in charge of running the components,
-    -   The [**Directory**](./reference/cli/directory.md) is the "directory" where Cogment services are registered and can be found by clients and other services.
-    -   The [**Trial Datastore**](./reference/cli/trial-datastore.md), which stores and make available data generated while running Cogment,
+    -   The [**Directory**](./reference/cli/directory/directory-server.md) is the "directory" where Cogment services are registered and can be found by clients and other services.
+    -   The [**Trial Datastore**](./reference/cli/trial-datastore/trial-datastore-server.md), which stores and make available data generated while running Cogment,
     -   The [**Model Registry**](./reference/cli/model-registry.md), which versions and stores trained AI models to be used by Cogment agents,
 -   The **SDKs** are used to build your Cogment app services and clients, SDKs are available in [Python](./reference/python.md) and [Javascript](./reference/javascript.md).
 

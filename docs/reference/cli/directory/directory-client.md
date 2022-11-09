@@ -1,11 +1,11 @@
 ---
-title: Directory
-sidebar_position: 4
+title: Client
+sidebar_position: 2
 ---
 
 # Directory Client
 
-The Directory Client is a utility to manually access (through the command line interface) the [Directory service](./directory.md#directory). It can be used to register, deregister (remove) and inquire services.
+The Directory Client is a utility to manually access (through the command line interface) the [Directory service](./directory-server.md). It can be used to register, deregister (remove) and inquire services.
 
 ## Common Options
 
@@ -42,6 +42,7 @@ $ cogment client directory register --endpoint="grpc://dir:9005" --host="act" --
 
 Service ID [7722934920723]  Secret [ZGi6GLe]
 ```
+
 ### Output
 
     If successful, the output is the service ID of the newly registered service, and its secret string. The secret string is necessary to deregister the service.
@@ -67,7 +68,7 @@ A boolean value (`true`/`false`) to indicate if SSL (encryption) is required to 
 #### `type`
 
 The service type. Can be `actor`, `environment`, `prehook`, `datalog`, `lifecycle`, `actservice`, `datastore`, `modelregistry` or `other`.
-These are the same keywords used as `paths` in Cogment [discovery endpoints](../parameters.md#discovery-path).
+These are the same keywords used as `paths` in Cogment [discovery endpoints](../../parameters.md#discovery-path).
 
 #### `permanent`
 
@@ -77,7 +78,7 @@ A boolean value (`true`/`false`) to indicate if the service is to stay permanent
 
 The properties to be associated with the service. In the form of "name=value,name=value" where the value is optional.
 
-Also see [special properties](../parameters.md#discover-host) used by Cogment.
+Also see [special properties](../../parameters.md#discover-host) used by Cogment.
 
 ## Directory Client Deregister
 
@@ -88,6 +89,7 @@ E.g.:
 ```bash
 $ cogment client directory deregister --endpoint="grpc://dir:9005" --service_id=7722934920723 --secret="ZGi6GLe"
 ```
+
 ### Output
 
     If successful, no output is produced.
@@ -135,7 +137,7 @@ The ID of the service to find. If this is provided, the `type` and `properties` 
 #### `type`
 
 The service type to find. Can be `actor`, `environment`, `prehook`, `datalog`, `lifecycle`, `actservice`, `datastore`, `modelregistry` or `other`.
-These are the same keywords used as `paths` in Cogment [discovery endpoints](../parameters.md#discovery-path).
+These are the same keywords used as `paths` in Cogment [discovery endpoints](../../parameters.md#discovery-path).
 
 If this is provided, the `service_id` option cannot be used.
 

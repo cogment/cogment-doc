@@ -797,7 +797,7 @@ message EnvInitialOutput {}
 
 ## Data/Log API
 
-This API is defined in `datalog.proto`. It is implemented by the data logger application using the gRPC server API, including the out-of-the-box component [`cogment-trial-datastore`](./cli/trial-datastore.md).
+This API is defined in `datalog.proto`. It is implemented by the data logger application using the gRPC server API, including the out-of-the-box component [`cogment-trial-datastore`](./cli/trial-datastore/trial-datastore-server.md).
 
 The data logger endpoint, for the orchestrator to connect to, is defined in the trial parameters.
 
@@ -1426,7 +1426,7 @@ Metadata: None
 
 ## Trial Datastore API
 
-This API is defined in `trial_datastore.proto`. It is implemented by [`cogment-trial-datastore`](./cli/trial-datastore.md).
+This API is defined in `trial_datastore.proto`. It is implemented by [`cogment-trial-datastore`](./cli/trial-datastore/trial-datastore-server.md).
 
 ### Service `TrialDatastoreSP`
 
@@ -1741,7 +1741,7 @@ message DeleteTrialsReply {}
 
 ### `TrialSamplesFileHeader`
 
-Header for the trial samples file that can be exported using [`cogment client export`](./cli/trial-datastore.md#export-command).
+Header for the trial samples file that can be exported using [`cogment client export`](./cli/trial-datastore/trial-datastore-client.md#export-command).
 
 ```protobuf
 message TrialSamplesFileHeader {

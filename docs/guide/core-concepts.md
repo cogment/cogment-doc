@@ -97,7 +97,7 @@ Please note that rewards can also be retrieved after the fact using a [datalog](
 
 On top of the core components described above, a Cogment deployment can include these additional ones:
 
--   **Datalog** services can be used to listen to the activity during a trial (actions, observations, rewards, messages) in order to, for example, store these data for the offline training of AI agents. [**Trial Datastore**](../reference/cli/trial-datastore.md) is an out-of-the-box implementation of this.
+-   **Datalog** services can be used to listen to the activity during a trial (actions, observations, rewards, messages) in order to, for example, store these data for the offline training of AI agents. [**Trial Datastore**](../reference/cli/trial-datastore/trial-datastore-server.md) is an out-of-the-box implementation of this.
 -   [**Model Registry**](../reference/cli/model-registry.md) handles the storage and dispatch of AI models trained with Cogment and used by the actors.
 -   **Pre-Trial Hooks** can be used to dynamically setup Trials from a given configuration, for example changing the number of Actors or pointing to other Environment or Actor implementations.
 
@@ -131,7 +131,7 @@ The following table summarizes how each component can either be implemented or u
 [11]: ../reference/python.md#register_datalogself-impl
 [12]: ../reference/python.md#register_pre_trial_hookself-impl
 [13]: ../reference/cli/orchestrator.md
-[16]: ../reference/cli/trial-datastore.md#service
+[16]: ../reference/cli/trial-datastore/trial-datastore-server.md
 [17]: ../reference/cli/model-registry.md
 [18]: ../reference/javascript.md/#getcontrollerendpoint
 [19]: ../reference/javascript.md#registeractorimpl-actorname-actorclass
@@ -139,4 +139,4 @@ The following table summarizes how each component can either be implemented or u
 [21]: ../reference/grpc.md#model-registry-api
 [22]: ../reference/grpc.md#trial-datastore-api
 [23]: ../reference/python.md#get_datastoreself-endpoint
-[24]: ../reference/cli/trial-datastore.md#client
+[24]: ../reference/cli/trial-datastore/trial-datastore-client.md
