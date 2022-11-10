@@ -23,13 +23,13 @@ cd rps
 cp -r /path/to/cogment-tutorial-rps/1-bootstrap-and-data-structures/. .
 ```
 
-This will get you started for an app with 2 AIs able to play games of RPS.
+This will get you started for an app with 2 AIs able to play games of Rock-Paper-Scissor (RPS).
 
 In Cogment's terminology, we have created 2 actors sharing a single implementation picking a random move for each round. We will develop a **service actor** implementation which is well suited for AIs, rather than a **client actor** implementation which would be better for an interactive actor; for exemple, an actor controlled by a Human player. In [step 5](./5-human-player.md), we will create such implementation.
 
 :::note
 
-For the remainder of this tutorial, unless otherwise mentioned, it is assumed that all operations are run in the `rps` directory.
+For the remainder of this tutorial, unless otherwise mentioned, it is assumed that all operations are run in the `rps` folder.
 
 :::
 

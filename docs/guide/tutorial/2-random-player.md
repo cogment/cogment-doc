@@ -10,20 +10,20 @@ In this step of the tutorial, we will implement the (very simple) decison logic 
 
 ## Random player agent
 
-In the `rps` directory, the `random_agent` directory contains the python implementation for the eponymous service. You'll find a few files here:
+In the `rps` folder, the `random_agent` folder contains the python implementation for the eponymous service. You'll find a few files here:
 
--   `cogment.yaml` and `data.proto` are copied from the `rps` directory and `cog_settings.py` and `data_pb2.py` are generated from them when running `./run.sh build`, don't edit them here.
+-   `cogment.yaml` and `data.proto` are copied from the `rps` folder and `cog_settings.py` and `data_pb2.py` are generated from them when running `./run.sh build`, don't edit them here.
 -   `requirements.txt` is a [pip requirement file](https://pip.pypa.io/en/stable/reference/pip_install/?highlight=requirements#requirements-file-format) defining the dependencies of the service. For the moment it only lists [`cogment`](https://pypi.org/project/cogment/), Cogment's python SDK.
 -   `main.py` contains the implementation of the service.
 
 :::note
 
-To get a better understanding of what happens when running `./run.sh build`, you can take a look at `./run.sh` and in particular to the `_py_build` function that is called on all the python modules directory.
+To get a better understanding of what happens when running `./run.sh build`, you can take a look at `./run.sh` and in particular to the `_py_build` function that is called on all the python modules folder.
 
 You'll see that it does the following:
 
 -   Load the environment variables defined in `.env`,
--   Copy `cogment.yaml` and `data.proto` to the module's directory,
+-   Copy `cogment.yaml` and `data.proto` to the module's folder,
 -   Create a python virtualenv and activate it,
 -   Install the python dependencies defined in `requirements.txt`,
 -   Run the cogment python code generation tool to generate `cog_settings.py` and `data_pb2.py`.
@@ -110,7 +110,7 @@ Modify the `random_agent/main.py` file to include the above additions.
 
 ## Implementing the rules of the game
 
-In the `rps` directory, the `environment` directory contains the python implementation for the eponymous service. Similarly to the actor's service, you will find a few files here.
+In the `rps` folder, the `environment` folder contains the python implementation for the eponymous service. Similarly to the actor's service, you will find a few files here.
 
 Open `main.py` and take a look at the initial content.
 

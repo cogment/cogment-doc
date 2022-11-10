@@ -65,7 +65,7 @@ Cogment endpoint of the directory service (only one directory is accepted). It m
 
 Can be specified as:
 
--   a command line option, e.g. `--directory_services=grpc://foo:9005`,
+-   a command line option, e.g. `--directory_endpoint=grpc://foo:9005`,
 -   an environment variable, e.g. `COGMENT_DIRECTORY_ENDPOINT=grpc://foo:9005`,
 -   it has no default value.
 

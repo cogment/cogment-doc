@@ -57,3 +57,11 @@ In the seventh step of the tutorial, you'll implement an actor trained with Rein
 The implementation will be done in Python, using Tensorflow.
 
 -   [Step 7: Add a player trained with Reinforcement Learning using DQN](7-dqn-player.md)
+
+## The Directory
+
+In the eigth step of the tutorial, you'll add the use of the Cogment Directory.
+And a bonus half step to start using Cogment environment variables.
+
+-   [Step 8: Improving  operational efficiency with a directory](8-directory.md)
+-   [Step 8.5: Using Cogment environment variables](8-directory.md#step-85-using-cogment-environment-variables)

@@ -68,7 +68,7 @@ In this simple implementation, the concept of game is local to the environment. 
 
 In the previous steps, we triggered the trials by running `./run.sh client_start`. The more curious among you will have understood that this launches a client of the Cogment app, implemented in `client/main.py`. In this step, we will make changes to this file, this is therefore a good time to take a look at it.
 
-In the `rps` directory, the `client` directory contains the python implementation for the cogment client for this app. Take a look a the `main.py` file.
+In the `rps` folder, the `client` folder contains the python implementation for the cogment client for this app. Take a look a the `main.py` file.
 
 After the imports, the first section defines the endpoints of the different services used by the App.
 

@@ -20,7 +20,7 @@ Before we start with the Cogment side of things, we'll need to get a few prerequ
 
 ## Creating a React app
 
-First, we will initialize a React app. This can be done very simply by running from the root `rps` directory:
+First, we will initialize a React app. This can be done very simply by running from the root `rps` folder:
 
 ```console
 npx create-react-app web_client
@@ -135,7 +135,7 @@ trial_params:
           endpoint: grpc://localhost:9002
 ```
 
-Create a `params.yaml` file in the root directory with the previous content.
+Create a `params.yaml` file in the root folder with the previous content.
 
 ## Adding Cogment to our web client
 
@@ -150,7 +150,7 @@ The easiest way to add Cogment to any web client is to start with a React app, t
 
     while inside of the `web_client` folder
 
-2.  Copy the hooks folder from the [tutorial's repository](https://github.com/cogment/cogment-tutorial-rps), found at [6-web-client/web_client/src/](https://github.com/cogment/cogment-tutorial-rps/tree/main/6-web-client/web_client/src), into your src directory.
+2.  Copy the hooks folder from the [tutorial's repository](https://github.com/cogment/cogment-tutorial-rps), found at [6-web-client/web_client/src/](https://github.com/cogment/cogment-tutorial-rps/tree/main/6-web-client/web_client/src), into your src folder.
 
 3.  Navigate nack to the `rps` folder then run the following command to generate Javascript files from your trial specs:
 
