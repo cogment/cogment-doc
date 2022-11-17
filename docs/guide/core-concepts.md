@@ -115,7 +115,7 @@ The following table summarizes how each component can either be implemented or u
 | Trial Datastore        | ✅ [`cogment services trial_datastore`][16] | ✅ [register datalog][11], [serve][8] & [get datastore][23] |                                            | ✅ implement [Datalog API][5] & [Trial Datastore API][22] |
 | Trial Datastore Client | ✅ [`cogment client trial_datastore`][24]   | ✅ [get datastore][23]                                      |                                            | ✅ use [Trial Datastore API][22]                          |
 | Model Registry         | ✅ [`cogment services model_registry`][17]  |                                                             |                                            | ✅ implement [Model Registry API][21]                     |
-| Model Registry Client  |                                             |                                                             |                                            | ✅ use [Model Registry API][21]                           |
+| Model Registry Client  |                                             | ✅ [get model registry][25]                                 |                                            | ✅ use [Model Registry API][21]                           |
 | Pre Trial Hook         |                                             | ✅ [register pre trial hook][11] & [serve][8]               |                                            | ✅ implement [Pre Trial Hook API][6]                      |
 
 [1]: ../reference/grpc.md#service-actor-api
@@ -140,3 +140,4 @@ The following table summarizes how each component can either be implemented or u
 [22]: ../reference/grpc.md#trial-datastore-api
 [23]: ../reference/python.md#get_datastoreself-endpoint
 [24]: ../reference/cli/trial-datastore/trial-datastore-client.md
+[25]: ../reference/python.md#async-get_model_registryself-endpointendpoint

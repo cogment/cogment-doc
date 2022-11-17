@@ -118,34 +118,44 @@ Parameters:
 
 Return: None
 
-### `async get_controller(self, endpoint)`
+### `async get_controller(self, endpoint=Endpoint())`
 
 Method to get a controller instance to manage trials (start, stop, inquire, etc).
 
 Parameters:
 
--   `endpoint`: _Endpoint instance_ - Details of the connection to the Orchestrator. If a directory is defined in the Context, this can be a discovery endpoint.
+-   `endpoint`: _[Endpoint](#class-cogmentendpoint) instance_ - Details of the connection to the Orchestrator.
 
 Return: _Controller instance_ - An instance of the Controller class used to manage trials.
 
-### `async get_datastore(self, endpoint)`
+### `async get_datastore(self, endpoint=Endpoint())`
 
 Method to get a class instance to retrieve and manage data in a Datastore.
 
 Parameters:
 
--   `endpoint`: _Endpoint instance_ - Details of the connection to the Datastore. If a directory is defined in the Context, this can be a discovery endpoint.
+-   `endpoint`: _[Endpoint](#class-cogmentendpoint) instance_ - Details of the connection to the Datastore.
 
 Return: _Datastore instance_ - An instance of the Datastore class.
 
-### `async join_trial(self, trial_id, endpoint, impl_name=None, actor_name=None, actor_class=None)`
+### `async get_model_registry(self, endpoint=Endpoint())`
+
+Method to get a class instance to store and retrieve models in a ModelRegistry
+
+Parameters:
+
+-   `endpoint`: _[Endpoint](#class-cogmentendpoint) instance_ - Details of the connection to the Model Registry.
+
+Return: _ModelRegistry instance_ - An instance of the ModelRegistry class.
+
+### `async join_trial(self, trial_id, endpoint=Endpoint(), impl_name=None, actor_name=None, actor_class=None)`
 
 Method for an actor to asynchronously join an existing trial. This task will normally end after the user implementation has exited.
 
 Parameters:
 
 -   `trial_id`: _str_ - The UUID of the trial to join.
--   `endpoint`: _Endpoint instance_ - Details of the connection to the Orchestrator.
+-   `endpoint`: _[Endpoint](#class-cogmentendpoint) instance_ - Details of the connection to the Orchestrator.
 -   `impl_name`: _str_ - **deprecated**
 -   `actor_name`: _str_ - Name of the actor joining the trial. If `None`, `actor_class` will be used to find the actor to join. The name must match an active actor in the trial as found in the trial parameters in the sections `trial_params:actors:name` with `trial_params:actors:endpoint` set to "cogment://client".
 -   `actor_class`: _str_ - The class of actor to join the trial. If `None`, `actor_name` will be used to find the actor to join. The class must match an active actor in the trial as found in the trial parameters in the sections `trial_params:actors:actor_class` with `trial_params:actors:endpoint` set to "cogment://client".
@@ -319,6 +329,58 @@ Parameters:
 -   `fields`: _list[cogment.DatastoreFields]_ - Data fields to be filled in `DatastoreActorData` (otherwise left empty). If the list is empty, all data will be filled in.
 
 Return: _generator(DatastoreSample instance)_ - A generator for the samples from the Datastore.
+
+
+
+## class ModelRegistry
+
+Class containing data and methods to store and retrieve models from a ModelRegistry.
+
+### `async store_initial_version(self, model)`
+
+Method to create a new model in the Model Registry and store the initial version
+
+Parameters:
+
+-   `model`: _Model instance_ - The model to be stored. Any data in the _Model.stored_version_info_ member will be ignored
+
+Return: _VersionInfo instance_ - The version info of the newly-stored model version
+
+### `async store_version(self, model, archived=False)`
+
+Method to store a new version of a previously existing model in the Model Registry
+
+Parameters:
+
+-   `model`: _Model instance_ - The model to be stored. Any data in the _stored_version_info_ member will be ignored
+-   `archived`: _bool_ - Whether the model version will be archived (i.e. stored in permanent storage)
+
+
+Return: _VersionInfo instance_ - The version info of the newly-stored model version
+
+### `async retrieve_version(self, model_id, version_number=-1, deserialize_func=None)`
+
+Method to retrieve a specific version of a model from the ModelRegistry
+
+Parameters:
+
+-   `model_id`: _str_ - The ID of the model to be retrieved
+-   `version_number`: _int_ - The version number of the model to retrieve. Leaving this parameter as -1 will retrieve the latest version.
+-   `deserialize_func`: _func(bytes)_ - An optional callback function that converts the retrieved serialized model back to its original type. If provided, the returned Model instance is guaranteed to have its _deserialized_model_ member populated.
+
+
+Return: _Model instance_ - The retrieved Model
+
+### `async retrieve_model_info(self, model_id)`
+
+Method to retrieve the model-information of a stored model type
+
+Parameters:
+
+-   `model_id`: _str_ - The ID of the model whose information will be retrieved
+
+Return: _ModelInfo instance_ - The retrieved ModelInfo
+
 
 ## class Session
 
@@ -556,11 +618,11 @@ Class enclosing the details for connecting to an Orchestrator.
 
 `certificate_chain`: _str_ - If using TLS for the connection, this can be set to the PEM-encoded certificate chain.
 
-### `__init__(self, url)`
+### `__init__(self, url="cogment://discover")`
 
 Parameters:
 
--   `url`: _str_ - The URL where to connect to the Orchestrator.
+-   `url`: _str_ - The URL where to connect to the Orchestrator. By default this is a discovery URL that uses the Directory to find the corresponding endpoint.
 
 ## class cogment.ServedEndpoint
 
@@ -911,6 +973,53 @@ Generator method to iterate over all the messages in the sample.
 Parameters: None
 
 Return: _generator(RecvMessage instance)_ - A generator for the messages in the sample.
+
+
+
+## class ModelInfo
+
+Class containing the information of a model stored in the ModelRegistry
+
+`id`: _str_ - The id of this model.
+
+`user_data`: _dict{str:str}_ - Custom data that the user can attach to the model.
+
+## class VersionInfo
+
+Class containing the information of a model version defined by and retrieved from the ModelRegistry
+
+`version_number`: _int_ - Unique version number, assigned incrementally at creation by the model registry.
+
+`creation_timestamp`: _int_ - When the model was created as nanosecond Unix epoch time.
+
+`archived`: _bool_ - If `true`, this version is archived and should be stored in a long-term storage. If `false`, this version is not archived and can be evicted after a while. Non-archived versions should be used to _broadcast_ an update of the model during training.
+
+`data_hash`: _str_ - SHA 256 hash (encoded in base64 with standard 64 characters with padding) of this version's serialized data, can be used to validate the data and for caching purposes.
+
+`data_size`: _int_ - Size (in bytes) of this version's serialized data.
+
+## class Model(ModelInfo)
+
+Class extending `ModelInfo` that also contains information about a specfic version of a model. When providing an instance of this class to the ModelRegistry through a method such as [_ModelRegistry.store_version_](#async-store_versionself-model-archivedfalse), the _stored_version_info_ member will be ignored.
+
+`version_user_data`: _dict{str:str}_ - Custom data that the user can attach to the model version.
+
+`deserialized_model`: _Any_ - The model version to store in its original form. If provided to the ModelRegistry, it will be stored in a cache. When retrieving a Model from the ModelRegistry, this attribute will be populated if it was found in the cache, or if a [_deserialize_func_](#async-retrieve_versionself-model_id-version_number-1-deserialize_funcnone) was provided.
+
+`serialized_model`: _bytes_ - The serialized model version to store. When retrieving a Model from the ModelRegistry, this attribute will be empty if the Model was found in the cache; the _deserialized_model_ attribute will be populated instead
+
+`stored_version_info`: _VersionInfo_ - The version info defined and created by the ModelRegistry
+
+### `__init__(self, model_id, serialized_model, **kwargs)`
+
+Parameters:
+
+-   `model_id`: _str_ - The id of this model.
+
+-   `serialized_model`: _bytes_ - The serialized model version to store.
+
+-   `**kwargs`: Accepts any of the other optional attributes as keyword to set their value on construction. E.g. `Model(model_id, serialized_model, deserialized_model=model)`
+
 
 ## class cogment.DatastoreFields(enum.Enum)
 
