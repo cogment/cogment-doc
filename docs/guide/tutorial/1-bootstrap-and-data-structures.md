@@ -6,8 +6,9 @@ To follow this tutorial you'll need a working installation of **Cogment**. If yo
 
 Additionaly, you'll need:
 
--   [python](https://www.python.org/) 3.7 or later,
+-   [python](https://www.python.org/) >=3.7, <3.10 .
 -   [virtualenv](https://virtualenv.pypa.io/en/latest/).
+-   [GNU parallel](https://www.gnu.org/software/parallel/).
 
 ## Bootstrap
 

@@ -23,6 +23,7 @@ from data_pb2 import PlayerAction
 import cogment
 
 import asyncio
+import os
 import random
 
 PORT = os.getenv('DQN_AGENT_PORT')
@@ -55,7 +56,7 @@ Let's add the following environment variables to the `.env` file:
 
 ```console
 DQN_AGENT_HOST=localhost
-DQN_AGENT_PORT=9003
+DQN_AGENT_PORT=9004
 ```
 
 In the `./run.sh` script we will add two new commands to build and start the dqn agent service.
