@@ -28,7 +28,7 @@ The parameters of the trial start call take priority over all others, and thus w
 -   `environment_name`: The name of the environment. DEFAULT: "env".
 -   `environment_endpoint`: Endpoint of the environment service. DEFAULT: context discovery endpoint (the Directory will be inquired).
 -   `environment_implementation`: The name of the implementation to run the environment. This must match an implementation that is defined at the endpoint. DEFAULT: not set (an arbitrary implementation will be chosen at runtime).
--   Actors
+-   `actors`: List of actor parameter sets.
     -   `config`: User defined configuration sent to the actor at the start of the trial. The type is defined in the spec file under section `actor_classes:config_type` for the appropriate actor class. DEFAULT: not set.
     -   `name`: The name of the actor (must be unique in the trial). DEFAULT: none (required parameter).
     -   `class_name`: The name of the actor class. This must match a value in the spec file under section `actor_classes:name`. DEFAULT: none (required parameter).
@@ -167,9 +167,12 @@ The result should be another discovery endpoint.
 The endpoint for the directory must be a grpc endpoint and is provided beforehand (e.g. for the [Orchestrator][../reference/cli/orchestrator.md], it is an option on start).
 
 With a **context discovery endpoint** there is no path in the URL, and some of the details of the service will be obtained from the context of the endpoint (i.e. where the endpoint was provided and for what).
-This type of endpoint is the simplest form of discovery endpoint and is the default when no endpoint is provided (where discovery endpoints are valid).
+This type of endpoint is the simple form of discovery endpoints.
 
-E.g.:
+When there is no query, it is in its simplest form and refered as a **pure context discovery endpoint**: "cogment://discover".
+It is the default in Cogment when no endpoint is provided by the user (where discovery endpoints are valid).
+
+Example of context discovery endpoints:
 
 ```
 cogment://discover
@@ -177,7 +180,7 @@ cogment://discover?tag=blue
 cogment://discover?tag=red&zone=1
 ```
 
-If these endpoints were provided for actors, they would be equivalent these explicit discovery endpoints:
+If these endpoints were provided for actors, they would be equivalent to these **explicit discovery endpoints**:
 
 ```
 cogment://discover/actor?__actor_class=xxx&__implementation=yyy
@@ -185,13 +188,14 @@ cogment://discover/actor?__actor_class=xxx&__implementation=yyy&?tag=blue
 cogment://discover/actor?__actor_class=xxx&__implementation=yyy&?tag=red&zone=1
 ```
 
-Where "xxx" and "yyy" are values taken from the context. For each type of endpoint, the context provides the path and these properties (if available):
+Where "xxx" and "yyy" are values taken from the context (typically the trial start parameters). For each type of endpoint, the context provides the path and these properties (if available):
 
--   For actors: path is `actor`, properties are `__actor_class` and `__implementation`
--   For environment: path is `environment` and property is `__implementation`
--   For all other types, no properties are provided and the path is as described below
+-   For actor contexts: path is `actor`, properties are `__actor_class` and `__implementation`
+-   For environment contexts: path is `environment` and property is `__implementation`
+-   For all other contexts, no properties are provided and the discovery path is as described [below](#discovery-path)
 
-An **explicit discovery endpoint** is a discovery endpoint with a path, and needs to explicitly provide all the necessary information in the URL to the directory (the context of the endpoint will be ignored). In other words, no context property will be implicitly added to the query sent to the directory, the user is fully responsible to match the URL (and query) to the need.
+An **explicit discovery endpoint**, as opposed to a context discovery endpoint, is a URL with a path, and needs to explicitly provide all the necessary information in the URL (the context of the endpoint will be ignored).
+In other words, no context property will be implicitly added to the URL query sent to the directory, the user is fully responsible to match the URL to the need.
 
 ##### Discovery path
 

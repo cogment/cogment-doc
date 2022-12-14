@@ -4,12 +4,13 @@
 
 This part of the tutorial follows [step 7](./7-dqn-player.md).
 It is not necessary to have gone through all the previous sections to understand this part, but the code changes refer to the code in step 7.
-This step also requires Cogment 2.9.2 and Cogment Python SDK 2.3.0.
+This step also requires at least Cogment 2.9.2 and Cogment Python SDK 2.3.0.
 The code can be retrieved from the [tutorial's repository](https://github.com/cogment/cogment-tutorial-rps).
 
 :::
 
-In this step of the tutorial, we will add the Cogment [Directory](../../reference/cli/directory/directory-server.md) to the project. A directory is a register of services together with the network addresses where to connect to the services. This will let components find the services they need instead of having to already know the network address. 
+In this step of the tutorial, we will add the Cogment [Directory](../../reference/cli/directory/directory-server.md) to the project. A directory is a register of services together with the network addresses where to connect to the services.
+This will let components find the services they need instead of having to already know the network address.
 It makes it easier to manage more complicated projects and complex deployments.
 
 ## Adding the Directory service
@@ -23,7 +24,7 @@ function directory_start() {
 ```
 
 Since the Directory is a service that all other services depend upon, it needs to be started first. Here we have a few choices; we could decide to start it in a separate terminal before the other services, or we could start it in the background with the same command as starting the services. It could also be kept running all the time.
-For the purpose of demonstration we will start it in the background, so in the `./run.sh` script we will change the `services_start` command like this:
+For the purpose of demonstration and simplicity we will start it in the background, so in the `./run.sh` script we will change the `services_start` command like this:
 
 ```bash
 function services_start() {
@@ -74,7 +75,7 @@ In special circumstances, which we don't need for this tutorial, components can 
 
 ## Discovering services from the Directory
 
-We have a directory, and the services are registered in that directory, but for it to be useful, we need to "discover" these services. This is done by providing Cogment with [discovery endpoints](../../reference/parameters.md#cogment-endpoints) instead grpc endpoints.
+We have a directory, and the services are registered in that directory, but for it to be useful, we need to "discover" these services. This is done by providing Cogment with [discovery endpoints](../../reference/parameters.md#cogment-endpoints) instead grpc endpoints (i.e. network addresses).
 
 Let's start with the client (`./client/main.py`), we'll change the endpoint variables to context discovery endpoints like this:
 
@@ -85,16 +86,21 @@ RANDOM_AGENT_ENDPOINT = "cogment://discover"
 DQN_AGENT_ENDPOINT = "cogment://discover"
 ```
 
-How is Cogment differentiating and finding the right service? This is done by using the context where the endpoint is provided. For example, the orchestrator endpoint is given here:
+How is Cogment differentiating and finding the right service?
+This is done by using the context where the endpoint is provided, thus the name "context" discovery endpoint.
+Endpoints can also be "explicit" discovery endpoints, in which case they don't use the context in which they are used; all the information is in the endpoint explicitly (since we consider the context information to be implicit).
+
+An example of context information can be seen here where the orchestrator endpoint is given:
 
 ```python
-controller = await context.get_controller(endpoint=cogment.Endpoint(ORCHESTRATOR_ENDPOINT))
+controller = await context.get_controller(endpoint=cogment.Endpoint("cogment://discover"))
 ```
 
-Cogment knows that this is an endpoint to communicate with the Orchestrator, so if it receives a context discovery endpoint, it will use the context (i.e. this must be an endpoint for an Orchestrator) to inquire the directory.
+The `cogment://discover` string does not contain anything to say that this is for an orchestrator.
+But because it is given to the `get_controller` parameter which requires an orchestrator endpoint, Cogment has the context that this is an endpoint to communicate with an orchestrator, so it will use this fact (i.e. this must be an endpoint for an orchestrator) to inquire the directory.
 In other words, it matters where a context discovery endpoint is used.
 
-And we can simplify even further because the method `get_controller` has a default endpoint that is a context discovery endpoint, so we can change it like this:
+We can also simplify the code even further because the method `get_controller` has a default endpoint parameter, and the default value for a `cogment.Endpoint` is a pure context discovery endpoint (i.e. "cogment://discover"), so we can change it like this:
 
 ```python
 controller = await context.get_controller()
@@ -102,7 +108,7 @@ controller = await context.get_controller()
 
 Which means that we don't need the `ORCHESTRATOR_ENDPOINT` variable anymore, and we'll remove that from the client file. Then we also don't need the `ORCHESTRATOR_HOST` environment variable, and we'll remove that from the `./.env` file. Note that we still want to keep the `ORCHESTRATOR_PORT` environment variable to centralize the port selection for our different services, it just makes it easier to maintain our project.
 
-Now we do the same (still in the client file) for the environment; we remove the `ENVIRONMENT_ENDPOINT` variable, and since the environment endpoint also defaults to a context discovery endpoint, we can remove it:
+Now we do the same (still in the client file) for the environment; we remove the `ENVIRONMENT_ENDPOINT` variable, and since the environment also has a pure context discovery default endpoint, we can remove it:
 
 ```python
 trial_params=cogment.TrialParameters(

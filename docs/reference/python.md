@@ -36,6 +36,7 @@ import logging
 
 logging.getLogger("cogment.sdk").setLevel(logging.WARNING)
 ```
+
 Or set the environment variable `COGMENT_LOG_LEVEL` to one of the values: `off`, `error`, `warning`, `info`, `debug`, `trace` (which match the respective Python levels `logging.CRITICAL`, `logging.ERROR`, `logging.WARNING`, `logging.INFO`, `logging.DEBUG`).
 Since the Cogment Python SDK does not output any critical logs, the `logging.CRITICAL` level effectively turns logging off.
 The `trace` level does not match a standard Python logging level and is mostly for internal use with a level lower than `logging.DEBUG`.
@@ -330,8 +331,6 @@ Parameters:
 
 Return: _generator(DatastoreSample instance)_ - A generator for the samples from the Datastore.
 
-
-
 ## class ModelRegistry
 
 Class containing data and methods to store and retrieve models from a ModelRegistry.
@@ -380,7 +379,6 @@ Parameters:
 -   `model_id`: _str_ - The ID of the model whose information will be retrieved
 
 Return: _ModelInfo instance_ - The retrieved ModelInfo
-
 
 ## class Session
 
@@ -974,8 +972,6 @@ Parameters: None
 
 Return: _generator(RecvMessage instance)_ - A generator for the messages in the sample.
 
-
-
 ## class ModelInfo
 
 Class containing the information of a model stored in the ModelRegistry
@@ -998,7 +994,7 @@ Class containing the information of a model version defined by and retrieved fro
 
 `data_size`: _int_ - Size (in bytes) of this version's serialized data.
 
-## class Model(ModelInfo)
+## class cogment.Model(ModelInfo)
 
 Class extending `ModelInfo` that also contains information about a specfic version of a model. When providing an instance of this class to the ModelRegistry through a method such as [_ModelRegistry.store_version_](#async-store_versionself-model-archivedfalse), the _stored_version_info_ member will be ignored.
 
@@ -1019,7 +1015,6 @@ Parameters:
 -   `serialized_model`: _bytes_ - The serialized model version to store.
 
 -   `**kwargs`: Accepts any of the other optional attributes as keyword to set their value on construction. E.g. `Model(model_id, serialized_model, deserialized_model=model)`
-
 
 ## class cogment.DatastoreFields(enum.Enum)
 
