@@ -81,7 +81,7 @@ Can be specified as:
 
 ### `directory_auto_register`
 
-if 0, then the Orchestrator will not register its services to the Directory; The services must be externally registered, or [gRPC endpoints](../parameters.md#grpc-scheme) used to reach the services. If 1, then the Orchestrator will register its services to the [directory service](#directoryservices) if possible. Other values are reserved.
+If 0, then the Orchestrator will not register its services to the Directory; The services must be externally registered, or [gRPC endpoints](../parameters.md#grpc-scheme) used to reach the services. If 1, then the Orchestrator will register its services to the [directory service](#directoryservices) if possible. Other values are reserved.
 
 Can be specified as:
 
@@ -99,7 +99,7 @@ Can be specified as:
 
 -   a command line option, e.g. `--directory_registration_host=foo.bar`,
 -   an environment variable, e.g. `COGMENT_ORCHESTRATOR_DIRECTORY_REGISTRATION_HOST=foo.bar`,
--   it has no default value (self determined IP address is used).
+-   it has no default value (i.e. self determined IP address is used).
 
 ### `directory_registration_properties`
 

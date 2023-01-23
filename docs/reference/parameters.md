@@ -162,14 +162,14 @@ The `discover` host is to indicate that a [Directory](./cli/directory/directory-
 An endpoint with this host (i.e. starting with "cogment://discover") is also called a **discovery endpoint**.
 
 The directory returns an actual endpoint where to reach the service; either a grpc endpoint (e.g. `grpc://10.5.134.2:9000`), or for an actor, it can also be a special endpoint (e.g. `cogment://client`).
-The result should be another discovery endpoint.
+The result should not be another discovery endpoint.
 
 The endpoint for the directory must be a grpc endpoint and is provided beforehand (e.g. for the [Orchestrator][../reference/cli/orchestrator.md], it is an option on start).
 
 With a **context discovery endpoint** there is no path in the URL, and some of the details of the service will be obtained from the context of the endpoint (i.e. where the endpoint was provided and for what).
 This type of endpoint is the simple form of discovery endpoints.
 
-When there is no query, it is in its simplest form and refered as a **pure context discovery endpoint**: "cogment://discover".
+When there is no query, it is in its simplest form and referred as a **pure context discovery endpoint**: "cogment://discover".
 It is the default in Cogment when no endpoint is provided by the user (where discovery endpoints are valid).
 
 Example of context discovery endpoints:
@@ -184,18 +184,21 @@ If these endpoints were provided for actors, they would be equivalent to these *
 
 ```
 cogment://discover/actor?__actor_class=xxx&__implementation=yyy
-cogment://discover/actor?__actor_class=xxx&__implementation=yyy&?tag=blue
-cogment://discover/actor?__actor_class=xxx&__implementation=yyy&?tag=red&zone=1
+cogment://discover/actor?__actor_class=xxx&__implementation=yyy&tag=blue
+cogment://discover/actor?__actor_class=xxx&__implementation=yyy&tag=red&zone=1
 ```
 
-Where "xxx" and "yyy" are values taken from the context (typically the trial start parameters). For each type of endpoint, the context provides the path and these properties (if available):
+Where "xxx" and "yyy" are values taken from the context (typically the trial start parameters). For each type of endpoint, the context provides the path as described [below](#discovery-path), and these properties (if available):
 
--   For actor contexts: path is `actor`, properties are `__actor_class` and `__implementation`
--   For environment contexts: path is `environment` and property is `__implementation`
--   For all other contexts, no properties are provided and the discovery path is as described [below](#discovery-path)
+-   For actor contexts: properties are `__actor_class` and `__implementation`
+-   For environment contexts: property is `__implementation`
+-   For all other contexts, no properties are provided by the context
+
+These properties are implicitly registered in the directory when starting an actor or environment service from a SDK.
+But if explicitly registering the services to the directory, these properties must be provided if a context discovery endpoint is used (otherwise the service will not be found).
 
 An **explicit discovery endpoint**, as opposed to a context discovery endpoint, is a URL with a path, and needs to explicitly provide all the necessary information in the URL (the context of the endpoint will be ignored).
-In other words, no context property will be implicitly added to the URL query sent to the directory, the user is fully responsible to match the URL to the need.
+In other words, no context property will be implicitly added to the URL query sent to the directory, the user is fully responsible to match the URL to the need (and match the properties).
 
 ##### Discovery path
 
@@ -215,13 +218,16 @@ The specific paths are used to find a specific type of service:
 -   `environment`: To find an environment service
 -   `datalog`: To find a data logger service
 -   `prehook`: To find a pre-trial hook service
--   `lifecycle`: To find a service offering trial life scycle management
+-   `lifecycle`: To find a service offering trial life cycle management
 -   `actservice`: To find a service offering client actor connection
 -   `datastore`: To find a data store service
 -   `modelregistry`: To find a model registry service
 
-The `prehook`, `lifecycle`, `actservice`, `datastore` and `modelregistry` paths are not for use in the trial parameters.
+The `actor`, `environment` and `datalog` paths will normally be used in the trial parameters to start a new trial.
+They will be interpreted and managed by the Orchestrator, which will inquire the Directory.
+
 The `prehook` path is for use on the command line of the Orchestrator.
+
 The others are for use by services themselves, e.g. to find an Orchestrator to connect to.
 
 ##### Discovery query
