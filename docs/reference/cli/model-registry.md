@@ -9,12 +9,12 @@ sidebar_position: 4
 This module is still in active development and should be considered a prerelease version.
 :::
 
-Cogment Model Registy is designed to store, version and make available AI models to be used by Cogment actors.
+Cogment Model Registry is designed to store and make available AI models to be used by Cogment actors.
 
-The Model Registry stores model versions in two ways:
+The Model Registry manages models in two ways:
 
--   **Transient** (non-archived) model versions can be used to broadcast an updated version of a model to its users, e.g. during training. Transient model versions are stored in memory and can be evicted, in particular once the memory limit is reached.
--   **Archived** model versions are stored on the filesystem, they are slower to create and to retrieve and should be used for long-term storage of specific versions, e.g. for validation or deployment purposes.
+-   **Transient** (non-archived) model iterations can be used to publish an updated model to users, e.g. during training. Transient model iterations are stored in memory and can be evicted, in particular once the memory limit is reached.
+-   **Stored** model iterations are stored on the filesystem and should be used for long-term storage of specific iterations, e.g. for validation or deployment purposes.
 
 ## Command line
 
@@ -50,7 +50,7 @@ Can be specified as:
 
 ### `archive_dir`
 
-Path to the directory to store archived model versions and model metadata.
+Path to the directory to store archived model iterations and model metadata.
 
 Can be specified as:
 
@@ -60,7 +60,7 @@ Can be specified as:
 
 ### `cache_max_items`
 
-This defines the maximum number of model versions that can be stored in the transient cache.
+This defines the maximum number of model iterations that can be stored in the transient cache.
 
 Can be specified as:
 
@@ -70,7 +70,7 @@ Can be specified as:
 
 ### `sent_version_chunk_size`
 
-The maximum size for model version data chunk sent by the server. It is defined in bytes.
+The maximum size for model iteration data chunk sent by the server. It is defined in bytes.
 
 Can be specified as:
 
@@ -168,7 +168,7 @@ $ echo "{\"model_ids\":[\"my_other_model\"]}" | grpcurl -plaintext -d @ localhos
 }
 ```
 
-### Create a model version - `cogmentAPI.ModelRegistrySP/CreateVersion( stream .cogmentAPI.CreateVersionRequestChunk ) returns ( .cogmentAPI.CreateVersionReply );`
+### Create a model iteration - `cogmentAPI.ModelRegistrySP/CreateVersion( stream .cogmentAPI.CreateVersionRequestChunk ) returns ( .cogmentAPI.CreateVersionReply );`
 
 ```console
 $ echo "{\"header\":{\"version_info\":{
@@ -194,9 +194,9 @@ $ echo "{\"header\":{\"version_info\":{
 }
 ```
 
-### Retrieve model versions infos - `cogmentAPI.ModelRegistrySP/RetrieveVersionInfos ( .cogmentAPI.RetrieveVersionInfosRequest ) returns ( .cogmentAPI.RetrieveVersionInfosReply );`
+### Retrieve model iteration infos - `cogmentAPI.ModelRegistrySP/RetrieveVersionInfos ( .cogmentAPI.RetrieveVersionInfosRequest ) returns ( .cogmentAPI.RetrieveVersionInfosReply );`
 
-#### List the versions of a model
+#### List the iterations of a model
 
 ```console
 $ echo "{\"model_id\":\"my_model\"}" | grpcurl -plaintext -d @ localhost:9000 cogmentAPI.ModelRegistrySP/RetrieveVersionInfos
@@ -223,7 +223,7 @@ $ echo "{\"model_id\":\"my_model\"}" | grpcurl -plaintext -d @ localhost:9000 co
 }
 ```
 
-#### Retrieve specific versions of a model
+#### Retrieve specific iterations of a model
 
 ```console
 $ echo "{\"model_id\":\"my_model\", \"version_numbers\":[1]}" | grpcurl -plaintext -d @ localhost:9000 cogmentAPI.ModelRegistrySP/RetrieveVersionInfos
@@ -242,7 +242,7 @@ $ echo "{\"model_id\":\"my_model\", \"version_numbers\":[1]}" | grpcurl -plainte
 }
 ```
 
-#### Retrieve the n-th to last version of a model
+#### Retrieve the n-th to last iterations of a model
 
 ```console
 $ echo "{\"model_id\":\"my_model\", \"version_numbers\":[-2]}" | grpcurl -plaintext -d @ localhost:9000 cogmentAPI.ModelRegistrySP/RetrieveVersionInfos
@@ -261,7 +261,7 @@ $ echo "{\"model_id\":\"my_model\", \"version_numbers\":[-2]}" | grpcurl -plaint
 }
 ```
 
-### Retrieve given version data - `cogmentAPI.ModelRegistrySP/RetrieveVersionData ( .cogmentAPI.RetrieveVersionDataRequest ) returns ( stream .cogmentAPI.RetrieveVersionDataReplyChunk );`
+### Retrieve given iteration data - `cogmentAPI.ModelRegistrySP/RetrieveVersionData ( .cogmentAPI.RetrieveVersionDataRequest ) returns ( stream .cogmentAPI.RetrieveVersionDataReplyChunk );`
 
 ```console
 $ echo "{\"model_id\":\"my_model\", \"version_number\":1}" | grpcurl -plaintext -d @ localhost:9000 cogment.ModelRegistrySP/RetrieveVersionData
@@ -270,4 +270,4 @@ $ echo "{\"model_id\":\"my_model\", \"version_number\":1}" | grpcurl -plaintext 
 }
 ```
 
-To retrieve the n-th to last version, use `version_number:-n` (e.g. `-1` for the latest, `-2` for the 2nd to last).
+To retrieve the n-th to last iteration, use `version_number:-n` (e.g. `-1` for the latest, `-2` for the 2nd to last).

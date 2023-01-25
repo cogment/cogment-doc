@@ -139,7 +139,7 @@ Parameters:
 
 Return: _Datastore instance_ - An instance of the Datastore class.
 
-### `async get_model_registry(self, endpoint=Endpoint())`
+### `async get_model_registry_v2(self, endpoint=Endpoint())`
 
 Method to get a class instance to store and retrieve models in a ModelRegistry
 
@@ -335,50 +335,112 @@ Return: _generator(DatastoreSample instance)_ - A generator for the samples from
 
 Class containing data and methods to store and retrieve models from a ModelRegistry.
 
-### `async store_initial_version(self, model)`
+### `async store_model(self, name, model, iteration_properties=None)`
 
-Method to create a new model in the Model Registry and store the initial version
+Method to publish and save the model to storage in the Model Registry.
+When stored, a model will be available until explicitly deleted.
 
-Parameters:
-
--   `model`: _Model instance_ - The model to be stored. Any data in the _Model.stored_version_info_ member will be ignored
-
-Return: _VersionInfo instance_ - The version info of the newly-stored model version
-
-### `async store_version(self, model, archived=False)`
-
-Method to store a new version of a previously existing model in the Model Registry
+If the model name already exists, the model will be saved as a new iteration of the existing model name.
+Iteration numbers start at 0 (the first model sent to the Model Registry) and increase by 1 for every new iteration.
+But not all iterations may be in storage (see [publish_model](#async-publish_modelself-name-model-iteration_propertiesnone)).
 
 Parameters:
 
--   `model`: _Model instance_ - The model to be stored. Any data in the _stored_version_info_ member will be ignored
--   `archived`: _bool_ - Whether the model version will be archived (i.e. stored in permanent storage)
+-   `name`: _str_ - The model name to be stored.
+-   `model`: _bytes_ - The data representing the model.
+-   `iteration_properties`: _dict{str:str}_ - Custom information that is specific to this iteration and will be stored with it.
 
+Return: _ModelIterationInfo instance_ - The information about the newly stored model iteration.
 
-Return: _VersionInfo instance_ - The version info of the newly-stored model version
+### `async publish_model(self, name, model, iteration_properties=None)`
 
-### `async retrieve_version(self, model_id, version_number=-1, deserialize_func=None)`
+Method to send a model to the Model Registry for the sole purpose of being published to other services.
+This model will be transient and not saved in storage.
+It will stay available in the Model Registry for a time, dependent on the Model Registry [max_cache_item](cli/model-registry.md#cache_max_items) option, then be deleted automatically.
 
-Method to retrieve a specific version of a model from the ModelRegistry
-
-Parameters:
-
--   `model_id`: _str_ - The ID of the model to be retrieved
--   `version_number`: _int_ - The version number of the model to retrieve. Leaving this parameter as -1 will retrieve the latest version.
--   `deserialize_func`: _func(bytes)_ - An optional callback function that converts the retrieved serialized model back to its original type. If provided, the returned Model instance is guaranteed to have its _deserialized_model_ member populated.
-
-
-Return: _Model instance_ - The retrieved Model
-
-### `async retrieve_model_info(self, model_id)`
-
-Method to retrieve the model-information of a stored model type
+If the model name already exists, the model will be seen as a new iteration of the existing model name.
+Iteration numbers start at 0 (the first model sent to the Model Registry) and increase by 1 for every new iteration.
 
 Parameters:
 
--   `model_id`: _str_ - The ID of the model whose information will be retrieved
+-   `name`: _str_ - The model name to be published.
+-   `model`: _bytes_ - The data representing the model.
+-   `iteration_properties`: _dict{str:str}_ - Custom information that is specific to this iteration.
 
-Return: _ModelInfo instance_ - The retrieved ModelInfo
+Return: _ModelIterationInfo instance_ - The information about the newly published model iteration.
+
+### `async retrieve_model(self, name, iteration=-1)`
+
+Method to retrieve the data of a specific model iteration from the ModelRegistry.
+Transient iterations may become unavailable at any time.
+
+Parameters:
+
+-   `name`: _str_ - The model name to be retrieved.
+-   `iteration`: _int_ - The number of the model iteration to be retrieved. If -1, then the latest (most recent) iteration will be retrieved.
+
+Return: _bytes_ - The model data representing the specific iteration requested. `None` if the iteration is not available (if `iteration` = -1, it means the model has no iteration available).
+
+### `async remove_model(self, name)`
+
+Method to delete a model (and all its stored and transient iterations) from the Model Registry.
+
+Parameters:
+
+-   `name`: _str_ - The model name to be removed from the Model Registry.
+
+Return: None
+
+### `async list_models(self)`
+
+Method to retrieve the list of all models stored in the Model Registry.
+
+Parameters: None
+
+Return: _list[ModelInfo instance]_ - List of model info for all models stored in the Model Registry.
+
+### `async list_iterations(self, model_name)`
+
+Method to retrieve the list of all available iterations for a model in the Model Registry.
+
+Parameters:
+
+-   `model_name`: _str_ - The model name.
+
+Return: _list[ModelIterationInfo instance]_ - List of iteration info for all available iterations of the model. This includes all stored iterations and all currently available transient iterations.
+
+### `async get_iteration_info(self, name, iteration)`
+
+Method to retrieve information about a specific model iteration.
+
+Parameters:
+
+-   `name`: _str_ - The model name.
+-   `iteration`: _int_ - The iteration number. If -1, then information about the latest (most recent) iteration will be retrieved.
+
+Return: _ModelIterationInfo instance_ - The information about the model iteration. `None` if the iteration is not available (if `iteration` = -1, it means the model has no iteration available).
+
+### `async update_model_info(self, name, properties)`
+
+Method to store or update properties associated with the model name (not specific to any iteration).
+
+Parameters:
+
+-   `name`: _str_ - The model name.
+-   `properties`: _dict{str:str}_ - Custom information that will be stored with the model name, independently of any iteration. If the model name already has properties, they will be overwritten.
+
+Return: None
+
+### `async get_model_info(self, name)`
+
+Method to retrieve information associated with the model name (not specific to any iteration).
+
+Parameters:
+
+-   `name`: _str_ - The model name.
+
+Return: _ModelInfo instance_ - Info associated with the model name, independent of any iteration. `None` if the model is not found in the Model Registry.
+
 
 ## class Session
 
@@ -974,47 +1036,29 @@ Return: _generator(RecvMessage instance)_ - A generator for the messages in the 
 
 ## class ModelInfo
 
-Class containing the information of a model stored in the ModelRegistry
+Class containing information about a model name stored in the ModelRegistry.
 
-`id`: _str_ - The id of this model.
+`name`: _str_ - The model name.
 
-`user_data`: _dict{str:str}_ - Custom data that the user can attach to the model.
+`properties`: _dict{str:str}_ - Custom information associated with the model name (not specific to any iteration).
 
-## class VersionInfo
+## class ModelIterationInfo
 
-Class containing the information of a model version defined by and retrieved from the ModelRegistry
+Class containing information specific to a model iteration stored in the Model Registry.
 
-`version_number`: _int_ - Unique version number, assigned incrementally at creation by the model registry.
+`model_name`: _str_ - The name of the model.
 
-`creation_timestamp`: _int_ - When the model was created as nanosecond Unix epoch time.
+`iteration`: _int_ - The iteration number.
 
-`archived`: _bool_ - If `true`, this version is archived and should be stored in a long-term storage. If `false`, this version is not archived and can be evicted after a while. Non-archived versions should be used to _broadcast_ an update of the model during training.
+`timestamp`: _int_ - When the iteration was stored in the Model Registry. Unix epoch time in nanoseconds.
 
-`data_hash`: _str_ - SHA 256 hash (encoded in base64 with standard 64 characters with padding) of this version's serialized data, can be used to validate the data and for caching purposes.
+`hash`: _str_ - SHA 256 hash (encoded in base64 with standard 64 characters with padding) of the iteration's data.
 
-`data_size`: _int_ - Size (in bytes) of this version's serialized data.
+`size`: _int_ - Size (in bytes) of the iteration's data.
 
-## class cogment.Model(ModelInfo)
+`stored`: _bool_ - Whether the model is stored, as opposed to just being published (and therefore transient).
 
-Class extending `ModelInfo` that also contains information about a specfic version of a model. When providing an instance of this class to the ModelRegistry through a method such as [_ModelRegistry.store_version_](#async-store_versionself-model-archivedfalse), the _stored_version_info_ member will be ignored.
-
-`version_user_data`: _dict{str:str}_ - Custom data that the user can attach to the model version.
-
-`deserialized_model`: _Any_ - The model version to store in its original form. If provided to the ModelRegistry, it will be stored in a cache. When retrieving a Model from the ModelRegistry, this attribute will be populated if it was found in the cache, or if a [_deserialize_func_](#async-retrieve_versionself-model_id-version_number-1-deserialize_funcnone) was provided.
-
-`serialized_model`: _bytes_ - The serialized model version to store. When retrieving a Model from the ModelRegistry, this attribute will be empty if the Model was found in the cache; the _deserialized_model_ attribute will be populated instead
-
-`stored_version_info`: _VersionInfo_ - The version info defined and created by the ModelRegistry
-
-### `__init__(self, model_id, serialized_model, **kwargs)`
-
-Parameters:
-
--   `model_id`: _str_ - The id of this model.
-
--   `serialized_model`: _bytes_ - The serialized model version to store.
-
--   `**kwargs`: Accepts any of the other optional attributes as keyword to set their value on construction. E.g. `Model(model_id, serialized_model, deserialized_model=model)`
+`properties`: _dict{str:str}_ - Custom information associated with the iteration.
 
 ## class cogment.DatastoreFields(enum.Enum)
 

@@ -1149,7 +1149,7 @@ This API is defined in `model_registry.proto`. It is implemented by [`cogment-mo
 
 ### Service `ModelRegistrySP`
 
-This gRPC API defines a service able to store versioned model, e.g. neural network architecture, weights and any additional parameters.
+This gRPC API defines a service able to store models, e.g. neural network architecture, weights and any additional parameters.
 
 ```protobuf
 service ModelRegistrySP {
@@ -1175,7 +1175,7 @@ Create or update a model in the registry having the given unique (within the reg
 
 #### `DeleteModel()`
 
-Delete a given model and all its versions from the registry.
+Delete a given model and all its iterations from the registry.
 
 -   Metadata: None
 -   Request: [`DeleteModelRequest`](#deletemodelrequest)
@@ -1191,7 +1191,7 @@ Retrieve all or selected models. This procedure supports paginated requests.
 
 #### `CreateVersion()`
 
-Create a new version of a given model. Because of their potential large size, model version data are uploaded as a stream.
+Create a new iteration of a given model. Because of their potential large size, model iteration data are uploaded as a stream.
 
 -   Metadata: None
 -   Request: Stream of [`CreateVersionRequestChunk`](#createversionrequestchunk)
@@ -1199,7 +1199,7 @@ Create a new version of a given model. Because of their potential large size, mo
 
 #### `RetrieveVersionInfos()`
 
-Retrieve the information for all or selected versions of a given model.
+Retrieve the information for all or selected iterations of a given model.
 
 -   Metadata: None
 -   Request: [`RetrieveVersionInfosRequest`](#retrieveversioninfosrequest)
@@ -1207,7 +1207,7 @@ Retrieve the information for all or selected versions of a given model.
 
 #### `RetrieveVersionData()`
 
-Retrieve the data for a specific version of the model. Because of their potential large size, data are retrieved as a stream.
+Retrieve the data for a specific iteration of the model. Because of their potential large size, data are retrieved as a stream.
 
 -   Metadata: None
 -   Request: [`RetrieveVersionDataRequest`](#retrieveversiondatarequest)
@@ -1304,11 +1304,11 @@ message CreateVersionRequestChunk {
 
 The first message in the stream should define `header`:
 
--   `version_info`: Information regarding the model version to create, `version_number` will be ignored. `data_hash` and `data_size` should be computed from the total final data and will be used by the server to validate it.
+-   `version_info`: Information regarding the model iteration to create, `version_number` will be ignored. `data_hash` and `data_size` should be computed from the total final data and will be used by the server to validate it.
 
 The following messages should define `body`:
 
--   `data_chunk`: A chunk of the version data, all the chunks in the stream will be concatenated.
+-   `data_chunk`: A chunk of the iteration data, all the chunks in the stream will be concatenated.
 
 ### `CreateVersionReply`
 
@@ -1320,7 +1320,7 @@ message CreateVersionReply {
 }
 ```
 
--   `version_info`: The information relative to the created model version, in particular the defined `version_number`.
+-   `version_info`: The information relative to the created model iteration, in particular the defined `version_number`.
 
 ### `RetrieveVersionInfosRequest`
 
@@ -1335,10 +1335,10 @@ message RetrieveVersionInfosRequest {
 }
 ```
 
--   `model_id`: Identifier of the model we want to retrieve versions from.
--   `version_numbers`: List of desired version number (or -1 to denote the latest version). Leave empty to retrieve all versions of the given model.
--   `versions_count`: (optional) The desired number of versions to be retrieved, leave empty (or set to 0) to retrieve all the versions matching the request.
--   `version_handle`: (optional) Leave empty for the initial request, use previously provided `RetrieveVersionInfosReply.next_version_handle` on the next calls to retrieve the next versions.
+-   `model_id`: Identifier of the model we want to retrieve iterations from.
+-   `version_numbers`: List of desired iteration number (or -1 to denote the latest iteration). Leave empty to retrieve all iterations of the given model.
+-   `versions_count`: (optional) The desired number of iterations to be retrieved, leave empty (or set to 0) to retrieve all the iterations matching the request.
+-   `version_handle`: (optional) Leave empty for the initial request, use previously provided `RetrieveVersionInfosReply.next_version_handle` on the next calls to retrieve the next iterations.
 
 ### `RetrieveVersionInfosReply`
 
@@ -1351,8 +1351,8 @@ message RetrieveVersionInfosReply {
 }
 ```
 
--   `version_infos`: At most `RetrieveVersionInfosRequest.versions_count` versions.
--   `next_version_handle`: Opaque handle to be used to retrieve the next versions matching the request.
+-   `version_infos`: At most `RetrieveVersionInfosRequest.versions_count` iterations.
+-   `next_version_handle`: Opaque handle to be used to retrieve the next iterations matching the request.
 
 ### `RetrieveVersionDataRequest`
 
@@ -1365,8 +1365,8 @@ message RetrieveVersionDataRequest {
 }
 ```
 
--   `model_id`: Identifier of the model we want to retrieve version from.
--   `version_numbers`: Number of the desired version.
+-   `model_id`: Identifier of the model we want to retrieve iteration from.
+-   `version_numbers`: Number of the desired iteration.
 
 ### `RetrieveVersionDataReplyChunk`
 
@@ -1378,7 +1378,7 @@ message RetrieveVersionDataReplyChunk {
 }
 ```
 
--   `data_chunk`: A chunk of the version data. All the chunks in the stream need to be concatenated. The completeness and validity of the received data can be checked using the version's `data_size` and `data_hash` respectively.
+-   `data_chunk`: A chunk of the iteration data. All the chunks in the stream need to be concatenated. The completeness and validity of the received data can be checked using the iteration's `data_size` and `data_hash` respectively.
 
 ### `ModelInfo`
 
@@ -1396,7 +1396,7 @@ message ModelInfo {
 
 ### `ModelVersionInfo`
 
-Defines a model version and associated user data.
+Defines a model iteration and associated user data.
 
 ```protobuf
 message ModelVersionInfo {
@@ -1410,17 +1410,17 @@ message ModelVersionInfo {
 }
 ```
 
--   `model_id`: Unique identifier, within the registry, of this version's model.
--   `version_number`: Unique version number, assigned incrementally at creation by the model registry.
+-   `model_id`: Unique identifier, within the registry, of this iteration's model.
+-   `version_number`: Unique iteration number, assigned incrementally at creation by the model registry.
 -   `creation_timestamp`: When the model was created as nanosecond Unix epoch time.
--   `archived`: If `true`, this version is archived and should be stored in a long-term storage. If `false`, this version is not archived and can be evicted after a while. Non-archived versions should be used to _broadcast_ an update of the model during training.
--   `data_hash`: SHA 256 hash (encoded in base64 with standard 64 characters with padding) of this version's data, can be used to validate the data and for caching purposes.
--   `data_size`: Size (in bytes) of this version's data.
+-   `archived`: If `true`, this iteration is archived and should be stored in a long-term storage. If `false`, this iteration is not archived and can be evicted after a while. Non-archived iterations should be used to _broadcast_ an update of the model during training.
+-   `data_hash`: SHA 256 hash (encoded in base64 with standard 64 characters with padding) of this iteration's data, can be used to validate the data and for caching purposes.
+-   `data_size`: Size (in bytes) of this iteration's data.
 -   `user_data`: Key/value user data associated with the model, in particular it can be used to provide information required for the deserialization of the data.
 
 #### `Version()`
 
-Called to request version data.
+Called to request iteration data.
 
 Metadata: None
 
