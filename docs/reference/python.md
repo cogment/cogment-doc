@@ -108,14 +108,14 @@ Parameters:
 -   `directory_endpoint`: _Endpoint instance_ - Grpc endpoint (i.e. starting with "grpc://") to access the directory. The directory will be used to inquire discovery endpoints, and to register the services for discovery. If no endpoint is provided, a check for the environment variable `COGMENT_DIRECTORY_ENDPOINT` will be made and if it exists, it will be used as the URL of a basic endpoint.
 -   `directory_auth_token`: _str_ - Authentication token for access to the directory. This token will be registered with the services, and must match registered tokens when inquiring the directory. If no token is provided, a check for the environment variable `COGMENT_DIRECTORY_AUTHENTICATION_TOKEN` will be made and if it exists, it will be used as the token.
 
-### `async serve_all_registered(self, served_endpoint, prometheus_port = 8000)`
+### `async serve_all_registered(self, served_endpoint, prometheus_port=None)`
 
 Method to start and run the communication server for the registered components (environment, actor, prehook, datalog). This coroutine will end when all activity has stopped. If a directory is defined in the Context, then this method will also register the services in the defined directory.
 
 Parameters:
 
 -   `served_endpoint`: _ServedEndpoint instance_ - Details of the connection for the served components.
--   `prometheus_port`: _int_ - TCP/IP port number for Prometheus. Can be set to None to deactivate the Prometheus metrics server.
+-   `prometheus_port`: _int_ - TCP/IP port number for Prometheus. Set to None to disable the Prometheus metrics server.
 
 Return: None
 
