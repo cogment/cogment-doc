@@ -36,7 +36,7 @@ Can be specified as:
 
 -   a command line option, e.g. `--endpoint="grpc://10.0.123.5:9003"`,
 -   an environment variable, e.g. `COGMENT_TRIAL_DATASTORE_ENDPOINT=grpc://trial_datastore:9003`,
--   its default value is `grpc://localhost:9003` (which is the default when running `cogment services trial_datastore` locally).
+-   its default value is "grpc://localhost:9003" (which is the default when running `cogment services trial_datastore` locally).
 
 #### `timeout`
 

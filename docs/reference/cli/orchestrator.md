@@ -59,9 +59,11 @@ Can be specified as:
 -   an environment variable, e.g. `COGMENT_DEFAULT_PARAMS_FILE=./path/to/params.yaml`,
 -   it has no default value.
 
-### `directory_services`
+### `directory_endpoint`
 
-Cogment endpoint of the directory service (only one directory is accepted). It must be a [gRPC endpoint](../parameters.md#grpc-scheme). The directory service may be used to inquire about the location of services before a new trial starts, and to register the Orchestrator services. If not provided, the endpoints provided to the Orchestrator or in the parameters must not be discovery endpoints (i.e. must not require a directory).
+Cogment endpoint of the directory service. It must be a [gRPC endpoint](../parameters.md#grpc-scheme). The directory will be used to register the orchestrator services, and to discover services for new trials.
+
+If not provided, the endpoints provided to the Orchestrator or in the parameters must _not_ be discovery endpoints (i.e. must not require a directory). And the Orchestrator will not auto register its services, in which case manual registration to the directory must be done, or an explicit address must be provided to access the Orchestrator.
 
 Can be specified as:
 
@@ -71,7 +73,7 @@ Can be specified as:
 
 ### `directory_authentication_token`
 
-Authentication token for Directory communication. This token must match the token in the Directory when doing an inquiry or deregistering a service. It is recorded in the Directory when registering a service. An empty token is the same as no token.
+Authentication token for services registered in the Directory. It is recorded in the Directory when registering a service. And a matching token must be provided to inquire for the service. An empty token is the same as no token.
 
 Can be specified as:
 

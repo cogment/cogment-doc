@@ -1,5 +1,7 @@
 ---
 sidebar_position: 4
+toc_min_heading_level: 2
+toc_max_heading_level: 2
 ---
 
 # Python SDK
@@ -292,13 +294,15 @@ Parameters:
 
 Return: _list[DatastoreTrialInfo instance]_ - List of trial information, one per trial. Can be empty if no trial matches any of the provided trial IDs.
 
-### `async all_trials(self, bundle_size=1)`
+### `async all_trials(self, bundle_size=1, wait_for_trials=0)`
 
 Generator method to iterate through all the trials in the Datastore.
 
 Parameters:
 
 -   `bundle_size`: _int_ - Number of trials to retrieve at a time from the Datastore. This may be increased to more efficiently inquire the Datastore at the price of increased memory use.
+
+-   `wait_for_trials`: _float_ - Number of seconds to wait for new trials (to reach bundle size). If 0, only the trials currently in the datastore will be returned.
 
 Return: _generator(DatastoreTrialInfo instance)_ - A generator for the trials in the Datastore.
 
@@ -338,10 +342,10 @@ Class containing data and methods to store and retrieve models from a ModelRegis
 ### `async store_model(self, name, model, iteration_properties=None)`
 
 Method to publish and save the model to storage in the Model Registry.
-When stored, a model will be available until explicitly deleted.
+When stored, a model name will be available until explicitly deleted.
 
 If the model name already exists, the model will be saved as a new iteration of the existing model name.
-Iteration numbers start at 0 (the first model sent to the Model Registry) and increase by 1 for every new iteration.
+Iteration numbers start at 1 (the first model sent to the Model Registry) and increase by 1 for every new iteration.
 But not all iterations may be in storage (see [publish_model](#async-publish_modelself-name-model-iteration_propertiesnone)).
 
 Parameters:
@@ -440,6 +444,18 @@ Parameters:
 -   `name`: _str_ - The model name.
 
 Return: _ModelInfo instance_ - Info associated with the model name, independent of any iteration. `None` if the model is not found in the Model Registry.
+
+### `async iteration_updates(self, model_name)`
+
+Generator method to receive the information about the model iterations as they are stored or published.
+
+Information about the latest iteration will be returned immediately, then the function will wait for new iterations to be stored or published to the Model Registry and return their information when they are made available.
+
+Parameters:
+
+-   `model_name`: _str_ - The model name for which to receive iteration information.
+
+Return: _generator(ModelIterationInfo instance)_ - A generator for the model iteration information.
 
 
 ## class Session

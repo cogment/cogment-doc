@@ -91,3 +91,45 @@ Can be specified as:
 -   a command line option, e.g. `--log_file=./path/to/cogment.log`,
 -   an environment variable, e.g. `COGMENT_LOG_FILE=./path/to/cogment.log`,
 -   default value is info.
+
+### `directory_endpoint`
+
+Cogment endpoint of the directory service. It must be a [gRPC endpoint](../../parameters.md#grpc-scheme). The directory will be used to register the trial datastore services for discovery by other services. If not provided, the trial datastore will not auto register, in which case manual registration to the directory must be done, or an explicit address must be provided to access the services of the trial datastore.
+
+Can be specified as:
+
+-   a command line option, e.g. `--directory_endpoint=grpc://foo:9005`,
+-   an environment variable, e.g. `COGMENT_DIRECTORY_ENDPOINT=grpc://foo:9005`,
+-   it has no default value.
+
+### `directory_authentication_token`
+
+Authentication token for services registered in the Directory. It is recorded in the Directory when registering a service. And a matching token must be provided to inquire for the service. An empty token is the same as no token.
+
+Can be specified as:
+
+-   a command line option, e.g. `--directory_authentication_token=GH670ploT`,
+-   an environment variable, e.g. `COGMENT_DIRECTORY_AUTHENTICATION_TOKEN=GH670ploT`,
+-   it has no default value.
+
+### `directory_registration_host`
+
+This is the host that will be registered to the Directory for the Trial Datastore services. If not provided, the Trial Datastore will determine its own IP address and use that as the registration host.
+
+In some circumstances, the IP address determined by Cogment may be wrong (e.g. multiple interfaces, load balancing, firewall), thus a host (hostname or IP address) must be explicitly provided.
+
+Can be specified as:
+
+-   a command line option, e.g. `--directory_registration_host=foo.bar`,
+-   an environment variable, e.g. `COGMENT_ORCHESTRATOR_DIRECTORY_REGISTRATION_HOST=foo.bar`,
+-   it has no default value (i.e. self determined IP address is used).
+
+### `directory_registration_properties`
+
+These are the properties that will be registered to the Directory for the Trial Datastore services. When inquiring the Directory, the properties inquired must match the properties registered. This is a string representing multiple properties in the form "name=value,name=value,name=value" where the values are optional.
+
+Can be specified as:
+
+-   a command line option, e.g. `--directory_registration_properties="Sim=20,hpp,mem=HIGH"`,
+-   an environment variable, e.g. `COGMENT_ORCHESTRATOR_DIRECTORY_REGISTRATION_PROPERTIES="Sim=20,hpp,mem=HIGH"`,
+-   it has no default value.

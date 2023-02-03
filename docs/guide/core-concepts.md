@@ -99,6 +99,7 @@ On top of the core components described above, a Cogment deployment can include 
 
 -   **Datalog** services can be used to listen to the activity during a trial (actions, observations, rewards, messages) in order to, for example, store these data for the offline training of AI agents. [**Trial Datastore**](../reference/cli/trial-datastore/trial-datastore-server.md) is an out-of-the-box implementation of this.
 -   [**Model Registry**](../reference/cli/model-registry.md) handles the storage and dispatch of AI models trained with Cogment and used by the actors.
+-   [**Directory**](../reference/cli/directory/directory-server.md) handles the publishing and discovery of cogment services.
 -   **Pre-Trial Hooks** can be used to dynamically setup Trials from a given configuration, for example changing the number of Actors or pointing to other Environment or Actor implementations.
 
 ## Components availability summary
@@ -116,6 +117,8 @@ The following table summarizes how each component can either be implemented or u
 | Trial Datastore Client | ✅ [`cogment client trial_datastore`][24]   | ✅ [get datastore][23]                                      |                                            | ✅ use [Trial Datastore API][22]                          |
 | Model Registry         | ✅ [`cogment services model_registry`][17]  |                                                             |                                            | ✅ implement [Model Registry API][21]                     |
 | Model Registry Client  |                                             | ✅ [get model registry][25]                                 |                                            | ✅ use [Model Registry API][21]                           |
+| Directory              | ✅ [`cogment services directory][26]        |                                                             |                                            | ✅ implement [Directory API][29]                          |
+| Directory Client       | ✅ [`cogment client directory][27]          | ✅ [use directory][28]                                      |                                            | ✅ use [Directory API][29]                                |
 | Pre Trial Hook         |                                             | ✅ [register pre trial hook][11] & [serve][8]               |                                            | ✅ implement [Pre Trial Hook API][6]                      |
 
 [1]: ../reference/grpc.md#service-actor-api
@@ -141,3 +144,8 @@ The following table summarizes how each component can either be implemented or u
 [23]: ../reference/python.md#get_datastoreself-endpoint
 [24]: ../reference/cli/trial-datastore/trial-datastore-client.md
 [25]: ../reference/python.md#async-get_model_registryself-endpointendpoint
+
+[26]: ../reference/cli/directory/directory-server.md
+[27]: ../reference/cli/directory/directory-client.md
+[28]: ../reference/python.md#__init__self-user_id-cog_settings-prometheus_registryprometheus_clientcoreregistry-directory_endpointnone-directory_auth_tokennone
+[29]: ../reference/grpc.md#directory-api

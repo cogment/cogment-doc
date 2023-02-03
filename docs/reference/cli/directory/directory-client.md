@@ -11,23 +11,23 @@ The Directory Client is a utility to manually access (through the command line i
 
 All directory client services have these options in common.
 
-### `endpoint`
+### `directory_endpoint`
 
 The grpc protocol endpoint where to find the Directory.
 
 Can be specified as:
 
--   a command line option, e.g. `--endpoint`,
+-   a command line option, e.g. `--directory_endpoint`,
 -   an environment variable, e.g. `COGMENT_DIRECTORY_ENDPOINT`,
--   its default value is "grpc://localhost:9005".
+-   its default value is "grpc://localhost:9005" (which is the default when running `cogment services directory` locally).
 
-### `auth_token`
+### `directory_authentication_token`
 
 The authentication token for the service(s) in the Directory.
 
 Can be specified as:
 
--   a command line option, e.g. `--auth_token`,
+-   a command line option, e.g. `--directory_authentication_token`,
 -   an environment variable, e.g. `COGMENT_DIRECTORY_AUTHENTICATION_TOKEN`,
 -   empty default value ("").
 
@@ -38,7 +38,7 @@ The registration client is used to register (add) a service to the Directory.
 E.g.:
 
 ```bash
-$ cogment client directory register --endpoint="grpc://dir:9005" --host="act" --port=9030 --type="actor" --properties="__actor_class=reporter,intensity=5,high_profile"
+$ cogment client directory register --directory_endpoint="grpc://dir:9005" --host="act" --port=9030 --type="actor" --properties="__actor_class=reporter,intensity=5,high_profile"
 
 Service ID [7722934920723]  Secret [ZGi6GLe]
 ```
@@ -87,7 +87,7 @@ The deregistration client is used to deregister (remove/delete) a service from t
 E.g.:
 
 ```bash
-$ cogment client directory deregister --endpoint="grpc://dir:9005" --service_id=7722934920723 --secret="ZGi6GLe"
+$ cogment client directory deregister --directory_endpoint="grpc://dir:9005" --service_id=7722934920723 --secret="ZGi6GLe"
 ```
 
 ### Output
