@@ -67,7 +67,7 @@ Messages and feedback user data don't have a set type, they can be any type of p
 
 The trial [parameters](./parameters.md) can come from the Controller `start_trial` command, from the default parameters provided to the Orchestrator on startup, or from the pre-trial hooks (themselves provided to the Orchestrator on startup).
 
-The parameters are mostly indepedent of the spec file (cogment.yaml), except that the active actors listed in the parameters must have their actor class match an actor class defined in the spec file.
+The parameters are mostly independent of the spec file (cogment.yaml), except that the active actors listed in the parameters must have their actor class match an actor class defined in the spec file.
 
 Below, when we refer to the trial parameters, we mean the final parameters after any pre-trial hooks.
 
@@ -129,7 +129,7 @@ Parameters:
 
 -   `endpoint`: _[Endpoint](#class-cogmentendpoint) instance_ - Details of the connection to the Orchestrator.
 
-Return: _Controller instance_ - An instance of the Controller class used to manage trials.
+Return: _Controller instance_ - An instance of the `Controller` class used to manage trials.
 
 ### `async get_datastore(self, endpoint=Endpoint())`
 
@@ -139,17 +139,17 @@ Parameters:
 
 -   `endpoint`: _[Endpoint](#class-cogmentendpoint) instance_ - Details of the connection to the Datastore.
 
-Return: _Datastore instance_ - An instance of the Datastore class.
+Return: _Datastore instance_ - An instance of the `Datastore` class.
 
 ### `async get_model_registry_v2(self, endpoint=Endpoint())`
 
-Method to get a class instance to store and retrieve models in a ModelRegistry
+Method to get a class instance to store and retrieve models in a Model Registry
 
 Parameters:
 
 -   `endpoint`: _[Endpoint](#class-cogmentendpoint) instance_ - Details of the connection to the Model Registry.
 
-Return: _ModelRegistry instance_ - An instance of the ModelRegistry class.
+Return: _ModelRegistry instance_ - An instance of the `ModelRegistry` class.
 
 ### `async join_trial(self, trial_id, endpoint=Endpoint(), impl_name=None, actor_name=None, actor_class=None)`
 
@@ -457,6 +457,24 @@ Parameters:
 
 Return: _generator(ModelIterationInfo instance)_ - A generator for the model iteration information.
 
+### `async track_latest_model(self, name, deserialize_func=None, initial_wait=0)`
+
+Method to start automatically tracking a specific model and make the latest iteration available seamlessly.
+
+A background task will be started (running `iteration_updates`) to track the latest model iteration and retrieve it automatically.
+Multiple calls for the same model will not duplicate the background task and will point to the same underlying model.
+Thus if the model is changed by a caller, all callers will see the changes (unless and until a new model is retrieved from the Model Registry).
+
+Due to background processing and caching, this method is not thread safe and cannot be used by different async loops.
+It is best used for simple cases. More complicated use-cases should explicitly use `iteration_updates`.
+
+Parameters:
+
+-   `name`: _str_ - The model name to track.
+-   `deserialize_func`: _func(bytes)_ - Callback function to deserialize the model iteration from a `bytes` string to a user defined object instance. This is called asynchronously in the background to deserialize the raw bytes from the Model Registry, and the user object is made available in `LatestModel`. If not provided, the raw `bytes` string from the Model Registry is made available in `LatestModel` instead of a user object.
+-   `initial_wait`: _int_ - Number of seconds to wait for the model name to be available in the Model Registry. The method will return once the model name is available, or raise an exception if the model name was not available within the given time. The model name being available only means that it is registered in the Model Registry, not necessarily that it has iterations; i.e. the background task may wait more for iterations to be available.
+
+Return: _LatestModel instance_ -  An instance of the `LatestModel` class.
 
 ## class Session
 
@@ -706,7 +724,7 @@ Class enclosing the details for connection from an Orchestrator.
 
 `port`: _int_ - The TCP/IP port where the service will be awaiting the Orchestrator connection.
 
-`private_key_certificate_chain_pairs`: _list[tupple(str, str)]_ - To use TLS for incoming connections, this must be set to a list of tuples of the form (PEM-encoded private key, PEM-encoded certificate chain).
+`private_key_certificate_chain_pairs`: _list[tuple(str, str)]_ - To use TLS for incoming connections, this must be set to a list of tuples of the form (PEM-encoded private key, PEM-encoded certificate chain).
 
 `root_certificates`: _str_ - If using TLS for the connection (i.e. `private_key_certificate_chain_pairs` is not `None`), this should be set to PEM-encoded Orchestrator root certificates that the server will use to verify Orchestrator authentication.
 
@@ -1075,6 +1093,46 @@ Class containing information specific to a model iteration stored in the Model R
 `stored`: _bool_ - Whether the model is stored, as opposed to just being published (and therefore transient).
 
 `properties`: _dict{str:str}_ - Custom information associated with the iteration.
+
+## class LatestModel
+
+Class making the latest model iteration, from the Model Registry, available on-demand.
+
+`name`: _str_ - The name of the model.
+
+### `async get(self)`
+
+Method to return the latest iteration that has been downloaded in the background. This method may wait for the first iteration to be available. Once an iteration is available, this method will not be blocking.
+
+Subsequent calls to this method may return different results according to the availability of new data.
+
+Parameters: None
+
+Return: _tuple(data, ModelIterationInfo instance)_ - The data can either be a `bytes` string or a user object depending on `is_deserialized()`. The second tuple item is a `ModelIterationInfo` instance containing the information of the iteration represented by the data.
+
+### `is_deserialized(self)`
+
+Method to check if the model iteration is deserialized automatically.
+
+Parameters: None
+
+Return: _bool_ - True if the model is deserialized automatically in the background, in which case the data (returned by `get`) is a user object. This user object is derived by calling `deserialize_func` (parameter of `ModelRegistry.track_latest_model`) with the raw bytes from the Model Registry. False if the data (returned by `get`) is the raw bytes retrieved from the Model Registry.
+
+### `is_available(self)`
+
+Method to check if an iteration is available.
+
+Parameters: None
+
+Returns: _bool_ - True if an iteration is available, an thus `get` will not block. False otherwise.
+
+### `async wait_for_available(self)`
+
+Method to wait for an iteration to be available.
+
+Parameters: None
+
+Returns: None
 
 ## class cogment.DatastoreFields(enum.Enum)
 
