@@ -19,6 +19,7 @@ The parameters of the trial start call take priority over all others, and thus w
 ## Parameters reference
 
 -   `config`: User defined configuration sent to the first trial pre-hook before the start of the trial. The type is defined in the spec file under section `trial:config_type`. DEFAULT: not set.
+-   `properties`: User defined key/value properties in a map/dictionary style. DEFAULT: empty.
 -   `max_steps`: The maximum number of time steps (ticks) that the trial will run before requesting a [_soft_ termination](../guide/development-guide.mdx#soft-termination) at the next step. DEFAULT: 0 (infinite nb steps).
 -   `max_inactivity`: The number of seconds of inactivity after which a trial will be [_hard_ terminated](../guide/development-guide.mdx#hard-termination). "Activity" is defined as a message received by the Orchestrator from a user component. If 0, the trial will not be terminated because of inactivity. DEFAULT: 30 seconds.
 -   `nb_buffered_ticks`: The number of ticks (steps) to buffer in the Orchestrator before sending the data to the datalog. This is in effect the delay between the currently running trial and the datalog data. It is also the time window for past data (e.g. rewards) to still make it in the correct normal sample of the datalog. If data is too far in the past (the tick ID is more in the past than `nb_buffered_ticks`) then a special `out-of-sync` [sample](./python.md#class-cogmentlogsample) will be sent to the datalog. This value must be larger than 1. DEFAULT: 2.
@@ -49,6 +50,7 @@ Any other top level section will be ignored.
 
 The layout is hierarchical, so the name of the parameters may be different than the parameter description above:
 
+-   `properties`: Dictionary of user defined key/value pairs.
 -   `max_steps`
 -   `max_inactivity`
 -   `nb_buffered_ticks`
@@ -72,6 +74,13 @@ E.g.:
 
 ```yaml
 trial_params:
+    properties:
+        days_to_retain: 10
+        training: no
+        with_humans: yes
+        params_source: default
+        processor: "Alpha-67+"
+
     max_steps: 1000
     max_inactivity: 30
     nb_buffered_ticks: 5

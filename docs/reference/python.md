@@ -753,6 +753,8 @@ Class enclosing the details of a trial.
 
 `trial_id`: _str_ - The trial ID to which the details pertain.
 
+`properties`: _dict{str:str}_ - User defined properties provided on trial start (see [Trial Parameters](./parameters.md#trial-parameters)).
+
 `state`: _cogment.TrialState_ - The current state of the trial.
 
 `env_name`: _str_ - The name of the environment running the trial.
@@ -891,6 +893,8 @@ Any attribute can be set to `None` to reset it to its default.
 Some attributes (`config` and `environment_config`) are immutable: changes to the instance received will not be reflected in `TrialParameters`, the attribute must be set with a new instance to make changes. These attributes can also return `None` if not set.
 
 `config`: _protobuf class instance_ - The type is specified in the spec file under the section `trial:config_type`.
+
+`properties`: _dict{str:str}_
 
 `max_steps`: _int_
 
