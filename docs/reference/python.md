@@ -1138,6 +1138,17 @@ Parameters: None
 
 Returns: None
 
+### `async wait_for_newer(self, iteration)`
+
+Method to wait for a newer iteration to be available.
+Once this method returns, the newer iteration can be retrieved with `get`.
+
+Parameters:
+
+-   `iteration`: _int_ - Strict lower bound for awaited model iteration. I.e. the method will wait for a model iteration that is newer, and not equal, to this.
+
+Returns: None
+
 ## class cogment.DatastoreFields(enum.Enum)
 
 Enum representing the various data in a `DatastoreActorData` instance
