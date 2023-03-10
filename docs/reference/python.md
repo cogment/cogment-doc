@@ -43,8 +43,10 @@ Or set the environment variable `COGMENT_LOG_LEVEL` to one of the values: `off`,
 Since the Cogment Python SDK does not output any critical logs, the `logging.CRITICAL` level effectively turns logging off.
 The `trace` level does not match a standard Python logging level and is mostly for internal use with a level lower than `logging.DEBUG`.
 
-In all cases, the Cogment logger has a null handler, and the handler management is left to the application (as is standard in Python).
-The application can enable logging as required, e.g.:
+The Cogment logger does not define a handler, and the handler management is left to the application (as is standard for a library in Python).
+Thus the Python `logging.lastResort` handler will be used if no explicit handler is defined by the application (i.e. only warnings and errors will be output to stderr, with no formatting).
+The application should enable a handler as required.
+E.g. for a default logging setup (including a stream handler):
 
 ```python
 import cogment
@@ -52,6 +54,12 @@ import logging
 
 logging.basicConfig()
 ```
+
+:::note
+Calling any of the module level functions `logging.log`, `logging.debug`, `logging.info`, `logging.warning`, `logging.error`, `logging.critical` or `logging.exception`, will implicitly call `logging.basicConfig`.
+And calling `logging.basicConfig` does nothing if there is a root handler already defined.
+See Python documentation for [logging.basicConfig](https://docs.python.org/3/library/logging.html#logging.basicConfig)
+:::
 
 ### Trial Specifications
 
