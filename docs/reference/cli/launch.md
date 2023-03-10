@@ -1,13 +1,12 @@
 ---
-title: Launch
 sidebar_position: 5
 ---
 
 # Launch
 
-Launch is a utility command meant to faciliate locally launching and shutting down an entire cogment project at once.
+Launch is a utility command meant to facilitate locally launching and shutting down an entire cogment project at once.
 
-When launch is used, a set of processes will be launched, as described by a yaml file. Once any of these processes terminates, all other ones will be terminated as well.
+When launch is used, a set of processes will be launched to run in parallel, as described by a yaml file. Once any of these processes terminates, all other ones will be terminated as well.
 
 ## Command line
 
@@ -21,12 +20,17 @@ $ cogment launch ./launch.yaml
 
 The launch yaml file consists of a single top-level object called `scripts`.
 
-Each property of `scripts` represents one of the processes to run. It will be done by running the contents of the `commands` property in sequence
+Each node under `scripts` represents one of the processes to run. The processes can be given any name, which will serve to identify outputs related to that process.
+
+Each process will run the contents of the `commands` list in sequence (i.e. the next command will run when the previous terminates). Each command runs in an independent environment (e.g. environment variables set by one command will not be seen by the others).
+
+E.g.:
 
 ```yaml
 scripts:
     process_a:
         commands:
+            - ["retrieve_db.sh"]
             - ["python", "env/main.py"]
 
     process_b:
@@ -36,43 +40,45 @@ scripts:
 
 ## Environment Variables
 
-You can specify environment variables to set using the `environment` property of scripts:
+You can set environment variables using the `environment` node of the process. These will be part of the environment of all commands of the process.
 
-E.g.
+E.g:
 
 ```yaml
 scripts:
     orchestrator:
         environment:
             COGMENT_ORCHESTRATOR_ACTOR_PORT: 9000
+            COGMENT_LIFECYCLE_PORT: 9000
         commands:
             - ["cogment", "services", "orchestrator"]
 ```
 
 ## Variable substitution
 
-You can use to environment variables using `{{.VAR_NAME}}` anywhere whitin the grammar. Variables set using `environment` will be also available within `commands`.
+You can substitute environment variables using `{{.ENV_VAR}}` anywhere within the grammar of the `commands` list. Environment variables set in the `environment` node will also be available for substitution.
 
-E.g.
+E.g.:
 
 ```yaml
 scripts:
     say_hi:
+        environment:
+            QUESTION: "How are you?"
         commands:
-            - ["echo", "Hello, {{.USER}}"]
+            - ["echo", "Hello, {{.USER}}. {{.QUESTION}}"]
 ```
 
-N.B. Technically, it uses [go text templates](https://pkg.go.dev/text/template), where the root object is a dictionnary of the available environment variables.
+## Working folder
 
-## Working directory
+By default, the current working folder is set to the folder containing the launch script. You can override that behavior with the `dir` node for each process.
 
-By default, the current working directory is set to the folder containing the launch script. You can override that behavior with the `dir` property:
-
-E.g.
+E.g.:
 
 ```yaml
 scripts:
-    dir: environment
-    commands:
-        - ["python", "main.py"]
+    actor_alpha:
+        dir: ./actors/alpha
+        commands:
+            - ["python", "main.py"]
 ```
