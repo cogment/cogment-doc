@@ -237,7 +237,7 @@ Parameters:
 
 Return: _str_ - The newly started trial ID. An empty string if the trial was not started due to a non-unique requested ID.
 
-### `terminate_trial(self, trial_ids, hard=False)`
+### `async terminate_trial(self, trial_ids, hard=False)`
 
 Method to request the end of a trial.
 
