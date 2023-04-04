@@ -121,7 +121,7 @@ In some circumstances, the IP address determined by Cogment may be wrong (e.g. m
 Can be specified as:
 
 -   a command line option, e.g. `--directory_registration_host=foo.bar`,
--   an environment variable, e.g. `COGMENT_ORCHESTRATOR_DIRECTORY_REGISTRATION_HOST=foo.bar`,
+-   an environment variable, e.g. `COGMENT_TRIAL_DATASTORE_DIRECTORY_REGISTRATION_HOST=foo.bar`,
 -   it has no default value (i.e. self determined IP address is used).
 
 ### `directory_registration_properties`
@@ -131,5 +131,5 @@ These are the properties that will be registered to the Directory for the Trial 
 Can be specified as:
 
 -   a command line option, e.g. `--directory_registration_properties="Sim=20,hpp,mem=HIGH"`,
--   an environment variable, e.g. `COGMENT_ORCHESTRATOR_DIRECTORY_REGISTRATION_PROPERTIES="Sim=20,hpp,mem=HIGH"`,
+-   an environment variable, e.g. `COGMENT_TRIAL_DATASTORE_DIRECTORY_REGISTRATION_PROPERTIES="Sim=20,hpp,mem=HIGH"`,
 -   it has no default value.
