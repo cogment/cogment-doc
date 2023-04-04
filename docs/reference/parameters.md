@@ -32,7 +32,7 @@ The parameters of the trial start call take priority over all others, and thus w
 -   `actors`: List of actor parameter sets.
     -   `config`: User defined configuration sent to the actor at the start of the trial. The type is defined in the spec file under section `actor_classes:config_type` for the appropriate actor class. DEFAULT: not set.
     -   `name`: The name of the actor (must be unique in the trial). DEFAULT: none (required parameter).
-    -   `class_name`: The name of the actor class. This must match a value in the spec file under section `actor_classes:name`. DEFAULT: none (required parameter).
+    -   `actor_class`: The name of the actor class. This must match a value in the spec file under section `actor_classes:name`. DEFAULT: none (required parameter).
     -   `endpoint`: Endpoint of the actor. This can be "cogment://client", which indicates a client actor. DEFAULT: context discovery endpoint (the Directory will be inquired).
     -   `implementation`: The name of the implementation to run this actor. This must match an implementation that is defined at the endpoint. DEFAULT: not set (an arbitrary implementation will be chosen at runtime).
     -   `initial_connection_timeout`: Maximum amount of time (in seconds) to wait for an actor to connect to a new trial, after which it is considered unavailable for the trial duration. If the wait is too long (see `max_inactivity`), the trial may be terminated. The trial may wait longer than the requested timeout. DEFAULT: 0.0 (no timeout; indefinite wait).

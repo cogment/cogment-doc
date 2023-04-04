@@ -258,15 +258,16 @@ Parameters:
 
 Return: _list[TrialInfo instance]_ - List of trial information, one per trial. Can be empty if no trial matches.
 
-### `async watch_trials(self, trial_state_filters=[])`
+### `async watch_trials(self, trial_state_filters=[], full_info=False)`
 
-Generator method to iterate, in real-time, through all trial states matching the filters. When called, it will first iterate over the current states matching the filters, for all trials. Afterwards, it will iterate in real-time over the matching states as they change.
+Generator method to iterate, in real-time, through all trials with state matching the filters. When called, it will first iterate over the trials with current state matching the filters. Afterwards, it will wait, and yield in real-time, as trial states change and match the filters.
 
 Parameters:
 
 -   `trial_state_filters`: _list[cogment.TrialState]_ - List of enum values from `cogment.TrialState` for which we are interested in receiving state changes.
+-   `full_info`: _bool_ - If True, all the fields of the returned `TrialInfo` will be set. Otherwise only the trial ID and state will be set.
 
-Return: _generator(TrialInfo instance)_ - A generator for the state changes that arrive. The `TrialInfo` received here only contains the trial ID and the state.
+Return: _generator(TrialInfo instance)_ - A generator for the relevant trial info.
 
 ### `async get_actors(self, trial_id)`
 
@@ -609,7 +610,7 @@ Return: None
 
 Class based on `Session`, containing session/trial data and methods necessary to run an actor for a trial. An instance of this class is passed as argument to the actor callback function registered with `cogment.Context.register_actor`.
 
-`class_name`: _str_ - Name of the class of actor this instance represents. Specified in the spec file as `actor_classes:name`.
+`actor_class`: _str_ - Name of the class of actor this instance represents. Specified in the spec file as `actor_classes:name`.
 
 `impl_name`: _str_ - Name of the implementation of the actor represented by this instance.
 

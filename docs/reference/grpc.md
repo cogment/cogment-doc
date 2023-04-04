@@ -524,10 +524,12 @@ Request message for the `WatchTrials` procedure.
 ```protobuf
 message TrialListRequest {
   repeated TrialState filter = 1;
+  bool full_info = 2;
 }
 ```
 
 -   filter: The list of states that are requested. If a trial is not in a state found in this list, it will not be reported. If the list is empty, all states will be reported.
+-   full_info: If true, full trial information will be returned instead of just trial ID and trial state.
 
 ### `TrialListEntry`
 
@@ -537,12 +539,14 @@ Stream reply message for the `WatchTrials` procedure.
 message TrialListEntry {
   string trial_id = 1;
   TrialState state = 2;
+  TrialInfo info = 3;
 }
 
 ```
 
--   trial_id: The Identifier of the trial.
--   state: The state of the trial.
+-   trial_id: The Identifier of the trial. Only set if `info` is not present.
+-   state: The state of the trial. Only set if `info` is not present.
+-   info: Trial basic information (i.e. without `latest_observation` and `actors_in_trials`). Present only if requested with `full_info` in the `TrialListRequest`.
 
 ## Actor API
 
