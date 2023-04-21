@@ -16,6 +16,15 @@ Launch is a command that takes a single parameter: a yaml file describing the pr
 $ cogment launch ./launch.yaml
 ```
 
+<!---
+Optionally it can take a quiet options: [-q] or [--quiet] that can also be increased by adding [-qq]. This will remove some of the launcher output, but never disables the processes output.
+
+```bash
+$ cogment launch -qq ./launch.yaml
+```
+
+--->
+
 ## launch.yaml
 
 The launch yaml file consists of a single top-level object called `scripts`.

@@ -63,7 +63,7 @@ See Python documentation for [logging.basicConfig](https://docs.python.org/3/lib
 
 ### Trial Specifications
 
-The specifications of a trial type are contained in a [spec file](./cogment-yaml.md) and the imported files defined in the spec. This file is typically named `cogment.yaml`.
+The specifications (specs) of a trial type are contained in a [spec file](./cogment-yaml.md) and the imported files defined in the spec file. This file is typically named `cogment.yaml`.
 
 For example, an [actor](../guide/core-concepts.md#actors) class is defined by its required observation space and action space.
 
@@ -81,7 +81,7 @@ Below, when we refer to the trial parameters, we mean the final parameters after
 
 ### Compiling the spec file into cog_settings.py
 
-In order to use the specifications within python scripts, the spec file needs to be compiled into python modules. This is done by the Python SDK generator (see [#installation]).
+In order to use the specifications within python scripts, the [spec file](#trial-specifications) needs to be compiled into python modules. This is done by the Python SDK generator (see [#installation]).
 
 The generator is used this way:
 
@@ -89,13 +89,13 @@ The generator is used this way:
 $ python3 -m cogment.generate --spec cogment.yaml --output ./cog_settings.py
 ```
 
-This will create a `cog_settings.py` module in the current directory (`--output ./`). The generator will also compile the imported `*.proto` files into python modules that will be saved in the same location as the specified output file (`cog_settings.py`) and they will be named according to their proto names (`*_pb2.py`).
+This will create a `cog_settings.py` specs module in the current directory (`--output ./`). The generator will also compile the imported `*.proto` files into python modules that will be saved in the same location as the specified output file (`cog_settings.py`) and they will be named according to their proto names (`*_pb2.py`).
 
 The `cog_settings.py` Python module is required by all API entry points.
 
 ### Top-level import
 
-The main module of the Cogment SDK is `cogment`. But all cogment scripts need to start with a `cogment.Context`, which also requires the generated module `cog_settings` (project specific definitions created from the spec file).
+The main module of the Cogment SDK is `cogment`. But all cogment scripts need to start with a `cogment.Context`, which also requires the generated module [cog_settings](#compiling-the-spec-file-into-cog_settingspy) (project specific definitions created from the spec file).
 
 If one needs to create a `cogment.TrialParameters` or `cogment.ActorParameters` from scratch, the `cog_settings` module is also required.
 
@@ -104,28 +104,53 @@ import cog_settings
 import cogment
 ```
 
+<!---
+## make_logger(name, env_name=None, default_level="INFO")
+
+Function to create a Cogment styled logger.
+
+Parameters:
+
+-   `name`: _str_ - Name of the logger. This is used in `logging.getLogger(name)`.
+-   `env_name`: _str_ - Name of the environment variable to set this logger's log level. The environment variable will be checked when this function is called. If `None`, then the environment will not be used to set log level on this logger.
+-   `default_level`: _str_ - The default logging level.
+
+Return: _logging.Logger instance_ - Logger defined in the Cogment style (i.e. with "trace", "deprecated", etc).
+
+--->
+
 ## class cogment.Context
 
 Class to setup and run all the different aspects of Cogment trials.
 
-### `__init__(self, user_id, cog_settings, prometheus_registry=prometheus_client.core.REGISTRY, directory_endpoint=None, directory_auth_token=None)`
+`served_port`: _int_ - The port on which `serve_all_registered` is offering the various registered services. `None` if no services are offered (e.g. `serve_all_registered` was not called yet).
+
+### `__init__(self, user_id, cog_settings, asyncio_loop=None, prometheus_registry=prometheus_client.core.REGISTRY, directory_endpoint=None, directory_auth_token=None)`
 
 Parameters:
 
 -   `user_id`: _str_ - Identifier for the user of this context.
--   `cog_settings`: _module_ - Settings module associated with trials that will be run ([cog_settings](#cog_settings.py) namespace).
+-   `cog_settings`: _module_ - Specs module associated with trials that will be run, observed or inquired (see [cog_settings generation](#compiling-the-spec-file-into-cog_settingspy)).
+-   `asyncio_loop`: _asyncio.Loop instance_ - The asyncio loop into which the Context should operate. If `None`, the current loop will be used.
 -   `prometheus_registry`: _prometheus_client.core.CollectorRegistry instance_ - Prometheus registry that'll be used by the Cogment metrics in this context. Can be set to `None` to completely deactivate them. The default value is Prometheus' default global registry.
 -   `directory_endpoint`: _Endpoint instance_ - Grpc endpoint (i.e. starting with "grpc://") to access the directory. The directory will be used to inquire discovery endpoints, and to register the services for discovery. If no endpoint is provided, a check for the environment variable `COGMENT_DIRECTORY_ENDPOINT` will be made and if it exists, it will be used as the URL of a basic endpoint.
 -   `directory_auth_token`: _str_ - Authentication token for access to the directory. This token will be registered with the services, and must match registered tokens when inquiring the directory. If no token is provided, a check for the environment variable `COGMENT_DIRECTORY_AUTHENTICATION_TOKEN` will be made and if it exists, it will be used as the token.
 
-### `async serve_all_registered(self, served_endpoint, prometheus_port=None)`
+### `has_specs(self)`
+
+Parameters: None
+
+Return: _bool_ - True if the specs are known. False otherwise. The specs are known if the `cog_settings` argument was provided and not `None`. A context instantiated without specs has limited functionality and will produce objects without specs (thus also having limited functionality).
+
+### `async serve_all_registered(self, served_endpoint=ServedEndpoint(), prometheus_port=None, directory_registration_host=None)`
 
 Method to start and run the communication server for the registered components (environment, actor, prehook, datalog). This coroutine will end when all activity has stopped. If a directory is defined in the Context, then this method will also register the services in the defined directory.
 
 Parameters:
 
--   `served_endpoint`: _ServedEndpoint instance_ - Details of the connection for the served components.
+-   `served_endpoint`: _ServedEndpoint instance_ - Details of the connection for the served components. If `served_endpoint.port` is zero(0), then the system will choose a free port. The port chosen is found in the `served_port` attribute of the Context.
 -   `prometheus_port`: _int_ - TCP/IP port number for Prometheus. Set to None to disable the Prometheus metrics server.
+-   `directory_registration_host`: _str_ - Hostname (or IP address) of the host to register to the directory (the port is taken from the `served_endpoint`) for the services registered. If `None`, the SDK will determine the current host IP address automatically. In some circumstances, the IP address determined by the SDK may be wrong (e.g. multiple interfaces, load balancing, firewall), thus a host must be explicitly provided.
 
 Return: None
 
@@ -220,9 +245,55 @@ Parameters:
 
 Return: None
 
+<!---
+
+### `get_context_directory(self)`
+
+Method to return the internal Directory instance used by the Context.
+This instance connects to the directory provided when instantiating the Context (i.e. using `directory_endpoint`).
+
+Parameters: None
+
+Return: _Directory instance_ - And instance of the `Directory` class.
+
+### `get_directory(self, endpoint, authentication_token=None)`
+
+Method to return a new Directory instance.
+
+Parameters:
+
+-   `endpoint`: _Endpoint instance_ - Grpc endpoint (i.e. starting with "grpc://") to access the directory.
+-   `directory_auth_token`: _str_ - Authentication token for access to the directory. This token will be registered with the services, and must match registered tokens when inquiring the directory.
+
+Return: _Directory instance_ - And instance of the `Directory` class.
+
+## class Directory
+
+Class containing data and methods to manage directory registration, deregistration, and inquiries.
+
+### `register_host(self, type, host, port, ssl=False, properties=None)`
+
+### `deregister_service(self, service_id, secret)`
+
+### `inquire_by_id(self, service_id)`
+
+### `inquire_by_type(self, type, properties)`
+
+### `get_inquired_endpoint(self, endpoint, type=None, properties=None)`
+
+Utility method to return a new endpoint if one is found in the directory, or the same endpoint if not.
+
+--->
+
 ## class Controller
 
 Class containing data and methods to control and manage trials.
+
+### `has_specs(self)`
+
+Parameters: None
+
+Return: _bool_ - Always True since the Controller does not rely on trial specs.
 
 ### `async start_trial(self, trial_config=None, trial_id_requested=None, trial_params=None)`
 
@@ -231,7 +302,7 @@ The config and parameter options are mutually exclusive.
 
 Parameters:
 
--   `trial_config`: _protobuf class instance_ - Configuration for the trial. The type is specified in the spec file under the section `trial:config_type`. The config will be added to the default parameters (in the Orchestrator) and sent to the pre-trial hooks (if any). The pre-trial hooks will set the trial parameters according to the config. If there is no pre-trial hooks, the config is ignored and the default parameters are used. This cannot be provided with the `trial_params`.
+-   `trial_config`: _protobuf class instance_ - Configuration for the trial. The type is specified in the spec file under the section `trial:config_type`. The config will be added to the default parameters (in the Orchestrator) and sent to the pre-trial hooks (if any). The pre-trial hooks will set the trial parameters according to the config. If there is no pre-trial hooks, the config is ignored and the default parameters are used. This cannot be provided with the `trial_params`. <!--- If this is a bytes string, it will be passed raw to the orchestrator. --->
 -   `trial_id_requested`: _str_ - The trial identifier requested for the new trial. It must be unique among all active trials and a limited set of the latest ended trials (this list of trials can be retrieved with `get_trial_info` or `watch_trial`). If provided, the Orchestrator will try to use this trial_id, otherwise, a UUID will be created.
 -   `trial_params`: _TrialParameters instance_ - Fully defined parameters to start the new trial. This will be used as the trial parameters (I.e. the default parameters and pre-trial hooks are ignored). This cannot be provided with the `trial_config`.
 
@@ -292,7 +363,13 @@ Return: _dict_ - The key of the dictionary is the name of the component (_str_),
 Class containing data and methods to retrieve historical (or real-time) trial samples from a Datastore.
 This class can also be used to delete trials from a Datastore.
 
-### `async get_trials(self, ids)`
+### `has_specs(self)`
+
+Parameters: None
+
+Return: _bool_ - True if the specs are known by this instance. False otherwise. Specs will be known if the top level Cogment Context has specs.
+
+### `async get_trials(self, ids=[], properties={})`
 
 Method to get information about historical (or ongoing) trials in the Datastore.
 This method is more efficient than `all_trials()`, but can be problematic if too many trials are to be returned.
@@ -301,17 +378,23 @@ Parameters:
 
 -   `ids`: _list[str]_ - The trial IDs for which to request information. If no ID is provided (empty list), returns information about all trials in the Datastore.
 
-Return: _list[DatastoreTrialInfo instance]_ - List of trial information, one per trial. Can be empty if no trial matches any of the provided trial IDs.
+-   `properties`: _dict{str:str}_ - Properties that must match the trial properties (see [trial parameters](./parameters.md)).
 
-### `async all_trials(self, bundle_size=1, wait_for_trials=0)`
+Return: _list[DatastoreTrialInfo instance]_ - List of trial information, one per trial. Can be empty if no trial matches any of the provided trial IDs and properties.
 
-Generator method to iterate through all the trials in the Datastore.
+### `async all_trials(self, bundle_size=1, wait_for_trials=0, properties={}, ids=[])`
+
+Generator method to iterate through the trials in the Datastore that match the given properties.
 
 Parameters:
 
 -   `bundle_size`: _int_ - Number of trials to retrieve at a time from the Datastore. This may be increased to more efficiently inquire the Datastore at the price of increased memory use.
 
 -   `wait_for_trials`: _float_ - Number of seconds to wait for new trials (to reach bundle size). If 0, only the trials currently in the datastore will be returned.
+
+-   `properties`: _dict{str:str}_ - Properties that must match the trial properties (see [trial parameters](./parameters.md)). If empty, all trials match.
+
+-   `ids`: _list[str]_ - The trial IDs that are considered for retrieval. If no ID is provided (empty list), all trials are considered.
 
 Return: _generator(DatastoreTrialInfo instance)_ - A generator for the trials in the Datastore.
 
@@ -347,6 +430,12 @@ Return: _generator(DatastoreSample instance)_ - A generator for the samples from
 ## class ModelRegistry
 
 Class containing data and methods to store and retrieve models from a ModelRegistry.
+
+### `has_specs(self)`
+
+Parameters: None
+
+Return: _bool_ - Always True since the ModelRegistry does not rely on trial specs.
 
 ### `async store_model(self, name, model, iteration_properties=None)`
 
@@ -737,11 +826,11 @@ Class enclosing the details for connection from an Orchestrator.
 
 `root_certificates`: _str_ - If using TLS for the connection (i.e. `private_key_certificate_chain_pairs` is not `None`), this should be set to PEM-encoded Orchestrator root certificates that the server will use to verify Orchestrator authentication.
 
-### `__init__(self, port)`
+### `__init__(self, port=0)`
 
 Parameters:
 
--   `port`: _int_ - The TCP/IP port where the service will be awaiting the Orchestrator connection.
+-   `port`: _int_ - The TCP/IP port where the service will be awaiting the Orchestrator connection. If 0, the system will choose a free port.
 
 ## class cogment.TrialState(enum.Enum)
 
@@ -903,6 +992,8 @@ Some attributes (`config` and `environment_config`) are immutable: changes to th
 
 `config`: _protobuf class instance_ - The type is specified in the spec file under the section `trial:config_type`.
 
+`config_serialized`: _bytes_ - Config in serialized (class independent) form. This can be accessed even without specs (see `has_specs()`).
+
 `properties`: _dict{str:str}_
 
 `max_steps`: _int_
@@ -917,20 +1008,28 @@ Some attributes (`config` and `environment_config`) are immutable: changes to th
 
 `environment_config`: _protobuf class instance_ - The type is specified in the spec file under the section `environment:config_type`.
 
+`environment_serialized`: _bytes_ - Config in serialized (class independent) form. This can be accessed even without specs (see `has_specs()`).
+
 `environment_name`: _str_
 
 `environment_endpoint`: _str_
 
 `environment_implementation`: _str_
 
-`actors`: _list(cogment.ActorParameters)_ - The parameters for the actors. This is a list style object that implements the basic Python `list` functionality.
+`actors`: _list(cogment.ActorParameters)_ - The parameters for the actors. This is a list style object that implements the basic Python `list` functionality. If the actors' data is not being edited (e.g. read only parameters), the "index" of this list can be the name of an actor.
 
 ### `__init__(self, cog_settings, **kwargs)`
 
-Parameter:
+Parameters:
 
--   `cog_settings`: _module_ - Settings module associated with trials that will be run ([cog_settings](#cog_settings.py) namespace).
+-   `cog_settings`: _module_ - Specs module associated with trials that relate to these parameters (see [cog_settings generation](#compiling-the-spec-file-into-cog_settingspy)).
 -   `**kwargs`: Accepts any of the attributes as keyword to set their value on construction. E.g. `TrialParameters(settings, max_steps=1000, environment_name="level")`
+
+### `has_specs(self)`
+
+Parameters: None
+
+Return: _bool_ - True if the specs are known by this instance. False otherwise. Specs will be known if the top level Cogment Context has specs or if a non `None` argument `cog_settings` was provided.
 
 ### `get_serialization_type(self)`
 
@@ -952,9 +1051,9 @@ Return: _str_ - Serialized parameters.
 
 Takes a serialized parameter string and sets the `TrialParameters` instance.
 
-Parameter:
+Parameters:
 
--   `raw_string`: _str_ - Binary string representing a serialized `TrialParameters` of type `type`.
+-   `raw_string`: _bytes_ - Binary string representing a serialized `TrialParameters` of type `type`.
 -   `type`: _int_ - Type of serial data in `raw_string` (from `get_serialization` of the source). If `None`, the current type is assumed (i.e. this instance type matches the source type).
 
 ## class cogment.ActorParameters
@@ -965,6 +1064,8 @@ Any attribute can be set to `None` to reset it to its default.
 Some attributes (`config`, `default_action`) are immutable: changes to the instance received will not be reflected in `ActorParameters`, the attribute must be set with a new instance to make changes. These attributes can also return `None` if not set.
 
 `config`: _protobuf class instance_ - The type is specified in the spec file under the section `actor_classes:config_type` for the specific actor class of the actor.
+
+`config_serialized`: _bytes_ - Config in serialized (class independent) form. This can be accessed even without specs (see `has_specs()`).
 
 `class_name`: _str_ - This cannot be changed (it is a parameter of the constructor).
 
@@ -982,13 +1083,21 @@ Some attributes (`config`, `default_action`) are immutable: changes to the insta
 
 `default_action`: _protobuf class instance_ - The type is specified in the spec file under the section `actor_classes:action:space` for the specific class of the actor.
 
+`default_action_serialized`: _bytes_ - Action in serialized (class independent) form. This can be accessed even without specs (see `has_specs()`).
+
 ### `__init__(self, cog_settings, class_name, **kwargs)`
 
-Parameter:
+Parameters:
 
--   `cog_settings`: _module_ - Settings module associated with trials that will be run ([cog_settings](#cog_settings.py) namespace).
+-   `cog_settings`: _module_ - Specs module associated with trials that relate to these parameters (see [cog_settings generation](#compiling-the-spec-file-into-cog_settingspy)).
 -   `class_name`: _str_ - The name of the actor class for the actor. This is specific to a type of trial and must match values in the spec file under section `actor_classes:name`.
 -   `**kwargs`: Accepts any of the attributes (except `class_name`) as keyword to set their value on construction. E.g. `ActorParameters(settings, class_name="some_class", name="act_name")`
+
+### `has_specs(self)`
+
+Parameters: None
+
+Return: _bool_ - True if the specs are known by this instance. False otherwise. Specs will be known if the top level Cogment Context has specs or if a non `None` argument `cog_settings` was provided.
 
 ## class cogment.LogSample
 
@@ -1009,7 +1118,7 @@ Note that some of the data may not be available (`None`) if it was excluded from
 
 ### `__init__(self, params)`
 
-Parameter:
+Parameters:
 
 -   `params`: _LogParams instance_ - The parameters of the trial.
 
@@ -1033,7 +1142,7 @@ Return: _str_ - Serialized sample.
 
 Takes a serialized sample string and sets the LogSample instance.
 
-Parameter:
+Parameters:
 
 -   `raw_string`: _str_ - Binary string representing a serialized LogSample of the same type.
 
@@ -1185,6 +1294,12 @@ Class containing the information of a trial stored in the Datastore.
 
 `parameters`: _cogment.TrialParameters instance_ - The parameters for the trial.
 
+### `has_specs(self)`
+
+Parameters: None
+
+Return: _bool_ - True if the specs are known by this instance. False otherwise. Specs will be known if the top level Cogment Context has specs.
+
 ## class DatastoreSample
 
 Class containing the data of a trial sample (typically representing all the data during a trial tick).
@@ -1199,6 +1314,12 @@ Class containing the data of a trial sample (typically representing all the data
 
 `actors_data`: _dict{str:DatastoreActorData instance}_ - Dictionary of all actors data included in the sample, indexed by actor name.
 
+### `has_specs(self)`
+
+Parameters: None
+
+Return: _bool_ - True if the specs are known by this instance. False otherwise. Specs will be known if the top level Cogment Context has specs.
+
 ## class DatastoreActorData
 
 Class containing the data related to an actor in a sample.
@@ -1207,9 +1328,19 @@ Class containing the data related to an actor in a sample.
 
 `observation`: _protobuf class instance_ - Observation received by the actor. The class of the observation is defined as observation space for the actor class. This is specified in section `actor_classes:observation:space` in the spec file for the appropriate actor class.
 
+`observation_serialized`: _bytes_ - Observation received by the actor in serialized (class independent) form. This can be retrieved even without specs (see `has_specs()`).
+
 `action`: _protobuf class instance_ - Action from the actor. The class of the action is defined as action space for the specific actor in the section `actor_classes:action:space` in the spec file for the appropriate actor class.
 
+`action_serialized`: _bytes_ - Action from the actor in serialized (class independent) form. This can be retrieved even without specs (see `has_specs()`).
+
 `reward`: _float_ - The aggregated reward received by the actor in the sample.
+
+### `has_specs(self)`
+
+Parameters: None
+
+Return: _bool_ - True if the specs are known by this instance. False otherwise. Specs will be known if the top level Cogment Context has specs.
 
 ### `all_received_rewards(self)`
 

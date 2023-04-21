@@ -43,6 +43,12 @@ The Cogment platform consists of multiple components:
     -   The [**Model Registry**](./reference/cli/model-registry.md), which versions and stores trained AI models to be used by Cogment agents,
 -   The **SDKs** are used to build your Cogment app services and clients, SDKs are available in [Python](./reference/python.md) and [Javascript](./reference/javascript.md).
 
+### Enterprise
+
+[AI Redefined](https://ai-r.com) also offers an enterprise package to help customer integrate cogment faster in their environment.
+
+- The [**Batching**](./enterprise/batch_runner.md) module can greatly simplify the running of batches of trials with training.
+
 ## First steps
 
 Before diving right in, we recommend taking the time to read the [Core concepts](./guide/core-concepts.md) section which details the terminology we use for several critical concepts of Cogment. You can then proceed to read on how to [install](./reference/cli/index.md) the platform.
