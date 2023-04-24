@@ -47,7 +47,7 @@ The Cogment platform consists of multiple components:
 
 [AI Redefined](https://ai-r.com) also offers an enterprise package to help customer integrate cogment faster in their environment.
 
-- The [**Batching**](./enterprise/batch_runner.md) module can greatly simplify the running of batches of trials with training.
+-   The [**Runner**](./reference/python-enterprise/runner.md) module can greatly simplify the running of batches of trials with training.
 
 ## First steps
 

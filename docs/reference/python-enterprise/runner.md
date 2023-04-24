@@ -2,11 +2,15 @@
 sidebar_position: 2
 ---
 
-# Runner SDK
+# Runner
+
+:::note Cogment Enterprise
+This is part of the **Cogment Enterprise**, [AI Redefined's](https://ai-r.com/) commercial offering.
+:::
 
 <!---  These sections should be filled in before documenting officially
 
-Repository: 
+Repository:
 
 ## Installation
 --->
@@ -15,7 +19,7 @@ Repository:
 
 ### `asyncio`
 
-The use of this module requires Cogment Python SDK >= 2.8.0. It uses Python's `asyncio` library and as such should be run in an `asyncio.Task`.
+The use of this module requires [Cogment Python SDK](../python.md) >= 2.8.0. It uses Python's `asyncio` library and as such should be run in an `asyncio.Task`.
 This documentation assumes some familiarity with the `asyncio` library of Python (see [Python documentation](https://docs.python.org/3/library/asyncio.html)).
 
 E.g.
@@ -31,7 +35,7 @@ asyncio.run(MyMainFunction())
 This module uses the `cogment.enterprise` logger, and the default log level is `INFO`. E.g. to change the log level to `WARNING`:
 
 ```python
-import enterprise
+import cogment_enterprise
 import logging
 
 logging.getLogger("cogment.enterprise").setLevel(logging.WARNING)
@@ -51,29 +55,29 @@ Objects normally received as `google.protobuf.Any` will still be deserialized to
 
 ### Top-level import
 
-The main module of the Runner SDK is `batching`, and most enterprise scripts will start with a [batching.TrialRunner](#class-trialrunner).
+The main module of the Runner SDK is `cogment_enterprise.runner`, and most enterprise scripts will start with a [cogment_enterprise.runner.TrialRunner](#class-cogment_enterpriserunnertrialrunner).
 
 ## Utilities and Constants
 
-### `batching.BATCH_ID_PROPERTY`
+### `cogment_enterprise.runner.BATCH_ID_PROPERTY`
 
 This is the name of the trial property where the batch ID is stored.
 Each trial started by a batch will have this property.
 
 ```python
-batch_id = trial_parameters.properties[batching.BATCH_ID_PROPERTY]
+batch_id = trial_parameters.properties[cogment_enterprise.runner.BATCH_ID_PROPERTY]
 ```
 
-### `batching.BATCH_TRIAL_INDEX_PROPERTY`
+### `cogment_enterprise.runner.BATCH_TRIAL_INDEX_PROPERTY`
 
 This is the name of the trial property where the index of the trial in the batch is stored.
 Each trial started by a batch will have this property.
 
 ```python
-trial_index_in_batch = trial_parameters.properties[batching.BATCH_TRIAL_INDEX_PROPERTY]
+trial_index_in_batch = trial_parameters.properties[cogment_enterprise.runner.BATCH_TRIAL_INDEX_PROPERTY]
 ```
 
-### `batching.BATCH_LAST_TRIAL_PROPERTY`
+### `cogment_enterprise.runner.BATCH_LAST_TRIAL_PROPERTY`
 
 This is the name of the trial property that will be set on the last trial of the batch.
 The property value is empty, it's presence indicates that this is the last trial of the batch.
@@ -82,10 +86,10 @@ Only one trial in a batch may have this property.
 Note that there may not be a trial with this property if the batch was stopped prematurely.
 
 ```python
-last_trial = batching.BATCH_LAST_TRIAL_PROPERTY in trial_parameters.properties
+last_trial = cogment_enterprise.runner.BATCH_LAST_TRIAL_PROPERTY in trial_parameters.properties
 ```
 
-### `batching.deserialize_action(serialized_data, actor_class, cog_settings)`
+### `cogment_enterprise.runner.deserialize_action(serialized_data, actor_class, cog_settings)`
 
 Function to deserialize raw data into a Python class instance.
 
@@ -95,13 +99,13 @@ This function simplifies deserialization of messages related to a Cogment projec
 
 Parameters:
 
-- `serialized_data`: _bytes_ - Raw data received.
-- `actor_class`: _str_ - Name of the class of the actor to which this data relates. This information is necessary to find the proper message type in the spec.
-- `cog_settings`: _module_ - Specification module associated with the trial from which the data relates.
+-   `serialized_data`: _bytes_ - Raw data received.
+-   `actor_class`: _str_ - Name of the class of the actor to which this data relates. This information is necessary to find the proper message type in the spec.
+-   `cog_settings`: _module_ - Specification module associated with the trial from which the data relates.
 
 Return: _protobuf class instance_ - Action from an actor of type `actor_class`. The class of the action is defined as action space for the specific actor class in the section `actor_classes:action:space` in the spec file (e.g. `cog_settings`).
 
-### `batching.deserialize_actor_observation(serialized_data, actor_class, cog_settings)`
+### `cogment_enterprise.runner.deserialize_actor_observation(serialized_data, actor_class, cog_settings)`
 
 Function to deserialize raw data into a Python class instance.
 
@@ -111,13 +115,13 @@ This function simplifies deserialization of messages related to a Cogment projec
 
 Parameters:
 
-- `serialized_data`: _bytes_ - Raw data received.
-- `actor_class`: _str_ - Name of the class of the actor to which this data relates. This information is necessary to find the proper message type in the spec.
-- `cog_settings`: _module_ - Specification module associated with the trial from which the data relates.
+-   `serialized_data`: _bytes_ - Raw data received.
+-   `actor_class`: _str_ - Name of the class of the actor to which this data relates. This information is necessary to find the proper message type in the spec.
+-   `cog_settings`: _module_ - Specification module associated with the trial from which the data relates.
 
 Return: _protobuf class instance_ - Observation for an actor of type `actor_class`. The class of the observation is defined as observation space for the specific actor class in the section `actor_classes:observation:space` in the spec file (e.g. `cog_settings`).
 
-### `batching.deserialize_actor_config(serialized_data, actor_class, cog_settings)`
+### `cogment_enterprise.runner.deserialize_actor_config(serialized_data, actor_class, cog_settings)`
 
 Function to deserialize raw data into a Python class instance.
 
@@ -127,13 +131,13 @@ This function simplifies deserialization of messages related to a Cogment projec
 
 Parameters:
 
-- `serialized_data`: _bytes_ - Raw data received.
-- `actor_class`: _str_ - Name of the class of the actor to which this data relates. This information is necessary to find the proper message type in the spec.
-- `cog_settings`: _module_ - Specification module associated with the trial from which the data relates.
+-   `serialized_data`: _bytes_ - Raw data received.
+-   `actor_class`: _str_ - Name of the class of the actor to which this data relates. This information is necessary to find the proper message type in the spec.
+-   `cog_settings`: _module_ - Specification module associated with the trial from which the data relates.
 
 Return: _protobuf class instance_ - Config for an actor of type `actor_class`. The class of the config is defined as config type for the specific actor class in the section `actor_classes:config_type` in the spec file (e.g. `cog_settings`).
 
-### `batching.deserialize_environment_config(serialized_data, cog_settings)`
+### `cogment_enterprise.runner.deserialize_environment_config(serialized_data, cog_settings)`
 
 Function to deserialize raw data into a Python class instance.
 
@@ -143,12 +147,12 @@ This function simplifies deserialization of messages related to a Cogment projec
 
 Parameters:
 
-- `serialized_data`: _bytes_ - Raw data received.
-- `cog_settings`: _module_ - Specification module associated with the trial from which the data relates.
+-   `serialized_data`: _bytes_ - Raw data received.
+-   `cog_settings`: _module_ - Specification module associated with the trial from which the data relates.
 
 Return: _protobuf class instance_ - Config for the environment. The class of the config is defined as config type in the section `environment:config_type` in the spec file (e.g. `cog_settings`).
 
-### `batching.deserialize_trial_config(serialized_data, cog_settings)`
+### `cogment_enterprise.runner.deserialize_trial_config(serialized_data, cog_settings)`
 
 Function to deserialize raw data into a Python class instance.
 
@@ -158,12 +162,12 @@ This function simplifies deserialization of messages related to a Cogment projec
 
 Parameters:
 
-- `serialized_data`: _bytes_ - Raw data received.
-- `cog_settings`: _module_ - Specification module associated with the trial from which the data relates.
+-   `serialized_data`: _bytes_ - Raw data received.
+-   `cog_settings`: _module_ - Specification module associated with the trial from which the data relates.
 
 Return: _protobuf class instance_ - Config for the trial. The class of the config is defined as config type in the section `trial:config_type` in the spec file (e.g. `cog_settings`).
 
-## class batching.TrialRunner
+## class cogment_enterprise.runner.TrialRunner
 
 ### `__init__(self, user_id, cog_settings=None, asyncio_loop=None, directory_endpoint=None, directory_auth_token=None, orchestrator_endpoint=None, datastore_endpoint=None, model_registry=None)`
 
@@ -171,7 +175,7 @@ Parameters:
 
 -   `user_id`: _str_ - Identifier for the user of this context.
 -   `cog_settings`: _module_ - Settings module associated with trials that will be run ([cog_settings](#cog_settings.py) namespace).
--   `asyncio_loop`: _asyncio.Loop_ - For special purpose implementations. 
+-   `asyncio_loop`: _asyncio.Loop_ - For special purpose implementations.
 -   `directory_endpoint`: _Endpoint instance_ - Grpc endpoint (i.e. starting with "grpc://") to access the directory. The directory will be used to inquire discovery endpoints, and to register the services for discovery. If no endpoint is provided, a check for the environment variable `COGMENT_DIRECTORY_ENDPOINT` will be made and if it exists, it will be used as the URL of a basic endpoint.
 -   `directory_auth_token`: _str_ - Authentication token for access to the directory. This token will be registered with the services, and must match registered tokens when inquiring the directory. If no token is provided, a check for the environment variable `COGMENT_DIRECTORY_AUTHENTICATION_TOKEN` will be made and if it exists, it will be used as the token.
 -   `orchestrator_endpoint`: _Endpoint instance_ - Details of the connection to the Orchestrator. If not provided, the directory will be inquired. Only needed for running batches, not for training.
@@ -234,7 +238,7 @@ Class to run a batch of related trials.
 <!---
 ### __init__(self, id, controller, nb_trials, pre_trial_callback, post_trial_callback, datalog_endpoint)
 
-The parameters are the same as provided to `run_simple_batch`.
+The parameters are the same as provided to [`run_simple_batch`](#class-cogment_enterpriserunnertrialrunner).
 
 Parameters:
 
@@ -291,7 +295,7 @@ Method to terminate the batch. It stops new trials from starting, and currently 
 
 Parameters:
 
-- `hard`: _bool_ -  If True the trials are sent a "hard" terminate, otherwise they are sent a "soft" terminate (see Python Documentation "Controller.terminate_trial").
+-   `hard`: _bool_ - If True the trials are sent a "hard" terminate, otherwise they are sent a "soft" terminate (see Python Documentation "Controller.terminate_trial").
 
 Return: None
 
@@ -317,7 +321,7 @@ Method to wait for the batch to be done. The batch will end normally when all tr
 
 Parameters:
 
-- `timeout`: _float_ - Maximum time to wait in seconds.
+-   `timeout`: _float_ - Maximum time to wait in seconds.
 
 Return: _bool_ - True if the batch ended normally with the last trial tagged as such. False otherwise. `None` if timed out.
 
@@ -333,7 +337,7 @@ Parameters:
 -   `batch_spec`: _str_ or _dict{str:str}_ or _list[str]_ or _TrialBatch instance_ - If a string, it represents a batch ID of the trials to use for training. If a dictionary, it represents the properties of the trials to use for training. If a list, it represents the list of trial IDs to use for training. If an instance of `TrialBatch`, then the trials started by that batch will be used for training. For anything other than a `TrialBatch` instance, there is no reliable way to know if the batch has ended, therefore `max_trial_wait` should be used.
 -   `datastore`: _cogment.Datastore instance_ - The datastore used to retrieve the samples.
 -   `model_registry`: _cogment.ModelRegistry instance_ - The registry that will be passed to the callback.
--   `sampler_callback`: same parameter as provided to `run_simple_training`
+-   `sampler_callback`: same parameter as provided to [`run_simple_training`](#async-run_simple_trainingself-batch-sampler_callback-actor_names)
 -   `max_trial_wait`: _int_ - Maximum number of seconds to wait for a new trial that matches `batch_spec` to appear in the datastore. If this is zero (0) then only trials already in the datastore will be used.
 
 ### `start(self, actor_names=[], actor_classes=[], actor_implementations=[], fields=[])`
@@ -368,7 +372,7 @@ Method to wait for the training to be done. The training will end normally when 
 
 Parameters:
 
-- `timeout`: _float_ - Maximum time to wait in seconds.
+-   `timeout`: _float_ - Maximum time to wait in seconds.
 
 Return: _bool_ - True if all samples available were processed. False otherwise. `None` if timed out.
 
@@ -384,7 +388,7 @@ Return: _bool_ - True if all samples available were processed. False otherwise. 
 
 ### Use
 
-These functions are passed to the `TrialRunner.run_simple_batch` or `TrialRunner.run_simple_training` methods and will be called at specific times to request information to the user or provide information to the user.
+These functions are passed to the [`TrialRunner.run_simple_batch`](#class-cogment_enterpriserunnertrialrunner) or [`TrialRunner.run_simple_training`](#async-run_simple_trainingself-batch-sampler_callback-actor_names) methods and will be called at specific times to request information to the user or provide information to the user.
 They can be defined and used in a number of ways.
 
 Here we take the `pre_trial_callback` as an example, but the other callbacks are similar, except for parameters and return values:
@@ -428,7 +432,7 @@ runner = TrialRunner(1, 1, None, actual_callback)
 
 ### Pre-Trial Callback
 
-This function is passed to the `TrialRunner.run_simple_batch` method and will be called before any trial is started to define the trial parameters.
+This function is passed to the [`TrialRunner.run_simple_batch`](#class-cogment_enterpriserunnertrialrunner) method and will be called before any trial is started to define the trial parameters.
 It is an `asyncio` coroutine.
 
 e.g.:
@@ -447,9 +451,9 @@ The trial ID will automatically be created using the batch ID and the trial inde
 
 Once the trial parameters are received by the `TrialBatch`, some data will be added, and some will be overwritten. These are the attributes changed in the received `TrialParameter` before passing it to Cogment:
 
-- `properties`: Some properties will be added to the existing properties (see [Module Attributes](#module-attributes)). If the property names clash, the user properties will be overwritten. In general, do not start property names with an underscore to prevent such clashes.
-- `datalog_endpoint`: This attribute of the trial parameters will be overwritten with the provided `datastore_endpoint` argument of `TrialRunner`. If `datastore_endpoint` was not provided, or it was `None`, then the directory will be used to find an appropriate datastore. The same datastore must be used by both the `TrialBatch` (as a datalog) and `BatchTrainer` (as a datastore), so the endpoint should resolve to the same datastore locally and at the Orchestrator (i.e. ideally use the same directory).
-- `datalog_exclude_fields`: This attribute will be reset (i.e. not excluding any fields from the datalog).
+-   `properties`: Some properties will be added to the existing properties (see [Module Attributes](#module-attributes)). If the property names clash, the user properties will be overwritten. In general, do not start property names with an underscore to prevent such clashes.
+-   `datalog_endpoint`: This attribute of the trial parameters will be overwritten with the provided `datastore_endpoint` argument of `TrialRunner`. If `datastore_endpoint` was not provided, or it was `None`, then the directory will be used to find an appropriate datastore. The same datastore must be used by both the `TrialBatch` (as a datalog) and `BatchTrainer` (as a datastore), so the endpoint should resolve to the same datastore locally and at the Orchestrator (i.e. ideally use the same directory).
+-   `datalog_exclude_fields`: This attribute will be reset (i.e. not excluding any fields from the datalog).
 
 <!---
 The return value of the function can also be a tuple of two items `(requested_id, parameters)`.
@@ -461,7 +465,7 @@ If the return value of the function is `None`, the batch will be stopped and the
 
 ### Post-Trial Callback
 
-This function is passed to the `TrialRunner.run_simple_batch` method and will be called after a trial has ended.
+This function is passed to the [`TrialRunner.run_simple_batch`](#class-cogment_enterpriserunnertrialrunner) method and will be called after a trial has ended.
 It is an `asyncio` coroutine.
 
 e.g.:
@@ -490,8 +494,8 @@ async def my_sampler_callback(sample, trial_parameters, model_registry) -> bool:
 
 The parameters received are:
 
-- `sample`: _cogment.DatastoreSample_ -  The is the sample that was received with all necessary data to train.
-- `trial_parameters`: _cogment.TrialParameters_ - These are the parameters of the trial from which the sample came from.
-- `model_registry`: _cogment.ModelRegistry_ - A common model registry for the whole batch being trained. The TrialRunner argument `model_registry_endpoint` is used to retrieve this model registry.
+-   `sample`: _cogment.DatastoreSample_ - The is the sample that was received with all necessary data to train.
+-   `trial_parameters`: _cogment.TrialParameters_ - These are the parameters of the trial from which the sample came from.
+-   `model_registry`: _cogment.ModelRegistry_ - A common model registry for the whole batch being trained. The TrialRunner argument `model_registry_endpoint` is used to retrieve this model registry.
 
 The expected return value is a `bool`. If True, the training will continue normally. If False, the `BatchTrainer` will stop retrieving samples, the sampler callback will stop being called, and the `BatchTrainer` will stop.
