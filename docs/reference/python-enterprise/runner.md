@@ -8,13 +8,6 @@ sidebar_position: 2
 This is part of the **Cogment Enterprise**, [AI Redefined's](https://ai-r.com/) commercial offering.
 :::
 
-<!---  These sections should be filled in before documenting officially
-
-Repository:
-
-## Installation
---->
-
 ## General usage
 
 ### `asyncio`
@@ -283,7 +276,7 @@ Return: None
 
 ### `stop(self)`
 
-Method to stop the batch. It stops new trials from starting, and currently running trials continue to their normal end. Once all trials have ended, the batch is done. This implicitly "resumes" a paused batch.
+Method to stop the batch. It stops new trials from starting, and currently running trials continue to their normal end. Once all trials have ended, the batch is done.
 
 Parameters: None
 
@@ -291,7 +284,7 @@ Return: None
 
 ### `terminate(self, hard=False)`
 
-Method to terminate the batch. It stops new trials from starting, and currently running trials are terminated. The batch is then considered done. This implicitly "resumes" a paused batch.
+Method to terminate the batch. It stops new trials from starting, and currently running trials are terminated. The batch is then considered done.
 
 Parameters:
 
@@ -350,9 +343,19 @@ Return: None
 
 --->
 
+### `terminate(self)`
+
+Method to terminate training.
+The callback task will be cancelled.
+
+Parameters: None
+
+Return: None
+
 ### `async stop(self)`
 
-Method to stop training. The callback will stop receiving samples and the training will be considered done. This is also automatically called when the instance is deleted.
+Method to stop training.
+Stops retrieving new samples from the Datastore and waits for all samples already queued to be processed by the callback (or the callback to return `False`).
 
 Parameters: None
 
@@ -498,4 +501,4 @@ The parameters received are:
 -   `trial_parameters`: _cogment.TrialParameters_ - These are the parameters of the trial from which the sample came from.
 -   `model_registry`: _cogment.ModelRegistry_ - A common model registry for the whole batch being trained. The TrialRunner argument `model_registry_endpoint` is used to retrieve this model registry.
 
-The expected return value is a `bool`. If True, the training will continue normally. If False, the `BatchTrainer` will stop retrieving samples, the sampler callback will stop being called, and the `BatchTrainer` will stop.
+The expected return value is a `bool`. If True, the training will continue normally. If False, the sampler callback will stop being called, and the `BatchTrainer` will stop.
