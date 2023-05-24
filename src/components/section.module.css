@@ -1,0 +1,5 @@
+.section h3 {
+  text-transform: uppercase;
+  color: var(--ifm-color-primary);
+  text-align: center;
+}

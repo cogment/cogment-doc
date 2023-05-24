@@ -89,6 +89,11 @@ const config = {
             label: "Documentation",
           },
           {
+            position: "right",
+            label: "Cogment Verse",
+            to: "cogment_verse",
+          },
+          {
             href: "https://github.com/cogment",
             label: "GitHub",
             position: "right",

@@ -21,17 +21,19 @@ import clsx from "clsx";
 import Layout from "@theme/Layout";
 import Link from "@docusaurus/Link";
 import React from "react";
-import styles from "./home.module.css";
+import helpersStyles from "../css/helpers.module.css";
 import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
 import { Logos, Logo } from "../components/logos";
 import { Benefits, Benefit } from "../components/benefits";
 import { Screenshots } from "../components/screenshots";
+import { Cta } from "../components/cta";
+import { Hero } from "../components/hero";
+import { Section } from "../components/section";
 
 import contentBenefits from "../content/home/benefits";
 import contentFeatures from "../content/home/features";
-import ContentCogmentVerse, {
-  CogmentVerseScreenshots,
-} from "../content/home/cogment-verse";
+import ContentCogmentVerseDescription from "../content/cogment_verse/description.md";
+import CogmentVerseScreenshots from "../content/cogment_verse/screenshots";
 import CogmentVerseLogo from "@site/static/img/cogment_verse_logo.svg";
 
 config.autoAddCss = false;
@@ -40,7 +42,7 @@ export default function Home() {
   const { siteConfig } = useDocusaurusContext();
   return (
     <Layout title={siteConfig.title} description={siteConfig.tagline}>
-      <div className={clsx("hero", "shadow--md", styles.hero)}>
+      <Hero className="shadow--md">
         <div className="container">
           <h1 className="hero__title">
             Build, train, and operate AI agents in simulated or real
@@ -50,7 +52,7 @@ export default function Home() {
             Cogment is the first open source platform designed to address the
             challenges of continuously training humans and AI together.
           </h2>
-          <div className={clsx("row", styles.cta)}>
+          <Cta className="row">
             <Link
               className={clsx(
                 "button",
@@ -68,12 +70,10 @@ export default function Home() {
             >
               <FontAwesomeIcon icon={faDiscord} /> Come chat and share!
             </Link>
-          </div>
+          </Cta>
         </div>
-      </div>
-      <div
-        className={clsx("margin-vert--lg", "padding-vert--lg", styles.section)}
-      >
+      </Hero>
+      <Section className={clsx("margin-vert--lg", "padding-vert--lg")}>
         <div className="container">
           <div className="row">
             <div className="col">
@@ -87,17 +87,17 @@ export default function Home() {
               </Benefit>
             ))}
           </Benefits>
-          <div className={clsx("row", styles.cta)}>
+          <Cta className="row">
             <Link
               href="https://ai-r.com/solutions"
-              class="button button--secondary"
+              className="button button--secondary"
             >
               Discover Cogment-enabled solutions from AI Redefined
             </Link>
-          </div>
+          </Cta>
         </div>
-      </div>
-      <div className={clsx("shadow--md", "padding-vert--lg", styles.section)}>
+      </Section>
+      <Section className={clsx("shadow--md", "padding-vert--lg")}>
         <div className={clsx("margin-vert--lg", "container")}>
           <div className="row">
             <div className="col">
@@ -176,40 +176,29 @@ export default function Home() {
         </div>
         <div className={clsx("margin-vert--xl", "container")}>
           <div className="row">
-            <div className={clsx("col", styles.verticallyJustifiedCol)}>
+            <div className={clsx("col", helpersStyles.verticallyJustifiedCol)}>
               <div className="padding--lg">
                 <CogmentVerseLogo />
               </div>
-              <h3>
-                Get started with pretrained models, environments, and demos
-              </h3>
             </div>
-            <div className={clsx("col", styles.verticallyJustifiedCol)}>
-              <ContentCogmentVerse />
+            <div className={clsx("col", helpersStyles.verticallyJustifiedCol)}>
+              <ContentCogmentVerseDescription />
             </div>
           </div>
           <Screenshots className="row">
             <CogmentVerseScreenshots />
           </Screenshots>
-          <div className={clsx("row", styles.cta)}>
+          <Cta className="row">
             <Link
               className="button button--primary button--lg margin-right--sm"
-              href="https://github.com/cogment/cogment-verse"
+              to="/cogment_verse"
             >
-              <FontAwesomeIcon icon={faGithub} /> Get started for free
+              Learn more about Cogment Verse...
             </Link>
-            <Link
-              className="button button--secondary button--lg"
-              href="https://discord.com/invite/QDxb9Fweqr"
-            >
-              <FontAwesomeIcon icon={faDiscord} /> Come chat and share!
-            </Link>
-          </div>
+          </Cta>
         </div>
-      </div>
-      <div
-        className={clsx("margin-vert--lg", "padding-vert--lg", styles.section)}
-      >
+      </Section>
+      <Section className={clsx("margin-vert--lg", "padding-vert--lg")}>
         <div className="container">
           <div className="row">
             <div className="col">
@@ -217,7 +206,7 @@ export default function Home() {
             </div>
           </div>
           <div className="row">
-            <div className={clsx("col", styles.verticallyJustifiedCol)}>
+            <div className={clsx("col", helpersStyles.verticallyJustifiedCol)}>
               {contentFeatures
                 .filter((_, index, array) => index < array.length / 2)
                 .map((Content) => (
@@ -226,7 +215,7 @@ export default function Home() {
                   </div>
                 ))}
             </div>
-            <div className={clsx("col", styles.verticallyJustifiedCol)}>
+            <div className={clsx("col", helpersStyles.verticallyJustifiedCol)}>
               {contentFeatures
                 .filter((_, index, array) => index >= array.length / 2)
                 .map((Content) => (
@@ -237,7 +226,7 @@ export default function Home() {
             </div>
           </div>
         </div>
-      </div>
+      </Section>
     </Layout>
   );
 }

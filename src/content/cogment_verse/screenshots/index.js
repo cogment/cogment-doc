@@ -15,13 +15,12 @@
 // @ts-check
 
 import React from "react";
-import CogmentVerseDescription from "./cogment-verse.md";
 import atariDoubleDunkImgUrl from "./atari_double_dunk.gif";
 import goImgUrl from "./classic_go.gif";
 import atariMontezumasRevengeUrl from "./atari_montezumas_revenge.gif";
 import lunarLanderUrl from "./lunar_lander.gif";
 
-export function CogmentVerseScreenshots() {
+function CogmentVerseScreenshots() {
   return (
     <React.Fragment>
       <img
@@ -38,4 +37,4 @@ export function CogmentVerseScreenshots() {
   );
 }
 
-export default CogmentVerseDescription;
+export default CogmentVerseScreenshots;
