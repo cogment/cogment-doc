@@ -70,7 +70,7 @@ export default function CogmentVerse() {
           </div>
           <Cta className="row">
             <Link
-              href="https://ai-r.com/solutions"
+              href="https://github.com/cogment/cogment-verse"
               className="button button--lg button--secondary"
             >
               <FontAwesomeIcon icon={faGithub} /> Get started
