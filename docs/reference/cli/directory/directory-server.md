@@ -75,6 +75,18 @@ Can be specified as:
 -   an environment variable, e.g. `COGMENT_DIRECTORY_REGISTRATION_LAG`,
 -   default value is 0.
 
+### `persistence_file`
+
+The file name where persistence data will be read from on start-up and stored afterward.
+The file will be created if it does not already exist.
+If set to an empty string, persistence will be disabled.
+
+Can be specified as:
+
+-   a command line option, e.g. `--persistence_file`,
+-   an environment variable, e.g. `COGMENT_DIRECTORY_PERSISTENCE_FILE`,
+-   default value is ".cogment-directory-data".
+
 ## Operation
 
 At its most basic, the Directory contains services searchable by type and property, and returns endpoints where to reach the matched services.
