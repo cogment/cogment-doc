@@ -21,7 +21,12 @@ The orchestrator configuration can be specified either through the command line 
 
 ### `lifecycle_port`
 
-The TCP port where to serve the [trial lifecycle gRPC service](../grpc.md#service-triallifecyclesp). This is where the [Controller](../../guide/development-guide.mdx#controller) connects to. It can be the same as the `actor_port`.
+The TCP port where to serve the [trial lifecycle gRPC service](../grpc.md#service-triallifecyclesp).
+This is where the [Controller](../../guide/development-guide.mdx#controller) connects to.
+It can be the same as the `actor_port`.
+
+If set to 0, then the system will automatically choose a free port.
+This is normally used in combination with a [Directrory](#directory_endpoint).
 
 Can be specified as:
 
@@ -31,7 +36,12 @@ Can be specified as:
 
 ### `actor_port`
 
-The TCP port where to serve the [client actor gRPC service](../grpc.md#service-clientactorsp). This is where [Client Actors](../../guide/development-guide.mdx#service-actor-client-actor) (as opposed to service actors) connect to. It can be the same as the `lifecycle_port`.
+The TCP port where to serve the [client actor gRPC service](../grpc.md#service-clientactorsp).
+This is where [Client Actors](../../guide/development-guide.mdx#service-actor-client-actor) (as opposed to service actors) connect to.
+It can be the same as the `lifecycle_port`.
+
+If set to 0, then the system will automatically choose a free port.
+This is normally used in combination with a [Directrory](#directory_endpoint).
 
 Can be specified as:
 

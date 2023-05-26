@@ -35,6 +35,9 @@ The Trial Datastore offers two services at the same TCP port: the [Datalog API](
 The Datalog API is where the Datastore receives the raw trial data from the Orchestrator.
 The Trial Datastore API is is where the Datastore delivers online or offline stored data (typically to actors for training).
 
+If set to 0, then the system will automatically choose a free port.
+This is normally used in combination with a [Directrory](#directory_endpoint).
+
 Can be specified as:
 
 -   a command line option, e.g. `--port=12000`,

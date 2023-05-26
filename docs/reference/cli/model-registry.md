@@ -32,6 +32,9 @@ The Model Registry configuration can be specified either through the command lin
 
 The TCP port where to serve the [The Model Registry API](../grpc.md#model-registry-api).
 
+If set to 0, then the system will automatically choose a free port.
+This is normally used in combination with a [Directrory](#directory_endpoint).
+
 Can be specified as:
 
 -   a command line option, e.g. `--port=12000`,
