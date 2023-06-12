@@ -123,7 +123,8 @@ Return: _logging.Logger instance_ - Logger defined in the Cogment style (i.e. wi
 
 Class to setup and run all the different aspects of Cogment trials.
 
-`served_port`: _int_ - The port on which `serve_all_registered` is offering the various registered services. `None` if no services are offered (e.g. `serve_all_registered` was not called yet).
+`served_port`: _int_ - The port on which `serve_all_registered` is offering the various registered services. The port is 0 if no services are offered (e.g. `serve_all_registered` was not called yet).
+`asyncio_loop`: _asyncio.EventLoop instance_ - The Python asyncio loop used by the context (note that the actual type is specific to the platform).
 
 ### `__init__(self, user_id, cog_settings, asyncio_loop=None, prometheus_registry=prometheus_client.core.REGISTRY, directory_endpoint=None, directory_auth_token=None)`
 
@@ -131,7 +132,7 @@ Parameters:
 
 -   `user_id`: _str_ - Identifier for the user of this context.
 -   `cog_settings`: _module_ - Specs module associated with trials that will be run, observed or inquired (see [cog_settings generation](#compiling-the-spec-file-into-cog_settingspy)).
--   `asyncio_loop`: _asyncio.Loop instance_ - The asyncio loop into which the Context should operate. If `None`, the current loop will be used.
+-   `asyncio_loop`: _asyncio.EventLoop instance_ - The Python asyncio loop into which the Context should operate. If `None`, the current loop will be used.
 -   `prometheus_registry`: _prometheus_client.core.CollectorRegistry instance_ - Prometheus registry that'll be used by the Cogment metrics in this context. Can be set to `None` to completely deactivate them. The default value is Prometheus' default global registry.
 -   `directory_endpoint`: _Endpoint instance_ - Grpc endpoint (i.e. starting with "grpc://") to access the directory. The directory will be used to inquire discovery endpoints, and to register the services for discovery. If no endpoint is provided, a check for the environment variable `COGMENT_DIRECTORY_ENDPOINT` will be made and if it exists, it will be used as the URL of a basic endpoint.
 -   `directory_auth_token`: _str_ - Authentication token for access to the directory. This token will be registered with the services, and must match registered tokens when inquiring the directory. If no token is provided, a check for the environment variable `COGMENT_DIRECTORY_AUTHENTICATION_TOKEN` will be made and if it exists, it will be used as the token.
@@ -390,7 +391,7 @@ Parameters:
 
 -   `bundle_size`: _int_ - Number of trials to retrieve at a time from the Datastore. This may be increased to more efficiently inquire the Datastore at the price of increased memory use.
 
--   `wait_for_trials`: _float_ - Number of seconds to wait for new trials (to reach bundle size). If 0, only the trials currently in the datastore will be returned.
+-   `wait_for_trials`: _float_ - Number of seconds to wait for new trials (to reach bundle size). If 0, only the trials currently in the datastore will be returned. If the bundle size is not reached within that time limit, whatever trials were found are returned, and if no trials were found, the iterator exits.
 
 -   `properties`: _dict{str:str}_ - Properties that must match the trial properties (see [trial parameters](./parameters.md)). If empty, all trials match.
 

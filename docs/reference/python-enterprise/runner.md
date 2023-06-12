@@ -207,20 +207,35 @@ Parameters:
 
 -   `nb_trials`: _int_ - The number of trials to run.
 -   `nb_parallel_trials`: _int_ - The number of trials to run in parallel. Must be <= `nb_trials`.
--   `id`: _str_ - ID of the batch. This will be added to the properties of the trials that are started by the batch. This should be unique in the Datastore, otherwise there could be a clash of trial IDs (a mix of trials from different batches could also be used by the `BatchTrainer`). If `None`, an ID will be chosen by the system (Unix epoch in nanoseconds).
--   `pre_trial_callback`: _async func(BatchTrialInfo instance) -> cogment.TrialParameters_ - This [Callbacks](#callbacks) function will be called before any new trial is started. If None, then the parameters for the trials will come from the Orchestrator defaults and pre-trial hooks (see Cogment Orchestrator documentation). In which case the `BatchTrainer` cannot work with this batch (because the necessary trial properties cannot be set).
--   `post_trial_callback`: _async func(sample, trial_parameters, model_registry)_ - This [Callbacks](#callbacks) function will be called after the end of a trial. If None, then no call will happen at the end of trials.
+-   `id`: _str_ - ID of the batch. This will be added to the properties of the trials that are started by the batch. This should be unique in the Datastore, otherwise there could be a clash of trial IDs (a mix of trials from different batches could also be used by the `BatchTrainer`). If `None`, an ID will be chosen by the system.
+-   `pre_trial_callback`: _async func(BatchTrialInfo instance) -> cogment.TrialParameters_ - This [Callbacks](#callbacks) function will be called before any new trial is started.
+-   `post_trial_callback`: _async func(sample, trial_parameters, model_registry)_ - This [Callbacks](#callbacks) function will be called after the end of a trial.
 
 Return: _TrialBatch instance_ - An instance of the `TrialBatch` class.
 
-### `async run_simple_training(self, batch, sampler_callback, actor_names=[])`
+### `async run_simple_training(self, batch, sampler_callback, actor_names=None, max_trial_wait=None)`
+
+Method to start training on a batch of trials with a per-sample callback.
+
+Parameters:
+
+-   `batch`: _TrialBatch instance_ - The batch to train on. This will be used to identify the trials that are part of the batch and retrieve only the samples from these trials.
+-   `sampler_callback`: _async func(cogment.DatastoreSample, cogment.TrialParameters, cogment.ModelRegistry) -> bool_ - This [Callbacks](#callbacks) function will be called for every sample in the batch.
+-   `actor_names`: _list[str]_ - Names of actors to include in the samples. If `None`, all actors will be included.
+-   `max_trial_wait`: _int_ - Maximum number of seconds to wait for new trials to be started by the batch. Since this depends on the running time of trials, this should be longer than the expected max trial duration. If `None`, then 86400 seconds (24 hours) will be used.
+
+Return: _BatchTrainer instance_ - An instance of the `BatchTrainer` class.
+
+### `async run_simple_trial_training(self, batch, trial_callback, actor_names=None, max_trial_wait=None)`
 
 Method to start training on a batch of trials.
 
 Parameters:
 
--   `batch`: _TrialBatch instance_ - The batch to train on. This will be used to identify the trials (from the trial properties) that are part of the batch and retrieve only the samples from these trials.
--   `sampler_callback`: _async func(cogment.DatastoreSample, cogment.TrialParameters, cogment.ModelRegistry) -> bool_ - This [Callbacks](#callbacks) function will be called for every batch sample retrieved.
+-   `batch`: _TrialBatch instance_ - The batch to train on. This will be used to identify the trials that are part of the batch and retrieve only the samples from these trials.
+-   `trial_callback`: _async func(cogment.DatastoreSample, cogment.TrialParameters, cogment.ModelRegistry) -> bool_ - This [Callbacks](#callbacks) function will be called for every trial in the batch.
+-   `actor_names`: _list[str]_ - Names of actors to include in the samples. If `None`, all actors will be included.
+-   `max_trial_wait`: _int_ - Maximum number of seconds to wait for new trials to be started by the batch. Since this depends on the running time of trials, this should be longer than the expected max trial duration. If `None`, then 86400 seconds (24 hours) will be used.
 
 Return: _BatchTrainer instance_ - An instance of the `BatchTrainer` class.
 
@@ -228,35 +243,40 @@ Return: _BatchTrainer instance_ - An instance of the `BatchTrainer` class.
 
 Class to run a batch of related trials.
 
-<!---
 ### __init__(self, id, controller, nb_trials, pre_trial_callback, post_trial_callback, datalog_endpoint)
 
 The parameters are the same as provided to [`run_simple_batch`](#class-cogment_enterpriserunnertrialrunner).
 
 Parameters:
 
+-   `id`: _str_ - ID of the batch. This will be added to the properties of the trials that are started by the batch. This should be unique in the Datastore, otherwise there could be a clash of trial IDs (a mix of trials from different batches could also be used by the `BatchTrainer`). If `None`, an ID will be chosen by the system.
 -   `controller`: _cogment.Controller instance_ - Controller used to start trials.
+-   `nb_trials`: _int_ - Number of trials to run.
+-   `pre_trial_callback`: _async func(BatchTrialInfo instance) -> cogment.TrialParameters_ - This [Callbacks](#callbacks) function will be called before any new trial is started. If None, then the parameters for the trials will come from the Orchestrator defaults and pre-trial hooks (see Cogment Orchestrator documentation). In which case the `BatchTrainer` cannot work with this batch (because the necessary trial properties cannot be set).
+-   `post_trial_callback`: _async func(sample, trial_parameters, model_registry)_ - This [Callbacks](#callbacks) function will be called after the end of a trial. If None, then no call will happen at the end of trials.
 -   `datalog_endpoint`: _cogment.Endpoint instance_ - Details of the connection to the Datalog that will be set for the trials.
 
 ### `start_trials(self, nb_trials)`
 
-Method to start trials in the batch. At least one trial must be started for the batch to run. The batch will maintain active the number of trials started by this method; the trials will effectively run in parallel.
+Method to start the batch. At least one trial must be started for the batch to run.
+
+This will start the trials in parallel. The batch will maintain active the number of trials started by this method by starting a new trial when one ends.
 
 -   `nb_trials`: _int_ - Number of trials to start that will be running in parallel. Any new calls of this method on a running batch will just add to the number of trials running in parallel.
 
 Return: None
 
+<!--
 ### `async all_trials(self, timeout)`
 
 Generator method to iterate through all the trials that the batch has or is starting. If the batch is ongoing, this will wait for new trials until the end of the batch. Current limitation: No more than one task can wait for trials in an ongoing batch with a timeout > 0 (i.e. only one task can be waiting on the batch).
 
 Parameters:
 
-- `timeout`: _float_ - Maximum time to wait in seconds. If 0, then only already started trials will be returned. If `None` wait indefinitely.
+- `timeout`: _float_ - Maximum time to wait in seconds. If 0, then only already started trials will be returned. If `None`, then wait indefinitely.
 
 Return: _generator(str)_ - A generator for the trial ids in the batch.
-
---->
+-->
 
 ### `pause(self)`
 
@@ -322,31 +342,28 @@ Return: _bool_ - True if the batch ended normally with the last trial tagged as 
 
 Class to help train a model on a specific batch of trials.
 
-<!---
-### `__init__(self, batch_spec, datastore, model_registry, sampler_callback, max_trial_wait)`
+### `__init__(self, batch_spec, datastore, model_registry, trial_callback, max_trial_wait)`
 
 Parameters:
 
--   `batch_spec`: _str_ or _dict{str:str}_ or _list[str]_ or _TrialBatch instance_ - If a string, it represents a batch ID of the trials to use for training. If a dictionary, it represents the properties of the trials to use for training. If a list, it represents the list of trial IDs to use for training. If an instance of `TrialBatch`, then the trials started by that batch will be used for training. For anything other than a `TrialBatch` instance, there is no reliable way to know if the batch has ended, therefore `max_trial_wait` should be used.
+-   `batch_spec`: _str_ or _dict{str:str}_ or _list[str]_ or _TrialBatch instance_ - If a string, it represents a batch ID of the trials to use for training. If a dictionary, it represents the properties of the trials to use for training. If a list, it represents the list of trial IDs to use for training. If an instance of `TrialBatch`, then the trials started by that batch will be used for training. For anything other than a `TrialBatch` instance, there is no reliable way to know if an ongoing batch has ended, therefore the trainer will have to manually be stopped or use `max_trial_wait` to stop automatically.
 -   `datastore`: _cogment.Datastore instance_ - The datastore used to retrieve the samples.
--   `model_registry`: _cogment.ModelRegistry instance_ - The registry that will be passed to the callback.
--   `sampler_callback`: same parameter as provided to [`run_simple_training`](#async-run_simple_trainingself-batch-sampler_callback-actor_names)
--   `max_trial_wait`: _int_ - Maximum number of seconds to wait for a new trial that matches `batch_spec` to appear in the datastore. If this is zero (0) then only trials already in the datastore will be used.
+-   `model_registry`: _cogment.ModelRegistry instance_ - The registry that will be passed to the callbacks.
+-   `trial_callback`: same parameter as provided to [`run_simple_training`](#async-run_simple_trainingself-batch-trial_callback-actor_names).
+-   `max_trial_wait`: _int_ - Maximum number of seconds to wait for a new trial. If `batch_spec` is an instance of `TrialBatch` then this wait is for new trials to be started by the batch. Otherwise, this wait if for trials that match `batch_spec` to appear in the datastore (If set to 0, then only trials already in the datastore will be used).
 
 ### `start(self, actor_names=[], actor_classes=[], actor_implementations=[], fields=[])`
 
 Method to start training.
 
-Parameters: Same as `cogment.Datastore.all_samples` of the same name.
+Parameters: Same as `cogment.Datastore.all_samples` of the same name. These parameters will be passed as-is to the datastore `all_sample` method.
 
 Return: None
-
---->
 
 ### `terminate(self)`
 
 Method to terminate training.
-The callback task will be cancelled.
+The callback tasks will be cancelled.
 
 Parameters: None
 
@@ -355,7 +372,8 @@ Return: None
 ### `async stop(self)`
 
 Method to stop training.
-Stops retrieving new samples from the Datastore and waits for all samples already queued to be processed by the callback (or the callback to return `False`).
+Stops retrieving trials from the Datastore.
+All trials already started will continue training.
 
 Parameters: None
 
@@ -367,17 +385,19 @@ Method to inquire whether the training is done or not.
 
 Parameters: None
 
-Return: _bool_ - True if the training is still running. I.e. there are still samples being retrieved from the trials and sent to the callback. False otherwise.
+Return: _bool_ - True if the training is still running. The training has stopped running when no more samples are being retrieved and all callbacks have returned.
 
 ### `async wait(self, timeout)`
 
-Method to wait for the training to be done. The training will end normally when all samples of the batch have been processed. The training can also be stopped, or encounter an error to become done.
+Method to wait for the training to be done.
+The training will end normally when all trials of the batch have started processing and all callbacks have returned.
+The training can also be stopped, or encounter an error to become done.
 
 Parameters:
 
 -   `timeout`: _float_ - Maximum time to wait in seconds.
 
-Return: _bool_ - True if all samples available were processed. False otherwise. `None` if timed out.
+Return: _bool_ - False if timed out, True otherwise. If True, then `is_running` will also return True.
 
 ## class BatchTrialInfo
 
@@ -386,6 +406,24 @@ Return: _bool_ - True if all samples available were processed. False otherwise. 
 `trial_index`: _int_ - The index of the trial in the batch. Generally the order the trials were started, and unique in the batch (`[0, nb_trials[`).
 
 `trial_info`: _cogment.DatastoreTrialInfo_ - The running trial information. May not always be present.
+
+## class TrainerTrialSession
+
+Class to help train a model on a specific batch of trials.
+
+`trial_id`: _str_ - ID of the trial.
+
+`parameters`: _cogment.TrialParameters instance_ - Parameters of the trial.
+
+`model_registry`: _cogment.ModelRegistry instance_ - Common model registry for the whole batch being trained. The TrialRunner argument `model_registry_endpoint` is used to retrieve this model registry.
+
+### `async all_samples(self)`
+
+Method to retrieve all samples from the trial.
+
+Parameters: None
+
+Return: _generator(cogment.DatastoreSample instance)_ - A generator for the trial samples that arrive.
 
 ## Callbacks
 
@@ -447,38 +485,40 @@ async def my_pre_trial_callback(info: BatchTrialInfo) -> cogment.TrialParameters
     return trial_params
 ```
 
-The parameter received is a `BatchTrialInfo` instance that is partially filled (i.e. it does not contain a `trial_info`).
+Parameters Received:
 
-The function must create an instance of `cogment.TrialParameters`, fill the necessary parameters for the trial and return it.
-The trial ID will automatically be created using the batch ID and the trial index.
+-   `info`: _BatchTrialInfo instance_ - Partially filled info of the trial to start; it does not contain `trial_info`.
 
-Once the trial parameters are received by the `TrialBatch`, some data will be added, and some will be overwritten. These are the attributes changed in the received `TrialParameter` before passing it to Cogment:
+Expected Return: _None or tuple(str, cogment.TrialParameters instance)_ - The first item of the tuple is the requested trial ID. If the trial ID is `None`, it will be automatically created using the batch ID and the trial index. The second item of the tuple is the trial parameters that must be fully populated to start the new trial. If the return value is `None` (instead of a tuple), the trial will not start and the batch will stop (i.e. not start any new trial, but ongoing trials will continue).
+
+In case of exceptions: Exceptions raised by the callback will do the same as if `None` was returned.
+
+Once the parameters are received by the `TrialBatch`, some data will be added, and some will be overwritten before starting the trial.
+These are the `TrialParameters` attributes changed:
 
 -   `properties`: Some properties will be added to the existing properties (see [Module Attributes](#module-attributes)). If the property names clash, the user properties will be overwritten. In general, do not start property names with an underscore to prevent such clashes.
--   `datalog_endpoint`: This attribute of the trial parameters will be overwritten with the provided `datastore_endpoint` argument of `TrialRunner`. If `datastore_endpoint` was not provided, or it was `None`, then the directory will be used to find an appropriate datastore. The same datastore must be used by both the `TrialBatch` (as a datalog) and `BatchTrainer` (as a datastore), so the endpoint should resolve to the same datastore locally and at the Orchestrator (i.e. ideally use the same directory).
+-   `datalog_endpoint`: This attribute of the trial parameters will be overwritten. If the `datastore_endpoint` argument of `TrialRunner` is provided, it will be used. If `datastore_endpoint` was not provided, or it was `None`, then the directory will be used to find an appropriate datalog/datastore. The same datastore must be used by both the `TrialBatch` (as a datalog) and `BatchTrainer` (as a datastore), so the endpoint should resolve to the same datastore locally and at the Orchestrator (i.e. ideally use the same directory).
 -   `datalog_exclude_fields`: This attribute will be reset (i.e. not excluding any fields from the datalog).
-
-<!---
-The return value of the function can also be a tuple of two items `(requested_id, parameters)`.
-The first item of the tuple is the requested trial ID. If it is `None`, the ID will be created as above.
-The second item of the tuple is an instance of `cogment.TrialParameters` as described above.
-
-If the return value of the function is `None`, the batch will be stopped and the function will not be called again for that batch.
---->
 
 ### Post-Trial Callback
 
-This function is passed to the [`TrialRunner.run_simple_batch`](#class-cogment_enterpriserunnertrialrunner) method and will be called after a trial has ended.
+This function is passed to the [`TrialRunner.run_simple_batch`](#class-cogment_enterpriserunnertrialrunner) method and will be called after a trial has ended normally (i.e. was not terminated).
 It is an `asyncio` coroutine.
 
 e.g.:
 
 ```python
-async def my_post_trial_callback(info: BatchTrialInfo):
+async def my_post_trial_callback(info):
     # ... Do cleanup, tracking, etc
 ```
 
-The parameter received is a `BatchTrialInfo` instance.
+Parameters Received:
+
+-   `info`: _BatchTrialInfo instance_ - The full info of the trial that ended.
+
+Expected Return: None
+
+In case of exceptions: All exceptions raised by the callback will be ignored.
 
 ### Sampler Callback
 
@@ -489,16 +529,38 @@ It is an `asyncio` coroutine.
 e.g.:
 
 ```python
-async def my_sampler_callback(sample, trial_parameters, model_registry) -> bool:
+async def my_sampler_callback(sample, trial_parameters, model_registry):
     # ... Train model
-    continue_training = True
-    return continue_training
 ```
 
-The parameters received are:
+Parameters Received:
 
--   `sample`: _cogment.DatastoreSample_ - The is the sample that was received with all necessary data to train.
--   `trial_parameters`: _cogment.TrialParameters_ - These are the parameters of the trial from which the sample came from.
--   `model_registry`: _cogment.ModelRegistry_ - A common model registry for the whole batch being trained. The TrialRunner argument `model_registry_endpoint` is used to retrieve this model registry.
+-   `sample`: _cogment.DatastoreSample instance_ - Trial sample received.
+-   `trial_parameters`: _cogment.TrialParameters instance_ - Parameters of the trial from which the sample came from.
+-   `model_registry`: _cogment.ModelRegistry instance_ - Common model registry for the whole batch being trained. The TrialRunner argument `model_registry_endpoint` is used to retrieve this model registry.
 
-The expected return value is a `bool`. If True, the training will continue normally. If False, the sampler callback will stop being called, and the `BatchTrainer` will stop.
+Expected Return: _None or bool_ - If `None` or True, the training will continue normally. If a bool and False, the sampler callback will stop being called, and the `BatchTrainer` will stop.
+
+In case of exceptions: If the callback raises an exception, the `BatchTrainer` will stop at the next sample.
+
+### Trial Callback
+
+This function is passed to the `TrialRunner.run_simple_trial_trainer` method and will be called for each trial of the batch.
+This is asynchronous with the actual running of the trials and uses the Cogment Datastore to retrieve the trial data and samples.
+It is an `asyncio` coroutine.
+
+e.g.:
+
+```python
+async def my_trial_callback(session):
+    async for sample in session.all_samples():
+        # ... process sample
+```
+
+Parameters Received:
+
+-   `session`: _TrainerTrialSession instance_ - The session for the trial.
+
+Expected Return: _None or bool_ - If `None` or True, continue processing the batch. If a bool and False, stop the `BatchTrainer`.
+
+In case of exceptions: If the callback raises an exception, the `BatchTrainer` will stop immediately.
