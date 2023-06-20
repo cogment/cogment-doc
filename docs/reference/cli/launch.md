@@ -17,7 +17,7 @@ $ cogment launch ./launch.yaml
 ```
 
 <!---
-Optionally it can take a quiet options: [-q] or [--quiet] that can also be increased by adding [-qq]. This will remove some of the launcher output, but never disables the processes output.
+Optionally it can take a quiet options: [-q] or [--quiet] that can also be increased by adding [-qq]. This will disable some of the launcher output. It will not however disable the processes output.
 
 ```bash
 $ cogment launch -qq ./launch.yaml

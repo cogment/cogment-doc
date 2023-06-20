@@ -399,6 +399,16 @@ Parameters:
 
 Return: _bool_ - False if timed out, True otherwise. If True, then `is_running` will also return True.
 
+### `set_nb_parallel_trials(self, nb_trials)`
+
+Method to set the number of trials to train in parallel.
+
+Parameters:
+
+-   `nb_trials`: _int_ - Number of trials to train in parallel (>0). If `None`, no limit will be enforced and all batch trial data will be processed as it becomes available. Default is 1 (i.e. no parallelism, only one trial at a time).
+
+Return: None
+
 ## class BatchTrialInfo
 
 `batch_id`: _str_ - ID of the batch
