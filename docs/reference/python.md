@@ -1307,7 +1307,7 @@ Class containing the data of a trial sample (typically representing all the data
 
 `trial_id`: _str_ - The id of the trial the data in the sample relates to.
 
-`trial_state`: _cogment.TrialState instance_ - The state of the trial at the end of the sample period.
+`trial_state`: _cogment.TrialState instance_ - The state of the trial at the end of the sample period. Note that the last sample (when `trial_state` is `TrialState.ENDED`) may have `None` data (e.g. observation, action, etc) if the trial ended on an error or was hard terminated.
 
 `tick_id`: _int_ - The step/tick at which the data in the sample was obtained.
 
@@ -1327,13 +1327,13 @@ Class containing the data related to an actor in a sample.
 
 `name`: _str_ - Name of the actor.
 
-`observation`: _protobuf class instance_ - Observation received by the actor. The class of the observation is defined as observation space for the actor class. This is specified in section `actor_classes:observation:space` in the spec file for the appropriate actor class.
+`observation`: _protobuf class instance_ - Observation received by the actor. The class of the observation is defined as observation space for the actor class. This is specified in section `actor_classes:observation:space` in the spec file for the appropriate actor class. Can be `None` if there is no data.
 
-`observation_serialized`: _bytes_ - Observation received by the actor in serialized (class independent) form. This can be retrieved even without specs (see `has_specs()`).
+`observation_serialized`: _bytes_ - Observation received by the actor in serialized (class independent) form. This can be retrieved even without specs (see `has_specs()`). Can be `None` if there is no data.
 
-`action`: _protobuf class instance_ - Action from the actor. The class of the action is defined as action space for the specific actor in the section `actor_classes:action:space` in the spec file for the appropriate actor class.
+`action`: _protobuf class instance_ - Action from the actor. The class of the action is defined as action space for the specific actor in the section `actor_classes:action:space` in the spec file for the appropriate actor class. Can be `None` if there is no data.
 
-`action_serialized`: _bytes_ - Action from the actor in serialized (class independent) form. This can be retrieved even without specs (see `has_specs()`).
+`action_serialized`: _bytes_ - Action from the actor in serialized (class independent) form. This can be retrieved even without specs (see `has_specs()`). Can be `None` if there is no data.
 
 `reward`: _float_ - The aggregated reward received by the actor in the sample.
 
@@ -1398,4 +1398,4 @@ Class containing the data of a message in the Datastore.
 
 `receiver`: _str_ - Name of the receiver of the message. The string could contain wildcard characters to represent multiple receivers intended by the sender.
 
-`payload`: _google.protobuf.Any instance_ - Data for a received message. The class enclosed in `google.protobuf.Any` is of the type set by the sender; It is the responsibility of the receiver to manage the data received (i.e. determine the type and unpack the data).
+`payload`: _google.protobuf.Any instance_ - Data for a received message. The class enclosed in `google.protobuf.Any` is of the type set by the sender; It is the responsibility of the receiver to manage the data received (i.e. determine the type and unpack the data). Can be `None` if there is no data.

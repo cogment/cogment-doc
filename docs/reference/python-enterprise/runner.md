@@ -96,7 +96,7 @@ Parameters:
 -   `actor_class`: _str_ - Name of the class of the actor to which this data relates. This information is necessary to find the proper message type in the spec.
 -   `cog_settings`: _module_ - Specification module associated with the trial from which the data relates.
 
-Return: _protobuf class instance_ - Action from an actor of type `actor_class`. The class of the action is defined as action space for the specific actor class in the section `actor_classes:action:space` in the spec file (e.g. `cog_settings`).
+Return: _protobuf class instance_ - Action from an actor of type `actor_class`. The class of the action is defined as action space for the specific actor class in the section `actor_classes:action:space` in the spec file (e.g. `cog_settings`). `None` if `serialized_data` is `None`.
 
 ### `cogment_enterprise.runner.deserialize_actor_observation(serialized_data, actor_class, cog_settings)`
 
@@ -112,7 +112,7 @@ Parameters:
 -   `actor_class`: _str_ - Name of the class of the actor to which this data relates. This information is necessary to find the proper message type in the spec.
 -   `cog_settings`: _module_ - Specification module associated with the trial from which the data relates.
 
-Return: _protobuf class instance_ - Observation for an actor of type `actor_class`. The class of the observation is defined as observation space for the specific actor class in the section `actor_classes:observation:space` in the spec file (e.g. `cog_settings`).
+Return: _protobuf class instance_ - Observation for an actor of type `actor_class`. The class of the observation is defined as observation space for the specific actor class in the section `actor_classes:observation:space` in the spec file (e.g. `cog_settings`). `None` if `serialized_data` is `None`.
 
 ### `cogment_enterprise.runner.deserialize_actor_config(serialized_data, actor_class, cog_settings)`
 
@@ -128,7 +128,7 @@ Parameters:
 -   `actor_class`: _str_ - Name of the class of the actor to which this data relates. This information is necessary to find the proper message type in the spec.
 -   `cog_settings`: _module_ - Specification module associated with the trial from which the data relates.
 
-Return: _protobuf class instance_ - Config for an actor of type `actor_class`. The class of the config is defined as config type for the specific actor class in the section `actor_classes:config_type` in the spec file (e.g. `cog_settings`).
+Return: _protobuf class instance_ - Config for an actor of type `actor_class`. The class of the config is defined as config type for the specific actor class in the section `actor_classes:config_type` in the spec file (e.g. `cog_settings`). `None` if `serialized_data` is `None`.
 
 ### `cogment_enterprise.runner.deserialize_environment_config(serialized_data, cog_settings)`
 
@@ -143,7 +143,7 @@ Parameters:
 -   `serialized_data`: _bytes_ - Raw data received.
 -   `cog_settings`: _module_ - Specification module associated with the trial from which the data relates.
 
-Return: _protobuf class instance_ - Config for the environment. The class of the config is defined as config type in the section `environment:config_type` in the spec file (e.g. `cog_settings`).
+Return: _protobuf class instance_ - Config for the environment. The class of the config is defined as config type in the section `environment:config_type` in the spec file (e.g. `cog_settings`). `None` if `serialized_data` is `None`.
 
 ### `cogment_enterprise.runner.deserialize_trial_config(serialized_data, cog_settings)`
 
@@ -158,7 +158,7 @@ Parameters:
 -   `serialized_data`: _bytes_ - Raw data received.
 -   `cog_settings`: _module_ - Specification module associated with the trial from which the data relates.
 
-Return: _protobuf class instance_ - Config for the trial. The class of the config is defined as config type in the section `trial:config_type` in the spec file (e.g. `cog_settings`).
+Return: _protobuf class instance_ - Config for the trial. The class of the config is defined as config type in the section `trial:config_type` in the spec file (e.g. `cog_settings`). `None` if `serialized_data` is `None`.
 
 ## class cogment_enterprise.runner.TrialRunner
 
