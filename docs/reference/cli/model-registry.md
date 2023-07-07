@@ -77,9 +77,9 @@ The maximum size for model iteration data chunk sent by the server. It is define
 
 Can be specified as:
 
--   a command line option, e.g. `--sent_version_chunk_size=10000000`,
--   an environment variable, e.g. `COGMENT_MODEL_REGISTRY_SENT_MODEL_VERSION_DATA_CHUNK_SIZE=10000000`,
--   its default value is 5242880 Bytes, i.e. 5MB.
+-   a command line option, e.g. `--sent_version_chunk_size=100000`,
+-   an environment variable, e.g. `COGMENT_MODEL_REGISTRY_SENT_MODEL_VERSION_DATA_CHUNK_SIZE=100000`,
+-   its default value is 2097152 Bytes, i.e. 2MB.
 
 ### `log_level`
 

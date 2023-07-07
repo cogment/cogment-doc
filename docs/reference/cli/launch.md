@@ -6,7 +6,10 @@ sidebar_position: 5
 
 Launch is a utility command meant to facilitate locally launching and shutting down an entire Cogment project at once.
 
-When launch is used, a set of processes will be launched to run in parallel, as described by a [YAML definition file](#definition-file). Once any of these processes terminates, all other ones will be terminated as well.
+When launch is used, a set of processes will be launched to run in parallel, as described by a [YAML definition file](#definition-file).
+Once any of these processes terminates, all other ones will be terminated as well.
+
+The order of script launches is undefined, which is to say that they may not start in the order they are defined, and may not always start in the same order.
 
 ## Command line
 
