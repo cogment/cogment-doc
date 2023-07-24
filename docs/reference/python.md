@@ -89,7 +89,7 @@ The generator is used this way:
 $ python3 -m cogment.generate --spec cogment.yaml --output ./cog_settings.py
 ```
 
-This will create a `cog_settings.py` specs module in the current directory (`--output ./`). The generator will also compile the imported `*.proto` files into python modules that will be saved in the same location as the specified output file (`cog_settings.py`) and they will be named according to their proto names (`*_pb2.py`).
+This will create a `cog_settings.py` specs module in the current directory (`--output ./`). The generator will also compile the imported `*.proto` files into python modules that will be saved in the same location as the specified output file (`cog_settings.py`) and they will be named according to their proto names:  `<name>.proto` is compiled to `<name>_pb2.py`.
 
 The `cog_settings.py` Python module is required by all API entry points.
 
@@ -564,8 +564,9 @@ A background task will be started (running `iteration_updates`) to track the lat
 Multiple calls for the same model will not duplicate the background task and will point to the same underlying model.
 Thus if the model is changed by a caller, all callers will see the changes (unless and until a new model is retrieved from the Model Registry).
 
-Due to background processing and caching, this method is not thread safe and cannot be used by different async loops.
-It is best used for simple cases. More complicated use-cases should explicitly use `iteration_updates`.
+Due to background processing and caching, this method is not thread safe.
+It is best used for simple cases.
+More complicated use-cases should explicitly use `iteration_updates`.
 
 Parameters:
 

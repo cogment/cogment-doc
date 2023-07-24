@@ -11,6 +11,16 @@ The Directory Client is a utility to manually access (through the command line i
 
 All directory client services have these options in common.
 
+### `timeout`
+
+The maximum duration for the execution of the request. The duration should be specified as a sequence of numbers followed by a unit suffix: "300ms", "1.5h" or "2h45m" are valid timeouts. Valid time units are "ns", "us" (or "µs"), "ms", "s", "m", "h".
+
+Can be specified as:
+
+-   a command line option, e.g. `--timeout=1m`,
+-   an environment variable, e.g. `COGMENT_CLIENT_TIMEOUT=90s`,
+-   its default value is 30 seconds.
+
 ### `directory_endpoint`
 
 The grpc protocol endpoint where to find the Directory.
@@ -33,7 +43,7 @@ Can be specified as:
 
 ## Directory Client Register
 
-The registration client is used to register (add) a service to the Directory.
+This command is used to register (add) a service to the Directory.
 
 E.g.:
 
@@ -82,7 +92,7 @@ Also see [special properties](../../parameters.md#discover-host) used by Cogment
 
 ## Directory Client Deregister
 
-The deregistration client is used to deregister (remove/delete) a service from the Directory.
+This command is used to deregister (remove/delete) a service from the Directory.
 
 E.g.:
 
@@ -106,7 +116,7 @@ The secret string that was returned when the service was registered.
 
 ## Directory Client Inquire
 
-The inquiry client is used to inquire (find) services in the Directory. Note that if services are not found (or the authentication token does not match), an empty list is returned, but there is no "error".
+This command is used to inquire (find) services in the Directory. Note that if services are not found (or the authentication token does not match), an empty list is returned, but there is no "error".
 
 E.g.:
 
@@ -146,3 +156,8 @@ If this is provided, the `service_id` option cannot be used.
 The properties associated with the service to find. In the form of "name=value,name=value" where the value is optional. All properties must match (in name and value) the properties of the service for a match to occur.
 
 If this is provided, the `service_id` option cannot be used.
+
+## Directory Client WaitForReady
+
+The client will wait for a connection to the directory.
+If a connection cannot be established within the [timeout](#timeout) period, it returns an error, otherwise it returns success.
