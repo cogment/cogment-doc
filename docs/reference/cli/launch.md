@@ -146,6 +146,7 @@ E.g.:
 ```yaml
 scripts:
     process_a:
+        quiet: True
         commands:
             - ["retrieve_db.sh"]
             - ["python3", "env/main.py"]
@@ -163,7 +164,7 @@ Notes:
 - It is better to use single quotes to define the regex string to prevent YAML from interpreting control characters (e.g. backslash).
 - Be aware that colors in the process output can make matching difficult.
 - The version of regex currently used mostly follows [Google's RE2](https://github.com/google/re2/wiki/Syntax).
-- The `quiet` option (if enabled), does not prevent the matching of the process output.
+- The matching of the process output is not affected by the [quiet](#quiet) script option.
 
 #### Global *(Cogment >= 2.15)*
 
@@ -249,10 +250,10 @@ scripts:
         commands:
             - ["echo", "args: {{.__1}} {{.__2}} {{.__3}}"]  # echo "args: 42 foo "
             - ["echo", "no args: {{.__10}}"]  # echo "no args: <no value>"
-        ready_output: '.* {{.__2}}$'
+        ready_output: '.* {{.__2}} $'
 ```
 
-### Example
+### File Example
 
 ```yaml
 global:
@@ -288,7 +289,6 @@ scripts:
         depends_on:
             - directory
         commands:
-            - ["sleep", "1"]
             - ["cogment", "services", "orchestrator"]
     runner:
         folder: ./pycode
@@ -296,7 +296,6 @@ scripts:
             - directory
             - orchestrator
         commands:
-            - ["sleep", "1"]
             - ["python3", "runner.py", "-u {{.USER}}", "-n {{.RUN_NAME}}", "{{.__2}}"]
     report:
         commands: 
