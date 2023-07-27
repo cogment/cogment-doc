@@ -9,7 +9,7 @@ The Directory is an implementation of the [directory gRPC service](../../grpc.md
 
 A regular health check is done on non-permanent network services to make sure they remain available (i.e. network reachable).
 If a service fails the health check, it is automatically removed from the Directory.
-Non-permanent services have a limited lifetime in the directory; after a week, they will be removed.
+Non-permanent services have a limited lifetime in the directory; after a week, they will be removed regardless of the health check.
 
 The Directory works in tandem with the Cogment [endpoints](../../parameters.md#cogment-endpoints), in particular the ones with a [discover](../../parameters.md#discover-host) host (referred as **discovery endpoints**).
 

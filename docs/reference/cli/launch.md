@@ -61,7 +61,9 @@ scripts:
 The output will then look something like this:
 
 ```output
+2023-06-30T22:24:08Z [TRACE ] [process_a] Ready
 2023-06-30T22:24:08Z [TRACE ] [process_a:(1/2)] Launch [retrieve_db.sh]
+2023-06-30T22:24:08Z [TRACE ] [process_b] Ready
 2023-06-30T22:24:08Z [stdout] [process_a:(1/2)] Retrieving default database...
 2023-06-30T22:24:08Z [TRACE ] [process_b:(1/1)] Launch [cogment services orchestrator]
 2023-06-30T22:24:08Z [stderr] [process_b:(1/1)] 2023-06-30T22:24:08Z [INFO] [cmd] starting the orchestrator service [version:2.16.0]
@@ -162,7 +164,7 @@ scripts:
 Notes:
 
 - It is better to use single quotes to define the regex string to prevent YAML from interpreting control characters (e.g. backslash).
-- Be aware that colors in the process output can make matching difficult.
+- Be aware that colors and other terminal controls (e.g. curses) in the process output can make matching difficult.
 - The version of regex currently used mostly follows [Google's RE2](https://github.com/google/re2/wiki/Syntax).
 - The matching of the process output is not affected by the [quiet](#quiet) script option.
 
