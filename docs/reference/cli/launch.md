@@ -9,7 +9,8 @@ Launch is a utility command meant to facilitate locally launching and shutting d
 When launch is used, a set of processes will be launched to run in parallel, as described by a [YAML definition file](#definition-file).
 Once any of these processes terminates, all other ones will be terminated as well.
 
-The order of script launches is undefined, which is to say that they may not start in the order they are defined, and may not always start in the same order.
+The order of of the script execution is undefined, which is to say that they may not start in the order they are defined, and may not always start in the same order.
+Script [dependency](#dependency-cogment--216) can be used if a certain order must be used.
 
 ## Command line
 
@@ -210,49 +211,92 @@ scripts:
 ### Variable substitution
 
 <!-- This is using the go 'text.template' facility with the environment variables as dictionary -->
-You can substitute environment variables using `{{.ENV_VAR}}` anywhere in the `commands`, `environment` or `ready_output` values.
-Environment variables set in the definition file can also be substituted that way.
+You can substitute launch variables using `{{.VAR}}` in strings anywhere in the `commands`, `environment` or `ready_output` nodes of the yaml definition file.
+All environment variables when `launch` is started are defined as launch variables.
+New environment variables set in the definition file also define launch variables.
+And launch defines some [special variables](#special-variables) internally also.
 
-To print the literal double curly open brackets, surround them with backticks inside substitution brackets: ```{{`{{`}}```.
-
-E.g.:
-
-```yaml
-# "USER=Elvis" is a variable in the environment where "cogment launch" was run
-scripts:
-    say_hi:
-        environment:
-            TYPE: "How"
-            QUESTION: "{{.TYPE}} are you?"
-        commands:
-            - ["echo", "Hello, {{.USER}}. {{.QUESTION}}"]  # echo "Hello, Elvis. How are you?"
-            - ["echo", "{{`{{`}} brackets }}"]  # echo "{{ brackets }}"
-        ready_output: 'Hello, {{.USER}}.*'
-```
+In the concerned strings, the double open curly brackets ("`{{`") delimit the start of a variable to be substituted, therefore to include a literal double open brackets in a string, you have to surround them with backticks inside substitution brackets: ```{{`{{`}}```.
 
 Undefined values will be replaced with `<no value>`.
-
-#### Arguments *(Cogment >= 2.15)*
-
-You can also substitute the arguments from the command line of launch (e.g. `cogment launch ./launch.yaml arg1 arg2 arg3`) using `{{.__1}}`, `{{.__2}}`, `{{.__3}}`, etc.
-Note that the `{{.__1}}` to `{{.__9}}` are always defined, but will be empty if no corresponding argument was given on the command line.
-Arguments 10 (`{{.__10}}`) and above will only be defined if they were provided on the command line.
 
 E.g.:
 
 ```console
-$ cogment launch ./launch.yaml 42 foo
+$ export OWNER=Elvis
+$ cogment launch ./launch.yaml
+```
+
+```yaml
+scripts:
+    say_hi:
+        environment:
+            Type: "How"
+            Question: "{{.Type}} are you?"
+        commands:
+            - ["echo", "Hello, {{.OWNER}}. {{.Question}}"]  # echo "Hello, Elvis. How are you?"
+            - ["echo", "{{`{{`}} brackets }}"]  # echo "{{ brackets }}"
+            - ["echo", "no val: {{.MADE_UP_VARIABLE}}"]  # echo "no val: <no value>"
+        ready_output: 'Hello, {{.OWNER}}.*'
+```
+
+#### Special Variables
+
+The launch program will also define variables that can be used in substitutions.
+These internally defined variables start with a double underscore (`__`).
+
+Environment variables with conflicting names will be replaced by these internal launch variables.
+Note that this only affects variable substitution, not the environment of the command execution.
+And internal launch variables are not available as environment variables.
+
+##### Arguments *(Cogment >= 2.15)*
+
+The arguments from the command line of launch define variables and can thus be substituted.
+E.g. `cogment launch ./launch.yaml arg1 arg2 arg3` will define `__1`, `__2` and `__3` respectively corresponding to `arg1`, `arg2` and `arg3`.
+They can then be substituted with `{{.__1}}`, `{{.__2}}`, `{{.__3}}`.
+
+`__1` to `__9` are always defined, but will be empty if no corresponding argument was given on the command line.
+Arguments 10 (`__10`) and above will only be defined if they were provided on the command line.
+
+E.g.:
+
+```console
+$ cogment launch -q ./launch.yaml 42 foo
 ```
 
 ```yaml
 scripts:
     args_out:
-        environment:
-            NAME: foo
         commands:
-            - ["echo", "args: {{.__1}} {{.__2}} {{.__3}}"]  # echo "args: 42 foo "
-            - ["echo", "no args: {{.__10}}"]  # echo "no args: <no value>"
+            - ["echo", "args:", "{{.__1}}", "{{.__2}}", "{{.__3}}"]  # echo "args:" "42" "foo" ""
+            - ["echo", "empty: >{{.__3}}< >{{.__6}}<"]  # echo "empty: >< ><"
+            - ["echo", "no args: {{.__10}} {{.__42}}"]  # echo "no args: <no value> <no value>"
         ready_output: '.* {{.__2}} $'
+```
+
+###### All Arguments *(Cogment >= 2.17)*
+
+The number of arguments on the command line of launch is defined in `__NB_ARGS`.
+And all the launch arguments can be added to a script command with `__ALL_ARGS`.
+
+The `__ALL_ARGS` variable is special in terms of substitution; if the command argument string is exactly `{{.__ALL_ARGS}}`, then all launch arguments will be added to this command. Otherwise if it is only *part* of a string, it will substitute a string containing all launch arguments.
+
+In other words, a command argument "{{.__ALL_ARGS}}" will expand to multiple arguments for the command, whereas something like "--{{.__ALL_ARGS}}" will stay as one argument (a string that contains all launch arguments preceded by "--").
+
+E.g.:
+
+```console
+$ cogment launch ./launch.yaml 42 foo extra
+```
+
+```yaml
+scripts:
+    args_out:
+        commands:
+            - ["echo", "nb of args: {{.__NB_ARGS}}]"]  # echo "nb of args: 3"
+            - ["echo", "all:", "{{.__ALL_ARGS}}", "and more"]  # echo "all:" "42" "foo" "extra" "and more"
+            - ["echo", "all:", "args: {{.__ALL_ARGS}}"]  # echo "all:" "args: 42 foo extra"
+        ready_output: 'args:.*{{.__2}}'
 ```
 
 ### File Example
