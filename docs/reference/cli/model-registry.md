@@ -5,10 +5,6 @@ sidebar_position: 4
 
 # Model Registry
 
-:::caution
-This module is still in active development and should be considered a prerelease version.
-:::
-
 Cogment Model Registry is designed to store and make available AI models to be used by Cogment actors.
 
 The Model Registry manages models in two ways:
@@ -33,7 +29,7 @@ The Model Registry configuration can be specified either through the command lin
 The TCP port where to serve the [The Model Registry API](../grpc.md#model-registry-api).
 
 If set to 0, then the system will automatically choose a free port.
-This is normally used in combination with a [Directrory](#directory_endpoint).
+This is normally used in combination with a [Directory](#directory_endpoint).
 
 Can be specified as:
 

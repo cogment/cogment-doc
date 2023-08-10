@@ -26,7 +26,7 @@ This is where the [Controller](../../guide/development-guide.mdx#controller) con
 It can be the same as the `actor_port`.
 
 If set to 0, then the system will automatically choose a free port.
-This is normally used in combination with a [Directrory](#directory_endpoint).
+This is normally used in combination with a [Directory](#directory_endpoint).
 
 Can be specified as:
 
@@ -41,7 +41,7 @@ This is where [Client Actors](../../guide/development-guide.mdx#service-actor-cl
 It can be the same as the `lifecycle_port`.
 
 If set to 0, then the system will automatically choose a free port.
-This is normally used in combination with a [Directrory](#directory_endpoint).
+This is normally used in combination with a [Directory](#directory_endpoint).
 
 Can be specified as:
 

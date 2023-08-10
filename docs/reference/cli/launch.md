@@ -1,5 +1,5 @@
 ---
-sidebar_position: 5
+sidebar_position: 6
 ---
 
 # Launch
@@ -49,12 +49,12 @@ E.g.:
 
 ```yaml
 scripts:
-    process_a:  # The name of this process is "process_a"
+    process_a: # The name of this process is "process_a"
         commands:
             - ["retrieve_db.sh"]
             - ["python3", "env/main.py"]
 
-    process_b:  # The name of this process is "process_b"
+    process_b: # The name of this process is "process_b"
         commands:
             - ["cogment", "service", "orchestrator"]
 ```
@@ -77,11 +77,11 @@ The output will then look something like this:
 
 Notes:
 
-- "[TRACE ]" is low level information from the launcher (it could also be "[INFO  ]" for more important information).
-- "[stdout]", and "[stderr]" are the output from the process.
-- "process_a" and "process_b" are the names given to the processes in the definition file.
-- "(1/2)" means that it is the first command out of two for that process.
-- The times/dates are in RFC3339 format.
+-   "[TRACE ]" is low level information from the launcher (it could also be "[INFO ]" for more important information).
+-   "[stdout]", and "[stderr]" are the output from the process.
+-   "process_a" and "process_b" are the names given to the processes in the definition file.
+-   "(1/2)" means that it is the first command out of two for that process.
+-   The times/dates are in RFC3339 format.
 
 ##### Environment Variables
 
@@ -104,6 +104,7 @@ scripts:
 
 By default, the current working folder is set to the folder **containing the launch definition file** (not the folder where the Launch command is executed).
 You can change the working folder with the `folder` node for each process.
+
 <!-- The `dir` node is deprecated. -->
 
 E.g.:
@@ -112,7 +113,7 @@ E.g.:
 # Definition file is in "/home/user"
 scripts:
     actor_alpha:
-        folder: ./actors/alpha  # Working folder is "/home/user/actors/alpha"
+        folder: ./actors/alpha # Working folder is "/home/user/actors/alpha"
         commands:
             - ["python3", "main.py"]
 ```
@@ -133,7 +134,7 @@ scripts:
             - ["python3", "setup.py"]
 ```
 
-##### Dependency *(Cogment >= 2.16)*
+##### Dependency _(Cogment >= 2.16)_
 
 Inter-process dependency can also be defined using the `depends_on` and `ready_output` nodes of the script.
 
@@ -153,7 +154,7 @@ scripts:
         commands:
             - ["retrieve_db.sh"]
             - ["python3", "env/main.py"]
-        ready_output: '^Database retrieved in'
+        ready_output: "^Database retrieved in"
 
     process_b:
         depends_on:
@@ -164,12 +165,12 @@ scripts:
 
 Notes:
 
-- It is better to use single quotes to define the regex string to prevent YAML from interpreting control characters (e.g. backslash).
-- Be aware that colors and other terminal controls (e.g. curses) in the process output can make matching difficult.
-- The version of regex currently used mostly follows [Google's RE2](https://github.com/google/re2/wiki/Syntax).
-- The matching of the process output is not affected by the [quiet](#quiet) script option.
+-   It is better to use single quotes to define the regex string to prevent YAML from interpreting control characters (e.g. backslash).
+-   Be aware that colors and other terminal controls (e.g. curses) in the process output can make matching difficult.
+-   The version of regex currently used mostly follows [Google's RE2](https://github.com/google/re2/wiki/Syntax).
+-   The matching of the process output is not affected by the [quiet](#quiet) script option.
 
-#### Global *(Cogment >= 2.15)*
+#### Global _(Cogment >= 2.15)_
 
 The `global` node contains values that have a global scope (i.e. they affect all scripts defined in the file).
 Some of these values can be overridden by the individual scripts.
@@ -200,23 +201,24 @@ E.g.:
 ```yaml
 # Definition file is in "/home/user"
 global:
-    folder: ./app  # Default folder for all scripts is set to "/home/user/app"
+    folder: ./app # Default folder for all scripts is set to "/home/user/app"
 scripts:
     local:
-        folder: ./inside  # Working folder is then "/home/user/app/inside"
+        folder: ./inside # Working folder is then "/home/user/app/inside"
     somewhere:
-        folder: /home/away  # Working folder is then "/home/away"
+        folder: /home/away # Working folder is then "/home/away"
 ```
 
 ### Variable substitution
 
 <!-- This is using the go 'text.template' facility with the environment variables as dictionary -->
+
 You can substitute launch variables using `{{.VAR}}` in strings anywhere in the `commands`, `environment` or `ready_output` nodes of the yaml definition file.
 All environment variables when `launch` is started are defined as launch variables.
 New environment variables set in the definition file also define launch variables.
 And launch defines some [special variables](#special-variables) internally also.
 
-In the concerned strings, the double open curly brackets ("`{{`") delimit the start of a variable to be substituted, therefore to include a literal double open brackets in a string, you have to surround them with backticks inside substitution brackets: ```{{`{{`}}```.
+In the concerned strings, the double open curly brackets ("`{{`") delimit the start of a variable to be substituted, therefore to include a literal double open brackets in a string, you have to surround them with backticks inside substitution brackets: `` {{`{{`}} ``.
 
 Undefined values will be replaced with `<no value>`.
 
@@ -234,10 +236,10 @@ scripts:
             Type: "How"
             Question: "{{.Type}} are you?"
         commands:
-            - ["echo", "Hello, {{.OWNER}}. {{.Question}}"]  # echo "Hello, Elvis. How are you?"
-            - ["echo", "{{`{{`}} brackets }}"]  # echo "{{ brackets }}"
-            - ["echo", "no val: {{.MADE_UP_VARIABLE}}"]  # echo "no val: <no value>"
-        ready_output: 'Hello, {{.OWNER}}.*'
+            - ["echo", "Hello, {{.OWNER}}. {{.Question}}"] # echo "Hello, Elvis. How are you?"
+            - ["echo", "{{`{{`}} brackets }}"] # echo "{{ brackets }}"
+            - ["echo", "no val: {{.MADE_UP_VARIABLE}}"] # echo "no val: <no value>"
+        ready_output: "Hello, {{.OWNER}}.*"
 ```
 
 #### Special Variables
@@ -249,7 +251,7 @@ Environment variables with conflicting names will be replaced by these internal 
 Note that this only affects variable substitution, not the environment of the command execution.
 And internal launch variables are not available as environment variables.
 
-##### Arguments *(Cogment >= 2.15)*
+##### Arguments _(Cogment >= 2.15)_
 
 The arguments from the command line of launch define variables and can thus be substituted.
 E.g. `cogment launch ./launch.yaml arg1 arg2 arg3` will define `__1`, `__2` and `__3` respectively corresponding to `arg1`, `arg2` and `arg3`.
@@ -268,18 +270,18 @@ $ cogment launch -q ./launch.yaml 42 foo
 scripts:
     args_out:
         commands:
-            - ["echo", "args:", "{{.__1}}", "{{.__2}}", "{{.__3}}"]  # echo "args:" "42" "foo" ""
-            - ["echo", "empty: >{{.__3}}< >{{.__6}}<"]  # echo "empty: >< ><"
-            - ["echo", "no args: {{.__10}} {{.__42}}"]  # echo "no args: <no value> <no value>"
-        ready_output: '.* {{.__2}} $'
+            - ["echo", "args:", "{{.__1}}", "{{.__2}}", "{{.__3}}"] # echo "args:" "42" "foo" ""
+            - ["echo", "empty: >{{.__3}}< >{{.__6}}<"] # echo "empty: >< ><"
+            - ["echo", "no args: {{.__10}} {{.__42}}"] # echo "no args: <no value> <no value>"
+        ready_output: ".* {{.__2}} $"
 ```
 
-###### All Arguments *(Cogment >= 2.17)*
+###### All Arguments _(Cogment >= 2.17)_
 
 The number of arguments on the command line of launch is defined in `__NB_ARGS`.
 And all the launch arguments can be added to a script command with `__ALL_ARGS`.
 
-The `__ALL_ARGS` variable is special in terms of substitution; if the command argument string is exactly `{{.__ALL_ARGS}}`, then all launch arguments will be added to this command. Otherwise if it is only *part* of a string, it will substitute a string containing all launch arguments.
+The `__ALL_ARGS` variable is special in terms of substitution; if the command argument string is exactly `{{.__ALL_ARGS}}`, then all launch arguments will be added to this command. Otherwise if it is only _part_ of a string, it will substitute a string containing all launch arguments.
 
 In other words, a command argument "{{.__ALL_ARGS}}" will expand to multiple arguments for the command, whereas something like "--{{.__ALL_ARGS}}" will stay as one argument (a string that contains all launch arguments preceded by "--").
 
@@ -293,10 +295,10 @@ $ cogment launch ./launch.yaml 42 foo extra
 scripts:
     args_out:
         commands:
-            - ["echo", "nb of args: {{.__NB_ARGS}}]"]  # echo "nb of args: 3"
-            - ["echo", "all:", "{{.__ALL_ARGS}}", "and more"]  # echo "all:" "42" "foo" "extra" "and more"
-            - ["echo", "all:", "args: {{.__ALL_ARGS}}"]  # echo "all:" "args: 42 foo extra"
-        ready_output: 'args:.*{{.__2}}'
+            - ["echo", "nb of args: {{.__NB_ARGS}}]"] # echo "nb of args: 3"
+            - ["echo", "all:", "{{.__ALL_ARGS}}", "and more"] # echo "all:" "42" "foo" "extra" "and more"
+            - ["echo", "all:", "args: {{.__ALL_ARGS}}"] # echo "all:" "args: 42 foo extra"
+        ready_output: "args:.*{{.__2}}"
 ```
 
 ### File Example
@@ -315,8 +317,8 @@ scripts:
         commands:
             - ["./importdata.sh"]
             - ["./cudasetup.sh"]
-            - ["sleep", "infinity"]  # To prevent process from ending
-        ready_output: '^Done'
+            - ["sleep", "infinity"] # To prevent process from ending
+        ready_output: "^Done"
     directory:
         quiet: true
         folder: ./cogment
@@ -326,7 +328,7 @@ scripts:
             - prep
         commands:
             - ["cogment", "services", "directory"]
-        ready_output: 'Listening \[port:[0-9]*\]'  # To match "Listening [port:9010]"
+        ready_output: 'Listening \[port:[0-9]*\]' # To match "Listening [port:9010]"
     orchestrator:
         folder: ./cogment
         environment:
@@ -342,8 +344,14 @@ scripts:
             - directory
             - orchestrator
         commands:
-            - ["python3", "runner.py", "-u {{.USER}}", "-n {{.RUN_NAME}}", "{{.__2}}"]
+            - [
+                  "python3",
+                  "runner.py",
+                  "-u {{.USER}}",
+                  "-n {{.RUN_NAME}}",
+                  "{{.__2}}",
+              ]
     report:
-        commands: 
+        commands:
             - ["reporting_service"]
 ```

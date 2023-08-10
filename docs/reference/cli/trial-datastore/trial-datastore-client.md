@@ -5,10 +5,6 @@ sidebar_position: 2
 
 # Trial Datastore Client
 
-:::caution
-This module is still in active development and should be considered a prerelease version.
-:::
-
 The Trial Datastore client provides command line access to some features of the [Trial Datastore](#service), and in general any service implementing the [Trial Datastore API](../../grpc.md#trial-datastore-api).
 
 It is called this way:
