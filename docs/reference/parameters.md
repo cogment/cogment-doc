@@ -271,6 +271,3 @@ They may be used for special purposes that differ for each name.
 -   `__authentication-token`: This query property is _not_ a directory property. It is used to provide authentication to the directory. The value (and need) depends on the directory implementation and/or how the registration of the service is made in the directory. This is not registered as a property in the Directory.
 -   `__id`: This query property is not a directory property. It is used to provide a service ID for inquiry to the directory for a specific service. This is not registered as a property in the Directory.
 -   `__implementation`: This is a property name implicitly used by Cogment. It is registered in the Directory for services that were implicitly registered by Cogment or a Cogment SDK. It is also used by Cogment to inquire for context discovery endpoints.
--   `__order_by`: This query property is _not_ used for filtering but to sort the services returned by the directory. Currently supported values are:
-    -   `registration`, the default behavior, returned services are ordered by their registration timestamp with the most recent first.
-    -   `random`, returned services are randomly shuffled, this behavior can be leveraged for a simple load balancing strategy.
