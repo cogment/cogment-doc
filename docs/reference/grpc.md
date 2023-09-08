@@ -45,7 +45,7 @@ Due to normal network delays and unpredictability of the various components, the
 
 ## Common types
 
-Most of the messages are defined in the `common.proto` file. `ObservationSet` and `ActionSet` are defined in `environment.proto`.
+Most of the common messages are defined in the `common.proto` file. `ObservationSet` and `ActionSet` are defined in `environment.proto`.
 
 ### Common Values
 
@@ -81,9 +81,47 @@ message VersionInfo {
 }
 ```
 
--   versions: List of version information
--   name: The name/software/module for which the version is given. E.g. "cogment-api"
--   version: The version related to the name. E.g. "1.0.0b5"
+-   versions: List of version information.
+-   name: The name/software/module for which the version is given. E.g. "cogment-api".
+-   version: The version related to the name. E.g. "1.0.0b5".
+
+### `StatusRequest`
+
+Request message for `Status` procedure (present in all gRPC services defined in the Cogment API).
+It contains the list of states and statuses (hereafter referred as "statuses") to request from the service.
+
+```protobuf
+message StatusRequest {
+  repeated string names = 1;
+}
+```
+
+-   names: The names of the statuses to request. If a name does not exist, it is ignored (i.e. it does not cause an error).
+
+If no names are requested, the reply will be empty.
+This can be used as a health check for the service.
+
+The "*" name is always defined. It is not really a status in itself, but requests all _available_ statuses.
+What it means for a status to be available depends on the service.
+Statuses with token values and undocumented names could be considered unavailable and need to be requested explicitly.
+
+Names that are usually defined:
+
+-   "overall_load": A representation of the load on the machine where the service is running. A specific meaning is associated with this status by the Cogment Directory [Load Balancing](./cli/directory/directory-server.md#load-balancing) mechanism.
+
+### `StatusReply`
+
+Reply message for the `Status` procedure (present in all gRPC services defined in the API).
+It contains the list of requested (and available) statuses.
+Reported statuses are specific to the service called (or the machine/system/network it is running on).
+
+```protobuf
+message StatusReply {
+  map<string, string> statuses = 1;  // <name, value>
+}
+```
+
+-   statuses: Requested statuses (name/value) that are available, in no particular order.
 
 ### `TrialParams`
 

@@ -66,13 +66,20 @@ Can be specified as:
 
 ### `registration_lag`
 
-The maximum number of seconds to wait before responding with no result. This can be used when components may start at slightly different time, and some components may inquire about a component that did not have time to register yet.
+The maximum number of seconds to wait before responding with no result (either due to a service not registered, or that has failed a health check).
+This can be used when components may start at slightly different time, and some components may inquire about a component that did not have time to register yet.
+It may also help when services sometimes go temporarily offline.
 
 Can be specified as:
 
 -   a command line option, e.g. `--registration_lag`,
 -   an environment variable, e.g. `COGMENT_DIRECTORY_REGISTRATION_LAG`,
 -   default value is 0.
+
+:::note
+[Unserviceable](#load-balancing) services are not considered for this lag.
+I.e. the directory will not wait for a service to become "serviceable".
+:::
 
 ### `persistence_file`
 
@@ -85,6 +92,29 @@ Can be specified as:
 -   a command line option, e.g. `--persistence_file`,
 -   an environment variable, e.g. `COGMENT_DIRECTORY_PERSISTENCE_FILE`,
 -   default value is ".cogment-directory-data".
+
+### `load_balancing`
+
+Whether or not to enable [load balancing](#load-balancing) when services are inquired.
+
+Can be specified as:
+
+-   a command line option, e.g. `--load_balancing`,
+-   an environment variable, e.g. `COGMENT_DIRECTORY_LOAD_BALANCING=1`,
+-   by default, it is disabled.
+
+### `check_on_inquire`
+
+Whether or not to enable [health checking](#health-checking) when a service is matched by an inquiry (in addition to being checked periodically).
+This can prevent unavailable services from being returned (before the periodic health check has time to run).
+It can also allow load balancing to use more recent/dynamic values.
+But it can significantly slow down directory inquiries, especially when there are failures.
+
+Can be specified as:
+
+-   a command line option, e.g. `--check_on_inquire`,
+-   an environment variable, e.g. `COGMENT_DIRECTORY_CHECK_ON_INQUIRE=1`,
+-   by default, it is disabled.
 
 ## Operation
 
@@ -102,9 +132,46 @@ For example, any inquiry can only find services that have the same authenticatio
 Similarly for deregistering: a service cannot be deregistered without the appropriate authentication token.
 In closed environments, the authentication token can be left empty to facilitate directory management.
 
-When inquiring services, the services returned are in increasing order of age (since registration).
+### Health Checking
+
+Each entry is normally checked for connectivity on a regular basis (every 60 seconds), but can also be checked when an entry matches an inquiries (see [check_on_inquire](#check_on_inquire)).
+
+The type of the entry determines the extent of the health check.
+For Cogment services, the `Status` procedure will be called and a response expected.
+For non-Cogment services, a simple tcp connection will be attempted, and if successful, the service will be considered healthy.
+
+Before being removed from the directory, a service must fail the health check multiple times.
+But after the first failure, the service will not be reported on inquiries.
+
+When services are recovered from a persistence file, they will immediately be subjected to a health check.
+
+### Load Balancing
+
+By default load balancing is disabled, and thus when inquiring, the services returned are in increasing order of age (since registration).
 So the first is always the most recently registered service.
+
+:::note
 Permanent services do not change their registration timestamp when updated.
+:::
+
+When load balancing is enabled, and an inquiry is made, the order of services returned is different:
+
+1. For each service that match the inquiry, an extended health check is made. This means that the `Status` gRPC procedure is called to inquire the "overall_load" (see below).
+2. Services with a load of 255 are considered unserviceable and removed from the list of potential candidates.
+3. The service with the lowest load is found. That service, and services with a load close to that one, are retained.
+4. The retained services are shuffled randomly, and returned as a reply to the inquiry.
+
+:::note
+Non-Cogment services (with no `Status` gRPC procedure) are always considered fully available (with a load of 0).
+And thus will always be returned, but in random order, when load balancing is enabled.
+:::
+
+The `Status` gRPC procedure's "overall_load" status is expected to be a string representation of an integer from 0 to 255 (8 bit unsigned integer).
+If an error occurs in the conversion from string to integer, a load of 0 is assumed.
+A normal value is between 0 and 100, representing the load on the machine where the service is running.
+A value of 0 means that there is no load, and a value of 100 means that the machine is very loaded (and may not be able to do processing in a timely manner).
+The exact meaning of the value is dependent on the service reporting.
+A value of 255 indicates that the machine is not fit to run any services.
 
 ### Data
 
