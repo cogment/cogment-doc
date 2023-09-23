@@ -9,7 +9,7 @@ The Directory Client is a utility to manually access (through the command line i
 
 ## Common Options
 
-All directory client services have these options in common.
+All directory clients have these options in common.
 
 ### `timeout`
 
@@ -23,23 +23,23 @@ Can be specified as:
 
 ### `directory_endpoint`
 
-The grpc protocol endpoint where to find the Directory.
+Cogment endpoint of the directory service. It must be a [gRPC endpoint](../../parameters.md#grpc-scheme).
 
 Can be specified as:
 
--   a command line option, e.g. `--directory_endpoint`,
--   an environment variable, e.g. `COGMENT_DIRECTORY_ENDPOINT`,
+-   a command line option, e.g. `--directory_endpoint=grpc://foo:9005`,
+-   an environment variable, e.g. `COGMENT_DIRECTORY_ENDPOINT=grpc://foo:9005`,
 -   its default value is "grpc://localhost:9005" (which is the default when running `cogment services directory` locally).
 
 ### `directory_authentication_token`
 
-The authentication token for the service(s) in the Directory.
+Authentication token for services registered in the Directory. It is recorded in the Directory when registering a service. And a matching token must be provided to inquire for the service. An empty token is the same as no token.
 
 Can be specified as:
 
--   a command line option, e.g. `--directory_authentication_token`,
--   an environment variable, e.g. `COGMENT_DIRECTORY_AUTHENTICATION_TOKEN`,
--   empty default value ("").
+-   a command line option, e.g. `--directory_authentication_token=GH670ploT`,
+-   an environment variable, e.g. `COGMENT_DIRECTORY_AUTHENTICATION_TOKEN=GH670ploT`,
+-   it has no default value.
 
 ## Directory Client Register
 

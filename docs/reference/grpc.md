@@ -99,11 +99,11 @@ message StatusRequest {
 -   names: The names of the statuses to request. If a name does not exist, it is ignored (i.e. it does not cause an error).
 
 If no names are requested, the reply will be empty.
-This can be used as a health check for the service.
+This can be used as a health/communication check for the service.
 
-The "*" name is always defined. It is not really a status in itself, but requests all _available_ statuses.
-What it means for a status to be available depends on the service.
-Statuses with token values and undocumented names could be considered unavailable and need to be requested explicitly.
+The "*" name is always defined. It is not really a status in itself, but requests all _standard_ statuses.
+What it means for a status to be standard depends on the service.
+Non-standard statuses need to be requested explicitly.
 
 Names that are usually defined:
 
@@ -1014,6 +1014,7 @@ enum ServiceType {
   DATALOG_SERVICE = 6;
   DATASTORE_SERVICE = 7;
   MODEL_REGISTRY_SERVICE = 8;
+  DIRECTORY_SERVICE = 9;
   OTHER_SERVICE = 100;
 }
 ```
@@ -1027,6 +1028,7 @@ enum ServiceType {
 -   DATALOG_SERVICE: Cogment service accessed with gRPC service `DatalogSP`.
 -   DATASTORE_SERVICE: Cogment service accessed with gRPC service `TrialDatastoreSP`.
 -   MODEL_REGISTRY_SERVICE: Cogment service accessed with gRPC service `ModelRegistrySP`.
+-   DIRECTORY_SERVICE: Cogment service accessed with gRPC service `DirectorySP`.
 -   OTHER_SERVICE: This is for services not provided by Cogment or that do not have a dedicated service type. The properties registered in the directory should provide the necessary information, but this is left to the users to manage, and no health checking is performed.
 
 ### `ServiceDetails`

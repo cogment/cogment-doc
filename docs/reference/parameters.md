@@ -173,7 +173,7 @@ An endpoint with this host (i.e. starting with "cogment://discover") is also cal
 The directory returns an actual endpoint where to reach the service; either a grpc endpoint (e.g. `grpc://10.5.134.2:9000`), or for an actor, it can also be a special endpoint (e.g. `cogment://client`).
 The result should not be another discovery endpoint.
 
-The endpoint for the directory must be a grpc endpoint and is provided beforehand (e.g. for the [Orchestrator][../reference/cli/orchestrator.md], it is an option on start).
+The endpoint for the directory must be a grpc endpoint and is provided beforehand (e.g. for the [Orchestrator](../reference/cli/orchestrator.md), it is an option on start).
 
 With a **context discovery endpoint** there is no path in the URL, and some of the details of the service will be obtained from the context of the endpoint (i.e. where the endpoint was provided and for what).
 This type of endpoint is the simple form of discovery endpoints.
@@ -214,7 +214,7 @@ In other words, no context property will be implicitly added to the URL query se
 There are two categories of path for discovery endpoints, one for generic service types and the other for specific service types.
 
 The generic path `service` is used to find services of any type.
-In this case, the query is `__id=XXX` where XXX is a 64 bit unsigned integer representing the ID of a service registered in the directory, e.g.:
+In this case, the query must be `__id=XXX` where XXX is a 64 bit unsigned integer representing the ID of a service registered in the directory, e.g.:
 
 ```
 cogment://discover/service?__id=67834892
@@ -231,6 +231,7 @@ The specific paths are used to find a specific type of service:
 -   `actservice`: To find a service offering client actor connection
 -   `datastore`: To find a data store service
 -   `modelregistry`: To find a model registry service
+-   `directory`: To find a directory service
 
 The `actor`, `environment` and `datalog` paths will normally be used in the trial parameters to start a new trial.
 They will be interpreted and managed by the Orchestrator, which will inquire the Directory.

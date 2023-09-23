@@ -131,7 +131,7 @@ Class to setup and run all the different aspects of Cogment trials.
 Parameters:
 
 -   `user_id`: _str_ - Identifier for the user of this context.
--   `cog_settings`: _module_ - Specs module associated with trials that will be run, observed or inquired (see [cog_settings generation](#compiling-the-spec-file-into-cog_settingspy)).
+-   `cog_settings`: _module_ - Specs module associated with trials that will be run, observed or inquired (see [cog_settings generation](#compiling-the-spec-file-into-cog_settingspy)). This can be None in some circumstances.
 -   `asyncio_loop`: _asyncio.EventLoop instance_ - The Python asyncio loop into which the Context should operate. If `None`, the current loop will be used.
 -   `prometheus_registry`: _prometheus_client.core.CollectorRegistry instance_ - Prometheus registry that'll be used by the Cogment metrics in this context. Can be set to `None` to completely deactivate them. The default value is Prometheus' default global registry.
 -   `directory_endpoint`: _Endpoint instance_ - Grpc endpoint (i.e. starting with "grpc://") to access the directory. The directory will be used to inquire discovery endpoints, and to register the services for discovery. If no endpoint is provided, a check for the environment variable `COGMENT_DIRECTORY_ENDPOINT` will be made and if it exists, it will be used as the URL of a basic endpoint.
@@ -149,7 +149,7 @@ Method to start and run the communication server for the registered components (
 
 Parameters:
 
--   `served_endpoint`: _ServedEndpoint instance_ - Details of the connection for the served components. If `served_endpoint.port` is zero(0), then the system will choose a free port. The port chosen is found in the `served_port` attribute of the Context.
+-   `served_endpoint`: _ServedEndpoint instance_ - Details of the connection for the served components. If `served_endpoint.port` is zero (0), then the system will choose a free port; in which case the port chosen is found in the `served_port` attribute of the Context.
 -   `prometheus_port`: _int_ - TCP/IP port number for Prometheus. Set to None to disable the Prometheus metrics server.
 -   `directory_registration_host`: _str_ - Hostname (or IP address) of the host to register to the directory (the port is taken from the `served_endpoint`) for the services registered. If `None`, the SDK will determine the current host IP address automatically. In some circumstances, the IP address determined by the SDK may be wrong (e.g. multiple interfaces, load balancing, firewall), thus a host must be explicitly provided.
 
