@@ -1,8 +1,8 @@
-# Step 6: Add a web client for the human player
+# Add a Web Client for the Human Player
 
 :::note
 
-This part of the tutorial follows [step 5](./5-human-player.md), make sure you've gone through it before starting this one. Alternatively the completed step 5 can be retrieved from the [tutorial's repository](https://github.com/cogment/cogment-tutorial-rps).
+This part of the tutorial follows [step 5](6-human-player.md), make sure you've gone through it before starting this one. Alternatively the completed step 5 can be retrieved from the [tutorial's repository](https://github.com/cogment/cogment-tutorial-rps).
 
 :::
 
@@ -14,7 +14,7 @@ To develop a web client, we will need a working installation of Node.js, version
 
 ## The web client
 
-In the previous steps, we triggered the trials by running `./run.sh client_start`. This launched a trial using code in `client/main.py`. In this step we will trigger a trial using a React web app.
+In the previous steps, we triggered the trials by running `./run.sh trial_runner_start`. This launched a trial using code in `trial_runner/main.py`. In this step we will trigger a trial using a React web app.
 
 Before we start with the Cogment side of things, we'll need to get a few prerequisite files setup.
 
@@ -46,7 +46,7 @@ npm install @mui/icons-material
 
 :::note
 
-Due to the nature of create-react-app when installed using the ```npx``` command, the resulting installation will always utilize the latest version of React. This may cause dependecy issues when installing Material UI. As such, whenever such issues are encountered, please refer to the [Material UI documentation](https://mui.com/material-ui/getting-started/installation/) to confirm the correct required version of React.
+Due to the nature of create-react-app when installed using the `npx` command, the resulting installation will always utilize the latest version of React. This may cause dependecy issues when installing Material UI. As such, whenever such issues are encountered, please refer to the [Material UI documentation](https://mui.com/material-ui/getting-started/installation/) to confirm the correct required version of React.
 
 :::
 
@@ -206,7 +206,7 @@ let theme = createTheme({
 
 theme = responsiveFontSizes(theme);
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
     <React.StrictMode>
         <ThemeProvider theme={theme}>
@@ -227,11 +227,7 @@ We'll start with a few imports. Some of these files don't exist yet, so we'll be
 import React, { useEffect } from "react";
 
 //Then some imports for icons and Material UI functionality we'll be using
-import {
-    Box,
-    Button,
-    Typography,
-} from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 
 //And here's the important part: we're importing the two things that will allow us to use Cogment.

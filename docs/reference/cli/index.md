@@ -3,7 +3,7 @@ title: CLI
 sidebar_position: 1
 ---
 
-# CLI executable
+# Command Line Interface (CLI) executable
 
 [![Repository](https://img.shields.io/badge/repository-cogment%2Fcogment-%235217b8?style=for-the-badge&logo=github)](https://github.com/cogment/cogment) [![Latest Release](https://img.shields.io/github/v/release/cogment/cogment?label=latest%20release&sort=semver&style=for-the-badge)](https://github.com/cogment/cogment/releases)
 [![Latest Docker Release](https://img.shields.io/docker/v/cogment/cogment?label=latest%20docker%20release&sort=semver&style=for-the-badge)](https://hub.docker.com/r/cogment/cogment)

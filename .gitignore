@@ -7,3 +7,12 @@
 
 # Backup of "sed-ed" files
 *.bak
+
+# ideas folder
+.idea/*
+
+# svg files
+**.svg
+
+# old stuff
+**/archive/

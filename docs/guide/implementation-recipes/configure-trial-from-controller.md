@@ -2,7 +2,7 @@
 title: Configure Trial from Controller
 ---
 
-# Fully configure a trial from a [**Controller**](../../guide/core-concepts.md#controller)
+# Fully configure a trial from a [**Controller**](../core-concepts.md#controller)
 
 :::note
 Starting with versions v2.2.0 of Cogment and v2.1.0 of the python SDK, it is now possible to [provide the full trial parameters when starting a trial](../development-guide.mdx#start-trial-from-trial-parameters). This recipe is still applicable but it is recommended to use the new method instead.

@@ -243,7 +243,7 @@ Return: _BatchTrainer instance_ - An instance of the `BatchTrainer` class.
 
 Class to run a batch of related trials.
 
-### __init__(self, id, controller, nb_trials, pre_trial_callback, post_trial_callback, datalog_endpoint)
+### **init**(self, id, controller, nb_trials, pre_trial_callback, post_trial_callback, datalog_endpoint)
 
 The parameters are the same as provided to [`run_simple_batch`](#class-cogment_enterpriserunnertrialrunner).
 

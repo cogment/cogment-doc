@@ -15,7 +15,6 @@
   color: var(--ifm-font-color-base-inverse);
 }
 
-
 .hero :global(.button--primary) {
   --ifm-button-background-color: var(--ifm-color-content-inverse);
   --ifm-button-border-color: var(--ifm-color-content-inverse);

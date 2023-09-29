@@ -69,3 +69,8 @@
 html[data-theme="dark"] .docusaurus-highlight-code-line {
   background-color: rgba(0, 0, 0, 0.3);
 }
+
+details summary {
+  font-size: 20px;
+  font: "Object Sans Regular";
+}

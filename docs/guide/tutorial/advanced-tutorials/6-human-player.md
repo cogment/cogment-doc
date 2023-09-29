@@ -1,8 +1,8 @@
-# Step 5: Add a human player in the loop
+# Add a Human Player in the Loop
 
 :::note
 
-This part of the tutorial follows [step 4](./4-heuristic-player.md), make sure you've gone through it before starting this one. Alternatively the completed step 4 can be retrieved from the [tutorial's repository](https://github.com/cogment/cogment-tutorial-rps).
+This part of the tutorial follows [step 4](../4-decision-making.md), make sure you've gone through it before starting this one. Alternatively the completed step 4 can be retrieved from the [tutorial's repository](https://github.com/cogment/cogment-tutorial-rps).
 
 :::
 
@@ -80,7 +80,7 @@ print(f"Trial '{trial_id}' ended")
 
 Modify the `client/main.py` file with these updates.
 
-You can now [build and run](./1-bootstrap-and-data-structures.md#building-and-running-the-app) the application. Everything should work but player 1 shouldn't fare too well as it only ever plays `PAPER`.
+You can now [build and run](../1-setup.md#building-and-running-the-app) the application. Everything should work but player 1 shouldn't fare too well as it only ever plays `PAPER`.
 
 ## Interactive prompt to let Humans play RPS
 
@@ -119,8 +119,8 @@ next_action = PlayerAction(move=move)
 
 Modify the `client/main.py` file to include the above additions.
 
-You can now [build and run](./1-bootstrap-and-data-structures.md#building-and-running-the-app) the application. You'll be presented with a prompt for choosing your moves and comparing your skills to the simple heuristic AI we implemented earlier.
+You can now [build and run](../1-setup.md#building-and-running-the-app) the application. You'll be presented with a prompt for choosing your moves and comparing your skills to the simple heuristic AI we implemented earlier.
 
 This concludes the step 5 of the tutorial: you implemented your first client actor and put your first human in the loop! This is also the final step for the basics tutorial.
 
-You can continue by implementing a web client to replace the command line interface we just developed in [step 6](./6-web-client.md). You can also learn how to train an actor implementation using Reinforcement Learning in [step 7](./7-dqn-player.md).
+You can continue by implementing a web client to replace the command line interface we just developed in [step 6](7-web-client.md).

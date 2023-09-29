@@ -5,7 +5,7 @@ sidebar_position: 8
 # Cogment 2.0
 
 :::tip
-This document describes the full list of the changes for Cogment 2.O. A migration guide is available [there](../guide/implementation-recipes/v2-migration-guide.md).
+This document describes the full list of the changes for Cogment 2.O. A migration guide is available [here](../guide/implementation-recipes/v2-migration-guide.md).
 :::
 
 Cogment 2.0 is a massive internal change to Cogment, starting with the underlying gRPC API that has seen a major refactoring. But there is a minimal amount of changes that affect the use of cogment. The changes that affect users are in three categories: breaking changes, deprecated behavior and new functionalities.

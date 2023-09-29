@@ -89,7 +89,7 @@ The generator is used this way:
 $ python3 -m cogment.generate --spec cogment.yaml --output ./cog_settings.py
 ```
 
-This will create a `cog_settings.py` specs module in the current directory (`--output ./`). The generator will also compile the imported `*.proto` files into python modules that will be saved in the same location as the specified output file (`cog_settings.py`) and they will be named according to their proto names:  `<name>.proto` is compiled to `<name>_pb2.py`.
+This will create a `cog_settings.py` specs module in the current directory (`--output ./`). The generator will also compile the imported `*.proto` files into python modules that will be saved in the same location as the specified output file (`cog_settings.py`) and they will be named according to their proto names: `<name>.proto` is compiled to `<name>_pb2.py`.
 
 The `cog_settings.py` Python module is required by all API entry points.
 
@@ -574,7 +574,7 @@ Parameters:
 -   `deserialize_func`: _func(bytes)_ - Callback function to deserialize the model iteration from a `bytes` string to a user defined object instance. This is called asynchronously in the background to deserialize the raw bytes from the Model Registry, and the user object is made available in `LatestModel`. If not provided, the raw `bytes` string from the Model Registry is made available in `LatestModel` instead of a user object.
 -   `initial_wait`: _int_ - Number of seconds to wait for the model name to be available in the Model Registry. The method will return once the model name is available, or raise an exception if the model name was not available within the given time. The model name being available only means that it is registered in the Model Registry, not necessarily that it has iterations; i.e. the background task may wait more for iterations to be available.
 
-Return: _LatestModel instance_ -  An instance of the `LatestModel` class.
+Return: _LatestModel instance_ - An instance of the `LatestModel` class.
 
 ## class Session
 
@@ -841,7 +841,7 @@ Enum representing the various states of trials.
 -   UNKNOWN: Should not be used.
 -   INITIALIZING: The trial is in the process of starting.
 -   PENDING: The trial is waiting for its final parameters, all the components to be ready, and the first observation.
--   RUNNING: The trial is running. 
+-   RUNNING: The trial is running.
 -   TERMINATING: The trial is in the process of ending (either a request to end has been received or the last observation has been received).
 -   ENDED: The trial has ended. Only a set number of ended trials will be kept (configured in the Orchestrator).
 

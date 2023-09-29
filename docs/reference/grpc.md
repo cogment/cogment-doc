@@ -101,7 +101,7 @@ message StatusRequest {
 If no names are requested, the reply will be empty.
 This can be used as a health/communication check for the service.
 
-The "*" name is always defined. It is not really a status in itself, but requests all _standard_ statuses.
+The "\*" name is always defined. It is not really a status in itself, but requests all _standard_ statuses.
 What it means for a status to be standard depends on the service.
 Non-standard statuses need to be requested explicitly.
 
@@ -596,7 +596,7 @@ This API is defined in `agent.proto`. It is implemented by the service actor app
 
 This API is used by service actors that will be participating in new trials. They are connected at the start of a trial in which they participate.
 Multiple simultaneous service actors can be served from a single service application instance (i.e. same endpoint).
-An actor endpoint, for the Orchestrator to connect to, is defined in the [trial parameters](./cogment-yaml.md#trial-params).
+An actor endpoint, for the Orchestrator to connect to, is defined in the [trial parameters](./parameters.md).
 
 #### Service `ServiceActorSP`
 
@@ -612,7 +612,7 @@ service ServiceActorSP {
 This API is defined in `orchestrator.proto`. It is implemented by the Orchestrator using the gRPC server API, and client applications are expected to connect to the Orchestrator using the gRPC client API.
 
 This API is used by client actors participating in existing (initializing) trials. The trial expecting client actors will wait for all actors to be connected before starting the trial.
-The actors connecting this way must have an endpoint set to "cogment://client" in the [trial parameters](./cogment-yaml.md#trial-params).
+The actors connecting this way must have an endpoint set to "cogment://client" in the [trial parameters](./parameters.md).
 
 Note the reversal of the input and output messages compared to the service actor `RunTrial` procedure.
 
@@ -737,7 +737,7 @@ This API is defined in `environment.proto`. It is implemented by the environment
 This API is used by environments that will run trials.
 There is only one environment per trial.
 Multiple simultaneous environments (for different trials) can be served from a single environment application instance (endpoint).
-The environment endpoint, for the Orchestrator to connect to, is defined in the [trial parameters](./cogment-yaml.md#trial-params).
+The environment endpoint, for the Orchestrator to connect to, is defined in the [trial parameters](./parameters.md).
 
 ### Service `EnvironmentSP`
 

@@ -1,7 +1,7 @@
 # Migrate from Cogment v1 to v2
 
 :::tip
-This document is written as a guide to migrate from Cogment v1 to v2, a full list of the changes is also available [there](../../reference/cogment-v2-changes.md).
+This document is written as a guide to migrate from Cogment v1 to v2, a full list of the changes is also available [here](../../reference/cogment-v2-changes.md).
 :::
 
 ## Updating components

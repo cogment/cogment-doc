@@ -156,7 +156,7 @@ scripts:
         commands:
             - ["retrieve_db.sh"]
             - ["python3", "env/main.py"]
-        ready_output: '^Database retrieved in'
+        ready_output: "^Database retrieved in"
 
     process_b:
         depends_on:
@@ -220,7 +220,7 @@ All environment variables when `launch` is started are defined as launch variabl
 New environment variables set in the definition file also define launch variables.
 And launch defines some [special variables](#special-variables) internally also.
 
-In the concerned strings, the double open curly brackets ("`{{`") delimit the start of a variable to be substituted, therefore to include a literal double open brackets in a string, you have to surround them with backticks inside substitution brackets: ``{{`{{`}}``.
+In the concerned strings, the double open curly brackets ("`{{`") delimit the start of a variable to be substituted, therefore to include a literal double open brackets in a string, you have to surround them with backticks inside substitution brackets: `` {{`{{`}} ``.
 
 Undefined values will be replaced with `<no value>`.
 
@@ -275,7 +275,7 @@ scripts:
             - ["echo", "args:", "{{.__1}}", "{{.__2}}", "{{.__3}}"] # echo "args:" "42" "foo" ""
             - ["echo", "empty: >{{.__3}}< >{{.__6}}<"] # echo "empty: >< ><"
             - ["echo", "no args: {{.__10}} {{.__42}}"] # echo "no args: <no value> <no value>"
-        ready_output: '.* {{.__2}} $'
+        ready_output: ".* {{.__2}} $"
 ```
 
 ###### All Arguments _(Cogment >= 2.17)_
@@ -300,7 +300,7 @@ scripts:
             - ["echo", "nb of args: {{.__NB_ARGS}}]"] # echo "nb of args: 3"
             - ["echo", "all:", "{{.__ALL_ARGS}}", "and more"] # echo "all:" "42" "foo" "extra" "and more"
             - ["echo", "all:", "args: {{.__ALL_ARGS}}"] # echo "all:" "args: 42 foo extra"
-        ready_output: 'args:.*{{.__2}}'
+        ready_output: "args:.*{{.__2}}"
 ```
 
 ### File Example
@@ -320,7 +320,7 @@ scripts:
             - ["./importdata.sh"]
             - ["./cudasetup.sh"]
             - ["sleep", "infinity"] # To prevent process from ending
-        ready_output: '^Done'
+        ready_output: "^Done"
     directory:
         quiet: true
         folder: ./cogment

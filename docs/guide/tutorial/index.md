@@ -2,66 +2,59 @@
 title: Tutorial
 ---
 
-# Tutorial
+Here we will learn about the different elements of [Cogment](../../index.md) and how they fit together by creating a simulated game of [Rock-Paper-Scissors](https://en.wikipedia.org/wiki/Rock_paper_scissors). To run this tutorial locally, you will need to download or clone the source code from our [github repository](https://github.com/cogment/cogment-tutorial-rps).
 
-You've reached the Cogment tutorial, the best way to learn about the concepts and the usage details of Cogment by using it to create a Rock-Paper-Scissors simulation and build AIs to play the game.
+### Prerequisites
 
-Full sources for the tutorials are available at <https://github.com/cogment/cogment-tutorial-rps>.
+This tutorial assumes a strong working knowledge of Python, as well as some basic familiarity with the following:
 
-## Rock-Paper-Scissors (RPS)
+-   Reinforcement Learning (RL) - some fundamental ideas of RL are covered on the [Cogment Core Concepts](../core-concepts.md) page
+-   [gRPC](https://grpc.io/) & [Protocol Buffers](https://protobuf.dev/)
+-   Python's [asynchronous features](https://docs.python.org/3/library/asyncio-task.html), as the [Python SDK](../../reference/python.md) leverages this functionality
 
-Let's quote [wikipedia](https://en.wikipedia.org/wiki/Rock_paper_scissors):
+## Why Rock-Paper-Scissors (RPS)?
 
-> Rock paper scissors [...] is a hand game usually played between two people, in which each player simultaneously forms one of three shapes with an outstretched hand. These shapes are "rock" (a closed fist), "paper" (a flat hand), and "scissors" (a fist with the index finger and middle finger extended, forming a V). "Scissors" is identical to the two-fingered V sign (also indicating "victory" or "peace") except that it is pointed horizontally instead of being held upright in the air.
->
-> A simultaneous, zero-sum game, it has only two possible outcomes: a draw, or a win for one player and a loss for the other. A player who decides to play rock will beat another player who has chosen scissors ("rock crushes scissors"[...]), but will lose to one who has played paper ("paper covers rock"); a play of paper will lose to a play of scissors ("scissors cuts paper"). If both players choose the same shape, the game is tied and is usually immediately replayed to break the tie. The type of game originated in China and spread with increased contact with East Asia, while developing different variants in signs over time.
+RPS is a hand game, usually played between two players, in which each player selects one of three possible hand-signs indicating rock, paper, or scissors.
 
-Its rules can be expressed with the following statements:
+![Schematic of rock-paper-scissors from Wikipedia](../imgs/Rock-paper-scissors.png)
 
--   2 players are competing to win the most rounds in a game;
--   During each round, players play one move each, simultaneously;
--   3 moves are available, rock, paper and scissors;
--   rock beats scissors, scissors beats paper and paper beats rock;
--   playing the same move leads to a draw and the round needs to be replayed.
+RPS is a simultaneous, zero-sum game which has only two possible outcomes:
 
-RPS is a very simple game with straightforward rules. As long as we "forbid" pure random moves, that are very difficult to beat, it is an interesting testbed to develop AIs that compete with Humans. Unlike _deep_ games such as chess or go, the power is not really in the brute force exploration of possible outcomes but in getting some level of understanding of how the opponent plays to be able to anticipate their moves.
+-   One player's action beats the other (i.e. they win and their opponent loses), or
+-   Both players choose the same action and the game is a draw.
 
-A good read on the subject of AI and RPS is this article by Benjamin Peterson published by Towards AI: [**Towards an AI for Rock, Paper, Scissors**](https://towardsai.net/p/artificial-intelligence/towards-an-ai-for-rock-paper-scissors-3fb05780271f).
+RPS is a very simple game with straightforward rules. As long as we forbid pure random moves, which are very difficult to beat, it is an interesting testbed to develop AIs that compete with Humans. Unlike "deep" games such as chess or go, the power is not really in the brute force exploration of possible outcomes, but rather in getting some level of understanding of how the opponent plays to be able to anticipate their moves. A good read on the subject of AI and RPS is this article by Benjamin Peterson: [Towards an AI for Rock, Paper, Scissors](https://towardsai.net/p/artificial-intelligence/towards-an-ai-for-rock-paper-scissors-3fb05780271f). This means as a tutorial to get acquainted with Cogment, RPS is simple enough to be easily implemented, and interesting enough to be a good example to showcase the different kinds of things Cogment is capable of doing.
 
-Now that we have better general knowledge on the game itself, let's start with the tutorial.
+## Formalizing RPS
 
-## Basics
+Cogment is designed with the abstraction of reinforcement Learning in mind: tasks are broken down into sequential interactions between [Actor(s)](../core-concepts.md#actors) and the [Environment](../core-concepts.md#environment). The Actors are the players of RPS, and the Environment is the world the players operate in: which types of actions are allowed, the rules that specify the consequences of actions (eg. "scissors beats paper").
 
-In the first 5 steps of the tutorial, you'll go from a blank state to a Cogment app implementing RPS with 3 different player actor implementations: a random player, a simple heuristic player and a human player.
+![Abstraction of Interactions](../imgs/actor-env-interaction-simple.png)
 
-The implementations will be done in Python 3, you'll need a good knowledge of the language to follow through.
+Actors usually need to know some information about the state of the world in order to make a choice about which action to select -- this kind of information is called an "[Observation](../core-concepts.md#state-and-observation-spaces)".
 
--   [Step 1: Bootstrap the RPS project and define observation & action space data structures](1-bootstrap-and-data-structures.md)
--   [Step 2: Implement a first actor and environment](2-random-player.md)
--   [Step 3: Introduce rewards](3-rewards.md)
--   [Step 4: Create a second actor implementation based on a heuristic](4-heuristic-player.md)
--   [Step 5: Add a human player in the loop](5-human-player.md)
+The Environment receives these actions and produces consequences -- updated Observations on the state of the world, and sometimes a reward signal, such as a win or loss. Reward signals are a useful way of quantifying goals, and are used in RL for training AI-based actors to improve their behaviour in pursuit of maximizing the rewards.
 
-## Webapp
+The repeated sequential interactions between players and the RPS game environment are handled by running [Trials](../core-concepts.md#trials) which coordinate the exchange of information between Actors and the Environment until a terminal condition is met.
 
-In the sixth step of the tutorial, you'll implement your first webapp to provide a more user friendly interface for the human player.
+### How does Cogment think of these pieces?
 
-The implementation will be done in Javascript, using React.
+Cogment runs as a [distributed microservices architecture](https://www.atlassian.com/microservices/microservices-architecture/distributed-architecture#:~:text=A%20microservices%20architecture%20is%20one,users%2C%20products%2C%20etc.), meaning that the RPS Environment, each of the Actors, and the Cogment machinery that supports their interactions are all set up as separate services whose processes can be run on separate computation nodes. The operations carried out on each of these services are coordinated by the [Orchestrator](../../reference/cli/orchestrator.md), a key component of Cogment that ties all services together in order to execute the [Trials](../core-concepts.md#trials).
 
--   [Step 6: Implement a web client for the human player](6-web-client.md)
+![Cogment components used in RPS](../imgs/cogment_components_RPS.png)
 
-## Learning actors
+## Tutorial Roadmap
 
-In the seventh step of the tutorial, you'll implement an actor trained with Reinforcement Learning.
+By the end of this basic tutorial you should understand the key elements of Cogment and how they work together. In particular, these steps cover how Cogment handles Actors and Environments and how the interactions between them are orchestrated to run trials. We start with a basic skeleton of each of these pieces, and add more detail as we go through the tutorial.
 
-The implementation will be done in Python, using Tensorflow.
+![tutorial roadmap](../imgs/tutorial_roadmap.png)
 
--   [Step 7: Add a player trained with Reinforcement Learning using DQN](7-dqn-player.md)
+The [first step](./1-setup.md) of the tutorial is to get the code set up and make sure it functions properly. The basic code doesn't do anything interesting, but we will walk through what components are included so that it's clear how the different pieces fit together.
 
-## The Directory
+In [step 2](./2-actors-in-cogment.md), we will look at how Cogment represents Actors, what information they operate with, and how they communicate with the other components of the application
 
-In the eigth step of the tutorial, you'll add the use of the Cogment Directory.
-And a bonus half step to start using Cogment environment variables.
+In [step 3](./3-environment-in-cogment.md), we will flesh out the details of the Environment. This involves specifying what types of actions are allowed in the game and the rules for what happens when actions are taken, as well as configuring the conditions for when a game has been won.
 
--   [Step 8: Improving  operational efficiency with a directory](8-directory.md)
--   [Step 8.5: Using Cogment environment variables](8-directory.md#step-85-using-cogment-environment-variables)
+In [step 4](./4-decision-making.md), we will add feedback from the Environment and enable one of the Actors to reason about action selection given information in the Observation it receives. We'll look at how two Actors using different implementations perform in a game of RPS.
+
+Once you understand the basic components of Cogment and how they work together, you may be interested in [more advanced tutorials](./advanced-tutorials/index.md) on how to implement more complex things with Cogment. We treat the more advanced tutorials as a "choose your own adventure" style of guide: [play with a human in the loop](./advanced-tutorials/6-human-player.md), [connect a web client for a better human user interface](./advanced-tutorials/7-web-client.md), or [improve operational efficiency by using some more advanced Cogment tooling](./advanced-tutorials/8-directory.md).
