@@ -53,7 +53,9 @@ Can be specified as:
 
 ### `type`
 
-The type of service from which to request statuses. This is relevant only if the [endpoint](#endpoint) is a grpc endpoint (because directory entries include the type data). If this type is not provided, all types will be tried to determine if one works.
+The type of service from which to request statuses.
+This is relevant only if the [endpoint](#endpoint) is a grpc endpoint (because directory entries include the type data).
+If this type is not provided, all types will be tried to determine if one works (if there are multiple services at the endpoint, only one will be reported).
 
 Possible values are: `actor`, `environment`, `prehook`, `datalog`, `lifecycle`, `actservice`, `datastore`, `modelregistry` or `other`.
 These are the same keywords used as `paths` in Cogment [discovery endpoints](../parameters.md#discovery-path).
