@@ -74,6 +74,7 @@ If none is provided, a request will still be made for no statuses; This can serv
 The star (`*`) status can be used to request all "standard" statuses (note that at the command line, the star may need to be enclosed in quotation marks to prevent it from being interpreted by the command shell).
 What defines a "standard" status depends on the service, it often excludes debug statuses and statuses that require extra computation.
 Non-standard statuses must be requested explicitly by name.
+Explicit (named) statuses can precede the star (`*`) in the list of statuses to request, but all names following the star status will be ignored.
 
 E.g.:
 
