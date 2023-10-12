@@ -87,6 +87,7 @@ A boolean value (`true`/`false`) to indicate if the service is to stay permanent
 #### `properties`
 
 The properties to be associated with the service. In the form of "name=value,name=value" where the value is optional.
+The names and values of properties are restricted to a limited character set (see [endpoint query](../../parameters.md#discovery-query)).
 
 Also see [special properties](../../parameters.md#discover-host) used by Cogment.
 

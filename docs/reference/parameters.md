@@ -250,7 +250,7 @@ The query in the discovery endpoint must follow these guidelines:
 
 -   Entries are separated by the ampersand (&)
 -   Property name and associated value are separated by an equal sign (=)
--   Property names and values must be composed of only these characters: A-Z, a-z, 0-9, underscore (\_), dash (-)
+-   Property names and values must be composed of only these characters: A-Z, a-z, 0-9, underscore (\_), dash (-), dot (.)
 -   Property values are optional
 -   Property names starting with a double underscore (\_\_) are reserved. E.g `__authentication-token`
 
