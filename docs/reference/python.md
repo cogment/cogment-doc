@@ -462,7 +462,7 @@ This model will be transient and not saved in storage.
 It will stay available in the Model Registry for a time, dependent on the Model Registry [max_cache_item](cli/model-registry.md#cache_max_items) option, then be deleted automatically.
 
 If the model name already exists, the model will be seen as a new iteration of the existing model name.
-Iteration numbers start at 0 (the first model sent to the Model Registry) and increase by 1 for every new iteration.
+Iteration numbers start at 1 (the first model sent to the Model Registry) and increase by 1 for every new iteration.
 
 Parameters:
 
