@@ -58,14 +58,7 @@ const config = {
     ],
   ],
 
-  themes: [
-    [
-      require.resolve("@easyops-cn/docusaurus-search-local"),
-      {
-        hashed: true,
-      },
-    ],
-  ],
+  themes: [],
 
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
@@ -193,6 +186,15 @@ const config = {
       prism: {
         theme: lightCodeTheme,
         darkTheme: darkCodeTheme,
+      },
+      algolia: {
+        // see https://docusaurus.io/docs/2.x/search#using-algolia-docsearch for details
+        appId: "L5URPTBK9E",
+        apiKey: "a47b82547b2b987f6e4c501900ddcf6e",
+        indexName: "cogment",
+
+        // Optional: see doc section below
+        contextualSearch: true,
       },
     }),
 };
