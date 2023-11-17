@@ -116,6 +116,22 @@ Can be specified as:
 -   an environment variable, e.g. `COGMENT_DIRECTORY_CHECK_ON_INQUIRE=1`,
 -   by default, it is disabled.
 
+### `force_permanent`
+
+Forces all registration of services to be a [permanent](#data) entry.
+
+Services can normally be tagged permanent on an individual basis.
+This `force_permanent` option is for special circumstances where **all** entries should be permanent and it is not appropriate, or too complicated, to set each individual entry to be permanent.
+
+Permanent entries are not health checked, and thus are not implicitly removed from the Directory if they fail.
+They are also not duplicated; they are updated instead of being duplicated or replaced.
+
+Can be specified as:
+
+-   a command line option, e.g. `--force_permanent`,
+-   an environment variable, e.g. `COGMENT_DIRECTORY_FORCE_PERMANENT=1`,
+-   by default, it is disabled.
+
 ## Operation
 
 At its most basic, the Directory contains services searchable by type and property, and returns endpoints where to reach the matched services.
