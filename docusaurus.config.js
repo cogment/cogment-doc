@@ -14,8 +14,7 @@
 
 // @ts-check
 
-const lightCodeTheme = require("prism-react-renderer/themes/github");
-const darkCodeTheme = require("prism-react-renderer/themes/dracula");
+const { themes } = require("prism-react-renderer");
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
@@ -59,6 +58,16 @@ const config = {
   ],
 
   themes: [],
+
+  plugins: [
+    [
+      "./cogment-web-proxy-openapi-plugin",
+      {
+        output: "api/web-proxy-openapi.json",
+        version: "latest",
+      },
+    ],
+  ],
 
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
@@ -184,8 +193,8 @@ const config = {
         copyright: `Copyright © ${new Date().getFullYear()} AI Redefined Inc.`,
       },
       prism: {
-        theme: lightCodeTheme,
-        darkTheme: darkCodeTheme,
+        theme: themes.github,
+        darkTheme: themes.dracula,
       },
       algolia: {
         // see https://docusaurus.io/docs/2.x/search#using-algolia-docsearch for details

@@ -1,0 +1,60 @@
+/* Completely hide the right panel */
+.openapidoc :global(.menu-content) {
+  display: none;
+}
+
+/* ------- Right Panel Overrides ------- */
+
+.openapidoc code {
+  padding: 0px;
+  /* Fix weird overlay on curly braces */
+  background-color: transparent;
+}
+
+/* ------ Schema Styling Overrides ------- */
+
+.openapidoc table th {
+  border: none;
+}
+
+.openapidoc table td {
+  border-top: none;
+  border-right: none;
+}
+
+.openapidoc table td:nth-child(1) {
+  border-bottom: none;
+}
+
+.openapidoc table td:nth-child(2) {
+  border-left: none;
+}
+
+.openapidoc table tr {
+  background-color: var(--ifm-background-color);
+}
+
+.openapidoc table > tbody > tr {
+  color: var(--ifm-font-color-base);
+}
+
+.openapidoc table tbody tr table {
+  background-color: var(--ifm-background-surface-color);
+}
+
+.openapidoc table tbody tr table tbody tr {
+  background-color: var(--ifm-background-surface-color);
+}
+
+.openapidoc tr:global(.last) + tr > td > div {
+  background-color: var(--ifm-background-color) !important;
+}
+
+.openapidoc span:global(.dropdown-selector-value) {
+  color: var(--ifm-font-color-secondary);
+}
+
+/* Authentication tables */
+.openapidoc table:global(.security-details) tr:nth-child(2n + 1) {
+  background-color: var(--ifm-background-surface-color);
+}

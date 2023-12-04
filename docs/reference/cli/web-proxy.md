@@ -9,7 +9,7 @@ sidebar_position: 5
 This module is still in active development and should be considered a preview version.
 :::
 
-The Cogment Web Proxy is designed to facilitate the use of Cogment with web-based components. It implements a JSON HTTP API that can be easily used from a web application.
+The Cogment Web Proxy is designed to facilitate the use of Cogment with web-based components. It implements a JSON HTTP API, whose reference can be found [here](../web-proxy-api.mdx), that can be easily used from a web application.
 
 Current features include the following.
 
@@ -37,7 +37,7 @@ The Web Proxy configuration can be specified either through the command line or 
 
 ### `web_port`
 
-The TCP port where to serve the [Web Proxy HTTP API](#http-api).
+The TCP port where to serve the [Web Proxy HTTP API](../web-proxy-api.mdx).
 
 Can be specified as:
 
@@ -165,65 +165,3 @@ Can be specified as:
 -   a command line option, e.g. `--directory_registration_properties="Sim=20,hpp,mem=HIGH"`,
 -   an environment variable, e.g. `COGMENT_MODEL_REGISTRY_DIRECTORY_REGISTRATION_PROPERTIES="Sim=20,hpp,mem=HIGH"`,
 -   it has no default value.
-
-## HTTP API
-
-### Controller
-
-#### List trials
-
-```http
-GET /controller/trials
-```
-
-List all active trials.
-
-:construction:
-
-#### Start a trial
-
-```http
-POST /controller/trials
-```
-
-Start a trial from given trial parameters.
-
-:::info
-It is forbidden to pass [gRPC endpoint](../parameters.md#grpc-scheme) as part of the trial parameters here
-:::
-
-:construction:
-
-### Actor
-
-#### Join a trial
-
-```http
-POST /actor/:actor_name/:trial_id:
-```
-
-Join trial `trial_id` as actor `actor_name`, retrieve the initial observation and the actor trial token
-
-:construction:
-
-#### Leave a trial
-
-```http
-DELETE /actor/:actor_name/:trial_id:
-```
-
-Explicitly close the trial connection.
-
-Requires matching actor trial token passed in the `Cogment-Actor-Trial-Token` header
-
-:construction:
-
-#### Act
-
-```http
-POST/GET /actor/:actor_name/:trial_id/:tick_id:
-```
-
-Post the action (and potential sent rewards) for a tick (empty action on GET), retrieve the next observation (and potential received rewards).
-
-Requires matching actor trial token passed in the `Cogment-Actor-Trial-Token` header
