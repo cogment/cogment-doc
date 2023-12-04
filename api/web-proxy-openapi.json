@@ -1,0 +1,843 @@
+{
+	"openapi": "3.0.1",
+	"info": {
+		"title": "Cogment Web Proxy",
+		"description": "The Cogment Web Proxy is designed to facilitate the use of Cogment with web-based components. It implements a JSON HTTP API that can be easily used from a web application.\n\nThe API is composed of two groups of routes:\n- [Actor](#tag/Actor)\n- [Trial Lifecycle Control](#tag/Trial-Lifecycle-Control)\n",
+		"version": "2.21.2"
+	},
+	"paths": {
+		"/": {
+			"get": {
+				"summary": "Retrieve information about this API",
+				"operationId": "getInfo-fm",
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/APIInfoResponse"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/actor/{actor_name}/{trial_id}": {
+			"post": {
+				"tags": [
+					"Actor"
+				],
+				"summary": "Join a trial",
+				"description": "Join trial `trial_id` as actor `actor_name`, retrieve the initial observation and the actor trial token",
+				"operationId": "joinTrial-fm",
+				"parameters": [
+					{
+						"name": "actor_name",
+						"in": "path",
+						"description": "The actor name",
+						"required": true,
+						"schema": {
+							"type": "string",
+							"description": "The actor name"
+						}
+					},
+					{
+						"name": "trial_id",
+						"in": "path",
+						"description": "The trial identifier",
+						"required": true,
+						"schema": {
+							"type": "string",
+							"description": "The trial identifier"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/HttpserverJoinTrialResponse"
+								}
+							}
+						}
+					},
+					"500": {
+						"description": "Bad server configuration or state",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ErrorResponse"
+								}
+							}
+						}
+					}
+				}
+			},
+			"delete": {
+				"tags": [
+					"Actor"
+				],
+				"summary": "Leave a trial",
+				"description": "This explicitly closes the trial connection between the actor and the trial",
+				"operationId": "leaveTrial-fm",
+				"parameters": [
+					{
+						"name": "actor_name",
+						"in": "path",
+						"description": "The actor name",
+						"required": true,
+						"schema": {
+							"type": "string",
+							"description": "The actor name"
+						}
+					},
+					{
+						"name": "trial_id",
+						"in": "path",
+						"description": "The trial identifier",
+						"required": true,
+						"schema": {
+							"type": "string",
+							"description": "The trial identifier"
+						}
+					},
+					{
+						"name": "Cogment-Actor-Trial-Token",
+						"in": "header",
+						"description": "The actor trial token, it must match the token returned when [joining the trial](#tag/Actor/operation/joinTrial-fm).",
+						"required": true,
+						"schema": {
+							"type": "string",
+							"description": "The actor trial token, it must match the token returned when [joining the trial](#tag/Actor/operation/joinTrial-fm)."
+						}
+					}
+				],
+				"responses": {
+					"202": {
+						"description": "Accepted",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/HttpserverResponse"
+								}
+							}
+						}
+					},
+					"401": {
+						"description": "Invalid Trial Actor Token",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ErrorResponse"
+								}
+							}
+						}
+					},
+					"500": {
+						"description": "Bad server configuration or state",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ErrorResponse"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/actor/{actor_name}/{trial_id}/{tick_id}": {
+			"get": {
+				"tags": [
+					"Actor"
+				],
+				"summary": "Act, with an empty action, in a trial",
+				"description": "Have the actor `actor_name` in trial `trial_id` act, with an empty action, at tick `tick_id`.\n\nThis will send an action initialized with its [default protobuf value](https://protobuf.dev/programming-guides/proto3/#default).",
+				"operationId": "actEmpty-fm",
+				"parameters": [
+					{
+						"name": "actor_name",
+						"in": "path",
+						"description": "The actor name",
+						"required": true,
+						"schema": {
+							"type": "string",
+							"description": "The actor name"
+						}
+					},
+					{
+						"name": "tick_id",
+						"in": "path",
+						"description": "Identifier of the tick (time step)",
+						"required": true,
+						"schema": {
+							"type": "integer",
+							"description": "Identifier of the tick (time step)",
+							"format": "int64"
+						}
+					},
+					{
+						"name": "trial_id",
+						"in": "path",
+						"description": "The trial identifier",
+						"required": true,
+						"schema": {
+							"type": "string",
+							"description": "The trial identifier"
+						}
+					},
+					{
+						"name": "Cogment-Actor-Trial-Token",
+						"in": "header",
+						"description": "The actor trial token, it must match the token returned when [joining the trial](#tag/Actor/operation/joinTrial-fm).",
+						"required": true,
+						"schema": {
+							"type": "string",
+							"description": "The actor trial token, it must match the token returned when [joining the trial](#tag/Actor/operation/joinTrial-fm)."
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/HttpserverActResponse"
+								}
+							}
+						}
+					},
+					"401": {
+						"description": "Invalid Trial Actor Token",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ErrorResponse"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "Trial not found or Actor not found in Trial",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ErrorResponse"
+								}
+							}
+						}
+					},
+					"500": {
+						"description": "Bad server configuration or state",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ErrorResponse"
+								}
+							}
+						}
+					}
+				}
+			},
+			"post": {
+				"tags": [
+					"Actor"
+				],
+				"summary": "Act in a trial",
+				"operationId": "act-fm",
+				"parameters": [
+					{
+						"name": "actor_name",
+						"in": "path",
+						"description": "The actor name",
+						"required": true,
+						"schema": {
+							"type": "string",
+							"description": "The actor name"
+						}
+					},
+					{
+						"name": "tick_id",
+						"in": "path",
+						"description": "Identifier of the tick (time step)",
+						"required": true,
+						"schema": {
+							"type": "integer",
+							"description": "Identifier of the tick (time step)",
+							"format": "int64"
+						}
+					},
+					{
+						"name": "trial_id",
+						"in": "path",
+						"description": "The trial identifier",
+						"required": true,
+						"schema": {
+							"type": "string",
+							"description": "The trial identifier"
+						}
+					},
+					{
+						"name": "Cogment-Actor-Trial-Token",
+						"in": "header",
+						"description": "The actor trial token, it must match the token returned when [joining the trial](#tag/Actor/operation/joinTrial-fm).",
+						"required": true,
+						"schema": {
+							"type": "string",
+							"description": "The actor trial token, it must match the token returned when [joining the trial](#tag/Actor/operation/joinTrial-fm)."
+						}
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/Act-FmInput"
+							}
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/HttpserverActResponse"
+								}
+							}
+						}
+					},
+					"401": {
+						"description": "Invalid Trial Actor Token",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ErrorResponse"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "Trial not found or Actor not found in Trial",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ErrorResponse"
+								}
+							}
+						}
+					},
+					"500": {
+						"description": "Bad server configuration or state",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ErrorResponse"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/controller/trials": {
+			"get": {
+				"tags": [
+					"Trial Lifecycle Control"
+				],
+				"summary": "Retrieve currently active trials",
+				"operationId": "listTrials-fm",
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "array",
+									"items": {
+										"$ref": "#/components/schemas/TrialInfo"
+									}
+								}
+							}
+						}
+					},
+					"500": {
+						"description": "Bad server configuration or state",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ErrorResponse"
+								}
+							}
+						}
+					}
+				}
+			},
+			"post": {
+				"tags": [
+					"Trial Lifecycle Control"
+				],
+				"summary": "Start a trial",
+				"description": "Start a trial from given trial parameters.\nFor further documentation of trial parameters, take a look at the dedicated [page](/docs/reference/parameters)\n\n\u003e It is forbidden to pass [gRPC endpoint](/docs/reference/parameters#grpc-scheme) as part of the trial parameters here",
+				"operationId": "startTrial-fm",
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/StartTrial-FmInput"
+							}
+						}
+					}
+				},
+				"responses": {
+					"202": {
+						"description": "Accepted",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/StartTrialResponse"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad server configuration or state",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ErrorResponse"
+								}
+							}
+						}
+					},
+					"500": {
+						"description": "Bad server configuration or state",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ErrorResponse"
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	},
+	"components": {
+		"schemas": {
+			"APIInfoResponse": {
+				"type": "object",
+				"properties": {
+					"message": {
+						"type": "string",
+						"description": "Human-readable response description"
+					},
+					"version": {
+						"type": "string",
+						"description": "Cogment Version"
+					},
+					"version_hash": {
+						"type": "string"
+					}
+				}
+			},
+			"Act-FmInput": {
+				"type": "object",
+				"properties": {
+					"action": {
+						"type": "object",
+						"description": "Action from the actor",
+						"nullable": true
+					},
+					"rewards": {
+						"type": "array",
+						"items": {
+							"$ref": "#/components/schemas/SentReward"
+						},
+						"description": "Rewards sent by the actor"
+					}
+				}
+			},
+			"ActorParams": {
+				"type": "object",
+				"properties": {
+					"actor_class": {
+						"type": "string",
+						"description": "The name of the actor class"
+					},
+					"config": {
+						"type": "object",
+						"description": "Actor configuration, following the format defined in the spec file",
+						"nullable": true
+					},
+					"default_action": {
+						"type": "object",
+						"description": "This is only relevant for optional actors (see optional). If set, and the actor is not available, the environment will receive this action.",
+						"nullable": true
+					},
+					"endpoint": {
+						"type": "string",
+						"description": "Endpoint of the actor"
+					},
+					"implementation": {
+						"type": "string",
+						"description": "The name of the implementation to run this actor"
+					},
+					"initial_connection_timeout": {
+						"type": "number",
+						"description": "Maximum amount of time (in seconds) to wait for an actor to connect to a new trial, after which it is considered unavailable for the trial duration.",
+						"format": "float",
+						"default": 0
+					},
+					"name": {
+						"type": "string",
+						"description": "The name of the actor (must be unique in the trial)"
+					},
+					"optional": {
+						"type": "boolean",
+						"description": "If set (true), the actor is optional.",
+						"default": false
+					},
+					"response_timeout": {
+						"type": "number",
+						"description": "Maximum amount of time (in seconds) to wait for an actor to respond with an action after an observation is sent, after which it is considered unavailable.",
+						"format": "float",
+						"default": 0
+					}
+				},
+				"required": [
+					"actor_class",
+					"name"
+				]
+			},
+			"DatalogParams": {
+				"type": "object",
+				"properties": {
+					"endpoint": {
+						"type": "string",
+						"description": "Endpoint for the datalog service"
+					},
+					"exclude_fields": {
+						"type": "array",
+						"items": {
+							"type": "string"
+						},
+						"description": "List of fields to exclude from the data samples sent to the datalog service"
+					}
+				}
+			},
+			"EnvironmentParams": {
+				"type": "object",
+				"properties": {
+					"config": {
+						"type": "object",
+						"description": "Environment configuration, following the format defined in the spec file",
+						"nullable": true
+					},
+					"endpoint": {
+						"type": "string",
+						"description": "Endpoint of the environment service"
+					},
+					"implementation": {
+						"type": "string",
+						"description": "The name of the implementation to run the environment."
+					},
+					"name": {
+						"type": "string",
+						"description": "The name of the environment",
+						"default": "env"
+					}
+				},
+				"required": [
+					"implementation"
+				]
+			},
+			"ErrorResponse": {
+				"type": "object",
+				"properties": {
+					"message": {
+						"type": "string",
+						"description": "Human-readable error description"
+					}
+				}
+			},
+			"HttpserverActResponse": {
+				"type": "object",
+				"properties": {
+					"action": {
+						"type": "object",
+						"description": "Action from the actor",
+						"nullable": true
+					},
+					"message": {
+						"type": "string",
+						"description": "Human-readable response description"
+					},
+					"observation": {
+						"type": "object",
+						"description": "Observation received by the actor for this tick",
+						"nullable": true
+					},
+					"rewards": {
+						"type": "array",
+						"items": {
+							"$ref": "#/components/schemas/SentReward"
+						},
+						"description": "Rewards sent by the actor"
+					},
+					"tick_id": {
+						"type": "integer",
+						"description": "Identifier of the tick (time step)",
+						"format": "int64"
+					}
+				}
+			},
+			"HttpserverJoinTrialResponse": {
+				"type": "object",
+				"properties": {
+					"actor_class": {
+						"type": "string",
+						"description": "The actor class"
+					},
+					"actor_config": {
+						"type": "object",
+						"description": "Actor configuration, following the format defined in the spec file for its actor_class",
+						"nullable": true
+					},
+					"actor_implementation": {
+						"type": "string",
+						"description": "The actor implementation"
+					},
+					"actor_name": {
+						"type": "string",
+						"description": "The actor name"
+					},
+					"message": {
+						"type": "string",
+						"description": "Human-readable response description"
+					},
+					"observation": {
+						"type": "object",
+						"description": "Observation received by the actor for this tick",
+						"nullable": true
+					},
+					"rewards": {
+						"type": "array",
+						"items": {
+							"$ref": "#/components/schemas/RecvReward"
+						},
+						"description": "Rewards received by the actor"
+					},
+					"tick_id": {
+						"type": "integer",
+						"description": "Identifier of the tick (time step)",
+						"format": "int64"
+					},
+					"token": {
+						"type": "string",
+						"description": "Actor trial token, required to authenticate further interactions with the trial as this actor."
+					},
+					"trial_id": {
+						"type": "string",
+						"description": "The trial identifier"
+					}
+				}
+			},
+			"HttpserverResponse": {
+				"type": "object",
+				"properties": {
+					"message": {
+						"type": "string",
+						"description": "Human-readable response description"
+					}
+				}
+			},
+			"RecvReward": {
+				"type": "object",
+				"properties": {
+					"sources": {
+						"type": "array",
+						"items": {
+							"$ref": "#/components/schemas/RecvRewardSource"
+						},
+						"description": "Sources for the reward"
+					},
+					"tick_id": {
+						"type": "integer",
+						"description": "The tick associated with the reward",
+						"format": "int64"
+					},
+					"value": {
+						"type": "number",
+						"description": "The numerical value of the final reward",
+						"format": "float"
+					}
+				}
+			},
+			"RecvRewardSource": {
+				"type": "object",
+				"properties": {
+					"confidence": {
+						"type": "number",
+						"description": "The weight of this reward in computing the final (aggregated) reward",
+						"format": "float",
+						"maximum": 1
+					},
+					"sender": {
+						"type": "string",
+						"description": "Name of the sending actor or environment"
+					},
+					"user_data": {
+						"type": "object",
+						"description": "Additional user data",
+						"nullable": true
+					},
+					"value": {
+						"type": "number",
+						"description": "The numerical value of the reward",
+						"format": "float"
+					}
+				}
+			},
+			"SentReward": {
+				"type": "object",
+				"properties": {
+					"confidence": {
+						"type": "number",
+						"description": "The weight of this reward in computing the final (aggregated) reward",
+						"format": "float",
+						"maximum": 1
+					},
+					"receiver": {
+						"type": "string",
+						"description": "Name of the receiving actor"
+					},
+					"tick_id": {
+						"type": "integer",
+						"description": "The tick associated with the reward",
+						"format": "int64"
+					},
+					"user_data": {
+						"type": "object",
+						"additionalProperties": {},
+						"description": "Additional user data"
+					},
+					"value": {
+						"type": "number",
+						"description": "The numerical value of the provided reward",
+						"format": "float"
+					}
+				}
+			},
+			"StartTrial-FmInput": {
+				"type": "object",
+				"properties": {
+					"actors": {
+						"type": "array",
+						"items": {
+							"$ref": "#/components/schemas/ActorParams"
+						},
+						"minItems": 1
+					},
+					"config": {
+						"type": "object",
+						"description": "Trial configuration, following the format defined in the spec file",
+						"nullable": true
+					},
+					"datalog": {
+						"$ref": "#/components/schemas/DatalogParams"
+					},
+					"environment": {
+						"$ref": "#/components/schemas/EnvironmentParams"
+					},
+					"max_inactivity": {
+						"type": "integer",
+						"description": "The number of seconds of inactivity after which a trial will be hard terminated",
+						"format": "int32",
+						"default": 30
+					},
+					"max_steps": {
+						"type": "integer",
+						"description": "The maximum number of time steps (ticks) that the trial will run",
+						"format": "int32",
+						"default": 0
+					},
+					"nb_buffered_ticks": {
+						"type": "integer",
+						"description": "The number of ticks (steps) to buffer in the Orchestrator before sending the data to the datalog",
+						"format": "int64",
+						"default": 2,
+						"minimum": 2
+					},
+					"properties": {
+						"type": "object",
+						"additionalProperties": {
+							"type": "string"
+						}
+					},
+					"trial_id": {
+						"type": "string",
+						"description": "The trial identifier requested for the new trial. It must be unique. If not empty, the Orchestrator will try to use this trial_id, otherwise, a UUID will be created."
+					}
+				},
+				"required": [
+					"environment"
+				]
+			},
+			"StartTrialResponse": {
+				"type": "object",
+				"properties": {
+					"message": {
+						"type": "string",
+						"description": "Human-readable response description"
+					},
+					"trial_id": {
+						"type": "string",
+						"description": "The trial identifier"
+					}
+				}
+			},
+			"TrialInfo": {
+				"type": "object",
+				"properties": {
+					"env_name": {
+						"type": "string",
+						"description": "Name of the environment"
+					},
+					"properties": {
+						"type": "object",
+						"additionalProperties": {
+							"type": "string"
+						}
+					},
+					"state": {
+						"type": "integer",
+						"description": "Current state of the trial",
+						"format": "int32"
+					},
+					"trial_id": {
+						"type": "string",
+						"description": "The trial identifier"
+					}
+				}
+			}
+		}
+	},
+	"tags": [
+		{
+			"name": "Actor",
+			"description": "Interact with a running trial as an actor"
+		},
+		{
+			"name": "Trial Lifecycle Control",
+			"description": "Interact with the Cogment Orchestrator to control the lifetime of trials."
+		}
+	]
+}
